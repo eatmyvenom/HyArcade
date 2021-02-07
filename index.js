@@ -274,6 +274,22 @@ let afkers = [
     new Account("NoHackzJustAsian",0),
 ];
 
+let important = [
+    new Account("plancke",0),
+    new Account("AgentKid",0),
+    new Account("hypixel",0),
+    new Account("SlothPixel",0),
+    new Account("Plancker",0),
+    new Account("Plank",0),
+    new Account("SenorPancake",0),
+    new Account("ZeroErrors",0),
+    new Account("MasterControl",0),
+    new Account("Thorlon",0),
+    new Account("Sylent_",0),
+    new Account("SylentButDedly",0),
+    new Account("LadyBleu",0),
+]
+
 accounts.concat(afkers);
 
 let players = [
