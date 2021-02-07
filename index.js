@@ -290,7 +290,17 @@ let important = [
     new Account("LadyBleu",0),
 ]
 
-accounts.concat(afkers, important);
+let yt = [
+    new Account("Technoblade",0),
+    new Account("Dream",0),
+    new Account("elybeatmaker",0),
+    new Account("gamerboy80",0),
+    new Account("Illumina",0),
+    new Account("Purpled",0),
+    new Account("TapL",0),
+]
+
+accounts.concat(afkers, important ,yt);
 
 let players = [
     new Player("Als", ["als_31"]),
