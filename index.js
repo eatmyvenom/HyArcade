@@ -301,7 +301,7 @@ let yt = [
     new Account("Zyphon_",0),
 ]
 
-accounts.concat(afkers, important ,yt);
+accounts = accounts.concat(afkers, important ,yt);
 
 let players = [
     new Player("Als", ["als_31"]),
