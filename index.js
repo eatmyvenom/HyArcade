@@ -290,7 +290,7 @@ let important = [
     new Account("LadyBleu",0),
 ]
 
-accounts.concat(afkers);
+accounts.concat(afkers, important);
 
 let players = [
     new Player("Als", ["als_31"]),
