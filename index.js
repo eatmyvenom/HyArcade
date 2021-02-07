@@ -298,6 +298,7 @@ let yt = [
     new Account("Illumina",0),
     new Account("Purpled",0),
     new Account("TapL",0),
+    new Account("Zyphon_",0),
 ]
 
 accounts.concat(afkers, important ,yt);
