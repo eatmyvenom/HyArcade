@@ -231,8 +231,22 @@ let accounts = [
     new Account("Musgravite", 0),
     new Account("Speedblaster",0),
     new Account("Latex_allergy",0),
+    new Account("mythicalpingu",0),
+    new Account("jkGALAKTUS",0),
+    new Account("Pe3tr",0),
+    new Account("knacam",0),
+    new Account("Cukrenka",0),
+    new Account("FortuneLemon",0),
+    new Account("Aldix",0),
+    new Account("Krumpachnik",0),
+    new Account("aByee",0),
+    new Account("ZenBenn",0),
+    new Account("ThePoGoCZ",0),
     new Account("LunaTheRanger",0),
+    new Account("Nebbens",0),
+]
 
+let afkers = [
     new Account("xHugTacos",25),
     new Account("Oblueish",28),
     new Account("TomerWB",104),
@@ -255,22 +269,12 @@ let accounts = [
     new Account("GloriousYellow",0),
     new Account("swaggerdawg69",104),
     new Account("Cubxr",62),
-    new Account("mythicalpingu",0),
-    new Account("jkGALAKTUS",0),
-    new Account("Pe3tr",0),
-    new Account("knacam",0),
-    new Account("Cukrenka",0),
-    new Account("FortuneLemon",0),
-    new Account("Aldix",0),
-    new Account("Krumpachnik",0),
-    new Account("aByee",0),
-    new Account("ZenBenn",0),
-    new Account("ThePoGoCZ",0),
     new Account("Almighty_Dab",0),
     new Account("SirFuzzyMonkey",0),
-    new Account("Nebbens",0),
-    new Account("yt_rift",0)
+    new Account("NoHackzJustAsian",0),
 ];
+
+accounts.concat(afkers);
 
 let players = [
     new Player("Als", ["als_31"]),
