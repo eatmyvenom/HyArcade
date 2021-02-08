@@ -478,7 +478,7 @@ function sleep(time) {
 async function updateAllAccounts(){
     for(let i=0;i<accounts.length;i++){
         await accounts[i].updateWins();
-        await sleep(0.52);
+        await sleep(0.6);
     }
 }
 
@@ -660,7 +660,7 @@ async function main(){
         let str = '';
         for(let i=0;i<accounts.length;i++) {
             str += await txtStatus(accounts[i].name);
-            await sleep(0.52);
+            await sleep(0.6);
         }
         fs.writeFileSync("status.txt",str);
     } else if (arg1=='genUUID') {
