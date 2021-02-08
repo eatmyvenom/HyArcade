@@ -273,6 +273,8 @@ let afkers = [
     new Account("SirFuzzyMonkey",0),
     new Account("NoHackzJustAsian",0),
     new Account("UnitxdStates",45),
+    new Account("Chilled_Thunder",21),
+    new Account("Bqsketball",7),
 ];
 
 let important = [
