@@ -478,7 +478,7 @@ function sleep(time) {
 async function updateAllAccounts(){
     for(let i=0;i<accounts.length;i++){
         await accounts[i].updateWins();
-        await sleep(0.62);
+        await sleep(0.52);
     }
 }
 
@@ -651,7 +651,7 @@ async function main(){
         for(let i=0;i<oldaccounts.length;i++) {
             acc = accounts.find(g=>g.name.toLowerCase()==oldaccounts[i].name.toLowerCase())
             if (acc) {
-                oldaccounts[i].wins = Math.abs(oldaccounts[i].wins - acc.wins);
+                oldaccounts[i].wins = oldaccounts[i].wins - acc.wins;
             }
         }
         oldaccounts = oldaccounts.sort(winsSorter);
@@ -660,7 +660,7 @@ async function main(){
         let str = '';
         for(let i=0;i<accounts.length;i++) {
             str += await txtStatus(accounts[i].name);
-            await sleep(0.62);
+            await sleep(0.52);
         }
         fs.writeFileSync("status.txt",str);
     } else if (arg1=='genUUID') {
@@ -668,7 +668,7 @@ async function main(){
         for(let i=0;i<accounts.length;i++) {
             console.log(accounts[i].name)
             uuids[accounts[i].name] = await getUUID(accounts[i].name);
-            sleep(1);
+            await sleep(1);
         }
         fs.writeFileSync("uuids.json", JSON.stringify(uuids,null,4));
     }
