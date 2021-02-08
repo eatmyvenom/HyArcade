@@ -2,6 +2,7 @@ let accounts;
 
 module.exports = function Gld(acclist) {
     accounts=acclist
+    return Guild;
 }
 
 class Guild {
