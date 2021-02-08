@@ -470,7 +470,7 @@ let guilds = [
 ]
 
 function sleep(time) {
-    return new Promise((resolve,reject) =>{
+    return new Promise((resolve) =>{
         setTimeout(resolve,time);
     });
 }
@@ -478,7 +478,7 @@ function sleep(time) {
 async function updateAllAccounts(){
     for(let i=0;i<accounts.length;i++){
         await accounts[i].updateWins();
-        await sleep(0.6);
+        await sleep(500);
     }
 }
 
@@ -660,7 +660,7 @@ async function main(){
         let str = '';
         for(let i=0;i<accounts.length;i++) {
             str += await txtStatus(accounts[i].name);
-            await sleep(0.6);
+            await sleep(500);
         }
         fs.writeFileSync("status.txt",str);
     } else if (arg1=='genUUID') {
@@ -668,7 +668,7 @@ async function main(){
         for(let i=0;i<accounts.length;i++) {
             console.log(accounts[i].name)
             uuids[accounts[i].name] = await getUUID(accounts[i].name);
-            await sleep(1);
+            await sleep(1000);
         }
         fs.writeFileSync("uuids.json", JSON.stringify(uuids,null,4));
     }
