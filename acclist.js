@@ -210,4 +210,10 @@ let yt = [
     new Account("Zyphon_",0),
 ]
 
-module.exports = accounts.concat(afkers, important ,yt);
+let pog = [
+    new Account("pr0cess"),
+    new Account("smokey95dog"),
+    new Account("Rechenmaschine")
+]
+
+module.exports = accounts.concat(afkers, important ,yt, pog);
