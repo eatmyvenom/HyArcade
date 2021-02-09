@@ -28,7 +28,7 @@ module.exports = function gld(accs) {
             "qSpider",
             "Party_Gamer",
             "pastuuh",
-            "yungtf",
+            "yubg",
             "steakinthewall",
             "khaninthewall",
         ]),

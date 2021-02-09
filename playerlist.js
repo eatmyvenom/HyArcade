@@ -12,7 +12,7 @@ module.exports = function plrs(accs) {
         new Player("Khan", ["KhanInTheWall"]),
         new Player("Norrie", ["norriie"]),
         new Player("Oogle", ["minecraftoogle","cute_god","CRAZYJAKE0617","ceebee83","jodie237","javiles","pandapuffz","prolapsedhole","tanman34","vibby22","xredhound","bigboyman96","clairemac13","kas61","merica49"]),
-        new Player("Yung", ["yungtf"]),
+        new Player("Yung", ["yubg"]),
         new Player("Itamar", ["itamar080607"]),
         new Player("THE77", ["ilovethe77"]),
         new Player("Jake", ["jqkeup","Faevourite"]),

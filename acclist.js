@@ -30,7 +30,7 @@ let accounts = [
     new Account("clairemac13",0),
     new Account("kas61",0),
     new Account("merica49",0),
-    new Account("yungtf",0),
+    new Account("yubg",0),
     new Account("itamar080607",0),
     new Account("ilovethe77",0),
     new Account("jqkeup",0),
@@ -150,6 +150,7 @@ let accounts = [
     new Account("ThePoGoCZ",0),
     new Account("LunaTheRanger",0),
     new Account("Nebbens",0),
+    new Account("Dumboes",0)
 ]
 
 let afkers = [
