@@ -7,8 +7,8 @@ const Player = require('./player')(accounts);
 const Account = require("./account");
 const Guild = require("./guild")(accounts);
 
-let players = require("./playerlist");
-let guilds = require("./guildlist")
+let players = require("./playerlist")(accounts);
+let guilds = require("./guildlist")(accounts)
 
 function sleep(time) {
     return new Promise((resolve) =>{
@@ -192,7 +192,7 @@ async function main(){
         for(let i=0;i<oldaccounts.length;i++) {
             acc = accounts.find(g=>g.name.toLowerCase()==oldaccounts[i].name.toLowerCase())
             if (acc) {
-                oldaccounts[i].wins = oldaccounts[i].wins - acc.wins;
+                oldaccounts[i].wins = Math.abs(oldaccounts[i].wins - acc.wins);
             }
         }
         oldaccounts = oldaccounts.sort(winsSorter);

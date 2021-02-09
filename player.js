@@ -1,4 +1,4 @@
-let accounts;
+let accounts =[];
 
 module.exports = function Plr(acclist) {
     accounts=acclist;
