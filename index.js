@@ -10,6 +10,8 @@ const Guild = require("./guild")(accounts);
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts)
 
+let rawstatus = {};
+
 function sleep(time) {
     return new Promise((resolve) =>{
         setTimeout(resolve,time);
@@ -80,7 +82,9 @@ async function txtStatus(name) {
     if(!status) {
         return "";
     }
+
     let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
+    rawstatus[name]=status;
     if (status.online) {
         str += `${pname}: Type=${status.gameType}, Mode=${status.mode}\n`
     } else {
@@ -204,6 +208,7 @@ async function main(){
             await sleep(500);
         }
         fs.writeFileSync("status.txt",str);
+        fs.writeFileSync("status.json",JSON.stringify(rawstatus,null,4));
     } else if (arg1=='genUUID') {
         let uuids = {};
         for(let i=0;i<accounts.length;i++) {
