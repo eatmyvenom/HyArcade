@@ -83,11 +83,32 @@ async function txtStatus(name) {
         return "";
     }
 
+
+
     let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
     rawstatus[name]=status;
     if (status.online) {
-        str += `${pname}: Type=${status.gameType}, Mode=${status.mode}\n`
-    } else {
+        str += `${pname}:`
+        if(status.mode == 'LOBBY') {
+            str += `${status.gameType} ${status.mode}`
+        } else if (status.mode == 'DUELS') {
+            str += `${status.mode}: ${status.map}`
+        } else if (status.gameType == 'ARCADE') {
+            if (status.mode == "FARM_HUNT") {
+                str += "Farm hunt: "
+            } else if (status.mode == "PVP_CTW") {
+                str += "Ctw: "
+            }
+            str += `${status.map}`
+        } else if (status.gameType == 'BEDWARS') {
+            str += `Bedwars ${status.mode.toLowerCase().replace('_',' ')} ${status.map}`
+        } else if (status.gameType == 'TNTGAMES') {
+            str += `Tnt ${status.mode.toLowerCase()}: ${status.map}`
+        } else {
+            str += `${status.gameType} ${status.mode}`
+        }
+        str += "\n"
+     } else {
         return "";
     }
     
