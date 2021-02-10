@@ -95,15 +95,17 @@ async function txtStatus(name) {
             str += `${status.mode}: ${status.map}`
         } else if (status.gameType == 'ARCADE') {
             if (status.mode == "FARM_HUNT") {
-                str += "Farm hunt: "
+                str += "Farm hunt- "
             } else if (status.mode == "PVP_CTW") {
-                str += "Ctw: "
+                str += "Ctw- "
             }
             str += `${status.map}`
         } else if (status.gameType == 'BEDWARS') {
-            str += `Bedwars ${status.mode.toLowerCase().replace('_',' ')} ${status.map}`
+            str += `Bedwars ${status.mode.toLowerCase().replace('_',' ')}- ${status.map}`
         } else if (status.gameType == 'TNTGAMES') {
-            str += `Tnt ${status.mode.toLowerCase()}: ${status.map}`
+            str += `Tnt ${status.mode.toLowerCase()}- ${status.map}`
+        } else if (status.gameType == 'BUILD_BATTLE') {
+            str += `${status.map}`
         } else {
             str += `${status.gameType} ${status.mode}`
         }
