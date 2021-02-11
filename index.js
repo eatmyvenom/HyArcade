@@ -88,7 +88,7 @@ async function txtStatus(name) {
     let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
     rawstatus[name]=status;
     if (status.online) {
-        str += `${pname}:`
+        str += `${pname}: `
         if(status.mode == 'LOBBY') {
             str += `${status.gameType.toLowerCase()} ${status.mode.toLowerCase()}`
         } else if (status.gameType == 'DUELS') {
