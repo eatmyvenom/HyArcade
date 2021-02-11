@@ -106,6 +106,10 @@ async function txtStatus(name) {
             str += `Tnt ${status.mode.toLowerCase()}- ${status.map}`
         } else if (status.gameType == 'BUILD_BATTLE') {
             str += `${status.map}`
+        } else if (status.gameType == 'HOUSING') {
+            str += `Housing ${status.map}`
+        } else if (status.gameType == 'SKYBLOCK' && status.mode == "dynamic") {
+            str += `Skyblock island`
         } else {
             str += `${status.gameType} ${status.mode}`
         }
