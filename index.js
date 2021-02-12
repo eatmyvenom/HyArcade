@@ -83,8 +83,6 @@ async function txtStatus(name) {
         return "";
     }
 
-
-
     let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
     rawstatus[name]=status;
     if (status.online) {
@@ -101,7 +99,7 @@ async function txtStatus(name) {
             } else if (status.mode == "MINI_WALLS") {
                 str += "Mini walls - "
             } else if (status.mode.includes("HIDE_AND_SEEK")) {
-                str += status.mode.replace("HIDE_AND_SEEK","").toLowerCase.replace("_","");
+                str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase.replace("_"," ")}`
             }
             str += `${status.map}`
         } else if (status.gameType == 'BEDWARS') {
