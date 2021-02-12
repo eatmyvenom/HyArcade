@@ -100,6 +100,8 @@ async function txtStatus(name) {
                 str += "Ctw - "
             } else if (status.mode == "MINI_WALLS") {
                 str += "Mini walls - "
+            } else if (status.mode.includes("HIDE_AND_SEEK")) {
+                str += status.mode.replace("HIDE_AND_SEEK","").toLowerCase.replace("_","");
             }
             str += `${status.map}`
         } else if (status.gameType == 'BEDWARS') {
