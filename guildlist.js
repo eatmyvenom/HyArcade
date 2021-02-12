@@ -31,6 +31,7 @@ module.exports = function gld(accs) {
             "yubg",
             "steakinthewall",
             "khaninthewall",
+            "xmuffins"
         ]),
         new Guild("Fidelity",0,[
             "paethetic",
