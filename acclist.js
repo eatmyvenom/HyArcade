@@ -94,8 +94,6 @@ let accounts = [
     new Account("_nadel_",0),
     new Account("Ghostlyboomerang",0),
     new Account("Faevourite",0),
-    new Account("HammyInTheWall",0),
-    new Account("UekuInTheWall",0),
     new Account("verybad_",0),
     new Account("i1a",0),
     new Account("LiamGoneMad",0),
@@ -104,17 +102,11 @@ let accounts = [
     new Account("Arcxire",0),
     new Account("USOMUSKY",0),
     new Account("Blackoutburst",0),
-    new Account("MasonInTheWall",0),
-    new Account("bunniexoxo",0),
     new Account("pastuuh",0),
     new Account("holidee",0),
     new Account("CloverStyle",0),
     new Account("skycity17",0),
     new Account("p3ppa_plg",0),
-    new Account("Galaxy_Senpai",0),
-    new Account("genkai95",0),
-    new Account("Chenchen87",0),
-    new Account("Swishfox",0),
     new Account("shiins",0),
     new Account("0897david0897",0),
     new Account("lllGhost",0),
@@ -126,6 +118,19 @@ let accounts = [
     new Account("DrPickle_",0),
     new Account("SuperMinerAAA",0),
     new Account("PokemonCity17",0),
+    new Account("Speedblaster",0),
+    new Account("Latex_allergy",0),
+    new Account("mythicalpingu",0),
+    new Account("LunaTheRanger",0),
+    new Account("Nebbens",0),
+    new Account("Dumboes",0)
+]
+
+let afkers = [
+    new Account("Galaxy_Senpai",0),
+    new Account("genkai95",0),
+    new Account("Chenchen87",0),
+    new Account("Swishfox",0),
     new Account("xLightW0lf",0),
     new Account("Riiruu",0),
     new Account("Cale73",0),
@@ -133,9 +138,6 @@ let accounts = [
     new Account("Gigchad",0),
     new Account("Sebastitgames",0),
     new Account("Musgravite", 0),
-    new Account("Speedblaster",0),
-    new Account("Latex_allergy",0),
-    new Account("mythicalpingu",0),
     new Account("jkGALAKTUS",0),
     new Account("Pe3tr",0),
     new Account("knacam",0),
@@ -146,12 +148,10 @@ let accounts = [
     new Account("aByee",0),
     new Account("ZenBenn",0),
     new Account("ThePoGoCZ",0),
-    new Account("LunaTheRanger",0),
-    new Account("Nebbens",0),
-    new Account("Dumboes",0)
-]
-
-let afkers = [
+    new Account("MasonInTheWall",0),
+    new Account("bunniexoxo",0),
+    new Account("HammyInTheWall",0),
+    new Account("UekuInTheWall",0),
     new Account("xHugTacos",25),
     new Account("LoverBoyCanadian", 0),
     new Account("canadiansweat", 0),
@@ -216,7 +216,9 @@ let yt = [
 let pog = [
     new Account("pr0cess"),
     new Account("smokey95dog"),
-    new Account("Rechenmaschine")
+    new Account("Rechenmaschine"),
+    new Account("ilmango"),
+    new Account("kman")
 ]
 
 module.exports = {full: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 
