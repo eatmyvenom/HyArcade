@@ -132,8 +132,6 @@ let accounts = [
     new Account("Aplanna",0),
     new Account("Gigchad",0),
     new Account("Sebastitgames",0),
-    new Account("LoverBoyCanadian", 0),
-    new Account("canadiansweat", 0),
     new Account("Musgravite", 0),
     new Account("Speedblaster",0),
     new Account("Latex_allergy",0),
@@ -155,6 +153,8 @@ let accounts = [
 
 let afkers = [
     new Account("xHugTacos",25),
+    new Account("LoverBoyCanadian", 0),
+    new Account("canadiansweat", 0),
     new Account("Oblueish",28),
     new Account("TomerWB",104),
     new Account("Osunburst",12),
