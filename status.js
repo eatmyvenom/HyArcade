@@ -55,6 +55,7 @@ async function getStatusRAW(UUID) {
 }
 
 function arcadeFormatter(status) {
+    let str = '';
     if (status.mode == "FARM_HUNT") {
         str += "Farm hunt - "
     } else if (status.mode == "PVP_CTW") {
@@ -68,6 +69,7 @@ function arcadeFormatter(status) {
         str += `Zombies - `
     }
     str += `${status.map}`
+    return str;
 }
 
 async function txtStatus(name) {
