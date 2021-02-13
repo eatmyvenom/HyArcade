@@ -219,4 +219,4 @@ let pog = [
     new Account("Rechenmaschine")
 ]
 
-module.exports = accounts.concat(afkers, important ,yt, pog);
+module.exports = {full: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 

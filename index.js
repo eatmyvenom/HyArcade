@@ -1,6 +1,8 @@
 const fs = require('fs');
 const https = require('https');
-let accounts = require("./acclist")
+let acclist = require("./acclist")
+let accounts = acclist.full
+let gameraccs = acclist.gamers
 const apiKey = require('fs').readFileSync('./key')
 
 const Player = require('./player')(accounts);
@@ -144,11 +146,16 @@ async function main(){
         console.log(await txtPlayerList(oldaccounts))
     } else if (arg1=='status') {
         let str = '';
+        let str2= '';
         for(let i=0;i<accounts.length;i++) {
-            str += await status.txtStatus(accounts[i].name);
+            if(gameraccs.includes(accounts[i])) {
+                str += await status.txtStatus(accounts[i].name);
+            } else {
+                str2 += await status.txtStatus(accounts[i].name);
+            }
             await sleep(500);
         }
-        fs.writeFileSync("status.txt",str);
+        fs.writeFileSync("status.txt",str + "\n\n Non gamers: \n\n" + str2);
         fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
     } else if (arg1=='genUUID') {
         let uuids = {};
