@@ -77,10 +77,10 @@ async function txtStatus(name) {
             } else if (status.mode == "MINI_WALLS") {
                 str += "Mini walls - "
             } else if (status.mode.includes("HIDE_AND_SEEK")) {
-                str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase.replace("_"," ")}`
+                str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ")}`
             }
             else if (status.mode.includes("ZOMBIES")) {
-                str += `Zombies ${status.mode.replace("Zombies","").toLowerCase.replace("_"," ")}`
+                str += `Zombies ${status.mode.replace("Zombies","").toLowerCase().replace("_"," ")}`
             }
             str += `${status.map}`
         } else if (status.gameType == 'BEDWARS') {
