@@ -123,7 +123,8 @@ let accounts = [
     new Account("mythicalpingu",0),
     new Account("LunaTheRanger",0),
     new Account("Nebbens",0),
-    new Account("Dumboes",0)
+    new Account("Dumboes",0),
+    new Account("MiWadiPOG",205)
 ]
 
 let afkers = [
