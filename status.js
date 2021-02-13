@@ -88,7 +88,7 @@ async function txtStatus(name) {
         } else if (status.gameType == 'DUELS') {
             str += `${status.mode} - ${status.map}`
         } else if (status.gameType == 'ARCADE') {
-            arcadeFormatter(status)
+            str += arcadeFormatter(status)
         } else if (status.gameType == 'BEDWARS') {
             str += `Bedwars ${status.mode.toLowerCase().replace('_',' ').slice(lastIndexOf(" "))} - ${status.map}`
         } else if (status.gameType == 'TNTGAMES') {
