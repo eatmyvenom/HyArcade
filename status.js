@@ -80,7 +80,7 @@ async function txtStatus(name) {
                 str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ")}`
             }
             else if (status.mode.includes("ZOMBIES")) {
-                str += `Zombies ${status.mode.replace("Zombies","").toLowerCase().replace("_"," ")}`
+                str += `Zombies`
             }
             str += `${status.map}`
         } else if (status.gameType == 'BEDWARS') {

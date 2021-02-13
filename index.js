@@ -155,7 +155,7 @@ async function main(){
             }
             await sleep(500);
         }
-        fs.writeFileSync("status.txt",str + "\n\n Non gamers: \n\n" + str2);
+        fs.writeFileSync("status.txt",str + "\nNon gamers: \n\n" + str2);
         fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
     } else if (arg1=='genUUID') {
         let uuids = {};
