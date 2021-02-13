@@ -54,6 +54,22 @@ async function getStatusRAW(UUID) {
     });
 }
 
+function arcadeFormatter(status) {
+    if (status.mode == "FARM_HUNT") {
+        str += "Farm hunt - "
+    } else if (status.mode == "PVP_CTW") {
+        str += "Ctw - "
+    } else if (status.mode == "MINI_WALLS") {
+        str += "Mini walls - "
+    } else if (status.mode.includes("HIDE_AND_SEEK")) {
+        str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ")}`
+    }
+    else if (status.mode.includes("ZOMBIES")) {
+        str += `Zombies - `
+    }
+    str += `${status.map}`
+}
+
 async function txtStatus(name) {
     let status = await getStatus(name);
     let str='';
@@ -70,19 +86,7 @@ async function txtStatus(name) {
         } else if (status.gameType == 'DUELS') {
             str += `${status.mode} - ${status.map}`
         } else if (status.gameType == 'ARCADE') {
-            if (status.mode == "FARM_HUNT") {
-                str += "Farm hunt - "
-            } else if (status.mode == "PVP_CTW") {
-                str += "Ctw - "
-            } else if (status.mode == "MINI_WALLS") {
-                str += "Mini walls - "
-            } else if (status.mode.includes("HIDE_AND_SEEK")) {
-                str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ")}`
-            }
-            else if (status.mode.includes("ZOMBIES")) {
-                str += `Zombies`
-            }
-            str += `${status.map}`
+            arcadeFormatter(status)
         } else if (status.gameType == 'BEDWARS') {
             str += `Bedwars ${status.mode.toLowerCase().replace('_',' ')} - ${status.map}`
         } else if (status.gameType == 'TNTGAMES') {
