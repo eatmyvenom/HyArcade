@@ -4,9 +4,17 @@ let { accounts, gamers } = require("./acclist")
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
-const { sleep, winsSorter} = require("./utils")
+const { sleep, winsSorter } = require("./utils")
  
 async function updateAllAccounts(){
+    // sort this before hand because otherwise everything dies
+    // like seriously holy fuck its so bad
+    // oogle ended up with 21k wins due to this bug
+    // do not remove this
+    // people will notice
+    // just take the extra time
+    sortAccounts();
+    oldAccounts.sort(winsSorter);
     // set flag for force file
     let force = fs.existsSync("./force");
     if (force) { fs.unlinkSync("./force"); }
@@ -20,17 +28,17 @@ async function updateAllAccounts(){
             await sleep(500);
         } else {
             // fallback for new accounts
-            if(!oldAccounts[i] || !oldAccounts[i].wins) {
+            oldver = oldAccounts.find(g=>g.name.toLowerCase()==accounts[i].name.toLowerCase())
+            if(oldver != undefined) {
+                // use previous wins if the player was not online
+                accounts[i].wins = oldver.wins;
+            } else {
                 await accounts[i].updateWins();
                 // avoid hypixel rate limit
                 await sleep(500);
-            } else {
-                // use previous wins if the player was not online
-                accounts[i].wins = oldAccounts[i].wins;
             }
         }
     }
-
     sortAccounts();
 }
 
