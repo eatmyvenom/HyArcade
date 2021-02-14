@@ -1,6 +1,6 @@
-const apiKey = require('fs').readFileSync('./key')
-const https = require('https');
 const fs = require('fs');
+const apiKey = fs.readFileSync('./key')
+const https = require('https');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 
 let rawstatus = {};
@@ -11,10 +11,12 @@ function getUUIDFromCache(name) {
 
 async function getStatus(name) {
     let uuid = await getUUIDFromCache(name);
+    // cache miss
     if(!uuid) {
         uuid = getUUID(name);
     }
     
+    // account does not exist
     if(!uuid) {
         return undefined;
     }
@@ -73,6 +75,7 @@ function arcadeFormatter(status) {
 }
 
 async function txtStatus(name) {
+    console.log(name);
     let status = await getStatus(name);
     let str='';
     if(!status) {
@@ -90,7 +93,7 @@ async function txtStatus(name) {
         } else if (status.gameType == 'ARCADE') {
             str += arcadeFormatter(status)
         } else if (status.gameType == 'BEDWARS') {
-            str += `Bedwars ${status.mode.toLowerCase().replace('_',' ').slice(status.mode.lastIndexOf(" "))} - ${status.map}`
+            str += `Bedwars - ${status.map}`
         } else if (status.gameType == 'TNTGAMES') {
             str += `Tnt ${status.mode.toLowerCase()} - ${status.map}`
         } else if (status.gameType == 'BUILD_BATTLE') {
@@ -111,8 +114,8 @@ async function txtStatus(name) {
 }
 
 function isOnlineC(name) {
-    if(cachedStatus[name]) {
-        return cachedStatus[name].online == true;
+    if(cachedStatus[name]!=undefined) {
+        return cachedStatus[name].online;
     }
     return true;
 }

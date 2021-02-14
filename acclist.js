@@ -217,9 +217,7 @@ let yt = [
 let pog = [
     new Account("pr0cess"),
     new Account("smokey95dog"),
-    new Account("Rechenmaschine"),
-    new Account("ilmango"),
-    new Account("kman")
+    new Account("Rechenmaschine")
 ]
 
 module.exports = {full: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 

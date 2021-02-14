@@ -1,15 +1,8 @@
 const fs = require('fs');
-const https = require('https');
+const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 let acclist = require("./acclist")
 let accounts = acclist.full
 let gameraccs = acclist.gamers
-const apiKey = require('fs').readFileSync('./key')
-
-const Player = require('./player')(accounts);
-const Account = require("./account");
-const Guild = require("./guild")(accounts);
-const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
-
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
@@ -22,15 +15,18 @@ function sleep(time) {
 
 async function updateAllAccounts(force=false){
     for(let i=0;i<accounts.length;i++){
+        // check if player is online before updating wins
+        console.log(accounts[i].name)
         if(status.isOnlineC(accounts[i].name) || force) {
             await accounts[i].updateWins();
             await sleep(500);
         } else {
-            if(!oldAccounts[i].wins) {
+            if(!oldAccounts[i] || !oldAccounts[i].wins) {
                 await accounts[i].updateWins();
                 await sleep(500);
+            } else {
+                accounts[i].wins = oldAccounts[i].wins;
             }
-            accounts[i].wins = oldAccounts[i].wins;
         }
     }
 }
