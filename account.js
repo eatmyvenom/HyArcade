@@ -1,5 +1,5 @@
 const https = require("https")
-const apiKey = require('fs').readFileSync('./key')
+const apiKey = require("./config.json").key;
 
 module.exports = class Account {
     name="";

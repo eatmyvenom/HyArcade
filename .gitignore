@@ -1,4 +1,5 @@
 *.json
 *.sh
 *.txt
+node_modules
 key

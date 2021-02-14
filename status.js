@@ -1,5 +1,5 @@
 const fs = require('fs');
-const apiKey = fs.readFileSync('./key')
+const apiKey = require("./config.json").key;
 const https = require('https');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 

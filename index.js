@@ -5,6 +5,7 @@ let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
 const { sleep, winsSorter } = require("./utils")
+const Webhook = require('./webhook');
  
 async function updateAllAccounts(){
     // sort this before hand because otherwise everything dies
@@ -98,10 +99,14 @@ async function save() {
     fs.writeFileSync("guild.json",JSON.stringify(guilds,null,4));
 }
 
-async function logNormal(name) {
+async function stringNormal(name) {
     let list = JSON.parse(fs.readFileSync(`${name}.json`));
     list.sort(winsSorter);
-    console.log(await txtPlayerList(list));
+    return await txtPlayerList(list);
+}
+
+async function logNormal(name) {
+    console.log(await stringNormal(name));
 }
 
 async function logG() {
@@ -116,7 +121,9 @@ async function logA() {
     await logNormal("accounts");
 }
 
-function snap() {
+async function snap() {
+    await Webhook.send(await stringNormal("players"));
+    await Webhook.send(await stringDaily("players"));
     guilds = JSON.parse(fs.readFileSync("guild.json"));
     players = JSON.parse(fs.readFileSync("players.json"));
     accounts = JSON.parse(fs.readFileSync("accounts.json"));
@@ -125,7 +132,7 @@ function snap() {
     fs.writeFileSync("guild.day.json",JSON.stringify(guilds,null,4));
 }
 
-async function logDaily(name) {
+async function stringDaily(name) {
     let newlist = JSON.parse(fs.readFileSync(`${name}.json`));
     let oldlist = JSON.parse(fs.readFileSync(`${name}.day.json`));
 
@@ -141,7 +148,11 @@ async function logDaily(name) {
     // use old list to ensure that players added today 
     // don't show up with a crazy amount of daily wins
     oldlist = oldlist.sort(winsSorter);
-    console.log(await txtPlayerList(oldlist));
+    return await txtPlayerList(oldlist);
+}
+
+async function logDaily(name) {
+    console.log(await stringDaily(name));
 }
 
 async function logGD() {
