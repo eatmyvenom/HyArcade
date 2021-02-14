@@ -39,7 +39,7 @@ let accounts = [
     new Account("matchatw",0),
     new Account("YummosChihuahua",0),
     new Account("botcheetah",0),
-    new Account("catgirlneko",0),
+    new Account("cakeeplayz",0),
     new Account("heylevy",0),
     new Account("faebled",0),
     new Account("ilomiswir",0),
@@ -80,7 +80,7 @@ let accounts = [
     new Account("0name",0),
     new Account("js_juke",0),
     new Account("drgen",0),
-    new Account("party_gamer",0),
+    new Account("napness",0),
     new Account("tabananaman",0),
     new Account("badneon",0),
     new Account("daniezowo",0),
@@ -220,4 +220,4 @@ let pog = [
     new Account("Rechenmaschine")
 ]
 
-module.exports = {full: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 
+module.exports = {accounts: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 

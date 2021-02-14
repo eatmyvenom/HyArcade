@@ -1,8 +1,6 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
-let acclist = require("./acclist")
-let accounts = acclist.full
-let gameraccs = acclist.gamers
+let { accounts, gamers } = require("./acclist")
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
@@ -151,11 +149,11 @@ async function logAD() {
 }
 
 async function genStatus() {
-    let gamers = '';
+    let gamerstr = '';
     let nongamers= '';
     for(let i=0;i<accounts.length;i++) {
-        if(gameraccs.includes(accounts[i])) {
-            gamers += await status.txtStatus(accounts[i].name);
+        if(gamers.includes(accounts[i])) {
+            gamerstr += await status.txtStatus(accounts[i].name);
         } else {
             nongamers += await status.txtStatus(accounts[i].name);
         }
@@ -165,7 +163,7 @@ async function genStatus() {
     }
 
     // write formatted
-    fs.writeFileSync("status.txt",gamers + "\nNon gamers: \n\n" + nongamers);
+    fs.writeFileSync("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers);
     // write object 
     fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
 }
