@@ -6,13 +6,8 @@ let gameraccs = acclist.gamers
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
-
-function sleep(time) {
-    return new Promise((resolve) =>{
-        setTimeout(resolve,time);
-    });
-}
-
+const { sleep, winsSorter} = require("./utils")
+ 
 async function updateAllAccounts(force=false){
     for(let i=0;i<accounts.length;i++){
         // check if player is online before updating wins
@@ -57,12 +52,6 @@ function sortGuilds() {
 
 function sortAccounts() {
     accounts.sort(winsSorter);
-}
-
-function winsSorter(a,b) {
-    if(a.wins < b.wins) return 1;
-    if(a.wins > b.wins) return -1;
-    return 0;
 }
 
 async function updateAll() {
