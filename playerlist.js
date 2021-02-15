@@ -58,6 +58,7 @@ module.exports = function plrs(accs) {
         new Player("Llleeee", ["llleeee"]),
         new Player("Nadel", ["_nadel_"]),
         new Player("Pingu", ["mythicalpingu"]),
-        new Player("dee" , ["holidee"])
+        new Player("dee" , ["holidee"]),
+        new Player("smertnix", ["smertnix"])
     ];
 }
