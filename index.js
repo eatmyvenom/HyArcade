@@ -185,6 +185,8 @@ async function genStatus() {
     fs.writeFileSync("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers);
     // write object 
     fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
+    // store the cache misses
+    fs.writeFileSync("cachemiss.json", JSON.stringify(status.cacheMiss,null,4));
 }
 
 async function genUUID() {

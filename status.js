@@ -4,6 +4,7 @@ const https = require('https');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 
 let rawstatus = {};
+let cachemiss = [];
 
 function getUUIDFromCache(name) {
     return JSON.parse(fs.readFileSync("uuids.json"))[name]
@@ -13,6 +14,7 @@ async function getStatus(name) {
     let uuid = await getUUIDFromCache(name);
     // cache miss
     if(!uuid) {
+        cachemiss.push(uuid);
         uuid = getUUID(name);
     }
     
@@ -121,4 +123,4 @@ function isOnlineC(name) {
 }
 
 
-module.exports = {getUUID : getUUID, txtStatus : txtStatus, rawStatus : rawstatus, isOnlineC: isOnlineC}
+module.exports = {getUUID : getUUID, txtStatus : txtStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss}
