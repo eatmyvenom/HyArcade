@@ -22,7 +22,6 @@ let accounts = [
     new Account("jodie237",0),
     new Account("javiles",0),
     new Account("pandapuffz",0),
-    new Account("prolapsedhole",0),
     new Account("tanman34",0),
     new Account("vibby22",0),
     new Account("xredhound",0),
