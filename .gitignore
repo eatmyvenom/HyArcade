@@ -1,5 +1,7 @@
 *.json
 *.sh
 *.txt
+# dont expose alt accounts
+playerlist.js
 node_modules
 key
