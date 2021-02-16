@@ -1,6 +1,7 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 let { accounts, gamers } = require("./acclist")
+// a module that exports an array of player objects from the player module
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
