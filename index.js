@@ -1,6 +1,6 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
-let { accounts, gamers } = require("./acclist")
+let { accounts, gamers } = require("./acclist");
 // a module that exports an array of player objects from the player module
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
@@ -60,6 +60,8 @@ async function updateAllGuilds() {
     sortGuilds();
 }
 
+// just some wrappers
+
 function sortPlayers() {
     players.sort(winsSorter);
 }
@@ -94,7 +96,9 @@ async function txtPlayerList(list){
 }
 
 async function save() {
+    // get up to date info
     await updateAll();
+    // write new data to json files to be used later
     fs.writeFileSync("accounts.json",JSON.stringify(accounts,null,4));
     fs.writeFileSync("players.json",JSON.stringify(players,null,4));
     fs.writeFileSync("guild.json",JSON.stringify(guilds,null,4));
@@ -123,8 +127,16 @@ async function logA() {
 }
 
 async function snap() {
+
+    // send webhook messages, this is only currently 
+    // in a small server and only does the unofficial 
+    // leaderboard, this can be easily changed and if
+    // someone else would like I can add this to 
+    // another server
     await Webhook.send(await stringNormal("players"));
     await Webhook.send(await stringDaily("players"));
+
+    // move all the current stats files to be the daily files
     guilds = JSON.parse(fs.readFileSync("guild.json"));
     players = JSON.parse(fs.readFileSync("players.json"));
     accounts = JSON.parse(fs.readFileSync("accounts.json"));
@@ -137,11 +149,14 @@ async function stringDaily(name) {
     let newlist = JSON.parse(fs.readFileSync(`${name}.json`));
     let oldlist = JSON.parse(fs.readFileSync(`${name}.day.json`));
 
+    // sort the list before hand
     oldlist = oldlist.sort(winsSorter);
 
     for(let i=0;i<oldlist.length;i++) {
         acc = newlist.find(g=>g.name.toLowerCase()==oldlist[i].name.toLowerCase())
+        // make sure acc isnt null/undefined
         if (acc) {
+            // this uses abs in case there is some other error along the way
             oldlist[i].wins = Math.abs(oldlist[i].wins - acc.wins);
         }
     }
@@ -193,6 +208,8 @@ async function genStatus() {
 async function genUUID() {
     let uuids = {};
     for(let i=0;i<accounts.length;i++) {
+        // since stdout isnt piped into something else, a log here is 
+        // harmless
         console.log(accounts[i].name)
         uuids[accounts[i].name] = await status.getUUID(accounts[i].name);
         // make sure no more than 600 requests are sent per 10 minutes
@@ -205,6 +222,7 @@ async function genUUID() {
 // wrap main code in async function for nodejs backwards compatability
 
 async function main(){
+    // im lazy
     let args = process.argv;
 
     // use different functions for different args

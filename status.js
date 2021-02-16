@@ -14,6 +14,8 @@ async function getStatus(name) {
     let uuid = await getUUIDFromCache(name);
     // cache miss
     if(!uuid) {
+        // store the cache miss for later
+        // this helps me identify name changes
         cachemiss.push(uuid);
         uuid = getUUID(name);
     }
@@ -37,6 +39,7 @@ async function getUUID(name) {
 }
 
 async function getUUIDRaw(name) {
+    // promisify query
     return new Promise((resolve,reject)=>{
         https.get(`https://api.mojang.com/users/profiles/minecraft/${name}`, res => {
             let reply='';
@@ -48,6 +51,7 @@ async function getUUIDRaw(name) {
 }
 
 async function getStatusRAW(UUID) {
+    // promisify query
     return new Promise((resolve,reject)=>{
         https.get(`https://api.hypixel.net/status?key=${apiKey}&uuid=${UUID}`, res => {
             let reply='';
@@ -58,6 +62,7 @@ async function getStatusRAW(UUID) {
     });
 }
 
+// arcade is special so it gets its own method
 function arcadeFormatter(status) {
     let str = '';
     if (status.mode == "FARM_HUNT") {
@@ -77,41 +82,56 @@ function arcadeFormatter(status) {
 }
 
 async function txtStatus(name) {
-    console.log(name);
+    // unfortunately this cant be shortcut
     let status = await getStatus(name);
     let str='';
+    
     if(!status) {
         return "";
     }
 
+    // this hack exists because no proper formatter in js
     let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
+    // store this in a json file in case i need it later
     rawstatus[name]=status;
+
+    // make sure player is online so we dont log a shit ton
+    // of offline players doing nothing
     if (status.online) {
+        // start the line with the formatted name
         str += `${pname}: `
         if(status.mode == 'LOBBY') {
+            // seeing LOBBY MAIN is not epic so just lower case it
             str += `${status.gameType.toLowerCase()} ${status.mode.toLowerCase()}`
         } else if (status.gameType == 'DUELS') {
+            // most duels stuff says duels in the mode
+            // so no need to send the gameType
             str += `${status.mode} - ${status.map}`
         } else if (status.gameType == 'ARCADE') {
             str += arcadeFormatter(status)
         } else if (status.gameType == 'BEDWARS') {
             str += `Bedwars - ${status.map}`
         } else if (status.gameType == 'TNTGAMES') {
+            // Tnt games dont have epic names 
             str += `Tnt ${status.mode.toLowerCase()} - ${status.map}`
         } else if (status.gameType == 'BUILD_BATTLE') {
+            // the modes dont have seperate maps, just log the map name
             str += `${status.map}`
         } else if (status.gameType == 'HOUSING') {
+            // housing doesnt have a mode
             str += `Housing ${status.map}`
         } else if (status.gameType == 'SKYBLOCK' && status.mode == "dynamic") {
+            // dynamic isnt helpful
             str += `Skyblock island`
         } else {
+            // basic formatter for anything i havent covered here
             str += `${status.gameType} ${status.mode}`
         }
         str += "\n"
      } else {
         return "";
     }
-    
+
     return str
 }
 
@@ -121,6 +141,5 @@ function isOnlineC(name) {
     }
     return true;
 }
-
 
 module.exports = {getUUID : getUUID, txtStatus : txtStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss}

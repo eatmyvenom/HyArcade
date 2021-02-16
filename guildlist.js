@@ -1,4 +1,10 @@
-
+/* These guild lists are not accurate
+ * this is due to the fact that if I add
+ * every guild member it will take way 
+ * too much time to regenerate the list 
+ * every time. If anyone wants to have 
+ * someone added please let me know.
+ */
 module.exports = function gld(accs) {
     let accounts=accs;
     let Guild = require("./guild")(accounts);
@@ -35,7 +41,6 @@ module.exports = function gld(accs) {
         ]),
         new Guild("Fidelity",0,[
             "paethetic",
-    
         ]),
         new Guild("TKJK", 0, [
             "UUUJTAGR_81",
