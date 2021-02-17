@@ -1,12 +1,13 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
+const { sleep, winsSorter } = require("./utils")
+const Webhook = require('./webhook');
+const gameAmount = require("./gameAmount")
 let { accounts, gamers } = require("./acclist");
 // a module that exports an array of player objects from the player module
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
-const { sleep, winsSorter } = require("./utils")
-const Webhook = require('./webhook');
  
 async function updateAllAccounts(){
     // sort this before hand because otherwise everything dies
@@ -60,7 +61,7 @@ async function updateAllGuilds() {
     sortGuilds();
 }
 
-// just some wrappers
+// just some wrappers because this was abstracted
 
 function sortPlayers() {
     players.sort(winsSorter);
@@ -114,6 +115,7 @@ async function logNormal(name) {
     console.log(await stringNormal(name));
 }
 
+// wrappers because I abstracted this
 async function logG() {
     await logNormal("guild");
 }
@@ -184,7 +186,9 @@ async function logAD() {
 }
 
 async function genStatus() {
+    // string at start
     let gamerstr = '';
+    // string at end
     let nongamers= '';
     for(let i=0;i<accounts.length;i++) {
         if(gamers.includes(accounts[i])) {
@@ -205,6 +209,10 @@ async function genStatus() {
     fs.writeFileSync("cachemiss.json", JSON.stringify(status.cacheMiss,null,4));
 }
 
+/**
+ * @function - Generate uuids for all the accounts in the accounts list
+ * @see acclist
+ */
 async function genUUID() {
     let uuids = {};
     for(let i=0;i<accounts.length;i++) {
@@ -217,6 +225,13 @@ async function genUUID() {
         await sleep(1000);
     }
     fs.writeFileSync("uuids.json", JSON.stringify(uuids,null,4));
+}
+
+/**
+ * @function gameAmnt - reflects the amount of players in various hypixel games
+ */
+async function gameAmnt() {
+    await gameAmount.logCounts();
 }
 
 // wrap main code in async function for nodejs backwards compatability
@@ -238,7 +253,7 @@ async function main(){
         case 'logAD':   await logAD();     break;
         case 'status':  await genStatus(); break;
         case 'genUUID': await genUUID();   break;
-        
+        case 'games':   await gameAmnt();  break;
     }
 }
 
