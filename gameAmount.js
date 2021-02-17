@@ -1,5 +1,6 @@
 const https = require('https');
 const { key } = require("./config.json");
+const { sleep } = require('./utils');
 
 async function formatCounts() {
     let str = '';
@@ -18,6 +19,10 @@ async function formatCounts() {
 }
 
 async function logCounts() {
+    // this isnt looped so in theory it could get me rate limited
+    // so therefore there is a useless sleep here to avoid the 
+    // hypixel rate limit
+    sleep(500);
     console.log(await formatCounts());
 }
 
