@@ -100,7 +100,6 @@ module.exports = function gld(accs) {
             "DarthEsme",
             "Ink0taScythe",
             "PartyGamesUpdate",
-            "N0rr1e_is_b4d",
             "DrPickle_",
             "SuperMinerAAA",
             "PokemonCity17",

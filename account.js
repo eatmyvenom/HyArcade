@@ -4,14 +4,16 @@ const apiKey = require("./config.json").key;
 module.exports = class Account {
     name="";
     wins=0;
+    uuid="";
 
-    constructor(name,wins){
+    constructor(name,wins,uuid){
         this.name = name;
         this.wins = wins;
+        this.uuid = uuid;
     }
 
     async updateWins() {
-        let newWins = await getAccountWins(this.name)
+        let newWins = await getAccountWins(this.uuid)
         this.wins = Math.max(this.wins, newWins)
         return newWins;
     }
@@ -32,9 +34,9 @@ async function getAccountWins(name) {
     return wins;
 }
 
-function getAccountData(name) {
+function getAccountData(uuid) {
     return new Promise((resolve,reject)=>{
-        https.get(`https://api.hypixel.net/player?key=${apiKey}&name=${name}`, res => {
+        https.get(`https://api.hypixel.net/player?key=${apiKey}&uuid=${uuid}`, res => {
             let reply='';
             res.on('data',d=>{reply+=d});
             res.on('end',()=>{resolve(reply)});
