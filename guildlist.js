@@ -34,12 +34,12 @@ module.exports = function gld(accs) {
             "qSpider",
             "napness",
             "pastuuh",
-            "yubg",
-            "steakinthewall",
-            "khaninthewall",
             "xmuffins"
         ]),
         new Guild("Fidelity",0,[
+            "yubg",
+            "khaninthewall",
+            "steakinthewall",
             "paethetic",
         ]),
         new Guild("TKJK", 0, [
