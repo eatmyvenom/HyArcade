@@ -1,7 +1,7 @@
 const fs = require('fs');
-const apiKey = require("./config.json").key;
 const https = require('https');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
+const { getStatusRaw } = require('./hypixelRequest');
 
 let rawstatus = {};
 let cachemiss = [];
@@ -24,7 +24,7 @@ async function getStatus(name) {
     if(!uuid) {
         return undefined;
     }
-    let raw = await getStatusRAW(uuid);
+    let raw = await getStatusRaw(uuid);
     let json = JSON.parse(raw);
     return json.session;
 }
@@ -42,18 +42,6 @@ async function getUUIDRaw(name) {
     // promisify query
     return new Promise((resolve,reject)=>{
         https.get(`https://api.mojang.com/users/profiles/minecraft/${name}`, res => {
-            let reply='';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
-}
-
-async function getStatusRAW(UUID) {
-    // promisify query
-    return new Promise((resolve,reject)=>{
-        https.get(`https://api.hypixel.net/status?key=${apiKey}&uuid=${UUID}`, res => {
             let reply='';
             res.on('data',d=>{reply+=d});
             res.on('end',()=>{resolve(reply)});

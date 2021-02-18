@@ -1,6 +1,5 @@
-const https = require('https');
-const { key } = require("./config.json");
 const { sleep } = require('./utils');
+const { getGameCountsRAW } = require('./hypixelRequest');
 
 async function formatCounts() {
     let str = '';
@@ -29,17 +28,6 @@ async function logCounts() {
 async function getGameCounts() {
     let data = await getGameCountsRAW();
     return JSON.parse(data);
-}
-
-function getGameCountsRAW() {
-    return new Promise((resolve,reject)=>{
-        https.get(`https://api.hypixel.net/gameCounts?key=${key}`, res => {
-            let reply='';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
 }
 
 module.exports = { formatCounts : formatCounts, logCounts : logCounts };
