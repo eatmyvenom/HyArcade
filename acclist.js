@@ -163,7 +163,16 @@ let afkers = [
     new Account("NoHackzJustAsian", 0,  "921d1f805da940c79008e5c5b10cba18"),
     new Account("Bqsketball",       7,  "ee0fca3f3c86440293fb6084e1c85030"),
     new Account("riskytaunt",       0,  "5fdd078f4e434f299de097dc901657c7"),
-    new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73")
+    new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73"),
+    new Account("TheLazySquid",     9,  "2402d53a1c674a54a7eb4cef31852b7b"),
+    new Account("RAT_nee920",       25, "59069d61c23248fbafbd3b0473740a84"),
+    new Account("wcho",             10, "0484d90b86ba4281aaeacf1668a41106"),
+    new Account("Shadqw",           104,"46ca8b111c59428f9b27318100cda158"),
+    new Account("CursedRaven",      2,  "f6da7e9895c34773a8db9dc00c807832"),
+    new Account("Knightviper98",    0,  "ed369af75c9c427986048861df28e9b7"),
+    new Account("undramatic",       54, "cc24a439bd3e48ec9858e807d2cb7288"),
+    new Account("ColorfulBlob",     100,"72ec4d813f674d59a767955fa9981324"),
+    new Account("sddie",            34, "95b02f267f714642b34c78f7f5a44521")
 ];
 
 let important = [
