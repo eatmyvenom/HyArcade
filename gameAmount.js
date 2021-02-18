@@ -3,8 +3,8 @@ const { getGameCountsRAW } = require('./hypixelRequest');
 
 async function formatCounts() {
     let str = '';
-    let counts = await getGameCounts();
-    counts = counts.games;
+    let all = await getGameCounts();
+    let counts = all.games;
 
     str += `Arcade Total        : ${counts.ARCADE.players}\n`
     str += `Party Games Total   : ${counts.ARCADE.modes.PARTY}\n`
@@ -13,9 +13,10 @@ async function formatCounts() {
     str += `Throw out Total     : ${counts.ARCADE.modes.THROW_OUT}\n`
     str += `Hypixel says Total  : ${counts.ARCADE.modes.SIMON_SAYS}\n`
     str += `Ctw Total           : ${counts.ARCADE.modes.PVP_CTW}\n`
+    str += `Limbo Total         : ${counts.LIMBO.players}\n`
     str += `Idle Total          : ${counts.IDLE.players}\n`
     str += `Queue Total         : ${counts.QUEUE.players}\n`
-    str += `Total               : ${counts.playerCount.players}`
+    str += `Total               : ${all.playerCount}`
 
     return str;
 }
