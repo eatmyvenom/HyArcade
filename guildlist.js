@@ -26,7 +26,7 @@ module.exports = function gld(accs) {
             "mvvi",
             "VeryLonelyTree",
             "rxob",
-            "wire21",
+            "oojetager",
             "MasonInTheWall",
             "Blatser",
             "Ilomiswir",
