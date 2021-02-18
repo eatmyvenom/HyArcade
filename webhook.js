@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 
 async function sendToDiscord(content) {
     let hook = new Discord.WebhookClient(config.hookid, config.hooktoken);
-    await hook.send("```" + content + "```", {
+    await hook.send("```" + content + "\n=============```", {
         // impersonate ugy because he does daily lb 
         // in official party games discord server
         username: 'Ujtagrovec',
