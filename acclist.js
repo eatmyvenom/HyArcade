@@ -7,7 +7,7 @@ let accounts = [
     new Account("uuujtagr_81",      0,  "3bd62e7edecd4baaa402ac84712e32cb"),
     new Account("paethetic",        0,  "d832af69690640089ae72e09647110c0"),
     new Account("h6es",             0,  "52d71f22bad74bcc946e553c2301c6c6"),
-    new Account("bighairypasha",    0,  "276682c596d144c1937da8cc86746edb"),
+    new Account("yiffings",    0,  "276682c596d144c1937da8cc86746edb"),
     new Account("c_ck",             0,  "83aed29868654893a678d6a841f21fe0"),
     new Account("cupoflizard",      0,  "ab01b82689d443fc87d2b2e4bb27ed70"),
     new Account("mcpoptart",        0,  "ee037e2495b54c0c997ed926005d6d2b"),

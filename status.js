@@ -34,6 +34,7 @@ async function getUUID(name) {
     if(raw!="") {
         return JSON.parse(raw).id
     } else {
+        console.error(`"${name}" does not exist`)
         return undefined;
     }
 }
