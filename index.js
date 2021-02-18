@@ -215,7 +215,7 @@ async function genStatus() {
  */
 async function genUUID() {
     let uuids = {};
-    for(let i=0;i<accounts.length;i++) {
+    for(let i = 0; i<accounts.length; i++) {
         // since stdout isnt piped into something else, a log here is 
         // harmless
         console.log(accounts[i].name)

@@ -6,9 +6,9 @@ module.exports = function Gld(acclist) {
 }
 
 class Guild {
-    members=[];
-    name="";
-    wins=0;
+    members = [];
+    name = "";
+    wins = 0;
     constructor(name,wins,members) {
         this.name = name
         this.wins = wins;
@@ -19,12 +19,12 @@ class Guild {
     }
 
     async updateWins() {
-        let newWins=0;
-        for(let i=0;i<this.members.length;i++) {
+        let newWins = 0;
+        for(let i = 0; i < this.members.length; i++) {
             let memberwins = await this.members[i].wins;
-            newWins+=memberwins;
+            newWins += memberwins;
         }
-        this.wins=newWins;
+        this.wins = newWins;
         return newWins;
     }
 }

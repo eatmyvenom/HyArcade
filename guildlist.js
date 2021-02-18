@@ -6,7 +6,7 @@
  * someone added please let me know.
  */
 module.exports = function gld(accs) {
-    let accounts=accs;
+    let accounts = accs;
     let Guild = require("./guild")(accounts);
     return [
         new Guild("Mini",0,[
