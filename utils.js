@@ -1,9 +1,17 @@
+/**
+ * This only works in async functions
+ * because of how promises work.
+ */
 function sleep(time) {
     return new Promise((resolve) =>{
         setTimeout(resolve,time);
     });
 }
 
+/**
+ * This literally just sorts from
+ * an object in the element
+ */
 function winsSorter(a,b) {
     if(a.wins < b.wins) return 1;
     if(a.wins > b.wins) return -1;
