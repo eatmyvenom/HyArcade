@@ -190,7 +190,6 @@ async function genStatus() {
     // string at end
     let nongamers = '';
     for(let i = 0; i < accounts.length; i++) {
-        console.log(accounts[i].name)
         if(gamers.includes(accounts[i])) {
             gamerstr += await status.txtStatus(accounts[i].name);
         } else if(!force && afkers.includes(accounts[i])) {
