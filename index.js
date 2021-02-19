@@ -182,6 +182,7 @@ async function logAD() {
 }
 
 async function genStatus() {
+    fs.writeFileSync('force',JSON.stringify(accounts,null,4));
     // old status
     let oldstatus = JSON.parse(fs.readFileSync('status.json'));
     // string at start
@@ -189,16 +190,21 @@ async function genStatus() {
     // string at end
     let nongamers = '';
     for(let i = 0; i < accounts.length; i++) {
+        console.log(accounts[i].name)
         if(gamers.includes(accounts[i])) {
             gamerstr += await status.txtStatus(accounts[i].name);
-        } else {
-            if(!force || afkers.includes(accounts[i])) {
-                // get old status instead
-                nongamers += await status.genStatus(oldstatus[accounts[i].name]);
-            } else {
+        } else if(!force && afkers.includes(accounts[i])) {
+            // get old status instead
+            let old = oldstatus[accounts[i].name];
+            if (old == undefined) {
                 nongamers += await status.txtStatus(accounts[i].name);
+            } else {
+                nongamers += await status.genStatus(accounts[i].name, oldstatus[accounts[i].name]);
             }
+        } else { // force true or not afker
+            nongamers += await status.txtStatus(accounts[i].name);
         }
+        
     }
 
     // write formatted

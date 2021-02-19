@@ -46,7 +46,7 @@ let accounts = [
     new Account("pasha300",         0,  "b73f575a0f7c485ead046122ccaa888d"),
     new Account("rxob",             0,  "2bb0a2bc41f246db81496a78ce45c909"),
     new Account("v3n0m__",          0,  "92a5199614ac4bd181d1f3c951fb719f"),
-    new Account("wetaspoggers",    0,  "92553df2682b4e6697cd615a6185dbb8"),
+    new Account("wetaspoggers",     0,  "92553df2682b4e6697cd615a6185dbb8"),
     new Account("bruhpogchamp",     0,  "cb04f741d505497fa9e030dcc5870a39"),
     new Account("coolswaggamer",    0,  "307103ee17af4ae398e15d2f0c8a4d83"),
     new Account("eatmyvenom",       0,  "5ec59f3572844dd6ad0f5e88abf176a8"),

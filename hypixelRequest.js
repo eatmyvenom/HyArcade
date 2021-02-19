@@ -39,10 +39,14 @@ async function basicRequest(page, extraArgs = [] ) {
         // json data
         let json = JSON.parse(data);
         // upon the data not having the response needed
-        if(data == '' || json.success == false) {
+        if(json.success == false && json.throttle == true) {
+            // time since day start
+            let daytime = Date().replace(/.*20[0-9][0-9] /,'').replace(/ [A-Z]..-[0-9]... \(.*\)/,'');
+
+            console.error(`${daytime} ERROR: ${json.cause.toUpperCase()}, WAITING TWO SECONDS AND RETRYING...`);
             // sleep for 1 second and retry getting the data
-            console.error('KEY THROTTLE, WAITING 1 SECOND AND RETRYING...');
-            await sleep(1000);
+            await sleep(2000);
+            success = false;
         } else {
             // allow the loop to end
             success = true;
