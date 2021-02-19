@@ -127,7 +127,7 @@ async function genStatus(name,status) {
             str += `Skyblock island`
         } else {
             // basic formatter for anything i havent covered here
-            str += `${modeFormatter(status.mode)} ${modeFormatter(status.mode)}`
+            str += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
         }
         str += "\n"
      } else {
