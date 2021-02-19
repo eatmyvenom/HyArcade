@@ -28,8 +28,6 @@ async function updateAllAccounts(){
         // all wins are updated
         if(status.isOnlineC(accounts[i].name) || force) {
             await accounts[i].updateWins();
-            // avoid hypixel rate limit
-            await sleep(500);
         } else {
             // fallback for new accounts
             oldver = oldAccounts.find(g=>g.name.toLowerCase()==accounts[i].name.toLowerCase())
@@ -38,8 +36,6 @@ async function updateAllAccounts(){
                 accounts[i].wins = oldver.wins;
             } else {
                 await accounts[i].updateWins();
-                // avoid hypixel rate limit
-                await sleep(500);
             }
         }
     }
@@ -188,7 +184,7 @@ async function logAD() {
 
 async function genStatus() {
     // old status
-    let oldstatus = JSON.parse(fs.readFileSync('./status.json'));
+    let oldstatus = JSON.parse(fs.readFileSync('status.json'));
     // string at start
     let gamerstr = '';
     // string at end
@@ -198,14 +194,12 @@ async function genStatus() {
             gamerstr += await status.txtStatus(accounts[i].name);
         } else {
             if(!force || afkers.includes(accounts[i])) {
+                // get old status instead
                 nongamers += await status.genStatus(oldstatus[accounts[i].name]);
             } else {
                 nongamers += await status.txtStatus(accounts[i].name);
             }
         }
-        // make sure no more then 120 requests are sent per minute
-        // this is the hypixel api limitation
-        await sleep(500);
     }
 
     // write formatted

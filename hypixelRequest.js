@@ -1,5 +1,17 @@
 const https = require('https');
 const { key } = require('./config.json');
+const { sleep } = require('./utils');
+
+function getData(url) {
+    return new Promise((resolve,reject)=>{
+        https.get(url, res => {
+            let reply = '';
+            res.on('data',d=>{reply+=d});
+            res.on('end',()=>{resolve(reply)});
+            res.on('error',err=>{reject(err)});
+        });
+    });
+}
 
 async function basicRequest(page, extraArgs = [] ) {
     let url = `https://api.hypixel.net/${page}?key=${key}`
@@ -11,14 +23,32 @@ async function basicRequest(page, extraArgs = [] ) {
         }
     }
 
-    return new Promise((resolve,reject)=>{
-        https.get(url, res => {
-            let reply = '';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
+    // this next section of code results in the ability
+    // for me to make api requests without sleeping after 
+    // each request. I like this because it allows me to 
+    // use my key an unexpected amount of times without 
+    // any issues, it allow can improve the speed of the
+    // requests
+
+    // flag if the request was successful
+    let success = false;
+    let data = '';
+    while(!success) {
+        // raw data from hypixel api endpoint
+        data = await getData(url);
+        // json data
+        let json = JSON.parse(data);
+        // upon the data not having the response needed
+        if(data == '' || json.success == false) {
+            // sleep for 1 second and retry getting the data
+            console.error('KEY THROTTLE, WAITING 1 SECOND AND RETRYING...');
+            await sleep(1000);
+        } else {
+            // allow the loop to end
+            success = true;
+        }
+    }
+    return data;
 } 
 
 exports.getStatusRaw = async function getStatusRAW(uuid) {
