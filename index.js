@@ -3,12 +3,15 @@ const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 const { sleep, winsSorter } = require("./utils")
 const Webhook = require('./webhook');
 const gameAmount = require("./gameAmount")
-let { accounts, gamers } = require("./acclist");
+let { accounts, gamers, afkers } = require("./acclist");
 // a module that exports an array of player objects from the player module
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 let status = require("./status");
- 
+// set flag for force file
+let force = fs.existsSync("./force");
+if (force) { fs.unlinkSync("./force"); }
+
 async function updateAllAccounts(){
     // sort this before hand because otherwise everything dies
     // like seriously holy fuck its so bad
@@ -18,9 +21,7 @@ async function updateAllAccounts(){
     // just take the extra time
     sortAccounts();
     oldAccounts.sort(winsSorter);
-    // set flag for force file
-    let force = fs.existsSync("./force");
-    if (force) { fs.unlinkSync("./force"); }
+
     for(let i=0;i<accounts.length;i++){
         // check if player is online before updating wins
         // or if the force file has been added to make sure
@@ -186,15 +187,21 @@ async function logAD() {
 }
 
 async function genStatus() {
+    // old status
+    let oldstatus = JSON.parse(fs.readFileSync('./status.json'));
     // string at start
     let gamerstr = '';
     // string at end
-    let nongamers= '';
-    for(let i=0;i<accounts.length;i++) {
+    let nongamers = '';
+    for(let i = 0; i < accounts.length; i++) {
         if(gamers.includes(accounts[i])) {
             gamerstr += await status.txtStatus(accounts[i].name);
         } else {
-            nongamers += await status.txtStatus(accounts[i].name);
+            if(!force || afkers.includes(accounts[i])) {
+                nongamers += await status.genStatus(oldstatus[accounts[i].name]);
+            } else {
+                nongamers += await status.txtStatus(accounts[i].name);
+            }
         }
         // make sure no more then 120 requests are sent per minute
         // this is the hypixel api limitation

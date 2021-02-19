@@ -70,9 +70,7 @@ function arcadeFormatter(status) {
     return str;
 }
 
-async function txtStatus(name) {
-    // unfortunately this cant be shortcut
-    let status = await getStatus(name);
+async function genStatus(name,status) {
     let str='';
     
     if(!status) {
@@ -124,6 +122,12 @@ async function txtStatus(name) {
     return str
 }
 
+async function txtStatus(name) {
+    // unfortunately this cant be shortcut
+    let status = await getStatus(name);
+    return await genStatus(name,status);
+}
+
 function isOnlineC(name) {
     if(cachedStatus[name]!=undefined) {
         return cachedStatus[name].online;
@@ -131,4 +135,4 @@ function isOnlineC(name) {
     return true;
 }
 
-module.exports = {getUUID : getUUID, txtStatus : txtStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss}
+module.exports = {getUUID : getUUID, txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss}
