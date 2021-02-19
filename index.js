@@ -10,7 +10,6 @@ let guilds = require("./guildlist")(accounts);
 let status = require("./status");
 // set flag for force file
 let force = fs.existsSync("./force");
-if (force) { fs.unlinkSync("./force"); }
 
 async function updateAllAccounts(){
     // sort this before hand because otherwise everything dies
