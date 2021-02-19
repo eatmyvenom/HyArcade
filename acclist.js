@@ -46,7 +46,7 @@ let accounts = [
     new Account("pasha300",         0,  "b73f575a0f7c485ead046122ccaa888d"),
     new Account("rxob",             0,  "2bb0a2bc41f246db81496a78ce45c909"),
     new Account("v3n0m__",          0,  "92a5199614ac4bd181d1f3c951fb719f"),
-    new Account("wetasspoggerss",   0,  "92553df2682b4e6697cd615a6185dbb8"),
+    new Account("wetaspoggers",    0,  "92553df2682b4e6697cd615a6185dbb8"),
     new Account("bruhpogchamp",     0,  "cb04f741d505497fa9e030dcc5870a39"),
     new Account("coolswaggamer",    0,  "307103ee17af4ae398e15d2f0c8a4d83"),
     new Account("eatmyvenom",       0,  "5ec59f3572844dd6ad0f5e88abf176a8"),
@@ -111,8 +111,18 @@ let accounts = [
     new Account("Smertnix",         506,"b6fa98ce973741d0996c3282c30f1200")
 ]
 
+let others = [
+    new Account("HammyInTheWall",   0,  "b00d07b27984424db8f2d96c1e4aace5"),
+    new Account("UekuInTheWall",    0,  "2f3a6a6d8d4447e5a310f3456a4f999c"),
+    new Account("riskytaunt",       0,  "5fdd078f4e434f299de097dc901657c7"),
+    new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73"),
+    new Account("bunniexoxo",       0,  "a606f01b5a334c6ca1ebc770fa9fd6c1"),
+    new Account("MasonInTheWall",   0,  "bedb53e2dd754786a2ac1ec80023aabe"),
+];
+
 let afkers = [
     new Account("Galaxy_Senpai",    0,  "12b722c11e1e4afdb94c9035b505b381"),
+    new Account("xHugTacos",        25, "6b13ccc803e4492099c0a69b8711287d"),
     new Account("genkai95",         0,  "ae4448d2426847cdab3c2643ba180f62"),
     new Account("Chenchen87",       0,  "8c7fda5b68a344cab0285fb819e72b84"),
     new Account("Swishfox",         0,  "54daaea5e2434d509c3ae2ab6894613b"),
@@ -133,11 +143,6 @@ let afkers = [
     new Account("aByee",            0,  "989ab8d5264546f09734ab01095c3b12"),
     new Account("ZenBenn",          0,  "f9adb4d8fd664d4098d4e70bb3d15ee6"),
     new Account("ThePoGoCZ",        0,  "2dea766f25b84d37b08a88e4dc2fee4d"),
-    new Account("MasonInTheWall",   0,  "bedb53e2dd754786a2ac1ec80023aabe"),
-    new Account("bunniexoxo",       0,  "a606f01b5a334c6ca1ebc770fa9fd6c1"),
-    new Account("HammyInTheWall",   0,  "b00d07b27984424db8f2d96c1e4aace5"),
-    new Account("UekuInTheWall",    0,  "2f3a6a6d8d4447e5a310f3456a4f999c"),
-    new Account("xHugTacos",        25, "6b13ccc803e4492099c0a69b8711287d"),
     new Account("LoverBoyCanadian", 0,  "2b5a1ae09148446eb50fbb2f7bc2b41c"),
     new Account("canadiansweat",    0,  "2beab55b4b5f48c3be44c1fc6143bc76"),
     new Account("TomerWB",          104,"27bfc7fa817a4614a9336d4da29643f1"),
@@ -162,8 +167,6 @@ let afkers = [
     new Account("SirFuzzyMonkey",   0,  "97f3afe5e9924d2bb862cb0b51a29105"),
     new Account("NoHackzJustAsian", 0,  "921d1f805da940c79008e5c5b10cba18"),
     new Account("Bqsketball",       7,  "ee0fca3f3c86440293fb6084e1c85030"),
-    new Account("riskytaunt",       0,  "5fdd078f4e434f299de097dc901657c7"),
-    new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73"),
     new Account("TheLazySquid",     9,  "2402d53a1c674a54a7eb4cef31852b7b"),
     new Account("RAT_nee920",       25, "59069d61c23248fbafbd3b0473740a84"),
     new Account("wcho",             10, "0484d90b86ba4281aaeacf1668a41106"),
@@ -208,4 +211,4 @@ let pog = [
     new Account("Rechenmaschine",   0,  "a0d6849dcaca4a86bba9d8bf2f0a88d7")
 ]
 
-module.exports = {accounts: accounts.concat(afkers, important ,yt, pog),gamers:accounts, afkers : afkers, important: important, yt:yt, pog:pog} 
+module.exports = {accounts: accounts.concat(others, afkers, important ,yt, pog),gamers:accounts, others: others, afkers : afkers, important: important, yt:yt, pog:pog} 

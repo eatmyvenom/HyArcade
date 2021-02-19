@@ -63,7 +63,7 @@ module.exports = function gld(accs) {
             "v3n0m__",
             "fubyinthecutie",
             "BruhPogChamp",
-            "wetasspoggerss",
+            "wetaspoggers",
             "fuby",
             "coolswaggamer",
             "hotcheetah",
