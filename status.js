@@ -70,6 +70,18 @@ function arcadeFormatter(status) {
     return str;
 }
 
+function mapFormatter(txt) {
+    return (''+txt)
+        .replace(/ the /ig,'')
+        .replace(/_/g,' ')
+}
+
+function modeFormatter(txt) {
+    return (''+txt)
+        .toLowerCase()
+        .replace(/_/g,' ')
+}
+
 async function genStatus(name,status) {
     let str='';
     
@@ -93,17 +105,20 @@ async function genStatus(name,status) {
         } else if (status.gameType == 'DUELS') {
             // most duels stuff says duels in the mode
             // so no need to send the gameType
-            str += `${status.mode} - ${status.map}`
+            str += `${status.mode} - ${mapFormatter(status.map)}`
         } else if (status.gameType == 'ARCADE') {
             str += arcadeFormatter(status)
         } else if (status.gameType == 'BEDWARS') {
-            str += `Bedwars - ${status.map}`
+            str += `Bedwars - ${mapFormatter(status.map)}`
         } else if (status.gameType == 'TNTGAMES') {
             // Tnt games dont have epic names 
-            str += `Tnt ${status.mode.toLowerCase()} - ${status.map}`
+            str += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(status.map)}`
         } else if (status.gameType == 'BUILD_BATTLE') {
             // the modes dont have seperate maps, just log the map name
             str += `${status.map}`
+        } else if (status.gameType == 'MURDER_MYSTERY') {
+            // says muder in the mode title
+            str += `${modeFormatter(status.mode)}`
         } else if (status.gameType == 'HOUSING') {
             // housing doesnt have a mode
             str += `Housing ${status.map}`
@@ -112,7 +127,7 @@ async function genStatus(name,status) {
             str += `Skyblock island`
         } else {
             // basic formatter for anything i havent covered here
-            str += `${status.gameType} ${status.mode}`
+            str += `${modeFormatter(status.mode)} ${modeFormatter(status.mode)}`
         }
         str += "\n"
      } else {
