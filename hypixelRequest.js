@@ -28,19 +28,22 @@ async function basicRequest(page, extraArgs = [] ) {
     // each request. I like this because it allows me to 
     // use my key an unexpected amount of times without 
     // any issues, it allow can improve the speed of the
-    // requests
+    // requests due to the amount of time to get data from
+    // the hypixel api being uncertain
 
     // flag if the request was successful
     let success = false;
+    // data needs to be outside the loop because it is the return
     let data = '';
     while(!success) {
         // raw data from hypixel api endpoint
         data = await getData(url);
         // json data
         let json = JSON.parse(data);
+
         // upon the data not having the response needed
         if(json.success == false && json.throttle == true) {
-            // time since day start
+            // current time so I can see difference in logs
             let daytime = Date().replace(/.*20[0-9][0-9] /,'').replace(/ [A-Z]..-[0-9]... \(.*\)/,'');
 
             console.error(`${daytime} ERROR: ${json.cause.toUpperCase()}, WAITING TWO SECONDS AND RETRYING...`);
