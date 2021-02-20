@@ -109,7 +109,8 @@ let accounts = [
     new Account("Dumboes",          0,  "69253d1078ba4d43aaaad9996d6085c7"),
     new Account("MiWadiPOG",        205,"86fa3f6650f44550b91e034c566d65e4"),
     new Account("Smertnix",         506,"b6fa98ce973741d0996c3282c30f1200"),
-    new Account("fizzyferns",       272,"7855118f2df742cdb91719b0c679c4d9")
+    new Account("fizzyferns",       272,"7855118f2df742cdb91719b0c679c4d9"),
+    new Account("UnderscoreRandom", 54, "60432cfd0f884053af42aa5c86d4980b")
 ]
 
 let others = [
