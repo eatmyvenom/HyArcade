@@ -12,6 +12,7 @@ async function formatCounts() {
     str += `Throw out Total     : ${counts.ARCADE.modes.THROW_OUT}\n`
     str += `Hypixel says Total  : ${counts.ARCADE.modes.SIMON_SAYS}\n`
     str += `Ctw Total           : ${counts.ARCADE.modes.PVP_CTW}\n`
+    str += `Party Poopers Total : ${counts.ARCADE.modes.PARTY_POOPERS}\n`
     str += `Limbo Total         : ${counts.LIMBO.players}\n`
     str += `Idle Total          : ${counts.IDLE.players}\n`
     str += `Queue Total         : ${counts.QUEUE.players}\n`
