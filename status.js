@@ -101,7 +101,7 @@ async function genStatus(name,status) {
         str += `${pname}: `
         if(status.mode == 'LOBBY') {
             // seeing LOBBY MAIN is not epic so just lower case it
-            str += `${status.gameType.toLowerCase()} ${status.mode.toLowerCase()}`
+            str += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
         } else if (status.gameType == 'DUELS') {
             // most duels stuff says duels in the mode
             // so no need to send the gameType
