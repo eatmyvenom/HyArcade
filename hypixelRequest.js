@@ -29,7 +29,7 @@ async function basicRequest(page, extraArgs = [] ) {
     // use my key an unexpected amount of times without 
     // any issues, it allow can improve the speed of the
     // requests due to the amount of time to get data from
-    // the hypixel api being uncertain
+    // the hypixel api being uncertain other than it is !0
 
     // flag if the request was successful
     let success = false;
