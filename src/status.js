@@ -1,14 +1,11 @@
 const fs = require('fs');
-const https = require('https');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 const { getStatusRaw } = require('./hypixelRequest');
+const { getUUIDFromCache, getUUID } = require('./mojangRequest');
 
 let rawstatus = {};
 let cachemiss = [];
 
-function getUUIDFromCache(name) {
-    return JSON.parse(fs.readFileSync("uuids.json"))[name]
-}
 
 async function getStatus(name) {
     let uuid = await getUUIDFromCache(name);
@@ -27,28 +24,6 @@ async function getStatus(name) {
     let raw = await getStatusRaw(uuid);
     let json = JSON.parse(raw);
     return json.session;
-}
-
-async function getUUID(name) {
-    let raw = await getUUIDRaw(name);
-    if(raw!="") {
-        return JSON.parse(raw).id
-    } else {
-        console.error(`"${name}" does not exist`)
-        return undefined;
-    }
-}
-
-async function getUUIDRaw(name) {
-    // promisify query
-    return new Promise((resolve,reject)=>{
-        https.get(`https://api.mojang.com/users/profiles/minecraft/${name}`, res => {
-            let reply='';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
 }
 
 // arcade is special so it gets its own method
