@@ -182,7 +182,6 @@ async function logAD() {
 }
 
 async function genStatus() {
-    fs.writeFileSync('force',JSON.stringify(accounts,null,4));
     // old status
     let oldstatus = JSON.parse(fs.readFileSync('status.json'));
     // string at start
