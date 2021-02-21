@@ -8,6 +8,8 @@ let { accounts, gamers, afkers } = require("./src/acclist");
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
 let status = require("./src/status");
+const { getUUID } = require('./src/mojangRequest');
+const { getAccountWins } = require('./src/hypixelRequest');
 // set flag for force file
 let force = fs.existsSync("./force");
 
@@ -238,6 +240,16 @@ async function gameAmnt() {
     await gameAmount.logCounts();
 }
 
+async function newAcc() {
+    let name = process.argv[3]
+    let uuid = await getUUID(name);
+    let wins = await getAccountWins(uuid);
+    let formattedname = ('"'+name+'",                         ').slice(0,20)
+    let formattedWins = (wins+',   ').slice(0,4);
+    console.log(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
+}
+
+
 // wrap main code in async function for nodejs backwards compatability
 
 async function main(){
@@ -258,6 +270,7 @@ async function main(){
         case 'status':  await genStatus(); break;
         case 'genUUID': await genUUID();   break;
         case 'games':   await gameAmnt();  break;
+        case 'newAcc':  await newAcc();    break;
     }
 }
 
