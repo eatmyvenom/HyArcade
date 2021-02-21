@@ -68,7 +68,7 @@ module.exports = function gld(accs) {
             "coolswaggamer",
             "hotcheetah",
             "BotCheetah",
-            "ghostly3",
+            "ghostlyboomerang",
             "Atni",
             "BadNeon",
             "kas61"
@@ -76,7 +76,7 @@ module.exports = function gld(accs) {
         new Guild("sadvibes",0,[
             "jqkeup",
             "Faebled",
-            "holidee"
+            "DeeDossed"
         ]),
         new Guild("psoldiers",0,[
             "ILoveTHE77",
