@@ -120,6 +120,7 @@ let others = [
     new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73"),
     new Account("bunniexoxo",       0,  "a606f01b5a334c6ca1ebc770fa9fd6c1"),
     new Account("MasonInTheWall",   0,  "bedb53e2dd754786a2ac1ec80023aabe"),
+    new Account("SlightlyRomantic", 23, "ad46fd81d60c4c9abc8a625f151ae236")
 ];
 
 let afkers = [
