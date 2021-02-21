@@ -1,5 +1,5 @@
 const https = require('https');
-const { key } = require('./config.json');
+const { key } = require('../config.json');
 const { sleep } = require('./utils');
 
 function getData(url) {

@@ -1,13 +1,13 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
-const { sleep, winsSorter } = require("./utils")
-const Webhook = require('./webhook');
-const gameAmount = require("./gameAmount")
-let { accounts, gamers, afkers } = require("./acclist");
+const { sleep, winsSorter } = require("./src/utils")
+const Webhook = require('./src/webhook');
+const gameAmount = require("./src/gameAmount")
+let { accounts, gamers, afkers } = require("./src/acclist");
 // a module that exports an array of player objects from the player module
-let players = require("./playerlist")(accounts);
-let guilds = require("./guildlist")(accounts);
-let status = require("./status");
+let players = require("./src/playerlist")(accounts);
+let guilds = require("./src/guildlist")(accounts);
+let status = require("./src/status");
 // set flag for force file
 let force = fs.existsSync("./force");
 
