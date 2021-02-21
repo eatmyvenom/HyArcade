@@ -58,15 +58,32 @@ async function basicRequest(page, extraArgs = [] ) {
     return data;
 } 
 
-exports.getStatusRaw = async function getStatusRAW(uuid) {
+async function getStatusRAW(uuid) {
     return await basicRequest('status', [{ key : 'uuid', val : uuid}] );
 }
 
-exports.getAccountDataRaw =  async function getAccountDataRaw(uuid) {
+async function getAccountDataRaw(uuid) {
     return await basicRequest('player', [{ key : 'uuid', val : uuid}] );
 }
 
-exports.getGameCountsRAW = async function getGameCountsRAW() {
+async function getGameCountsRAW() {
     // dont put empty array since that is automatically done
     return await basicRequest('gameCounts');
 }
+
+async function getAccountWins(uuid) {
+    let data = await getAccountDataRaw(uuid);
+    let json = JSON.parse(data);
+    // make sure player has stats to be checked
+    if(!json.player || !json.player.stats || !json.player.stats.Arcade) {
+        return 0;
+    }
+    let arcade = json.player.stats.Arcade;
+    let wins = 0;
+    if(arcade.wins_party) wins += arcade.wins_party;
+    if(arcade.wins_party_2) wins += arcade.wins_party_2;
+    if(arcade.wins_party_3) wins += arcade.wins_party_3;
+    return wins;
+}
+
+module.exports = { getStatusRAW : getStatusRAW, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }
