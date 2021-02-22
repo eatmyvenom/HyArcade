@@ -133,6 +133,7 @@ let accounts = [
     new Account("Squashy_SquidMC",  532,"7c01c0effca24035a39b8ff001ef6883"),
     new Account("firework15069",    559,"7312a6a342eb4fb5ba82841655d64eed"),
     new Account("gkc1414",          514,"23ce7611d41848048239ef4303d18aec"),
+    new Account("BigHairyPoggers",  0,  "d069d531593e4449ba3ce1f6a0adb4f9"),
 ]
 
 let others = [
