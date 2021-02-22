@@ -86,4 +86,4 @@ async function getAccountWins(uuid) {
     return wins;
 }
 
-module.exports = { getStatusRAW : getStatusRAW, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }
+module.exports = { getStatusRaw : getStatusRAW, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }
