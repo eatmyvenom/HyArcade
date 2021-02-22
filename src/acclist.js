@@ -112,6 +112,27 @@ let accounts = [
     new Account("fizzyferns",       272,"7855118f2df742cdb91719b0c679c4d9"),
     new Account("UnderscoreRandom", 54, "60432cfd0f884053af42aa5c86d4980b"),
     new Account("GreenToothbrush",  542,"b5c76b6b568d4c7d960783736f3011c4"),
+    new Account("JaidJule",         156,"50714dea74d54c2c99467d4eddced34a"),
+    new Account("MintBiscuitBalls", 101,"7fb433d1a0244f51aa84472010d9e9a2"),
+    new Account("Pamowen1",         73, "d22d9033b45a4cb7ad4270202cc13edb"),
+    new Account("Generic_Mystic",   276,"02d148b337954851a62183da05eaf958"),
+    new Account("Kelp04",           54, "d70c6b7b68d5433a9a1541c69d937bc5"),
+    new Account("Riley_14",         670,"2edbe7fd91d84e00b01b9c676696a6b3"),
+    new Account("UnderscoreRandom", 56, "60432cfd0f884053af42aa5c86d4980b"),
+    new Account("sevehn",           515,"1102b2cdb4394201b76f055d9e73947c"),
+    new Account("Miisted",          68, "8e526df6c8914c64b8959240e3621595"),
+    new Account("enuoia",           782,"a4ade80fba14494ab86730865869fc80"),
+    new Account("PandaBroDk",       752,"f9180df5d6584556ad41424bef2c7134"),
+    new Account("rosmine",          729,"9ec963384e434b12914f63cdc50d39a5"),
+    new Account("TheMinatoryFox",   707,"3f89d735247242ab93e423ac2dcd1587"),
+    new Account("Railbeam",         706,"b7c5561ed03f4efda5d548dd7578e505"),
+    new Account("Leuphou",          673,"c943524c9e814137b5052adb7971c4f5"),
+    new Account("Cale73",           662,"19f86e80474b46399f8e4895bc3f9aa8"),
+    new Account("Haelx",            1031,"967baa9c478a4b428dcce752c224fad5"),
+    new Account("UhmCringe",        572,"6f67052f845647fa8ac23b0a089d6579"),
+    new Account("Squashy_SquidMC",  532,"7c01c0effca24035a39b8ff001ef6883"),
+    new Account("firework15069",    559,"7312a6a342eb4fb5ba82841655d64eed"),
+    new Account("gkc1414",          514,"23ce7611d41848048239ef4303d18aec"),
 ]
 
 let others = [
@@ -121,7 +142,9 @@ let others = [
     new Account("xmuffins",         1,  "fd377fb97ccd424ba150355c7e651a73"),
     new Account("bunniexoxo",       0,  "a606f01b5a334c6ca1ebc770fa9fd6c1"),
     new Account("MasonInTheWall",   0,  "bedb53e2dd754786a2ac1ec80023aabe"),
-    new Account("SlightlyRomantic", 23, "ad46fd81d60c4c9abc8a625f151ae236")
+    new Account("SlightlyRomantic", 23, "ad46fd81d60c4c9abc8a625f151ae236"),
+    new Account("herobrine_7_7_7",  0,  "b6ae289c0b554905a6b471eb882eb068"),
+    new Account("Klaudes",          21, "eccb20606d064dc78910e7749251fb6d"),
 ];
 
 let afkers = [
