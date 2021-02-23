@@ -13,7 +13,7 @@ async function getStatus(name) {
     if(!uuid) {
         // store the cache miss for later
         // this helps me identify name changes
-        cachemiss.push(uuid);
+        cachemiss.push(name);
         uuid = getUUID(name);
     }
     
