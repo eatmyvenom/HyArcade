@@ -25,4 +25,13 @@ function winsSorter(a,b) {
     }
 }
 
-module.exports = { sleep : sleep, winsSorter : winsSorter };
+function daytime() {
+    return config.showDaytime ? 
+    Date()
+        .replace(/.*20[0-9][0-9] /,'')
+        .replace(/ [A-Z]..-[0-9]... \(.*\)/,'') 
+        + " " :
+    "";
+}
+
+module.exports = { sleep : sleep, winsSorter : winsSorter, daytime: daytime };

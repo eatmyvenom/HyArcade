@@ -1,5 +1,6 @@
 const https = require('https');
 const fs = require('fs');
+const { daytime } = require('./utils');
 
 async function getUUIDRaw(name) {
     // promisify query
@@ -18,7 +19,7 @@ async function getUUID(name) {
     if(raw!="") {
         return JSON.parse(raw).id
     } else {
-        console.error(`"${name}" does not exist`)
+        console.error(`${daytime}ERROR: "${name}" does not exist`)
         return undefined;
     }
 }

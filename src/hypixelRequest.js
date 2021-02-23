@@ -1,5 +1,6 @@
 const https = require('https');
-const { key, failDelay } = require('../config.json');
+const { key, failDelay, showDaytime } = require('../config.json');
+const utils = require('./utils');
 const { sleep } = require('./utils');
 
 function getData(url) {
@@ -44,9 +45,9 @@ async function basicRequest(page, extraArgs = [] ) {
         // upon the data not having the response needed
         if(json.success == false && json.throttle == true) {
             // current time so I can see difference in logs
-            let daytime = Date().replace(/.*20[0-9][0-9] /,'').replace(/ [A-Z]..-[0-9]... \(.*\)/,'') + " ";
 
-            console.error(`${daytime}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
+
+            console.error(`${utils.daytime()}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
             // sleep for 1 second and retry getting the data
             await sleep(failDelay);
             success = false;
