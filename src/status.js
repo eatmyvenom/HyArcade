@@ -65,7 +65,11 @@ async function genStatus(name,status) {
     }
 
     // this hack exists because no proper formatter in js
-    let pname = (name.slice(0,1).toUpperCase() + name.slice(1) + "                        ").slice(0,17);
+    let pname = ( name.slice(0,1).toUpperCase() 
+                    + name.slice(1) 
+                    + "                        "
+                )
+                .slice(0,17);
     // store this in a json file in case i need it later
     rawstatus[name]=status;
 
@@ -92,7 +96,7 @@ async function genStatus(name,status) {
 
         } else if (status.gameType == 'BEDWARS') {
 
-            str += `Bedwars - ${mapFormatter(status.map)}`
+            str += `Bedwars - ${modeFormatter(status.mode)}`
 
         } else if (status.gameType == 'TNTGAMES') {
 
