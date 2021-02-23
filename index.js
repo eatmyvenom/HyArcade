@@ -231,7 +231,7 @@ async function genUUID() {
         uuids[accounts[i].name] = await status.getUUID(accounts[i].name);
         // make sure no more than 600 requests are sent per 10 minutes
         // this is the mojang api limitation
-        await sleep(1000);
+        await sleep(config.mojang.sleep);
     }
     fs.writeFileSync("uuids.json", JSON.stringify(uuids,null,4));
 }
