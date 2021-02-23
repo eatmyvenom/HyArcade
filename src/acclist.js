@@ -134,6 +134,9 @@ let accounts = [
     new Account("firework15069",    559,"7312a6a342eb4fb5ba82841655d64eed"),
     new Account("gkc1414",          514,"23ce7611d41848048239ef4303d18aec"),
     new Account("BigHairyPoggers",  0,  "d069d531593e4449ba3ce1f6a0adb4f9"),
+    new Account("Pureloor",         169,"2a8c301c367c49218d676c23bbe31f82"),
+    new Account("Korr",             42, "572701ac574446549d4144cd33d24e0e"),
+    new Account("sphylx",           166,"2ebcf8158d654e0aa03fd7fd70f50c05"),
 ]
 
 let others = [
@@ -146,6 +149,7 @@ let others = [
     new Account("SlightlyRomantic", 23, "ad46fd81d60c4c9abc8a625f151ae236"),
     new Account("herobrine_7_7_7",  0,  "b6ae289c0b554905a6b471eb882eb068"),
     new Account("Klaudes",          21, "eccb20606d064dc78910e7749251fb6d"),
+    new Account("ElectricC",        27, "386d3cbb07d34f45a07c9bbdaf1575df"),
 ];
 
 let afkers = [
