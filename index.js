@@ -13,10 +13,9 @@ let { accounts, gamers, afkers } = require("./src/acclist");
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
 let status = require("./src/status");
-const { getUUID } = require('./src/mojangRequest');
-const { getAccountWins } = require('./src/hypixelRequest');
+
 // set flag for force file
-let force = fs.existsSync("./force");
+let force = (fs.existsSync("./force") || config.alwaysForce);
 
 async function updateAllAccounts(){
     // sort this before hand because otherwise everything dies
