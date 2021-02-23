@@ -1,9 +1,14 @@
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
-const { sleep, winsSorter } = require("./src/utils")
-const Webhook = require('./src/webhook');
 const gameAmount = require("./src/gameAmount")
+const Webhook = require('./src/webhook');
+const config = require('./config.json');
+const { sleep, winsSorter } = require("./src/utils")
+const { getUUID } = require('./src/mojangRequest');
+const { getAccountWins } = require('./src/hypixelRequest');
+
 let { accounts, gamers, afkers } = require("./src/acclist");
+
 // a module that exports an array of player objects from the player module
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
