@@ -87,7 +87,7 @@ async function txtPlayerList(list){
     let str="";
     for(let i=0;i<list.length;i++){
         // don't print if player has 0 wins
-        if(list[i].wins<1) continue;
+        if(list[i].wins<1 || config.printAllWins) continue;
         
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or nodenative for this
