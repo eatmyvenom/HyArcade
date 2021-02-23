@@ -160,8 +160,7 @@ async function stringDaily(name) {
         acc = newlist.find(g=>g.name.toLowerCase()==oldlist[i].name.toLowerCase())
         // make sure acc isnt null/undefined
         if (acc) {
-            // this uses abs in case there is some other error along the way
-            oldlist[i].wins = Math.abs(oldlist[i].wins - acc.wins);
+            oldlist[i].wins = acc.wins - oldlist[i].wins;
         }
     }
 
