@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 
 async function sendToDiscord(content) {
     let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
-    await hook.send("```" + content + "======================```", {
+    await hook.send("```" + content + "===========================```", {
         username: config.webhook.username,
         avatarURL: config.webhook.pfp
     });

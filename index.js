@@ -134,7 +134,7 @@ async function logA() {
     await logNormal("accounts");
 }
 
-async function webhookLog(type) {
+async function webhookLog(type = 'players') {
     // send webhook messages, this is only currently 
     // in a small server and only does the unofficial 
     // leaderboard, this can be easily changed and if
