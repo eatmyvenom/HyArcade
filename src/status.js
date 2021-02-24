@@ -1,7 +1,6 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 const { getStatus } = require('./hypixelRequest');
-const { cacheMiss: cachemiss } = require('./utils');
 
 let rawstatus = {};
 
@@ -132,4 +131,4 @@ function isOnlineC(name) {
     return true;
 }
 
-module.exports = { txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss }
+module.exports = { txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC }

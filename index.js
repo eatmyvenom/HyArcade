@@ -16,6 +16,7 @@ let { accounts, gamers, afkers } = require("./src/acclist");
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
 let status = require("./src/status");
+const utils = require('./src/utils');
 
 // set flag for force file
 let force = (fs.existsSync("./force") || config.alwaysForce);
@@ -220,7 +221,7 @@ async function genStatus() {
     // write object 
     fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
     // store the cache misses
-    fs.writeFileSync("cachemiss.json", JSON.stringify(status.cacheMiss,null,4));
+    fs.writeFileSync("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4));
 }
 
 /**
