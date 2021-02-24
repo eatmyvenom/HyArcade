@@ -6,6 +6,7 @@ const config = require('./config.json');
 const { sleep, winsSorter } = require("./src/utils")
 const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelRequest');
+const args = process.argv0 == 'node' ? process.argv : ['node'].concat(process.argv)
 
 let { accounts, gamers, afkers } = require("./src/acclist");
 
@@ -130,23 +131,25 @@ async function logA() {
     await logNormal("accounts");
 }
 
-async function snap() {
-
+async function webhookLog(type) {
     // send webhook messages, this is only currently 
     // in a small server and only does the unofficial 
     // leaderboard, this can be easily changed and if
     // someone else would like I can add this to 
     // another server
-    await Webhook.send(await stringNormal("players"));
-    await Webhook.send(await stringDaily("players"));
 
+    await Webhook.send(await stringNormal(type));
+    await Webhook.send(await stringDaily(type));
+}
+
+async function snap(timeType = 'day') {
     // move all the current stats files to be the daily files
-    guilds = JSON.parse(fs.readFileSync("guild.json"));
-    players = JSON.parse(fs.readFileSync("players.json"));
-    accounts = JSON.parse(fs.readFileSync("accounts.json"));
-    fs.writeFileSync("accounts.day.json",JSON.stringify(accounts,null,4));
-    fs.writeFileSync("players.day.json",JSON.stringify(players,null,4));
-    fs.writeFileSync("guild.day.json",JSON.stringify(guilds,null,4));
+    guilds      = JSON.parse(fs.readFileSync("guild.json"));
+    players     = JSON.parse(fs.readFileSync("players.json"));
+    accounts    = JSON.parse(fs.readFileSync("accounts.json"));
+    fs.writeFileSync(`accounts.${timeType}.json`    ,JSON.stringify(accounts    ,null,4));
+    fs.writeFileSync(`players.${timeType}.json`     ,JSON.stringify(players     ,null,4));
+    fs.writeFileSync(`guild.${timeType}.json`       ,JSON.stringify(guilds      ,null,4));
 }
 
 async function stringDaily(name) {
@@ -244,7 +247,7 @@ async function gameAmnt() {
 }
 
 async function newAcc() {
-    let name = process.argv[3]
+    let name = args[3]
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
     let formattedname = ('"'+name+'",                         ').slice(0,20)
@@ -256,24 +259,23 @@ async function newAcc() {
 // wrap main code in async function for nodejs backwards compatability
 
 async function main(){
-    // im lazy
-    let args = process.argv;
 
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
-        case 'save':    await save();      break;
-        case 'logG':    await logG();      break;
-        case 'logA':    await logA();      break;
-        case 'logP':    await logP();      break;
-        case 'snap':    await snap();      break;
-        case 'logGD':   await logGD();     break;
-        case 'logPD':   await logPD();     break;
-        case 'logAD':   await logAD();     break;
-        case 'status':  await genStatus(); break;
-        case 'genUUID': await genUUID();   break;
-        case 'games':   await gameAmnt();  break;
-        case 'newAcc':  await newAcc();    break;
+        case 'save':        await save();           break;
+        case 'logG':        await logG();           break;
+        case 'logA':        await logA();           break;
+        case 'logP':        await logP();           break;
+        case 'logGD':       await logGD();          break;
+        case 'logPD':       await logPD();          break;
+        case 'logAD':       await logAD();          break;
+        case 'snap':        await snap(args[3]);      break;
+        case 'status':      await genStatus();      break;
+        case 'discord':     await webhookLog();     break;
+        case 'genUUID':     await genUUID();        break;
+        case 'games':       await gameAmnt();       break;
+        case 'newAcc':      await newAcc();         break;
     }
 }
 
