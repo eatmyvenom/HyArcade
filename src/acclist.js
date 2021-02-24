@@ -135,6 +135,9 @@ let accounts = [
     new Account("Korr",             42, "572701ac574446549d4144cd33d24e0e"),
     new Account("sphylx",           166,"2ebcf8158d654e0aa03fd7fd70f50c05"),
     new Account("Pio1",             34, "687d52e048694f32b4daf4467bf7cb76"),
+    new Account("awesomedudeIV",    633,"226a029f1bb64ee3a2ecef734fb290cb"),
+    new Account("GhostlyUchi",      169,"f1a73af3d6574adeb3639ad07a399e67"),
+    new Account("ordnasxd",         174,"65d9b07e42fe4914bc95420b9812c594"),
 ]
 
 let others = [
