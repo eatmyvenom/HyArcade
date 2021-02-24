@@ -19,7 +19,7 @@ async function getUUID(name) {
     if(raw!="") {
         return JSON.parse(raw).id
     } else {
-        console.error(`${daytime}ERROR: "${name}" does not exist`)
+        console.error(`${daytime()}ERROR: "${name}" does not exist`)
         return undefined;
     }
 }
