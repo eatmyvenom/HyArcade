@@ -18,7 +18,11 @@ class Player {
         this.wins = wins;
 
         for(let i = 0; i < altnames.length; i++){
-            this.alts.push(accounts.find(acc => acc.name.toLowerCase() == altnames[i].toLowerCase()))
+            this.alts.push(
+                accounts.find(
+                    acc => acc.name.toLowerCase() == altnames[i].toLowerCase()
+                )
+            );
         }
     }
 

@@ -16,15 +16,19 @@ async function getUUIDRaw(name) {
 
 async function getUUID(name) {
     let raw = await getUUIDRaw(name);
+
+    // make sure the data isnt an empty response
     if(raw!="") {
         return JSON.parse(raw).id
     } else {
+        // log the missing username so i can change it
         console.error(`${daytime()}ERROR: "${name}" does not exist`)
         return undefined;
     }
 }
 
 function getUUIDFromCache(name) {
+    // avoid making mojang requests
     return JSON.parse(fs.readFileSync("uuids.json"))[name]
 }
 
