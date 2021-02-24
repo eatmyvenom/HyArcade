@@ -17,14 +17,20 @@ class Guild {
         this.name = name;
     }
 
+    /**
+     * This isnt in the constructor because then every usage
+     * of anything in the entire site will result in a few
+     * needless api requests
+     */
     async updateData() {
         let data = await this.getGuild();
         this.name = data.guild.name_lower;
 
-        let gmembers = data.guild.members; // type coercing 
+        let gmembers = data.guild.members; 
         for(let i = 0; i < gmembers.length; i++) {
-            let member = gmembers[i];
-            let gamer = accounts.find( acc => acc.uuid == member.uuid);
+            // find a corrosponding account in my account list
+            let gamer = accounts.find( acc => acc.uuid == gmembers[i].uuid);
+            // dont add empty accounts
             if (gamer != undefined) {
                 this.members.push(gamer);
             }
