@@ -270,7 +270,7 @@ async function main(){
         case 'logGD':       await logGD();          break;
         case 'logPD':       await logPD();          break;
         case 'logAD':       await logAD();          break;
-        case 'snap':        await snap(args[3]);      break;
+        case 'snap':        await snap(args[3]);    break;
         case 'status':      await genStatus();      break;
         case 'discord':     await webhookLog();     break;
         case 'genUUID':     await genUUID();        break;
