@@ -231,7 +231,7 @@ async function genUUID() {
         // since stdout isnt piped into something else, a log here is 
         // harmless
         console.log(accounts[i].name)
-        uuids[accounts[i].name] = await status.getUUID(accounts[i].name);
+        uuids[accounts[i].name] = await getUUID(accounts[i].name);
         // make sure no more than 600 requests are sent per 10 minutes
         // this is the mojang api limitation
         await sleep(config.mojang.sleep);

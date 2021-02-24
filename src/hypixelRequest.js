@@ -1,5 +1,6 @@
 const https = require('https');
-const { key, failDelay, showDaytime } = require('../config.json');
+const { key, failDelay } = require('../config.json');
+const { getUUIDFromCache } = require('./mojangRequest');
 const utils = require('./utils');
 const { sleep } = require('./utils');
 
@@ -46,7 +47,6 @@ async function basicRequest(page, extraArgs = [] ) {
         if(json.success == false && json.throttle == true) {
             // current time so I can see difference in logs
 
-
             console.error(`${utils.daytime()}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
             // sleep for 1 second and retry getting the data
             await sleep(failDelay);
@@ -85,6 +85,25 @@ async function getAccountWins(uuid) {
     if(arcade.wins_party_2) wins += arcade.wins_party_2;
     if(arcade.wins_party_3) wins += arcade.wins_party_3;
     return wins;
+}
+
+async function getStatus(name) {
+    let uuid = await getUUIDFromCache(name);
+    // cache miss
+    if(!uuid) {
+        // store the cache miss for later
+        // this helps me identify name changes
+        cachemiss.push(name);
+        uuid = getUUID(name);
+    }
+    
+    // account does not exist
+    if(!uuid) {
+        return undefined;
+    }
+    let raw = await getStatusRaw(uuid);
+    let json = JSON.parse(raw);
+    return json.session;
 }
 
 module.exports = { getStatusRaw : getStatusRAW, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }

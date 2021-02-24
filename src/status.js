@@ -1,30 +1,9 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
-const { getStatusRaw } = require('./hypixelRequest');
-const { getUUIDFromCache, getUUID } = require('./mojangRequest');
+const { getStatus } = require('./hypixelRequest');
 
 let rawstatus = {};
 let cachemiss = [];
-
-
-async function getStatus(name) {
-    let uuid = await getUUIDFromCache(name);
-    // cache miss
-    if(!uuid) {
-        // store the cache miss for later
-        // this helps me identify name changes
-        cachemiss.push(name);
-        uuid = getUUID(name);
-    }
-    
-    // account does not exist
-    if(!uuid) {
-        return undefined;
-    }
-    let raw = await getStatusRaw(uuid);
-    let json = JSON.parse(raw);
-    return json.session;
-}
 
 // arcade is special so it gets its own method
 function arcadeFormatter(status) {
@@ -153,4 +132,4 @@ function isOnlineC(name) {
     return true;
 }
 
-module.exports = {getUUID : getUUID, txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss}
+module.exports = { txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC, cacheMiss: cachemiss }
