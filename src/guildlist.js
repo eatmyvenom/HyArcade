@@ -9,105 +9,12 @@ module.exports = function gld(accs) {
     let accounts = accs;
     let Guild = require("./guild")(accounts);
     return [
-        new Guild("Mini",0,[
-            "HammyInTheWall",
-            "UekuInTheWall",
-            "verybad_",
-            "i1a",
-            "liamgonemad",
-            "Tabananaman",
-            "Pasha300",
-            "WinInTheWall",
-            "itamar080607",
-            "Arcxire",
-            "_Hipo",
-            "USOMUSKY",
-            "Blackoutburst",
-            "mvvi",
-            "VeryLonelyTree",
-            "rxob",
-            "oojetager",
-            "MasonInTheWall",
-            "Blatser",
-            "Ilomiswir",
-            "bunniexoxo",
-            "qSpider",
-            "napness",
-            "pastuuh",
-            "xmuffins"
-        ]),
-        new Guild("Fidelity",0,[
-            "yubg",
-            "khaninthewall",
-            "steakinthewall",
-            "paethetic",
-        ]),
-        new Guild("TKJK", 0, [
-            "UUUJTAGR_81",
-            "jkGALAKTUS",
-            "Pe3tr",
-            "knacam",
-            "Cukrenka",
-            "FortuneLemon",
-            "Aldix",
-            "Krumpachnik",
-            "aByee",
-            "ThePoGoCZ"
-        ]),
-        new Guild("Cactus",0,[
-            "minecraftoogle",
-            "cute_god",
-            "als_31",
-            "cakeeplayz",
-            "markynoodle",
-            "v3n0m__",
-            "fubyinthecutie",
-            "BruhPogChamp",
-            "wetaspoggers",
-            "fuby",
-            "coolswaggamer",
-            "hotcheetah",
-            "BotCheetah",
-            "ghostlyboomerang",
-            "Atni",
-            "BadNeon",
-            "kas61"
-        ]),
-        new Guild("sadvibes",0,[
-            "jqkeup",
-            "Faebled",
-            "DeeDossed"
-        ]),
-        new Guild("psoldiers",0,[
-            "ILoveTHE77",
-            "norriie"
-        ]),
-        new Guild("PartyGamers",0,[
-            "CloverStyle",
-            "DaniezOwo",
-            "SkyCity17",
-            "p3ppa_plg",
-            "Galaxy_Senpai",
-            "genkai95",
-            "Chenchen87",
-            "Swishfox",
-            "Sebastitgames",
-            "shiins",
-            "0897david0897",
-            "lllGhost",
-            "BLKIN",
-            "laura_something",
-            "DarthEsme",
-            "Ink0taScythe",
-            "PartyGamesUpdate",
-            "DrPickle_",
-            "SuperMinerAAA",
-            "PokemonCity17",
-            "xLightW0lf",
-            "Riiruu",
-            "Cale73",
-            "Aplanna",
-            "Gigchad"
-        ])
+        new Guild("mini", "5fd934088ea8c9855c1256c1"), // mini
+        new Guild("Fidelity", "5ffe240e8ea8c9e004b017e7"), // Fidelity
+        new Guild("TKJK", "57c72db00cf24b341f8d955f"), // TKJK
+        new Guild("Cactus", "5fc573a68ea8c9d1008d616d"), // Cactus
+        new Guild("sadvibes", "5f9b78518ea8c992ddb8cb4b"), // sadvibes
+        new Guild("psoldiers", "5dfdbd7d8ea8c92086b1065b"), // psoldiers
+        new Guild("PartyGamers", "5d91564977ce8436b66ad2bf"), // PartyGamers
     ];
 }

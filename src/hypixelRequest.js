@@ -72,6 +72,10 @@ async function getGameCountsRAW() {
     return await basicRequest('gameCounts');
 }
 
+async function getGuildRaw(id) {
+    return await basicRequest('guild', [{ key : 'id', val : id }]);
+}
+
 async function getAccountWins(uuid) {
     let data = await getAccountDataRaw(uuid);
     let json = JSON.parse(data);
@@ -106,4 +110,4 @@ async function getStatus(name) {
     return json.session;
 }
 
-module.exports = { getStatusRaw : getStatusRAW, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }
+module.exports = { getStatusRaw : getStatusRAW, getStatus : getStatus, getGuildRaw : getGuildRaw, getAccountDataRaw : getAccountDataRaw, getGameCountsRAW : getGameCountsRAW, getAccountWins : getAccountWins }

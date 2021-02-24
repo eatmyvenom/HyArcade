@@ -1,3 +1,5 @@
+#!/bin/node
+
 const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 const gameAmount = require("./src/gameAmount")
@@ -6,7 +8,7 @@ const config = require('./config.json');
 const { sleep, winsSorter } = require("./src/utils")
 const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelRequest');
-const args = process.argv0 == 'node' ? process.argv : ['node'].concat(process.argv)
+const args = process.argv[0] == '/usr/bin/node' ? process.argv : ['node'].concat(process.argv)
 
 let { accounts, gamers, afkers } = require("./src/acclist");
 
@@ -259,7 +261,6 @@ async function newAcc() {
 // wrap main code in async function for nodejs backwards compatability
 
 async function main(){
-
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
