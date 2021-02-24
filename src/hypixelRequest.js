@@ -1,8 +1,8 @@
 const https = require('https');
 const { key, failDelay } = require('../config.json');
-const { getUUIDFromCache } = require('./mojangRequest');
+const { getUUIDFromCache , getUUID } = require('./mojangRequest');
 const utils = require('./utils');
-const { sleep } = require('./utils');
+const sleep = utils.sleep;
 
 function getData(url) {
     return new Promise((resolve,reject)=>{
@@ -97,7 +97,7 @@ async function getStatus(name) {
     if(!uuid) {
         // store the cache miss for later
         // this helps me identify name changes
-        cachemiss.push(name);
+        utils.cacheMiss.push(name);
         uuid = getUUID(name);
     }
     
@@ -105,7 +105,7 @@ async function getStatus(name) {
     if(!uuid) {
         return undefined;
     }
-    let raw = await getStatusRaw(uuid);
+    let raw = await getStatusRAW(uuid);
     let json = JSON.parse(raw);
     return json.session;
 }

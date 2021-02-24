@@ -1,9 +1,9 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 const { getStatus } = require('./hypixelRequest');
+const { cacheMiss: cachemiss } = require('./utils');
 
 let rawstatus = {};
-let cachemiss = [];
 
 // arcade is special so it gets its own method
 function arcadeFormatter(status) {

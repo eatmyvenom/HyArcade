@@ -34,4 +34,4 @@ function daytime() {
     "";
 }
 
-module.exports = { sleep : sleep, winsSorter : winsSorter, daytime: daytime };
+module.exports = { sleep : sleep, winsSorter : winsSorter, daytime: daytime, cacheMiss : [] };
