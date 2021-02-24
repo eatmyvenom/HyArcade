@@ -34,4 +34,14 @@ function daytime() {
     "";
 }
 
-module.exports = { sleep : sleep, winsSorter : winsSorter, daytime: daytime, cacheMiss : [] };
+function day() {
+    return Date().replace(/[0-9].:[0-9].:[0-9].*/,'').trim().replace(/ /g,'_');
+}
+
+async function archiveJson(oldfile, path, timetype) {
+    old = JSON.parse(fs.readFileSync(oldfile+".json"));
+    fs.writeFileSync(`${path}${oldfile}.${timetype}.json`, JSON.stringify(old,null,4));
+}
+
+
+module.exports = { archiveJson : archiveJson, day : day, sleep : sleep, winsSorter : winsSorter, daytime: daytime, cacheMiss : [] };

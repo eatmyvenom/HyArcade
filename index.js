@@ -9,6 +9,7 @@ const { sleep, winsSorter } = require("./src/utils")
 const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelRequest');
 const args = process.argv[0] == '/usr/bin/node' ? process.argv : ['node'].concat(process.argv)
+const utils = require('./src/utils');
 
 let { accounts, gamers, afkers } = require("./src/acclist");
 
@@ -16,7 +17,6 @@ let { accounts, gamers, afkers } = require("./src/acclist");
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
 let status = require("./src/status");
-const utils = require('./src/utils');
 
 // set flag for force file
 let force = (fs.existsSync("./force") || config.alwaysForce);
@@ -147,12 +147,7 @@ async function webhookLog(type) {
 
 async function snap(timeType = 'day') {
     // move all the current stats files to be the daily files
-    guilds      = JSON.parse(fs.readFileSync("guild.json"));
-    players     = JSON.parse(fs.readFileSync("players.json"));
-    accounts    = JSON.parse(fs.readFileSync("accounts.json"));
-    fs.writeFileSync(`accounts.${timeType}.json`    ,JSON.stringify(accounts    ,null,4));
-    fs.writeFileSync(`players.${timeType}.json`     ,JSON.stringify(players     ,null,4));
-    fs.writeFileSync(`guild.${timeType}.json`       ,JSON.stringify(guilds      ,null,4));
+    await archive('./',timeType);
 }
 
 async function stringDaily(name) {
@@ -258,6 +253,13 @@ async function newAcc() {
     console.log(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
 }
 
+async function archive(path = './archive/', timeType = utils.day()) {
+    await utils.archiveJson('guild',path,timetype);
+    await utils.archiveJson('players',path,timetype);
+    await utils.archiveJson('accounts',path,timetype);
+}
+
+
 
 // wrap main code in async function for nodejs backwards compatability
 
@@ -278,6 +280,7 @@ async function main(){
         case 'genUUID':     await genUUID();        break;
         case 'games':       await gameAmnt();       break;
         case 'newAcc':      await newAcc();         break;
+        case 'archive':     await archive();        break;
     }
 }
 
