@@ -145,6 +145,10 @@ async function webhookLog(type = 'players') {
     await Webhook.send(await stringDaily(type));
 }
 
+/**
+ * This is here because i abstracted this to archive
+ * @param {String} timeType - the inbetween of the file
+ */
 async function snap(timeType = 'day') {
     // move all the current stats files to be the daily files
     await archive('./',timeType);
@@ -174,6 +178,8 @@ async function stringDaily(name) {
 async function logDaily(name) {
     console.log(await stringDaily(name));
 }
+
+//more abstracted methods
 
 async function logGD() {
     await logDaily("guild");
@@ -258,8 +264,6 @@ async function archive(path = './archive/', timeType = utils.day()) {
     await utils.archiveJson('players',path,timetype);
     await utils.archiveJson('accounts',path,timetype);
 }
-
-
 
 // wrap main code in async function for nodejs backwards compatability
 
