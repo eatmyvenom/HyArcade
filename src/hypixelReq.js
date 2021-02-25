@@ -1,6 +1,6 @@
 const https = require('https');
 
-module.exports = class hypixelAPI {
+module.exports = class hypixelReq {
     url = '';
     headers = {};
     constructor(url) {
