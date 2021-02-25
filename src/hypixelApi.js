@@ -98,7 +98,7 @@ module.exports = class hypixelAPI {
     }
 
     static async getGameCounts() {
-        let data = await getGameCountsRAW();
+        let data = await hypixelAPI.getGameCountsRAW();
         return JSON.parse(data);
     }
 }
