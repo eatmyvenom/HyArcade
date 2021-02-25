@@ -5,11 +5,13 @@ const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 const gameAmount = require("./src/gameAmount")
 const Webhook = require('./src/webhook');
 const config = require('./config.json');
-const { sleep, winsSorter } = require("./src/utils")
 const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelRequest');
-const args = process.argv[0] == '/usr/bin/node' ? process.argv : ['node'].concat(process.argv)
+const args = process.argv;
 const utils = require('./src/utils');
+const sleep = utils.sleep;
+const winsSorter = utils.winsSorter;
+const logger = utils.logger;
 
 let { accounts, gamers, afkers } = require("./src/acclist");
 
@@ -91,12 +93,24 @@ async function txtPlayerList(list){
     let str="";
     for(let i=0;i<list.length;i++){
         // don't print if player has 0 wins
-        if(list[i].wins<1 || config.printAllWins) continue;
+        if(list[i].wins < 1 || config.printAllWins) continue;
         
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or nodenative for this
-        let num = ("000"+(i+1)).slice(-3);
-        let name = (list[i].name.slice(0,1).toUpperCase() + list[i].name.slice(1) + "                       ").slice(0,17);
+        let num = (
+            "000"
+            +(i+1)
+        )
+        .slice(-3);
+        
+        let name = (
+            list[i].name
+            	.slice(0,1)
+            	.toUpperCase()
+            + list[i].name
+            	.slice(1)
+            + "                       "
+        ).slice(0,17);
         str+=`${num}) ${name}: ${list[i].wins}\n`;
     }
     return str;
@@ -118,7 +132,7 @@ async function stringNormal(name) {
 }
 
 async function logNormal(name) {
-    console.log(await stringNormal(name));
+    logger.out(await stringNormal(name));
 }
 
 // wrappers because I abstracted this
@@ -176,7 +190,7 @@ async function stringDaily(name) {
 }
 
 async function logDaily(name) {
-    console.log(await stringDaily(name));
+    logger.out(await stringDaily(name));
 }
 
 //more abstracted methods
@@ -234,7 +248,7 @@ async function genUUID() {
     for(let i = 0; i<accounts.length; i++) {
         // since stdout isnt piped into something else, a log here is 
         // harmless
-        console.log(accounts[i].name)
+        logger.out(accounts[i].name)
         uuids[accounts[i].name] = await getUUID(accounts[i].name);
         // make sure no more than 600 requests are sent per 10 minutes
         // this is the mojang api limitation
@@ -256,7 +270,7 @@ async function newAcc() {
     let wins = await getAccountWins(uuid);
     let formattedname = ('"'+name+'",                         ').slice(0,20)
     let formattedWins = (wins+',   ').slice(0,4);
-    console.log(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
+    logger.out(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
 }
 
 async function archive(path = './archive/', timeType = utils.day()) {
