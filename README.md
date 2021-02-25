@@ -1,4 +1,4 @@
 # party-games-site
 
 This is pog
-http://eatmyvenom.me/share/party-games
+http://eatmyvenom.me/share/partygames
