@@ -45,6 +45,12 @@ module.exports = class hypixelAPI {
         return await hypixelAPI.basicRequest('player', [{ key : 'uuid', val : uuid}] );
     }
 
+    static async getAccountData(uuid) {
+        let data = await hypixelAPI.getAccountDataRaw(uuid);
+        let json = JSON.parse(data);
+        return json;
+    }
+
     static async getGameCountsRAW() {
         // dont put empty array since that is automatically done
         return await hypixelAPI.basicRequest('gameCounts');
@@ -55,8 +61,7 @@ module.exports = class hypixelAPI {
     }
 
     static async getAccountWins(uuid) {
-        let data = await hypixelAPI.getAccountDataRaw(uuid);
-        let json = JSON.parse(data);
+        let json = this.getAccountData(uuid);
         // make sure player has stats to be checked
         if(!json.player || !json.player.stats || !json.player.stats.Arcade) {
             return 0;

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
-const { getStatus } = require('./hypixelApi');
+let { accounts } = require('./acclist');
+const { getUUIDStatus } = require('./hypixelApi');
 
 let rawstatus = {};
 
@@ -48,8 +49,7 @@ async function genStatus(name,status) {
                     + "                        "
                 )
                 .slice(0,17);
-    // store this in a json file in case i need it later
-    rawstatus[name]=status;
+
 
     // make sure player is online so we dont log a shit ton
     // of offline players doing nothing
@@ -118,15 +118,17 @@ async function genStatus(name,status) {
     return str
 }
 
-async function txtStatus(name) {
+async function txtStatus(uuid) {
     // unfortunately this cant be shortcut
-    let status = await getStatus(name);
-    return await genStatus(name,status);
+    let status = await getUUIDStatus(uuid);
+    // store this in a json file in case i need it later
+    rawstatus[uuid]=status;
+    return await genStatus( accounts.find( acc => acc.uuid == uuid ).name, status);
 }
 
-function isOnlineC(name) {
-    if(cachedStatus[name]!=undefined) {
-        return cachedStatus[name].online;
+function isOnlineC(uuid) {
+    if(cachedStatus[uuid]!=undefined) {
+        return cachedStatus[uuid].online;
     }
     return true;
 }

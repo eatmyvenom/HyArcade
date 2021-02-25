@@ -4,7 +4,6 @@ const fs = require('fs');
 const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 const gameAmount = require("./src/gameAmount")
 const Webhook = require('./src/webhook');
-const config = require('./config.json');
 const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelApi');
 const args = process.argv;
@@ -12,6 +11,13 @@ const utils = require('./src/utils');
 const sleep = utils.sleep;
 const winsSorter = utils.winsSorter;
 const logger = utils.logger;
+
+// So you may be wondering, "why use such a horrible config 
+// format venom?" Well you see this is a nodejs project, this
+// means that if I start adding all kinds of modules, this 
+// will become an issue really fast. So this is my way of not
+// bloating this project with node modules and shit. 
+const config = require('./config.json');
 
 let { accounts, gamers, afkers } = require("./src/acclist");
 
@@ -37,16 +43,16 @@ async function updateAllAccounts(){
         // check if player is online before updating wins
         // or if the force file has been added to make sure
         // all wins are updated
-        if(status.isOnlineC(accounts[i].name) || force) {
-            await accounts[i].updateWins();
+        if(status.isOnlineC(accounts[i].uuid) || force) {
+            await accounts[i].updateData();
         } else {
             // fallback for new accounts
-            oldver = oldAccounts.find(g=>g.name.toLowerCase()==accounts[i].name.toLowerCase())
+            oldver = oldAccounts.find(g=>g.uuid.toLowerCase()==accounts[i].uuid.toLowerCase())
             if(oldver != undefined) {
                 // use previous wins if the player was not online
                 accounts[i].wins = oldver.wins;
             } else {
-                await accounts[i].updateWins();
+                await accounts[i].updateData();
             }
         }
     }
@@ -216,17 +222,17 @@ async function genStatus() {
     let nongamers = '';
     for(let i = 0; i < accounts.length; i++) {
         if(gamers.includes(accounts[i])) {
-            gamerstr += await status.txtStatus(accounts[i].name);
+            gamerstr += await status.txtStatus(accounts[i].uuid);
         } else if(!force && afkers.includes(accounts[i])) {
             // get old status instead
-            let old = oldstatus[accounts[i].name];
+            let old = oldstatus[accounts[i].uuid];
             if (old == undefined) {
-                nongamers += await status.txtStatus(accounts[i].name);
+                nongamers += await status.txtStatus(accounts[i].uuid);
             } else {
-                nongamers += await status.genStatus(accounts[i].name, oldstatus[accounts[i].name]);
+                nongamers += await status.genStatus(accounts[i].uuid, oldstatus[accounts[i].uuid]);
             }
         } else { // force true or not afker
-            nongamers += await status.txtStatus(accounts[i].name);
+            nongamers += await status.txtStatus(accounts[i].uuid);
         }
         
     }
@@ -246,8 +252,6 @@ async function genStatus() {
 async function genUUID() {
     let uuids = {};
     for(let i = 0; i<accounts.length; i++) {
-        // since stdout isnt piped into something else, a log here is 
-        // harmless
         logger.out(accounts[i].name)
         uuids[accounts[i].name] = await getUUID(accounts[i].name);
         // make sure no more than 600 requests are sent per 10 minutes
