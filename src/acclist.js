@@ -32,11 +32,9 @@ let accounts = [
     new Account("ilomiswir",        0,  "9ac4f965e1c7423dafe60be383cdbf30"),
     new Account("oojetager",        0,  "0ce6eb40ae8f4e1ca402655da9fa3ce1"),
     new Account("ghostlyboomerang", 0,  "61af970f407a47cd94aa9d5ccb71dea2"),
-    new Account("fromagepaladin",   0,  "37b526399f194cc88a6e5f5b52573f4c"),
     new Account("jaywolvian",       0,  "37b526399f194cc88a6e5f5b52573f4c"),
     new Account("kokosuke",         0,  "31410a289cab435c9185b859e08abe97"),
     new Account("jambal",           0,  "d6f3ade2777849b9a3bbc10c624127b8"),
-    new Account("kashmoney420",     0,  "078bfc90a24d4546847dadec18dfa9cc"),
     new Account("codymacke",        0,  "078bfc90a24d4546847dadec18dfa9cc"),
     new Account("bignick1",         0,  "03da5a3a08d94094ac6d771ee1ed65b5"),
     new Account("tigernew",         0,  "3b2455595d084f1a809a4c2b97867a89"),
@@ -138,6 +136,7 @@ let accounts = [
     new Account("awesomedudeIV",    633,"226a029f1bb64ee3a2ecef734fb290cb"),
     new Account("GhostlyUchi",      169,"f1a73af3d6574adeb3639ad07a399e67"),
     new Account("ordnasxd",         174,"65d9b07e42fe4914bc95420b9812c594"),
+    new Account("baomars",          9,  "05604ed9730841fea40746f1fd6320e7"),
 ]
 
 let others = [
