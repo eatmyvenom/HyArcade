@@ -1,4 +1,4 @@
-const { getAccountWins } = require('./hypixelRequest');
+const { getAccountWins } = require('./hypixelApi');
 
 module.exports = class Account {
     name="";

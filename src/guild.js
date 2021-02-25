@@ -1,4 +1,4 @@
-const hypixelRequest = require('./hypixelRequest');
+const hypixelApi = require('./hypixelApi');
 let accounts = []; // type coercing 
 
 module.exports = function Gld(acclist) {
@@ -38,7 +38,7 @@ class Guild {
     }
 
     async getGuild() {
-        return JSON.parse(await hypixelRequest.getGuildRaw(this.uuid));
+        return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
     }
 
     async updateWins() {

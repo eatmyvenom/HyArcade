@@ -1,6 +1,6 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
-const { getStatus } = require('./hypixelRequest');
+const { getStatus } = require('./hypixelApi');
 
 let rawstatus = {};
 

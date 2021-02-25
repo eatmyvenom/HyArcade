@@ -1,19 +1,24 @@
-const https = require('https');
-const { key, failDelay } = require('../config.json');
+const hypixelReq = require('./hypixelReq');
+const { key } = require('../config.json');
 const { getUUIDFromCache , getUUID } = require('./mojangRequest');
 const utils = require('./utils');
 const sleep = utils.sleep;
 const logger = utils.logger;
 
-function getData(url) {
-    return new Promise((resolve,reject)=>{
-        https.get(url, res => {
-            let reply = '';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
+async function getData(url) {
+    let apiPoint = new hypixelReq(url);
+    let response = await apiPoint.makeRequest();
+
+    // Hypixel api put the amount of time you have to wait 
+    // upon rate limit within the response headers. If this
+    // exists, wait that amount of time in seconds then 
+    // make a new request.
+    while (apiPoint.headers["retry-after"]) {
+        logger.err(`${utils.daytime()}ERROR: Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
+        await sleep(apiPoint.headers["retry-after"] * 1000);
+        response = await apiPoint.makeRequest();
+    }
+    return response;
 }
 
 async function basicRequest(page, extraArgs = [] ) {
@@ -26,37 +31,7 @@ async function basicRequest(page, extraArgs = [] ) {
         }
     }
 
-    // this next section of code results in the ability
-    // for me to make api requests without sleeping after 
-    // each request. I like this because it allows me to 
-    // use my key an unexpected amount of times without 
-    // any issues, it allow can improve the speed of the
-    // requests due to the amount of time to get data from
-    // the hypixel api being uncertain other than it is !0
-
-    // flag if the request was successful
-    let success = false;
-    // data needs to be outside the loop because it is the return
-    let data = '';
-    while(!success) {
-        // raw data from hypixel api endpoint
-        data = await getData(url);
-        // json data
-        let json = JSON.parse(data);
-
-        // upon the data not having the response needed
-        if(json.success == false && json.throttle == true) {
-            // current time so I can see difference in logs
-
-            logger.err(`${utils.daytime()}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
-            // sleep for 1 second and retry getting the data
-            await sleep(failDelay);
-            success = false;
-        } else {
-            // allow the loop to end
-            success = true;
-        }
-    }
+    let data = await getData(url);
     return data;
 } 
 
