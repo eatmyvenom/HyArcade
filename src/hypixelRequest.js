@@ -3,6 +3,7 @@ const { key, failDelay } = require('../config.json');
 const { getUUIDFromCache , getUUID } = require('./mojangRequest');
 const utils = require('./utils');
 const sleep = utils.sleep;
+const logger = utils.logger;
 
 function getData(url) {
     return new Promise((resolve,reject)=>{
@@ -47,7 +48,7 @@ async function basicRequest(page, extraArgs = [] ) {
         if(json.success == false && json.throttle == true) {
             // current time so I can see difference in logs
 
-            console.error(`${utils.daytime()}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
+            logger.err(`${utils.daytime()}ERROR: ${json.cause.toUpperCase()}, WAITING ${failDelay}ms AND RETRYING...`);
             // sleep for 1 second and retry getting the data
             await sleep(failDelay);
             success = false;

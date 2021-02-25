@@ -1,4 +1,5 @@
 const config = require('../config.json');
+const fs = require('fs/promises');
 /**
  * This only works in async functions
  * because of how promises work.
@@ -43,5 +44,31 @@ async function archiveJson(oldfile, path, timetype) {
     fs.writeFileSync(`${path}${oldfile}.${timetype}.json`, JSON.stringify(old,null,4));
 }
 
+function log(content) {
+    if(config.std.disable) {
+        fs.writeFile(config.std.out, content, { flag : 'a' });
+    } else {
+	console.log(content);
+    }
+}
 
-module.exports = { archiveJson : archiveJson, day : day, sleep : sleep, winsSorter : winsSorter, daytime: daytime, cacheMiss : [] };
+function error(content) {
+    if(config.std.disable) {
+        fs.writeFile(config.std.error, content, { flag : 'a' });
+    } else {
+	console.error(content);
+    }
+}
+
+module.exports = {
+    archiveJson : archiveJson,
+    day : day,
+    sleep : sleep,
+    winsSorter : winsSorter,
+    daytime: daytime,
+    cacheMiss : [],
+    logger : {
+        out : log,
+        err : error
+    }
+};

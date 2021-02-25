@@ -1,4 +1,5 @@
 const { getGameCountsRAW } = require('./hypixelRequest');
+const { logger } = require('./utils');
 
 async function formatCounts() {
     let str = '';
@@ -21,7 +22,7 @@ async function formatCounts() {
 }
 
 async function logCounts() {
-    console.log(await formatCounts());
+    logger.out(await formatCounts());
 }
 
 async function getGameCounts() {

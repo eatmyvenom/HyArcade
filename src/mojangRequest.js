@@ -22,7 +22,7 @@ async function getUUID(name) {
         return JSON.parse(raw).id
     } else {
         // log the missing username so i can change it
-        console.error(`${daytime()}ERROR: "${name}" does not exist`)
+        logger.err(`${daytime()}ERROR: "${name}" does not exist`)
         return undefined;
     }
 }
