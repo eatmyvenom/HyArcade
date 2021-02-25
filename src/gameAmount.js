@@ -1,4 +1,4 @@
-const { getGameCountsRAW } = require('./hypixelApi');
+const { getGameCounts } = require('./hypixelApi');
 const { logger } = require('./utils');
 
 async function formatCounts() {
@@ -23,11 +23,6 @@ async function formatCounts() {
 
 async function logCounts() {
     logger.out(await formatCounts());
-}
-
-async function getGameCounts() {
-    let data = await getGameCountsRAW();
-    return JSON.parse(data);
 }
 
 module.exports = { formatCounts : formatCounts, logCounts : logCounts };
