@@ -16,5 +16,6 @@ module.exports = function gld(accs) {
         new Guild("sadvibes",       "5f9b78518ea8c992ddb8cb4b"), // sadvibes
         new Guild("psoldiers",      "5dfdbd7d8ea8c92086b1065b"), // psoldiers
         new Guild("PartyGamers",    "5d91564977ce8436b66ad2bf"), // PartyGamers
+	new Guild("Nope",           "52e68cf30cf254781aced9cc"), // Nope
     ];
 }
