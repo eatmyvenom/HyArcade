@@ -229,7 +229,7 @@ async function genStatus() {
             if (old == undefined) {
                 nongamers += await status.txtStatus(accounts[i].uuid);
             } else {
-                nongamers += await status.genStatus(accounts[i].uuid, oldstatus[accounts[i].uuid]);
+                nongamers += await status.genStatus(accounts[i].name, oldstatus[accounts[i].uuid]);
             }
         } else { // force true or not afker
             nongamers += await status.txtStatus(accounts[i].uuid);
