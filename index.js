@@ -95,9 +95,10 @@ async function updateAll() {
     await updateAllGuilds();
 }
 
-async function txtPlayerList(list){
+async function txtPlayerList(list,maxamnt = -1){
     let str="";
-    for(let i=0;i<list.length;i++){
+    let len = (maxamnt != -1) ? maxamnt : list.length;
+    for(let i = 0;i < len; i++){
         // don't print if player has 0 wins
         if(list[i].wins < 1 || config.printAllWins) continue;
         
@@ -269,7 +270,8 @@ async function genUUID() {
  * @function gameAmnt - reflects the amount of players in various hypixel games
  */
 async function gameAmnt() {
-    await gameAmount.logCounts();
+    // write to file so that there isnt blank files in website at any point
+    fs.writeFileSync('games.txt',gameAmount.formatCounts())
 }
 
 async function newAcc() {
@@ -287,26 +289,46 @@ async function archive(path = './archive/', timeType = utils.day()) {
     await utils.archiveJson('accounts',path,timetype);
 }
 
+async function writeFile(args) {
+    let logName = args[3];
+    let location = args[4];
+    let str = await stringNormal(logName) 
+
+    fs.writeFileSync(location,str);
+}
+
+async function writeFileD(args) {
+    let logName = args[3];
+    let location = args[4];
+    let str = await stringDaily(logName);
+
+    fs.writeFileSync(location,str);
+}
+
 // wrap main code in async function for nodejs backwards compatability
 
 async function main(){
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
-        case 'save':        await save();           break;
-        case 'logG':        await logG();           break;
-        case 'logA':        await logA();           break;
-        case 'logP':        await logP();           break;
-        case 'logGD':       await logGD();          break;
-        case 'logPD':       await logPD();          break;
-        case 'logAD':       await logAD();          break;
-        case 'snap':        await snap(args[3]);    break;
-        case 'status':      await genStatus();      break;
-        case 'discord':     await webhookLog();     break;
-        case 'genUUID':     await genUUID();        break;
-        case 'games':       await gameAmnt();       break;
-        case 'newAcc':      await newAcc();         break;
-        case 'archive':     await archive();        break;
+        case 'logG':        await logG();               break;
+        case 'logA':        await logA();               break;
+        case 'logP':        await logP();               break;
+        case 'logGD':       await logGD();              break;
+        case 'logPD':       await logPD();              break;
+        case 'logAD':       await logAD();              break;
+
+        case 'write':       await writeFile(args);      break;
+        case 'writeD':      await writeFileD(args);     break;
+
+        case 'save':        await save();               break;
+        case 'snap':        await snap(args[3]);        break;
+        case 'status':      await genStatus();          break;
+        case 'discord':     await webhookLog();         break;
+        case 'genUUID':     await genUUID();            break;
+        case 'games':       await gameAmnt();           break;
+        case 'newAcc':      await newAcc();             break;
+        case 'archive':     await archive();            break;
     }
 }
 
