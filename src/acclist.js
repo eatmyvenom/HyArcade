@@ -180,7 +180,6 @@ let afkers = [
     new Account("TomerWB",          104,"27bfc7fa817a4614a9336d4da29643f1"),
     new Account("Osunburst",        12, "39f04005bbb14d2ea6fd0b378ad7a700"),
     new Account("Cuseno",           147,"233fec7343b143dca38d973c4bac86f9"),
-    new Account("Falsehacker",      58, "233fec7343b143dca38d973c4bac86f9"),
     new Account("InfamousJUK3D",    0,  "f99735b1b41e4d81966f2d6512b65e7b"),
     new Account("Hiejo",            35, "eff2905c6d964a88a8f5c098472dd741"),
     new Account("oMarc",            28, "d4601e8aa2d04249a3a9368840735873"),
