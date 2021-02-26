@@ -18,7 +18,7 @@ async function formatCounts() {
     str += `Queue Total         : ${counts.QUEUE.players}\n`
     str += `Total               : ${all.playerCount}`
 
-    return str;
+    return str.replace(/undefined/g,'0');
 }
 
 async function logCounts() {
