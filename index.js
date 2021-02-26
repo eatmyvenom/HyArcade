@@ -132,9 +132,15 @@ async function save() {
     fs.writeFileSync("guild.json",JSON.stringify(guilds,null,4));
 }
 
-async function stringNormal(name) {
+async function listNormal(name, maxamnt) {
     let list = JSON.parse(fs.readFileSync(`${name}.json`));
     list.sort(winsSorter);
+    list = list.slice(0,maxamnt);
+    return list;
+}
+
+async function stringNormal(name,maxamnt) {
+    let list = await listNormal(name,maxamnt);
     return await txtPlayerList(list);
 }
 
@@ -155,15 +161,29 @@ async function logA() {
     await logNormal("accounts");
 }
 
-async function webhookLog(type = 'players') {
+async function webhookLog(type = 'players', maxamnt) {
     // send webhook messages, this is only currently 
     // in a small server and only does the unofficial 
     // leaderboard, this can be easily changed and if
     // someone else would like I can add this to 
     // another server
 
-    await Webhook.send(await stringNormal(type));
-    await Webhook.send(await stringDaily(type));
+    await Webhook.send(await stringNormal(type, maxamnt));
+    await Webhook.send(await stringDaily(type, maxamnt));
+}
+
+async function webhookEmbed(type = 'players', maxamnt) {
+    // send webhook messages, this is only currently 
+    // in a small server and only does the unofficial 
+    // leaderboard, this can be easily changed and if
+    // someone else would like I can add this to 
+    // another server
+
+    let normal = await listNormal(type,maxamnt);
+    let day = await listDiff(type,'day',maxamnt);
+
+    await Webhook.sendEmbed("WINS", normal);
+    await Webhook.sendEmbed("DAILY", day);
 }
 
 /**
@@ -175,7 +195,7 @@ async function snap(timeType = 'day') {
     await archive('./',timeType);
 }
 
-async function stringDiff(name,timetype) {
+async function listDiff(name, timetype, maxamnt) {
     let newlist = JSON.parse(fs.readFileSync(`${name}.json`));
     let oldlist = JSON.parse(fs.readFileSync(`${name}.${timetype}.json`));
 
@@ -193,11 +213,16 @@ async function stringDiff(name,timetype) {
     // use old list to ensure that players added today 
     // don't show up with a crazy amount of daily wins
     oldlist = oldlist.sort(winsSorter);
-    return await txtPlayerList(oldlist);
+    return oldlist.slice(0,maxamnt);
 }
 
-async function stringDaily(name) {
-    return await stringDiff(name,'day');
+async function stringDiff(name,timetype, maxamnt) {
+    let list = await listDiff(name,timetype);
+    return await txtPlayerList(list);
+}
+
+async function stringDaily(name,maxamnt) {
+    return await stringDiff(name,'day',maxamnt);
 }
 
 async function logDaily(name) {
@@ -311,24 +336,25 @@ async function main(){
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
-        case 'logG':        await logG();               break;
-        case 'logA':        await logA();               break;
-        case 'logP':        await logP();               break;
-        case 'logGD':       await logGD();              break;
-        case 'logPD':       await logPD();              break;
-        case 'logAD':       await logAD();              break;
+        case 'logG':        await logG();                               break;
+        case 'logA':        await logA();                               break;
+        case 'logP':        await logP();                               break;
+        case 'logGD':       await logGD();                              break;
+        case 'logPD':       await logPD();                              break;
+        case 'logAD':       await logAD();                              break;
 
-        case 'write':       await writeFile(args);      break;
-        case 'writeD':      await writeFileD(args);     break;
+        case 'write':       await writeFile(args);                      break;
+        case 'writeD':      await writeFileD(args);                     break;
 
-        case 'save':        await save();               break;
-        case 'snap':        await snap(args[3]);        break;
-        case 'status':      await genStatus();          break;
-        case 'discord':     await webhookLog();         break;
-        case 'genUUID':     await genUUID();            break;
-        case 'games':       await gameAmnt();           break;
-        case 'newAcc':      await newAcc();             break;
-        case 'archive':     await archive();            break;
+        case 'save':        await save();                               break;
+        case 'snap':        await snap(args[3]);                        break;
+        case 'status':      await genStatus();                          break;
+        case 'discord':     await webhookLog(args[3], args[4]);         break;
+        case 'discordE':    await webhookEmbed(args[3], args[4]);       break;
+        case 'genUUID':     await genUUID();                            break;
+        case 'games':       await gameAmnt();                           break;
+        case 'newAcc':      await newAcc();                             break;
+        case 'archive':     await archive();                            break;
     }
 }
 
