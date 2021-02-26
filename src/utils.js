@@ -41,7 +41,7 @@ function day() {
 
 async function archiveJson(oldfile, path, timetype) {
     old = JSON.parse(await fs.readFile(oldfile+".json"));
-    fs.writeFileSync(`${path}${oldfile}.${timetype}.json`, JSON.stringify(old,null,4));
+    await fs.writeFile(`${path}${oldfile}.${timetype}.json`, JSON.stringify(old,null,4));
 }
 
 function log(content) {
