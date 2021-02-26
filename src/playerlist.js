@@ -1,3 +1,3 @@
 module.exports = function plrs(accs) {
-    require('./listParser').players(accs);
+    return require('./listParser').players(accs);
 }

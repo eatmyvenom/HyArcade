@@ -6,5 +6,6 @@ exports.players = function players(acclist) {
     for (let i = 0; i < playerjson.length; i++) {
         playerlist.push(new Player(playerjson[i].name,playerjson[i].accs,0))
     }
+    console.log(playerlist)
     return playerlist;
 }
