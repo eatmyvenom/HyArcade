@@ -174,9 +174,9 @@ async function snap(timeType = 'day') {
     await archive('./',timeType);
 }
 
-async function stringDaily(name) {
+async function stringDiff(name,timetype) {
     let newlist = JSON.parse(fs.readFileSync(`${name}.json`));
-    let oldlist = JSON.parse(fs.readFileSync(`${name}.day.json`));
+    let oldlist = JSON.parse(fs.readFileSync(`${name}.${timetype}.json`));
 
     // sort the list before hand
     oldlist = oldlist.sort(winsSorter);
@@ -193,6 +193,10 @@ async function stringDaily(name) {
     // don't show up with a crazy amount of daily wins
     oldlist = oldlist.sort(winsSorter);
     return await txtPlayerList(oldlist);
+}
+
+async function stringDaily(name) {
+    return await stringDiff(name,'day');
 }
 
 async function logDaily(name) {
