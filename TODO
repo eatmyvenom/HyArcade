@@ -1,2 +1,11 @@
 ✅ Make guilds work automatically
 ❌ Have accurate leaderboard wins for 250+ wins
+❌ Make list length adjustable
+❌ add file output options for everything
+❌ weekly wins
+❌ monthly wins
+❌ move acclist.js, guildlist.js, playerlist.js to json files
+❌ embed mode for discord
+❌ icons for peoples faces
+❌ move to only fs/promises
+❌ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
