@@ -296,7 +296,7 @@ async function genUUID() {
  */
 async function gameAmnt() {
     // write to file so that there isnt blank files in website at any point
-    fs.writeFileSync('games.txt',gameAmount.formatCounts())
+    fs.writeFileSync('games.txt',await gameAmount.formatCounts())
 }
 
 async function newAcc() {
