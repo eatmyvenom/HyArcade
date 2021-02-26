@@ -25,13 +25,13 @@ function arcadeFormatter(status) {
 }
 
 function mapFormatter(txt) {
-    return (''+txt)
+    return txt
         .replace(/ the /ig,'')
         .replace(/_/g,' ')
 }
 
 function modeFormatter(txt) {
-    return (''+txt)
+    return txt
         .toLowerCase()
         .replace(/_/g,' ')
 }
@@ -110,8 +110,8 @@ async function genStatus(name,status) {
             statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
 
         }
-        if(statusstr.length > 32) {
-            statusstr.slice(0,31) + "...";
+        if(statusstr.length > 24) {
+            statusstr = statusstr.slice(0,23) + "...";
         }
         
         str += statusstr + "\n"
