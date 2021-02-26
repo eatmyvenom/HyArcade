@@ -57,59 +57,64 @@ async function genStatus(name,status) {
 
         // start the line with the formatted name
         str += `${pname}: `
+        let statusstr = ''
         if(status.mode == 'LOBBY') {
 
             // seeing LOBBY MAIN is not epic so just lower case it
-            str += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
 
         } else if (status.gameType == 'DUELS') {
 
             // most duels stuff says duels in the mode
             // so no need to send the gameType
-            str += `${status.mode} - ${mapFormatter(status.map)}`
+            statusstr += `${status.mode} - ${mapFormatter(status.map)}`
 
         } else if (status.gameType == 'ARCADE') {
 
-            str += arcadeFormatter(status)
+            statusstr += arcadeFormatter(status)
 
         } else if (status.gameType == 'BEDWARS') {
 
-            str += `Bedwars - ${modeFormatter(status.mode)}`
+            statusstr += `Bedwars - ${modeFormatter(status.mode)}`
 
         } else if (status.gameType == 'TNTGAMES') {
 
             // Tnt games dont have epic names 
-            str += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(status.map)}`
+            statusstr += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(status.map)}`
 
         } else if (status.gameType == 'BUILD_BATTLE') {
 
             // the modes dont have seperate maps, just log the map name
-            str += `${status.map}`
+            statusstr += `${status.map}`
 
         } else if (status.gameType == 'MURDER_MYSTERY') {
 
             // says muder in the mode title
-            str += `${modeFormatter(status.mode)}`
+            statusstr += `${modeFormatter(status.mode)}`
 
         } else if (status.gameType == 'HOUSING') {
 
             // housing doesnt have a mode
-            str += `Housing ${status.map}`
+            statusstr += `Housing ${status.map}`
 
         }
         else if (status.gameType == 'SKYBLOCK'
                 && status.mode == "dynamic") {
 
             // dynamic isnt helpful
-            str += `Skyblock island`
+            statusstr += `Skyblock island`
 
         } else {
 
             // basic formatter for anything i havent covered here
-            str += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
 
         }
-        str += "\n"
+        if(statusstr.length > 32) {
+            statusstr.slice(0,31) + "...";
+        }
+        
+        str += statusstr + "\n"
 
      } else {
         return "";
