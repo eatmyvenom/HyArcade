@@ -308,7 +308,7 @@ async function newAcc() {
     logger.out(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
 }
 
-async function archive(path = './archive/', timeType = utils.day()) {
+async function archive(path = './archive/', timetype = utils.day()) {
     await utils.archiveJson('guild',path,timetype);
     await utils.archiveJson('players',path,timetype);
     await utils.archiveJson('accounts',path,timetype);
