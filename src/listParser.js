@@ -25,4 +25,3 @@ exports.accounts = function accounts() {
     acclist.accounts = acclist.gamers.concat(acclist.others, acclist.afkers, acclist.important ,acclist.yt, acclist.pog)
     return acclist;
 }
-// console.log(exports.accounts())
