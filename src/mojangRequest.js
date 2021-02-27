@@ -5,7 +5,7 @@ const webRequest = require('./webRequest')
 
 async function getUUIDRaw(name) {
     // promisify query
-    let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`)
+    let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
     let data = response.data;
     return data;
 }
