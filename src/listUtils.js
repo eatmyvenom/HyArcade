@@ -45,7 +45,7 @@ async function listDiff(name, timetype, maxamnt) {
     oldlist = oldlist.sort(winsSorter);
 
     for(let i=0;i<oldlist.length;i++) {
-        acc = newlist.find(g=>g.name.toLowerCase()==oldlist[i].name.toLowerCase())
+        acc = newlist.find(g=>g.uuid.toLowerCase()==oldlist[i].uuid.toLowerCase())
         // make sure acc isnt null/undefined
         if (acc) {
             oldlist[i].wins = acc.wins - oldlist[i].wins;
