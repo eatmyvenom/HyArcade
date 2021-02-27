@@ -1,17 +1,13 @@
 const https = require('https');
 const fs = require('fs');
 const { daytime } = require('./utils');
+const webRequest = require('./webRequest')
 
 async function getUUIDRaw(name) {
     // promisify query
-    return new Promise((resolve,reject)=>{
-        https.get(`https://api.mojang.com/users/profiles/minecraft/${name}`, res => {
-            let reply='';
-            res.on('data',d=>{reply+=d});
-            res.on('end',()=>{resolve(reply)});
-            res.on('error',err=>{reject(err)});
-        });
-    });
+    let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`)
+    let data = response.data;
+    return data;
 }
 
 async function getUUID(name) {
