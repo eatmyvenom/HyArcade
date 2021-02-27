@@ -25,3 +25,15 @@ exports.accounts = function accounts() {
     acclist.accounts = acclist.gamers.concat(acclist.others, acclist.afkers, acclist.important ,acclist.yt, acclist.pog)
     return acclist;
 }
+
+exports.guilds = function gld(accs) {
+    let accounts = accs;
+    let Guild = require("./guild")(accounts);
+    let guildlistjson = require("../guildlist.json");
+    let realList = [];
+
+    for (const guild of guildlistjson) {
+        realList.push(new Guild(guild.name,guild.id))
+    }
+    return realList;
+}
