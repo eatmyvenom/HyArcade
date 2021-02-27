@@ -1,17 +1,17 @@
 #!/bin/node
 
 const fs = require('fs');
-const oldAccounts = JSON.parse(fs.readFileSync("./accounts.json"));
 const gameAmount = require("./src/gameAmount")
 const Webhook = require('./src/webhook');
-const { getUUID } = require('./src/mojangRequest');
 const { getAccountWins } = require('./src/hypixelApi');
-const args = process.argv;
 const utils = require('./src/utils');
+const dataGen = require('./src/dataGeneration');
+const { getUUID } = require('./src/mojangRequest');
+const { listNormal, listDiff, stringNormal, stringDaily } = require('./src/listUtils'); 
+const args = process.argv;
 const sleep = utils.sleep;
-const winsSorter = utils.winsSorter;
 const logger = utils.logger;
-const { txtPlayerList, listNormal, listDiff, stringNormal, stringDaily, stringDiff } = require('./src/listUtils'); 
+const winsSorter = utils.winsSorter;
 
 // So you may be wondering, "why use such a horrible config 
 // format venom?" Well you see this is a nodejs project, this
@@ -20,46 +20,15 @@ const { txtPlayerList, listNormal, listDiff, stringNormal, stringDaily, stringDi
 // bloating this project with node modules and shit. 
 const config = require('./config.json');
 
-let { accounts, gamers, afkers } = require("./src/acclist");
+let { accounts } = require("./src/acclist");
 
-// a module that exports an array of player objects from the player module
+// these modules need to use identical accounts lists so that 
+// the data does not need to be updated multiple times
 let players = require("./src/playerlist")(accounts);
 let guilds = require("./src/guildlist")(accounts);
-let status = require("./src/status");
-
-// set flag for force file
-let force = (fs.existsSync("./force") || config.alwaysForce);
 
 async function updateAllAccounts(){
-    // sort this before hand because otherwise everything dies
-    // like seriously holy fuck its so bad
-    // oogle ended up with 21k wins due to this bug
-    // do not remove this
-    // people will notice
-    // just take the extra time
-    // ...
-    // okay maybe its redundant now
-    sortAccounts();
-    oldAccounts.sort(winsSorter);
-
-    for(let i=0;i<accounts.length;i++){
-        // check if player is online before updating wins
-        // or if the force file has been added to make sure
-        // all wins are updated
-        if(status.isOnlineC(accounts[i].uuid) || force) {
-            await accounts[i].updateData();
-        } else {
-            // fallback for new accounts
-            oldver = oldAccounts.find(g=>g.uuid.toLowerCase()==accounts[i].uuid.toLowerCase())
-            if(oldver != undefined) {
-                // use previous wins if the player was not online
-                accounts[i].wins = oldver.wins;
-            } else {
-                await accounts[i].updateData();
-            }
-        }
-    }
-    sortAccounts();
+    accounts = await dataGen.updateAllAccounts(accounts);
 }
 
 async function updateAllPlayers() {
@@ -177,35 +146,7 @@ async function logAD() {
 }
 
 async function genStatus() {
-    // old status
-    let oldstatus = JSON.parse(fs.readFileSync('status.json'));
-    // string at start
-    let gamerstr = '';
-    // string at end
-    let nongamers = '';
-    for(let i = 0; i < accounts.length; i++) {
-        if(gamers.includes(accounts[i])) {
-            gamerstr += await status.txtStatus(accounts[i].uuid);
-        } else if(!force && afkers.includes(accounts[i])) {
-            // get old status instead
-            let old = oldstatus[accounts[i].uuid];
-            if (old == undefined) {
-                nongamers += await status.txtStatus(accounts[i].uuid);
-            } else {
-                nongamers += await status.genStatus(accounts[i].name, oldstatus[accounts[i].uuid]);
-            }
-        } else { // force true or not afker
-            nongamers += await status.txtStatus(accounts[i].uuid);
-        }
-        
-    }
-
-    // write formatted
-    fs.writeFileSync("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers);
-    // write object 
-    fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
-    // store the cache misses
-    fs.writeFileSync("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4));
+    return await dataGen.genStatus();
 }
 
 /**
