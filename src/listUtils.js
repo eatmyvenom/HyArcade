@@ -42,10 +42,15 @@ async function listDiff(name, timetype, maxamnt) {
     let oldlist = JSON.parse(fs.readFileSync(`${name}.${timetype}.json`));
 
     // sort the list before hand
-    oldlist = oldlist.sort(winsSorter);
+    oldlist = oldlist.sort(utils.winsSorter);
 
     for(let i=0;i<oldlist.length;i++) {
-        acc = newlist.find(g=>g.uuid.toLowerCase()==oldlist[i].uuid.toLowerCase())
+        let acc;
+        if (oldlist[i].uuid) {
+            acc = newlist.find(g=> g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase())
+        } else {
+            acc = newlist.find(g=> g.name.toLowerCase() == oldlist[i].name.toLowerCase())
+        }
         // make sure acc isnt null/undefined
         if (acc) {
             oldlist[i].wins = acc.wins - oldlist[i].wins;
@@ -54,7 +59,7 @@ async function listDiff(name, timetype, maxamnt) {
 
     // use old list to ensure that players added today 
     // don't show up with a crazy amount of daily wins
-    oldlist = oldlist.sort(winsSorter);
+    oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0,maxamnt);
 }
 
