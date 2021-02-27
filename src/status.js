@@ -16,7 +16,7 @@ function arcadeFormatter(status) {
     } else if (status.mode == "MINI_WALLS") {
         str += "Mini walls - "
     } else if (status.mode.includes("HIDE_AND_SEEK")) {
-        str += `${status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ").trim()} `
+        str += `${modeFormatter(status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ").trim())} `
     }
     else if (status.mode.includes("ZOMBIES")) {
         str += `Zombies - `
