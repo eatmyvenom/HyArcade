@@ -1,3 +1,5 @@
+const Account = require('./account');
+
 exports.players = function players(acclist) {
     let Player = require('./player')(acclist);
     
@@ -8,3 +10,19 @@ exports.players = function players(acclist) {
     }
     return playerlist;
 }
+
+exports.accounts = function accounts() {
+    let acclistjson = require('../acclist.json');
+    let acclist = {};
+
+    for ( const sublist in acclistjson) {
+        let currentlist = [];
+        for ( const args of acclistjson[sublist] ) {
+            currentlist.push(new Account(args.name, args.wins, args.uuid));
+        }
+        acclist[sublist] = currentlist;
+    }
+    acclist.accounts = acclist.gamers.concat(acclist.others, acclist.afkers, acclist.important ,acclist.yt, acclist.pog)
+    return acclist;
+}
+// console.log(exports.accounts())
