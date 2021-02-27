@@ -27,12 +27,20 @@ function arcadeFormatter(status) {
 
 function mapFormatter(txt) {
     return txt
+        .slice(0,1)
+        .toUpperCase()
+        + txt
+        .slice(1)
         .replace(/ the /ig,'')
         .replace(/_/g,' ')
 }
 
 function modeFormatter(txt) {
     return txt
+        .slice(0,1)
+        .toUpperCase()
+        + txt
+        .slice(1)
         .toLowerCase()
         .replace(/_/g,' ')
 }
