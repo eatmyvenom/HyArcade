@@ -1,3 +1,7 @@
+const fs = require('fs');
+const utils = require('./utils')
+const config = require('../config.json')
+
 async function txtPlayerList(list,maxamnt = -1){
     let str="";
     let len = (maxamnt != -1) ? maxamnt : list.length;
@@ -28,7 +32,7 @@ async function txtPlayerList(list,maxamnt = -1){
 
 async function listNormal(name, maxamnt) {
     let list = JSON.parse(fs.readFileSync(`${name}.json`));
-    list.sort(winsSorter);
+    list.sort(utils.winsSorter);
     list = list.slice(0,maxamnt);
     return list;
 }
