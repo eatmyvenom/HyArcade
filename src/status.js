@@ -2,6 +2,7 @@ const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
 let { accounts } = require('./acclist');
 const { getUUIDStatus } = require('./hypixelApi');
+const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
 
 let rawstatus = {};
 
@@ -128,7 +129,7 @@ async function txtStatus(uuid) {
     let status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later
     rawstatus[uuid]=status;
-    return await genStatus( accounts.find( acc => acc.uuid == uuid ).name, status);
+    return await genStatus( oldAccounts.find( acc => acc.uuid == uuid ).name, status);
 }
 
 function isOnlineC(uuid) {
