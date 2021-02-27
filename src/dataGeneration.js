@@ -3,6 +3,7 @@ const utils = require('./utils');
 const fs = require('fs');
 const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
 let { accounts, gamers, afkers } = require("./acclist");
+const config = require('../config.json')
 
 // set flag for force file
 let force = (fs.existsSync("./force") || config.alwaysForce);
@@ -51,7 +52,7 @@ async function updateAllAccounts(accounts){
     accounts.sort(utils.winsSorter);
     oldAccounts.sort(utils.winsSorter);
 
-    for(let i=0;i<accounts.length;i++){
+    for(let i = 0; i<accounts.length; i++){
         let account = accounts[i];
         // check if player is online before updating wins
         // or if the force file has been added to make sure
@@ -60,7 +61,7 @@ async function updateAllAccounts(accounts){
             await account.updateData();
         } else {
             // fallback for new accounts
-            oldver = oldAccounts.find(acc=>acc.uuid.toLowerCase()==account.uuid.toLowerCase());
+            oldver = oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
             if(oldver != undefined) {
                 // use previous wins if the player was not online
                 account.wins = oldver.wins;
