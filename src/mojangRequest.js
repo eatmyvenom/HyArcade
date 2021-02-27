@@ -1,6 +1,5 @@
-const https = require('https');
 const fs = require('fs');
-const { daytime } = require('./utils');
+const { logger, daytime } = require('./utils');
 const webRequest = require('./webRequest')
 
 async function getUUIDRaw(name) {
