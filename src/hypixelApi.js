@@ -61,7 +61,7 @@ module.exports = class hypixelAPI {
     }
 
     static async getAccountWins(uuid) {
-        let json = this.getAccountData(uuid);
+        let json = await hypixelAPI.getAccountData(uuid);
         // make sure player has stats to be checked
         if(!json.player || !json.player.stats || !json.player.stats.Arcade) {
             return 0;
