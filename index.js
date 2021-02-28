@@ -174,12 +174,13 @@ async function gameAmnt() {
 }
 
 async function newAcc() {
-    let name = args[3]
+    let name = args[3];
+    let category = args[4];
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
-    let formattedname = ('"'+name+'",                         ').slice(0,20)
-    let formattedWins = (wins+',   ').slice(0,4);
-    logger.out(`new Account(${formattedname}${formattedWins}"${uuid}"),`);
+    let acclist = JSON.parse(fs.readFileSync('./acclist.json'));
+    acclist[category].push({ name : name, wins : wins, uuid: uuid })
+    fs.writeFileSync(JSON.stringify(acclist))
 }
 
 async function archive(path = './archive/', timetype = utils.day()) {
