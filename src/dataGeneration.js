@@ -1,6 +1,6 @@
 const status = require('./status');
 const utils = require('./utils');
-const fs = require('fs');
+const fs = require('fs/promises');
 const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
 let { accounts, gamers, afkers } = require("./acclist");
 const config = require('../config.json')
@@ -10,7 +10,7 @@ let force = (fs.existsSync("./force") || config.alwaysForce);
 
 async function genStatus() {
     // old status
-    let oldstatus = JSON.parse(fs.readFileSync('status.json'));
+    let oldstatus = JSON.parse(await fs.readFile('status.json'));
     // string at start
     let gamerstr = '';
     // string at end
@@ -29,15 +29,17 @@ async function genStatus() {
         } else { // force true or not afker
             nongamers += await status.txtStatus(account.uuid);
         }
-        
+
     };
 
-    // write formatted
-    fs.writeFileSync("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers);
-    // write object 
-    fs.writeFileSync("status.json",JSON.stringify(status.rawStatus,null,4));
-    // store the cache misses
-    fs.writeFileSync("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4));
+    await Promise.all([
+        // write formatted
+        fs.writeFile("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers),
+        // write object 
+        fs.writeFile("status.json",JSON.stringify(status.rawStatus,null,4)),
+        // store the cache misses
+        fs.writeFile("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4))
+    ]);
 }
 
 async function updateAllAccounts(accounts){

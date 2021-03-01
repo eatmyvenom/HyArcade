@@ -1,6 +1,6 @@
 #!/bin/node
 
-const fs = require('fs');
+const fs = require('fs/promises');
 const gameAmount = require("./src/gameAmount")
 const Webhook = require('./src/webhook');
 const { getAccountWins } = require('./src/hypixelApi');
@@ -32,9 +32,7 @@ async function updateAllAccounts(){
 }
 
 async function updateAllPlayers() {
-    for(let i=0;i<players.length;i++){
-        await players[i].updateWins();
-    }
+    await Promise.all( players.map ( async player => { await player.updateWins() } ) )
 
     sortPlayers();
 }
@@ -71,9 +69,9 @@ async function save() {
     // get up to date info
     await updateAll();
     // write new data to json files to be used later
-    fs.writeFileSync("accounts.json",JSON.stringify(accounts,null,4));
-    fs.writeFileSync("players.json",JSON.stringify(players,null,4));
-    fs.writeFileSync("guild.json",JSON.stringify(guilds,null,4));
+    await fs.writeFile("accounts.json",JSON.stringify(accounts,null,4));
+    await fs.writeFile("players.json",JSON.stringify(players,null,4));
+    await fs.writeFile("guild.json",JSON.stringify(guilds,null,4));
 }
 
 async function logNormal(name) {
@@ -162,7 +160,7 @@ async function genUUID() {
         // this is the mojang api limitation
         await sleep(config.mojang.sleep);
     }
-    fs.writeFileSync("uuids.json", JSON.stringify(uuids,null,4));
+    await fs.writeFile("uuids.json", JSON.stringify(uuids,null,4));
 }
 
 /**
@@ -170,7 +168,7 @@ async function genUUID() {
  */
 async function gameAmnt() {
     // write to file so that there isnt blank files in website at any point
-    fs.writeFileSync('games.txt',await gameAmount.formatCounts())
+    await fs.writeFile('games.txt',await gameAmount.formatCounts())
 }
 
 async function newAcc() {
@@ -178,15 +176,17 @@ async function newAcc() {
     let category = args[4];
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
-    let acclist = JSON.parse(fs.readFileSync('./acclist.json'));
-    acclist[category].push({ name : name, wins : wins, uuid: uuid })
-    fs.writeFileSync(JSON.stringify(acclist))
+    let acclist = JSON.parse(await fs.readFile('./acclist.json'));
+    acclist[category].push({ name : name, wins : wins, uuid: uuid });
+    await fs.writeFile("./acclist.json",JSON.stringify(acclist,null,4));
 }
 
 async function archive(path = './archive/', timetype = utils.day()) {
-    await utils.archiveJson('guild',path,timetype);
-    await utils.archiveJson('players',path,timetype);
-    await utils.archiveJson('accounts',path,timetype);
+    await Promise.all([
+        utils.archiveJson('guild',path,timetype),
+        utils.archiveJson('players',path,timetype),
+        utils.archiveJson('accounts',path,timetype)
+    ])
 }
 
 async function writeFile(args) {
@@ -194,7 +194,7 @@ async function writeFile(args) {
     let location = args[4];
     let str = await stringNormal(logName) 
 
-    fs.writeFileSync(location,str);
+    await fs.writeFile(location,str);
 }
 
 async function writeFileD(args) {
@@ -202,7 +202,7 @@ async function writeFileD(args) {
     let location = args[4];
     let str = await stringDaily(logName);
 
-    fs.writeFileSync(location,str);
+    await fs.writeFile(location,str);
 }
 
 // wrap main code in async function for nodejs backwards compatability
