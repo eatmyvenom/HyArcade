@@ -4,40 +4,57 @@ const fs = require('fs/promises');
 const ffs = require('fs');
 let { accounts, gamers, afkers } = require("./acclist");
 const config = require('../config.json');
+const hypixelAPI = require('./hypixelApi');
 let force = (ffs.existsSync("./force") || config.alwaysForce);
 
 async function genStatus() {
     // old status
+
+    let statusObj = {};
     let oldstatus = JSON.parse(await fs.readFile('status.json'));
-    // string at start
-    let gamerstr = '';
-    // string at end
-    let nongamers = '';
-    for(const account of accounts) {
+    await Promise.all( accounts.map( async account => {
         if(gamers.includes(account)) {
-            gamerstr += await status.txtStatus(account.uuid);
+            statusObj[account.uuid] = JSON.parse(await hypixelAPI.getStatusRAW(account.uuid)).session;
         } else if(!force && afkers.includes(account)) {
             // get old status instead
             let old = oldstatus[account.uuid];
+            // datafixer
+            old = old.session ? old.session : old;
             if (old == undefined) {
-                nongamers += await status.txtStatus(account.uuid);
+                statusObj[account.uuid] = JSON.parse(await hypixelAPI.getStatusRAW(account.uuid)).session;
             } else {
-                nongamers += await status.genStatus(account.name, oldstatus[account.uuid]);
+                statusObj[account.uuid] = old
             }
         } else { // force true or not afker
-            nongamers += await status.txtStatus(account.uuid);
+            statusObj[account.uuid] = JSON.parse(await hypixelAPI.getStatusRAW(account.uuid)).session;
         }
-
-    };
+    }));
 
     await Promise.all([
-        // write formatted
-        fs.writeFile("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers),
         // write object 
-        fs.writeFile("status.json",JSON.stringify(status.rawStatus,null,4)),
+        fs.writeFile("status.json",JSON.stringify(statusObj,null,4)),
         // store the cache misses
         fs.writeFile("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4))
     ]);
+    await statusTxt();
+}
+
+async function statusTxt() {
+    let gamerstr = "";
+    let nongamers = "";
+
+    let accs = require('../accounts.json')
+
+    let crntstatus = JSON.parse(await fs.readFile('status.json'));
+    for(const account of accs) {
+        if(gamers.find(acc=>acc.uuid==account.uuid)!=undefined) {
+            gamerstr += await status.genStatus(account.name, crntstatus[account.uuid]);
+        } else {
+            nongamers += await status.genStatus(account.name, crntstatus[account.uuid]);
+        }
+    }
+
+    await fs.writeFile("status.txt",`${gamerstr}\nNon gamers:\n\n${nongamers}`,null,4);
 }
 
 async function updateAllAccounts(accounts){
