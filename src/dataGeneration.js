@@ -64,7 +64,7 @@ async function updateAllAccounts(accounts){
             oldver = oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
             if(oldver != undefined) {
                 // use previous wins if the player was not online
-                account.wins = oldver.wins;
+                account = oldver;
             } else {
                 await account.updateData();
             }
