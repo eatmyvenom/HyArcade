@@ -38,9 +38,7 @@ async function updateAllPlayers() {
 }
 
 async function updateAllGuilds() {
-    for(let i=0;i<guilds.length;i++){
-        await guilds[i].updateWins();
-    }
+    await Promise.all( guilds.map ( async guild => { await guild.updateWins() } ) )
 
     sortGuilds();
 }
@@ -53,10 +51,6 @@ function sortPlayers() {
 
 function sortGuilds() {
     guilds.sort(winsSorter);
-}
-
-function sortAccounts() {
-    accounts.sort(winsSorter);
 }
 
 async function updateAll() {
