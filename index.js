@@ -171,8 +171,15 @@ async function newAcc() {
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
     let acclist = JSON.parse(await fs.readFile('./acclist.json'));
-    acclist[category].push({ name : name, wins : wins, uuid: uuid });
-    await fs.writeFile("./acclist.json",JSON.stringify(acclist,null,4));
+    if (acclist[category].find(acc=>acc.uuid == uuid)) {
+        logger.err("Refusing to add duplicate!");
+    } else if (wins < 50) {
+        logger.err("Refusing to add account with under 50 wins!");
+    }else {
+        acclist[category].push({ name : name, wins : wins, uuid: uuid });
+        await fs.writeFile("./acclist.json",JSON.stringify(acclist,null,4));
+        logger.out(`${name} with ${wins} wins added.`);
+    }
 }
 
 async function archive(path = './archive/', timetype = utils.day()) {
