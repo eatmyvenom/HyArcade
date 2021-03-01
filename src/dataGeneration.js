@@ -15,22 +15,22 @@ async function genStatus() {
     let gamerstr = '';
     // string at end
     let nongamers = '';
-    for(let i = 0; i < accounts.length; i++) {
-        if(gamers.includes(accounts[i])) {
-            gamerstr += await status.txtStatus(accounts[i].uuid);
-        } else if(!force && afkers.includes(accounts[i])) {
+    for(const account of accounts) {
+        if(gamers.includes(account)) {
+            gamerstr += await status.txtStatus(account.uuid);
+        } else if(!force && afkers.includes(account)) {
             // get old status instead
-            let old = oldstatus[accounts[i].uuid];
+            let old = oldstatus[account.uuid];
             if (old == undefined) {
-                nongamers += await status.txtStatus(accounts[i].uuid);
+                nongamers += await status.txtStatus(account.uuid);
             } else {
-                nongamers += await status.genStatus(accounts[i].name, oldstatus[accounts[i].uuid]);
+                nongamers += await status.genStatus(account.name, oldstatus[account.uuid]);
             }
         } else { // force true or not afker
-            nongamers += await status.txtStatus(accounts[i].uuid);
+            nongamers += await status.txtStatus(account.uuid);
         }
         
-    }
+    };
 
     // write formatted
     fs.writeFileSync("status.txt",gamerstr + "\nNon gamers: \n\n" + nongamers);
