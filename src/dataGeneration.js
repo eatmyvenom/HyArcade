@@ -1,12 +1,10 @@
 const status = require('./status');
 const utils = require('./utils');
 const fs = require('fs/promises');
-const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
+const ffs = require('fs');
 let { accounts, gamers, afkers } = require("./acclist");
-const config = require('../config.json')
-
-// set flag for force file
-let force = (fs.existsSync("./force") || config.alwaysForce);
+const config = require('../config.json');
+let force = (ffs.existsSync("./force") || config.alwaysForce);
 
 async function genStatus() {
     // old status
@@ -51,6 +49,7 @@ async function updateAllAccounts(accounts){
     // just take the extra time
     // ...
     // okay maybe its redundant now
+    const oldAccounts = JSON.parse(await fs.readFile("./accounts.json"))
     accounts.sort(utils.winsSorter);
     oldAccounts.sort(utils.winsSorter);
 

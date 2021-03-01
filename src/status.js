@@ -137,7 +137,10 @@ async function txtStatus(uuid) {
     let status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later
     rawstatus[uuid]=status;
-    return await genStatus( oldAccounts.find( acc => acc.uuid == uuid ).name, status);
+    let oldver = oldAccounts.find( acc => acc.uuid == uuid )
+    if (oldver) {
+        return await genStatus( oldver.name , status );
+    }
 }
 
 function isOnlineC(uuid) {
