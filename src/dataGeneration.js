@@ -52,8 +52,7 @@ async function updateAllAccounts(accounts){
     accounts.sort(utils.winsSorter);
     oldAccounts.sort(utils.winsSorter);
 
-    for(let i = 0; i<accounts.length; i++){
-        let account = accounts[i];
+    await Promise.all(accounts.map( async account => {
         // check if player is online before updating wins
         // or if the force file has been added to make sure
         // all wins are updated
@@ -69,7 +68,7 @@ async function updateAllAccounts(accounts){
                 await account.updateData();
             }
         }
-    }
+    }));
     accounts.sort(utils.winsSorter);
     return accounts;
 }
