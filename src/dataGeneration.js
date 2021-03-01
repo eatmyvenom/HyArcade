@@ -53,24 +53,35 @@ async function updateAllAccounts(accounts){
     accounts.sort(utils.winsSorter);
     oldAccounts.sort(utils.winsSorter);
 
+    // Yes, this is abusive to the api, but also consider this
+    // SPEEEEEEEEDDD
     await Promise.all(accounts.map( async account => {
         // check if player is online before updating wins
         // or if the force file has been added to make sure
         // all wins are updated
+        oldver = await oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
         if(status.isOnlineC(account.uuid) || force) {
             await account.updateData();
         } else {
-            // fallback for new accounts
-            oldver = oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
             if(oldver != undefined) {
-                // use previous wins if the player was not online
-                account = oldver;
+                // use previous data if player is offline
+                account.wins                = oldver.wins;
+                account.name                = oldver.name;
+                account.uuid                = oldver.uuid;
+                account.rank                = oldver.rank;
+                account.version             = oldver.version;
+                account.mostRecentGameType  = oldver.mostRecentGameType;
+                account.xp                  = oldver.xp;
+                account.hitwQual            = oldver.hitwQual;
+                account.hitwFinal           = oldver.hitwFinal;
+                account.farmhuntWins        = oldver.farmhuntWins;
             } else {
+                // fallback for new accounts
                 await account.updateData();
             }
         }
     }));
-    accounts.sort(utils.winsSorter);
+    await accounts.sort(utils.winsSorter);
     return accounts;
 }
 

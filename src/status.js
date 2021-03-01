@@ -1,6 +1,5 @@
 const fs = require('fs');
 const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
-let { accounts } = require('./acclist');
 const { getUUIDStatus } = require('./hypixelApi');
 const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
 
