@@ -45,7 +45,7 @@ async function statusTxt() {
 
     let accs = require('../accounts.json')
 
-    let crntstatus = JSON.parse(await fs.readFile('status.json'));
+    let crntstatus = require('../status.json');
     for(const account of accs) {
         if(gamers.find(acc=>acc.uuid==account.uuid)!=undefined) {
             gamerstr += await status.genStatus(account.name, crntstatus[account.uuid]);
@@ -66,7 +66,7 @@ async function updateAllAccounts(accounts){
     // just take the extra time
     // ...
     // okay maybe its redundant now
-    const oldAccounts = JSON.parse(await fs.readFile("./accounts.json"))
+    const oldAccounts = require("../accounts.json");
     accounts.sort(utils.winsSorter);
     oldAccounts.sort(utils.winsSorter);
 
@@ -76,8 +76,9 @@ async function updateAllAccounts(accounts){
         // check if player is online before updating wins
         // or if the force file has been added to make sure
         // all wins are updated
-        oldver = await oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
-        if(status.isOnlineC(account.uuid) || force) {
+        let oldver = await oldAccounts.find(acc => acc.uuid.toLowerCase() == account.uuid.toLowerCase());
+        let isGamer = (await accounts.gamers.find(acc=>acc.uuid.toLowerCase()==account.uuid.toLowerCase())) != undefined;
+        if((status.isOnlineC(account.uuid) && isGamer)|| force) {
             await account.updateData();
         } else {
             if(oldver != undefined) {
