@@ -83,16 +83,9 @@ async function updateAllAccounts(accounts){
         } else {
             if(oldver != undefined) {
                 // use previous data if player is offline
-                account.wins                = oldver.wins;
-                account.name                = oldver.name;
-                account.uuid                = oldver.uuid;
-                account.rank                = oldver.rank;
-                account.version             = oldver.version;
-                account.mostRecentGameType  = oldver.mostRecentGameType;
-                account.xp                  = oldver.xp;
-                account.hitwQual            = oldver.hitwQual;
-                account.hitwFinal           = oldver.hitwFinal;
-                account.farmhuntWins        = oldver.farmhuntWins;
+                for (let prop in oldver) {
+                    account[prop] = oldver[prop];
+                }
             } else {
                 // fallback for new accounts
                 await account.updateData();
