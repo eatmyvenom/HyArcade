@@ -1,7 +1,12 @@
 const config = require('../config.json');
 const Discord = require("discord.js");
+const { logger } = require('./utils');
 
-async function sendToDiscord(content, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
+async function sendToDiscord(content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
+    if(content == '') {
+        logger.err('Refusing to send empty message to webhook!');
+        return;
+    }
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send("```" + content + "===========================```", {
         username: config.webhook.username,
@@ -9,7 +14,7 @@ async function sendToDiscord(content, webhookID = config.webhook.id, webhookToke
     });
     // this closes the hook client so the nodejs doesnt hang
     // forever
-    hook.destroy();
+    await hook.destroy();
 }
 
 async function sendToEmbedDiscord(txt,list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
