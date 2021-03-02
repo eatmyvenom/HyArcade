@@ -1,9 +1,14 @@
 const hypixelReq = require('./hypixelReq');
-const { key } = require('../config.json');
 const { getUUIDFromCache , getUUID } = require('./mojangRequest');
 const utils = require('./utils');
 const sleep = utils.sleep;
 const logger = utils.logger;
+const config = require('../config.json');
+let key = config.key;
+
+if(config.mode != 'prod') {
+    key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
+}
 
 module.exports = class hypixelAPI {
 
