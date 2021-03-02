@@ -173,8 +173,8 @@ async function newAcc() {
     let acclist = JSON.parse(await fs.readFile('./acclist.json'));
     if (acclist[category].find(acc=>acc.uuid == uuid)) {
         logger.err("Refusing to add duplicate!");
-    } else if (wins < 50) {
-        logger.err("Refusing to add account with under 50 wins!");
+    } else if (wins < 50 && category == 'gamers') {
+        logger.err("Refusing to add account with under 50 wins to gamers!");
     }else {
         acclist[category].push({ name : name, wins : wins, uuid: uuid });
         await fs.writeFile("./acclist.json",JSON.stringify(acclist,null,4));
