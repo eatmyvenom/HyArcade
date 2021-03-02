@@ -1,4 +1,6 @@
 *.json
+!package.json
+!package-lock.json
 *.sh
 *.txt
 node_modules
