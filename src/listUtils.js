@@ -2,12 +2,12 @@ const fs = require('fs');
 const utils = require('./utils')
 const config = require('../config.json')
 
-async function txtPlayerList(list,maxamnt = -1){
+async function txtPlayerList(list,maxamnt){
     let str="";
-    let len = (maxamnt != -1) ? maxamnt : list.length;
+    let len = (maxamnt != undefined) ? maxamnt : list.length;
     for(let i = 0;i < len; i++){
         // don't print if player has 0 wins
-        if(list[i].wins < 1 || config.printAllWins) continue;
+        if(list[i].wins < 1  && !config.printAllWins) continue;
         
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or nodenative for this
@@ -69,8 +69,8 @@ async function stringNormal(name,maxamnt) {
 }
 
 async function stringDiff(name,timetype, maxamnt) {
-    let list = await listDiff(name,timetype);
-    return await txtPlayerList(list);
+    let list = await listDiff(name,timetype,maxamnt);
+    return await txtPlayerList(list,maxamnt);
 }
 
 async function stringDaily(name,maxamnt) {
