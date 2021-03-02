@@ -4,10 +4,13 @@ const utils = require('./utils');
 const sleep = utils.sleep;
 const logger = utils.logger;
 const config = require('../config.json');
-let key = config.key;
 
-if(config.mode != 'prod') {
-    key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
+function getKey() {
+    let key = config.key;
+    if(config.mode != 'prod') {
+        key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
+    }
+    return key;
 }
 
 module.exports = class hypixelAPI {
@@ -29,7 +32,7 @@ module.exports = class hypixelAPI {
     }
 
     static async basicRequest(page, extraArgs = [] ) {
-        let url = `https://api.hypixel.net/${page}?key=${key}`
+        let url = `https://api.hypixel.net/${page}?key=${getKey()}`
         // this is my handling of adding other args that work
         // in urls, its not perfect but it works well here
         if (extraArgs != []) {
