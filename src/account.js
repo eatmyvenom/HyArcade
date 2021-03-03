@@ -1,4 +1,5 @@
 const { getAccountData } = require('./hypixelApi');
+const optifineRequest = require('./optifineRequest');
 
 module.exports = class Account {
     name="";
@@ -12,6 +13,7 @@ module.exports = class Account {
     hitwFinal=0;
     farmhuntWins=0;
     ranksGifted=0;
+    hasOFCape=false;
 
     constructor(name,wins,uuid){
         this.name = name;
@@ -20,6 +22,16 @@ module.exports = class Account {
     }
 
     async updateData() {
+        await Promise.all([this.updateHypixel(), this.updateOptifine()])
+    }
+
+    async updateOptifine() {
+        let req = new optifineRequest(this.name);
+        await req.makeRequest();
+        this.hasOFCape = req.hasCape();
+    }
+
+    async updateHypixel() {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
         if(json.player && json.player.stats && json.player.stats.Arcade) {
