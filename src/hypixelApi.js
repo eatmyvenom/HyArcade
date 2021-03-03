@@ -24,7 +24,7 @@ module.exports = class hypixelAPI {
         // exists, wait that amount of time in seconds then 
         // make a new request.
         while (apiPoint.headers["retry-after"]) {
-            logger.err(`${utils.daytime()}ERROR: Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
+            logger.err(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
             await sleep(apiPoint.headers["retry-after"] * 1000);
             response = await apiPoint.makeRequest();
         }

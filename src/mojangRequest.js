@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { logger, daytime } = require('./utils');
+const { logger } = require('./utils');
 const webRequest = require('./webRequest')
 
 async function getUUIDRaw(name) {
@@ -17,7 +17,7 @@ async function getUUID(name) {
         return JSON.parse(raw).id
     } else {
         // log the missing username so i can change it
-        logger.err(`${daytime()}ERROR: "${name}" does not exist`)
+        logger.err(`"${name}" does not exist`)
         return undefined;
     }
 }

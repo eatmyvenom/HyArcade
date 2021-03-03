@@ -56,7 +56,7 @@ function error(content) {
     if(config.std.disable) {
         fs.writeFile(config.std.error, content, { flag : 'a' });
     } else {
-	console.error(content);
+	console.error(daytime() + "ERROR: " + content.trim());
     }
 }
 
