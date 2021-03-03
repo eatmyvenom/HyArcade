@@ -68,6 +68,10 @@ module.exports = class hypixelAPI {
         return await hypixelAPI.basicRequest('guild', [{ key : 'id', val : id }]);
     }
 
+    static async getGuildFromPlayer(uuid) {
+        return await hypixelAPI.basicRequest('guild', [{ key : 'player', val : uuid }]);
+    }
+
     static async getAccountWins(uuid) {
         let json = await hypixelAPI.getAccountData(uuid);
         // make sure player has stats to be checked
