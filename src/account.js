@@ -5,6 +5,7 @@ module.exports = class Account {
     name="";
     wins=0;
     uuid="";
+    uuidPosix={};
     rank="";
     version="";
     mostRecentGameType="";
@@ -19,6 +20,12 @@ module.exports = class Account {
         this.name = name;
         this.wins = wins;
         this.uuid = uuid;
+        let timeLow = uuid.slice(0,8);
+        let timeMid = uuid.slice(8,12);
+        let version = uuid.slice(12,16);
+        let varient = uuid.slice(16,20);
+        let node    = uuid.slice(-12);
+        this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
     }
 
     async updateData() {
