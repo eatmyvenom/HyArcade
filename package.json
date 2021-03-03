@@ -9,8 +9,8 @@
     "genuuid": "node . genUUID",
     "games": "node . games",
     "upload": "./upload.sh",
-    "upload-accs":"./upload-accounts.sh",
-    "upload-meta":"./upload-meta.sh"
+    "upload-accs": "./upload-accounts.sh",
+    "upload-meta": "./upload-meta.sh"
   },
   "author": "EatMyVenom",
   "license": "MPL-2.0",
