@@ -3,7 +3,7 @@
 const fs = require('fs/promises');
 const gameAmount = require("./src/gameAmount")
 const Webhook = require('./src/webhook');
-const { getAccountWins } = require('./src/hypixelApi');
+const { getAccountWins, getGuildFromPlayer } = require('./src/hypixelApi');
 const utils = require('./src/utils');
 const dataGen = require('./src/dataGeneration');
 const { getUUID } = require('./src/mojangRequest');
@@ -197,6 +197,27 @@ async function newPlayer() {
     await fs.writeFile('./playerlist.json', JSON.stringify(plrlist,null,4));
     logger.out(`Player "${name}" has been added with ${alts.length} alts.`)
 }
+
+async function newGuild() {
+    let playerUUID = args[3];
+
+    // get data from hypixel
+    let gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
+    
+    // create the actual guild object
+    let id = gldInfo.guild._id;
+    let name = gldInfo.guild.name;
+    let gldObj = { id : id, name : name};
+    
+    // add object to list
+    let gldLst = require('./guildlist.json');
+    gldLst.push(gldObj);
+
+    // write new list
+    await fs.writeFile('./guildlist.json', JSON.stringify(gldLst,null,4));
+    logger.out(`Guild "${name} has been added successfully.`);
+}
+
 async function archive(path = './archive/', timetype = utils.day()) {
     await Promise.all([
         utils.archiveJson('guild',path,timetype),
@@ -246,6 +267,7 @@ async function main(){
         case 'games':       await gameAmnt();                           break;
         case 'newAcc':      await newAcc();                             break;
         case 'newPlr':      await newPlayer();                          break;
+        case 'newGuild':    await newGuild();                           break;
         case 'archive':     await archive();                            break;
     }
 }
