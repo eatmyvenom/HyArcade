@@ -10,6 +10,7 @@ class Guild {
     members = [];
     name = "";
     wins = 0;
+    arcadeEXP = 0;
     uuid = '';
 
     constructor(name ,uuid) {
@@ -25,6 +26,7 @@ class Guild {
     async updateData() {
         let data = await this.getGuild();
         this.name = data.guild.name_lower;
+        this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
 
         let gmembers = data.guild.members; 
         for(let i = 0; i < gmembers.length; i++) {
