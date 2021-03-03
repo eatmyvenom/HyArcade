@@ -182,6 +182,21 @@ async function newAcc() {
     }
 }
 
+async function newPlayer() {
+    let name = args[3];
+    let alts = args.slice(4);
+
+    // construct object
+    let playerObj = { name : name , accs : alts };
+
+    // add object to list
+    let plrlist = require('./playerlist.json');
+    plrlist.push(playerObj);
+
+    // write new list
+    await fs.writeFile('./playerlist.json', JSON.stringify(plrlist,null,4));
+    logger.out(`Player "${name}" has been added with ${alts.length} alts.`)
+}
 async function archive(path = './archive/', timetype = utils.day()) {
     await Promise.all([
         utils.archiveJson('guild',path,timetype),
@@ -230,6 +245,7 @@ async function main(){
         case 'genUUID':     await genUUID();                            break;
         case 'games':       await gameAmnt();                           break;
         case 'newAcc':      await newAcc();                             break;
+        case 'newPlr':      await newPlayer();                          break;
         case 'archive':     await archive();                            break;
     }
 }
