@@ -10,3 +10,4 @@
 ❌ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
 ❌ move to only fs/promises
 ❌ promise.all mode for updating data
+❗️ get list of cosmetics
