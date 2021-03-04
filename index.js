@@ -142,22 +142,6 @@ async function genStatus() {
 }
 
 /**
- * @function - Generate uuids for all the accounts in the accounts list
- * @see acclist
- */
-async function genUUID() {
-    let uuids = {};
-    for(let i = 0; i<accounts.length; i++) {
-        logger.out(accounts[i].name)
-        uuids[accounts[i].name] = await getUUID(accounts[i].name);
-        // make sure no more than 600 requests are sent per 10 minutes
-        // this is the mojang api limitation
-        await sleep(config.mojang.sleep);
-    }
-    await utils.writeJSON('uuids.json', uuids);
-}
-
-/**
  * @function gameAmnt - reflects the amount of players in various hypixel games
  */
 async function gameAmnt() {
@@ -263,7 +247,6 @@ async function main(){
         case 'status':      await genStatus();                          break;
         case 'discord':     await webhookLog(args[3], args[4]);         break;
         case 'discordE':    await webhookEmbed(args[3], args[4]);       break;
-        case 'genUUID':     await genUUID();                            break;
         case 'games':       await gameAmnt();                           break;
         case 'newAcc':      await newAcc();                             break;
         case 'newPlr':      await newPlayer();                          break;

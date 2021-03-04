@@ -21,9 +21,4 @@ async function getUUID(name) {
     }
 }
 
-function getUUIDFromCache(name) {
-    // avoid making mojang requests
-    return require("uuids.json")[name];
-}
-
 module.exports = { getUUIDRaw : getUUIDRaw, getUUID : getUUID, getUUIDFromCache : getUUIDFromCache }

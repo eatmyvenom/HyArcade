@@ -92,23 +92,6 @@ module.exports = class hypixelAPI {
         return json.session;
     }
 
-    static async getStatus(name) {
-        let uuid = await getUUIDFromCache(name);
-        // cache miss
-        if(!uuid) {
-            // store the cache miss for later
-            // this helps me identify name changes
-            utils.cacheMiss.push(name);
-            uuid = getUUID(name);
-        }
-        
-        // account does not exist
-        if(!uuid) {
-            return undefined;
-        }
-        return await hypixelAPI.getUUIDStatus(uuid);
-    }
-
     static async getGameCounts() {
         let data = await hypixelAPI.getGameCountsRAW();
         return JSON.parse(data);
