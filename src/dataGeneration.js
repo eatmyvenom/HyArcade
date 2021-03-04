@@ -5,7 +5,7 @@ const ffs = require('fs');
 let { accounts, gamers, afkers } = require("./acclist");
 const config = require('../config.json');
 const hypixelAPI = require('./hypixelApi');
-let force = (ffs.existsSync("./force") || config.alwaysForce);
+let force = (ffs.existsSync("./force") || config.alwaysForce || process.argv.includes('-f'));
 
 async function genStatus() {
     // old status
