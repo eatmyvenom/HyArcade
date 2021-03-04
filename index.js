@@ -63,9 +63,9 @@ async function save() {
     // get up to date info
     await updateAll();
     // write new data to json files to be used later
-    await fs.writeFile("accounts.json",JSON.stringify(accounts,null,4));
-    await fs.writeFile("players.json",JSON.stringify(players,null,4));
-    await fs.writeFile("guild.json",JSON.stringify(guilds,null,4));
+    await utils.writeJSON("accounts.json", accounts);
+    await utils.writeJSON("players.json", accounts);
+    await utils.writeJSON("guild.json", accounts);
 }
 
 async function logNormal(name) {
@@ -154,7 +154,7 @@ async function genUUID() {
         // this is the mojang api limitation
         await sleep(config.mojang.sleep);
     }
-    await fs.writeFile("uuids.json", JSON.stringify(uuids,null,4));
+    await utils.writeJSON('uuids.json', uuids);
 }
 
 /**
@@ -170,14 +170,14 @@ async function newAcc() {
     let category = args[4];
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
-    let acclist = JSON.parse(await fs.readFile('./acclist.json'));
+    let acclist = require('./acclist.json');
     if (acclist[category].find(acc=>acc.uuid == uuid)) {
         logger.err("Refusing to add duplicate!");
     } else if (wins < 50 && category == 'gamers') {
         logger.err("Refusing to add account with under 50 wins to gamers!");
     }else {
         acclist[category].push({ name : name, wins : wins, uuid: uuid });
-        await fs.writeFile("./acclist.json",JSON.stringify(acclist,null,4));
+        await utils.writeJSON('./acclist.json',acclist);
         logger.out(`${name} with ${wins} wins added.`);
     }
 }
@@ -194,7 +194,7 @@ async function newPlayer() {
     plrlist.push(playerObj);
 
     // write new list
-    await fs.writeFile('./playerlist.json', JSON.stringify(plrlist,null,4));
+    await utils.writeJSON('./playerlist.json', plrlist);
     logger.out(`Player "${name}" has been added with ${alts.length} alts.`)
 }
 
@@ -214,7 +214,7 @@ async function newGuild() {
     gldLst.push(gldObj);
 
     // write new list
-    await fs.writeFile('./guildlist.json', JSON.stringify(gldLst,null,4));
+    await fs.writeFile('./guildlist.json', gldlLst);
     logger.out(`Guild "${name} has been added successfully.`);
 }
 

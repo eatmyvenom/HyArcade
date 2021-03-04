@@ -39,9 +39,13 @@ function day() {
     return Date().replace(/[0-9].:[0-9].:[0-9].*/,'').trim().replace(/ /g,'_');
 }
 
+async function writeJSON(path, json) {
+    await fs.writeFile(path, JSON.stringify(json,null,4));
+} 
+
 async function archiveJson(oldfile, path, timetype) {
     old = JSON.parse(await fs.readFile(oldfile+".json"));
-    await fs.writeFile(`${path}${oldfile}.${timetype}.json`, JSON.stringify(old,null,4));
+    await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 }
 
 function log(content) {
@@ -65,6 +69,7 @@ module.exports = {
     day : day,
     sleep : sleep,
     winsSorter : winsSorter,
+    writeJSON : writeJSON,
     daytime: daytime,
     cacheMiss : [],
     logger : {
