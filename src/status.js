@@ -1,7 +1,6 @@
-const fs = require('fs');
-const cachedStatus = JSON.parse(fs.readFileSync("./status.json"));
+const cachedStatus = require("../status.json");
 const { getUUIDStatus } = require('./hypixelApi');
-const oldAccounts = [].concat(JSON.parse(fs.readFileSync("./accounts.json")));
+const oldAccounts = require("../accounts.json");
 
 let rawstatus = {};
 

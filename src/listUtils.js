@@ -1,4 +1,3 @@
-const fs = require('fs');
 const utils = require('./utils')
 const config = require('../config.json')
 
@@ -31,15 +30,15 @@ async function txtPlayerList(list,maxamnt){
 }
 
 async function listNormal(name, maxamnt) {
-    let list = JSON.parse(fs.readFileSync(`${name}.json`));
+    let list = require(`${name}.json`);
     list.sort(utils.winsSorter);
     list = list.slice(0,maxamnt);
     return list;
 }
 
 async function listDiff(name, timetype, maxamnt) {
-    let newlist = JSON.parse(fs.readFileSync(`${name}.json`));
-    let oldlist = JSON.parse(fs.readFileSync(`${name}.${timetype}.json`));
+    let newlist = require(`${name}.json`);
+    let oldlist = require(`${name}.${timetype}.json`);
 
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);

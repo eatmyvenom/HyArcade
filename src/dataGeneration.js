@@ -1,11 +1,10 @@
 const status = require('./status');
 const utils = require('./utils');
 const fs = require('fs/promises');
-const ffs = require('fs');
 let { accounts, gamers, afkers } = require("./acclist");
 const config = require('../config.json');
 const hypixelAPI = require('./hypixelApi');
-let force = (ffs.existsSync("./force") || config.alwaysForce || process.argv.includes('-f'));
+let force = (utils.fileExists('force') || config.alwaysForce || process.argv.includes('-f'));
 
 async function genStatus() {
     // old status
@@ -32,9 +31,9 @@ async function genStatus() {
 
     await Promise.all([
         // write object 
-        fs.writeFile("status.json",JSON.stringify(statusObj,null,4)),
+        utils.writeJSON('status.json',statusObj),
         // store the cache misses
-        fs.writeFile("cachemiss.json", JSON.stringify(utils.cacheMiss,null,4))
+        utils.writeJSON('cachemiss.json', utils.cacheMiss)
     ]);
     await statusTxt();
 }

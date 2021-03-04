@@ -41,7 +41,16 @@ function day() {
 
 async function writeJSON(path, json) {
     await fs.writeFile(path, JSON.stringify(json,null,4));
-} 
+}
+
+async function fileExists(path) {
+    try {
+        await fs.access(path);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 
 async function archiveJson(oldfile, path, timetype) {
     old = JSON.parse(await fs.readFile(oldfile+".json"));
@@ -70,6 +79,7 @@ module.exports = {
     sleep : sleep,
     winsSorter : winsSorter,
     writeJSON : writeJSON,
+    fileExists : fileExists,
     daytime: daytime,
     cacheMiss : [],
     logger : {

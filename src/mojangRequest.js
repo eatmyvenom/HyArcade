@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { logger } = require('./utils');
 const webRequest = require('./webRequest')
 
@@ -24,7 +23,7 @@ async function getUUID(name) {
 
 function getUUIDFromCache(name) {
     // avoid making mojang requests
-    return JSON.parse(fs.readFileSync("uuids.json"))[name]
+    return require("uuids.json")[name];
 }
 
 module.exports = { getUUIDRaw : getUUIDRaw, getUUID : getUUID, getUUIDFromCache : getUUIDFromCache }
