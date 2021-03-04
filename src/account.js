@@ -1,5 +1,6 @@
 const { getAccountData } = require('./hypixelApi');
 const optifineRequest = require('./optifineRequest');
+const labyRequest = require('./labyRequest');
 
 module.exports = class Account {
     name="";
@@ -15,6 +16,7 @@ module.exports = class Account {
     farmhuntWins=0;
     ranksGifted=0;
     hasOFCape=false;
+    hasLabyCape=false;
 
     constructor(name,wins,uuid){
         this.name = name;
@@ -29,13 +31,19 @@ module.exports = class Account {
     }
 
     async updateData() {
-        await Promise.all([this.updateHypixel(), this.updateOptifine()])
+        await Promise.all([this.updateHypixel(), this.updateOptifine(), this.updateLaby()])
     }
 
     async updateOptifine() {
         let req = new optifineRequest(this.name);
         await req.makeRequest();
         this.hasOFCape = req.hasCape();
+    }
+
+    async updateLaby() {
+        let req = new labyRequest(this.uuidPosix);
+        await req.makeRequest();
+        this.hasLabyCape = req.hasCape();
     }
 
     async updateHypixel() {
