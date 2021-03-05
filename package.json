@@ -1,13 +1,14 @@
 {
   "name": "pg-api",
   "version": "1.1.1",
-  "description": "",
+  "description": "A js endpoint for accessing various party games related hypixel stats",
   "main": "index.js",
   "scripts": {
     "status": "node . status",
     "save": "node . save",
     "genuuid": "node . genUUID",
     "games": "node . games",
+    "clean": "./clean.sh",
     "upload": "./upload.sh",
     "upload-accs": "./upload-accounts.sh",
     "upload-meta": "./upload-meta.sh"
