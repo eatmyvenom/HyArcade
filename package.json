@@ -1,21 +1,26 @@
 {
-  "name": "pg-api",
-  "version": "1.1.1",
-  "description": "A js endpoint for accessing various party games related hypixel stats",
-  "main": "index.js",
-  "scripts": {
-    "status": "node . status",
-    "save": "node . save",
-    "genuuid": "node . genUUID",
-    "games": "node . games",
-    "clean": "./clean.sh",
-    "upload": "./upload.sh",
-    "upload-accs": "./upload-accounts.sh",
-    "upload-meta": "./upload-meta.sh"
-  },
-  "author": "EatMyVenom",
-  "license": "MPL-2.0",
-  "dependencies": {
-    "discord.js": "^12.5.1"
-  }
+    "name": "pg-api",
+    "version": "1.1.2",
+    "description": "A js endpoint for accessing various party games related hypixel stats",
+    "main": "index.js",
+    "scripts": {
+        "status": "node . status",
+        "save": "node . save",
+        "games": "node . games",
+        "names": "node . names",
+        "snap": "node . snap",
+        "archive": "node . archive",
+        "clean": "./clean.sh",
+        "upload": "./upload.sh",
+        "upload-accs": "./upload-accounts.sh",
+        "upload-meta": "./upload-meta.sh"
+    },
+    "author": "EatMyVenom",
+    "license": "MPL-2.0",
+    "dependencies": {
+        "discord.js": "^12.5.1"
+    },
+    "devDependencies": {
+        "prettier": "^2.2.1"
+    }
 }
