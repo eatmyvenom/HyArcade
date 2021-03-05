@@ -84,7 +84,7 @@ async function checkNames() {
     }
 
     await utils.writeJSON("./acclist.json", acclist);
-    logger.out("Name check complete");
+    logger.out("\nName check complete");
 }
 
 async function log(args) {
