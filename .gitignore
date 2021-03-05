@@ -1,6 +1,7 @@
 *.json
 !package.json
 !package-lock.json
+!.prettierrc.json
 *.sh
 *.txt
 node_modules
