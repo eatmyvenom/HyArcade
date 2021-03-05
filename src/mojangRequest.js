@@ -21,4 +21,4 @@ async function getUUID(name) {
     }
 }
 
-module.exports = { getUUIDRaw : getUUIDRaw, getUUID : getUUID, getUUIDFromCache : getUUIDFromCache }
+module.exports = { getUUIDRaw : getUUIDRaw, getUUID : getUUID }
