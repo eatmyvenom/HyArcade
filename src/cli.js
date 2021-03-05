@@ -8,9 +8,13 @@ const logger = utils.logger;
 async function newAcc() {
     let name = args[3];
     let category = args[4];
+    let acclist = require("../acclist.json");
+    if (acclist[category] == undefined) {
+        logger.err('Please input a valid category!')
+        return
+    }
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);
-    let acclist = require("../acclist.json");
     if (acclist[category].find((acc) => acc.uuid == uuid)) {
         logger.err("Refusing to add duplicate!");
     } else if (wins < 50 && category == "gamers") {
