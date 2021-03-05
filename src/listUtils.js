@@ -1,3 +1,4 @@
+const fs = require('fs/promises');
 const utils = require('./utils')
 const config = require('../config.json')
 
@@ -30,15 +31,16 @@ async function txtPlayerList(list,maxamnt){
 }
 
 async function listNormal(name, maxamnt) {
-    let list = require(`${name}.json`);
-    list.sort(utils.winsSorter);
-    list = list.slice(0,maxamnt);
-    return list;
+    let thelist = JSON.parse(await fs.readFile(`${name}.json`));
+    thelist.sort(utils.winsSorter);
+    thelist = thelist.slice(0,maxamnt);
+    return thelist;
 }
 
 async function listDiff(name, timetype, maxamnt) {
-    let newlist = require(`${name}.json`);
-    let oldlist = require(`${name}.${timetype}.json`);
+    // cant use require here
+    let newlist = JSON.parse(await fs.readFile(`${name}.json`));
+    let oldlist = JSON.parse(await fs.readFile(`${name}.${timetype}.json`));
 
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
