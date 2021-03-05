@@ -1,5 +1,4 @@
 const hypixelReq = require('./hypixelReq');
-const { getUUIDFromCache , getUUID } = require('./mojangRequest');
 const utils = require('./utils');
 const sleep = utils.sleep;
 const logger = utils.logger;
