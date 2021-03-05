@@ -4,7 +4,6 @@ const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/webhook");
 const utils = require("./src/utils");
-const dataGen = require("./src/dataGeneration");
 const cli = require("./src/cli");
 const {
     listNormal,
@@ -13,53 +12,26 @@ const {
     stringDaily,
 } = require("./src/listUtils");
 const args = process.argv;
-const winsSorter = utils.winsSorter;
+const cluster = require("./src/cluster");
+const task = require("./src/task");
 
 // So you may be wondering, "why use such a horrible config
 // format venom?" Well you see this is a nodejs project, this
 // means that if I start adding all kinds of modules, this
 // will become an issue really fast. So this is my way of not
 // bloating this project with node modules and shit.
-
-let { accounts } = require("./src/acclist");
-
-// these modules need to use identical accounts lists so that
-// the data does not need to be updated multiple times
-let players = require("./src/playerlist")(accounts);
-let guilds = require("./src/guildlist")(accounts);
+const config = require("./config.json");
 
 async function updateAllAccounts() {
-    accounts = await dataGen.updateAllAccounts(accounts);
+    await task.accounts();
 }
 
 async function updateAllPlayers() {
-    await Promise.all(
-        players.map(async (player) => {
-            await player.updateWins();
-        })
-    );
-
-    sortPlayers();
+    await task.players();
 }
 
 async function updateAllGuilds() {
-    await Promise.all(
-        guilds.map(async (guild) => {
-            await guild.updateWins();
-        })
-    );
-
-    sortGuilds();
-}
-
-// just some wrappers because this was abstracted
-
-function sortPlayers() {
-    players.sort(winsSorter);
-}
-
-function sortGuilds() {
-    guilds.sort(winsSorter);
+    await task.guilds();
 }
 
 async function updateAll() {
@@ -69,12 +41,8 @@ async function updateAll() {
 }
 
 async function save() {
-    // get up to date info
+    // this was all abstracted
     await updateAll();
-    // write new data to json files to be used later
-    await utils.writeJSON("accounts.json", accounts);
-    await utils.writeJSON("players.json", players);
-    await utils.writeJSON("guild.json", guilds);
 }
 
 async function webhookLog(type = "players", maxamnt) {
@@ -112,7 +80,7 @@ async function snap(timeType = "day") {
 }
 
 async function genStatus() {
-    return await dataGen.genStatus();
+    await task.status();
 }
 
 /**
@@ -145,6 +113,12 @@ async function writeFileD(args) {
     let str = await stringDaily(logName);
 
     await fs.writeFile(location, str);
+}
+
+async function clusterHandler() {
+    let cstr = new cluster(config.cluster);
+    await cstr.doTasks();
+    await cstr.uploadData();
 }
 
 // wrap main code in async function for nodejs backwards compatability
@@ -203,6 +177,10 @@ async function main() {
 
         case "games":
             await gameAmnt();
+            break;
+
+        case "cluster":
+            await clusterHandler();
             break;
 
         case "discord":

@@ -10,8 +10,8 @@ async function newAcc() {
     let category = args[4];
     let acclist = require("../acclist.json");
     if (acclist[category] == undefined) {
-        logger.err('Please input a valid category!')
-        return
+        logger.err("Please input a valid category!");
+        return;
     }
     let uuid = await getUUID(name);
     let wins = await getAccountWins(uuid);

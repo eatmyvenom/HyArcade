@@ -6,6 +6,9 @@ const config = require("../config.json");
 
 function getKey() {
     let key = config.key;
+    if (config.cluser) {
+        key = config.clusters[cluster].key;
+    }
     if (config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
     }

@@ -1,4 +1,3 @@
-const https = require("https");
 const webRequest = require("./webRequest");
 
 module.exports = class hypixelReq {
