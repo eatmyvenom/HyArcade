@@ -3,7 +3,7 @@ const methods = { https: require("https"), http: require("http") };
 module.exports = function webRequest(url) {
     return new Promise((resolve, reject) => {
         let method = "http";
-        if (("" + url).startsWith("https")) {
+        if (url.startsWith("https")) {
             method = "https";
         }
         methods[method].get(url, (res) => {

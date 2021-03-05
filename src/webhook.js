@@ -39,7 +39,7 @@ async function sendToEmbedDiscord(
 }
 
 function generateEmbed(list) {
-    list = [].concat(list).filter((item) => item.wins > 0);
+    list = list.filter((item) => item.wins > 0);
 
     let embeds = [];
     let i,

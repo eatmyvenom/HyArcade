@@ -10,7 +10,7 @@ async function txtPlayerList(list, maxamnt) {
         if (list[i].wins < 1 && !config.printAllWins) continue;
 
         // this hack is because js has no real string formatting and its
-        // not worth it to use wasm or nodenative for this
+        // not worth it to use wasm or node native for this
         let num = ("000" + (i + 1)).slice(-3);
 
         let name = (
@@ -18,6 +18,7 @@ async function txtPlayerList(list, maxamnt) {
             list[i].name.slice(1) +
             "                       "
         ).slice(0, 17);
+        //         001) Monkey           : 5900
         str += `${num}) ${name}: ${list[i].wins}\n`;
     }
     return str;

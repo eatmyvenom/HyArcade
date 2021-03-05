@@ -1,5 +1,5 @@
 const hypixelApi = require("./hypixelApi");
-let accounts = []; // type coercing
+let accounts = [];
 
 module.exports = function Gld(acclist) {
     accounts = acclist;
