@@ -10,10 +10,7 @@
         "names": "node . names",
         "snap": "node . snap",
         "archive": "node . archive",
-        "clean": "./clean.sh",
-        "upload": "./upload.sh",
-        "upload-accs": "./upload-accounts.sh",
-        "upload-meta": "./upload-meta.sh"
+        "clean": "./clean.sh"
     },
     "author": "EatMyVenom",
     "license": "MPL-2.0",

@@ -2,6 +2,7 @@
 !package.json
 !package-lock.json
 !.prettierrc.json
+!clean.sh
 *.sh
 *.txt
 node_modules

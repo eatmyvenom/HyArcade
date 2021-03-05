@@ -2,14 +2,15 @@
 ✅ Have accurate leaderboard wins top 100
 ✅ Make list length adjustable
 ✅ add file output options for everything
-❗️ weekly wins
-❗️ monthly wins
 ✅ move acclist.js, guildlist.js, playerlist.js to json files
 ✅ embed mode for discord
-❓ icons for peoples faces
-❌ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
 ✅ move to only fs/promises
 ✅ promise.all mode for updating data
+❗️ weekly wins
+❗️ monthly wins
 ❗️ get list of cosmetics
+❌ Conserve api requests
+❌ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
 ❌ rolling daily
+❓ icons for peoples faces
 ❓ graphs
