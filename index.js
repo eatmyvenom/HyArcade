@@ -148,6 +148,9 @@ async function main(){
         case 'logAD':       await cli.logDaily("accounts");             break;
         case 'logPD':       await cli.logDaily("players");              break;
 
+        case 'log':         await cli.log(args);                        break;
+        case 'logD':        await cli.logD(args);                       break;
+
         case 'write':       await writeFile(args);                      break;
         case 'writeD':      await writeFileD(args);                     break;
 

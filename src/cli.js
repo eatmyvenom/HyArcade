@@ -84,11 +84,27 @@ async function checkNames() {
     logger.out("Name check complete");
 }
 
+async function log(args) {
+    let logName = args[3];
+    let str = await stringNormal(logName) 
+
+    logger.out(str);
+}
+
+async function logD(args) {
+    let logName = args[3];
+    let str = await stringDaily(logName) 
+
+    logger.out(str);
+}
+
 module.exports = {
     newAcc : newAcc,
     newGuild : newGuild,
     newPlayer : newPlayer,
     logNormal : logNormal,
     logDaily : logDaily,
+    log : log,
+    logD : logD,
     checkNames : checkNames
 }
