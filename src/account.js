@@ -7,6 +7,7 @@ module.exports = class Account {
     wins=0;
     uuid="";
     uuidPosix={};
+    internalId="";
     rank="";
     version="";
     mostRecentGameType="";
@@ -17,6 +18,9 @@ module.exports = class Account {
     ranksGifted=0;
     hasOFCape=false;
     hasLabyCape=false;
+    discord="";
+    karma=0;
+    isLoggedIn=false;
 
     constructor(name,wins,uuid){
         this.name = name;
@@ -62,13 +66,21 @@ module.exports = class Account {
             if(json.player.monthlyPackageRank == 'SUPERSTAR') this.rank += "_PLUS";
             if(json.player.rank) this.rank = json.player.rank;
             
+            if(json.player.socialMedia && json.player.socialMedia.links && json.player.socialMedia.links.DISCORD) this.discord = json.player.socialMedia.links.DISCORD;
+
             this.name = json.player.displayname;
+
+            this.internalId = json.player._id;
+
+            this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
 
             this.version = json.player.mcVersionRp;
 
             this.mostRecentGameType = json.player.mostRecentGameType;
 
             this.xp = json.player.networkExp;
+
+            this.karma = json.player.karma;
 
             this.ranksGifted = (json.player.giftingMeta != undefined) ? json.player.giftingMeta.ranksGiven : 0 ;
 
