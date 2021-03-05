@@ -1,31 +1,24 @@
-const fs = require('fs/promises');
-const utils = require('./utils')
-const config = require('../config.json')
+const fs = require("fs/promises");
+const utils = require("./utils");
+const config = require("../config.json");
 
-async function txtPlayerList(list,maxamnt){
-    let str="";
-    let len = (maxamnt != undefined) ? maxamnt : list.length;
-    for(let i = 0;i < len; i++){
+async function txtPlayerList(list, maxamnt) {
+    let str = "";
+    let len = maxamnt != undefined ? maxamnt : list.length;
+    for (let i = 0; i < len; i++) {
         // don't print if player has 0 wins
-        if(list[i].wins < 1  && !config.printAllWins) continue;
-        
+        if (list[i].wins < 1 && !config.printAllWins) continue;
+
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or nodenative for this
-        let num = (
-            "000"
-            +(i+1)
-        )
-        .slice(-3);
-        
+        let num = ("000" + (i + 1)).slice(-3);
+
         let name = (
-            list[i].name
-            	.slice(0,1)
-            	.toUpperCase()
-            + list[i].name
-            	.slice(1)
-            + "                       "
-        ).slice(0,17);
-        str+=`${num}) ${name}: ${list[i].wins}\n`;
+            list[i].name.slice(0, 1).toUpperCase() +
+            list[i].name.slice(1) +
+            "                       "
+        ).slice(0, 17);
+        str += `${num}) ${name}: ${list[i].wins}\n`;
     }
     return str;
 }
@@ -33,7 +26,7 @@ async function txtPlayerList(list,maxamnt){
 async function listNormal(name, maxamnt) {
     let thelist = JSON.parse(await fs.readFile(`${name}.json`));
     thelist.sort(utils.winsSorter);
-    thelist = thelist.slice(0,maxamnt);
+    thelist = thelist.slice(0, maxamnt);
     return thelist;
 }
 
@@ -45,12 +38,16 @@ async function listDiff(name, timetype, maxamnt) {
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
 
-    for(let i=0;i<oldlist.length;i++) {
+    for (let i = 0; i < oldlist.length; i++) {
         let acc;
         if (oldlist[i].uuid) {
-            acc = newlist.find(g=> g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase())
+            acc = newlist.find(
+                (g) => g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase()
+            );
         } else {
-            acc = newlist.find(g=> g.name.toLowerCase() == oldlist[i].name.toLowerCase())
+            acc = newlist.find(
+                (g) => g.name.toLowerCase() == oldlist[i].name.toLowerCase()
+            );
         }
         // make sure acc isnt null/undefined
         if (acc) {
@@ -58,31 +55,31 @@ async function listDiff(name, timetype, maxamnt) {
         }
     }
 
-    // use old list to ensure that players added today 
+    // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
     oldlist = oldlist.sort(utils.winsSorter);
-    return oldlist.slice(0,maxamnt);
+    return oldlist.slice(0, maxamnt);
 }
 
-async function stringNormal(name,maxamnt) {
-    let list = await listNormal(name,maxamnt);
+async function stringNormal(name, maxamnt) {
+    let list = await listNormal(name, maxamnt);
     return await txtPlayerList(list);
 }
 
-async function stringDiff(name,timetype, maxamnt) {
-    let list = await listDiff(name,timetype,maxamnt);
-    return await txtPlayerList(list,maxamnt);
+async function stringDiff(name, timetype, maxamnt) {
+    let list = await listDiff(name, timetype, maxamnt);
+    return await txtPlayerList(list, maxamnt);
 }
 
-async function stringDaily(name,maxamnt) {
-    return await stringDiff(name,'day',maxamnt);
+async function stringDaily(name, maxamnt) {
+    return await stringDiff(name, "day", maxamnt);
 }
 
 module.exports = {
-    txtPlayerList : txtPlayerList,
-    listNormal : listNormal,
-    listDiff : listDiff,
-    stringNormal : stringNormal,
-    stringDiff : stringDiff,
-    stringDaily : stringDaily
-}
+    txtPlayerList: txtPlayerList,
+    listNormal: listNormal,
+    listDiff: listDiff,
+    stringNormal: stringNormal,
+    stringDiff: stringDiff,
+    stringDaily: stringDaily,
+};

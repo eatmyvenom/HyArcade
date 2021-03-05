@@ -1,19 +1,19 @@
-const hypixelApi = require('./hypixelApi');
-let accounts = []; // type coercing 
+const hypixelApi = require("./hypixelApi");
+let accounts = []; // type coercing
 
 module.exports = function Gld(acclist) {
-    accounts=acclist
+    accounts = acclist;
     return Guild;
-}
+};
 
 class Guild {
     members = [];
     name = "";
     wins = 0;
     arcadeEXP = 0;
-    uuid = '';
+    uuid = "";
 
-    constructor(name ,uuid) {
+    constructor(name, uuid) {
         this.uuid = uuid;
         this.name = name;
     }
@@ -28,10 +28,10 @@ class Guild {
         this.name = data.guild.name_lower;
         this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
 
-        let gmembers = data.guild.members; 
-        for(let i = 0; i < gmembers.length; i++) {
+        let gmembers = data.guild.members;
+        for (let i = 0; i < gmembers.length; i++) {
             // find a corrosponding account in my account list
-            let gamer = accounts.find( acc => acc.uuid == gmembers[i].uuid);
+            let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
             // dont add empty accounts
             if (gamer != undefined) {
                 this.members.push(gamer);
@@ -46,7 +46,7 @@ class Guild {
     async updateWins() {
         await this.updateData();
         let newWins = 0;
-        for(let i = 0; i < this.members.length; i++) {
+        for (let i = 0; i < this.members.length; i++) {
             let memberwins = await this.members[i].wins;
             newWins += memberwins;
         }

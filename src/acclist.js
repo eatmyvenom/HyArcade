@@ -1,1 +1,1 @@
-module.exports = require('./listParser').accounts();
+module.exports = require("./listParser").accounts();

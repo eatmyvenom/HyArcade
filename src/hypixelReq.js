@@ -1,8 +1,8 @@
-const https = require('https');
-const webRequest = require('./webRequest');
+const https = require("https");
+const webRequest = require("./webRequest");
 
 module.exports = class hypixelReq {
-    url = '';
+    url = "";
     headers = {};
     constructor(url) {
         this.url = url;
@@ -13,4 +13,4 @@ module.exports = class hypixelReq {
         this.headers = req.headers;
         return req.data;
     }
-}
+};

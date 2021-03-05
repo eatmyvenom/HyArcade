@@ -1,4 +1,4 @@
-const webReq = require('./webRequest');
+const webReq = require("./webRequest");
 
 async function reqOFCape(name) {
     return await webReq(`http://s.optifine.net/capes/${name}.png`);
@@ -27,4 +27,4 @@ module.exports = class optifineRequest {
     getCapePNG() {
         return this.data;
     }
-}
+};

@@ -1,1 +1,1 @@
-module.exports = require('./listParser').guilds;
+module.exports = require("./listParser").guilds;

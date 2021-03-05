@@ -1,4 +1,4 @@
-const webReq = require('./webRequest');
+const webReq = require("./webRequest");
 
 async function reqLabyCape(uuid) {
     return await webReq(`https://dl.labymod.net/capes/${uuid}`);
@@ -27,4 +27,4 @@ module.exports = class labyRequest {
     getCapePNG() {
         return this.data;
     }
-}
+};

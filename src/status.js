@@ -1,151 +1,136 @@
 const cachedStatus = require("../status.json");
-const { getUUIDStatus } = require('./hypixelApi');
+const { getUUIDStatus } = require("./hypixelApi");
 const oldAccounts = require("../accounts.json");
 
 let rawstatus = {};
 
 // arcade is special so it gets its own method
 function arcadeFormatter(status) {
-    let str = '';
+    let str = "";
     if (status.mode == "FARM_HUNT") {
-        str += "Farm hunt - "
+        str += "Farm hunt - ";
     } else if (status.mode == "PVP_CTW") {
-        str += "Ctw - "
+        str += "Ctw - ";
     } else if (status.mode == "MINI_WALLS") {
-        str += "Mini walls - "
+        str += "Mini walls - ";
     } else if (status.mode.includes("HIDE_AND_SEEK")) {
-        str += `${modeFormatter(status.mode.replace("HIDE_AND_SEEK","").toLowerCase().replace("_"," ").trim())} `
+        str += `${modeFormatter(
+            status.mode
+                .replace("HIDE_AND_SEEK", "")
+                .toLowerCase()
+                .replace("_", " ")
+                .trim()
+        )} `;
+    } else if (status.mode.includes("ZOMBIES")) {
+        str += `Zombies - `;
     }
-    else if (status.mode.includes("ZOMBIES")) {
-        str += `Zombies - `
-    }
-    str += `${status.map}`
+    str += `${status.map}`;
     return str;
 }
 
 function mapFormatter(txt) {
-    return txt
-        .slice(0,1)
-        .toUpperCase()
-        + txt
-        .slice(1)
-        .replace(/ the /ig,'')
-        .replace(/_/g,' ')
+    return (
+        txt.slice(0, 1).toUpperCase() +
+        txt.slice(1).replace(/ the /gi, "").replace(/_/g, " ")
+    );
 }
 
 function modeFormatter(txt) {
-    return txt
-        .slice(0,1)
-        .toUpperCase()
-        + txt
-        .slice(1)
-        .toLowerCase()
-        .replace(/_/g,' ')
+    return (
+        txt.slice(0, 1).toUpperCase() +
+        txt.slice(1).toLowerCase().replace(/_/g, " ")
+    );
 }
 
-async function genStatus(name,status) {
-    let str='';
-    
-    if(!status) {
+async function genStatus(name, status) {
+    let str = "";
+
+    if (!status) {
         return "";
     }
 
     // this hack exists because no proper formatter in js
-    let pname = ( name.slice(0,1).toUpperCase() 
-                    + name.slice(1) 
-                    + "                        "
-                )
-                .slice(0,17);
-
+    let pname = (
+        name.slice(0, 1).toUpperCase() +
+        name.slice(1) +
+        "                        "
+    ).slice(0, 17);
 
     // make sure player is online so we dont log a shit ton
     // of offline players doing nothing
     if (status.online) {
-
         // start the line with the formatted name
-        str += `${pname}: `
-        let statusstr = ''
-        if(status.mode == 'LOBBY') {
-
+        str += `${pname}: `;
+        let statusstr = "";
+        if (status.mode == "LOBBY") {
             // seeing LOBBY MAIN is not epic so just lower case it
-            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
-
-        } else if (status.gameType == 'DUELS') {
-
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(
+                status.mode
+            )}`;
+        } else if (status.gameType == "DUELS") {
             // most duels stuff says duels in the mode
             // so no need to send the gameType
-            statusstr += `${status.mode} - ${mapFormatter(status.map)}`
-
-        } else if (status.gameType == 'ARCADE') {
-
-            statusstr += arcadeFormatter(status)
-
-        } else if (status.gameType == 'BEDWARS') {
-
-            statusstr += `Bedwars - ${modeFormatter(status.mode)}`
-
-        } else if (status.gameType == 'TNTGAMES') {
-
-            // Tnt games dont have epic names 
-            statusstr += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(status.map)}`
-
-        } else if (status.gameType == 'BUILD_BATTLE') {
-
+            statusstr += `${status.mode} - ${mapFormatter(status.map)}`;
+        } else if (status.gameType == "ARCADE") {
+            statusstr += arcadeFormatter(status);
+        } else if (status.gameType == "BEDWARS") {
+            statusstr += `Bedwars - ${modeFormatter(status.mode)}`;
+        } else if (status.gameType == "TNTGAMES") {
+            // Tnt games dont have epic names
+            statusstr += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(
+                status.map
+            )}`;
+        } else if (status.gameType == "BUILD_BATTLE") {
             // the modes dont have seperate maps, just log the map name
-            statusstr += `${status.map}`
-
-        } else if (status.gameType == 'MURDER_MYSTERY') {
-
+            statusstr += `${status.map}`;
+        } else if (status.gameType == "MURDER_MYSTERY") {
             // says muder in the mode title
-            statusstr += `${modeFormatter(status.mode)}`
-
-        } else if (status.gameType == 'HOUSING') {
-
+            statusstr += `${modeFormatter(status.mode)}`;
+        } else if (status.gameType == "HOUSING") {
             // housing doesnt have a mode
-            statusstr += `Housing ${status.map}`
-
-        }
-        else if (status.gameType == 'SKYBLOCK'
-                && status.mode == "dynamic") {
-
+            statusstr += `Housing ${status.map}`;
+        } else if (status.gameType == "SKYBLOCK" && status.mode == "dynamic") {
             // dynamic isnt helpful
-            statusstr += `Skyblock island`
-
+            statusstr += `Skyblock island`;
         } else {
-
             // basic formatter for anything i havent covered here
-            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`
-
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(
+                status.mode
+            )}`;
         }
-        if(statusstr.length > 24) {
-            statusstr = statusstr.slice(0,23) + "...";
+        if (statusstr.length > 24) {
+            statusstr = statusstr.slice(0, 23) + "...";
         }
-        
-        str += statusstr + "\n"
 
-     } else {
+        str += statusstr + "\n";
+    } else {
         return "";
     }
 
-    return str
+    return str;
 }
 
 async function txtStatus(uuid) {
     // unfortunately this cant be shortcut
     let status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later
-    rawstatus[uuid]=status;
-    let oldver = oldAccounts.find( acc => acc.uuid == uuid )
+    rawstatus[uuid] = status;
+    let oldver = oldAccounts.find((acc) => acc.uuid == uuid);
     if (oldver) {
-        return await genStatus( oldver.name , status );
+        return await genStatus(oldver.name, status);
     }
 }
 
 function isOnlineC(uuid) {
-    if(cachedStatus[uuid]!=undefined) {
+    if (cachedStatus[uuid] != undefined) {
         return cachedStatus[uuid].online;
     }
     return true;
 }
 
-module.exports = { txtStatus : txtStatus, genStatus: genStatus, rawStatus : rawstatus, isOnlineC: isOnlineC }
+module.exports = {
+    txtStatus: txtStatus,
+    genStatus: genStatus,
+    rawStatus: rawstatus,
+    isOnlineC: isOnlineC,
+};
