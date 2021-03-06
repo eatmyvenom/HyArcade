@@ -22,7 +22,7 @@ class clusterClient {
 
     async doTasks() {
         for (let t of this.tasks) {
-            logger.out("Executing task "+t);
+            logger.out("Executing task " + t);
             this.files.concat(await task[t]());
         }
     }

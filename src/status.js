@@ -126,7 +126,7 @@ function isOnlineC(uuid) {
     if (cachedStatus[uuid] != undefined) {
         return cachedStatus[uuid].online == true;
     }
-    logger.err("Couldn't find UUID '"+uuid+"' in status!")
+    logger.err("Couldn't find UUID '" + uuid + "' in status!");
     return true;
 }
 

@@ -5,9 +5,7 @@ let { accounts, gamers, afkers } = require("./acclist");
 const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
 const { logger } = require("./utils");
-let force =
-    utils.fileExists("force") ||
-    config.alwaysForce
+let force = utils.fileExists("force") || config.alwaysForce;
 
 async function genStatus() {
     // old status
@@ -73,7 +71,10 @@ async function statusTxt() {
         }
     }
 
-    await fs.writeFile("status.txt",`${gamerstr}\nNon gamers:\n\n${nongamers}`);
+    await fs.writeFile(
+        "status.txt",
+        `${gamerstr}\nNon gamers:\n\n${nongamers}`
+    );
 }
 
 async function updateAllAccounts() {
@@ -113,7 +114,9 @@ async function updateAllAccounts() {
                         account[prop] = oldver[prop];
                     }
                 } else {
-                    logger.err(`Couldn't locate old version for account "${account.name}"`)
+                    logger.err(
+                        `Couldn't locate old version for account "${account.name}"`
+                    );
                     // fallback for new accounts
                     await account.updateData();
                 }

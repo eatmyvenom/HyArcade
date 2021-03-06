@@ -46,7 +46,7 @@ async function writeJSON(path, json) {
 }
 
 function fileExists(path) {
-    return require('fs').existsSync(path);
+    return require("fs").existsSync(path);
 }
 
 async function archiveJson(oldfile, path, timetype) {
