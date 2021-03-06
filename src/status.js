@@ -1,6 +1,7 @@
 const cachedStatus = require("../status.json");
 const { getUUIDStatus } = require("./hypixelApi");
-const oldAccounts = require("../accounts.json");
+let { accounts } = require("./acclist");
+const { logger } = require("./utils");
 
 let rawstatus = {};
 
@@ -115,7 +116,7 @@ async function txtStatus(uuid) {
     let status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later
     rawstatus[uuid] = status;
-    let oldver = oldAccounts.find((acc) => acc.uuid == uuid);
+    let oldver = accounts.find((acc) => acc.uuid == uuid);
     if (oldver) {
         return await genStatus(oldver.name, status);
     }
@@ -123,8 +124,9 @@ async function txtStatus(uuid) {
 
 function isOnlineC(uuid) {
     if (cachedStatus[uuid] != undefined) {
-        return cachedStatus[uuid].online;
+        return cachedStatus[uuid].online == true;
     }
+    logger.err("Couldn't find UUID '"+uuid+"' in status!")
     return true;
 }
 

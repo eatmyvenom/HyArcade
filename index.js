@@ -1,4 +1,4 @@
-#!/bin/node
+#!/bin/env node
 
 const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");

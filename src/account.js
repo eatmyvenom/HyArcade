@@ -1,6 +1,7 @@
 const { getAccountData } = require("./hypixelApi");
 const optifineRequest = require("./optifineRequest");
 const labyRequest = require("./labyRequest");
+const { logger } = require("./utils");
 
 module.exports = class Account {
     name = "";
@@ -40,6 +41,7 @@ module.exports = class Account {
             this.updateOptifine(),
             this.updateLaby(),
         ]);
+        logger.out(this.name);
     }
 
     async updateOptifine() {

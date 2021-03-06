@@ -45,13 +45,8 @@ async function writeJSON(path, json) {
     await fs.writeFile(path, JSON.stringify(json, null, 4));
 }
 
-async function fileExists(path) {
-    try {
-        await fs.access(path);
-        return true;
-    } catch (e) {
-        return false;
-    }
+function fileExists(path) {
+    return require('fs').existsSync(path);
 }
 
 async function archiveJson(oldfile, path, timetype) {

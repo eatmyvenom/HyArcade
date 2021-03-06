@@ -50,7 +50,7 @@ async function stats() {
 
 async function status() {
     await dataGen.genStatus();
-    return ["status.json", "status.txt"];
+    return await ["status.json", "status.txt"];
 }
 
 async function discord() {

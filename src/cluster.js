@@ -6,6 +6,7 @@ const config = require("../config.json");
 const Rsync = require("rsync");
 const task = require("./task");
 const utils = require("./utils");
+const { logger } = require("./utils");
 
 class clusterClient {
     name = "";
@@ -21,6 +22,7 @@ class clusterClient {
 
     async doTasks() {
         for (let t of this.tasks) {
+            logger.out("Executing task "+t);
             this.files.concat(await task[t]());
         }
     }

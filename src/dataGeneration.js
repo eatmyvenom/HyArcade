@@ -4,10 +4,10 @@ const fs = require("fs/promises");
 let { accounts, gamers, afkers } = require("./acclist");
 const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
+const { logger } = require("./utils");
 let force =
     utils.fileExists("force") ||
-    config.alwaysForce ||
-    process.argv.includes("-f");
+    config.alwaysForce
 
 async function genStatus() {
     // old status
@@ -54,7 +54,7 @@ async function statusTxt() {
     let gamerstr = "";
     let nongamers = "";
 
-    let accs = require("../accounts.json");
+    let accs = require("./acclist").accounts;
 
     let crntstatus = require("../status.json");
     for (const account of accs) {
@@ -73,15 +73,10 @@ async function statusTxt() {
         }
     }
 
-    await fs.writeFile(
-        "status.txt",
-        `${gamerstr}\nNon gamers:\n\n${nongamers}`,
-        null,
-        4
-    );
+    await fs.writeFile("status.txt",`${gamerstr}\nNon gamers:\n\n${nongamers}`);
 }
 
-async function updateAllAccounts(accounts) {
+async function updateAllAccounts() {
     // sort this before hand because otherwise everything dies
     // like seriously holy fuck its so bad
     // oogle ended up with 21k wins due to this bug
@@ -118,6 +113,7 @@ async function updateAllAccounts(accounts) {
                         account[prop] = oldver[prop];
                     }
                 } else {
+                    logger.err(`Couldn't locate old version for account "${account.name}"`)
                     // fallback for new accounts
                     await account.updateData();
                 }
