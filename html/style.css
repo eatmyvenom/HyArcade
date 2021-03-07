@@ -1,0 +1,47 @@
+h3 {
+    display: inline-block;
+}
+div {
+    white-space: pre;
+    display: inline-block;
+    width: auto !important;
+    padding: 10px;
+    transition: all 0.25s ease-in-out;
+}
+div:hover {
+    box-shadow: -2px -2px 5px 1px purple,
+        2px 2px 5px 1px rgb(55, 55, 235);
+}
+aside {
+    position: fixed;
+    float: right;
+    right: 1vw;
+    height: 100vh;
+    overflow: auto;
+    padding: 8px;
+}
+div {
+    border: 2px solid transparent;
+    border-image: linear-gradient(
+        to bottom right,
+        purple,
+        rgb(55, 55, 235)
+    );
+    border-image-slice: 1;
+}
+aside div {
+    display: block;
+}
+nav {
+    position: fixed;
+    top: 0;
+    height: 40px;
+    background: #181c30;
+    z-index: 10;
+}
+main {
+    background: #181c30;
+    position: absolute;
+    top: 40px;
+    width: 49vw; /*border-right: 1px solid white;/**/
+}
