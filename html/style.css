@@ -44,3 +44,7 @@ main {
     top: 40px;
     width: 49vw; 
 }
+
+nav button[off] {
+    background: #0066cc;
+}

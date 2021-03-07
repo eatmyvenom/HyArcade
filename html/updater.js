@@ -26,11 +26,21 @@ function toggleDisplay(sel) {
     }
 }
 
+function toggleBtn(sel) {
+    var e = document.querySelector(sel);
+    if(e.hasAttribute("off")) {
+        e.removeAttribute("off")
+    } else {
+        e.setAttribute("off","");
+    }
+}
+
 function toggleCombined() {
     toggleDisplay(".lbh");
     toggleDisplay(".lb");
     toggleDisplay(".dayh");
     toggleDisplay(".daily");
+    toggleBtn(".lbb");
 }
 
 function toggleGuilds() {
@@ -38,6 +48,7 @@ function toggleGuilds() {
     toggleDisplay(".guild");
     toggleDisplay(".glddh");
     toggleDisplay(".guildday");
+    toggleBtn(".gldb");
 }
 
 function toggleNormal() {
@@ -45,6 +56,7 @@ function toggleNormal() {
     toggleDisplay(".accounts");
     toggleDisplay(".accdh");
     toggleDisplay(".accountsday");
+    toggleBtn(".accb");
 }
 
 main();
