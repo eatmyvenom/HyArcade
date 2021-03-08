@@ -1,9 +1,6 @@
 const hypixelReq = require("./hypixelReq");
-const utils = require("./utils");
-const sleep = utils.sleep;
-const logger = utils.logger;
+const { sleep, logger } = require("./utils");
 const config = require("../config.json");
-let limited = false;
 
 function getKey() {
     let key = config.key;
@@ -26,15 +23,13 @@ module.exports = class hypixelAPI {
         // exists, wait that amount of time in seconds then
         // make a new request.
         while (apiPoint.headers["retry-after"]) {
-            if (!limited) {
+            if (config.logRateLimit) {
                 logger.err(
                     `Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`
                 );
-                limited = true;
             }
             await sleep(apiPoint.headers["retry-after"] * 1000);
             response = await apiPoint.makeRequest();
-            limited = false;
         }
         return response;
     }

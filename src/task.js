@@ -1,8 +1,5 @@
 const Webhook = require("./webhook");
-const {
-    stringNormal,
-    stringDaily,
-} = require("./listUtils");
+const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
 const dataGen = require("./dataGeneration");
 
