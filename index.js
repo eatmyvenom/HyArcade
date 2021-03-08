@@ -203,6 +203,10 @@ async function main() {
         case "newGuild":
             await cli.newGuild();
             break;
+
+        case "getUUID":
+            await cli.getUUID(args);
+            break;
     }
 }
 

@@ -2,28 +2,31 @@ const { getUUID } = require("./mojangRequest");
 const { getAccountWins, getGuildFromPlayer } = require("./hypixelApi");
 const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
+const mojangRequest = require("./mojangRequest");
 const args = process.argv;
 const logger = utils.logger;
 
 async function newAcc() {
-    let name = args[3];
-    let category = args[4];
+    let category = args[args.length - 1];
     let acclist = require("../acclist.json");
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
         return;
     }
-    let uuid = await getUUID(name);
-    let wins = await getAccountWins(uuid);
-    if (acclist[category].find((acc) => acc.uuid == uuid)) {
-        logger.err("Refusing to add duplicate!");
-    } else if (wins < 50 && category == "gamers") {
-        logger.err("Refusing to add account with under 50 wins to gamers!");
-    } else {
-        acclist[category].push({ name: name, wins: wins, uuid: uuid });
-        await utils.writeJSON("./acclist.json", acclist);
-        logger.out(`${name} with ${wins} wins added.`);
+    let nameArr = args.slice(3, -1);
+    for (let name of nameArr) {
+        let uuid = await getUUID(name);
+        let wins = await getAccountWins(uuid);
+        if (acclist[category].find((acc) => acc.uuid == uuid)) {
+            logger.err("Refusing to add duplicate!");
+        } else if (wins < 50 && category == "gamers") {
+            logger.err("Refusing to add account with under 50 wins to gamers!");
+        } else {
+            acclist[category].push({ name: name, wins: wins, uuid: uuid });
+            logger.out(`${name} with ${wins} wins added.`);
+        }
     }
+    await utils.writeJSON("./acclist.json", acclist);
 }
 
 async function newPlayer() {
@@ -77,10 +80,7 @@ async function checkNames() {
     for (let list in acclist) {
         for (let acc of acclist[list]) {
             real = realAccs.find((a) => a.uuid == acc.uuid);
-            if (
-                real != undefined &&
-                acc.name.toLowerCase() != real.name.toLowerCase()
-            ) {
+            if (real != undefined && acc.name != real.name) {
                 logger.out(`${acc.name} -> ${real.name}`);
                 acc.name = real.name;
             }
@@ -105,6 +105,12 @@ async function logD(args) {
     logger.out(str);
 }
 
+async function getUUIDCli(args) {
+    let name = args[3];
+    let uuid = await mojangRequest.getUUIDRaw(name);
+    logger.out(`${name}'s uuid is ${uuid}`);
+}
+
 module.exports = {
     newAcc: newAcc,
     newGuild: newGuild,
@@ -114,4 +120,5 @@ module.exports = {
     log: log,
     logD: logD,
     checkNames: checkNames,
+    getUUID: getUUIDCli,
 };
