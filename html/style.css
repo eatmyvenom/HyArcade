@@ -9,8 +9,7 @@ div {
     transition: all 0.25s ease-in-out;
 }
 div:hover {
-    box-shadow: -2px -2px 5px 1px purple,
-        2px 2px 5px 1px rgb(55, 55, 235);
+    box-shadow: -2px -2px 5px 1px purple, 2px 2px 5px 1px rgb(55, 55, 235);
 }
 aside {
     position: fixed;
@@ -22,11 +21,7 @@ aside {
 }
 div {
     border: 2px solid transparent;
-    border-image: linear-gradient(
-        to bottom right,
-        purple,
-        rgb(55, 55, 235)
-    );
+    border-image: linear-gradient(to bottom right, purple, rgb(55, 55, 235));
     border-image-slice: 1;
 }
 aside div {
@@ -42,9 +37,24 @@ nav {
 main {
     position: absolute;
     top: 40px;
-    width: 49vw; 
+    width: 49vw;
 }
 
 nav button[off] {
     background: #0066cc;
+}
+
+.lenipt {
+    position: absolute;
+    right: 0;
+    height: 40px;
+}
+
+input {
+    background: #181c30;
+    border: 2px solid #44a3e7;
+    color: white;
+    height: inherit;
+    outline: none !important;
+    max-width: 6vw;
 }

@@ -1,7 +1,12 @@
+var maxLength = 100;
+
 function addstuff(ext, clazzz) {
     fetch("http://eatmyvenom.me/share/" + ext).then((res) => {
         res.text().then((txt) => {
-            document.querySelector(clazzz).innerHTML = txt.trim();
+            var arr = txt.split("\n");
+            var len = Math.min(arr.length, maxLength);
+            var newArr = arr.slice(0, len);
+            document.querySelector(clazzz).innerHTML = newArr.join("\n").trim();
         });
     });
 }
@@ -28,10 +33,10 @@ function toggleDisplay(sel) {
 
 function toggleBtn(sel) {
     var e = document.querySelector(sel);
-    if(e.hasAttribute("off")) {
-        e.removeAttribute("off")
+    if (e.hasAttribute("off")) {
+        e.removeAttribute("off");
     } else {
-        e.setAttribute("off","");
+        e.setAttribute("off", "");
     }
 }
 
@@ -57,6 +62,10 @@ function toggleNormal() {
     toggleDisplay(".accdh");
     toggleDisplay(".accountsday");
     toggleBtn(".accb");
+}
+
+function maxValChange(value) {
+    maxLength = value;
 }
 
 main();

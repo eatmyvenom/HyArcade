@@ -7,10 +7,7 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="http://eatmyvenom.me/style.css" />
-        <link
-            rel="stylesheet"
-            href="http://eatmyvenom.me/share/partygames/style.css"
-        />
+        <link rel="stylesheet" href="style.css" />
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -19,12 +16,21 @@
             <button class="lbb" onClick="toggleCombined()">Combined</button>
             <button class="gldb" onClick="toggleGuilds()">Guilds</button>
             <button class="accb" onClick="toggleNormal()">Normal</button>
+            <span class="lenipt">
+                Max Length:
+                <input
+                    oninput="maxValChange(this.value)"
+                    type="number"
+                    value="100"
+                />
+            </span>
         </nav>
         <aside>
-            <br /><br />
-            <h3>Status</h3>
+            <br />
+            <br />
+            <h3 class="statush">Status</h3>
             <div class="status"></div>
-            <h3>Player counts</h3>
+            <h3 class="countsh">Player counts</h3>
             <div class="counts"></div>
         </aside>
         <main>
