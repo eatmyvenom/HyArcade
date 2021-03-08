@@ -1,7 +1,5 @@
 const Webhook = require("./webhook");
 const {
-    listNormal,
-    listDiff,
     stringNormal,
     stringDaily,
 } = require("./listUtils");
