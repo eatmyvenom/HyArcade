@@ -1,6 +1,9 @@
 const fs = require("fs/promises");
 const utils = require("./utils");
+const { getUUID } = require("./mojangRequest");
+const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
+const logger = utils.logger;
 
 async function txtPlayerList(list, maxamnt) {
     let str = "";
@@ -76,6 +79,30 @@ async function stringDaily(name, maxamnt) {
     return await stringDiff(name, "day", maxamnt);
 }
 
+async function addAccounts(category, names) {
+    let acclist = require("../acclist.json");
+    if (acclist[category] == undefined) {
+        logger.err("Please input a valid category!");
+        return;
+    }
+    let nameArr = names;
+    for (let name of nameArr) {
+        let uuid = await getUUID(name);
+        if (uuid == undefined) continue;
+        
+        let wins = await getAccountWins(uuid);
+        if (acclist[category].find((acc) => acc.uuid == uuid)) {
+            logger.err("Refusing to add duplicate!");
+        } else if (wins < 50 && category == "gamers") {
+            logger.err("Refusing to add account with under 50 wins to gamers!");
+        } else {
+            acclist[category].push({ name: name, wins: wins, uuid: uuid });
+            logger.out(`${name} with ${wins} wins added.`);
+        }
+    }
+    await utils.writeJSON("./acclist.json", acclist);
+}
+
 module.exports = {
     txtPlayerList: txtPlayerList,
     listNormal: listNormal,
@@ -83,4 +110,5 @@ module.exports = {
     stringNormal: stringNormal,
     stringDiff: stringDiff,
     stringDaily: stringDaily,
+    addAccounts: addAccounts,
 };

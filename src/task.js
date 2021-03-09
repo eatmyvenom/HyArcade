@@ -2,6 +2,7 @@ const Webhook = require("./webhook");
 const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
 const dataGen = require("./dataGeneration");
+const DiscordBot = require('./discord/bot');
 
 // these modules need to use identical accounts lists so that
 // the data does not need to be updated multiple times
@@ -48,7 +49,7 @@ async function status() {
     return await ["status.json", "status.txt"];
 }
 
-async function discord() {
+async function webhook() {
     // send webhook messages, this is only currently
     // in a small server and only does the unofficial
     // leaderboard, this can be easily changed and if
@@ -61,11 +62,16 @@ async function discord() {
     return [];
 }
 
+async function discord() {
+    await DiscordBot();
+}
+
 module.exports = {
     accounts: accs,
     players: plrs,
     guilds: glds,
     stats: stats,
     status: status,
-    discord: discord,
+    webhook: webhook,
+    discord: discord
 };

@@ -83,6 +83,10 @@ async function genStatus() {
     await task.status();
 }
 
+async function discordBot() {
+    await task.discord();
+}
+
 /**
  * @function gameAmnt - reflects the amount of players in various hypixel games
  */
@@ -206,6 +210,10 @@ async function main() {
 
         case "getUUID":
             await cli.getUUID(args);
+            break;
+
+        case "bot":
+            await discordBot();
             break;
     }
 }

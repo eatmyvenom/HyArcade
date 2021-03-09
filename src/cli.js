@@ -1,6 +1,5 @@
-const { getUUID } = require("./mojangRequest");
-const { getAccountWins, getGuildFromPlayer } = require("./hypixelApi");
-const { stringNormal, stringDaily } = require("./listUtils");
+const { getGuildFromPlayer } = require("./hypixelApi");
+const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
 const utils = require("./utils");
 const mojangRequest = require("./mojangRequest");
 const args = process.argv;
@@ -8,25 +7,8 @@ const logger = utils.logger;
 
 async function newAcc() {
     let category = args[args.length - 1];
-    let acclist = require("../acclist.json");
-    if (acclist[category] == undefined) {
-        logger.err("Please input a valid category!");
-        return;
-    }
     let nameArr = args.slice(3, -1);
-    for (let name of nameArr) {
-        let uuid = await getUUID(name);
-        let wins = await getAccountWins(uuid);
-        if (acclist[category].find((acc) => acc.uuid == uuid)) {
-            logger.err("Refusing to add duplicate!");
-        } else if (wins < 50 && category == "gamers") {
-            logger.err("Refusing to add account with under 50 wins to gamers!");
-        } else {
-            acclist[category].push({ name: name, wins: wins, uuid: uuid });
-            logger.out(`${name} with ${wins} wins added.`);
-        }
-    }
-    await utils.writeJSON("./acclist.json", acclist);
+    await addAccounts(category, nameArr);
 }
 
 async function newPlayer() {
