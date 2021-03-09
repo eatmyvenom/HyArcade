@@ -1,0 +1,59 @@
+{
+    "key": "00000000-0000-0000-0000-000000000000",
+    "altkeys": [
+        "00000000-0000-0000-0000-000000000000",
+        "00000000-0000-0000-0000-000000000000"
+    ],
+    "mode": "prod",
+    "alwaysForce": false,
+    "logRateLimit": true,
+    "cluster":"main",
+    "sortDirection": "mostleast",
+    "printAllWins": false,
+    "showDaytime": true,
+    "cluserTarget" : "server:/path-to-pg-api",
+    "clusters": {
+        "main": {
+            "name" : "main",
+            "key" : "00000000-0000-0000-0000-000000000000",
+            "tasks" : [
+                "stats"
+            ]
+        },
+        "pi" : {
+            "name" : "pi",
+            "key" : "00000000-0000-0000-0000-000000000000",
+            "tasks" : [
+                "status"
+            ]
+        },
+        "serverbot": {
+            "name" : "serverbot",
+            "key" : "00000000-0000-0000-0000-000000000000",
+            "tasks" : [
+                "discord"
+            ]
+        }
+    },
+    "discord":{
+        "token": "00000000000000000000000000000000000000000000000000000000000",
+        "listenChannels": [
+            "000000000000000000",
+            "000000000000000000"
+        ]
+    },
+    "webhook": {
+        "id": "000000000000000000",
+        "token": "00000000000000000000000000000000000000000000000000000000000",
+        "username": "Bot",
+        "pfp": "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png"
+    },
+    "mojang": {
+        "sleep": 1000
+    },
+    "std": {
+        "disable": false,
+        "out": "stdout.log",
+        "err": "stderr.log"
+    }
+}
