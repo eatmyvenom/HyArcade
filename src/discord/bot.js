@@ -39,8 +39,10 @@ module.exports = function doBot() {
             // sanitize
             let firstWord = msg.content.split(" ")[0];
             if (!msg.author.bot && isValidIGN(firstWord)) {
+                let acclist = require('../../acclist.json')
+                let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "gamers"
                 logger.out(firstWord);
-                await addAccounts("gamers", [firstWord]);
+                await addAccounts(category, [firstWord]);
             }
         }
     });
