@@ -24,8 +24,8 @@ module.exports = function doBot() {
             txt != "ofc" &&
             txt != "get" &&
             txt != "are" &&
-            txt != "gamer" && 
-            txt != "yea" && 
+            txt != "gamer" &&
+            txt != "yea" &&
             txt != "okay"
         );
     }

@@ -89,7 +89,7 @@ async function addAccounts(category, names) {
     for (let name of nameArr) {
         let uuid = await getUUID(name);
         if (uuid == undefined) continue;
-        
+
         let wins = await getAccountWins(uuid);
         if (acclist[category].find((acc) => acc.uuid == uuid)) {
             logger.err("Refusing to add duplicate!");

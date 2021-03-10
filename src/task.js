@@ -2,7 +2,7 @@ const Webhook = require("./webhook");
 const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
 const dataGen = require("./dataGeneration");
-const DiscordBot = require('./discord/bot');
+const DiscordBot = require("./discord/bot");
 
 // these modules need to use identical accounts lists so that
 // the data does not need to be updated multiple times
@@ -73,5 +73,5 @@ module.exports = {
     stats: stats,
     status: status,
     webhook: webhook,
-    discord: discord
+    discord: discord,
 };
