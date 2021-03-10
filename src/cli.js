@@ -11,6 +11,18 @@ async function newAcc() {
     await addAccounts(category, nameArr);
 }
 
+async function moveAcc() {
+    let oldName = args[3];
+    let oldCategory = args[4];
+    let newCategory = args[5];
+    let acclist = require('../acclist.json');
+    let oldVer = acclist[oldCategory].find(acc=>acc.name==oldName);
+
+    acclist[newCategory].push(oldVer);
+    acclist[oldCategory] = acclist[oldCategory].filter(acc=>acc.name!=oldName);
+    utils.writeJSON('./acclist.json',acclist);
+}
+
 async function newPlayer() {
     let name = args[3];
     let alts = args.slice(4);
@@ -103,4 +115,5 @@ module.exports = {
     logD: logD,
     checkNames: checkNames,
     getUUID: getUUIDCli,
+    moveAcc: moveAcc
 };

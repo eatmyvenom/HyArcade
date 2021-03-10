@@ -208,6 +208,10 @@ async function main() {
             await cli.newGuild();
             break;
 
+        case 'moveAcc':
+            await cli.moveAcc();
+            break;
+
         case "getUUID":
             await cli.getUUID(args);
             break;
