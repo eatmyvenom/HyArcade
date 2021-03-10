@@ -15,12 +15,16 @@ async function moveAcc() {
     let oldName = args[3];
     let oldCategory = args[4];
     let newCategory = args[5];
-    let acclist = require('../acclist.json');
-    let oldVer = acclist[oldCategory].find(acc=>acc.name==oldName);
+    let acclist = require("../acclist.json");
+    let oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
 
-    acclist[newCategory].push(oldVer);
-    acclist[oldCategory] = acclist[oldCategory].filter(acc=>acc.name!=oldName);
-    utils.writeJSON('./acclist.json',acclist);
+    if (oldVer) {
+        acclist[newCategory].push(oldVer);
+        acclist[oldCategory][oldName] = undefined;
+        utils.writeJSON("./acclist.json", acclist);
+    } else {
+        logger.err("Couldn't find old version of " + oldName);
+    }
 }
 
 async function newPlayer() {
@@ -115,5 +119,5 @@ module.exports = {
     logD: logD,
     checkNames: checkNames,
     getUUID: getUUIDCli,
-    moveAcc: moveAcc
+    moveAcc: moveAcc,
 };

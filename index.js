@@ -208,7 +208,7 @@ async function main() {
             await cli.newGuild();
             break;
 
-        case 'moveAcc':
+        case "moveAcc":
             await cli.moveAcc();
             break;
 
