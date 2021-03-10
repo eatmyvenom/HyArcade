@@ -41,7 +41,6 @@ module.exports = class Account {
             this.updateOptifine(),
             this.updateLaby(),
         ]);
-        logger.out(this.name);
     }
 
     async updateOptifine() {

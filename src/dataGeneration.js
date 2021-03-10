@@ -23,8 +23,6 @@ async function genStatus() {
                 } else if (!force && afkers.includes(account)) {
                     // get old status instead
                     let old = oldstatus[account.uuid];
-                    // datafixer
-                    old = old.session ? old.session : old;
                     if (old == undefined) {
                         statusObj[account.uuid] = JSON.parse(
                             await hypixelAPI.getStatusRAW(account.uuid)
