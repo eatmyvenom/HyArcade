@@ -5,13 +5,13 @@ const config = require("../config.json");
 // must be using linux afaik
 const task = require("./task");
 const { logger } = require("./utils");
-const { exec } = require('child_process')
+const { exec } = require("child_process");
 
 function run(command) {
-    return new Promise((resolve,reject)=>{
-        exec(command,(err,stdout,stderr)=>{
+    return new Promise((resolve, reject) => {
+        exec(command, (err, stdout, stderr) => {
             resolve(stdout);
-            if(err) {
+            if (err) {
                 logger.err(stderr);
                 reject(err);
             }
@@ -39,9 +39,11 @@ class clusterClient {
     }
 
     async uploadData() {
-        if(this.name != "main") {
-            for(let file of this.files) {
-                await run(`rsync -a --rsh=ssh ${file} server:/home/eatmyvenom/pg-api/${file}`);
+        if (this.name != "main") {
+            for (let file of this.files) {
+                await run(
+                    `rsync -a --rsh=ssh ${file} server:/home/eatmyvenom/pg-api/${file}`
+                );
             }
         }
     }
