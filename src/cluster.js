@@ -42,7 +42,7 @@ class clusterClient {
         if (this.name != "main") {
             for (let file of this.files) {
                 await run(
-                    `rsync -a --rsh=ssh ${file} server:/home/eatmyvenom/pg-api/${file}`
+                    `rsync -a --rsh=ssh ${file} ${config.cluserTarget}/${file}`
                 );
             }
         }
