@@ -6,12 +6,12 @@
 ✅ embed mode for discord
 ✅ move to only fs/promises
 ✅ promise.all mode for updating data
+✅ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
+✅  add cluster ability for offloading of certian things to other devices
 ❗️ weekly wins
 ❗️ monthly wins
 ❗️ get list of cosmetics
-❗️ add cluster ability for offloading of certian things to other devices
 ❌ Conserve api requests
-❌ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
 ❌ rolling daily
 ❓ icons for peoples faces
 ❓ graphs
