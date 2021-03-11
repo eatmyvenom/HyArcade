@@ -3,10 +3,21 @@ const config = require("../config.json");
 // main server and on the client sending the
 // data, additionally it means that all systems
 // must be using linux afaik
-const Rsync = require("rsync");
 const task = require("./task");
-const utils = require("./utils");
 const { logger } = require("./utils");
+const { exec } = require('child_process')
+
+function run(command) {
+    return new Promise((resolve,reject)=>{
+        exec(command,(err,stdout,stderr)=>{
+            resolve(stdout);
+            if(err) {
+                logger.err(stderr);
+                reject(err);
+            }
+        });
+    });
+}
 
 class clusterClient {
     name = "";
@@ -27,18 +38,10 @@ class clusterClient {
         }
     }
 
-    uploadData() {
-        if (config.cluster != "main") {
-            for (let f of this.files) {
-                let rsc = new Rsync()
-                    .shell("ssh")
-                    .flags("a")
-                    .source(f)
-                    .destination(`${config.cluserTarget}/${f}`);
-
-                rsc.execute((err, code, cmd) => {
-                    utils.logger.out(`${f} uploaded`);
-                });
+    async uploadData() {
+        if(this.name != "main") {
+            for(let file of this.files) {
+                await run(`rsync -a --rsh=ssh ${file} server:/home/eatmyvenom/pg-api/${file}`);
             }
         }
     }
