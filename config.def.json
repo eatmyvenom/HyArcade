@@ -7,6 +7,7 @@
     "mode": "prod",
     "alwaysForce": false,
     "logRateLimit": true,
+    "watchdogTimeout" : 30000,
     "cluster":"main",
     "sortDirection": "mostleast",
     "printAllWins": false,
