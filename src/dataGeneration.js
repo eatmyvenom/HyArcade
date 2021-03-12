@@ -15,7 +15,8 @@ async function genStatus() {
 
     await Promise.all(
         accounts.map(async (account) => {
-            if (accdata.find((acc) => acc.uuid == account.uuid).isLoggedIn) {
+            let thisdata = accdata.find((acc) => acc.uuid == account.uuid);
+            if (thisdata && thisdata.isLoggedIn) {
                 if (gamers.includes(account)) {
                     statusObj[account.uuid] = JSON.parse(
                         await hypixelAPI.getStatusRAW(account.uuid)
