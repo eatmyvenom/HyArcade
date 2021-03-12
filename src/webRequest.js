@@ -1,12 +1,21 @@
-const methods = { https: require("https"), http: require("http") };
+const https = require("https");
+const config = require("../config.json");
 
-module.exports = function webRequest(url) {
+function sendRequest(url) {
     return new Promise((resolve, reject) => {
-        let method = "http";
+        let method = "http:";
         if (url.startsWith("https")) {
-            method = "https";
+            method = "https:";
         }
-        methods[method].get(url, (res) => {
+
+        let reqOptions = {
+            timeout: config.watchdogTimeout,
+            family: 4,
+            port: (method=='http:') ? 80 : 443,
+            protocol: method,
+        };
+
+        let req = https.get(url, reqOptions, (res) => {
             let reply = "";
             res.on("data", (d) => {
                 reply += d;
@@ -22,5 +31,11 @@ module.exports = function webRequest(url) {
                 reject(err);
             });
         });
+
+        req.on("timeout", reject);
     });
+}
+
+module.exports = async function webRequest(url) {
+    return await sendRequest(url);
 };
