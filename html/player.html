@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Player data</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="http://eatmyvenom.me/style.css" />
+        <style>
+            #render {
+                position: absolute;
+                top:5vh;
+                right:5vw;
+            }
+        </style>
+        <script src="player.js"></script>
+    </head>
+    <body>
+        <input name="ign" type="text" oninput="setName(this.value)" />
+        <h1 id="title">Player data</h1>
+        <main>
+            <div id="stats">
+                <h3>Stats</h3>
+                <p id="pg-wins">Party games wins:</p>
+                <p id="fh-wins">Farm Hunt wins:</p>
+                <p id="hitw">Hole in the wall: 000q 000f</p>
+                <p id="xp">XP: 6969696</p>
+                <p id="karma">Karma: 9696969</p>
+            </div>
+            <div id="info">
+                <h3>Info</h3>
+                <p id="name">Name:</p>
+                <p id="uuid">UUID:</p>
+                <p id="rank">Rank:</p>
+                <p id="version">Version:</p>
+                <p id="loggedIn">Online:</p>
+            </div>
+            <img
+                id="render"
+                src="https://crafatar.com/renders/body/92a5199614ac4bd181d1f3c951fb719f?size=512&default=MHF_Steve&scale=10&overlay"
+            />
+        </main>
+    </body>
+</html>
