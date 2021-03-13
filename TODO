@@ -11,12 +11,14 @@
 ❗️ weekly wins
 ❗️ monthly wins
 ❗️ get list of cosmetics
+❗️ player page
 ❌ Conserve api requests
 ❌ restructure code
 ❌ timeout on hanging requests
 ❌ watchdog incase code hangs indefinately
 ❌ full documentation for everything
 ❌ move to using URL objects
+❌ mobile css
 ❓ rolling daily
 ❓ icons for peoples faces
 ❓ graphs
