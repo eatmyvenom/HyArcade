@@ -1,17 +1,17 @@
 const { getAccountData } = require("./hypixelApi");
 const optifineRequest = require("./optifineRequest");
 const labyRequest = require("./labyRequest");
-const { logger } = require("./utils");
 
 module.exports = class Account {
     name = "";
-    wins = 0;
     uuid = "";
     uuidPosix = "";
     internalId = "";
     rank = "";
     version = "";
     mostRecentGameType = "";
+    wins = 0;
+    achievementPoints = 0;
     xp = 0;
     hitwQual = 0;
     hitwFinal = 0;
@@ -22,6 +22,10 @@ module.exports = class Account {
     discord = "";
     karma = 0;
     isLoggedIn = false;
+    plusColor = "";
+    hat = "";
+    clickEffect = "";
+    cloak = "";
 
     constructor(name, wins, uuid) {
         this.name = name;
@@ -66,41 +70,43 @@ module.exports = class Account {
             if (arcade.wins_party_2) wins += arcade.wins_party_2;
             if (arcade.wins_party_3) wins += arcade.wins_party_3;
             this.wins = wins;
+            
+            this.ranksGifted =
+                json.player.giftingMeta != undefined
+                    ? json.player.giftingMeta.ranksGiven
+                    : 0;
+            
+            this.rank =
+                json.player.newPackageRank != undefined
+                    ? json.player.newPackageRank
+                    : json.player.packageRank;
 
-            this.rank = json.player.newPackageRank;
             if (json.player.monthlyPackageRank == "SUPERSTAR")
-                this.rank += "_PLUS";
+                this.rank += "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
 
             if (
                 json.player.socialMedia &&
                 json.player.socialMedia.links &&
                 json.player.socialMedia.links.DISCORD
-            )
+            ) {
                 this.discord = json.player.socialMedia.links.DISCORD;
+            }
 
             this.name = json.player.displayname;
-
             this.internalId = json.player._id;
-
             this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
-
             this.version = json.player.mcVersionRp;
-
             this.mostRecentGameType = json.player.mostRecentGameType;
-
             this.xp = json.player.networkExp;
-
             this.karma = json.player.karma;
-
-            this.ranksGifted =
-                json.player.giftingMeta != undefined
-                    ? json.player.giftingMeta.ranksGiven
-                    : 0;
-
+            this.achievementPoints = json.player.achievementPoints;
+            this.plusColor = json.player.rankPlusColor;
+            this.cloak = json.player.currentCloak;
+            this.hat = json.player.currentHat;
+            this.clickEffect = json.player.currentClickEffect;
             this.hitwFinal = arcade.hitw_record_f;
             this.hitwQual = arcade.hitw_record_q;
-
             this.farmhuntWins = arcade.wins_farm_hunt;
         }
     }
