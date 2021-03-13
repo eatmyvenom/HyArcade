@@ -52,6 +52,21 @@
                 text-align: center;
                 vertical-align: middle;
             }
+
+            div {
+                border: 2px solid transparent;
+                border-image: linear-gradient(to bottom right, purple, rgb(55, 55, 235));
+                border-image-slice: 1;
+                max-width: 500px;
+                margin-left: 1vw !important;
+                padding:5px;
+                transition-duration: 0.3s;
+            }
+
+            div:hover {
+                box-shadow: -2px -2px 5px 1px purple, 2px 2px 5px 1px rgb(55, 55, 235);
+            }
+
         </style>
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -73,6 +88,7 @@
                 <p id="xp">XP: 6969696</p>
                 <p id="karma">Karma: 9696969</p>
             </div>
+            <br />
             <div id="info">
                 <h3>Info</h3>
                 <p id="name">Name:</p>
@@ -86,7 +102,6 @@
                     id="render"
                     src="https://crafatar.com/renders/body/92a5199614ac4bd181d1f3c951fb719f?size=512&default=MHF_Steve&scale=10&overlay"
                 />
-                <br />
                 <img id="lvlimg" src="gen.plancke.io/exp/v3n0m__.png" />
                 <br />
                 <img
