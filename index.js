@@ -128,6 +128,7 @@ async function clusterHandler() {
 // wrap main code in async function for nodejs backwards compatability
 
 async function main() {
+    await fs.writeFile('pid',"" + process.pid);
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {

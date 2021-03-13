@@ -82,7 +82,7 @@ module.exports = class Account {
                     : json.player.packageRank;
 
             if (json.player.monthlyPackageRank == "SUPERSTAR")
-                this.rank += "MVP_PLUS_PLUS";
+                this.rank = "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
 
             if (
