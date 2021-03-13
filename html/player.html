@@ -12,17 +12,58 @@
         />
         <link rel="stylesheet" href="http://eatmyvenom.me/style.css" />
         <style>
-            #render {
+            #renders {
                 position: absolute;
-                top:5vh;
-                right:5vw;
+                display: block;
+                top: 5vh;
+                right: 2vw;
+                width: 25%;
+            }
+
+            input {
+                background: #181c30;
+                border: 2px solid #44a3e7;
+                color: white;
+                height: inherit;
+                outline: none !important;
+            }
+
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                height: auto;
+                width: 100%;
+            }
+
+            img#render {
+                width: 25%;
+                height: auto;
+            }
+
+            button {
+                background-color: #181c30;
+                border: 2px solid #44a3e7;
+                border-radius: 0;
+                color: white;
+            }
+
+            .material-icons {
+                text-align: center;
+                vertical-align: middle;
             }
         </style>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
         <script src="player.js"></script>
     </head>
     <body>
-        <input name="ign" type="text" oninput="setName(this.value)" />
-        <h1 id="title">Player data</h1>
+        <input id="ign" type="text" oninput="setName(this.value)" />
+        <button onclick="refresh()">
+            <span class="material-icons md-light">autorenew</span>
+        </button>
         <main>
             <div id="stats">
                 <h3>Stats</h3>
@@ -40,10 +81,19 @@
                 <p id="version">Version:</p>
                 <p id="loggedIn">Online:</p>
             </div>
-            <img
-                id="render"
-                src="https://crafatar.com/renders/body/92a5199614ac4bd181d1f3c951fb719f?size=512&default=MHF_Steve&scale=10&overlay"
-            />
+            <div id="renders">
+                <img
+                    id="render"
+                    src="https://crafatar.com/renders/body/92a5199614ac4bd181d1f3c951fb719f?size=512&default=MHF_Steve&scale=10&overlay"
+                />
+                <br />
+                <img id="lvlimg" src="gen.plancke.io/exp/v3n0m__.png" />
+                <br />
+                <img
+                    id="achivimg"
+                    src="gen.plancke.io/achievementPoints/v3n0m__.png"
+                />
+            </div>
         </main>
     </body>
 </html>
