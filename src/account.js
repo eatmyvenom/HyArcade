@@ -26,6 +26,7 @@ module.exports = class Account {
     hat = "";
     clickEffect = "";
     cloak = "";
+    hypixelSaysWins = 0;
 
     constructor(name, wins, uuid) {
         this.name = name;
@@ -100,6 +101,7 @@ module.exports = class Account {
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
             this.karma = json.player.karma;
+            this.hypixelSaysWins = arcade.wins_simon_says;
             this.achievementPoints = json.player.achievementPoints;
             this.plusColor = json.player.rankPlusColor;
             this.cloak = json.player.currentCloak;
