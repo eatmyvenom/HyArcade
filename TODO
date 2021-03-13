@@ -8,16 +8,15 @@
 ✅ promise.all mode for updating data
 ✅ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
 ✅  add cluster ability for offloading of certian things to other devices
+✅ timeout on hanging requests
 ❗️ weekly wins
 ❗️ monthly wins
 ❗️ get list of cosmetics
 ❗️ player page
+❗️ full documentation for everything
 ❌ Conserve api requests
 ❌ restructure code
-❌ timeout on hanging requests
 ❌ watchdog incase code hangs indefinately
-❌ full documentation for everything
-❌ move to using URL objects
 ❌ mobile css
 ❓ rolling daily
 ❓ icons for peoples faces
