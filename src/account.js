@@ -27,6 +27,7 @@ module.exports = class Account {
     clickEffect = "";
     cloak = "";
     hypixelSaysWins = 0;
+    firstLogin = 0;
 
     constructor(name, wins, uuid) {
         this.name = name;
@@ -110,6 +111,7 @@ module.exports = class Account {
             this.hitwFinal = arcade.hitw_record_f;
             this.hitwQual = arcade.hitw_record_q;
             this.farmhuntWins = arcade.wins_farm_hunt;
+            this.firstLogin = json.player.firstLogin;
         }
     }
 };
