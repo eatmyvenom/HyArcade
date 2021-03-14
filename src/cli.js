@@ -98,7 +98,7 @@ async function logDaily(name) {
 }
 
 /**
- * Check for any name changes 
+ * Check for any name changes
  *
  */
 async function checkNames() {

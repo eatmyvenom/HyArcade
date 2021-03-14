@@ -39,7 +39,7 @@ async function txtPlayerList(list, maxamnt) {
  *
  * @param {String} name
  * @param {Number} maxamnt
- * @return {Object[]} 
+ * @return {Object[]}
  */
 async function listNormal(name, maxamnt) {
     let thelist = JSON.parse(await fs.readFile(`${name}.json`));
@@ -54,7 +54,7 @@ async function listNormal(name, maxamnt) {
  * @param {String} name
  * @param {String} timetype
  * @param {Number} maxamnt
- * @return {Object[]} 
+ * @return {Object[]}
  */
 async function listDiff(name, timetype, maxamnt) {
     // cant use require here
@@ -92,7 +92,7 @@ async function listDiff(name, timetype, maxamnt) {
  *
  * @param {String} name
  * @param {Number} maxamnt
- * @return {String} 
+ * @return {String}
  */
 async function stringNormal(name, maxamnt) {
     let list = await listNormal(name, maxamnt);
@@ -128,7 +128,7 @@ async function stringDaily(name, maxamnt) {
  *
  * @param {String} category
  * @param {String[]} names
- * @return {null} 
+ * @return {null}
  */
 async function addAccounts(category, names) {
     let acclist = require("../acclist.json");

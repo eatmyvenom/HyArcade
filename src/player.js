@@ -47,7 +47,7 @@ class Player {
     /**
      * Set the players wins to be combined amount of wins from all of the players accounts
      *
-     * @return {Number} 
+     * @return {Number}
      * @memberof Player
      */
     async updateWins() {

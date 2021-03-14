@@ -4,7 +4,7 @@ const Account = require("./account");
  * Gets a list of player objects from the player json list
  *
  * @param {Account[]} acclist
- * @return {Player[]} 
+ * @return {Player[]}
  */
 exports.players = function players(acclist) {
     let Player = require("./player")(acclist);
@@ -20,7 +20,7 @@ exports.players = function players(acclist) {
 /**
  * Gets a list of account object from the json account list
  *
- * @return {Object} 
+ * @return {Object}
  */
 exports.accounts = function accounts() {
     let acclistjson = require("../acclist.json");
@@ -47,7 +47,7 @@ exports.accounts = function accounts() {
  * Gets a list of guild objects from the json guild list
  *
  * @param {Account[]} accs
- * @return {Guild[]} 
+ * @return {Guild[]}
  */
 exports.guilds = function gld(accs) {
     let accounts = accs;

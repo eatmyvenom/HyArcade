@@ -7,7 +7,7 @@ const { exec } = require("child_process");
  * Run a shell command
  *
  * @param {String} command
- * @return {String} 
+ * @return {String}
  */
 function run(command) {
     return new Promise((resolve, reject) => {
@@ -35,14 +35,14 @@ class clusterClient {
      * @memberof clusterClient
      */
     key = "";
-    
+
     /**
      * The tasks for the cluster to execute
      *
      * @memberof clusterClient
      */
     tasks = [];
-    
+
     /**
      * The files this cluster affects
      *

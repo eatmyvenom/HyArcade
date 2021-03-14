@@ -4,7 +4,7 @@ const { logger } = require("./utils");
 /**
  * Get a formatted string of game counts
  *
- * @return {String} 
+ * @return {String}
  */
 async function formatCounts() {
     let str = "";

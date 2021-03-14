@@ -38,7 +38,7 @@ module.exports = class optifineRequest {
     /**
      * Returns if the player has a cape
      *
-     * @return {Boolean} 
+     * @return {Boolean}
      */
     hasCape() {
         return this.status != 404;

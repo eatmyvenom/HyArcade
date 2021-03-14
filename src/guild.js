@@ -48,7 +48,7 @@ class Guild {
     /**
      * Get the JSON guild data returned from hypixel
      *
-     * @return {Object} 
+     * @return {Object}
      * @memberof Guild
      */
     async getGuild() {
@@ -58,7 +58,7 @@ class Guild {
     /**
      * Set the combined win count for the guild
      *
-     * @return {Number} 
+     * @return {Number}
      * @memberof Guild
      */
     async updateWins() {
