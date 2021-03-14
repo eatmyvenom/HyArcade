@@ -42,7 +42,7 @@ function displayData(data) {
     }
     setHtmlByName("version", "Version: " + data.version);
     setHtmlByName("loggedIn", "Online: " + data.isLoggedIn);
-    setHtmlByName("firstLogin", "First login: " + formatTime(data.firstLogin))
+    setHtmlByName("firstLogin", "First login: " + formatTime(data.firstLogin));
     document
         .getElementById("render")
         .setAttribute(

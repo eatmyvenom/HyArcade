@@ -81,6 +81,7 @@ class clusterClient {
     async uploadData() {
         if (this.name != "main") {
             for (let file of this.files) {
+                // this requires rsync to be installed on both the server and client
                 await run(
                     `rsync -a --rsh=ssh ${file} ${config.cluserTarget}/${file}`
                 );
