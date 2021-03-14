@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/account.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/account.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { getAccountData } = require("./hypixelApi");
+const optifineRequest = require("./optifineRequest");
+const labyRequest = require("./labyRequest");
+
+module.exports = class Account {
+    name = "";
+    uuid = "";
+    uuidPosix = "";
+    internalId = "";
+    rank = "";
+    version = "";
+    mostRecentGameType = "";
+    wins = 0;
+    achievementPoints = 0;
+    xp = 0;
+    hitwQual = 0;
+    hitwFinal = 0;
+    farmhuntWins = 0;
+    ranksGifted = 0;
+    hasOFCape = false;
+    hasLabyCape = false;
+    discord = "";
+    karma = 0;
+    isLoggedIn = false;
+    plusColor = "";
+    hat = "";
+    clickEffect = "";
+    cloak = "";
+    hypixelSaysWins = 0;
+    firstLogin = 0;
+
+    /**
+     * Creates an instance of Account.
+     * @param {String} name
+     * @param {Number} wins
+     * @param {String} uuid
+     */
+    constructor(name, wins, uuid) {
+        this.name = name;
+        this.wins = wins;
+        this.uuid = uuid;
+        let timeLow = uuid.slice(0, 8);
+        let timeMid = uuid.slice(8, 12);
+        let version = uuid.slice(12, 16);
+        let varient = uuid.slice(16, 20);
+        let node = uuid.slice(-12);
+        this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
+    }
+
+    /**
+     * Update and populate all the data for this account
+     *
+     */
+    async updateData() {
+        await Promise.all([
+            this.updateHypixel(),
+            this.updateOptifine(),
+            this.updateLaby(),
+        ]);
+    }
+
+    /**
+     * Update and populate the optifine data
+     *
+     */
+    async updateOptifine() {
+        let req = new optifineRequest(this.name);
+        await req.makeRequest();
+        this.hasOFCape = req.hasCape();
+    }
+
+    /**
+     * Update and populate the labymod data
+     *
+     */
+    async updateLaby() {
+        let req = new labyRequest(this.uuidPosix);
+        await req.makeRequest();
+        this.hasLabyCape = req.hasCape();
+    }
+
+    /**
+     * Update and populate the hypixel data
+     *
+     */
+    async updateHypixel() {
+        let json = await getAccountData(this.uuid);
+        // make sure player has stats to be checked
+        if (json.player &amp;&amp; json.player.stats &amp;&amp; json.player.stats.Arcade) {
+            let arcade = json.player.stats.Arcade;
+
+            let wins = 0;
+            if (arcade.wins_party) wins += arcade.wins_party;
+            if (arcade.wins_party_2) wins += arcade.wins_party_2;
+            if (arcade.wins_party_3) wins += arcade.wins_party_3;
+            this.wins = wins;
+
+            this.ranksGifted =
+                json.player.giftingMeta != undefined
+                    ? json.player.giftingMeta.ranksGiven
+                    : 0;
+
+            this.rank =
+                json.player.newPackageRank != undefined
+                    ? json.player.newPackageRank
+                    : json.player.packageRank;
+
+            if (json.player.monthlyPackageRank == "SUPERSTAR")
+                this.rank = "MVP_PLUS_PLUS";
+            if (json.player.rank) this.rank = json.player.rank;
+
+            if (
+                json.player.socialMedia &amp;&amp;
+                json.player.socialMedia.links &amp;&amp;
+                json.player.socialMedia.links.DISCORD
+            ) {
+                this.discord = json.player.socialMedia.links.DISCORD;
+            }
+
+            this.name = json.player.displayname;
+            this.internalId = json.player._id;
+            this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
+            this.version = json.player.mcVersionRp;
+            this.mostRecentGameType = json.player.mostRecentGameType;
+            this.xp = json.player.networkExp;
+            this.karma = json.player.karma;
+            this.hypixelSaysWins = arcade.wins_simon_says;
+            this.achievementPoints = json.player.achievementPoints;
+            this.plusColor = json.player.rankPlusColor;
+            this.cloak = json.player.currentCloak;
+            this.hat = json.player.currentHat;
+            this.clickEffect = json.player.currentClickEffect;
+            this.hitwFinal = arcade.hitw_record_f;
+            this.hitwQual = arcade.hitw_record_q;
+            this.farmhuntWins = arcade.wins_farm_hunt;
+            this.firstLogin = json.player.firstLogin;
+        }
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="clusterClient.clusterClient.html">clusterClient</a></li><li><a href="Guild.Guild.html">Guild</a></li><li><a href="labyRequest.labyRequest.html">labyRequest</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Player.Player.html">Player</a></li><li><a href="webResponse.webResponse.html">webResponse</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accounts">accounts</a></li><li><a href="global.html#accs">accs</a></li><li><a href="global.html#addAccounts">addAccounts</a></li><li><a href="global.html#arcadeFormatter">arcadeFormatter</a></li><li><a href="global.html#archive">archive</a></li><li><a href="global.html#archiveJson">archiveJson</a></li><li><a href="global.html#checkNames">checkNames</a></li><li><a href="global.html#clusterHandler">clusterHandler</a></li><li><a href="global.html#day">day</a></li><li><a href="global.html#daytime">daytime</a></li><li><a href="global.html#discord">discord</a></li><li><a href="global.html#discordBot">discordBot</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#fileExists">fileExists</a></li><li><a href="global.html#formatCounts">formatCounts</a></li><li><a href="global.html#gameAmnt">gameAmnt</a></li><li><a href="global.html#generateEmbed">generateEmbed</a></li><li><a href="global.html#genStatus">genStatus</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getUUID">getUUID</a></li><li><a href="global.html#getUUIDCli">getUUIDCli</a></li><li><a href="global.html#getUUIDRaw">getUUIDRaw</a></li><li><a href="global.html#glds">glds</a></li><li><a href="global.html#guilds">guilds</a></li><li><a href="global.html#isOnlineC">isOnlineC</a></li><li><a href="global.html#listDiff">listDiff</a></li><li><a href="global.html#listNormal">listNormal</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#logCounts">logCounts</a></li><li><a href="global.html#logD">logD</a></li><li><a href="global.html#logDaily">logDaily</a></li><li><a href="global.html#logNormal">logNormal</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#mapFormatter">mapFormatter</a></li><li><a href="global.html#modeFormatter">modeFormatter</a></li><li><a href="global.html#moveAcc">moveAcc</a></li><li><a href="global.html#newAcc">newAcc</a></li><li><a href="global.html#newGuild">newGuild</a></li><li><a href="global.html#newPlayer">newPlayer</a></li><li><a href="global.html#players">players</a></li><li><a href="global.html#plrs">plrs</a></li><li><a href="global.html#reqLabyCape">reqLabyCape</a></li><li><a href="global.html#reqOFCape">reqOFCape</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#sendToDiscord">sendToDiscord</a></li><li><a href="global.html#sendToEmbedDiscord">sendToEmbedDiscord</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#snap">snap</a></li><li><a href="global.html#stats">stats</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#statusTxt">statusTxt</a></li><li><a href="global.html#stringDaily">stringDaily</a></li><li><a href="global.html#stringDiff">stringDiff</a></li><li><a href="global.html#stringNormal">stringNormal</a></li><li><a href="global.html#txtPlayerList">txtPlayerList</a></li><li><a href="global.html#txtStatus">txtStatus</a></li><li><a href="global.html#updateAll">updateAll</a></li><li><a href="global.html#updateAllAccounts">updateAllAccounts</a></li><li><a href="global.html#updateAllGuilds">updateAllGuilds</a></li><li><a href="global.html#updateAllPlayers">updateAllPlayers</a></li><li><a href="global.html#webhook">webhook</a></li><li><a href="global.html#webhookEmbed">webhookEmbed</a></li><li><a href="global.html#webhookLog">webhookLog</a></li><li><a href="global.html#winsSorter">winsSorter</a></li><li><a href="global.html#writeFile">writeFile</a></li><li><a href="global.html#writeFileD">writeFileD</a></li><li><a href="global.html#writeJSON">writeJSON</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Mar 13 2021 22:05:53 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

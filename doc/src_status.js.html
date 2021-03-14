@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/status.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/status.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const cachedStatus = require("../status.json");
+const { getUUIDStatus } = require("./hypixelApi");
+let { accounts } = require("./acclist");
+const { logger } = require("./utils");
+
+let rawstatus = {};
+
+/**
+ * Format status for arcade games
+ *
+ * @param {Object} status status object
+ * @return {String}
+ */
+function arcadeFormatter(status) {
+    let str = "";
+    if (status.mode == "FARM_HUNT") {
+        str += "Farm hunt - ";
+    } else if (status.mode == "PVP_CTW") {
+        str += "Ctw - ";
+    } else if (status.mode == "MINI_WALLS") {
+        str += "Mini walls - ";
+    } else if (status.mode.includes("HIDE_AND_SEEK")) {
+        str += `${modeFormatter(
+            status.mode
+                .replace("HIDE_AND_SEEK", "")
+                .toLowerCase()
+                .replace("_", " ")
+                .trim()
+        )} `;
+    } else if (status.mode.includes("ZOMBIES")) {
+        str += `Zombies - `;
+    }
+    str += `${status.map}`;
+    return str;
+}
+
+/**
+ * Format text for maps
+ *
+ * @param {String} txt raw text
+ * @return {String} formatted text
+ */
+function mapFormatter(txt) {
+    return (
+        txt.slice(0, 1).toUpperCase() +
+        txt.slice(1).replace(/ the /gi, "").replace(/_/g, " ")
+    );
+}
+
+/**
+ * Format text for game mods
+ *
+ * @param {String} txt raw text
+ * @return {String} formatted text
+ */
+function modeFormatter(txt) {
+    return (
+        txt.slice(0, 1).toUpperCase() +
+        txt.slice(1).toLowerCase().replace(/_/g, " ")
+    );
+}
+
+/**
+ * Convert players status object to a string
+ *
+ * @param {String} name player name
+ * @param {Object} status raw status object
+ * @return {String} Formatted result
+ */
+async function genStatus(name, status) {
+    let str = "";
+
+    if (!status) {
+        return "";
+    }
+
+    // this hack exists because no proper formatter in js
+    let pname = (
+        name.slice(0, 1).toUpperCase() +
+        name.slice(1) +
+        "                        "
+    ).slice(0, 17);
+
+    // make sure player is online so we dont log a shit ton
+    // of offline players doing nothing
+    if (status.online) {
+        // start the line with the formatted name
+        str += `${pname}: `;
+        let statusstr = "";
+        if (status.mode == "LOBBY") {
+            // seeing LOBBY MAIN is not epic so just lower case it
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(
+                status.mode
+            )}`;
+        } else if (status.gameType == "DUELS") {
+            // most duels stuff says duels in the mode
+            // so no need to send the gameType
+            statusstr += `${status.mode} - ${mapFormatter(status.map)}`;
+        } else if (status.gameType == "ARCADE") {
+            statusstr += arcadeFormatter(status);
+        } else if (status.gameType == "BEDWARS") {
+            statusstr += `Bedwars - ${modeFormatter(status.mode)}`;
+        } else if (status.gameType == "TNTGAMES") {
+            // Tnt games dont have epic names
+            statusstr += `Tnt ${modeFormatter(status.mode)} - ${mapFormatter(
+                status.map
+            )}`;
+        } else if (status.gameType == "BUILD_BATTLE") {
+            // the modes dont have seperate maps, just log the map name
+            statusstr += `${status.map}`;
+        } else if (status.gameType == "MURDER_MYSTERY") {
+            // says muder in the mode title
+            statusstr += `${modeFormatter(status.mode)}`;
+        } else if (status.gameType == "HOUSING") {
+            // housing doesnt have a mode
+            statusstr += `Housing ${status.map}`;
+        } else if (status.gameType == "SKYBLOCK" &amp;&amp; status.mode == "dynamic") {
+            // dynamic isnt helpful
+            statusstr += `Skyblock island`;
+        } else {
+            // basic formatter for anything i havent covered here
+            statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(
+                status.mode
+            )}`;
+        }
+        if (statusstr.length > 24) {
+            statusstr = statusstr.slice(0, 23) + "...";
+        }
+
+        str += statusstr + "\n";
+    } else {
+        return "";
+    }
+
+    return str;
+}
+
+/**
+ * Get a players status and turn it into a string
+ *
+ * @param {String} uuid
+ * @return {String} formatted status
+ */
+async function txtStatus(uuid) {
+    // unfortunately this cant be shortcut
+    let status = await getUUIDStatus(uuid);
+    // store this in a json file in case i need it later
+    rawstatus[uuid] = status;
+    let oldver = accounts.find((acc) => acc.uuid == uuid);
+    if (oldver) {
+        return await genStatus(oldver.name, status);
+    }
+}
+
+/**
+ * Check if a player was online when the status task was run
+ *
+ * @param {String} uuid
+ * @return {Boolean}
+ */
+function isOnlineC(uuid) {
+    if (cachedStatus[uuid] != undefined) {
+        return cachedStatus[uuid].online == true;
+    }
+    logger.err("Couldn't find UUID '" + uuid + "' in status!");
+    return true;
+}
+
+module.exports = {
+    txtStatus: txtStatus,
+    genStatus: genStatus,
+    rawStatus: rawstatus,
+    isOnlineC: isOnlineC,
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="clusterClient.clusterClient.html">clusterClient</a></li><li><a href="Guild.Guild.html">Guild</a></li><li><a href="labyRequest.labyRequest.html">labyRequest</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Player.Player.html">Player</a></li><li><a href="webResponse.webResponse.html">webResponse</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accounts">accounts</a></li><li><a href="global.html#accs">accs</a></li><li><a href="global.html#addAccounts">addAccounts</a></li><li><a href="global.html#arcadeFormatter">arcadeFormatter</a></li><li><a href="global.html#archive">archive</a></li><li><a href="global.html#archiveJson">archiveJson</a></li><li><a href="global.html#checkNames">checkNames</a></li><li><a href="global.html#clusterHandler">clusterHandler</a></li><li><a href="global.html#day">day</a></li><li><a href="global.html#daytime">daytime</a></li><li><a href="global.html#discord">discord</a></li><li><a href="global.html#discordBot">discordBot</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#fileExists">fileExists</a></li><li><a href="global.html#formatCounts">formatCounts</a></li><li><a href="global.html#gameAmnt">gameAmnt</a></li><li><a href="global.html#generateEmbed">generateEmbed</a></li><li><a href="global.html#genStatus">genStatus</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getUUID">getUUID</a></li><li><a href="global.html#getUUIDCli">getUUIDCli</a></li><li><a href="global.html#getUUIDRaw">getUUIDRaw</a></li><li><a href="global.html#glds">glds</a></li><li><a href="global.html#guilds">guilds</a></li><li><a href="global.html#isOnlineC">isOnlineC</a></li><li><a href="global.html#listDiff">listDiff</a></li><li><a href="global.html#listNormal">listNormal</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#logCounts">logCounts</a></li><li><a href="global.html#logD">logD</a></li><li><a href="global.html#logDaily">logDaily</a></li><li><a href="global.html#logNormal">logNormal</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#mapFormatter">mapFormatter</a></li><li><a href="global.html#modeFormatter">modeFormatter</a></li><li><a href="global.html#moveAcc">moveAcc</a></li><li><a href="global.html#newAcc">newAcc</a></li><li><a href="global.html#newGuild">newGuild</a></li><li><a href="global.html#newPlayer">newPlayer</a></li><li><a href="global.html#players">players</a></li><li><a href="global.html#plrs">plrs</a></li><li><a href="global.html#reqLabyCape">reqLabyCape</a></li><li><a href="global.html#reqOFCape">reqOFCape</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#sendToDiscord">sendToDiscord</a></li><li><a href="global.html#sendToEmbedDiscord">sendToEmbedDiscord</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#snap">snap</a></li><li><a href="global.html#stats">stats</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#statusTxt">statusTxt</a></li><li><a href="global.html#stringDaily">stringDaily</a></li><li><a href="global.html#stringDiff">stringDiff</a></li><li><a href="global.html#stringNormal">stringNormal</a></li><li><a href="global.html#txtPlayerList">txtPlayerList</a></li><li><a href="global.html#txtStatus">txtStatus</a></li><li><a href="global.html#updateAll">updateAll</a></li><li><a href="global.html#updateAllAccounts">updateAllAccounts</a></li><li><a href="global.html#updateAllGuilds">updateAllGuilds</a></li><li><a href="global.html#updateAllPlayers">updateAllPlayers</a></li><li><a href="global.html#webhook">webhook</a></li><li><a href="global.html#webhookEmbed">webhookEmbed</a></li><li><a href="global.html#webhookLog">webhookLog</a></li><li><a href="global.html#winsSorter">winsSorter</a></li><li><a href="global.html#writeFile">writeFile</a></li><li><a href="global.html#writeFileD">writeFileD</a></li><li><a href="global.html#writeJSON">writeJSON</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Mar 13 2021 22:05:53 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
