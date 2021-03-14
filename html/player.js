@@ -14,11 +14,16 @@ function refresh() {
     loadData();
 }
 
+function formatTime(time) {
+    return new Date(time).toDateString();
+}
+
 function displayData(data) {
     console.log(data);
     // setHtmlByName('title', 'Player data for ' + playername);
     setHtmlByName("pg-wins", "Party games wins: " + data.wins);
     setHtmlByName("fh-wins", "Farm hunt wins: " + data.farmhuntWins);
+    setHtmlByName("hysay", "Hypixel says wins: " + data.hypixelSaysWins);
     setHtmlByName(
         "hitw",
         "HITW: " + data.hitwQual + "Q " + data.hitwFinal + "F"
@@ -37,6 +42,7 @@ function displayData(data) {
     }
     setHtmlByName("version", "Version: " + data.version);
     setHtmlByName("loggedIn", "Online: " + data.isLoggedIn);
+    setHtmlByName("firstLogin", "First login: " + formatTime(data.firstLogin))
     document
         .getElementById("render")
         .setAttribute(
