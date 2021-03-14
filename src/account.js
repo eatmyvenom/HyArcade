@@ -2,7 +2,7 @@ const { getAccountData } = require("./hypixelApi");
 const optifineRequest = require("./optifineRequest");
 const labyRequest = require("./labyRequest");
 
-module.exports = class Account {
+class Account {
     name = "";
     uuid = "";
     uuidPosix = "";
@@ -34,6 +34,7 @@ module.exports = class Account {
      * @param {String} name
      * @param {Number} wins
      * @param {String} uuid
+     * @memberof account
      */
     constructor(name, wins, uuid) {
         this.name = name;
@@ -49,7 +50,7 @@ module.exports = class Account {
 
     /**
      * Update and populate all the data for this account
-     *
+     * @memberof account
      */
     async updateData() {
         await Promise.all([
@@ -61,7 +62,7 @@ module.exports = class Account {
 
     /**
      * Update and populate the optifine data
-     *
+     * @memberof account
      */
     async updateOptifine() {
         let req = new optifineRequest(this.name);
@@ -71,7 +72,7 @@ module.exports = class Account {
 
     /**
      * Update and populate the labymod data
-     *
+     * @memberof account
      */
     async updateLaby() {
         let req = new labyRequest(this.uuidPosix);
@@ -81,7 +82,7 @@ module.exports = class Account {
 
     /**
      * Update and populate the hypixel data
-     *
+     * @memberof account
      */
     async updateHypixel() {
         let json = await getAccountData(this.uuid);
@@ -137,3 +138,5 @@ module.exports = class Account {
         }
     }
 };
+
+module.exports = Account;
