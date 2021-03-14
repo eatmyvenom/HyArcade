@@ -137,6 +137,6 @@ class Account {
             this.firstLogin = json.player.firstLogin;
         }
     }
-};
+}
 
 module.exports = Account;
