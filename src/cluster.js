@@ -1,12 +1,14 @@
 const config = require("../config.json");
-// This requires Rsync to availiable on both the
-// main server and on the client sending the
-// data, additionally it means that all systems
-// must be using linux afaik
 const task = require("./task");
 const { logger } = require("./utils");
 const { exec } = require("child_process");
 
+/**
+ * Run a shell command
+ *
+ * @param {String} command
+ * @return {String} 
+ */
 function run(command) {
     return new Promise((resolve, reject) => {
         exec(command, (err, stdout, stderr) => {
@@ -20,17 +22,50 @@ function run(command) {
 }
 
 class clusterClient {
+    /**
+     * The cluster name
+     *
+     * @memberof clusterClient
+     */
     name = "";
+
+    /**
+     * The key the cluster uses
+     *
+     * @memberof clusterClient
+     */
     key = "";
+    
+    /**
+     * The tasks for the cluster to execute
+     *
+     * @memberof clusterClient
+     */
     tasks = [];
+    
+    /**
+     * The files this cluster affects
+     *
+     * @memberof clusterClient
+     */
     files = [];
 
+    /**
+     * Creates an instance of clusterClient.
+     * @param {String} name
+     * @memberof clusterClient
+     */
     constructor(name) {
         this.name = name;
         this.key = config.clusters[name].key;
         this.tasks = config.clusters[name].tasks;
     }
 
+    /**
+     * Execute all of the tasks this cluster has
+     *
+     * @memberof clusterClient
+     */
     async doTasks() {
         for (let t of this.tasks) {
             logger.out("Executing task " + t);
@@ -38,6 +73,11 @@ class clusterClient {
         }
     }
 
+    /**
+     * Send the updated data to the main cluster
+     *
+     * @memberof clusterClient
+     */
     async uploadData() {
         if (this.name != "main") {
             for (let file of this.files) {

@@ -3,6 +3,10 @@ const config = require("../../config.json");
 const { addAccounts } = require("../listUtils");
 const { logger } = require("../utils");
 
+/**
+ * Execute the discord bot
+ *
+ */
 module.exports = function doBot() {
     const client = new Discord.Client();
 

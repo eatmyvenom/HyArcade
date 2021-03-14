@@ -2,6 +2,30 @@ const https = require("https");
 const http = require("http");
 const config = require("../config.json");
 
+class webResponse {
+    data = "";
+    headers = [];
+    status = 200;
+    /**
+     * Creates an instance of webResponse.
+     * @param {String} data the raw data recived from the server
+     * @param {Object[]} headers the http response headers
+     * @param {Number} status the status code
+     * @memberof webResponse
+     */
+    constructor(data, headers, status) {
+        this.data = data;
+        this.headers = headers;
+        this.status = status;
+    }
+}
+
+/**
+ * Send a get request and return response as a promise
+ *
+ * @param {String} url The url to send the request to
+ * @return {webResponse}
+ */
 function sendRequest(url) {
     return new Promise((resolve, reject) => {
         let protocolObj = http;
@@ -24,11 +48,7 @@ function sendRequest(url) {
                 reply += d;
             });
             res.on("end", () => {
-                resolve({
-                    data: reply,
-                    headers: res.headers,
-                    status: res.statusCode,
-                });
+                resolve(new webResponse(reply, res.headers, res.statusCode));
             });
             res.on("error", (err) => {
                 reject(err);

@@ -29,6 +29,12 @@ module.exports = class Account {
     hypixelSaysWins = 0;
     firstLogin = 0;
 
+    /**
+     * Creates an instance of Account.
+     * @param {String} name
+     * @param {Number} wins
+     * @param {String} uuid
+     */
     constructor(name, wins, uuid) {
         this.name = name;
         this.wins = wins;
@@ -41,6 +47,10 @@ module.exports = class Account {
         this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
     }
 
+    /**
+     * Update and populate all the data for this account
+     *
+     */
     async updateData() {
         await Promise.all([
             this.updateHypixel(),
@@ -49,18 +59,30 @@ module.exports = class Account {
         ]);
     }
 
+    /**
+     * Update and populate the optifine data
+     *
+     */
     async updateOptifine() {
         let req = new optifineRequest(this.name);
         await req.makeRequest();
         this.hasOFCape = req.hasCape();
     }
 
+    /**
+     * Update and populate the labymod data
+     *
+     */
     async updateLaby() {
         let req = new labyRequest(this.uuidPosix);
         await req.makeRequest();
         this.hasLabyCape = req.hasCape();
     }
 
+    /**
+     * Update and populate the hypixel data
+     *
+     */
     async updateHypixel() {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
@@ -72,12 +94,12 @@ module.exports = class Account {
             if (arcade.wins_party_2) wins += arcade.wins_party_2;
             if (arcade.wins_party_3) wins += arcade.wins_party_3;
             this.wins = wins;
-            
+
             this.ranksGifted =
                 json.player.giftingMeta != undefined
                     ? json.player.giftingMeta.ranksGiven
                     : 0;
-            
+
             this.rank =
                 json.player.newPackageRank != undefined
                     ? json.player.newPackageRank

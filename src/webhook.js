@@ -2,6 +2,14 @@ const config = require("../config.json");
 const Discord = require("discord.js");
 const { logger } = require("./utils");
 
+/**
+ * Send text to a discord webhook
+ *
+ * @param {String} [content=""]
+ * @param {String} [webhookID=config.webhook.id]
+ * @param {String} [webhookToken=config.webhook.token]
+ * @return {null}
+ */
 async function sendToDiscord(
     content = "",
     webhookID = config.webhook.id,
@@ -21,6 +29,14 @@ async function sendToDiscord(
     await hook.destroy();
 }
 
+/**
+ * Send text and a list to a discord webhook to be embedded
+ *
+ * @param {String} txt
+ * @param {String[]} list
+ * @param {String} [webhookID=config.webhook.id]
+ * @param {String} [webhookToken=config.webhook.token]
+ */
 async function sendToEmbedDiscord(
     txt,
     list,
@@ -38,6 +54,12 @@ async function sendToEmbedDiscord(
     hook.destroy();
 }
 
+/**
+ * Do not look at this... I need a better solution
+ * TODO: fix
+ * @param {*} list
+ * @return {*}
+ */
 function generateEmbed(list) {
     list = list.filter((item) => item.wins > 0);
 

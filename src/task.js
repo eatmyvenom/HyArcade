@@ -10,12 +10,22 @@ let { accounts } = require("./acclist");
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 
+/**
+ * Run the generate the data for all accounts
+ *
+ * @return {String[]} files changed by this task
+ */
 async function accs() {
     accounts = await dataGen.updateAllAccounts(accounts);
     await utils.writeJSON("accounts.json", accounts);
     return ["accounts.json"];
 }
 
+/**
+ * Populate the data for all of the players in the player list
+ *
+ * @return {String[]} files changed by this task
+ */
 async function plrs() {
     await Promise.all(
         players.map(async (player) => {
@@ -28,6 +38,11 @@ async function plrs() {
     return ["players.json"];
 }
 
+/**
+ * Populate the data for all of the guilds in the guild list
+ *
+ * @return {String[]} files changed by this task
+ */
 async function glds() {
     await Promise.all(
         guilds.map(async (guild) => {
@@ -40,15 +55,30 @@ async function glds() {
     return ["guild.json"];
 }
 
+/**
+ * Do all of the stats population tasks
+ *
+ * @return {String[]} files changed by this task
+ */
 async function stats() {
     return await [].concat(await accs(), await plrs(), await glds());
 }
 
+/**
+ * Generate the status for online players
+ *
+ * @return {String[]} files changed by this task
+ */
 async function status() {
     await dataGen.genStatus();
     return await ["status.json", "status.txt"];
 }
 
+/**
+ * Send a webhook message to discord
+ *
+ * @return {String[]} files changed by this task
+ */
 async function webhook() {
     // send webhook messages, this is only currently
     // in a small server and only does the unofficial
@@ -62,6 +92,10 @@ async function webhook() {
     return [];
 }
 
+/**
+ * Run the discord bot
+ *
+ */
 async function discord() {
     await DiscordBot();
 }

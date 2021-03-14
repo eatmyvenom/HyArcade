@@ -5,12 +5,20 @@ const mojangRequest = require("./mojangRequest");
 const args = process.argv;
 const logger = utils.logger;
 
+/**
+ * Add a new account to the acclist
+ *
+ */
 async function newAcc() {
     let category = args[args.length - 1];
     let nameArr = args.slice(3, -1);
     await addAccounts(category, nameArr);
 }
 
+/**
+ * Move an account to a different category in the acclist
+ *
+ */
 async function moveAcc() {
     let oldName = args[3];
     let oldCategory = args[4];
@@ -27,6 +35,10 @@ async function moveAcc() {
     }
 }
 
+/**
+ * Create a new player with the specified accounts
+ *
+ */
 async function newPlayer() {
     let name = args[3];
     let alts = args.slice(4);
@@ -43,6 +55,10 @@ async function newPlayer() {
     logger.out(`Player "${name}" has been added with ${alts.length} alts.`);
 }
 
+/**
+ * Create a new guild from the guild a player is in
+ *
+ */
 async function newGuild() {
     let playerUUID = args[3];
 
@@ -63,14 +79,28 @@ async function newGuild() {
     logger.out(`Guild "${name} has been added successfully.`);
 }
 
+/**
+ * Log a normal list
+ *
+ * @param {String} name
+ */
 async function logNormal(name) {
     logger.out(await stringNormal(name));
 }
 
+/**
+ * Log a daily list
+ *
+ * @param {String} name
+ */
 async function logDaily(name) {
     logger.out(await stringDaily(name));
 }
 
+/**
+ * Check for any name changes 
+ *
+ */
 async function checkNames() {
     let acclist = require("../acclist.json");
     let realAccs = require("../accounts.json");
@@ -89,6 +119,11 @@ async function checkNames() {
     logger.out("\nName check complete");
 }
 
+/**
+ * Log a normal list from arguments
+ *
+ * @param {String[]} args
+ */
 async function log(args) {
     let logName = args[3];
     let str = await stringNormal(logName);
@@ -96,6 +131,11 @@ async function log(args) {
     logger.out(str);
 }
 
+/**
+ * Log a normal list from arguments
+ *
+ * @param {Stringp[]} args
+ */
 async function logD(args) {
     let logName = args[3];
     let str = await stringDaily(logName);
@@ -103,6 +143,11 @@ async function logD(args) {
     logger.out(str);
 }
 
+/**
+ * Get the uuid for a player
+ *
+ * @param {String[]} args
+ */
 async function getUUIDCli(args) {
     let name = args[3];
     let uuid = await mojangRequest.getUUIDRaw(name);

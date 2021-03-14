@@ -5,7 +5,12 @@ const { logger } = require("./utils");
 
 let rawstatus = {};
 
-// arcade is special so it gets its own method
+/**
+ * Format status for arcade games
+ *
+ * @param {Object} status status object
+ * @return {String}
+ */
 function arcadeFormatter(status) {
     let str = "";
     if (status.mode == "FARM_HUNT") {
@@ -29,6 +34,12 @@ function arcadeFormatter(status) {
     return str;
 }
 
+/**
+ * Format text for maps
+ *
+ * @param {String} txt raw text
+ * @return {String} formatted text
+ */
 function mapFormatter(txt) {
     return (
         txt.slice(0, 1).toUpperCase() +
@@ -36,6 +47,12 @@ function mapFormatter(txt) {
     );
 }
 
+/**
+ * Format text for game mods
+ *
+ * @param {String} txt raw text
+ * @return {String} formatted text
+ */
 function modeFormatter(txt) {
     return (
         txt.slice(0, 1).toUpperCase() +
@@ -43,6 +60,13 @@ function modeFormatter(txt) {
     );
 }
 
+/**
+ * Convert players status object to a string
+ *
+ * @param {String} name player name
+ * @param {Object} status raw status object
+ * @return {String} Formatted result
+ */
 async function genStatus(name, status) {
     let str = "";
 
@@ -111,6 +135,12 @@ async function genStatus(name, status) {
     return str;
 }
 
+/**
+ * Get a players status and turn it into a string
+ *
+ * @param {String} uuid
+ * @return {String} formatted status
+ */
 async function txtStatus(uuid) {
     // unfortunately this cant be shortcut
     let status = await getUUIDStatus(uuid);
@@ -122,6 +152,12 @@ async function txtStatus(uuid) {
     }
 }
 
+/**
+ * Check if a player was online when the status task was run
+ *
+ * @param {String} uuid
+ * @return {Boolean}
+ */
 function isOnlineC(uuid) {
     if (cachedStatus[uuid] != undefined) {
         return cachedStatus[uuid].online == true;

@@ -1,3 +1,4 @@
+/** @type {Account[]} */
 let accounts = [];
 
 module.exports = function Plr(acclist) {
@@ -11,6 +12,13 @@ class Player {
     alts = [];
     wins = 0;
 
+    /**
+     * Creates an instance of Player.
+     * @param {String} name The displayed name of the player
+     * @param {String} altnames The uuids or names of the players accounts
+     * @param {Number} wins The preset amount of wins
+     * @memberof Player
+     */
     constructor(name, altnames, wins) {
         this.name = name;
         this.altnames = altnames;
@@ -36,6 +44,12 @@ class Player {
         }
     }
 
+    /**
+     * Set the players wins to be combined amount of wins from all of the players accounts
+     *
+     * @return {Number} 
+     * @memberof Player
+     */
     async updateWins() {
         let newWins = 0;
         for (let i = 0; i < this.alts.length; i++) {

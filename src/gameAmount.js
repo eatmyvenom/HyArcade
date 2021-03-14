@@ -1,6 +1,11 @@
 const { getGameCounts } = require("./hypixelApi");
 const { logger } = require("./utils");
 
+/**
+ * Get a formatted string of game counts
+ *
+ * @return {String} 
+ */
 async function formatCounts() {
     let str = "";
     let all = await getGameCounts();
@@ -21,6 +26,10 @@ async function formatCounts() {
     return str.replace(/undefined/g, "0");
 }
 
+/**
+ * Print the game counts to stdout
+ *
+ */
 async function logCounts() {
     logger.out(await formatCounts());
 }

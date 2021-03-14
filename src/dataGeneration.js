@@ -6,9 +6,11 @@ const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || config.alwaysForce;
 
+/**
+ * Generates the status for all of the online players
+ *
+ */
 async function genStatus() {
-    // old status
-
     let statusObj = {};
     let oldstatus = JSON.parse(await fs.readFile("status.json"));
     let accdata = require("../accounts.json");
@@ -50,6 +52,10 @@ async function genStatus() {
     await statusTxt();
 }
 
+/**
+ * Turn the status object into a really long formatted string
+ *
+ */
 async function statusTxt() {
     let gamerstr = "";
     let nongamers = "";
@@ -79,6 +85,11 @@ async function statusTxt() {
     );
 }
 
+/**
+ * Update the player data for all players in the list
+ *
+ * @return {Account[]}
+ */
 async function updateAllAccounts() {
     // sort this before hand because otherwise everything dies
     // like seriously holy fuck its so bad

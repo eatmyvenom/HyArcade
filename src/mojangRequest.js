@@ -1,6 +1,12 @@
 const { logger } = require("./utils");
 const webRequest = require("./webRequest");
 
+/**
+ * The raw uuid response from mojang 
+ *
+ * @param {*} name
+ * @return {*} 
+ */
 async function getUUIDRaw(name) {
     // promisify query
     let response = await webRequest(
@@ -10,6 +16,12 @@ async function getUUIDRaw(name) {
     return data;
 }
 
+/**
+ * Actual uuid from mojang
+ *
+ * @param {String} name
+ * @return {String}
+ */
 async function getUUID(name) {
     let raw = await getUUIDRaw(name);
 

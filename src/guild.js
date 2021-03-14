@@ -13,15 +13,21 @@ class Guild {
     arcadeEXP = 0;
     uuid = "";
 
+    /**
+     * Creates an instance of Guild.
+     * @param {String} name
+     * @param {String} uuid
+     * @memberof Guild
+     */
     constructor(name, uuid) {
         this.uuid = uuid;
         this.name = name;
     }
 
     /**
-     * This isnt in the constructor because then every usage
-     * of anything in the entire site will result in a few
-     * needless api requests
+     * Updates the data for the guild with all of the accounts in the guild
+     *
+     * @memberof Guild
      */
     async updateData() {
         let data = await this.getGuild();
@@ -39,10 +45,22 @@ class Guild {
         }
     }
 
+    /**
+     * Get the JSON guild data returned from hypixel
+     *
+     * @return {Object} 
+     * @memberof Guild
+     */
     async getGuild() {
         return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
     }
 
+    /**
+     * Set the combined win count for the guild
+     *
+     * @return {Number} 
+     * @memberof Guild
+     */
     async updateWins() {
         await this.updateData();
         let newWins = 0;

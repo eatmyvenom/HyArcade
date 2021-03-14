@@ -22,47 +22,71 @@ const task = require("./src/task");
 // bloating this project with node modules and shit.
 const config = require("./config.json");
 
+/**
+ * Run the accounts task
+ *
+ */
 async function updateAllAccounts() {
     await task.accounts();
 }
 
+/**
+ * Run the players task
+ *
+ */
 async function updateAllPlayers() {
     await task.players();
 }
 
+/**
+ * Run the guilds task
+ *
+ */
 async function updateAllGuilds() {
     await task.guilds();
 }
 
+/**
+ * Run all three of the stats tasks
+ * @see save
+ * @see updateAllAccounts
+ * @see updateAllPlayers
+ * @see updateAllGuilds
+ */
 async function updateAll() {
     await updateAllAccounts();
     await updateAllPlayers();
     await updateAllGuilds();
 }
 
+/**
+ * Wrapper around updateAll()
+ * @see updateAll
+ *
+ */
 async function save() {
     // this was all abstracted
     await updateAll();
 }
-
+/**
+ * Send a list to a discord webhook as formatted text
+ * @function webhookLog
+ * @param {string} [type="players"] the type of list to log
+ * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
+ */
 async function webhookLog(type = "players", maxamnt) {
-    // send webhook messages, this is only currently
-    // in a small server and only does the unofficial
-    // leaderboard, this can be easily changed and if
-    // someone else would like I can add this to
-    // another server
-
     await Webhook.send(await stringNormal(type, maxamnt));
     await Webhook.send(await stringDaily(type, maxamnt));
 }
 
+/**
+ * Send a list to a discord webhook as a set of formatted embeds
+ *
+ * @param {string} [type="players"] the type of list to use
+ * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
+ * @see webhookLog
+ */
 async function webhookEmbed(type = "players", maxamnt) {
-    // send webhook messages, this is only currently
-    // in a small server and only does the unofficial
-    // leaderboard, this can be easily changed and if
-    // someone else would like I can add this to
-    // another server
-
     let normal = await listNormal(type, maxamnt);
     let day = await listDiff(type, "day", maxamnt);
 
@@ -71,30 +95,45 @@ async function webhookEmbed(type = "players", maxamnt) {
 }
 
 /**
- * This is here because i abstracted this to archive
- * @param {String} timeType - the inbetween of the file
+ * Snapshot the amount of wins into another json file
+ * @param {String} timeType the inbetween of the file
  */
 async function snap(timeType = "day") {
     // move all the current stats files to be the daily files
     await archive("./", timeType);
 }
 
+/**
+ * Run the status task
+ *
+ */
 async function genStatus() {
     await task.status();
 }
 
+/**
+ * Run the discord task
+ *
+ */
 async function discordBot() {
     await task.discord();
 }
 
 /**
- * @function gameAmnt - reflects the amount of players in various hypixel games
+ * Write a file with all the amounts of players currrently in games
+ *
  */
 async function gameAmnt() {
     // write to file so that there isnt blank files in website at any point
     await fs.writeFile("games.txt", await gameAmount.formatCounts());
 }
 
+/**
+ * Archive the various json files storing current data for later
+ *
+ * @param {string} [path="./archive/"] the path to place the archived files at
+ * @param {string} [timetype=utils.day()] the varied part of the file to distinguish it
+ */
 async function archive(path = "./archive/", timetype = utils.day()) {
     await Promise.all([
         utils.archiveJson("guild", path, timetype),
@@ -103,6 +142,11 @@ async function archive(path = "./archive/", timetype = utils.day()) {
     ]);
 }
 
+/**
+ * Write a logger output as a file
+ *
+ * @param {String[]} args the process arguments
+ */
 async function writeFile(args) {
     let logName = args[3];
     let location = args[4];
@@ -111,6 +155,11 @@ async function writeFile(args) {
     await fs.writeFile(location, str);
 }
 
+/**
+ * Write a daily wins logger output as a file
+ *
+ * @param {String[]} args
+ */
 async function writeFileD(args) {
     let logName = args[3];
     let location = args[4];
@@ -119,16 +168,21 @@ async function writeFileD(args) {
     await fs.writeFile(location, str);
 }
 
+/**
+ * wrapper function to do all cluster tasks
+ */
 async function clusterHandler() {
     let cstr = new cluster(config.cluster);
     await cstr.doTasks();
     await cstr.uploadData();
 }
 
-// wrap main code in async function for nodejs backwards compatability
-
+/**
+ * Main function in a async wrapper to use other async functions
+ *
+ */
 async function main() {
-    await fs.writeFile('pid',"" + process.pid);
+    await fs.writeFile("pid", "" + process.pid);
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
