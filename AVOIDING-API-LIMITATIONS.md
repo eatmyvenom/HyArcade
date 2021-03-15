@@ -18,6 +18,7 @@ if (config.mode == "test") {
 While using this system I am able to avoid the limitation on my testing environment. However I avoid using this in the actual enviorment.
 
 ## Clusters
+
 This is a far better system for using multiple keys while not being detected at least. My system uses this for seperating different tasks that are done that require many key usages.
 
 The way this works is by having different keys and tasks per cluster. Then just put the whole system on that cluster and then run the tasks specific to that cluster.
@@ -25,7 +26,9 @@ The way this works is by having different keys and tasks per cluster. Then just 
 Another advantage to this is that I have the ability to run these inside other small systems like github actions or repl.it and similar. I am currently running the main cluster on my server and the status cluster on my raspi at home.
 
 ## Other sources
+
 Another alternative to using any requests is to go through another source to process requests. In this case that other source could be plancke.io. When I first started this project I actually only had a few shell scripts that basically did `curl -> grep -> sed` and I would just keep the formatting and what not. This is directly abusive of other peoples limitations and isn't easy to filter what data you need.
 
 # Concluding
-This is obviously abusive and not a great thing to do, however given that I am the only one operating what I am doing and causing a lower amount of requests to go through other sources, I feel not too bad about it. 
+
+This is obviously abusive and not a great thing to do, however given that I am the only one operating what I am doing and causing a lower amount of requests to go through other sources, I feel not too bad about it.
