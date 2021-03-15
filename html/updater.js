@@ -6,6 +6,19 @@ function addstuff(ext, clazzz) {
             var arr = txt.split("\n");
             var len = Math.min(arr.length, maxLength);
             var newArr = arr.slice(0, len);
+            console.log(ext);
+            if (("" + ext).includes("pgA") || ext.includes("status")) {
+                for (var i = 0; i < newArr.length; i++) {
+                    if (newArr[i].trim() != "") {
+                        let line = newArr[i].split(":");
+                        newArr[
+                            i
+                        ] = `<a href='http://eatmyvenom.me/share/partygames/player.html?q=${line[0]
+                            .replace(/[0-9][0-9][0-9]\)/g, "")
+                            .trim()}'>${line[0]}</a>:${line[1]}`;
+                    }
+                }
+            }
             document.querySelector(clazzz).innerHTML = newArr.join("\n").trim();
         });
     });

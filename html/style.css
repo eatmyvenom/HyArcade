@@ -58,3 +58,8 @@ input {
     outline: none !important;
     max-width: 6vw;
 }
+
+a {
+    text-decoration: none;
+    color: white !important;
+}

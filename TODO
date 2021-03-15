@@ -10,6 +10,7 @@
 ✅  add cluster ability for offloading of certian things to other devices
 ✅ timeout on hanging requests
 ✅ full documentation for everything
+✅ click on player name -> player site
 ❗️ weekly wins
 ❗️ monthly wins
 ❗️ get list of cosmetics
@@ -21,7 +22,6 @@
 ❌ watchdog incase code hangs indefinately
 ❌ github actions cluster
 ❌ add account aliases
-❌ click on player name -> player site
 ❌ mobile css
 ❓ rolling daily
 ❓ graphs
