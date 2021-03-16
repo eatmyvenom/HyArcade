@@ -5,6 +5,7 @@ let { accounts, gamers, afkers } = require("./acclist");
 const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || config.alwaysForce;
+const GamesPlayed = require("./gamesPlayed");
 
 /**
  * Generates the status for all of the online players
@@ -53,6 +54,32 @@ async function genStatus() {
 }
 
 /**
+ * Adds new games to the total amount of games played for each player
+ *
+ */
+async function gamesPlayed() {
+    let oldGames = await utils.readJSON("./gamesPlayed.json");
+
+    let promiseArr = accounts.map(async (account) => {
+        let oldData = oldGames[account.uuid];
+        let oldCounts = {};
+        let oldTime = 0;
+
+        if (oldData != undefined) {
+            oldCounts = oldData.counts;
+            oldTime = oldData.newestTime;
+        }
+
+        let playerGames = new GamesPlayed(account.uuid, oldCounts, oldTime);
+        await playerGames.updateData();
+        oldGames[account.uuid] = playerGames;
+    });
+
+    await Promise.all(promiseArr);
+    await utils.writeJSON("./gamesPlayed.json", oldGames);
+}
+
+/**
  * Turn the status object into a really long formatted string
  *
  */
@@ -64,9 +91,8 @@ async function statusTxt() {
 
     let crntstatus = require("../status.json");
     for (const account of accs) {
-        if (
-            (await gamers.find((acc) => acc.uuid == account.uuid)) != undefined
-        ) {
+        let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
+        if (gamerAcc != undefined) {
             gamerstr += await status.genStatus(
                 account.name,
                 crntstatus[account.uuid]
@@ -115,4 +141,5 @@ async function updateAllAccounts() {
 module.exports = {
     genStatus: genStatus,
     updateAllAccounts: updateAllAccounts,
+    gamesPlayed: gamesPlayed,
 };

@@ -67,6 +67,10 @@ async function writeJSON(path, json) {
     await fs.writeFile(path, JSON.stringify(json, null, 4));
 }
 
+async function readJSON(path) {
+    return JSON.parse(await fs.readFile(path));
+}
+
 /**
  * Check if a file exists
  *
@@ -121,6 +125,7 @@ module.exports = {
     sleep: sleep,
     winsSorter: winsSorter,
     writeJSON: writeJSON,
+    readJSON: readJSON,
     fileExists: fileExists,
     daytime: daytime,
     cacheMiss: [],

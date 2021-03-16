@@ -65,6 +65,16 @@ async function stats() {
 }
 
 /**
+ * Calculate how many games have been played per player
+ *
+ * @return {*} 
+ */
+async function gamesPlayed() {
+    await dataGen.gamesPlayed();
+    return ["gamesPlayed.json"];
+}
+
+/**
  * Generate the status for online players
  *
  * @return {String[]} files changed by this task
@@ -104,6 +114,7 @@ module.exports = {
     accounts: accs,
     players: plrs,
     guilds: glds,
+    gamesPlayed: gamesPlayed,
     stats: stats,
     status: status,
     webhook: webhook,

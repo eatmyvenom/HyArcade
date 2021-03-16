@@ -176,6 +176,12 @@ module.exports = class hypixelAPI {
         return json.session;
     }
 
+    static async getGamesPlayedRAW(uuid) {
+        return await hypixelAPI.basicRequest("recentGames", [
+            { key: "uuid", val: uuid },
+        ]);
+    }
+
     /**
      * The objectified counts of players in various games
      *

@@ -178,6 +178,14 @@ async function clusterHandler() {
 }
 
 /**
+ * Run the games played task
+ *
+ */
+async function gamesPlayed() {
+    await task.gamesPlayed();
+}
+
+/**
  * Main function in a async wrapper to use other async functions
  *
  */
@@ -232,6 +240,10 @@ async function main() {
 
         case "status":
             await genStatus();
+            break;
+
+        case "gamesPlayed":
+            await gamesPlayed();
             break;
 
         case "games":
