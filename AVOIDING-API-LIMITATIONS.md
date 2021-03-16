@@ -25,9 +25,17 @@ The way this works is by having different keys and tasks per cluster. Then just 
 
 Another advantage to this is that I have the ability to run these inside other small systems like github actions or repl.it and similar. I am currently running the main cluster on my server and the status cluster on my raspi at home.
 
-## Other sources
+## Other peoples services
 
 Another alternative to using any requests is to go through another source to process requests. In this case that other source could be plancke.io. When I first started this project I actually only had a few shell scripts that basically did `curl -> grep -> sed` and I would just keep the formatting and what not. This is directly abusive of other peoples limitations and isn't easy to filter what data you need.
+
+## Proxies
+
+Proxies are quite self explanatory, simply do all of your code execution from one machine and then do your internet transactions through a different sever. In my case I believe a github actions instance with ssh doing a SOCKS proxy. SOCKS makes the sever location variable, which is advantagious if you are pursued for api abuse.
+
+## Modding
+
+This approach requires either a bit of trust or good security knowledge and extreme flexability. With this you can in theory make a mod that simply uses someone elses keys while they are in game. So you go through this process: `join server -> get new key -> use key -> disable on server disconnect`. With this you can have alot of people constantly pulling your data for you. However you need a cluster broker which tells each client what to do and can handle unexpected disconnects. I highly advise telling people if your mod does this!
 
 # Concluding
 
