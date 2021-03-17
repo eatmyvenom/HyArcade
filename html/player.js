@@ -1,5 +1,6 @@
 var playername = undefined;
 let urlParams = undefined;
+let uuid = undefined;
 
 function setName(name) {
     playername = name;
@@ -89,44 +90,53 @@ function displayData(data) {
     setIcon(data.uuid);
 }
 
+function handleData(rawjson) {
+    let json = JSON.parse(rawjson);
+    let playerdata = json.find((acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase());
+    if (playerdata != undefined) {
+        displayData(playerdata);
+        uuid = playerdata.uuid;
+        loadGamesPlayed();
+        if (urlParams.has("q")) {
+            if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
+                urlParams.set("q", playername);
+                window.history.replaceState(window.history.state,"",window.location.pathname +"?" +urlParams.toString());
+            }
+        } else {
+            urlParams.append("q", playername);
+            window.history.replaceState(window.history.state,"",window.location.pathname +"?" +urlParams.toString());
+        }
+    }
+}
+
+function handleGamesPlayed(rawjson) {
+    let json = JSON.parse(rawjson);
+    let data = json[uuid];
+    let sortable = Object.entries(data.counts)
+        .sort(([,a],[,b]) => a-b)
+        .reverse()
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+
+    let countsStr = "";
+    for(let count in sortable) {
+        countsStr += `${count.replace(/\./g," ").replace(/_/g," ")}: ${sortable[count]}\n`
+    }
+
+    setHtmlByName("gamesPlayed",countsStr);
+}
+
 function loadData() {
     if (playername != undefined) {
         fetch("http://eatmyvenom.me/share/accounts.json").then((res) => {
-            res.text().then((rawjson) => {
-                let json = JSON.parse(rawjson);
-                let playerdata = json.find(
-                    (acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase()
-                );
-                if (playerdata != undefined) {
-                    displayData(playerdata);
-                    if (urlParams.has("q")) {
-                        if (
-                            urlParams.get("q").toLowerCase() !=
-                            playername.toLowerCase()
-                        ) {
-                            urlParams.set("q", playername);
-                            window.history.replaceState(
-                                window.history.state,
-                                "",
-                                window.location.pathname +
-                                    "?" +
-                                    urlParams.toString()
-                            );
-                        }
-                    } else {
-                        urlParams.append("q", playername);
-                        window.history.replaceState(
-                            window.history.state,
-                            "",
-                            window.location.pathname +
-                                "?" +
-                                urlParams.toString()
-                        );
-                    }
-                }
-            });
+            res.text().then(handleData);
         });
     }
+}
+
+function loadGamesPlayed() {
+    fetch("http://eatmyvenom.me/share/gamesPlayed.json").then((res)=>{
+        res.text().then(handleGamesPlayed);
+    });
 }
 
 function loadPage() {

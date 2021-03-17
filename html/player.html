@@ -12,7 +12,7 @@
         />
         <link rel="stylesheet" href="http://eatmyvenom.me/style.css" />
         <style>
-            #renders {
+            aside {
                 position: absolute;
                 display: block;
                 top: 5vh;
@@ -71,6 +71,10 @@
                 box-shadow: -2px -2px 5px 1px purple,
                     2px 2px 5px 1px rgb(55, 55, 235);
             }
+
+            .pre {
+                white-space: pre-line;
+            }
         </style>
         <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -106,7 +110,10 @@
                 <p id="loggedIn">Online:</p>
                 <p id="firstLogin">First login:</p>
             </div>
-            <div id="renders">
+            <aside>
+                <div>
+
+                
                 <img
                     id="render"
                     src="https://crafatar.com/renders/body/00000000000000000000000000000000?size=512&default=MHF_Steve&scale=10&overlay"
@@ -118,6 +125,12 @@
                     src="https://gen.plancke.io/achievementPoints/ilmango.png"
                 />
             </div>
+            <br>
+            <div>
+                <h3>Games Played</h3>
+                <p class="pre" id="gamesPlayed"></p>
+            </div>
+            </aside>
         </main>
     </body>
 </html>
