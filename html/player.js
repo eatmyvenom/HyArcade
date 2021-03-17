@@ -95,7 +95,7 @@ function loadData() {
             res.text().then((rawjson) => {
                 let json = JSON.parse(rawjson);
                 let playerdata = json.find(
-                    (acc) => acc.name.toLowerCase() == playername.toLowerCase()
+                    (acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase()
                 );
                 if (playerdata != undefined) {
                     displayData(playerdata);
