@@ -131,15 +131,15 @@ function statusSort(a, b) {
     let status2 = b[1];
 
     // sanitize
-    status1.mode = status1.mode.toLowerCase();
-    status2.mode = status2.mode.toLowerCase();
-    status1.gameType = status1.gameType.toLowerCase();
-    status2.gameType = status2.gameType.toLowerCase();
+    status1.mode = ("" + status1.mode).toUpperCase();
+    status2.mode = ("" + status2.mode).toUpperCase();
+    status1.gameType = ("" + status1.gameType).toUpperCase();
+    status2.gameType = ("" + status2.gameType).toUpperCase();
 
-    if (status1.mode == "LOBBY" || status1.online == false) {
+    if (status1.mode == "LOBBY") {
         return -1;
     }
-    if (status2.mode == "LOBBY" || status2.online == false) {
+    if (status2.mode == "LOBBY") {
         return 1;
     }
     if (status1.mode == "PARTY" && status2.mode != "PARTY") {

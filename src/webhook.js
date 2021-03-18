@@ -20,12 +20,31 @@ async function sendToDiscord(
         return;
     }
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
-    await hook.send("```" + content + "===========================```", {
+    await hook.send("" + content, {
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
     });
     // this closes the hook client so the nodejs doesnt hang
     // forever
+    await hook.destroy();
+}
+
+async function sendBasic(content, webhook) {
+    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+    await hook.send(content, {
+        username: webhook.username,
+        avatarURL: webhook.pfp,
+    });
+    await hook.destroy();
+}
+
+async function sendBasicEmbed(content, embed, webhook) {
+    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+    await hook.send(content, {
+        embeds: embed,
+        username: webhook.username,
+        avatarURL: webhook.pfp,
+    });
     await hook.destroy();
 }
 
@@ -83,4 +102,9 @@ function generateEmbed(list) {
     return embeds;
 }
 
-module.exports = { send: sendToDiscord, sendEmbed: sendToEmbedDiscord };
+module.exports = {
+    send: sendToDiscord,
+    sendEmbed: sendToEmbedDiscord,
+    sendBasic: sendBasic,
+    sendBasicEmbed: sendBasicEmbed,
+};

@@ -3,6 +3,7 @@ const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
 const dataGen = require("./dataGeneration");
 const DiscordBot = require("./discord/bot");
+const EventDetector = require("./EventDetector");
 
 // these modules need to use identical accounts lists so that
 // the data does not need to be updated multiple times
@@ -17,6 +18,9 @@ let guilds = require("./guildlist")(accounts);
  */
 async function accs() {
     accounts = await dataGen.updateAllAccounts(accounts);
+    let ED = new EventDetector(require("../accounts.json"), accounts);
+    ED.runDetection();
+    ED.logEvents();
     await utils.writeJSON("accounts.json", accounts);
     return ["accounts.json"];
 }

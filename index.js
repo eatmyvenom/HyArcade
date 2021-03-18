@@ -70,13 +70,12 @@ async function save() {
 }
 /**
  * Send a list to a discord webhook as formatted text
- * @function webhookLog
  * @param {string} [type="players"] the type of list to log
  * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
  */
 async function webhookLog(type = "players", maxamnt) {
-    await Webhook.send(await stringNormal(type, maxamnt));
-    await Webhook.send(await stringDaily(type, maxamnt));
+    await Webhook.send("```\n" + (await stringNormal(type, maxamnt)) + "\n```");
+    await Webhook.send("```\n" + (await stringDaily(type, maxamnt)) + "\n```");
 }
 
 /**
