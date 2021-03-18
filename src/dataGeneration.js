@@ -112,44 +112,71 @@ async function statusTxt() {
 }
 
 async function statusTxtSorted() {
-    let str = ""; 
-    let accs = require('./acclist').accounts;
+    let str = "";
+    let accs = require("./acclist").accounts;
 
-    let crntstatus = require('../status.json');
-    const sortable = Object.entries(crntstatus)
-        .sort(statusSort)
-        .reverse()
+    let crntstatus = require("../status.json");
+    const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
 
-    for(const sts of sortable) {
-        let acc = await accs.find((a)=>a.uuid==sts[0]);
-        str += await status.genStatus(acc.name,sts[1]);
+    for (const sts of sortable) {
+        let acc = await accs.find((a) => a.uuid == sts[0]);
+        str += await status.genStatus(acc.name, sts[1]);
     }
 
-    await fs.writeFile(
-        "status.txt",
-        `${str}`
-    );
-
+    await fs.writeFile("status.txt", `${str}`);
 }
 
-function statusSort(a,b) {
+function statusSort(a, b) {
     let status1 = a[1];
     let status2 = b[1];
-    if(status1 == status2) {return 0;}
-    if(status1.mode == "LOBBY") {return -1;}
-    if(status2.mode == "LOBBY") {return 1;}
-    if(status1.mode == "PARTY") {return 1;}
-    if(status2.mode == "PARTY") {return -1;}
-    if(status1.mode == "FARM_HUNT") {return 1;}
-    if(status2.mode == "FARM_HUNT") {return -1;}
-    if(status1.gameType == "ARCADE" && status2.gameType != "ARCADE") {return 1;}
-    if(status2.gameType == "ARCADE" && status1.gameType != "ARCADE") {return -1;}
-    if(status1.gameType == "SKYBLOCK") {return -1}
-    if(status2.gameType == "SKYBLOCK") {return 1}
-    if(status1.gameType > status2.gameType) {return -1;}
-    if(status1.gameType < status2.gameType) {return 1;}
-    if(status1.mode > status2.mode) {return -1;}
-    if(status1.mode < status2.mode) {return 1;}
+    if (status1.mode == "LOBBY") {
+        return -1;
+    }
+    if (status2.mode == "LOBBY") {
+        return 1;
+    }
+    if (status1.mode == "PARTY" && status2.mode != "PARTY") {
+        return 1;
+    }
+    if (status2.mode == "PARTY" && status1.mode != "PARTY") {
+        return -1;
+    }
+    if (status1.mode == "FARM_HUNT" && status2.mode != "FARM_HUNT") {
+        return 1;
+    }
+    if (status2.mode == "FARM_HUNT" && status1.mode != "FARM_HUNT") {
+        return -1;
+    }
+    if (status1.gameType == "ARCADE" && status2.gameType != "ARCADE") {
+        return 1;
+    }
+    if (status2.gameType == "ARCADE" && status1.gameType != "ARCADE") {
+        return -1;
+    }
+    if (status1.gameType == "SKYBLOCK" && status2.mode != "SKYBLOCK") {
+        return -1;
+    }
+    if (status2.gameType == "SKYBLOCK" && status1.mode != "SKYBLOCK") {
+        return 1;
+    }
+    if (status1.gameType > status2.gameType) {
+        return -1;
+    }
+    if (status1.gameType < status2.gameType) {
+        return 1;
+    }
+    if (status1.mode > status2.mode) {
+        return -1;
+    }
+    if (status1.mode < status2.mode) {
+        return 1;
+    }
+    if (a[0] > b[0]) {
+        return 1;
+    }
+    if (b[0] > a[0]) {
+        return -1;
+    }
 }
 
 /**
