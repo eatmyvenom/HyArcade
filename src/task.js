@@ -67,7 +67,7 @@ async function stats() {
 /**
  * Calculate how many games have been played per player
  *
- * @return {*} 
+ * @return {*}
  */
 async function gamesPlayed() {
     await dataGen.gamesPlayed();

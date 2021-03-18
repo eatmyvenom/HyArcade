@@ -92,7 +92,11 @@ function displayData(data) {
 
 function handleData(rawjson) {
     let json = JSON.parse(rawjson);
-    let playerdata = json.find((acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase());
+    let playerdata = json.find(
+        (acc) =>
+            acc.name.toLowerCase() == playername.toLowerCase() ||
+            acc.uuid == playername.toLowerCase()
+    );
     if (playerdata != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
@@ -100,11 +104,19 @@ function handleData(rawjson) {
         if (urlParams.has("q")) {
             if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
                 urlParams.set("q", playername);
-                window.history.replaceState(window.history.state,"",window.location.pathname +"?" +urlParams.toString());
+                window.history.replaceState(
+                    window.history.state,
+                    "",
+                    window.location.pathname + "?" + urlParams.toString()
+                );
             }
         } else {
             urlParams.append("q", playername);
-            window.history.replaceState(window.history.state,"",window.location.pathname +"?" +urlParams.toString());
+            window.history.replaceState(
+                window.history.state,
+                "",
+                window.location.pathname + "?" + urlParams.toString()
+            );
         }
     }
 }
@@ -113,16 +125,18 @@ function handleGamesPlayed(rawjson) {
     let json = JSON.parse(rawjson);
     let data = json[uuid];
     let sortable = Object.entries(data.counts)
-        .sort(([,a],[,b]) => a-b)
+        .sort(([, a], [, b]) => a - b)
         .reverse()
         .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
     let countsStr = "";
-    for(let count in sortable) {
-        countsStr += `${count.replace(/\./g," ").replace(/_/g," ")}: ${sortable[count]}\n`
+    for (let count in sortable) {
+        countsStr += `${count.replace(/\./g, " ").replace(/_/g, " ")}: ${
+            sortable[count]
+        }\n`;
     }
 
-    setHtmlByName("gamesPlayed",countsStr);
+    setHtmlByName("gamesPlayed", countsStr);
 }
 
 function loadData() {
@@ -134,7 +148,7 @@ function loadData() {
 }
 
 function loadGamesPlayed() {
-    fetch("http://eatmyvenom.me/share/gamesPlayed.json").then((res)=>{
+    fetch("http://eatmyvenom.me/share/gamesPlayed.json").then((res) => {
         res.text().then(handleGamesPlayed);
     });
 }
