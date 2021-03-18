@@ -50,7 +50,7 @@ async function genStatus() {
         // store the cache misses
         utils.writeJSON("cachemiss.json", utils.cacheMiss),
     ]);
-    await statusTxt();
+    await statusTxtSorted();
 }
 
 /**
@@ -111,6 +111,47 @@ async function statusTxt() {
     );
 }
 
+async function statusTxtSorted() {
+    let str = ""; 
+    let accs = require('./acclist').accounts;
+
+    let crntstatus = require('../status.json');
+    const sortable = Object.entries(crntstatus)
+        .sort(statusSort)
+        .reverse()
+
+    for(const sts of sortable) {
+        let acc = await accs.find((a)=>a.uuid==sts[0]);
+        str += await status.genStatus(acc.name,sts[1]);
+    }
+
+    await fs.writeFile(
+        "status.txt",
+        `${str}`
+    );
+
+}
+
+function statusSort(a,b) {
+    let status1 = a[1];
+    let status2 = b[1];
+    if(status1 == status2) {return 0;}
+    if(status1.mode == "LOBBY") {return -1;}
+    if(status2.mode == "LOBBY") {return 1;}
+    if(status1.mode == "PARTY") {return 1;}
+    if(status2.mode == "PARTY") {return -1;}
+    if(status1.mode == "FARM_HUNT") {return 1;}
+    if(status2.mode == "FARM_HUNT") {return -1;}
+    if(status1.gameType == "ARCADE" && status2.gameType != "ARCADE") {return 1;}
+    if(status2.gameType == "ARCADE" && status1.gameType != "ARCADE") {return -1;}
+    if(status1.gameType == "SKYBLOCK") {return -1}
+    if(status2.gameType == "SKYBLOCK") {return 1}
+    if(status1.gameType > status2.gameType) {return -1;}
+    if(status1.gameType < status2.gameType) {return 1;}
+    if(status1.mode > status2.mode) {return -1;}
+    if(status1.mode < status2.mode) {return 1;}
+}
+
 /**
  * Update the player data for all players in the list
  *
@@ -141,5 +182,6 @@ async function updateAllAccounts() {
 module.exports = {
     genStatus: genStatus,
     updateAllAccounts: updateAllAccounts,
+    statusTxtSorted: statusTxtSorted,
     gamesPlayed: gamesPlayed,
 };

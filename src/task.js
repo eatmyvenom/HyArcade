@@ -84,6 +84,11 @@ async function status() {
     return await ["status.json", "status.txt"];
 }
 
+async function statusTxtSorted() {
+    await dataGen.statusTxtSorted();
+    return await ["status.txt"];
+}
+
 /**
  * Send a webhook message to discord
  *
@@ -116,6 +121,7 @@ module.exports = {
     guilds: glds,
     gamesPlayed: gamesPlayed,
     stats: stats,
+    statusTxtSorted: statusTxtSorted,
     status: status,
     webhook: webhook,
     discord: discord,

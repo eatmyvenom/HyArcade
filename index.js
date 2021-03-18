@@ -185,6 +185,10 @@ async function gamesPlayed() {
     await task.gamesPlayed();
 }
 
+async function statusSort() {
+    await task.statusTxtSorted();
+}
+
 /**
  * Main function in a async wrapper to use other async functions
  *
@@ -240,6 +244,10 @@ async function main() {
 
         case "status":
             await genStatus();
+            break;
+
+        case "statusSort":
+            await statusSort();
             break;
 
         case "gamesPlayed":
