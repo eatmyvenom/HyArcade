@@ -177,6 +177,7 @@ function statusSort(a, b) {
     if (b[0] > a[0]) {
         return -1;
     }
+    return 0;
 }
 
 /**
