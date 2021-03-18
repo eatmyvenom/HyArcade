@@ -129,10 +129,17 @@ async function statusTxtSorted() {
 function statusSort(a, b) {
     let status1 = a[1];
     let status2 = b[1];
-    if (status1.mode == "LOBBY") {
+
+    // sanitize
+    status1.mode = status1.mode.toLowerCase();
+    status2.mode = status2.mode.toLowerCase();
+    status1.gameType = status1.gameType.toLowerCase();
+    status2.gameType = status2.gameType.toLowerCase();
+
+    if (status1.mode == "LOBBY" || status1.online == false) {
         return -1;
     }
-    if (status2.mode == "LOBBY") {
+    if (status2.mode == "LOBBY" || status2.online == false) {
         return 1;
     }
     if (status1.mode == "PARTY" && status2.mode != "PARTY") {
