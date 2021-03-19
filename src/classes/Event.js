@@ -17,11 +17,15 @@ class AccountEvent {
 
     toString() {
         if (this.type == "PG") {
-            return `${this.name} just hit ${this.newAmnt} party game wins!`;
+            return `${this.name} just hit ${this.newAmnt} Party games wins!`;
         } else if (this.type == "HITW") {
-            return `${this.name} just got a ${this.newAmnt} ${this.modifier}!`;
+            return `${this.name} just got a ${this.newAmnt} ${this.modifier}! Was ${this.oldAmnt}.`;
         } else if (this.type == "HYSAYS") {
             return `${this.name} just hit ${this.newAmnt} Hypixel says wins!`;
+        } else if (this.type == "ARC") {
+            return `${this.name} just hit ${this.newAmnt} arcade wins!`;
+        } else if (this.type == "FH") {
+            return `${this.name} just hit ${this.newAmnt} farm hunt wins!`;
         }
     }
 
@@ -31,6 +35,10 @@ class AccountEvent {
         } else if ((this.type = "HITW")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if ((this.type = "HYSAYS")) {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if ((this.type = "ARC")) {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if ((this.type = "FH")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         }
     }

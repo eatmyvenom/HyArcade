@@ -16,107 +16,21 @@ class EventDetector {
             let oldAcc = account;
             let newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
 
-            if (newAcc.wins >= 500 && oldAcc.wins < 500) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 669 && oldAcc.wins < 669) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 750 && oldAcc.wins < 750) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 1000 && oldAcc.wins < 1000) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 1500 && oldAcc.wins < 1500) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 2000 && oldAcc.wins < 2000) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 2500 && oldAcc.wins < 2500) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 3000 && oldAcc.wins < 3000) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 3500 && oldAcc.wins < 3500) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            } else if (newAcc.wins >= 4000 && oldAcc.wins < 4000) {
-                this.Events.push(
-                    new AccountEvent(
-                        newAcc.name,
-                        "PG",
-                        oldAcc.wins,
-                        newAcc.wins,
-                        ""
-                    )
-                );
-            }
+            this.detectWins(oldAcc.wins, newAcc.wins, newAcc.name, "PG", "");
+            this.detectWins(
+                oldAcc.hypixelSaysWins,
+                newAcc.hypixelSaysWins,
+                newAcc.name,
+                "HYSAYS",
+                ""
+            );
+            this.detectWins(
+                oldAcc.farmhuntWins,
+                newAcc.farmhuntWins,
+                newAcc.name,
+                "FH",
+                ""
+            );
 
             if (newAcc.hitwQual > oldAcc.hitwQual) {
                 this.Events.push(
@@ -141,6 +55,14 @@ class EventDetector {
                     )
                 );
             }
+        }
+    }
+
+    detectWins(oldWc, newWc, name, type, modifier) {
+        if (newWc % 500 == 0 && newWc > oldWc) {
+            this.Events.push(
+                new AccountEvent(name, type, oldWc, newWc, modifier)
+            );
         }
     }
 
