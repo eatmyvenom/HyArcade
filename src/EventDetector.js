@@ -26,6 +26,16 @@ class EventDetector {
                         ""
                     )
                 );
+            } else if (newAcc.wins >= 669 && oldAcc.wins < 669) {
+                this.Events.push(
+                    new AccountEvent(
+                        newAcc.name,
+                        "PG",
+                        oldAcc.wins,
+                        newAcc.wins,
+                        ""
+                    )
+                );
             } else if (newAcc.wins >= 750 && oldAcc.wins < 750) {
                 this.Events.push(
                     new AccountEvent(
