@@ -19,8 +19,9 @@ let guilds = require("./guildlist")(accounts);
 async function accs() {
     accounts = await dataGen.updateAllAccounts(accounts);
     let ED = new EventDetector(require("../accounts.json"), accounts);
-    ED.runDetection();
-    ED.logEvents();
+    await ED.runDetection();
+    await ED.logEvents();
+    await ED.sendEvents();
     await utils.writeJSON("accounts.json", accounts);
     return ["accounts.json"];
 }
