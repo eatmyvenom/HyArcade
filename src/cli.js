@@ -76,7 +76,7 @@ async function newGuild() {
 
     // write new list
     await utils.writeJSON("./guildlist.json", gldLst);
-    logger.out(`Guild "${name} has been added successfully.`);
+    logger.out(`Guild "${name}" has been added successfully.`);
 }
 
 /**
