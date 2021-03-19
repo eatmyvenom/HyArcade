@@ -15,6 +15,8 @@ class Account {
     xp = 0;
     hitwQual = 0;
     hitwFinal = 0;
+    hitwWins = 0;
+    hitwRounds = 0;
     farmhuntWins = 0;
     ranksGifted = 0;
     hasOFCape = false;
@@ -133,6 +135,8 @@ class Account {
             this.clickEffect = json.player.currentClickEffect;
             this.hitwFinal = arcade.hitw_record_f;
             this.hitwQual = arcade.hitw_record_q;
+            this.hitwWins = arcade.wins_hole_in_the_wall;
+            this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
             this.firstLogin = json.player.firstLogin;
         }
