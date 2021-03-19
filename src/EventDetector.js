@@ -31,12 +31,19 @@ class EventDetector {
                 "FH",
                 ""
             );
+            this.detectWins(
+                oldAcc.hitwWins,
+                newAcc.hitwWins,
+                newAcc.name,
+                "HITW",
+                ""
+            );
 
             if (newAcc.hitwQual > oldAcc.hitwQual) {
                 this.Events.push(
                     new AccountEvent(
                         newAcc.name,
-                        "HITW",
+                        "HITWPB",
                         oldAcc.hitwQual,
                         newAcc.hitwQual,
                         "qualifiers"
@@ -48,7 +55,7 @@ class EventDetector {
                 this.Events.push(
                     new AccountEvent(
                         newAcc.name,
-                        "HITW",
+                        "HITWPB",
                         oldAcc.hitwFinal,
                         newAcc.hitwFinal,
                         "finals"

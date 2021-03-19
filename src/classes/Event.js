@@ -18,7 +18,7 @@ class AccountEvent {
     toString() {
         if (this.type == "PG") {
             return `${this.name} just hit ${this.newAmnt} Party games wins!`;
-        } else if (this.type == "HITW") {
+        } else if (this.type == "HITWPG") {
             return `${this.name} just got a ${this.newAmnt} ${this.modifier}! Was ${this.oldAmnt}.`;
         } else if (this.type == "HYSAYS") {
             return `${this.name} just hit ${this.newAmnt} Hypixel says wins!`;
@@ -26,13 +26,15 @@ class AccountEvent {
             return `${this.name} just hit ${this.newAmnt} arcade wins!`;
         } else if (this.type == "FH") {
             return `${this.name} just hit ${this.newAmnt} farm hunt wins!`;
+        } else if (this.type == "HITW") {
+            return `${this.name} just hit ${this.newAmnt} hole in the wall wins!`;
         }
     }
 
     async toDiscord() {
         if (this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
-        } else if ((this.type = "HITW")) {
+        } else if ((this.type = "HITWPB")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if ((this.type = "HYSAYS")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
