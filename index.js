@@ -193,7 +193,7 @@ async function statusSort() {
  *
  */
 async function main() {
-    await fs.writeFile("pid", "" + process.pid);
+    await fs.writeFile(args[2] + ".pid", "" + process.pid);
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
