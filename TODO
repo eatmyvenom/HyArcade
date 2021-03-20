@@ -11,17 +11,17 @@
 ✅ timeout on hanging requests
 ✅ full documentation for everything
 ✅ click on player name -> player site
+✅ send message in #role-update when player hits milestone
+✅ add ability to take over HITW bot
+✅  player page
 ❗️ weekly wins
 ❗️ monthly wins
 ❗️ get list of cosmetics
-❗️ player page
-❌ Conserve api requests
-❌ add ability to take over HITW bot
+❗️ Conserve api requests
+❗️ watchdog incase code hangs indefinately
 ❌ auto update roles for players wins in PGcord
-❌ send message in #role-update when player hits milestone
-❌ watchdog incase code hangs indefinately
-❌ github actions cluster
 ❌ add account aliases
 ❌ mobile css
+❓ github actions cluster
 ❓ rolling daily
 ❓ graphs
