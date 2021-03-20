@@ -20,12 +20,16 @@ function home() {
 }
 
 function formatTime(time) {
-    return new Date(time).toDateString();
+    return new Date(time).toLocaleString();
 }
 
 function formatNum(number) {
-    let str = new Number(number).toLocaleString();
-    return str == "NaN" ? "0" : str;
+    let str = new Number(number);
+    if(number == undefined) {
+        return new Number(0).toLocaleString();
+    } else {
+        return str.toLocaleString();
+    }
 }
 
 function setIcon(uuid) {
