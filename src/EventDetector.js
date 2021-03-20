@@ -19,27 +19,27 @@ class EventDetector {
             if (oldAcc == undefined || newAcc == undefined) {
                 return;
             }
-            this.detectWins(oldAcc.wins, newAcc.wins, newAcc.name, "PG", "");
+            this.detectWins(oldAcc.wins, newAcc.wins, newAcc.name, "PG", "", newAcc.uuid);
             this.detectWins(
                 oldAcc.hypixelSaysWins,
                 newAcc.hypixelSaysWins,
                 newAcc.name,
                 "HYSAYS",
-                ""
+                "", newAcc.uuid
             );
             this.detectWins(
                 oldAcc.farmhuntWins,
                 newAcc.farmhuntWins,
                 newAcc.name,
                 "FH",
-                ""
+                "", newAcc.uuid
             );
             this.detectWins(
                 oldAcc.hitwWins,
                 newAcc.hitwWins,
                 newAcc.name,
                 "HITW",
-                ""
+                "", newAcc.uuid
             );
 
             if (newAcc.hitwQual > oldAcc.hitwQual) {
@@ -49,7 +49,7 @@ class EventDetector {
                         "HITWPB",
                         oldAcc.hitwQual,
                         newAcc.hitwQual,
-                        "qualifiers"
+                        "qualifiers", newAcc.uuid
                     )
                 );
             }
@@ -61,17 +61,17 @@ class EventDetector {
                         "HITWPB",
                         oldAcc.hitwFinal,
                         newAcc.hitwFinal,
-                        "finals"
+                        "finals", newAcc.uuid
                     )
                 );
             }
         }
     }
 
-    detectWins(oldWc, newWc, name, type, modifier) {
+    detectWins(oldWc, newWc, name, type, modifier, uuid) {
         if (newWc % 500 == 0 && newWc > oldWc) {
             this.Events.push(
-                new AccountEvent(name, type, oldWc, newWc, modifier)
+                new AccountEvent(name, type, oldWc, newWc, modifier, uuid)
             );
         }
     }
