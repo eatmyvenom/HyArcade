@@ -18,7 +18,7 @@ class AccountEvent {
     toString() {
         if (this.type == "PG") {
             return `${this.name} just hit ${this.newAmnt} Party games wins!`;
-        } else if (this.type == "HITWPG") {
+        } else if (this.type == "HITWPB") {
             return `${this.name} just got a ${this.newAmnt} ${this.modifier}! Was ${this.oldAmnt}.`;
         } else if (this.type == "HYSAYS") {
             return `${this.name} just hit ${this.newAmnt} Hypixel says wins!`;
