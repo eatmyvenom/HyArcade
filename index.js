@@ -1,5 +1,6 @@
 #!/bin/env node
 
+const os = require('os');
 const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/webhook");
@@ -188,12 +189,23 @@ async function statusSort() {
     await task.statusTxtSorted();
 }
 
+async function writePID() {
+    if(!utils.fileExists(os.tmpdir() + "/pgapi")) {
+        await fs.mkdir(os.tmpdir() + "/pgapi");
+    }
+    await fs.writeFile(os.tmpdir() + "/pgapi/" + args[2] + ".pid", "" + process.pid)
+}
+
+async function rmPID() {
+    await fs.rm(os.tmpdir() + "/pgapi/" + args[2] + ".pid");
+}
+
 /**
  * Main function in a async wrapper to use other async functions
  *
  */
 async function main() {
-    await fs.writeFile(args[2] + ".pid", "" + process.pid);
+    await writePID();
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     switch (args[2]) {
@@ -294,6 +306,8 @@ async function main() {
             await discordBot();
             break;
     }
+
+    await rmPID();
 }
 
 main();
