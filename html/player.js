@@ -25,7 +25,7 @@ function formatTime(time) {
 
 function formatNum(number) {
     let str = new Number(number);
-    if(number == undefined) {
+    if (number == undefined) {
         return new Number(0).toLocaleString();
     } else {
         return str.toLocaleString();

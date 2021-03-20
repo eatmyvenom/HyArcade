@@ -1,6 +1,6 @@
 #!/bin/env node
 
-const os = require('os');
+const os = require("os");
 const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/webhook");
@@ -22,6 +22,7 @@ const task = require("./src/task");
 // will become an issue really fast. So this is my way of not
 // bloating this project with node modules and shit.
 const config = require("./config.json");
+const AccountEvent = require("./src/classes/Event");
 
 /**
  * Run the accounts task
@@ -190,14 +191,29 @@ async function statusSort() {
 }
 
 async function writePID() {
-    if(!utils.fileExists(os.tmpdir() + "/pgapi")) {
+    if (!utils.fileExists(os.tmpdir() + "/pgapi")) {
         await fs.mkdir(os.tmpdir() + "/pgapi");
     }
-    await fs.writeFile(os.tmpdir() + "/pgapi/" + args[2] + ".pid", "" + process.pid)
+    await fs.writeFile(
+        os.tmpdir() + "/pgapi/" + args[2] + ".pid",
+        "" + process.pid
+    );
 }
 
 async function rmPID() {
     await fs.rm(os.tmpdir() + "/pgapi/" + args[2] + ".pid");
+}
+
+async function sendDiscordEvent() {
+    let event = new AccountEvent(
+        args[3],
+        args[4],
+        args[5],
+        args[6],
+        args[7],
+        args[8]
+    );
+    await event.toDiscord();
 }
 
 /**
@@ -304,6 +320,10 @@ async function main() {
 
         case "bot":
             await discordBot();
+            break;
+
+        case "sendDiscordEvent":
+            await sendDiscordEvent();
             break;
     }
 

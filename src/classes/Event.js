@@ -1,6 +1,6 @@
 const Webhook = require("../webhook");
 const config = require("../../config.json");
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 
 class AccountEvent {
     name = "";
@@ -35,23 +35,41 @@ class AccountEvent {
         }
     }
 
+    async getHitWEmbed() {
+        let avatar =
+            "https://crafatar.com/renders/body/" +
+            this.uuid +
+            ".png?size=512&default=MHF_Steve&scale=10&overlay";
+        let embed = new MessageEmbed()
+            .setAuthor(this.name, avatar)
+            .setThumbnail(avatar)
+            .setFooter("UUID: " + this.uuid)
+            .setColor(0x0066cc)
+            .setTitle(
+                `${this.name} Improved their **${this.modifier}** Personal Best!`
+            )
+            .addField("Old PB", `**${this.oldAmnt}**`, true)
+            .addField("New PB", `**${this.newAmnt}**`, true)
+            .addField("Increase", `**${this.newAmnt - this.oldAmnt}**`, true);
+
+        return embed;
+    }
+
     async toDiscord() {
         if (this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
         } else if ((this.type = "HITWPB")) {
-            let avatar = "https://crafatar.com/renders/body/" + this.uuid + ".png"
-            let embed = new MessageEmbed()
-                .setAuthor(this.name, avatar)
-                .setThumbnail(avatar)
-                .setFooter("UUID: " + this.uuid)
-                .setTitle(`${this.name} Improved their **${this.modifier}** Personal Best!`)
-                .addField("Old PB", `**${this.oldAmnt}**`, true)
-                .addField("New PB", `**${this.newAmnt}**`, true)
-                .addField("Increase", `**${this.newAmnt - this.oldAmnt}**`, true)
-
-            await Webhook.sendBasicEmbed("",embed,config.events.HITW.webhook);
+            let embed = this.getHitWEmbed();
+            await Webhook.sendBasicEmbed(
+                "",
+                [embed],
+                config.events.HITW.webhook
+            );
         } else if ((this.type = "HITW")) {
-            await Webhook.sendBasic(this.toString(), config.events.HITW.webhook);
+            await Webhook.sendBasic(
+                this.toString(),
+                config.events.HITW.webhook
+            );
         } else if ((this.type = "HYSAYS")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if ((this.type = "ARC")) {

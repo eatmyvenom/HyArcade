@@ -19,27 +19,37 @@ class EventDetector {
             if (oldAcc == undefined || newAcc == undefined) {
                 return;
             }
-            this.detectWins(oldAcc.wins, newAcc.wins, newAcc.name, "PG", "", newAcc.uuid);
+            this.detectWins(
+                oldAcc.wins,
+                newAcc.wins,
+                newAcc.name,
+                "PG",
+                "",
+                newAcc.uuid
+            );
             this.detectWins(
                 oldAcc.hypixelSaysWins,
                 newAcc.hypixelSaysWins,
                 newAcc.name,
                 "HYSAYS",
-                "", newAcc.uuid
+                "",
+                newAcc.uuid
             );
             this.detectWins(
                 oldAcc.farmhuntWins,
                 newAcc.farmhuntWins,
                 newAcc.name,
                 "FH",
-                "", newAcc.uuid
+                "",
+                newAcc.uuid
             );
             this.detectWins(
                 oldAcc.hitwWins,
                 newAcc.hitwWins,
                 newAcc.name,
                 "HITW",
-                "", newAcc.uuid
+                "",
+                newAcc.uuid
             );
 
             if (newAcc.hitwQual > oldAcc.hitwQual) {
@@ -49,7 +59,8 @@ class EventDetector {
                         "HITWPB",
                         oldAcc.hitwQual,
                         newAcc.hitwQual,
-                        "qualifiers", newAcc.uuid
+                        "qualifiers",
+                        newAcc.uuid
                     )
                 );
             }
@@ -61,7 +72,8 @@ class EventDetector {
                         "HITWPB",
                         oldAcc.hitwFinal,
                         newAcc.hitwFinal,
-                        "finals", newAcc.uuid
+                        "finals",
+                        newAcc.uuid
                     )
                 );
             }
