@@ -16,6 +16,9 @@ class EventDetector {
             let oldAcc = account;
             let newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
 
+            if (oldAcc == undefined || newAcc == undefined) {
+                return;
+            }
             this.detectWins(oldAcc.wins, newAcc.wins, newAcc.name, "PG", "");
             this.detectWins(
                 oldAcc.hypixelSaysWins,
