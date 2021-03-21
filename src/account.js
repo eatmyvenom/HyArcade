@@ -141,8 +141,8 @@ class Account {
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
             this.firstLogin = json.player.firstLogin;
-            this.arcadeWins = json.achievements.arcade_arcade_winner;
-            this.anyWins = json.achievements.general_wins;
+            this.arcadeWins = json.player.achievements.arcade_arcade_winner;
+            this.anyWins = json.player.achievements.general_wins;
         }
     }
 }
