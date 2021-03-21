@@ -45,6 +45,8 @@ function setIcon(uuid) {
 function displayData(data) {
     console.log(data);
     let ver = data.version ? data.version : "1.8.9";
+    setHtmlByName("anywins", "All wins: " + formatNum(data.anyWins));
+    setHtmlByName("arcwins", "Arcade wins: " + formatNum(data.arcadeWins));
     setHtmlByName("pg-wins", "Party games wins: " + formatNum(data.wins));
     setHtmlByName("fh-wins", "Farm hunt wins: " + formatNum(data.farmhuntWins));
     setHtmlByName(
