@@ -33,6 +33,7 @@ let { accounts, gamers, afkers } = require("./acclist");
 const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || config.alwaysForce;
+const GamesPlayed = require("./gamesPlayed");
 
 /**
  * Generates the status for all of the online players
@@ -77,7 +78,33 @@ async function genStatus() {
         // store the cache misses
         utils.writeJSON("cachemiss.json", utils.cacheMiss),
     ]);
-    await statusTxt();
+    await statusTxtSorted();
+}
+
+/**
+ * Adds new games to the total amount of games played for each player
+ *
+ */
+async function gamesPlayed() {
+    let oldGames = await utils.readJSON("./gamesPlayed.json");
+
+    let promiseArr = accounts.map(async (account) => {
+        let oldData = oldGames[account.uuid];
+        let oldCounts = {};
+        let oldTime = 0;
+
+        if (oldData != undefined) {
+            oldCounts = oldData.counts;
+            oldTime = oldData.newestTime;
+        }
+
+        let playerGames = new GamesPlayed(account.uuid, oldCounts, oldTime);
+        await playerGames.updateData();
+        oldGames[account.uuid] = playerGames;
+    });
+
+    await Promise.all(promiseArr);
+    await utils.writeJSON("./gamesPlayed.json", oldGames);
 }
 
 /**
@@ -92,9 +119,8 @@ async function statusTxt() {
 
     let crntstatus = require("../status.json");
     for (const account of accs) {
-        if (
-            (await gamers.find((acc) => acc.uuid == account.uuid)) != undefined
-        ) {
+        let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
+        if (gamerAcc != undefined) {
             gamerstr += await status.genStatus(
                 account.name,
                 crntstatus[account.uuid]
@@ -111,6 +137,82 @@ async function statusTxt() {
         "status.txt",
         `${gamerstr}\nNon gamers:\n\n${nongamers}`
     );
+}
+
+async function statusTxtSorted() {
+    let str = "";
+    let accs = require("./acclist").accounts;
+
+    let crntstatus = require("../status.json");
+    const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
+
+    for (const sts of sortable) {
+        let acc = await accs.find((a) => a.uuid == sts[0]);
+        str += await status.genStatus(acc.name, sts[1]);
+    }
+
+    await fs.writeFile("status.txt", `${str}`);
+}
+
+function statusSort(a, b) {
+    let status1 = a[1];
+    let status2 = b[1];
+
+    // sanitize
+    status1.mode = ("" + status1.mode).toUpperCase();
+    status2.mode = ("" + status2.mode).toUpperCase();
+    status1.gameType = ("" + status1.gameType).toUpperCase();
+    status2.gameType = ("" + status2.gameType).toUpperCase();
+
+    if (status1.mode == "LOBBY") {
+        return -1;
+    }
+    if (status2.mode == "LOBBY") {
+        return 1;
+    }
+    if (status1.mode == "PARTY" &amp;&amp; status2.mode != "PARTY") {
+        return 1;
+    }
+    if (status2.mode == "PARTY" &amp;&amp; status1.mode != "PARTY") {
+        return -1;
+    }
+    if (status1.mode == "FARM_HUNT" &amp;&amp; status2.mode != "FARM_HUNT") {
+        return 1;
+    }
+    if (status2.mode == "FARM_HUNT" &amp;&amp; status1.mode != "FARM_HUNT") {
+        return -1;
+    }
+    if (status1.gameType == "ARCADE" &amp;&amp; status2.gameType != "ARCADE") {
+        return 1;
+    }
+    if (status2.gameType == "ARCADE" &amp;&amp; status1.gameType != "ARCADE") {
+        return -1;
+    }
+    if (status1.gameType == "SKYBLOCK" &amp;&amp; status2.mode != "SKYBLOCK") {
+        return -1;
+    }
+    if (status2.gameType == "SKYBLOCK" &amp;&amp; status1.mode != "SKYBLOCK") {
+        return 1;
+    }
+    if (status1.gameType > status2.gameType) {
+        return -1;
+    }
+    if (status1.gameType &lt; status2.gameType) {
+        return 1;
+    }
+    if (status1.mode > status2.mode) {
+        return -1;
+    }
+    if (status1.mode &lt; status2.mode) {
+        return 1;
+    }
+    if (a[0] > b[0]) {
+        return 1;
+    }
+    if (b[0] > a[0]) {
+        return -1;
+    }
+    return 0;
 }
 
 /**
@@ -143,6 +245,8 @@ async function updateAllAccounts() {
 module.exports = {
     genStatus: genStatus,
     updateAllAccounts: updateAllAccounts,
+    statusTxtSorted: statusTxtSorted,
+    gamesPlayed: gamesPlayed,
 };
 </code></pre>
         </article>
@@ -154,13 +258,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="account.Account.html">Account</a></li><li><a href="clusterClient.clusterClient.html">clusterClient</a></li><li><a href="Guild.Guild.html">Guild</a></li><li><a href="labyRequest.labyRequest.html">labyRequest</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Player.Player.html">Player</a></li><li><a href="webResponse.webResponse.html">webResponse</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accounts">accounts</a></li><li><a href="global.html#accs">accs</a></li><li><a href="global.html#addAccounts">addAccounts</a></li><li><a href="global.html#arcadeFormatter">arcadeFormatter</a></li><li><a href="global.html#archive">archive</a></li><li><a href="global.html#archiveJson">archiveJson</a></li><li><a href="global.html#checkNames">checkNames</a></li><li><a href="global.html#clusterHandler">clusterHandler</a></li><li><a href="global.html#day">day</a></li><li><a href="global.html#daytime">daytime</a></li><li><a href="global.html#discord">discord</a></li><li><a href="global.html#discordBot">discordBot</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#fileExists">fileExists</a></li><li><a href="global.html#formatCounts">formatCounts</a></li><li><a href="global.html#gameAmnt">gameAmnt</a></li><li><a href="global.html#generateEmbed">generateEmbed</a></li><li><a href="global.html#genStatus">genStatus</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getUUID">getUUID</a></li><li><a href="global.html#getUUIDCli">getUUIDCli</a></li><li><a href="global.html#getUUIDRaw">getUUIDRaw</a></li><li><a href="global.html#glds">glds</a></li><li><a href="global.html#guilds">guilds</a></li><li><a href="global.html#isOnlineC">isOnlineC</a></li><li><a href="global.html#listDiff">listDiff</a></li><li><a href="global.html#listNormal">listNormal</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#logCounts">logCounts</a></li><li><a href="global.html#logD">logD</a></li><li><a href="global.html#logDaily">logDaily</a></li><li><a href="global.html#logNormal">logNormal</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#mapFormatter">mapFormatter</a></li><li><a href="global.html#modeFormatter">modeFormatter</a></li><li><a href="global.html#moveAcc">moveAcc</a></li><li><a href="global.html#newAcc">newAcc</a></li><li><a href="global.html#newGuild">newGuild</a></li><li><a href="global.html#newPlayer">newPlayer</a></li><li><a href="global.html#players">players</a></li><li><a href="global.html#plrs">plrs</a></li><li><a href="global.html#reqLabyCape">reqLabyCape</a></li><li><a href="global.html#reqOFCape">reqOFCape</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#sendToDiscord">sendToDiscord</a></li><li><a href="global.html#sendToEmbedDiscord">sendToEmbedDiscord</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#snap">snap</a></li><li><a href="global.html#stats">stats</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#statusTxt">statusTxt</a></li><li><a href="global.html#stringDaily">stringDaily</a></li><li><a href="global.html#stringDiff">stringDiff</a></li><li><a href="global.html#stringNormal">stringNormal</a></li><li><a href="global.html#txtPlayerList">txtPlayerList</a></li><li><a href="global.html#txtStatus">txtStatus</a></li><li><a href="global.html#updateAll">updateAll</a></li><li><a href="global.html#updateAllAccounts">updateAllAccounts</a></li><li><a href="global.html#updateAllGuilds">updateAllGuilds</a></li><li><a href="global.html#updateAllPlayers">updateAllPlayers</a></li><li><a href="global.html#webhook">webhook</a></li><li><a href="global.html#webhookEmbed">webhookEmbed</a></li><li><a href="global.html#webhookLog">webhookLog</a></li><li><a href="global.html#winsSorter">winsSorter</a></li><li><a href="global.html#writeFile">writeFile</a></li><li><a href="global.html#writeFileD">writeFileD</a></li><li><a href="global.html#writeJSON">writeJSON</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="account.Account.html">Account</a></li><li><a href="clusterClient.clusterClient.html">clusterClient</a></li><li><a href="Guild.Guild.html">Guild</a></li><li><a href="labyRequest.labyRequest.html">labyRequest</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Player.Player.html">Player</a></li><li><a href="webResponse.webResponse.html">webResponse</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accounts">accounts</a></li><li><a href="global.html#accs">accs</a></li><li><a href="global.html#addAccounts">addAccounts</a></li><li><a href="global.html#arcadeFormatter">arcadeFormatter</a></li><li><a href="global.html#archive">archive</a></li><li><a href="global.html#archiveJson">archiveJson</a></li><li><a href="global.html#checkNames">checkNames</a></li><li><a href="global.html#clusterHandler">clusterHandler</a></li><li><a href="global.html#day">day</a></li><li><a href="global.html#daytime">daytime</a></li><li><a href="global.html#discord">discord</a></li><li><a href="global.html#discordBot">discordBot</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#fileExists">fileExists</a></li><li><a href="global.html#formatCounts">formatCounts</a></li><li><a href="global.html#gameAmnt">gameAmnt</a></li><li><a href="global.html#gamesPlayed">gamesPlayed</a></li><li><a href="global.html#generateEmbed">generateEmbed</a></li><li><a href="global.html#genStatus">genStatus</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getUUID">getUUID</a></li><li><a href="global.html#getUUIDCli">getUUIDCli</a></li><li><a href="global.html#getUUIDRaw">getUUIDRaw</a></li><li><a href="global.html#glds">glds</a></li><li><a href="global.html#guilds">guilds</a></li><li><a href="global.html#isOnlineC">isOnlineC</a></li><li><a href="global.html#listDiff">listDiff</a></li><li><a href="global.html#listNormal">listNormal</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#logCounts">logCounts</a></li><li><a href="global.html#logD">logD</a></li><li><a href="global.html#logDaily">logDaily</a></li><li><a href="global.html#logNormal">logNormal</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#mapFormatter">mapFormatter</a></li><li><a href="global.html#modeFormatter">modeFormatter</a></li><li><a href="global.html#moveAcc">moveAcc</a></li><li><a href="global.html#newAcc">newAcc</a></li><li><a href="global.html#newGuild">newGuild</a></li><li><a href="global.html#newPlayer">newPlayer</a></li><li><a href="global.html#players">players</a></li><li><a href="global.html#plrs">plrs</a></li><li><a href="global.html#reqLabyCape">reqLabyCape</a></li><li><a href="global.html#reqOFCape">reqOFCape</a></li><li><a href="global.html#run">run</a></li><li><a href="global.html#save">save</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#sendToDiscord">sendToDiscord</a></li><li><a href="global.html#sendToEmbedDiscord">sendToEmbedDiscord</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#snap">snap</a></li><li><a href="global.html#stats">stats</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#statusTxt">statusTxt</a></li><li><a href="global.html#stringDaily">stringDaily</a></li><li><a href="global.html#stringDiff">stringDiff</a></li><li><a href="global.html#stringNormal">stringNormal</a></li><li><a href="global.html#txtPlayerList">txtPlayerList</a></li><li><a href="global.html#txtStatus">txtStatus</a></li><li><a href="global.html#updateAll">updateAll</a></li><li><a href="global.html#updateAllAccounts">updateAllAccounts</a></li><li><a href="global.html#updateAllGuilds">updateAllGuilds</a></li><li><a href="global.html#updateAllPlayers">updateAllPlayers</a></li><li><a href="global.html#webhook">webhook</a></li><li><a href="global.html#webhookEmbed">webhookEmbed</a></li><li><a href="global.html#webhookLog">webhookLog</a></li><li><a href="global.html#winsSorter">winsSorter</a></li><li><a href="global.html#writeFile">writeFile</a></li><li><a href="global.html#writeFileD">writeFileD</a></li><li><a href="global.html#writeJSON">writeJSON</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 15 2021 02:14:46 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Mar 21 2021 00:04:03 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
