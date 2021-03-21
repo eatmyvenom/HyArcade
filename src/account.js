@@ -9,27 +9,29 @@ class Account {
     internalId = "";
     rank = "";
     version = "";
+    firstLogin = 0;
+    isLoggedIn = false;
     mostRecentGameType = "";
-    wins = 0;
     achievementPoints = 0;
     xp = 0;
+    karma = 0;
+    ranksGifted = 0;
+    wins = 0;
     hitwQual = 0;
     hitwFinal = 0;
     hitwWins = 0;
     hitwRounds = 0;
     farmhuntWins = 0;
-    ranksGifted = 0;
+    hypixelSaysWins = 0;
+    arcadeWins = 0;
+    anyWins = 0;
     hasOFCape = false;
     hasLabyCape = false;
-    discord = "";
-    karma = 0;
-    isLoggedIn = false;
+    cloak = "";
+    clickEffect = "";
     plusColor = "";
     hat = "";
-    clickEffect = "";
-    cloak = "";
-    hypixelSaysWins = 0;
-    firstLogin = 0;
+    discord = "";
 
     /**
      * Creates an instance of Account.
@@ -139,6 +141,8 @@ class Account {
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
             this.firstLogin = json.player.firstLogin;
+            this.arcadeWins = json.achievements.arcade_arcade_winner;
+            this.anyWins = json.achievements.general_wins;
         }
     }
 }
