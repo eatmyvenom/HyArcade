@@ -22,6 +22,7 @@
 ❌ auto update roles for players wins in PGcord
 ❌ add account aliases
 ❌ mobile css
+❌ leaderboard position change event
 ❓ github actions cluster
 ❓ rolling daily
 ❓ graphs
