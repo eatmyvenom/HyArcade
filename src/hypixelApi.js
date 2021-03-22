@@ -144,7 +144,7 @@ module.exports = class hypixelAPI {
 
     /**
      * Get the wins for an account with a specified uuid
-     * @deprecated
+     *
      * @static
      * @param {String} uuid
      * @return {Number}
