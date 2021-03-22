@@ -58,23 +58,23 @@ class AccountEvent {
     async toDiscord() {
         if (this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
-        } else if ((this.type = "HITWPB")) {
-            let embed = this.getHitWEmbed();
+        } else if ((this.type == "HITWPB")) {
+            let embed = await this.getHitWEmbed();
             await Webhook.sendBasicEmbed(
                 "",
                 [embed],
                 config.events.HITW.webhook
             );
-        } else if ((this.type = "HITW")) {
+        } else if ((this.type == "HITW")) {
             await Webhook.sendBasic(
                 this.toString(),
                 config.events.HITW.webhook
             );
-        } else if ((this.type = "HYSAYS")) {
+        } else if ((this.type == "HYSAYS")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if ((this.type = "ARC")) {
+        } else if ((this.type == "ARC")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if ((this.type = "FH")) {
+        } else if ((this.type == "FH")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         }
     }
