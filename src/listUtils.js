@@ -131,7 +131,7 @@ async function stringDaily(name, maxamnt) {
  * @return {null}
  */
 async function addAccounts(category, names) {
-    let acclist = require("../acclist.json");
+    let acclist = utils.readJSON("../acclist.json");
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
         return;
