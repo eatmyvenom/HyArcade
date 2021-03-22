@@ -82,7 +82,7 @@ class EventDetector {
                 );
             }
 
-            if(newIndex > 25 && newIndex > oldIndex) {
+            if (newIndex > 25 && newIndex > oldIndex) {
                 this.Events.push(
                     new AccountEvent(
                         newAcc.name,
@@ -92,7 +92,7 @@ class EventDetector {
                         "party games",
                         newAcc.uuid
                     )
-                )
+                );
             }
         }
     }
