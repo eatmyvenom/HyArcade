@@ -11,33 +11,15 @@ div {
 div:hover {
     box-shadow: -2px -2px 5px 1px purple, 2px 2px 5px 1px rgb(55, 55, 235);
 }
-aside {
-    position: fixed;
-    float: right;
-    right: 0vw;
-    height: 100vh;
-    overflow: auto;
-    padding: 8px;
-}
+
 div {
     border: 2px solid transparent;
     border-image: linear-gradient(to bottom right, purple, rgb(55, 55, 235));
     border-image-slice: 1;
 }
-aside div {
-    display: block;
-}
+
 nav {
-    position: fixed;
-    top: 0;
     height: 40px;
-    background: #181c30;
-    z-index: 10;
-}
-main {
-    position: absolute;
-    top: 40px;
-    width: 49vw;
 }
 
 nav button[off] {
@@ -45,8 +27,6 @@ nav button[off] {
 }
 
 .lenipt {
-    position: absolute;
-    right: 0;
     height: 40px;
 }
 
@@ -56,10 +36,13 @@ input {
     color: white;
     height: inherit;
     outline: none !important;
-    max-width: 6vw;
 }
 
 a {
     text-decoration: none;
     color: white !important;
+}
+
+.ipttxt {
+    display: none;
 }

@@ -8,6 +8,51 @@
         />
         <link rel="stylesheet" href="http://eatmyvenom.me/style.css" />
         <link rel="stylesheet" href="style.css" />
+        <style>
+            @media only screen and (min-width: 768px) {
+                aside {
+                    position: fixed;
+                    float: right;
+                    right: 0vw;
+                    height: 100vh;
+                    overflow: auto;
+                    padding: 8px;
+                }
+
+                main {
+                    width: 49vw;
+                }
+
+                aside div {
+                    display: block;
+                }
+
+                main {
+                    position: absolute;
+                    top: 40px;
+                }
+
+                nav {
+                    position: fixed;
+                    top: 0;
+                    background: #181c30;
+                    z-index: 10;
+                }
+
+                .lenipt {
+                    position: absolute;
+                    right: 0;
+                }
+
+                .ipttxt {
+                    display: inline;
+                }
+
+                input {
+                    max-width: 6vw;
+                }
+            }
+        </style>
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -17,7 +62,7 @@
             <button class="gldb" onClick="toggleGuilds()">Guilds</button>
             <button class="accb" onClick="toggleNormal()">Normal</button>
             <span class="lenipt">
-                Max Length:
+                <span class="ipttxt">Max Length:</span>
                 <input
                     oninput="maxValChange(this.value)"
                     type="number"

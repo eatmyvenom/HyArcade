@@ -8,6 +8,7 @@ const EventDetector = require("./EventDetector");
 // these modules need to use identical accounts lists so that
 // the data does not need to be updated multiple times
 let { accounts } = require("./acclist");
+const { winsSorter } = require("./utils");
 let players = require("./playerlist")(accounts);
 let guilds = require("./guildlist")(accounts);
 
@@ -18,7 +19,10 @@ let guilds = require("./guildlist")(accounts);
  */
 async function accs() {
     accounts = await dataGen.updateAllAccounts(accounts);
-    let ED = new EventDetector(require("../accounts.json"), accounts);
+    let old = require("../accounts.json");
+    old.sort(winsSorter);
+    accounts.sort(winsSorter);
+    let ED = new EventDetector(old, accounts);
     await ED.runDetection();
     await ED.logEvents();
     await ED.sendEvents();
