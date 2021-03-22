@@ -32,6 +32,8 @@ class AccountEvent {
             return `${this.name} just hit ${this.newAmnt} farm hunt wins!`;
         } else if (this.type == "HITW") {
             return `${this.name} just hit ${this.newAmnt} hole in the wall wins!`;
+        } else if (this.type == "LBPOS") {
+            return `${this.name} just got to rank ${this.newAmnt} on ${this.modifier} leaderboard!`;
         }
     }
 
@@ -75,6 +77,8 @@ class AccountEvent {
         } else if ((this.type == "ARC")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if ((this.type == "FH")) {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if ((this.type == "LBPOS")) {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         }
     }

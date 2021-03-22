@@ -19,6 +19,10 @@ class EventDetector {
             if (oldAcc == undefined || newAcc == undefined) {
                 return;
             }
+
+            let oldIndex = this.OldAccounts.indexOf(oldAcc);
+            let newIndex = this.NewAccounts.indexOf(newAcc);
+
             this.detectWins(
                 oldAcc.wins,
                 newAcc.wins,
@@ -76,6 +80,19 @@ class EventDetector {
                         newAcc.uuid
                     )
                 );
+            }
+
+            if(newIndex > 25 && newIndex > oldIndex) {
+                this.Events.push(
+                    new AccountEvent(
+                        newAcc.name,
+                        "LBPOS",
+                        oldIndex,
+                        newIndex,
+                        "party games",
+                        newAcc.uuid
+                    )
+                )
             }
         }
     }
