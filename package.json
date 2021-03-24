@@ -13,7 +13,7 @@
         "clean": "./clean.sh",
         "prettify": "prettier --write .",
         "writeDocs": "jsdoc . ./src ./src/discord -d ./doc",
-        "autoConfig": "node . autoconfig",
+        "autoconfig": "node . autoconfig",
         "test": "node . save"
     },
     "author": "EatMyVenom",
