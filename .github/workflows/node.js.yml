@@ -30,9 +30,9 @@ jobs:
     - name : download metadata
       run: npm run downloadMeta
       env: 
-        configjson : ${{ secrets.configjson }}
+        configjson : ${{ secrets.CONFIGJSON }}
     - name: generate config
       run: npm run autoconfig
       env: 
-        configjson : ${{ secrets.configjson }}
+        configjson : ${{ secrets.CONFIGJSON }}
     - run: npm test
