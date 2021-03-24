@@ -1,7 +1,9 @@
-const cachedStatus = require("../status.json");
 const { getUUIDStatus } = require("./hypixelApi");
-let { accounts } = require("./acclist");
 const { logger } = require("./utils");
+const utils = require("./utils");
+
+let cachedStatus = (utils.fileExists('./status.json')) ? require("../status.json") : {};
+let { accounts } = require("./acclist");
 
 let rawstatus = {};
 
