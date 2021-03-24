@@ -22,18 +22,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
+      env: 
+        configjson : ${{ secrets.CONFIGJSON }}
+        key : ${{ secrets.API_KEY }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - name : install dependencies
-      run: npm ci
-    - name : download metadata
-      run: npm run downloadMeta
-      env: 
-        configjson : ${{ secrets.CONFIGJSON }}
-        key : ${{ secrets.API_KEY }}
-    - name: generate config
-      run: npm run autoconfig
-      env: 
-        configjson : ${{ secrets.CONFIGJSON }}
+    - run: npm ci
+    - run: npm run downloadMeta
+    - run: npm run autoconfig
     - run: npm test
