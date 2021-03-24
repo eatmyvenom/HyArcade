@@ -1,5 +1,8 @@
 const config = require("../config.json");
 const fs = require("fs/promises");
+const ffs = require('fs');
+const http = require('http');
+const webRequest = require("./webRequest");
 
 /**
  * Halt execution for a specified amount of time
@@ -119,6 +122,11 @@ function error(content) {
     }
 }
 
+function downloadFile(name,servername) {
+    let response = await webRequest('http://eatmyvenom.me/share/' + servername);
+    await fs.writeFile(name, response.data);
+}
+
 module.exports = {
     archiveJson: archiveJson,
     day: day,
@@ -127,6 +135,7 @@ module.exports = {
     writeJSON: writeJSON,
     readJSON: readJSON,
     fileExists: fileExists,
+    downloadFile: downloadFile,
     daytime: daytime,
     cacheMiss: [],
     logger: {

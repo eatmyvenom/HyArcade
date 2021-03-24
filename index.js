@@ -224,6 +224,11 @@ async function sendDiscordEvent() {
 async function autoconfig() {
     let conf = Cfg.fromEnv();
     await conf.writeConfig();
+    await utils.downloadFile('status.json', 'pgstatus.json');
+    await utils.downloadFile('acclist.json', 'acclist.json');
+    await utils.downloadFile('accounts.json', 'accounts.json');
+    await utils.downloadFile('guild.json', 'guild.json');
+    await utils.downloadFile('players.json', 'players.json');
 }
 
 /**
