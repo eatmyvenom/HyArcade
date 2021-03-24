@@ -1,6 +1,5 @@
 const https = require("https");
 const http = require("http");
-const config = require("../config.json");
 
 class webResponse {
     data = "";
@@ -36,7 +35,6 @@ function sendRequest(url) {
         }
 
         let reqOptions = {
-            timeout: config.watchdogTimeout,
             family: 4,
             port: method == "http:" ? 80 : 443,
             protocol: method,
