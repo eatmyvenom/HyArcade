@@ -25,11 +25,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run downloadMeta
+    - name : install dependencies
+      run: npm ci
+    - name : download metadata
+      run: npm run downloadMeta
       env: 
         configjson : ${{ secrets.configjson }}
-    - run: npm run autoconfig
+    - name: generate config
+      run: npm run autoconfig
       env: 
         configjson : ${{ secrets.configjson }}
     - run: npm test
