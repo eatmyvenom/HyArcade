@@ -1,5 +1,9 @@
 #!/bin/env node
 
+if(!require('fs').existsSync('./config.json')) {
+    require('fs').writeFileSync('./config.json','{}');
+}
+
 const os = require("os");
 const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");
