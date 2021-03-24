@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const webRequest = require('./src/webRequest');
 const fs = require('fs/promises');
 
