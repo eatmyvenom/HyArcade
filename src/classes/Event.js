@@ -33,7 +33,7 @@ class AccountEvent {
         } else if (this.type == "HITW") {
             return `${this.name} just hit ${this.newAmnt} hole in the wall wins!`;
         } else if (this.type == "LBPOS") {
-            return `${this.name} just got to rank ${this.newAmnt} on ${this.modifier} leaderboard!`;
+            return `${this.name} just got to rank ${this.newAmnt + 1} on ${this.modifier} leaderboard!`;
         }
     }
 
