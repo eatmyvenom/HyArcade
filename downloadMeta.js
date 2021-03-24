@@ -12,6 +12,8 @@ async function main() {
     await downloadFile('accounts.json', 'accounts.json');
     await downloadFile('guild.json', 'guild.json');
     await downloadFile('players.json', 'players.json');
+    await downloadFile('playerlist.json', 'playerlist.json');
+    await downloadFile('guildlist.json', 'guildlist.json');
 }
 
 main();
