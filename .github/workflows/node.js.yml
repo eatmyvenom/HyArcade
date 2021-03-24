@@ -32,7 +32,7 @@ jobs:
       run: npm ci
     - name: download
       run: npm run downloadMeta
-    - name: config
+    - name: config test
       env:
         configjson: ${{secrets.CONFIGJSON}}
       run: npm run autoconfig
