@@ -13,6 +13,7 @@
         "clean": "./clean.sh",
         "prettify": "prettier --write .",
         "writeDocs": "jsdoc . ./src ./src/discord -d ./doc",
+        "downloadMeta": "node ./downloadMeta",
         "autoconfig": "node . autoconfig",
         "test": "node . save"
     },
