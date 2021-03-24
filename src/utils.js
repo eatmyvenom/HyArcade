@@ -1,7 +1,5 @@
 const config = require("../config.json");
 const fs = require("fs/promises");
-const ffs = require('fs');
-const http = require('http');
 const webRequest = require("./webRequest");
 
 /**

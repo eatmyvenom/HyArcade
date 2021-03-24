@@ -236,6 +236,7 @@ async function autoconfig() {
  *
  */
 async function main() {
+    console.log(process.env)
     await writePID();
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
