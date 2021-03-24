@@ -22,6 +22,7 @@ const task = require("./src/task");
 // will become an issue really fast. So this is my way of not
 // bloating this project with node modules and shit.
 const config = require("./config.json");
+const Cfg = require('./src/Config');
 const AccountEvent = require("./src/classes/Event");
 
 /**
@@ -216,6 +217,11 @@ async function sendDiscordEvent() {
     await event.toDiscord();
 }
 
+async function autoconfig() {
+    let conf = Cfg.fromEnv();
+    await conf.writeConfig();
+}
+
 /**
  * Main function in a async wrapper to use other async functions
  *
@@ -324,6 +330,10 @@ async function main() {
 
         case "sendDiscordEvent":
             await sendDiscordEvent();
+            break;
+
+        case "autoconfig":
+            await autoconfig();
             break;
     }
 

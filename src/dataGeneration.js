@@ -136,10 +136,10 @@ function statusSort(a, b) {
     status1.gameType = ("" + status1.gameType).toUpperCase();
     status2.gameType = ("" + status2.gameType).toUpperCase();
 
-    if (status1.mode == "LOBBY") {
+    if (status1.mode == "LOBBY" && status2.mode != "LOBBY") {
         return -1;
     }
-    if (status2.mode == "LOBBY") {
+    if (status2.mode == "LOBBY"  && status1.mode != "LOBBY") {
         return 1;
     }
     if (status1.mode == "PARTY" && status2.mode != "PARTY") {
