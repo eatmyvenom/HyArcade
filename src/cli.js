@@ -19,12 +19,12 @@ async function linkDiscord() {
     let player = args[3];
     let discord = args[4];
     let uuid = player;
-    if (player.length > 16) {
+    if (player.length < 16) {
         uuid = await mojangRequest.getUUID(player);
     }
-    let disclist = await utils.readJSON("./disclist");
+    let disclist = await utils.readJSON("./disclist.json");
     disclist[uuid] = discord;
-    await utils.writeJSON("./disclist", disclist);
+    await utils.writeJSON("./disclist.json", disclist);
 }
 
 /**
