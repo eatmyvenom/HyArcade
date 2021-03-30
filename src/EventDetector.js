@@ -55,6 +55,14 @@ class EventDetector {
                 "",
                 newAcc.uuid
             );
+            this.detectWins(
+                oldAcc.arcadeWins,
+                newAcc.arcadeWins,
+                newAcc.name,
+                "ARC",
+                "",
+                newAcc.uuid
+            );
 
             if (newAcc.hitwQual > oldAcc.hitwQual) {
                 this.Events.push(

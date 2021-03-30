@@ -42,13 +42,19 @@ class AccountEvent {
             "https://crafatar.com/renders/body/" +
             this.uuid +
             ".png?size=512&default=MHF_Steve&scale=10&overlay";
+        
+        let thumb = 
+            "https://crafatar.com/avatars/" +
+            this.uuid +
+            ".png?size=512?default=MHF_Steve&scale=10&overlay";
+        
         let embed = new MessageEmbed()
-            .setAuthor(this.name, avatar)
+            .setAuthor(this.name, thumb)
             .setThumbnail(avatar)
             .setFooter("UUID: " + this.uuid)
             .setColor(0x0066cc)
             .setTitle(
-                `${this.name} Improved their **${this.modifier}** Personal Best!`
+                `${this.name} just got a new **${this.modifier}** Personal Best!`
             )
             .addField("Old PB", `**${this.oldAmnt}**`, true)
             .addField("New PB", `**${this.newAmnt}**`, true)
