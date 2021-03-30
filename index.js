@@ -1,7 +1,7 @@
 #!/bin/env node
 
-if(!require('fs').existsSync('./config.json')) {
-    require('fs').writeFileSync('./config.json','{}');
+if (!require("fs").existsSync("./config.json")) {
+    require("fs").writeFileSync("./config.json", "{}");
 }
 
 const os = require("os");
@@ -26,7 +26,7 @@ const task = require("./src/task");
 // will become an issue really fast. So this is my way of not
 // bloating this project with node modules and shit.
 const config = require("./config.json");
-const Cfg = require('./src/Config');
+const Cfg = require("./src/Config");
 const AccountEvent = require("./src/classes/Event");
 
 /**
@@ -224,11 +224,11 @@ async function sendDiscordEvent() {
 async function autoconfig() {
     let conf = Cfg.fromEnv();
     await conf.writeConfig();
-    await utils.downloadFile('status.json', 'pgstatus.json');
-    await utils.downloadFile('acclist.json', 'acclist.json');
-    await utils.downloadFile('accounts.json', 'accounts.json');
-    await utils.downloadFile('guild.json', 'guild.json');
-    await utils.downloadFile('players.json', 'players.json');
+    await utils.downloadFile("status.json", "pgstatus.json");
+    await utils.downloadFile("acclist.json", "acclist.json");
+    await utils.downloadFile("accounts.json", "accounts.json");
+    await utils.downloadFile("guild.json", "guild.json");
+    await utils.downloadFile("players.json", "players.json");
 }
 
 /**
@@ -309,6 +309,9 @@ async function main() {
             break;
         case "discordE":
             await webhookEmbed(args[3], args[4]);
+            break;
+        case "link":
+            await cli.linkDiscord();
             break;
 
         case "names":

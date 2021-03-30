@@ -33,7 +33,9 @@ class AccountEvent {
         } else if (this.type == "HITW") {
             return `${this.name} just hit ${this.newAmnt} hole in the wall wins!`;
         } else if (this.type == "LBPOS") {
-            return `${this.name} just got to rank ${this.newAmnt + 1} on ${this.modifier} leaderboard!`;
+            return `${this.name} just got to rank ${this.newAmnt + 1} on ${
+                this.modifier
+            } leaderboard!`;
         }
     }
 
@@ -42,12 +44,12 @@ class AccountEvent {
             "https://crafatar.com/renders/body/" +
             this.uuid +
             ".png?size=512&default=MHF_Steve&scale=10&overlay";
-        
-        let thumb = 
+
+        let thumb =
             "https://crafatar.com/avatars/" +
             this.uuid +
             ".png?size=512?default=MHF_Steve&scale=10&overlay";
-        
+
         let embed = new MessageEmbed()
             .setAuthor(this.name, thumb)
             .setThumbnail(avatar)

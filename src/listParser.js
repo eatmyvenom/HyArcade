@@ -24,12 +24,15 @@ exports.players = function players(acclist) {
  */
 exports.accounts = function accounts() {
     let acclistjson = require("../acclist.json");
+    let disclist = require("../disclist");
     let acclist = {};
 
     for (const sublist in acclistjson) {
         let currentlist = [];
         for (const args of acclistjson[sublist]) {
-            currentlist.push(new Account(args.name, args.wins, args.uuid));
+            let acc = new Account(args.name, args.wins, args.uuid);
+            acc.discord = disclist[args.uuid];
+            currentlist.push(acc);
         }
         acclist[sublist] = currentlist;
     }

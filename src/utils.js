@@ -120,8 +120,8 @@ function error(content) {
     }
 }
 
-async function downloadFile(name,servername) {
-    let response = await webRequest('http://eatmyvenom.me/share/' + servername);
+async function downloadFile(name, servername) {
+    let response = await webRequest("http://eatmyvenom.me/share/" + servername);
     await fs.writeFile(name, response.data);
 }
 

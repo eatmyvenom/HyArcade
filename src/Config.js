@@ -1,15 +1,14 @@
-const fs = require('fs/promises');
+const fs = require("fs/promises");
 
 class Config {
-
     key = "";
     altkeys = [];
     mode = "";
-    alwaysForce = false
+    alwaysForce = false;
     logRateLimit = true;
     watchdogTimeout = 30000;
     cluster = "";
-    sortDirection = ""
+    sortDirection = "";
     printAllWins = false;
     showDaytime = false;
     clusterTarget = "";
@@ -21,13 +20,13 @@ class Config {
     std = {};
 
     constructor(json) {
-        for(let thing in json) {
+        for (let thing in json) {
             this[thing] = json[thing];
         }
     }
 
     static fromJSON() {
-        return new Config(require('../config.json'));
+        return new Config(require("../config.json"));
     }
 
     static fromEnv() {
@@ -35,8 +34,8 @@ class Config {
     }
 
     async writeConfig() {
-        await fs.writeFile('./config.json',JSON.stringify(this,null,4));
+        await fs.writeFile("./config.json", JSON.stringify(this, null, 4));
     }
-};
+}
 
 module.exports = Config;

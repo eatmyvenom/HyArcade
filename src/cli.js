@@ -15,6 +15,18 @@ async function newAcc() {
     await addAccounts(category, nameArr);
 }
 
+async function linkDiscord() {
+    let player = args[3];
+    let discord = args[4];
+    let uuid = player;
+    if (player.length > 16) {
+        uuid = await mojangRequest.getUUID(player);
+    }
+    let disclist = await utils.readJSON("./disclist");
+    disclist[uuid] = discord;
+    await utils.writeJSON("./disclist", disclist);
+}
+
 /**
  * Move an account to a different category in the acclist
  *
@@ -165,4 +177,5 @@ module.exports = {
     checkNames: checkNames,
     getUUID: getUUIDCli,
     moveAcc: moveAcc,
+    linkDiscord: linkDiscord,
 };

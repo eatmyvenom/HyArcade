@@ -139,7 +139,7 @@ function statusSort(a, b) {
     if (status1.mode == "LOBBY" && status2.mode != "LOBBY") {
         return -1;
     }
-    if (status2.mode == "LOBBY"  && status1.mode != "LOBBY") {
+    if (status2.mode == "LOBBY" && status1.mode != "LOBBY") {
         return 1;
     }
     if (status1.mode == "PARTY" && status2.mode != "PARTY") {
