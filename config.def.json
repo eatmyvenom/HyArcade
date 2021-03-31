@@ -36,6 +36,32 @@
             ]
         }
     },
+    "events": {
+        "PGT": {
+            "webhook": {
+                "id": "000000000000000000",
+                "token": "00000000000000000000000000000000000000000000000000000000000",
+                "username": "Bot",
+                "pfp": "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png"
+            }
+        },
+        "PG": {
+            "webhook": {
+                "id": "000000000000000000",
+                "token": "00000000000000000000000000000000000000000000000000000000000",
+                "username": "Bot",
+                "pfp": "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png"
+            }
+        },
+        "HITW": {
+            "webhook": {
+                "id": "000000000000000000",
+                "token": "00000000000000000000000000000000000000000000000000000000000",
+                "username": "Bot",
+                "pfp": "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png"
+            }
+        }
+    },
     "discord":{
         "token": "00000000000000000000000000000000000000000000000000000000000",
         "listenChannels": [
