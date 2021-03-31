@@ -23,47 +23,12 @@ class EventDetector {
             let oldIndex = this.OldAccounts.indexOf(oldAcc);
             let newIndex = this.NewAccounts.indexOf(newAcc);
 
-            this.detectWins(
-                oldAcc.wins,
-                newAcc.wins,
-                newAcc.name,
-                "PG",
-                "",
-                newAcc.uuid
-            );
-            this.detectWins(
-                oldAcc.hypixelSaysWins,
-                newAcc.hypixelSaysWins,
-                newAcc.name,
-                "HYSAYS",
-                "",
-                newAcc.uuid
-            );
-            this.detectWins(
-                oldAcc.farmhuntWins,
-                newAcc.farmhuntWins,
-                newAcc.name,
-                "FH",
-                "",
-                newAcc.uuid
-            );
-            this.detectWins(
-                oldAcc.hitwWins,
-                newAcc.hitwWins,
-                newAcc.name,
-                "HITW",
-                "",
-                newAcc.uuid
-            );
-            this.detectWins(
-                oldAcc.arcadeWins,
-                newAcc.arcadeWins,
-                newAcc.name,
-                "ARC",
-                "",
-                newAcc.uuid
-            );
-
+            this.detectWinsAuto(oldAcc, newAcc, "wins", "PG");
+            this.detectWinsAuto(oldAcc, newAcc, "hypixelSaysWins", "HYSAYS");
+            this.detectWinsAuto(oldAcc, newAcc, "farmhuntWins", "FH");
+            this.detectWinsAuto(oldAcc, newAcc, "hitwWins", "HITW");
+            this.detectWinsAuto(oldAcc, newAcc, "arcadeWins", "ARC");
+            
             if (newAcc.hitwQual > oldAcc.hitwQual) {
                 this.Events.push(
                     new AccountEvent(
@@ -102,6 +67,21 @@ class EventDetector {
                     )
                 );
             }
+        }
+    }
+
+    detectWinsAuto(oldAcc, newAcc, prop, type) {
+        if (oldAcc[prop] % 500 == 0 && newAcc[prop] > oldAcc[prop]) {
+            this.Events.push(
+                new AccountEvent(
+                    newAcc.name,
+                    type,
+                    oldAcc[prop],
+                    newAcc[prop],
+                    "",
+                    newAcc.uuid
+                )
+            );
         }
     }
 
