@@ -36,6 +36,40 @@ class AccountEvent {
             return `${this.name} just got to rank ${this.newAmnt + 1} on ${
                 this.modifier
             } leaderboard!`;
+        } else if (this.type == "WINS") {
+            return `${this.name} just hit ${this.newAmnt} total wins!`;
+        }
+    }
+
+    async toDiscord() {
+        if (this.type == "PG") {
+            await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
+        } else if (this.type == "HITWPB") {
+            let embed = await this.getHitWEmbed();
+            await Webhook.sendBasicEmbed(
+                "",
+                [embed],
+                config.events.HITW.webhook
+            );
+        } else if (this.type == "HITW") {
+            await Webhook.sendBasic(
+                this.toString(),
+                config.events.HITW.webhook
+            );
+        } else if (this.type == "HYSAYS") {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if (this.type == "ARC") {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if (this.type == "FH") {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if (this.type == "LBPOS") {
+            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else if (this.type == "WINS") {
+            await Webhook.sendBasic(
+                this.toString(),
+                config.events.PGT,
+                webhook
+            );
         }
     }
 
@@ -63,32 +97,6 @@ class AccountEvent {
             .addField("Increase", `**${this.newAmnt - this.oldAmnt}**`, true);
 
         return embed;
-    }
-
-    async toDiscord() {
-        if (this.type == "PG") {
-            await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
-        } else if (this.type == "HITWPB") {
-            let embed = await this.getHitWEmbed();
-            await Webhook.sendBasicEmbed(
-                "",
-                [embed],
-                config.events.HITW.webhook
-            );
-        } else if (this.type == "HITW") {
-            await Webhook.sendBasic(
-                this.toString(),
-                config.events.HITW.webhook
-            );
-        } else if (this.type == "HYSAYS") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if (this.type == "ARC") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if (this.type == "FH") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if (this.type == "LBPOS") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        }
     }
 }
 
