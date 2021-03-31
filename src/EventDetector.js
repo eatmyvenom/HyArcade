@@ -90,7 +90,7 @@ class EventDetector {
                 );
             }
 
-            if (newIndex <= 25 && newIndex < oldIndex) {
+            if (newIndex <= 35 && newIndex < oldIndex) {
                 this.Events.push(
                     new AccountEvent(
                         newAcc.name,
