@@ -41,9 +41,13 @@ module.exports = function doBot() {
 
     client.on("message", async (msg) => {
         let cmdResponse = await botCommands.execute(msg.content, msg.author.id);
-        if (cmdResponse != "") {
+        if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
             logger.out(msg.author.tag + " ran :" + msg.content);
-            msg.channel.send(cmdResponse);
+            let opts = {};
+            if (cmdResponse.embed) {
+                opts.embed = cmdResponse.embed;
+            }
+            msg.channel.send(cmdResponse.res, opts);
         }
         if (config.discord.listenChannels.includes(msg.channel.id)) {
             // sanitize
