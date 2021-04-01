@@ -49,7 +49,8 @@ let statsCommand = new Command("stats", ["*"], async (args) => {
     }
 
     let iconURL = "https://crafatar.com/avatars/" + acc.uuid + "?overlay";
-    let thumbURL = " https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
+    let thumbURL =
+        " https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
     let playerURL =
         "http://eatmyvenom.me/share/partygames/player.html?q=" + acc.name;
 
