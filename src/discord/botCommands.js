@@ -54,6 +54,8 @@ let statsCommand = new Command("stats", ["*"], async (args) => {
     let playerURL =
         "http://eatmyvenom.me/share/partygames/player.html?q=" + acc.name;
 
+    let lvl = Math.round(acc.level * 100) / 100;
+
     let embed = new MessageEmbed()
         .setAuthor(acc.name, iconURL, playerURL)
         .setTitle("Stats")
@@ -62,7 +64,10 @@ let statsCommand = new Command("stats", ["*"], async (args) => {
         .addField("All wins", acc.anyWins, false)
         .addField("Arcade wins", acc.arcadeWins, false)
         .addField("Party games wins", acc.wins, false)
-        .addField("Rank", acc.rank, false)
+        .addField("Farm hunt wins", acc.farmhuntWins, false)
+        .addField("Hypixel says wins", acc.hypixelSaysWins, false)
+        .addField("Level", lvl)
+        .addField("Rank", acc.rank.replace(/_/g, "").replace(/PLUS/g, "+"), false)
         .addField("UUID", acc.uuid, false);
 
     return { res: "", embed: embed };
