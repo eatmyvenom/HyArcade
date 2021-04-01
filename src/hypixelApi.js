@@ -103,8 +103,14 @@ module.exports = class hypixelAPI {
      */
     static async getAccountData(uuid) {
         let data = await hypixelAPI.getAccountDataRaw(uuid);
-        let json = JSON.parse(data);
-        return json;
+        try {
+            let json = JSON.parse(data);
+            return json;
+        } catch (e) {
+            logger.err("Hypixel sent malformed json");
+            logger.err(data);
+            process.exit(0xf4c6);
+        }
     }
 
     /**
