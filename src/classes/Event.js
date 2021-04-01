@@ -59,9 +59,9 @@ class AccountEvent {
         } else if (this.type == "HYSAYS") {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if (this.type == "ARC") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+            await Webhook.sendBasic(this.toString(), config.events.ARC.webhook);
         } else if (this.type == "FH") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+            await Webhook.sendBasic(this.toString(), config.events.FH.webhook);
         } else if (this.type == "LBPOS") {
             await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
         } else if (this.type == "WINS") {
