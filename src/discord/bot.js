@@ -40,7 +40,7 @@ module.exports = function doBot() {
     });
 
     client.on("message", async (msg) => {
-        let cmdResponse = await botCommands.execute(msg.content);
+        let cmdResponse = await botCommands.execute(msg.content, msg.author.id);
         if (cmdResponse != "") {
             logger.out(msg.author.tag + " ran :" + msg.content);
             msg.channel.send(cmdResponse);
