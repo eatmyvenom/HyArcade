@@ -14,6 +14,7 @@ class Account {
     mostRecentGameType = "";
     achievementPoints = 0;
     xp = 0;
+    level = 0;
     karma = 0;
     ranksGifted = 0;
     wins = 0;
@@ -128,6 +129,7 @@ class Account {
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
+            this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(-8750.0 / 2500.0 * -8750.0 / 2500.0 + 2.0 / 2500.0 * this.xp);
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
             this.achievementPoints = json.player.achievementPoints;
