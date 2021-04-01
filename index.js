@@ -231,6 +231,11 @@ async function autoconfig() {
     await utils.downloadFile("players.json", "players.json");
 }
 
+async function miniconfig() {
+    let conf = Cfg.fromJSON();
+    await fs.writeFile('./config.min.json', JSON.stringify(conf));
+}
+
 /**
  * Main function in a async wrapper to use other async functions
  *
@@ -311,6 +316,7 @@ async function main() {
             await webhookEmbed(args[3], args[4]);
             break;
         case "link":
+        case "ln":
             await cli.linkDiscord();
             break;
 
@@ -341,11 +347,17 @@ async function main() {
             break;
 
         case "sendDiscordEvent":
+        case "discordEvent":
+        case "discEvt":
             await sendDiscordEvent();
             break;
 
         case "autoconfig":
             await autoconfig();
+            break;
+
+        case "minify":
+            await miniconfig();
             break;
     }
 
