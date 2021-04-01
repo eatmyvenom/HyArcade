@@ -12,6 +12,7 @@ class Config {
     printAllWins = false;
     showDaytime = false;
     clusterTarget = "";
+    commandCharacter = "";
     clusters = {};
     discord = {};
     events = {};

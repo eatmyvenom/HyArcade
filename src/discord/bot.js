@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const config = require("../../config.json");
 const { addAccounts } = require("../listUtils");
 const { logger } = require("../utils");
+const botCommands = require("./botCommands");
 
 /**
  * Execute the discord bot
@@ -39,6 +40,11 @@ module.exports = function doBot() {
     });
 
     client.on("message", async (msg) => {
+        let cmdResponse = await botCommands.execute(msg.content);
+        if (cmdResponse != "") {
+            logger.out(msg.author.tag + " ran :" + msg.content);
+            msg.channel.send(cmdResponse);
+        }
         if (config.discord.listenChannels.includes(msg.channel.id)) {
             // sanitize
             let firstWord = msg.content.split(" ")[0];
