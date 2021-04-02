@@ -67,8 +67,7 @@ class AccountEvent {
         } else if (this.type == "WINS") {
             await Webhook.sendBasic(
                 this.toString(),
-                config.events.PGT,
-                webhook
+                config.events.PGT
             );
         }
     }
