@@ -57,7 +57,7 @@ module.exports = function doBot() {
                 let category =
                     acclist[msg.content.split(" ")[1]] != undefined
                         ? msg.content.split(" ")[1]
-                        : "gamers";
+                        : "others";
                 logger.out(firstWord);
                 await addAccounts(category, [firstWord]);
             }
