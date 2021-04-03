@@ -233,7 +233,7 @@ async function autoconfig() {
 
 async function miniconfig() {
     let conf = Cfg.fromJSON();
-    await fs.writeFile('./config.min.json', JSON.stringify(conf));
+    await fs.writeFile("./config.min.json", JSON.stringify(conf));
 }
 
 /**

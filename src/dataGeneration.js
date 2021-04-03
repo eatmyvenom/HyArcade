@@ -211,9 +211,9 @@ async function updateAllAccounts() {
         })
     );
     await accounts.sort(utils.winsSorter);
-    await accounts.sort((a,b)=>{
-        if(a.wins == b.wins) {
-            if(a.name > b.name) {
+    await accounts.sort((a, b) => {
+        if (a.wins == b.wins) {
+            if (a.name > b.name) {
                 return 1;
             } else {
                 return -1;
