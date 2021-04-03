@@ -3,6 +3,7 @@ let linkCmd = require("./Commands/Link");
 let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require('./Commands/Help');
+let pglbCmd = require('./Commands/PGLeaderboard');
 
 async function execute(txt, senderID) {
     if (txt.startsWith(config.commandCharacter)) {
@@ -29,8 +30,19 @@ async function checkCommands(command, args, author) {
             return await newAccCmd.execute(args, author);
             break;
 
-        case "help":
+        case "pglb":
+        case "pgleaderboard":
+        case "partygamesleaderboard":
+        case "partygameslb":
+        case "partylb": {
+            return await pglbCmd.execute(args, author);
+            break;
+        }
+
+        case "help": {
             return await helpCmd.execute(args,author);
+            break;
+        }
     }
     return { res: "" };
 }

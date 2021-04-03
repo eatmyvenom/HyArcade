@@ -36,6 +36,15 @@ function getHelp(cmd) {
             usage = "stats [name] [arcade game?]"
             desc = "Give the general arcade stats of a player. If the arcade game argument is filled then it also adds stats from that game."
         }
+
+        case "pglb":
+        case "partygameslb":
+        case "pgleaderboard":
+        case "partygamesleaderboard": {
+            title = "Party games leaderboard command"
+            usage = "pglb [type] [amount]"
+            desc = "Get the current party games leaderboard, type refers to either daily or overall. There is support for other arcade games coming soon."
+        }
     }
 
     desc = "`" + Config.commandCharacter + usage + "`\n" + desc;
@@ -50,6 +59,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("Help", "Get this message", false)
             .addField("Link", "Link a players discord id to their minecraft account", false)
             .addField("NewAcc", "Add a new account to the database", false)
+            .addField("PgLeaderboard", "Get the current party games leaderboard or the daily leaderboard", false)
             .addField("Stats", "Get the stats of a player", false);
 
         return {res : "", embed : embed}
