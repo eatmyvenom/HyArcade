@@ -24,6 +24,14 @@ class Account {
     hitwRounds = 0;
     farmhuntWins = 0;
     hypixelSaysWins = 0;
+    miniWallsWins = 0;
+    footballWins = 0;
+    enderSpleefWins = 0;
+    throwOutWins = 0;
+    galaxyWarsWins = 0;
+    dragonWarsWins = 0;
+    bountyHuntersWins = 0;
+    blockingDeadWins = 0;
     arcadeWins = 0;
     anyWins = 0;
     hasOFCape = false;
@@ -129,7 +137,14 @@ class Account {
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
-            this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(-8750.0 / 2500.0 * -8750.0 / 2500.0 + 2.0 / 2500.0 * this.xp);
+            this.level =
+                1.0 +
+                -8750.0 / 2500.0 +
+                Math.sqrt(
+                    ((-8750.0 / 2500.0) * -8750.0) / 2500.0 +
+                        (2.0 / 2500.0) * this.xp
+                );
+            this.firstLogin = json.player.firstLogin;
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
             this.achievementPoints = json.player.achievementPoints;
@@ -142,7 +157,14 @@ class Account {
             this.hitwWins = arcade.wins_hole_in_the_wall;
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
-            this.firstLogin = json.player.firstLogin;
+            this.miniWallsWins = arcade.wins_mini_walls;
+            this.footballWins = arcade.wins_soccer;
+            this.enderSpleefWins = arcade.wins_ender;
+            this.throwOutWins = arcade.wins_throw_out;
+            this.galaxyWarsWins = arcade.sw_game_wins;
+            this.dragonWarsWins = arcade.wins_dragonwars2;
+            this.bountyHuntersWins = arcade.wins_oneinthequiver;
+            this.blockingDeadWins = arcade.wins_dayone;
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
