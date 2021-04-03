@@ -131,6 +131,7 @@ async function stringDaily(name, maxamnt) {
  * @return {null}
  */
 async function addAccounts(category, names) {
+    let res = "";
     let acclist = await utils.readJSON("./acclist.json");
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
@@ -144,14 +145,18 @@ async function addAccounts(category, names) {
         let wins = await getAccountWins(uuid);
         if (acclist[category].find((acc) => acc.uuid == uuid)) {
             logger.err("Refusing to add duplicate!");
+            return "Refusing to add duplicate!";
         } else if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
+            return "Refusing to add duplicate!";
         } else {
             acclist[category].push({ name: name, wins: wins, uuid: uuid });
             logger.out(`${name} with ${wins} wins added.`);
+            res = `${name} with ${wins} wins added.`;
         }
     }
     await utils.writeJSON("./acclist.json", acclist);
+    return res;
 }
 
 module.exports = {
