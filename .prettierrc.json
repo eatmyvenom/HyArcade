@@ -3,5 +3,13 @@
     "bracketSpacing": true,
     "semi": true,
     "arrowParens": "always",
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "overrides": [
+        {
+            "files": "src/discord/Commands/Help.js",
+            "options": {
+                "printWidth": 200
+            }
+        }
+    ]
 }
