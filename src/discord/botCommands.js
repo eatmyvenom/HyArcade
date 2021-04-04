@@ -2,8 +2,9 @@ const config = require("../Config").fromJSON();
 let linkCmd = require("./Commands/Link");
 let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
-let helpCmd = require('./Commands/Help');
-let pglbCmd = require('./Commands/PGLeaderboard');
+let helpCmd = require("./Commands/Help");
+let pglbCmd = require("./Commands/PGLeaderboard");
+let lbCmd = require("./Commands/Leaderboard");
 
 async function execute(txt, senderID) {
     if (txt.startsWith(config.commandCharacter)) {
@@ -39,8 +40,16 @@ async function checkCommands(command, args, author) {
             break;
         }
 
+        case "lb":
+        case "lead":
+        case "leaderboard":
+        case "leadb": {
+            return await lbCmd.execute(args, author);
+            break;
+        }
+
         case "help": {
-            return await helpCmd.execute(args,author);
+            return await helpCmd.execute(args, author);
             break;
         }
     }

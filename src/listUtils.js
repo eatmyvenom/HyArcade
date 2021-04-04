@@ -5,6 +5,12 @@ const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
 const logger = utils.logger;
 
+function sortBy(list, prop) {
+    return list.sort((a, b) => {
+        return a[prop] - b[prop];
+    });
+}
+
 /**
  * Turn a list of anything with wins into formatted text
  *
@@ -159,6 +165,62 @@ async function addAccounts(category, names) {
     return res;
 }
 
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0));
+}
+
+async function stringLB(lbprop, maxamnt) {
+    let list = await utils.readJSON("./accounts.json");
+    list = await [].concat(list).sort((b, a) => {
+        return numberify(a[lbprop]) - numberify(b[lbprop]);
+    });
+    let str = "";
+    let len = maxamnt != undefined ? maxamnt : list.length;
+    for (let i = 0; i < len; i++) {
+        // don't print if player has 0 wins
+        if (list[i][lbprop] < 1 && !config.printAllWins) continue;
+
+        // this hack is because js has no real string formatting and its
+        // not worth it to use wasm or node native for this
+        let num = ("000" + (i + 1)).slice(-3);
+
+        let name = (
+            list[i].name.slice(0, 1).toUpperCase() +
+            list[i].name.slice(1) +
+            "                       "
+        ).slice(0, 17);
+        //         001) Monkey           : 5900
+        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+    }
+    return str;
+}
+
+async function stringLBDaily(lbprop, maxamnt) {
+    let list = await listDiff("accounts", "day", 9999);
+    list = await [].concat(list).sort((b, a) => {
+        return numberify(a[lbprop]) - numberify(b[lbprop]);
+    });
+    let str = "";
+    let len = maxamnt != undefined ? maxamnt : list.length;
+    for (let i = 0; i < len; i++) {
+        // don't print if player has 0 wins
+        if (numberify(list[i][lbprop]) < 1 && !config.printAllWins) continue;
+
+        // this hack is because js has no real string formatting and its
+        // not worth it to use wasm or node native for this
+        let num = ("000" + (i + 1)).slice(-3);
+
+        let name = (
+            list[i].name.slice(0, 1).toUpperCase() +
+            list[i].name.slice(1) +
+            "                       "
+        ).slice(0, 17);
+        //         001) Monkey           : 5900
+        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+    }
+    return str;
+}
+
 module.exports = {
     txtPlayerList: txtPlayerList,
     listNormal: listNormal,
@@ -167,4 +229,6 @@ module.exports = {
     stringDiff: stringDiff,
     stringDaily: stringDaily,
     addAccounts: addAccounts,
+    stringLB: stringLB,
+    stringLBDaily: stringLBDaily,
 };
