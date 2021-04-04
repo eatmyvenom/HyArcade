@@ -32,6 +32,7 @@ class Account {
     dragonWarsWins = 0;
     bountyHuntersWins = 0;
     blockingDeadWins = 0;
+    hideAndSeekWins = 0;
     arcadeWins = 0;
     anyWins = 0;
     hasOFCape = false;
@@ -165,6 +166,7 @@ class Account {
             this.dragonWarsWins = arcade.wins_dragonwars2;
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
+            this.hideAndSeekWins = arcade.seeker_wins_hide_and_seek + arcade.hider_wins_hide_and_seek;
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
