@@ -17,6 +17,7 @@ class Account {
     level = 0;
     karma = 0;
     ranksGifted = 0;
+    arcadeCoins = 0;
     wins = 0;
     hitwQual = 0;
     hitwFinal = 0;
@@ -45,6 +46,7 @@ class Account {
     clickEffect = "";
     plusColor = "";
     hat = "";
+    hypixelDiscord = "";
     discord = "";
 
     /**
@@ -133,7 +135,7 @@ class Account {
                 json.player.socialMedia.links &&
                 json.player.socialMedia.links.DISCORD
             ) {
-                this.discord = json.player.socialMedia.links.DISCORD;
+                this.hypixelDiscord = json.player.socialMedia.links.DISCORD;
             }
 
             this.name = json.player.displayname;
@@ -157,6 +159,7 @@ class Account {
             this.cloak = json.player.currentCloak;
             this.hat = json.player.currentHat;
             this.clickEffect = json.player.currentClickEffect;
+            this.arcadeCoins = arcade.coins;
             this.hitwFinal = arcade.hitw_record_f;
             this.hitwQual = arcade.hitw_record_q;
             this.hitwWins = arcade.wins_hole_in_the_wall;
