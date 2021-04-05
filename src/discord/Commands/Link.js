@@ -10,13 +10,13 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
         uuid = await mojangRequest.getUUID(player);
     }
     let disclist = await utils.readJSON("./disclist.json");
-    if (disclist[uuid]) {
+    if (disclist[discord]) {
         return "This player has already been linked!";
-    } else if (Object.values(disclist).find((d) => d == discord) != undefined) {
+    } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
         return "This user has already been linked!";
     }
 
-    disclist[uuid] = discord;
+    disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
     return { res: `${player} linked successfully!` };
 });
