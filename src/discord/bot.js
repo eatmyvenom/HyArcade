@@ -18,10 +18,19 @@ module.exports = function doBot() {
     client.on("message", async (msg) => {
         let cmdResponse = await botCommands.execute(msg.content, msg.author.id);
         if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
-            logger.out(msg.author.tag + " ran :" + msg.content);
+            logger.out(msg.author.tag + " ran : " + msg.content);
             let opts = {};
             if (cmdResponse.embed) {
                 opts.embed = cmdResponse.embed;
+            }
+
+            if(cmdResponse.res.length > 2000) {
+                cmdResponse.res = cmdResponse.res.slice(0,2000);
+                if(cmdResponse.res.slice(0,3) == '```') {
+                    cmdResponse.res = cmdResponse.res.slice(0,1994) + "```";
+                }
+                msg.channel.send("**WARNING** Attempted to send a message greater than 2000 characters in length!");
+                logger.err("**WARNING** Attempted to send a message greater than 2000 characters in length!");
             }
             msg.channel.send(cmdResponse.res, opts);
         }
