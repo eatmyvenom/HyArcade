@@ -85,6 +85,7 @@ module.exports = new Command("stats", ["*"], async (args) => {
         }
 
         case "mw":
+        case "miw":
         case "mini":
         case "mwall":
         case "wall":

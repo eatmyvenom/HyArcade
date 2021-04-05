@@ -60,6 +60,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         }
 
         case "mw":
+        case "miw":
         case "mini":
         case "mwall":
         case "wall":
@@ -185,6 +186,14 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "drawtheirthing":
         case "drawing": {
             res = await getLB("pixelPaintersWins", timetype, limit);
+            break;
+        }
+
+        case "coins":
+        case "arccoins":
+        case "arcadecoins":
+        case "arcade_coins": {
+            res = await getLB("arcadeCoins", timetype, limit);
             break;
         }
 

@@ -72,6 +72,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("Link", "Link a players discord id to their minecraft account", false)
             .addField("NewAcc", "Add a new account to the database", false)
             .addField("PgLeaderboard", "`Deprecated!`\nGet the current party games leaderboard or the daily leaderboard", false)
+            .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
             .addField("Stats", "Get the stats of a player", false);
 
         return { res: "", embed: embed };

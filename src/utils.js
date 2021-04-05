@@ -125,6 +125,10 @@ async function downloadFile(name, servername) {
     await fs.writeFile(name, response.data);
 }
 
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
 function isValidIGN(txt) {
     return (
         txt.length < 17 &&
@@ -171,6 +175,7 @@ module.exports = {
     daytime: daytime,
     isValidIGN: isValidIGN,
     defaultAllowed: defaultAllowed,
+    getKeyByValue: getKeyByValue,
     cacheMiss: [],
     logger: {
         out: log,

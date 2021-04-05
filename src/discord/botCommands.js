@@ -5,21 +5,28 @@ let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
 let pglbCmd = require("./Commands/PGLeaderboard");
 let lbCmd = require("./Commands/Leaderboard");
+let verifyCmd = require('./Commands/LinkMe');
 
-async function execute(txt, senderID) {
-    if (txt.startsWith(config.commandCharacter)) {
-        let cmdArr = txt.slice(1).split(" ");
-        return await checkCommands(cmdArr[0], cmdArr.slice(1), senderID);
+async function execute(msg, senderID) {
+    if (msg.content.startsWith(config.commandCharacter)) {
+        let cmdArr = msg.content.slice(1).split(" ");
+        return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     }
     return { res: "" };
 }
 
-async function checkCommands(command, args, author) {
-    switch (command) {
+async function checkCommands(rawMsg, command, args, author) {
+    switch (command.toLowerCase()) {
         case "link":
         case "ln":
             return await linkCmd.execute(args, author);
             break;
+
+        case "lnm":
+        case "verify":
+        case "linkme": {
+            return await verifyCmd.execute(args, author, rawMsg);
+        }
 
         case "stats":
         case "s":

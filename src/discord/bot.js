@@ -16,7 +16,7 @@ module.exports = function doBot() {
     });
 
     client.on("message", async (msg) => {
-        let cmdResponse = await botCommands.execute(msg.content, msg.author.id);
+        let cmdResponse = await botCommands.execute(msg, msg.author.id);
         if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
             logger.out(msg.author.tag + " ran : " + msg.content);
             let opts = {};

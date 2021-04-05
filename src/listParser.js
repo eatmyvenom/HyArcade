@@ -1,4 +1,5 @@
 const Account = require("./account");
+const { getKeyByValue } = require("./utils");
 
 /**
  * Gets a list of player objects from the player json list
@@ -31,7 +32,8 @@ exports.accounts = function accounts() {
         let currentlist = [];
         for (const args of acclistjson[sublist]) {
             let acc = new Account(args.name, args.wins, args.uuid);
-            acc.discord = disclist[args.uuid];
+            let disc = getKeyByValue(disclist, args.uuid);
+            acc.discord = disc;
             currentlist.push(acc);
         }
         acclist[sublist] = currentlist;

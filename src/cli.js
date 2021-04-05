@@ -23,7 +23,7 @@ async function linkDiscord() {
         uuid = await mojangRequest.getUUID(player);
     }
     let disclist = await utils.readJSON("./disclist.json");
-    disclist[uuid] = discord;
+    disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
 }
 
