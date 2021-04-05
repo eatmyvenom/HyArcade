@@ -63,6 +63,10 @@ async function listNormal(name, maxamnt) {
  * @return {Object[]}
  */
 async function listDiff(name, timetype, maxamnt) {
+    return await listDiffByProp(name, "wins", timetype, maxamnt);
+}
+
+async function listDiffByProp(name, prop, timetype, maxamnt) {
     // cant use require here
     let newlist = JSON.parse(await fs.readFile(`${name}.json`));
     let oldlist = JSON.parse(await fs.readFile(`${name}.${timetype}.json`));
@@ -83,7 +87,7 @@ async function listDiff(name, timetype, maxamnt) {
         }
         // make sure acc isnt null/undefined
         if (acc) {
-            oldlist[i].wins = acc.wins - oldlist[i].wins;
+            oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
         }
     }
 
@@ -92,6 +96,7 @@ async function listDiff(name, timetype, maxamnt) {
     oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
 }
+
 
 /**
  * Turn a json file into a formatted list
@@ -141,7 +146,7 @@ async function addAccounts(category, names) {
     let acclist = await utils.readJSON("./acclist.json");
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
-        return;
+        return "Please input a valid category!";
     }
     let nameArr = names;
     for (let name of nameArr) {
@@ -151,14 +156,12 @@ async function addAccounts(category, names) {
         let wins = await getAccountWins(uuid);
         if (acclist[category].find((acc) => acc.uuid == uuid)) {
             logger.err("Refusing to add duplicate!");
-            return "Refusing to add duplicate!";
         } else if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
-            return "Refusing to add duplicate!";
         } else {
             acclist[category].push({ name: name, wins: wins, uuid: uuid });
             logger.out(`${name} with ${wins} wins added.`);
-            res = `${name} with ${wins} wins added.`;
+            res += `${name} with ${wins} wins added.`;
         }
     }
     await utils.writeJSON("./acclist.json", acclist);
@@ -166,7 +169,7 @@ async function addAccounts(category, names) {
 }
 
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0));
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 async function stringLB(lbprop, maxamnt) {
@@ -196,7 +199,7 @@ async function stringLB(lbprop, maxamnt) {
 }
 
 async function stringLBDaily(lbprop, maxamnt) {
-    let list = await listDiff("accounts", "day", 9999);
+    let list = await listDiffByProp("accounts", lbprop, "day", 9999);
     list = await [].concat(list).sort((b, a) => {
         return numberify(a[lbprop]) - numberify(b[lbprop]);
     });
