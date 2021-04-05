@@ -139,6 +139,55 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
             break;
         }
 
+        case "has":
+        case "hide":
+        case "h&s":
+        case "hns":
+        case "probotkeptspammingthisshit":
+        case "hideandseek":
+        case "hidenseek":
+        case "hideseek": {
+            res = await getLB("hideAndSeekWins", timetype, limit);
+            break;
+        }
+
+        case "z":
+        case "zs":
+        case "zbs":
+        case "zomb":
+        case "zbies":
+        case "zombies": {
+            res = await getLB("zombiesWins", timetype, limit);
+            break;
+        }
+
+        case "ctw":
+        case "capkills":
+        case "capture":
+        case "ctwkills": {
+            res = await getLB("ctwKills", timetype, limit);
+            break;
+        }
+
+        case "ctwool":
+        case "capwool":
+        case "ctwwool": 
+        case "ctwwoolcaptured":{
+            res = await getLB("ctwWoolCaptured", timetype, limit);
+            break;
+        }
+
+        case "pp":
+        case "draw":
+        case "pixpaint":
+        case "pixelpaint":
+        case "drawmything":
+        case "drawtheirthing":
+        case "drawing": {
+            res = await getLB("pixelPaintersWins", timetype, limit);
+            break;
+        }
+
         default: {
             res = "That category does not exist!"
             break;

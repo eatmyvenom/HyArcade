@@ -188,6 +188,72 @@ module.exports = new Command("stats", ["*"], async (args) => {
             });
             break;
         }
+
+        case "has":
+        case "hide":
+        case "h&s":
+        case "hns":
+        case "probotkeptspammingthisshit":
+        case "hideandseek":
+        case "hidenseek":
+        case "hideseek": {
+            fields.push({
+                name: "Hide and seek wins",
+                value: acc.hideAndSeekWins,
+                inline: false,
+            });
+            break;
+        }
+
+        case "z":
+        case "zs":
+        case "zbs":
+        case "zomb":
+        case "zbies":
+        case "zombies": {
+            fields.push({
+                name: "Zombies wins",
+                value: acc.zombiesWins,
+                inline: false,
+            });
+            break;
+        }
+
+        case "ctw":
+        case "ctwool":
+        case "capkills":
+        case "capture":
+        case "capwool":
+        case "ctwwool": 
+        case "ctwwoolcaptured":
+        case "ctwkills": {
+            fields.push({
+                name: "Ctw kills",
+                value: acc.ctwKills,
+                inline: false,
+            });
+            fields.push({
+                name: "Ctw wool captured",
+                value: acc.ctwWoolCaptured,
+                inline: false,
+            });
+            break;
+        }
+
+        case "pp":
+        case "draw":
+        case "pixpaint":
+        case "pixelpaint":
+        case "drawmything":
+        case "drawtheirthing":
+        case "drawing": {
+            fields.push({
+                name: "Pixel painters wins",
+                value: acc.pixelPaintersWins,
+                inline: false
+            });
+            break;
+        }
     }
 
     let embed = new MessageEmbed()

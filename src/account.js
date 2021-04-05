@@ -33,6 +33,10 @@ class Account {
     bountyHuntersWins = 0;
     blockingDeadWins = 0;
     hideAndSeekWins = 0;
+    zombiesWins = 0;
+    pixelPaintersWins = 0;
+    ctwKills = 0;
+    ctwWoolCaptured = 0;
     arcadeWins = 0;
     anyWins = 0;
     hasOFCape = false;
@@ -167,6 +171,10 @@ class Account {
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
             this.hideAndSeekWins = arcade.seeker_wins_hide_and_seek + arcade.hider_wins_hide_and_seek;
+            this.zombiesWins = arcade.wins_zombies;
+            this.ctwKills = json.player.achievements.arcade_ctw_slayer;
+            this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
+            this.pixelPaintersWins = arcade.wins_draw_their_thing;
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
