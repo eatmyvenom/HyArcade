@@ -5,6 +5,7 @@ let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
 let lbCmd = require("./Commands/Leaderboard");
 let verifyCmd = require("./Commands/LinkMe");
+let countCmd = require('./Commands/GameCounts');
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -43,6 +44,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "leadb": {
             return await lbCmd.execute(args, author);
             break;
+        }
+
+        case "players":
+        case "amnts":
+        case "plrs":
+        case "gamecounts": {
+            return await countCmd.execute(args, author);
         }
 
         case "help": {
