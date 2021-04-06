@@ -11,16 +11,19 @@ const botCommands = require("./botCommands");
  */
 module.exports = function doBot() {
     const client = new Discord.Client();
+    let errchannel;
 
-    client.on("ready", () => {
+    client.on("ready", async () => {
         logger.out(`Logged in as ${client.user.tag}!`);
         client.user.setPresence({
             activity: { name: "your stats", type: "WATCHING" },
             status: "online",
         });
+        errchannel = await client.channels.fetch('829128492045828168');
     });
 
     client.on("message", async (msg) => {
+        
         let cmdResponse = await botCommands.execute(msg, msg.author.id);
         if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
             logger.out(msg.author.tag + " ran : " + msg.content);
@@ -34,6 +37,7 @@ module.exports = function doBot() {
                 if (cmdResponse.res.slice(0, 3) == "```") {
                     cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
                 }
+                errchannel.send("**WARNING** Attempted to send a message greater than 2000 characters in length!");
                 msg.channel.send(
                     "**WARNING** Attempted to send a message greater than 2000 characters in length!"
                 );
@@ -43,11 +47,17 @@ module.exports = function doBot() {
             }
             let hooks = await msg.channel.fetchWebhooks();
             if (hooks.size > 0) {
-                let hook = hooks.first();
-                await hook.send(
-                    cmdResponse.res,
-                    BotUtils.getWebhookObj(cmdResponse.embed)
-                );
+                try {
+                    let hook = await hooks.first();
+                    await hook.send(
+                        cmdResponse.res,
+                        BotUtils.getWebhookObj(cmdResponse.embed)
+                    );
+                } catch (e) {
+                    logger.err(e.toString());
+                    errchannel.send(e.toString());
+                    msg.channel.send(cmdResponse.res, opts);
+                }
             } else {
                 msg.channel.send(cmdResponse.res, opts);
             }
