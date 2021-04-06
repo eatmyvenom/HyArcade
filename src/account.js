@@ -166,7 +166,7 @@ class Account {
             this.hitwWins = arcade.wins_hole_in_the_wall;
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
-            this.farmhuntWins = arcade.poop_collected;
+            this.farmhuntShit = arcade.poop_collected;
             this.miniWallsWins = arcade.wins_mini_walls;
             this.footballWins = arcade.wins_soccer;
             this.enderSpleefWins = arcade.wins_ender;
