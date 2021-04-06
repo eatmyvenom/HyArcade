@@ -32,11 +32,17 @@ module.exports = class BotUtils {
     }
 
     static getWebhookObj(embed) {
+        let embeds;
+        if (embed == undefined) {
+            embeds = [];
+        } else {
+            embeds = [embed];
+        }
         return {
             username: "Arcade Bot",
             avatarURL:
                 "https://cdn.discordapp.com/avatars/818719828352696320/e3d2cac7292077850196fe232f1e7efe.webp",
-            embeds: [embed],
+            embeds: embeds,
         };
     }
 };
