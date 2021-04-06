@@ -49,6 +49,8 @@ async function checkCommands(rawMsg, command, args, author) {
         case "players":
         case "amnts":
         case "plrs":
+        case "counts":
+        case "amounts":
         case "gamecounts": {
             return await countCmd.execute(args, author);
         }
