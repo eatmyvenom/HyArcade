@@ -5,11 +5,6 @@ const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
 const logger = utils.logger;
 
-function sortBy(list, prop) {
-    return list.sort((a, b) => {
-        return a[prop] - b[prop];
-    });
-}
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -144,6 +139,7 @@ async function stringDaily(name, maxamnt) {
 async function addAccounts(category, names) {
     let res = "";
     let acclist = await utils.readJSON("./acclist.json");
+    let newAccs = [];
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
         return "Please input a valid category!";
@@ -158,14 +154,19 @@ async function addAccounts(category, names) {
             acclist["gamers"].find((acc) => acc.uuid == uuid) ||
             acclist["afkers"].find((acc) => acc.uuid == uuid)
         ) {
-            logger.err("Refusing to add duplicate!");
+            logger.err(`Refusing to add duplicate! (${name})`);
+            res += `Refusing to add duplicate! (${name})\n`
         } else if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
-            acclist[category].push({ name: name, wins: wins, uuid: uuid });
+            newAccs.push({ name: name, wins: wins, uuid: uuid });
             logger.out(`${name} with ${wins} wins added.`);
-            res += `${name} with ${wins} wins added.`;
+            res += `${name} with ${wins} wins added.\n`;
         }
+    }
+    acclist = await utils.readJSON("./acclist.json");
+    for(let acc of newAccs) {
+        acclist[category].push(acc);
     }
     await utils.writeJSON("./acclist.json", acclist);
     return res;
