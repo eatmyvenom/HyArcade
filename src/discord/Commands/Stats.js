@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
-const utils = require("../../utils");
+const config = require('../../Config').fromJSON();
 const BotUtils = require("../BotUtils");
 
 module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
@@ -10,6 +10,9 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
 
     let acc = await BotUtils.resolveAccount(player, rawMsg);
     if (acc == undefined) {
+        if(player == undefined) {
+            return {res : `It appears your discord isn't linked, run ${config.commandCharacter}verify to link yourself.`}
+        }
         return { res: player + " is not in the database" };
     }
 

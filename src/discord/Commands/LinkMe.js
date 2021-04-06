@@ -25,6 +25,6 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg)=> {
         await utils.writeJSON("./disclist.json", disclist);
         return { res: `${player} linked successfully!` };
     } else {
-        return { res: "Your discord tag does not match your hypixel set discord account" }
+        return { res: "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. If you are confused then just try linking via the hystats bot since it uses the same mechanism." }
     }
 });
