@@ -11,9 +11,9 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
     }
     let disclist = await utils.readJSON("./disclist.json");
     if (disclist[discord]) {
-        return { res : "This player has already been linked!"};
+        return { res: "This player has already been linked!" };
     } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
-        return { res : "This user has already been linked!"};
+        return { res: "This user has already been linked!" };
     }
 
     disclist[discord] = uuid;

@@ -16,7 +16,7 @@ function getHelp(cmd) {
 
         case "linkme":
         case "verify": {
-            title = "Verify command"
+            title = "Verify command";
             usage = "verify [ign/uuid]";
             desc = "Link your discord to your account";
             break;
@@ -67,16 +67,17 @@ function getHelp(cmd) {
             break;
         }
 
-        case "games" : {
+        case "games": {
             title = "Available games";
             usage = "s/lb [game]";
-            desc = "use any of these with the leaderboard or stats command party\nfarmhunt\nhysays\nhitw\nminiwalls\nfootball\nenderspleef\nthrowout\ngalaxywars\ndragonwars\nbounty\nblockingdead\nhide\nzombies\nctw\npixelpainters\nThere are also short versions availiable"
+            desc =
+                "use any of these with the leaderboard or stats command party\nfarmhunt\nhysays\nhitw\nminiwalls\nfootball\nenderspleef\nthrowout\ngalaxywars\ndragonwars\nbounty\nblockingdead\nhide\nzombies\nctw\npixelpainters\nThere are also short versions availiable";
             break;
         }
     }
 
-    if(title == "") {
-        return { title : "Not found", desc : "That command was not found"}
+    if (title == "") {
+        return { title: "Not found", desc: "That command was not found" };
     }
     desc = "`" + Config.commandCharacter + usage + "`\n" + desc;
     return { title: title, desc: desc };

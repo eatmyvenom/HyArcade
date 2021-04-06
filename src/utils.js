@@ -126,7 +126,7 @@ async function downloadFile(name, servername) {
 }
 
 function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
+    return Object.keys(object).find((key) => object[key] === value);
 }
 
 function isValidIGN(txt) {

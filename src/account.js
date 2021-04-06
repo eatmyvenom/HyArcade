@@ -175,7 +175,9 @@ class Account {
             this.dragonWarsWins = arcade.wins_dragonwars2;
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
-            this.hideAndSeekWins = arcade.seeker_wins_hide_and_seek + arcade.hider_wins_hide_and_seek;
+            this.hideAndSeekWins =
+                arcade.seeker_wins_hide_and_seek +
+                arcade.hider_wins_hide_and_seek;
             this.zombiesWins = arcade.wins_zombies;
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;

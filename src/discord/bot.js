@@ -14,7 +14,10 @@ module.exports = function doBot() {
 
     client.on("ready", () => {
         logger.out(`Logged in as ${client.user.tag}!`);
-        client.user.setPresence({ activity: { name: 'your stats', "type": "WATCHING" }, status: 'online' });
+        client.user.setPresence({
+            activity: { name: "your stats", type: "WATCHING" },
+            status: "online",
+        });
     });
 
     client.on("message", async (msg) => {
@@ -26,18 +29,25 @@ module.exports = function doBot() {
                 opts.embed = cmdResponse.embed;
             }
 
-            if(cmdResponse.res.length > 2000) {
-                cmdResponse.res = cmdResponse.res.slice(0,2000);
-                if(cmdResponse.res.slice(0,3) == '```') {
-                    cmdResponse.res = cmdResponse.res.slice(0,1994) + "```";
+            if (cmdResponse.res.length > 2000) {
+                cmdResponse.res = cmdResponse.res.slice(0, 2000);
+                if (cmdResponse.res.slice(0, 3) == "```") {
+                    cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
                 }
-                msg.channel.send("**WARNING** Attempted to send a message greater than 2000 characters in length!");
-                logger.err("**WARNING** Attempted to send a message greater than 2000 characters in length!");
+                msg.channel.send(
+                    "**WARNING** Attempted to send a message greater than 2000 characters in length!"
+                );
+                logger.err(
+                    "**WARNING** Attempted to send a message greater than 2000 characters in length!"
+                );
             }
             let hooks = await msg.channel.fetchWebhooks();
-            if(hooks.size > 0) {
+            if (hooks.size > 0) {
                 let hook = hooks.first();
-                await hook.send(cmdResponse.res, BotUtils.getWebhookObj(cmdResponse.embed))
+                await hook.send(
+                    cmdResponse.res,
+                    BotUtils.getWebhookObj(cmdResponse.embed)
+                );
             } else {
                 msg.channel.send(cmdResponse.res, opts);
             }

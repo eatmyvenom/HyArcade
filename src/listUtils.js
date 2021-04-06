@@ -5,7 +5,6 @@ const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
 const logger = utils.logger;
 
-
 /**
  * Turn a list of anything with wins into formatted text
  *
@@ -82,7 +81,8 @@ async function listDiffByProp(name, prop, timetype, maxamnt) {
         }
         // make sure acc isnt null/undefined
         if (acc) {
-            oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
+            oldlist[i][prop] =
+                numberify(acc[prop]) - numberify(oldlist[i][prop]);
         }
     }
 
@@ -91,7 +91,6 @@ async function listDiffByProp(name, prop, timetype, maxamnt) {
     oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
 }
-
 
 /**
  * Turn a json file into a formatted list
@@ -150,12 +149,13 @@ async function addAccounts(category, names) {
         if (uuid == undefined) continue;
 
         let wins = await getAccountWins(uuid);
-        if (acclist[category].find((acc) => acc.uuid == uuid) || 
+        if (
+            acclist[category].find((acc) => acc.uuid == uuid) ||
             acclist["gamers"].find((acc) => acc.uuid == uuid) ||
             acclist["afkers"].find((acc) => acc.uuid == uuid)
         ) {
             logger.err(`Refusing to add duplicate! (${name})`);
-            res += `Refusing to add duplicate! (${name})\n`
+            res += `Refusing to add duplicate! (${name})\n`;
         } else if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
@@ -165,7 +165,7 @@ async function addAccounts(category, names) {
         }
     }
     acclist = await utils.readJSON("./acclist.json");
-    for(let acc of newAccs) {
+    for (let acc of newAccs) {
         acclist[category].push(acc);
     }
     await utils.writeJSON("./acclist.json", acclist);
@@ -182,8 +182,8 @@ async function stringLB(lbprop, maxamnt) {
         return numberify(a[lbprop]) - numberify(b[lbprop]);
     });
     let str = "";
-    let len = maxamnt != undefined ? maxamnt : list.length;
-    for (let i = 0; i < len; i++) {
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
         if (list[i][lbprop] < 1 && !config.printAllWins) continue;
 
@@ -202,14 +202,14 @@ async function stringLB(lbprop, maxamnt) {
     return str;
 }
 
-async function stringLBDaily(lbprop, maxamnt) {
-    let list = await listDiffByProp("accounts", lbprop, "day", 9999);
+async function stringLBDiff(lbprop, maxamnt, timetype) {
+    let list = await listDiffByProp("accounts", lbprop, timetype, 9999);
     list = await [].concat(list).sort((b, a) => {
         return numberify(a[lbprop]) - numberify(b[lbprop]);
     });
     let str = "";
-    let len = maxamnt != undefined ? maxamnt : list.length;
-    for (let i = 0; i < len; i++) {
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
         if (numberify(list[i][lbprop]) < 1 && !config.printAllWins) continue;
 
@@ -228,6 +228,10 @@ async function stringLBDaily(lbprop, maxamnt) {
     return str;
 }
 
+async function stringLBDaily(lbprop, maxamnt) {
+    return await stringLBDiff(lbprop, maxamnt, "day");
+}
+
 module.exports = {
     txtPlayerList: txtPlayerList,
     listNormal: listNormal,
@@ -238,4 +242,5 @@ module.exports = {
     addAccounts: addAccounts,
     stringLB: stringLB,
     stringLBDaily: stringLBDaily,
+    stringLBDiff: stringLBDiff,
 };

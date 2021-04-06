@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
-const config = require('../../Config').fromJSON();
+const config = require("../../Config").fromJSON();
 const BotUtils = require("../BotUtils");
 
 module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
@@ -10,8 +10,10 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
 
     let acc = await BotUtils.resolveAccount(player, rawMsg);
     if (acc == undefined) {
-        if(player == undefined) {
-            return {res : `It appears your discord isn't linked, run ${config.commandCharacter}verify to link yourself.`}
+        if (player == undefined) {
+            return {
+                res: `It appears your discord isn't linked, run ${config.commandCharacter}verify to link yourself.`,
+            };
         }
         return { res: player + " is not in the database" };
     }
@@ -24,7 +26,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
     let lvl = Math.round(acc.level * 100) / 100;
 
     let fields = [];
-    switch ((game).toLowerCase()) {
+    switch (game.toLowerCase()) {
         case "party":
         case "partygames":
         case "pg": {
@@ -231,7 +233,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "capkills":
         case "capture":
         case "capwool":
-        case "ctwwool": 
+        case "ctwwool":
         case "ctwwoolcaptured":
         case "ctwkills": {
             fields.push({
@@ -258,7 +260,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
             fields.push({
                 name: "Pixel painters wins",
                 value: acc.pixelPaintersWins,
-                inline: false
+                inline: false,
             });
             break;
         }

@@ -1,25 +1,53 @@
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 
-async function getLB(prop,timetype,limit) {
+async function getLB(prop, timetype, limit) {
     let res = "";
-    if(timetype == 'd' || timetype == 'day' || timetype == "daily") {
-        res = await listUtils.stringLBDaily(prop,limit);
-    } else {
-        res = await listUtils.stringLB(prop,limit);
+
+    switch (timetype) {
+        case "d":
+        case "day":
+        case "daily": {
+            res = await listUtils.stringLBDiff(prop, limit, "day");
+            break;
+        }
+
+        case "w":
+        case "week":
+        case "weak":
+        case "weekly": {
+            res = await listUtils.stringLBDiff(prop, limit, "weekly");
+            break;
+        }
+
+        case "m":
+        case "mon":
+        case "month":
+        case "monthly": {
+            res = await listUtils.stringLBDiff(prop, limit, "monthly");
+            break;
+        }
+
+        default: {
+            res = await listUtils.stringLB(prop, limit);
+            break;
+        }
     }
 
-    return (res != "") ? "```" + res + "```" : "Nobody has won."
+    return res != "" ? "```" + res + "```" : "Nobody has won.";
 }
 
-module.exports = new Command("leaderboard", ["*"], async (args)=>{
+module.exports = new Command("leaderboard", ["*"], async (args) => {
     if (args.length < 2) {
-        return { res : "Use the command but correctly :slight_smile:\nUse the help command if you are unsure of how to brain!" }
+        return {
+            res:
+                "Use the command but correctly :slight_smile:\nUse the help command if you are unsure of how to brain!",
+        };
     }
 
     let type = args[0];
     let timetype = args[1];
-    let limit = (args[2] != undefined) ? args[2] : 10;
+    let limit = args[2] != undefined ? args[2] : 10;
     let res = "";
 
     switch (type) {
@@ -28,7 +56,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "party":
         case "partygames":
         case "pg": {
-            res = await getLB('wins', timetype, limit);
+            res = await getLB("wins", timetype, limit);
             break;
         }
 
@@ -38,7 +66,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "fmhnt":
         case "farmhunt":
         case "frmhnt": {
-            res = await getLB('farmhuntWins', timetype, limit);
+            res = await getLB("farmhuntWins", timetype, limit);
             break;
         }
 
@@ -47,7 +75,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "hypixel":
         case "says":
         case "hysays": {
-            res = await getLB('hypixelSaysWins', timetype, limit);
+            res = await getLB("hypixelSaysWins", timetype, limit);
             break;
         }
 
@@ -55,7 +83,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "hit":
         case "hole":
         case "pain": {
-            res = await getLB('hitwWins', timetype, limit);
+            res = await getLB("hitwWins", timetype, limit);
             break;
         }
 
@@ -66,7 +94,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "wall":
         case "pvp":
         case "miniwalls": {
-            res = await getLB('miniWallsWins', timetype, limit);
+            res = await getLB("miniWallsWins", timetype, limit);
             break;
         }
 
@@ -77,7 +105,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "fuck":
         case "shit":
         case "football": {
-            res = await getLB('footballWins', timetype, limit);
+            res = await getLB("footballWins", timetype, limit);
             break;
         }
 
@@ -87,7 +115,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "enderman":
         case "trash":
         case "enderspleef": {
-            res = await getLB('enderSpleefWins', timetype, limit);
+            res = await getLB("enderSpleefWins", timetype, limit);
             break;
         }
 
@@ -96,7 +124,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "toss":
         case "sumo2":
         case "throwout": {
-            res = await getLB('throwOutWins', timetype, limit);
+            res = await getLB("throwOutWins", timetype, limit);
             break;
         }
 
@@ -104,14 +132,14 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "sw":
         case "galaxy":
         case "galaxywars": {
-            res = await getLB('galaxyWarsWins', timetype, limit);
+            res = await getLB("galaxyWarsWins", timetype, limit);
             break;
         }
 
         case "dw":
         case "dragon":
         case "dragonWars": {
-            res = await getLB('dragonWarsWins', timetype, limit);
+            res = await getLB("dragonWarsWins", timetype, limit);
             break;
         }
 
@@ -120,7 +148,7 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "one":
         case "oneinthequiver":
         case "bountyhunters": {
-            res = await getLB('bountyHuntersWins', timetype, limit);
+            res = await getLB("bountyHuntersWins", timetype, limit);
             break;
         }
 
@@ -129,14 +157,14 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         case "dayone":
         case "blocking":
         case "blockingdead": {
-            res = await getLB('blockingDeadWins', timetype, limit);
+            res = await getLB("blockingDeadWins", timetype, limit);
             break;
         }
 
         case "arc":
         case "arcade":
         case "all": {
-            res = await getLB('arcadeWins', timetype, limit);
+            res = await getLB("arcadeWins", timetype, limit);
             break;
         }
 
@@ -172,8 +200,8 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
 
         case "ctwool":
         case "capwool":
-        case "ctwwool": 
-        case "ctwwoolcaptured":{
+        case "ctwwool":
+        case "ctwwoolcaptured": {
             res = await getLB("ctwWoolCaptured", timetype, limit);
             break;
         }
@@ -198,11 +226,10 @@ module.exports = new Command("leaderboard", ["*"], async (args)=>{
         }
 
         default: {
-            res = "That category does not exist!"
+            res = "That category does not exist!";
             break;
         }
     }
 
-    return { res : res}
-
+    return { res: res };
 });

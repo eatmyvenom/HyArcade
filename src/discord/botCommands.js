@@ -4,7 +4,7 @@ let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
 let lbCmd = require("./Commands/Leaderboard");
-let verifyCmd = require('./Commands/LinkMe');
+let verifyCmd = require("./Commands/LinkMe");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
