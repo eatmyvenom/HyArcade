@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const BotUtils = require("./BotUtils");
 const config = require("../../config.json");
 const { addAccounts } = require("../listUtils");
 const { logger } = require("../utils");
@@ -33,7 +34,13 @@ module.exports = function doBot() {
                 msg.channel.send("**WARNING** Attempted to send a message greater than 2000 characters in length!");
                 logger.err("**WARNING** Attempted to send a message greater than 2000 characters in length!");
             }
-            msg.channel.send(cmdResponse.res, opts);
+            let hooks = await msg.channel.fetchWebhooks();
+            if(hooks.size > 0) {
+                let hook = hooks.first();
+                await hook.send(cmdResponse.res, BotUtils.getWebhookObj(cmdResponse.embed))
+            } else {
+                msg.channel.send(cmdResponse.res, opts);
+            }
         }
         if (config.discord.listenChannels.includes(msg.channel.id)) {
             // sanitize

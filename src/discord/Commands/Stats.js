@@ -1,12 +1,14 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
+const BotUtils = require("../BotUtils");
 
-module.exports = new Command("stats", ["*"], async (args) => {
+module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
     let player = args[0];
 
-    let acclist = await utils.readJSON("./accounts.json");
-    let acc = acclist.find((a) => a.name.toLowerCase() == player.toLowerCase());
+    let game = "" + args[args.length - 1];
+
+    let acc = await BotUtils.resolveAccount(player, rawMsg);
     if (acc == undefined) {
         return { res: player + " is not in the database" };
     }
@@ -19,7 +21,7 @@ module.exports = new Command("stats", ["*"], async (args) => {
     let lvl = Math.round(acc.level * 100) / 100;
 
     let fields = [];
-    switch (("" + args[1]).toLowerCase()) {
+    switch ((game).toLowerCase()) {
         case "party":
         case "partygames":
         case "pg": {

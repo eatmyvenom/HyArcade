@@ -29,7 +29,7 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "stats":
         case "s":
-            return await statsCommand.execute(args, author);
+            return await statsCommand.execute(args, author, rawMsg);
             break;
 
         case "newAcc":
