@@ -24,6 +24,7 @@ class Account {
     hitwWins = 0;
     hitwRounds = 0;
     farmhuntWins = 0;
+    farmhuntShit = 0;
     hypixelSaysWins = 0;
     miniWallsWins = 0;
     footballWins = 0;
@@ -165,6 +166,7 @@ class Account {
             this.hitwWins = arcade.wins_hole_in_the_wall;
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
             this.farmhuntWins = arcade.wins_farm_hunt;
+            this.farmhuntWins = arcade.poop_collected;
             this.miniWallsWins = arcade.wins_mini_walls;
             this.footballWins = arcade.wins_soccer;
             this.enderSpleefWins = arcade.wins_ender;
