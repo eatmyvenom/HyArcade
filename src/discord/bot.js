@@ -13,6 +13,7 @@ module.exports = function doBot() {
 
     client.on("ready", () => {
         logger.out(`Logged in as ${client.user.tag}!`);
+        client.user.setPresence({ activity: { name: 'your stats', "type": "WATCHING" }, status: 'online' });
     });
 
     client.on("message", async (msg) => {

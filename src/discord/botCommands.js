@@ -3,7 +3,6 @@ let linkCmd = require("./Commands/Link");
 let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
-let pglbCmd = require("./Commands/PGLeaderboard");
 let lbCmd = require("./Commands/Leaderboard");
 let verifyCmd = require('./Commands/LinkMe');
 
@@ -37,15 +36,6 @@ async function checkCommands(rawMsg, command, args, author) {
         case "addAcc":
             return await newAccCmd.execute(args, author);
             break;
-
-        case "pglb":
-        case "pgleaderboard":
-        case "partygamesleaderboard":
-        case "partygameslb":
-        case "partylb": {
-            return await pglbCmd.execute(args, author);
-            break;
-        }
 
         case "lb":
         case "lead":

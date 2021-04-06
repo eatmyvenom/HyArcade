@@ -155,7 +155,7 @@ module.exports = new Command("stats", ["*"], async (args) => {
 
         case "dw":
         case "dragon":
-        case "dragonWars": {
+        case "dragonwars": {
             fields.push({
                 name: "Dragon wars wins",
                 value: acc.dragonWarsWins,
@@ -167,6 +167,7 @@ module.exports = new Command("stats", ["*"], async (args) => {
         case "bh":
         case "bnt":
         case "one":
+        case "bounty":
         case "oneinthequiver":
         case "bountyhunters": {
             fields.push({
@@ -245,6 +246,7 @@ module.exports = new Command("stats", ["*"], async (args) => {
         case "draw":
         case "pixpaint":
         case "pixelpaint":
+        case "pixelpainters":
         case "drawmything":
         case "drawtheirthing":
         case "drawing": {

@@ -14,6 +14,14 @@ function getHelp(cmd) {
             break;
         }
 
+        case "linkme":
+        case "verify": {
+            title = "Verify command"
+            usage = "verify [ign/uuid]";
+            desc = "Link your discord to your account";
+            break;
+        }
+
         case "ln":
         case "link": {
             title = "Link command";
@@ -56,9 +64,20 @@ function getHelp(cmd) {
             title = "Leaderboard command";
             usage = "lb [game] [type] [amount?]";
             desc = "Get the current leaderboard from most arcade games, type refers to either daily or overall.";
+            break;
+        }
+
+        case "games" : {
+            title = "Available games";
+            usage = "s/lb [game]";
+            desc = "use any of these with the leaderboard or stats command party\nfarmhunt\nhysays\nhitw\nminiwalls\nfootball\nenderspleef\nthrowout\ngalaxywars\ndragonwars\nbounty\nblockingdead\nhide\nzombies\nctw\npixelpainters\nThere are also short versions availiable"
+            break;
         }
     }
 
+    if(title == "") {
+        return { title : "Not found", desc : "That command was not found"}
+    }
     desc = "`" + Config.commandCharacter + usage + "`\n" + desc;
     return { title: title, desc: desc };
 }
@@ -68,10 +87,10 @@ module.exports = new Command("Help", ["*"], async (args) => {
         let embed = new MessageEmbed()
             .setTitle("Availiable commands")
             .setColor(0x000000)
-            .addField("Help", "Get this message", false)
+            .addField("Help", "Get this message or get help on a specific command", false)
+            .addField("Verify", "Link a your discord id to your minecraft account", false)
             .addField("Link", "Link a players discord id to their minecraft account", false)
             .addField("NewAcc", "Add a new account to the database", false)
-            .addField("PgLeaderboard", "`Deprecated!`\nGet the current party games leaderboard or the daily leaderboard", false)
             .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
             .addField("Stats", "Get the stats of a player", false);
 
