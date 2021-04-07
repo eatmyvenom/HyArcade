@@ -5,7 +5,9 @@ let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
 let lbCmd = require("./Commands/Leaderboard");
 let verifyCmd = require("./Commands/LinkMe");
-let countCmd = require('./Commands/GameCounts');
+let countCmd = require("./Commands/GameCounts");
+let pgdCmd = require("./Commands/PGDaily");
+let statusCmd = require("./Commands/Status");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -46,6 +48,22 @@ async function checkCommands(rawMsg, command, args, author) {
             break;
         }
 
+        case "pgd":
+        case "partyday":
+        case "pgday":
+        case "partygamesdaily":
+        case "partygamesday":
+        case "partygd": {
+            return await pgdCmd.execute(args, author);
+            break;
+        }
+
+        case "sts":
+        case "status": {
+            return await statusCmd.execute(args, author, rawMsg);
+            break;
+        }
+
         case "players":
         case "amnts":
         case "plrs":
@@ -53,6 +71,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "amounts":
         case "gamecounts": {
             return await countCmd.execute(args, author);
+            break;
         }
 
         case "help": {

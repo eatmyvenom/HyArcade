@@ -96,8 +96,8 @@ async function webhookEmbed(type = "players", maxamnt) {
     let normal = await listNormal(type, maxamnt);
     let day = await listDiff(type, "day", maxamnt);
 
-    await Webhook.sendEmbed("WINS", normal);
-    await Webhook.sendEmbed("DAILY", day);
+    // await Webhook.sendEmbed("WINS", normal);
+    await Webhook.sendEmbed("", day);
 }
 
 /**

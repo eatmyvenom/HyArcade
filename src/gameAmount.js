@@ -24,7 +24,7 @@ async function formatCounts() {
     str += `Queue Total         : ${counts.QUEUE.players}\n`;
     str += `Total               : ${all.playerCount}`;
 
-    await utils.writeJSON('./gameCounts.json', counts.ARCADE);
+    await utils.writeJSON("./gameCounts.json", counts.ARCADE);
     return str.replace(/undefined/g, "0");
 }
 

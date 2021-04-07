@@ -46,6 +46,13 @@ function getHelp(cmd) {
             break;
         }
 
+        case "sts":
+        case "status": {
+            title = "Status command";
+            usage = "status [name?]";
+            desc = "Get the current status of a player in the database.";
+        }
+
         case "pglb":
         case "partygameslb":
         case "pgleaderboard":
@@ -93,7 +100,9 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("Link", "Link a players discord id to their minecraft account", false)
             .addField("NewAcc", "Add a new account to the database", false)
             .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
-            .addField("Stats", "Get the stats of a player", false);
+            .addField("Stats", "Get the stats of a player", false)
+            .addField("Status", "Get the status of a player", false)
+            .addField("PGDaily", "Get the daily leaderboard for party games", false);
 
         return { res: "", embed: embed };
     } else {

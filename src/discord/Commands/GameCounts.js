@@ -3,9 +3,9 @@ const Command = require("../../classes/Command");
 const utils = require("../../utils");
 
 async function getFields(game) {
-    let counts = await utils.readJSON('./gameCounts.json');
+    let counts = await utils.readJSON("./gameCounts.json");
     let fields = [];
-    switch(("" + game).toLowerCase()) {
+    switch (("" + game).toLowerCase()) {
         case "party":
         case "partygames":
         case "pg": {
@@ -358,18 +358,18 @@ async function getFields(game) {
                 name: "Arcade players",
                 value: counts.players,
                 inline: true,
-            })
+            });
         }
     }
     return fields;
 }
 
-module.exports = new Command('Game counts', ["*"], async (args) => {
+module.exports = new Command("Game counts", ["*"], async (args) => {
     let game = args[0];
     let embed = new MessageEmbed()
-        .setTitle('Arcade game counts')
+        .setTitle("Arcade game counts")
         .setColor(0x44a3e7)
         .addFields(await getFields(game))
-        .setTimestamp(Date.now())
-    return { res : "", embed : embed}
+        .setTimestamp(Date.now());
+    return { res: "", embed: embed };
 });

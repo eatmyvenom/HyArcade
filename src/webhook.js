@@ -64,7 +64,7 @@ async function sendToEmbedDiscord(
 ) {
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send(txt, {
-        embeds: generateEmbed(list),
+        embeds: [generateEmbed(list)],
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
     });
@@ -82,24 +82,17 @@ async function sendToEmbedDiscord(
 function generateEmbed(list) {
     list = list.filter((item) => item.wins > 0);
 
-    let embeds = [];
-    let i,
-        j,
-        temparray,
-        chunk = 24;
-    for (i = 0, j = list.length; i < j; i += chunk) {
-        temparray = list.slice(i, i + chunk);
-        // do whatever
-        let embed = new Discord.MessageEmbed()
-            //.setTitle('Wins')
-            .setColor(0x44a3e7);
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Daily Leaderboard")
+        .setColor(0x0000ff)
+        .setTimestamp(Date.now());
 
-        for (let h = 0; h < temparray.length; h++) {
-            embed.addField(temparray[h].name, temparray[h].wins, true);
-        }
-        embeds.push(embed);
+    let len = Math.min(list.length, 24);
+    for (let i = 0; i < len; i++) {
+        embed.addField(i + 1 + ") " + list[i].name, list[i].wins, true);
     }
-    return embeds;
+
+    return embed;
 }
 
 module.exports = {
@@ -107,4 +100,5 @@ module.exports = {
     sendEmbed: sendToEmbedDiscord,
     sendBasic: sendBasic,
     sendBasicEmbed: sendBasicEmbed,
+    generateEmbed: generateEmbed,
 };

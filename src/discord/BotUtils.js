@@ -1,4 +1,6 @@
+const listUtils = require("../listUtils");
 const utils = require("../utils");
+const webhook = require("../webhook");
 
 function stringify(str) {
     return "" + str;
@@ -44,5 +46,10 @@ module.exports = class BotUtils {
                 "https://cdn.discordapp.com/avatars/818719828352696320/e3d2cac7292077850196fe232f1e7efe.webp",
             embeds: embeds,
         };
+    }
+
+    static async getPGDailyEmbed() {
+        let day = await listUtils.listDiff("accounts", "day", 999);
+        return webhook.generateEmbed(day);
     }
 };

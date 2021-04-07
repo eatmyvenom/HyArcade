@@ -15,8 +15,8 @@ module.exports = function doBot() {
     let logchannel;
 
     client.on("ready", async () => {
-        errchannel = await client.channels.fetch('829128492045828168');
-        logchannel = await client.channels.fetch('829151585925857331');
+        errchannel = await client.channels.fetch("829128492045828168");
+        logchannel = await client.channels.fetch("829151585925857331");
         logger.out(`Logged in as ${client.user.tag}!`);
         logchannel.send(`Logged in as ${client.user.tag}!`);
         client.user.setPresence({
@@ -26,7 +26,6 @@ module.exports = function doBot() {
     });
 
     client.on("message", async (msg) => {
-        
         let cmdResponse = await botCommands.execute(msg, msg.author.id);
         if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
             logger.out(msg.author.tag + " ran : " + msg.content);
@@ -41,7 +40,9 @@ module.exports = function doBot() {
                 if (cmdResponse.res.slice(0, 3) == "```") {
                     cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
                 }
-                errchannel.send("**WARNING** Attempted to send a message greater than 2000 characters in length!");
+                errchannel.send(
+                    "**WARNING** Attempted to send a message greater than 2000 characters in length!"
+                );
                 msg.channel.send(
                     "**WARNING** Attempted to send a message greater than 2000 characters in length!"
                 );
@@ -76,16 +77,18 @@ module.exports = function doBot() {
                         ? msg.content.split(" ")[1]
                         : "others";
                 logger.out(firstWord);
-                logchannel.send("Attempting to add \""+ firstWord + "\" to database.")
+                logchannel.send(
+                    'Attempting to add "' + firstWord + '" to database.'
+                );
                 await addAccounts(category, [firstWord]);
             }
         }
     });
 
-    client.on('rateLimit', rdta => {
-        logger.err('Bot Rate limited!');
-        errchannel.send("Rate limited!")
-    })
+    client.on("rateLimit", (rdta) => {
+        logger.err("Bot Rate limited!");
+        errchannel.send("Rate limited!");
+    });
 
     client.login(config.discord.token);
 };
