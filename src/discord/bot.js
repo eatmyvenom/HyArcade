@@ -12,14 +12,17 @@ const botCommands = require("./botCommands");
 module.exports = function doBot() {
     const client = new Discord.Client();
     let errchannel;
+    let logchannel;
 
     client.on("ready", async () => {
+        errchannel = await client.channels.fetch('829128492045828168');
+        logchannel = await client.channels.fetch('829151585925857331');
         logger.out(`Logged in as ${client.user.tag}!`);
+        logchannel.send(`Logged in as ${client.user.tag}!`);
         client.user.setPresence({
             activity: { name: "your stats", type: "WATCHING" },
             status: "online",
         });
-        errchannel = await client.channels.fetch('829128492045828168');
     });
 
     client.on("message", async (msg) => {
@@ -27,6 +30,7 @@ module.exports = function doBot() {
         let cmdResponse = await botCommands.execute(msg, msg.author.id);
         if (cmdResponse.res != "" || cmdResponse.embed != undefined) {
             logger.out(msg.author.tag + " ran : " + msg.content);
+            logchannel.send(msg.author.tag + " ran : " + msg.content);
             let opts = {};
             if (cmdResponse.embed) {
                 opts.embed = cmdResponse.embed;
@@ -72,10 +76,16 @@ module.exports = function doBot() {
                         ? msg.content.split(" ")[1]
                         : "others";
                 logger.out(firstWord);
+                logchannel.send("Attempting to add \""+ firstWord + "\" to database.")
                 await addAccounts(category, [firstWord]);
             }
         }
     });
+
+    client.on('rateLimit', rdta => {
+        logger.err('Bot Rate limited!');
+        errchannel.send("Rate limited!")
+    })
 
     client.login(config.discord.token);
 };
