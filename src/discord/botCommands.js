@@ -8,6 +8,7 @@ let verifyCmd = require("./Commands/LinkMe");
 let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
+let evalCmd = require("./Commands/Eval");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -62,6 +63,10 @@ async function checkCommands(rawMsg, command, args, author) {
         case "status": {
             return await statusCmd.execute(args, author, rawMsg);
             break;
+        }
+
+        case "eval": {
+            return await evalCmd.execute(args, author, rawMsg);
         }
 
         case "players":
