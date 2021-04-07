@@ -277,7 +277,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         .addField("Level", lvl)
         .addField(
             "Rank",
-            acc.rank.replace(/_/g, "").replace(/PLUS/g, "+"),
+            ("" + acc.rank).replace(/_/g, "").replace(/PLUS/g, "+").replace(/undefined/g, 'non'),
             false
         )
         .addField("UUID", acc.uuid, false);
