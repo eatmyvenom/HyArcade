@@ -40,20 +40,25 @@ function sendRequest(url) {
             protocol: method,
         };
 
-        let req = protocolObj.get(url, reqOptions, (res) => {
-            let reply = "";
-            res.on("data", (d) => {
-                reply += d;
+        try {
+            let req = protocolObj.get(url, reqOptions, (res) => {
+                let reply = "";
+                res.on("data", (d) => {
+                    reply += d;
+                });
+                res.on("end", () => {
+                    resolve(new webResponse(reply, res.headers, res.statusCode));
+                });
+                res.on("error", (err) => {
+                    reject(err);
+                });
             });
-            res.on("end", () => {
-                resolve(new webResponse(reply, res.headers, res.statusCode));
-            });
-            res.on("error", (err) => {
-                reject(err);
-            });
-        });
-
-        req.on("timeout", reject);
+    
+            req.on("timeout", reject);
+        } catch (e) {
+            return sendRequest(url);
+        }
+        
     });
 }
 
