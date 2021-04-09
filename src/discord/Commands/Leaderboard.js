@@ -1,13 +1,16 @@
+const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 
 async function getLB(prop, timetype, limit) {
     let res = "";
+    let time;
 
     switch (timetype) {
         case "d":
         case "day":
         case "daily": {
+            time = "Daily";
             res = await listUtils.stringLBDiff(prop, limit, "day");
             break;
         }
@@ -16,6 +19,7 @@ async function getLB(prop, timetype, limit) {
         case "week":
         case "weak":
         case "weekly": {
+            time = "Weekly";
             res = await listUtils.stringLBDiff(prop, limit, "weekly");
             break;
         }
@@ -24,17 +28,24 @@ async function getLB(prop, timetype, limit) {
         case "mon":
         case "month":
         case "monthly": {
+            time = "Monthly";
             res = await listUtils.stringLBDiff(prop, limit, "monthly");
             break;
         }
 
         default: {
+            time = "Lifetime";
             res = await listUtils.stringLB(prop, limit);
             break;
         }
     }
 
-    return res != "" ? "```" + res + "```" : "Nobody has won.";
+    res = res != "" ? "```" + res + "```" : "Nobody has won.";
+    let embed = new MessageEmbed()
+        .setTitle(time + " Leaderboard")
+        .setDescription(res);
+
+    return embed;
 }
 
 module.exports = new Command("leaderboard", ["*"], async (args) => {
@@ -227,9 +238,10 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
 
         default: {
             res = "That category does not exist!";
+            return { res : "That category does not exist!" }
             break;
         }
     }
 
-    return { res: res };
+    return { res: "", embed : res };
 });

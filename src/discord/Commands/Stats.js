@@ -26,15 +26,18 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
     let lvl = Math.round(acc.level * 100) / 100;
 
     let fields = [];
+    
     switch (game.toLowerCase()) {
         case "party":
         case "partygames":
         case "pg": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Party games wins",
                 value: acc.wins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -43,10 +46,16 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "fmhnt":
         case "farmhunt":
         case "frmhnt": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Farm hunt wins",
                 value: acc.farmhuntWins,
-                inline: false,
+                inline: true,
+            });
+            fields.push({
+                name: "Farm hunt poop",
+                value: acc.farmhuntShit,
+                inline: true,
             });
             break;
         }
@@ -56,11 +65,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "hypixel":
         case "says":
         case "hysays": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Hypixel says wins",
                 value: acc.hypixelSaysWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -68,25 +79,27 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "hit":
         case "hole":
         case "pain": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "HITW wins",
                 value: acc.hitwWins,
-                inline: false,
+                inline: true,
             });
             fields.push({
                 name: "HITW qualifiers",
                 value: acc.hitwQual,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "HITW finals",
                 value: acc.hitwFinal,
-                inline: false,
+                inline: true,
             });
             fields.push({
                 name: "HITW walls",
                 value: acc.hitwRounds,
-                inline: false,
+                inline: true,
             });
             break;
         }
@@ -98,11 +111,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "wall":
         case "pvp":
         case "miniwalls": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Mini walls wins",
                 value: acc.miniWallsWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -113,11 +128,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "fuck":
         case "shit":
         case "football": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Football wins",
                 value: acc.footballWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -127,11 +144,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "enderman":
         case "trash":
         case "enderspleef": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Ender spleef wins",
                 value: acc.enderSpleefWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -140,11 +159,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "toss":
         case "sumo2":
         case "throwout": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Throw out wins",
                 value: acc.throwOutWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -152,22 +173,26 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "sw":
         case "galaxy":
         case "galaxywars": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Galaxy wars wins",
                 value: acc.galaxyWarsWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
         case "dw":
         case "dragon":
         case "dragonwars": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Dragon wars wins",
                 value: acc.dragonWarsWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -177,11 +202,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "bounty":
         case "oneinthequiver":
         case "bountyhunters": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Bounty hunters wins",
                 value: acc.bountyHuntersWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -190,11 +217,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "dayone":
         case "blocking":
         case "blockingdead": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Blocking dead wins",
                 value: acc.blockingDeadWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -206,11 +235,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "hideandseek":
         case "hidenseek":
         case "hideseek": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Hide and seek wins",
                 value: acc.hideAndSeekWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -220,11 +251,13 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "zomb":
         case "zbies":
         case "zombies": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Zombies wins",
                 value: acc.zombiesWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
 
@@ -236,15 +269,16 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "ctwwool":
         case "ctwwoolcaptured":
         case "ctwkills": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Ctw kills",
                 value: acc.ctwKills,
-                inline: false,
+                inline: true,
             });
             fields.push({
                 name: "Ctw wool captured",
                 value: acc.ctwWoolCaptured,
-                inline: false,
+                inline: true,
             });
             break;
         }
@@ -257,29 +291,34 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         case "drawmything":
         case "drawtheirthing":
         case "drawing": {
+            fields.push(BotUtils.emptyField(true))
             fields.push({
                 name: "Pixel painters wins",
                 value: acc.pixelPaintersWins,
-                inline: false,
+                inline: true,
             });
+            fields.push(BotUtils.emptyField(true))
             break;
         }
     }
+
+    fields.push(BotUtils.emptyField(true))
 
     let embed = new MessageEmbed()
         .setAuthor(acc.name, iconURL, playerURL)
         .setTitle("Stats")
         .setThumbnail(thumbURL)
         .setColor(0x44a3e7)
-        .addField("All wins", acc.anyWins, false)
-        .addField("Arcade wins", acc.arcadeWins, false)
+        .addField("All wins", acc.anyWins, true)
+        .addField("Arcade wins", acc.arcadeWins, true)
         .addFields(fields)
-        .addField("Level", lvl)
+        .addField("Level", lvl, true)
         .addField(
             "Rank",
             ("" + acc.rank).replace(/_/g, "").replace(/PLUS/g, "+").replace(/undefined/g, 'non'),
-            false
+            true
         )
+        .addFields([BotUtils.emptyField(true)])
         .addField("UUID", acc.uuid, false);
 
     return { res: "", embed: embed };

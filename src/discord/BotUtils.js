@@ -52,4 +52,12 @@ module.exports = class BotUtils {
         let day = await listUtils.listDiff("accounts", "day", 999);
         return webhook.generateEmbed(day);
     }
+
+    static emptyField(inline) {
+        return { 
+            name: "\u200B",
+            value: "\u200B",
+            inline: inline,
+        }
+    }
 };
