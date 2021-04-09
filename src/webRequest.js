@@ -53,8 +53,6 @@ function sendRequest(url) {
                     reject(err);
                 });
             });
-    
-            req.on("timeout", reject);
         } catch (e) {
             return sendRequest(url);
         }
