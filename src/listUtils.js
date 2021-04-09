@@ -3,6 +3,7 @@ const utils = require("./utils");
 const { getUUID } = require("./mojangRequest");
 const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
+const { isValidIGN } = require("./utils");
 const logger = utils.logger;
 
 /**
@@ -145,7 +146,19 @@ async function addAccounts(category, names) {
     }
     let nameArr = names;
     for (let name of nameArr) {
-        let uuid = await getUUID(name);
+        
+        let uuid;
+        if (name.length == 32 || name.length == 36) {
+            uuid = name.replace(/-/g, "");
+        } else {
+            if(!isValidIGN(name)) {
+                logger.err(`${name} is not a valid IGN!`);
+                res += `${name} is not a valid IGN!\n`
+                continue;
+            }
+            uuid = await getUUID(name);
+        }
+
         if (uuid == undefined) continue;
 
         let wins = await getAccountWins(uuid);
