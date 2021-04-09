@@ -6,6 +6,8 @@ const config = require("../config.json");
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || config.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
+const listUtils = require("./listUtils");
+const { addAccounts } = require("./listUtils");
 
 /**
  * Generates the status for all of the online players
@@ -193,35 +195,27 @@ function statusSort(a, b) {
  * @return {Account[]}
  */
 async function updateAllAccounts() {
-    // sort this before hand because otherwise everything dies
-    // like seriously holy fuck its so bad
-    // oogle ended up with 21k wins due to this bug
-    // do not remove this
-    // people will notice
-    // just take the extra time
-    // ...
-    // okay maybe its redundant now
     accounts.sort(utils.winsSorter);
 
-    // Yes, this is abusive to the api, but also consider this
-    // SPEEEEEEEEDDD
     await Promise.all(
         accounts.map(async (account) => {
             await account.updateData();
         })
     );
     await accounts.sort(utils.winsSorter);
-    await accounts.sort((a, b) => {
-        if (a.wins == b.wins) {
-            if (a.name > b.name) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-        return 0;
-    });
     return accounts;
+}
+
+async function addLeaderboards() {
+    let leaders = await hypixelAPI.getLeaderboards();
+    let arcade = leaders.leaderboards.ARCADE;
+    let lifetimeCoins = arcade[0].leaders;
+    let monthlyCoins = arcade[2].leaders;
+    let weeklyCoins = arcade[1].leaders; 
+
+    await addAccounts("others", lifetimeCoins);
+    await addAccounts("others", monthlyCoins);
+    await addAccounts("others", weeklyCoins);
 }
 
 module.exports = {
@@ -229,4 +223,5 @@ module.exports = {
     updateAllAccounts: updateAllAccounts,
     statusTxtSorted: statusTxtSorted,
     gamesPlayed: gamesPlayed,
+    addLeaderboards: addLeaderboards,
 };

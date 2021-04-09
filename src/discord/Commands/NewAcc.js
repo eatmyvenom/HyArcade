@@ -3,14 +3,8 @@ const { addAccounts } = require("../../listUtils");
 const Command = require("../../classes/Command");
 
 module.exports = new Command("newAcc", utils.defaultAllowed, async (args) => {
-    if (utils.isValidIGN(args[0])) {
-        let name = args[0];
-        let category = args[1];
-        if (utils.isValidIGN(name)) {
-            let res = await addAccounts(category, [args[0]]);
-            return { res: res };
-        } else {
-            return { res: "Please input a valid IGN!" };
-        }
-    }
+    let category = args[args.length - 1];
+    let res = await addAccounts(category, args.slice(0,-1));
+    return { res: res };
+    
 });

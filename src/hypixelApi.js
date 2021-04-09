@@ -124,6 +124,11 @@ module.exports = class hypixelAPI {
         return await hypixelAPI.basicRequest("gameCounts");
     }
 
+    static async getLeaderboardsRAW() {
+        // dont put empty array since that is automatically done
+        return await hypixelAPI.basicRequest("leaderboards");
+    }
+
     /**
      * Returns the data of a guild with a specific id
      *
@@ -196,6 +201,11 @@ module.exports = class hypixelAPI {
      */
     static async getGameCounts() {
         let data = await hypixelAPI.getGameCountsRAW();
+        return JSON.parse(data);
+    }
+
+    static async getLeaderboards() {
+        let data = await hypixelAPI.getLeaderboardsRAW();
         return JSON.parse(data);
     }
 };

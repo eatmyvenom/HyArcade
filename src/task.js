@@ -83,6 +83,11 @@ async function gamesPlayed() {
     return ["gamesPlayed.json"];
 }
 
+async function addLeaderboards() {
+    await dataGen.addLeaderboards();
+    return ["acclist.json"];
+}
+
 /**
  * Generate the status for online players
  *
@@ -129,6 +134,7 @@ module.exports = {
     players: plrs,
     guilds: glds,
     gamesPlayed: gamesPlayed,
+    addLeaderboards: addLeaderboards,
     stats: stats,
     statusTxtSorted: statusTxtSorted,
     status: status,

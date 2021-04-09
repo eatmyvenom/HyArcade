@@ -195,6 +195,10 @@ async function statusSort() {
     await task.statusTxtSorted();
 }
 
+async function addLeaderboards() {
+    await task.addLeaderboards();
+}
+
 async function writePID() {
     if (!utils.fileExists(os.tmpdir() + "/pgapi")) {
         await fs.mkdir(os.tmpdir() + "/pgapi");
@@ -318,6 +322,12 @@ async function main() {
         case "link":
         case "ln":
             await cli.linkDiscord();
+            break;
+
+        case "lbs":
+        case "addLb":
+        case "addLeaderboards":
+            await addLeaderboards();
             break;
 
         case "names":

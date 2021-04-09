@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const BotUtils = require("./BotUtils");
 const config = require("../../config.json");
 const { addAccounts } = require("../listUtils");
-const { logger } = require("../utils");
+const { logger, isValidIGN } = require("../utils");
 const botCommands = require("./botCommands");
 
 /**
@@ -26,8 +26,17 @@ module.exports = function doBot() {
     });
 
     client.on("message", async (msg) => {
-        let cmdResponse = await botCommands.execute(msg, msg.author.id);
+        let cmdResponse;
+        try {
+            cmdResponse = await botCommands.execute(msg, msg.author.id);
+        } catch (e) {
+            errchannel.send("From - " + msg.content.replace(/`/g, "\\`"));
+            errchannel.send(e.toString());
+            logger.err("From - " + msg.content);
+            logger.err(e.toString());
+        }
         if (
+            cmdResponse != undefined &&
             cmdResponse.res != undefined &&
             (cmdResponse.res != "" || cmdResponse.embed != undefined)
         ) {

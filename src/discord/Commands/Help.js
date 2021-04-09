@@ -97,11 +97,13 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .setColor(0x000000)
             .addField("Help", "Get this message or get help on a specific command", false)
             .addField("Verify", "Link a your discord id to your minecraft account", false)
-            .addField("Link", "Link a players discord id to their minecraft account", false)
-            .addField("NewAcc", "Add a new account to the database", false)
+            .addField("Link - Trusted users only", "Link a players discord id to their minecraft account, use Verify if you aren't a trusted user", false)
+            .addField("NewAcc - Trusted users only", "Add a new account to the database", false)
             .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
             .addField("Stats", "Get the stats of a player", false)
             .addField("Status", "Get the status of a player", false)
+            .addField("GetDataRaw", "Get the raw data from an account", false)
+            .addField("GameCounts", "Get the amount of players in either all arcade games or just one", false)
             .addField("PGDaily", "Get the daily leaderboard for party games", false);
 
         return { res: "", embed: embed };
