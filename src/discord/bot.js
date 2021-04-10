@@ -11,18 +11,21 @@ const botCommands = require("./botCommands");
  */
 module.exports = function doBot() {
     const client = new Discord.Client();
-    let errchannel;
-    let logchannel;
+    let errHook;
+    let logHook;
 
     client.on("ready", async () => {
-        errchannel = await client.channels.fetch("829128492045828168");
-        logchannel = await client.channels.fetch("829151585925857331");
+        let errchannel = await client.channels.fetch(config.discord.errChannel);
+        let logchannel = await client.channels.fetch(config.discord.logChannel);
+        let errhooks = await errchannel.fetchWebhooks();
+        let loghooks = await logchannel.fetchWebhooks();
+        errHook = await errhooks.first();
+        logHook = await loghooks.first();
+        BotUtils.errHook = errHook;
+        BotUtils.logHook = logHook;
         logger.out(`Logged in as ${client.user.tag}!`);
-        logchannel.send(`Logged in as ${client.user.tag}!`);
-        client.user.setPresence({
-            activity: { name: "your stats", type: "WATCHING" },
-            status: "online",
-        });
+        logHook.send(`Logged in as ${client.user.tag}!`);
+        client.user.setPresence(config.discord.presence);
     });
 
     client.on("message", async (msg) => {
@@ -30,8 +33,8 @@ module.exports = function doBot() {
         try {
             cmdResponse = await botCommands.execute(msg, msg.author.id);
         } catch (e) {
-            errchannel.send("From - " + msg.content.replace(/`/g, "\\`"));
-            errchannel.send(e.toString());
+            errHook.send("From - " + msg.content.replace(/`/g, "\\`"));
+            errHook.send(e.toString());
             logger.err("From - " + msg.content);
             logger.err(e.toString());
         }
@@ -41,7 +44,7 @@ module.exports = function doBot() {
             (cmdResponse.res != "" || cmdResponse.embed != undefined)
         ) {
             logger.out(msg.author.tag + " ran : " + msg.content);
-            logchannel.send(msg.author.tag + " ran : " + msg.content);
+            logHook.send(msg.author.tag + " ran : " + msg.content);
             let opts = {};
             if (cmdResponse.embed) {
                 opts.embed = cmdResponse.embed;
@@ -52,7 +55,7 @@ module.exports = function doBot() {
                 if (cmdResponse.res.slice(0, 3) == "```") {
                     cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
                 }
-                errchannel.send(
+                errHook.send(
                     "**WARNING** Attempted to send a message greater than 2000 characters in length!"
                 );
                 msg.channel.send(
@@ -72,7 +75,7 @@ module.exports = function doBot() {
                     );
                 } catch (e) {
                     logger.err(e.toString());
-                    errchannel.send(e.toString());
+                    errHook.send(e.toString());
                     msg.channel.send(cmdResponse.res, opts);
                 }
             } else {
@@ -89,7 +92,7 @@ module.exports = function doBot() {
                         ? msg.content.split(" ")[1]
                         : "others";
                 logger.out(firstWord);
-                logchannel.send(
+                logHook.send(
                     'Attempting to add "' + firstWord + '" to database.'
                 );
                 await addAccounts(category, [firstWord]);
@@ -99,7 +102,7 @@ module.exports = function doBot() {
 
     client.on("rateLimit", (rdta) => {
         logger.err("Bot Rate limited!");
-        errchannel.send("Rate limited!");
+        errHook.send("Rate limited!");
     });
 
     client.login(config.discord.token);

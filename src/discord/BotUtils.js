@@ -7,6 +7,9 @@ function stringify(str) {
 }
 
 module.exports = class BotUtils {
+    static logHook;
+    static errHook;
+
     static async resolveAccount(string, rawMessage) {
         string = stringify(string);
         let acclist = await utils.readJSON("./accounts.json");

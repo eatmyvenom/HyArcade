@@ -155,14 +155,7 @@ function isValidIGN(txt) {
     );
 }
 
-let defaultAllowed = [
-    "156952208045375488",
-    "716907952736567387",
-    "696529020627714079",
-    "175596984722391049",
-    "339560215261347850",
-    "653105822569857025"
-];
+let defaultAllowed = config.discord.trustedUsers;
 
 module.exports = {
     archiveJson: archiveJson,
