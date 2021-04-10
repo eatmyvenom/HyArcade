@@ -8,7 +8,7 @@ let verifyCmd = require("./Commands/LinkMe");
 let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
-let evalCmd = require("./Commands/Eval");
+let ustatsCmd = require('./Commands/UnlinkedStats');
 let dataRawCmd = require("./Commands/GetDataRaw");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 
@@ -38,8 +38,14 @@ async function checkCommands(rawMsg, command, args, author) {
             return await statsCommand.execute(args, author, rawMsg);
             break;
 
-        case "newAcc":
-        case "addAcc":
+        case "ustats":
+        case "unlinkedstats":
+        case "us":
+            return await ustatsCmd.execute(args, author, rawMsg);
+            break;
+
+        case "newacc":
+        case "addacc":
             return await newAccCmd.execute(args, author);
             break;
 

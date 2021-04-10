@@ -37,7 +37,7 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
                 .setDescription("This player has already been linked!")
                 .setColor(0xff0000);
             return { res: "", embed: embed };
-        // make sure user isnt linked
+            // make sure user isnt linked
         } else if (
             Object.values(disclist).find((u) => u == uuid) != undefined
         ) {
