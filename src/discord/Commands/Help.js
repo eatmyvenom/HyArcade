@@ -78,7 +78,7 @@ function getHelp(cmd) {
             title = "Available games";
             usage = "s/lb [game]";
             desc =
-                "use any of these with the leaderboard or stats command party\nfarmhunt\nhysays\nhitw\nminiwalls\nfootball\nenderspleef\nthrowout\ngalaxywars\ndragonwars\nbounty\nblockingdead\nhide\nzombies\nctw\npixelpainters\nThere are also short versions availiable";
+                "use any of these with the leaderboard or stats command \n\nparty\nfarmhunt\nhysays\nhitw\nminiwalls\nfootball\nenderspleef\nthrowout\ngalaxywars\ndragonwars\nbounty\nblockingdead\nhide\nzombies\nctw\npixelpainters\n\nThere are also short versions availiable";
             break;
         }
     }
