@@ -10,6 +10,7 @@ let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
 let evalCmd = require("./Commands/Eval");
 let dataRawCmd = require('./Commands/GetDataRaw');
+let timeUpdateCmd = require('./Commands/LastUpdate');
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -81,6 +82,15 @@ async function checkCommands(rawMsg, command, args, author) {
         case "amounts":
         case "gamecounts": {
             return await countCmd.execute(args, author);
+            break;
+        }
+
+        case "lastupdate":
+        case "timeupdate":
+        case "catlock":
+        case "locktime":
+        case "checkupdate": {
+            return await timeUpdateCmd.execute(args, author);
             break;
         }
 
