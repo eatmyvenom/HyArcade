@@ -66,10 +66,6 @@ async function checkCommands(rawMsg, command, args, author) {
             break;
         }
 
-        case "eval": {
-            return await evalCmd.execute(args, author, rawMsg);
-        }
-
         case "getraw":
         case "getacc":
         case "getdata":
