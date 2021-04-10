@@ -2,7 +2,7 @@ module.exports = class Command {
     name = "";
     allowed = [];
     callback = async function () {
-        return "command broke";
+        return {res :"command broke"};
     };
 
     constructor(name, allowed, callback) {
