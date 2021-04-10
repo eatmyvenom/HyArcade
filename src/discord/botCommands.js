@@ -89,6 +89,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "timeupdate":
         case "catlock":
         case "locktime":
+        case "updatetime":
         case "checkupdate": {
             return await timeUpdateCmd.execute(args, author);
             break;
