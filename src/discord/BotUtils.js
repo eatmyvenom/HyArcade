@@ -15,10 +15,8 @@ module.exports = class BotUtils {
         let acclist = await utils.readJSON("./accounts.json");
         let acc;
         // rawMessage.guild.members.fetch()
-        if(string.length == 18) {
-            acc = acclist.find(
-                (a) => a.discord == string
-            );
+        if (string.length == 18) {
+            acc = acclist.find((a) => a.discord == string);
         }
 
         if (acc == undefined && string.length > 16) {
@@ -31,13 +29,14 @@ module.exports = class BotUtils {
             );
         }
 
-        if(acc == undefined) {
-            let discusers = await rawMessage.guild.members.fetch({ query : string, limit: 1});
+        if (acc == undefined) {
+            let discusers = await rawMessage.guild.members.fetch({
+                query: string,
+                limit: 1,
+            });
             if (discusers.size > 0) {
                 let id = discusers.first().id;
-                acc = acclist.find(
-                    (a) => a.discord == id
-                );
+                acc = acclist.find((a) => a.discord == id);
             }
         }
 
@@ -73,10 +72,10 @@ module.exports = class BotUtils {
     }
 
     static emptyField(inline) {
-        return { 
+        return {
             name: "\u200B",
             value: "\u200B",
             inline: inline,
-        }
+        };
     }
 };

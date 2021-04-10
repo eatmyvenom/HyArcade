@@ -1,13 +1,12 @@
 const Command = require("../../classes/Command");
-const fs = require('fs/promises');
+const fs = require("fs/promises");
 const { MessageEmbed } = require("discord.js");
 const utils = require("../../utils");
 
-module.exports = new Command('LastUpdate', ["*"], async (args) => {
-
+module.exports = new Command("LastUpdate", ["*"], async (args) => {
     let time;
-    if(utils.fileExists('timeupdate')) {
-        time = await fs.readFile('timeupdate');
+    if (utils.fileExists("timeupdate")) {
+        time = await fs.readFile("timeupdate");
     } else {
         time = "Saving data!";
     }
@@ -15,7 +14,7 @@ module.exports = new Command('LastUpdate', ["*"], async (args) => {
     let embed = new MessageEmbed()
         .setTitle("Update time")
         .setDescription(time)
-        .setColor(0x00b37b)
+        .setColor(0x00b37b);
 
-    return { res: "", embed : embed };
-})
+    return { res: "", embed: embed };
+});

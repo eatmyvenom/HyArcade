@@ -6,20 +6,16 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
     let player = args[0];
     let discord = args[1];
     let uuid;
-    let acclist = await utils.readJSON('./accounts.json');
+    let acclist = await utils.readJSON("./accounts.json");
     let acc;
     if (player.length < 17) {
-        acc = acclist.find(
-            (a) => a.name.toLowerCase() == player.toLowerCase()
-        )
+        acc = acclist.find((a) => a.name.toLowerCase() == player.toLowerCase());
     } else {
-        acc = acclist.find(
-            (a) => a.uuid.toLowerCase() == player.toLowerCase()
-        )
+        acc = acclist.find((a) => a.uuid.toLowerCase() == player.toLowerCase());
     }
 
-    if(acc == undefined) {
-        return { res : "This player is not in the database!" };
+    if (acc == undefined) {
+        return { res: "This player is not in the database!" };
     }
 
     uuid = acc.uuid;

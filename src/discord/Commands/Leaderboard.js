@@ -53,9 +53,12 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     if (args.length < 2) {
         let embed = new MessageEmbed()
             .setTitle("ERROR")
-            .setDescription("This command requires two arguments, game and type. Use the help command for more info.")
+            .setDescription(
+                "This command requires two arguments, game and type. Use the help command for more info."
+            );
         return {
-            res:"", embed :embed
+            res: "",
+            embed: embed,
         };
     }
 
@@ -242,12 +245,16 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         default: {
             let embed = new MessageEmbed()
                 .setTitle("ERROR")
-                .setDescription(`Sorry that category does not exist, use the command \`${Config.fromJSON().commandCharacter}help games\` to see what is available.`)
-                .setColor(0xff0000)
-            return { res : "", embed : embed }
+                .setDescription(
+                    `Sorry that category does not exist, use the command \`${
+                        Config.fromJSON().commandCharacter
+                    }help games\` to see what is available.`
+                )
+                .setColor(0xff0000);
+            return { res: "", embed: embed };
             break;
         }
     }
 
-    return { res: "", embed : res };
+    return { res: "", embed: res };
 });

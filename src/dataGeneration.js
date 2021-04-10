@@ -211,7 +211,7 @@ async function addLeaderboards() {
     let arcade = leaders.leaderboards.ARCADE;
     let lifetimeCoins = arcade[0].leaders;
     let monthlyCoins = arcade[2].leaders;
-    let weeklyCoins = arcade[1].leaders; 
+    let weeklyCoins = arcade[1].leaders;
 
     await addAccounts("others", lifetimeCoins);
     await addAccounts("others", monthlyCoins);
@@ -222,7 +222,7 @@ async function addGuild(uuid) {
     let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
     let members = guild.guild.members;
     let uuids = [];
-    for(let m of members) {
+    for (let m of members) {
         uuids.push(m.uuid);
     }
 

@@ -146,14 +146,13 @@ async function addAccounts(category, names) {
     }
     let nameArr = names;
     for (let name of nameArr) {
-        
         let uuid;
         if (name.length == 32 || name.length == 36) {
             uuid = name.replace(/-/g, "");
         } else {
-            if(!isValidIGN(name)) {
+            if (!isValidIGN(name)) {
                 logger.err(`${name} is not a valid IGN!`);
-                res += `${name} is not a valid IGN!\n`
+                res += `${name} is not a valid IGN!\n`;
                 continue;
             }
             uuid = await getUUID(name);
@@ -170,7 +169,7 @@ async function addAccounts(category, names) {
             res += `Refusing to add duplicate! (${name})\n`;
             continue;
         }
-        
+
         let wins = await getAccountWins(uuid);
         if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");

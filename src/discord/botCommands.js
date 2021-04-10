@@ -9,8 +9,8 @@ let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
 let evalCmd = require("./Commands/Eval");
-let dataRawCmd = require('./Commands/GetDataRaw');
-let timeUpdateCmd = require('./Commands/LastUpdate');
+let dataRawCmd = require("./Commands/GetDataRaw");
+let timeUpdateCmd = require("./Commands/LastUpdate");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {

@@ -47,7 +47,9 @@ function sendRequest(url) {
                     reply += d;
                 });
                 res.on("end", () => {
-                    resolve(new webResponse(reply, res.headers, res.statusCode));
+                    resolve(
+                        new webResponse(reply, res.headers, res.statusCode)
+                    );
                 });
                 res.on("error", (err) => {
                     reject(err);
@@ -56,7 +58,6 @@ function sendRequest(url) {
         } catch (e) {
             return sendRequest(url);
         }
-        
     });
 }
 

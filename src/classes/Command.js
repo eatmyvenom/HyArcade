@@ -2,7 +2,7 @@ module.exports = class Command {
     name = "";
     allowed = [];
     callback = async function () {
-        return {res :"command broke"};
+        return { res: "command broke" };
     };
 
     constructor(name, allowed, callback) {
@@ -13,7 +13,7 @@ module.exports = class Command {
 
     async execute(args, author, rawMsg) {
         if (!this.allowed.includes(author) && !this.allowed.includes("*"))
-            return { res : "You are not allowed to run this command."};
+            return { res: "You are not allowed to run this command." };
         return await this.callback(args, rawMsg);
     }
 };
