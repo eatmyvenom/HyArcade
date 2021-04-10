@@ -352,6 +352,12 @@ async function main() {
             await cli.getUUID(args);
             break;
 
+        case "addGuildMembers":
+        case "gmembers":
+        case "addGM":
+            await cli.addGuildMembers(args);
+            break;
+
         case "bot":
             await discordBot();
             break;

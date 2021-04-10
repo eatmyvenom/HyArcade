@@ -2,6 +2,7 @@ const { getGuildFromPlayer } = require("./hypixelApi");
 const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
 const utils = require("./utils");
 const mojangRequest = require("./mojangRequest");
+const dataGeneration = require("./dataGeneration");
 const args = process.argv;
 const logger = utils.logger;
 
@@ -166,6 +167,11 @@ async function getUUIDCli(args) {
     logger.out(`${name}'s uuid is ${uuid}`);
 }
 
+async function addGuildMembers(args) {
+    let uuid = args[3];
+    await dataGeneration.addGuild(uuid);
+}
+
 module.exports = {
     newAcc: newAcc,
     newGuild: newGuild,
@@ -175,6 +181,7 @@ module.exports = {
     log: log,
     logD: logD,
     checkNames: checkNames,
+    addGuildMembers: addGuildMembers,
     getUUID: getUUIDCli,
     moveAcc: moveAcc,
     linkDiscord: linkDiscord,
