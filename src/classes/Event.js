@@ -57,7 +57,7 @@ class AccountEvent {
                 config.events.HITW.webhook
             );
         } else if (this.type == "HYSAYS") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+            await Webhook.sendBasic(this.toString(), config.events.HS.webhook);
         } else if (this.type == "ARC") {
             await Webhook.sendBasic(this.toString(), config.events.ARC.webhook);
         } else if (this.type == "FH") {
