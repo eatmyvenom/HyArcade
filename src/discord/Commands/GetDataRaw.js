@@ -10,6 +10,6 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg) => {
     let embed = new MessageEmbed()
         .setTitle(acc.name + "." + path)
         .setDescription(acc[path])
-        .setColor(0x44a3e7)
-    return { res: "", embed :embed };
+        .setColor(0x44a3e7);
+    return { res: "", embed: embed };
 });

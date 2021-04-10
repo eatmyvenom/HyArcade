@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
@@ -10,34 +11,57 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
             a.uuid.toLowerCase() == player.toLowerCase() ||
             a.name.toLowerCase() == player.toLowerCase()
     );
-    if (acc == undefined)
-        return { res: "That account does not exist in the database." };
+    if (acc == undefined) {
+        let embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setDescription("This player is not in the database!")
+            .setColor(0xff0000);
+        return { res: "", embed: embed };
+    }
 
     if (
         ("" + acc.hypixelDiscord).toLowerCase() ==
         rawMsg.author.tag.toLowerCase()
     ) {
         let uuid = player;
-        if (player.length < 16) {
+        // if its not a uuid then convert to uuid
+        if (player.length < 17) {
             uuid = await mojangRequest.getUUID(player);
         }
         let discord = rawMsg.author.id;
         let disclist = await utils.readJSON("./disclist.json");
+        // make sure player isnt linked
         if (disclist[discord]) {
-            return { res: "This player has already been linked!" };
+            let embed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription("This player has already been linked!")
+                .setColor(0xff0000);
+            return { res: "", embed: embed };
+        // make sure user isnt linked
         } else if (
             Object.values(disclist).find((u) => u == uuid) != undefined
         ) {
-            return { res: "This user has already been linked!" };
+            let embed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription("This user has already been linked!")
+                .setColor(0xff0000);
+            return { res: "", embed: embed };
         }
 
         disclist[discord] = uuid;
         await utils.writeJSON("./disclist.json", disclist);
-        return { res: `${player} linked successfully!` };
+        let embed = new MessageEmbed()
+            .setTitle("Success")
+            .setDescription(`${player} linked successfully!`)
+            .setColor(0x00d492);
+        return { res: "", embed: embed };
     } else {
-        return {
-            res:
-                "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. If you are confused then just try linking via the hystats bot since it uses the same mechanism.",
-        };
+        let embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setDescription(
+                "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. If you are confused then just try linking via the hystats bot since it uses the same mechanism."
+            )
+            .setColor(0xff0000);
+        return { res: "", embed: embed };
     }
 });
