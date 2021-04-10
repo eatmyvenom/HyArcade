@@ -161,7 +161,6 @@ async function addAccounts(category, names) {
 
         if (uuid == undefined) continue;
 
-        let wins = await getAccountWins(uuid);
         if (
             acclist[category].find((acc) => acc.uuid == uuid) ||
             acclist["gamers"].find((acc) => acc.uuid == uuid) ||
@@ -169,7 +168,11 @@ async function addAccounts(category, names) {
         ) {
             logger.err(`Refusing to add duplicate! (${name})`);
             res += `Refusing to add duplicate! (${name})\n`;
-        } else if (wins < 50 && category == "gamers") {
+            continue;
+        }
+        
+        let wins = await getAccountWins(uuid);
+        if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
             newAccs.push({ name: name, wins: wins, uuid: uuid });
