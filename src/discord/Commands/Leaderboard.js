@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
+const Config = require("../../Config");
 const listUtils = require("../../listUtils");
 
 async function getLB(prop, timetype, limit) {
@@ -50,9 +51,11 @@ async function getLB(prop, timetype, limit) {
 
 module.exports = new Command("leaderboard", ["*"], async (args) => {
     if (args.length < 2) {
+        let embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setDescription("This command requires two arguments, game and type. Use the help command for more info.")
         return {
-            res:
-                "Use the command but correctly :slight_smile:\nUse the help command if you are unsure of how to brain!",
+            res:"", embed :embed
         };
     }
 
@@ -237,8 +240,11 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
 
         default: {
-            res = "That category does not exist!";
-            return { res : "That category does not exist!" }
+            let embed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription(`Sorry that category does not exist, use the command \`${Config.fromJSON().commandCharacter}help games\` to see what is available.`)
+                .setColor(0xff0000)
+            return { res : "", embed : embed }
             break;
         }
     }
