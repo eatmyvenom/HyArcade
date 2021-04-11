@@ -25,8 +25,8 @@ const task = require("./src/task");
 // means that if I start adding all kinds of modules, this
 // will become an issue really fast. So this is my way of not
 // bloating this project with node modules and shit.
-const config = require("./config.json");
 const Cfg = require("./src/Config");
+const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
 
 /**

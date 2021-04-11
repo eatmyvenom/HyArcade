@@ -30,10 +30,11 @@
 const utils = require("./utils");
 const fs = require("fs/promises");
 let { accounts, gamers, afkers } = require("./acclist");
-const config = require("../config.json");
+const cfg = require("./Config").fromJSON();
 const hypixelAPI = require("./hypixelApi");
-let force = utils.fileExists("force") || config.alwaysForce;
+let force = utils.fileExists("force") || cfg.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
+const { addAccounts } = require("./listUtils");
 
 /**
  * Generates the status for all of the online players
@@ -41,8 +42,8 @@ const GamesPlayed = require("./gamesPlayed");
  */
 async function genStatus() {
     let statusObj = {};
-    let oldstatus = JSON.parse(await fs.readFile("status.json"));
-    let accdata = require("../accounts.json");
+    let oldstatus = utils.readJSON("status.json");
+    let accdata = utils.readJSON("accounts.json");
 
     await Promise.all(
         accounts.map(async (account) => {
@@ -86,7 +87,7 @@ async function genStatus() {
  *
  */
 async function gamesPlayed() {
-    let oldGames = await utils.readJSON("./gamesPlayed.json");
+    let oldGames = await utils.readJSON("gamesPlayed.json");
 
     let promiseArr = accounts.map(async (account) => {
         let oldData = oldGames[account.uuid];
@@ -104,7 +105,7 @@ async function gamesPlayed() {
     });
 
     await Promise.all(promiseArr);
-    await utils.writeJSON("./gamesPlayed.json", oldGames);
+    await utils.writeJSON("gamesPlayed.json", oldGames);
 }
 
 /**
@@ -117,7 +118,7 @@ async function statusTxt() {
 
     let accs = require("./acclist").accounts;
 
-    let crntstatus = require("../status.json");
+    let crntstatus = utils.readJSON("status.json");
     for (const account of accs) {
         let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
         if (gamerAcc != undefined) {
@@ -143,7 +144,7 @@ async function statusTxtSorted() {
     let str = "";
     let accs = require("./acclist").accounts;
 
-    let crntstatus = require("../status.json");
+    let crntstatus = utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
 
     for (const sts of sortable) {
@@ -164,10 +165,10 @@ function statusSort(a, b) {
     status1.gameType = ("" + status1.gameType).toUpperCase();
     status2.gameType = ("" + status2.gameType).toUpperCase();
 
-    if (status1.mode == "LOBBY") {
+    if (status1.mode == "LOBBY" &amp;&amp; status2.mode != "LOBBY") {
         return -1;
     }
-    if (status2.mode == "LOBBY") {
+    if (status2.mode == "LOBBY" &amp;&amp; status1.mode != "LOBBY") {
         return 1;
     }
     if (status1.mode == "PARTY" &amp;&amp; status2.mode != "PARTY") {
@@ -221,25 +222,50 @@ function statusSort(a, b) {
  * @return {Account[]}
  */
 async function updateAllAccounts() {
-    // sort this before hand because otherwise everything dies
-    // like seriously holy fuck its so bad
-    // oogle ended up with 21k wins due to this bug
-    // do not remove this
-    // people will notice
-    // just take the extra time
-    // ...
-    // okay maybe its redundant now
     accounts.sort(utils.winsSorter);
 
-    // Yes, this is abusive to the api, but also consider this
-    // SPEEEEEEEEDDD
+    let oldAccs = await utils.readJSON("accounts.json");
+
     await Promise.all(
         accounts.map(async (account) => {
-            await account.updateData();
+            let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
+            if (oldAcc != undefined &amp;&amp; !force) {
+                if (oldAcc.arcadeWins >= cfg.arcadeWinLimit) {
+                    await account.updateData();
+                } else {
+                    // ignore accounts with under 50 arcade wins
+                    account.setData(oldAcc);
+                }
+            } else {
+                await account.updateData();
+            }
         })
     );
     await accounts.sort(utils.winsSorter);
     return accounts;
+}
+
+async function addLeaderboards() {
+    let leaders = await hypixelAPI.getLeaderboards();
+    let arcade = leaders.leaderboards.ARCADE;
+    let lifetimeCoins = arcade[0].leaders;
+    let monthlyCoins = arcade[2].leaders;
+    let weeklyCoins = arcade[1].leaders;
+
+    await addAccounts("others", lifetimeCoins);
+    await addAccounts("others", monthlyCoins);
+    await addAccounts("others", weeklyCoins);
+}
+
+async function addGuild(uuid) {
+    let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
+    let members = guild.guild.members;
+    let uuids = [];
+    for (let m of members) {
+        uuids.push(m.uuid);
+    }
+
+    await addAccounts("others", uuids);
 }
 
 module.exports = {
@@ -247,6 +273,8 @@ module.exports = {
     updateAllAccounts: updateAllAccounts,
     statusTxtSorted: statusTxtSorted,
     gamesPlayed: gamesPlayed,
+    addGuild: addGuild,
+    addLeaderboards: addLeaderboards,
 };
 </code></pre>
         </article>
@@ -264,7 +292,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Mar 21 2021 00:04:03 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Apr 11 2021 01:41:03 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

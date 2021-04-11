@@ -1,4 +1,4 @@
-const config = require("../config.json");
+const cfg = require("./Config").fromJSON();
 const task = require("./task");
 const { logger } = require("./utils");
 const { exec } = require("child_process");
@@ -57,8 +57,8 @@ class clusterClient {
      */
     constructor(name) {
         this.name = name;
-        this.key = config.clusters[name].key;
-        this.tasks = config.clusters[name].tasks;
+        this.key = cfg.clusters[name].key;
+        this.tasks = cfg.clusters[name].tasks;
     }
 
     /**
@@ -83,7 +83,7 @@ class clusterClient {
             for (let file of this.files) {
                 // this requires rsync to be installed on both the server and client
                 await run(
-                    `rsync -a --rsh=ssh ${file} ${config.cluserTarget}/${file}`
+                    `rsync -a --rsh=ssh ${file} ${cfg.cluserTarget}/${file}`
                 );
             }
         }

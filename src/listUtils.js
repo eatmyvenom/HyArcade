@@ -1,8 +1,7 @@
 const fs = require("fs/promises");
 const utils = require("./utils");
 const { getUUID } = require("./mojangRequest");
-const { getAccountWins } = require("./hypixelApi");
-const config = require("../config.json");
+const config = require("./Config").fromJSON();
 const { isValidIGN } = require("./utils");
 const Account = require("./account");
 const logger = utils.logger;

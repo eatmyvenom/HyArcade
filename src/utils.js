@@ -1,5 +1,5 @@
-const cfg = require("../config.json");
 const Config = require("./Config");
+const cfg = Config.fromJSON();
 const fs = require("fs/promises");
 const webRequest = require("./webRequest");
 

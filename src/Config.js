@@ -1,4 +1,5 @@
 const fs = require("fs/promises");
+const ffs = require("fs");
 
 class Config {
     key = "";
@@ -27,7 +28,7 @@ class Config {
     }
 
     static fromJSON() {
-        return new Config(require("../config.json"));
+        return new Config(JSON.parse(ffs.readFileSync("../config.json")));
     }
 
     static fromEnv() {

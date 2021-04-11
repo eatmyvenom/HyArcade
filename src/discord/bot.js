@@ -1,9 +1,6 @@
 const Discord = require("discord.js");
 const BotUtils = require("./BotUtils");
-const config = require("../../config.json");
-const { addAccounts } = require("../listUtils");
-const { logger, isValidIGN } = require("../utils");
-const botCommands = require("./botCommands");
+const config = require("../Config").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
 

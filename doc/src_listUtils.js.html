@@ -29,8 +29,9 @@
             <pre class="prettyprint source linenums"><code>const fs = require("fs/promises");
 const utils = require("./utils");
 const { getUUID } = require("./mojangRequest");
-const { getAccountWins } = require("./hypixelApi");
-const config = require("../config.json");
+const config = require("./Config").fromJSON();
+const { isValidIGN } = require("./utils");
+const Account = require("./account");
 const logger = utils.logger;
 
 /**
@@ -85,6 +86,10 @@ async function listNormal(name, maxamnt) {
  * @return {Object[]}
  */
 async function listDiff(name, timetype, maxamnt) {
+    return await listDiffByProp(name, "wins", timetype, maxamnt);
+}
+
+async function listDiffByProp(name, prop, timetype, maxamnt) {
     // cant use require here
     let newlist = JSON.parse(await fs.readFile(`${name}.json`));
     let oldlist = JSON.parse(await fs.readFile(`${name}.${timetype}.json`));
@@ -105,7 +110,8 @@ async function listDiff(name, timetype, maxamnt) {
         }
         // make sure acc isnt null/undefined
         if (acc) {
-            oldlist[i].wins = acc.wins - oldlist[i].wins;
+            oldlist[i][prop] =
+                numberify(acc[prop]) - numberify(oldlist[i][prop]);
         }
     }
 
@@ -159,27 +165,113 @@ async function stringDaily(name, maxamnt) {
  * @return {null}
  */
 async function addAccounts(category, names) {
-    let acclist = require("../acclist.json");
+    let res = "";
+    let acclist = await utils.readJSON("./acclist.json");
+    let newAccs = [];
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
-        return;
+        return "Please input a valid category!";
     }
     let nameArr = names;
     for (let name of nameArr) {
-        let uuid = await getUUID(name);
+        let uuid;
+        if (name.length == 32 || name.length == 36) {
+            uuid = name.replace(/-/g, "");
+        } else {
+            if (!isValidIGN(name)) {
+                logger.err(`${name} is not a valid IGN!`);
+                res += `${name} is not a valid IGN!\n`;
+                continue;
+            }
+            uuid = await getUUID(name);
+        }
+
         if (uuid == undefined) continue;
 
-        let wins = await getAccountWins(uuid);
-        if (acclist[category].find((acc) => acc.uuid == uuid)) {
-            logger.err("Refusing to add duplicate!");
-        } else if (wins &lt; 50 &amp;&amp; category == "gamers") {
+        if (
+            acclist[category].find((acc) => acc.uuid == uuid) ||
+            acclist["gamers"].find((acc) => acc.uuid == uuid) ||
+            acclist["afkers"].find((acc) => acc.uuid == uuid)
+        ) {
+            logger.err(`Refusing to add duplicate! (${name})`);
+            res += `Refusing to add duplicate! (${name})\n`;
+            continue;
+        }
+
+        let acc = new Account("", 0, uuid);
+        await acc.updateHypixel();
+        let wins = acc.wins;
+        name = acc.name;
+        if (wins &lt; 50 &amp;&amp; category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
-            acclist[category].push({ name: name, wins: wins, uuid: uuid });
-            logger.out(`${name} with ${wins} wins added.`);
+            newAccs.push({ name: name, wins: wins, uuid: uuid });
+            logger.out(`${name} with ${wins} pg wins added.`);
+            res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
+    acclist = await utils.readJSON("./acclist.json");
+    for (let acc of newAccs) {
+        acclist[category].push(acc);
+    }
     await utils.writeJSON("./acclist.json", acclist);
+    return res;
+}
+
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
+
+async function stringLB(lbprop, maxamnt) {
+    let list = await utils.readJSON("./accounts.json");
+    list = await [].concat(list).sort((b, a) => {
+        return numberify(a[lbprop]) - numberify(b[lbprop]);
+    });
+    let str = "";
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i &lt; list.length; i++) {
+        // don't print if player has 0 wins
+        if (list[i][lbprop] &lt; 1 &amp;&amp; !config.printAllWins) continue;
+
+        // this hack is because js has no real string formatting and its
+        // not worth it to use wasm or node native for this
+        let num = ("000" + (i + 1)).slice(-3);
+
+        let name = (list[i].name + "                       ").slice(0, 17);
+        //         001) Monkey           : 5900
+        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+    }
+    return str;
+}
+
+async function stringLBDiff(lbprop, maxamnt, timetype) {
+    let list = await listDiffByProp("accounts", lbprop, timetype, 9999);
+    list = await [].concat(list).sort((b, a) => {
+        return numberify(a[lbprop]) - numberify(b[lbprop]);
+    });
+    let str = "";
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i &lt; list.length; i++) {
+        // don't print if player has 0 wins
+        if (numberify(list[i][lbprop]) &lt; 1 &amp;&amp; !config.printAllWins) continue;
+
+        // this hack is because js has no real string formatting and its
+        // not worth it to use wasm or node native for this
+        let num = ("000" + (i + 1)).slice(-3);
+
+        let name = (
+            list[i].name.slice(0, 1).toUpperCase() +
+            list[i].name.slice(1) +
+            "                       "
+        ).slice(0, 17);
+        //         001) Monkey           : 5900
+        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+    }
+    return str;
+}
+
+async function stringLBDaily(lbprop, maxamnt) {
+    return await stringLBDiff(lbprop, maxamnt, "day");
 }
 
 module.exports = {
@@ -190,6 +282,9 @@ module.exports = {
     stringDiff: stringDiff,
     stringDaily: stringDaily,
     addAccounts: addAccounts,
+    stringLB: stringLB,
+    stringLBDaily: stringLBDaily,
+    stringLBDiff: stringLBDiff,
 };
 </code></pre>
         </article>
@@ -207,7 +302,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Mar 21 2021 00:04:03 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Apr 11 2021 01:41:03 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

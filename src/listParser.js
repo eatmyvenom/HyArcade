@@ -10,7 +10,7 @@ const { getKeyByValue } = require("./utils");
 exports.players = function players(acclist) {
     let Player = require("./player")(acclist);
 
-    let playerjson = require("../playerlist.json");
+    let playerjson = utils.readJSON("./playerlist.json");
     let playerlist = [];
     for (let i = 0; i < playerjson.length; i++) {
         playerlist.push(new Player(playerjson[i].name, playerjson[i].accs, 0));
@@ -24,8 +24,8 @@ exports.players = function players(acclist) {
  * @return {Object}
  */
 exports.accounts = function accounts() {
-    let acclistjson = require("../acclist.json");
-    let disclist = require("../disclist");
+    let acclistjson = utils.readJSON("acclist.json");
+    let disclist = utils.readJSON("disclist");
     let acclist = {};
 
     for (const sublist in acclistjson) {
@@ -57,7 +57,7 @@ exports.accounts = function accounts() {
 exports.guilds = function gld(accs) {
     let accounts = accs;
     let Guild = require("./guild")(accounts);
-    let guildlistjson = require("../guildlist.json");
+    let guildlistjson = utils.readJSON("guildlist.json");
     let realList = [];
 
     for (const guild of guildlistjson) {

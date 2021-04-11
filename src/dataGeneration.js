@@ -2,11 +2,10 @@ const status = require("./status");
 const utils = require("./utils");
 const fs = require("fs/promises");
 let { accounts, gamers, afkers } = require("./acclist");
-const config = require("../config.json");
+const cfg = require("./Config").fromJSON();
 const hypixelAPI = require("./hypixelApi");
-let force = utils.fileExists("force") || config.alwaysForce;
+let force = utils.fileExists("force") || cfg.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
-const listUtils = require("./listUtils");
 const { addAccounts } = require("./listUtils");
 
 /**
@@ -15,8 +14,8 @@ const { addAccounts } = require("./listUtils");
  */
 async function genStatus() {
     let statusObj = {};
-    let oldstatus = JSON.parse(await fs.readFile("status.json"));
-    let accdata = require("../accounts.json");
+    let oldstatus = utils.readJSON("status.json");
+    let accdata = utils.readJSON("accounts.json");
 
     await Promise.all(
         accounts.map(async (account) => {
@@ -60,7 +59,7 @@ async function genStatus() {
  *
  */
 async function gamesPlayed() {
-    let oldGames = await utils.readJSON("./gamesPlayed.json");
+    let oldGames = await utils.readJSON("gamesPlayed.json");
 
     let promiseArr = accounts.map(async (account) => {
         let oldData = oldGames[account.uuid];
@@ -78,7 +77,7 @@ async function gamesPlayed() {
     });
 
     await Promise.all(promiseArr);
-    await utils.writeJSON("./gamesPlayed.json", oldGames);
+    await utils.writeJSON("gamesPlayed.json", oldGames);
 }
 
 /**
@@ -91,7 +90,7 @@ async function statusTxt() {
 
     let accs = require("./acclist").accounts;
 
-    let crntstatus = require("../status.json");
+    let crntstatus = utils.readJSON("status.json");
     for (const account of accs) {
         let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
         if (gamerAcc != undefined) {
@@ -117,7 +116,7 @@ async function statusTxtSorted() {
     let str = "";
     let accs = require("./acclist").accounts;
 
-    let crntstatus = require("../status.json");
+    let crntstatus = utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
 
     for (const sts of sortable) {
@@ -203,7 +202,7 @@ async function updateAllAccounts() {
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
-                if (oldAcc.arcadeWins >= config.arcadeWinLimit) {
+                if (oldAcc.arcadeWins >= cfg.arcadeWinLimit) {
                     await account.updateData();
                 } else {
                     // ignore accounts with under 50 arcade wins

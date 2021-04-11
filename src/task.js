@@ -19,7 +19,7 @@ let guilds = require("./guildlist")(accounts);
  */
 async function accs() {
     accounts = await dataGen.updateAllAccounts(accounts);
-    let old = require("../accounts.json");
+    let old = utils.readJSON("accounts.json");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
     let ED = new EventDetector(old, accounts);

@@ -5,7 +5,7 @@ const fs = require("fs/promises");
 
 async function downloadFile(name, servername) {
     let response = await webRequest("http://eatmyvenom.me/share/" + servername);
-    await fs.writeFile(name, response.data);
+    await fs.writeFile("data/" + name, response.data);
 }
 
 async function main() {

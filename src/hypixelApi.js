@@ -1,6 +1,6 @@
 const hypixelReq = require("./hypixelReq");
 const { sleep, logger } = require("./utils");
-const config = require("../config.json");
+const config = require("./Config").fromJSON();
 
 /**
  * Function to get the key to use
