@@ -3,7 +3,6 @@ const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
-const { errHook, logHook } = require("./BotUtils");
 
 const longMsgStr =
     "**WARNING** Attempted to send a message greater than 2000 characters in length!";
@@ -13,8 +12,10 @@ module.exports = async function messageHandler(msg) {
     try {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
     } catch (e) {
-        errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
-        errHook.send(e.toString());
+        BotUtils.errHook.send(
+            "Error from - " + msg.content.replace(/`/g, "\\`")
+        );
+        BotUtils.errHook.send(e.toString());
         logger.err("Error from - " + msg.content);
         logger.err(e.toString());
     }
@@ -24,7 +25,7 @@ module.exports = async function messageHandler(msg) {
         (cmdResponse.res != "" || cmdResponse.embed != undefined)
     ) {
         logger.out(msg.author.tag + " ran : " + msg.content);
-        logHook.send(msg.author.tag + " ran : " + msg.content);
+        BotUtils.logHook.send(msg.author.tag + " ran : " + msg.content);
         let opts = {};
         if (cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
@@ -35,7 +36,7 @@ module.exports = async function messageHandler(msg) {
             if (cmdResponse.res.slice(0, 3) == "```") {
                 cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
             }
-            errHook.send(longMsgStr);
+            BotUtils.errHook.send(longMsgStr);
             msg.channel.send(longMsgStr);
             logger.err(longMsgStr);
         }
@@ -49,7 +50,7 @@ module.exports = async function messageHandler(msg) {
                 );
             } catch (e) {
                 logger.err(e.toString());
-                errHook.send(e.toString());
+                BotUtils.errHook.send(e.toString());
                 msg.channel.send(cmdResponse.res, opts);
             }
         } else {
@@ -66,7 +67,9 @@ module.exports = async function messageHandler(msg) {
                     ? msg.content.split(" ")[1]
                     : "others";
             logger.out(firstWord);
-            logHook.send('Attempting to add "' + firstWord + '" to database.');
+            BotUtils.logHook.send(
+                'Attempting to add "' + firstWord + '" to database.'
+            );
             await addAccounts(category, [firstWord]);
         }
     }
