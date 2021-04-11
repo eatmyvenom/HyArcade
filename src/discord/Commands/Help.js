@@ -46,6 +46,15 @@ function getHelp(cmd) {
             break;
         }
 
+        case "us":
+        case "ustats":
+        case "ulinkedstats": {
+            title = "UnlinkedStats command";
+            usage = "ustats [name] [arcade game?]";
+            desc = "Give the general arcade stats of a player not in the database. If the arcade game argument is filled then it also adds stats from that game.";
+            break;
+        }
+
         case "sts":
         case "status": {
             title = "Status command";
@@ -101,6 +110,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("NewAcc - Trusted users only", "Add a new account to the database", false)
             .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
             .addField("Stats", "Get the stats of a player", false)
+            .addField("UnlinkedStats", "Get the stats of a player that has not been added to the database", false)
             .addField("Status", "Get the status of a player", false)
             .addField("GetDataRaw", "Get the raw data from an account", false)
             .addField("GameCounts", "Get the amount of players in either all arcade games or just one", false)
