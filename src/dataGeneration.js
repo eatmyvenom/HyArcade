@@ -197,9 +197,21 @@ function statusSort(a, b) {
 async function updateAllAccounts() {
     accounts.sort(utils.winsSorter);
 
+    let oldAccs = await utils.readJSON('accounts.json');
+
     await Promise.all(
         accounts.map(async (account) => {
-            await account.updateData();
+            let oldAcc = oldAccs.find(a => a.uuid == account.uuid);
+            if(oldAcc != undefined && !force) {
+                if(oldAcc.arcadeWins >= 100) {
+                    await account.updateData();
+                } else {
+                    // ignore accounts with under 50 arcade wins
+                    account.setData(oldAcc);
+                }
+            } else {
+                await account.updateData();
+            }
         })
     );
     await accounts.sort(utils.winsSorter);
