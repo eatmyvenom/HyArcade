@@ -1,4 +1,5 @@
-const config = require("../config.json");
+const cfg = require("../config.json");
+const Config = require('./Config');
 const fs = require("fs/promises");
 const webRequest = require("./webRequest");
 
@@ -22,7 +23,7 @@ function sleep(time) {
  * @return {Number} where the first element should move in relation to its current position
  */
 function winsSorter(element1, element2) {
-    if (config.sortDirection == "mostleast") {
+    if (cfg.sortDirection == "mostleast") {
         if (element1.wins < element2.wins) return 1;
         if (element1.wins > element2.wins) return -1;
         return 0;
@@ -39,7 +40,7 @@ function winsSorter(element1, element2) {
  * @return {String}
  */
 function daytime() {
-    return config.showDaytime
+    return cfg.showDaytime
         ? Date()
               .replace(/.*20[0-9][0-9] /, "")
               .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " "
@@ -100,8 +101,8 @@ async function archiveJson(oldfile, path, timetype) {
  * @param {String} content
  */
 function log(content) {
-    if (config.std.disable) {
-        fs.writeFile(config.std.out, content, { flag: "a" });
+    if (cfg.std.disable) {
+        fs.writeFile(cfg.std.out, content, { flag: "a" });
     } else {
         console.log(content);
     }
@@ -113,8 +114,8 @@ function log(content) {
  * @param {String} content
  */
 function error(content) {
-    if (config.std.disable) {
-        fs.writeFile(config.std.error, content, { flag: "a" });
+    if (cfg.std.disable) {
+        fs.writeFile(cfg.std.error, content, { flag: "a" });
     } else {
         console.error(daytime() + "ERROR: " + ("" + content).trim());
     }
@@ -155,7 +156,7 @@ function isValidIGN(txt) {
     );
 }
 
-let defaultAllowed = config.discord.trustedUsers;
+let defaultAllowed = Config.fromJSON().discord.trustedUsers;
 
 module.exports = {
     archiveJson: archiveJson,

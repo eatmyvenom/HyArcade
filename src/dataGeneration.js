@@ -203,7 +203,7 @@ async function updateAllAccounts() {
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find(a => a.uuid == account.uuid);
             if(oldAcc != undefined && !force) {
-                if(oldAcc.arcadeWins >= 100) {
+                if(oldAcc.arcadeWins >= config.arcadeWinLimit) {
                     await account.updateData();
                 } else {
                     // ignore accounts with under 50 arcade wins
