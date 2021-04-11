@@ -172,7 +172,7 @@ async function addAccounts(category, names) {
         }
 
         let acc = new Account("", 0, uuid);
-        await acc.updateHypixel()
+        await acc.updateHypixel();
         let wins = acc.wins;
         name = acc.name;
         if (wins < 50 && category == "gamers") {
@@ -210,10 +210,7 @@ async function stringLB(lbprop, maxamnt) {
         // not worth it to use wasm or node native for this
         let num = ("000" + (i + 1)).slice(-3);
 
-        let name = (
-            list[i].name +
-            "                       "
-        ).slice(0, 17);
+        let name = (list[i].name + "                       ").slice(0, 17);
         //         001) Monkey           : 5900
         str += `${num}) ${name}: ${list[i][lbprop]}\n`;
     }

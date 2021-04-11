@@ -10,6 +10,7 @@ function stringify(str) {
 module.exports = class BotUtils {
     static logHook;
     static errHook;
+    static client;
 
     static async resolveAccount(string, rawMessage) {
         string = stringify(string);
@@ -367,8 +368,11 @@ module.exports = class BotUtils {
         }
 
         fields.push(BotUtils.emptyField(true));
-        let rank = ("" + acc.rank).replace(/_/g, "").replace(/PLUS/g, "+").replace(/undefined/g, "non");
-        rank = (rank == "") ? "Non" : rank;
+        let rank = ("" + acc.rank)
+            .replace(/_/g, "")
+            .replace(/PLUS/g, "+")
+            .replace(/undefined/g, "non");
+        rank = rank == "" ? "Non" : rank;
 
         let embed = new MessageEmbed()
             .setAuthor(acc.name, iconURL, playerURL)
@@ -379,8 +383,7 @@ module.exports = class BotUtils {
             .addField("Arcade wins", acc.arcadeWins, true)
             .addFields(fields)
             .addField("Level", lvl, true)
-            .addField("Rank", rank, true
-            )
+            .addField("Rank", rank, true)
             .addFields([BotUtils.emptyField(true)])
             .addField("UUID", acc.uuid, false);
 

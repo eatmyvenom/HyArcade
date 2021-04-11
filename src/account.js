@@ -70,7 +70,7 @@ class Account {
     }
 
     setData(oldAcc) {
-        for(let prop in oldAcc) {
+        for (let prop in oldAcc) {
             this[prop] = oldAcc[prop];
         }
     }

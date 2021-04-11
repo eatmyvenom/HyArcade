@@ -8,9 +8,10 @@ let verifyCmd = require("./Commands/LinkMe");
 let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
-let ustatsCmd = require('./Commands/UnlinkedStats');
+let ustatsCmd = require("./Commands/UnlinkedStats");
 let dataRawCmd = require("./Commands/GetDataRaw");
 let timeUpdateCmd = require("./Commands/LastUpdate");
+let KillBotCmd = require("./Commands/KillBot");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -73,12 +74,21 @@ async function checkCommands(rawMsg, command, args, author) {
             break;
         }
 
+        case "quit":
+        case "stopbot":
+        case "killbot":
+        case "botstop": {
+            return await KillBotCmd.execute(args, author);
+            break;
+        }
+
         case "getraw":
         case "getacc":
         case "getdata":
         case "rawdata":
         case "dataraw": {
             return await dataRawCmd.execute(args, author, rawMsg);
+            break;
         }
 
         case "players":
