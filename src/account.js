@@ -69,6 +69,12 @@ class Account {
         this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
     }
 
+    setData(oldAcc) {
+        for(let prop in oldAcc) {
+            this[prop] = oldAcc[prop];
+        }
+    }
+
     /**
      * Update and populate all the data for this account
      * @memberof account
