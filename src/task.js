@@ -5,12 +5,9 @@ const dataGen = require("./dataGeneration");
 const DiscordBot = require("./discord/bot");
 const EventDetector = require("./EventDetector");
 
-// these modules need to use identical accounts lists so that
-// the data does not need to be updated multiple times
-let { accounts } = require("./acclist");
+const lists = require("./listParser");
+let accounts = [];
 const { winsSorter } = require("./utils");
-let players = require("./playerlist")(accounts);
-let guilds = require("./guildlist")(accounts);
 
 /**
  * Run the generate the data for all accounts
@@ -18,8 +15,9 @@ let guilds = require("./guildlist")(accounts);
  * @return {String[]} files changed by this task
  */
 async function accs() {
-    accounts = await dataGen.updateAllAccounts(accounts);
-    let old = utils.readJSON("accounts.json");
+    let acclist = await lists.accounts();
+    accounts = await dataGen.updateAllAccounts(acclist);
+    let old = await utils.readJSON("accounts.json");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
     let ED = new EventDetector(old, accounts);
@@ -36,6 +34,7 @@ async function accs() {
  * @return {String[]} files changed by this task
  */
 async function plrs() {
+    let players = await lists.players(accounts);
     await Promise.all(
         players.map(async (player) => {
             await player.updateWins();
@@ -53,6 +52,7 @@ async function plrs() {
  * @return {String[]} files changed by this task
  */
 async function glds() {
+    let guilds = await lists.guilds(accounts);
     await Promise.all(
         guilds.map(async (guild) => {
             await guild.updateWins();

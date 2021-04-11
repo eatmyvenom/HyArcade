@@ -43,7 +43,7 @@ async function txtPlayerList(list, maxamnt) {
  * @return {Object[]}
  */
 async function listNormal(name, maxamnt) {
-    let thelist = JSON.parse(await fs.readFile(`${name}.json`));
+    let thelist = await utils.readJSON(`${name}.json`);
     thelist.sort(utils.winsSorter);
     thelist = thelist.slice(0, maxamnt);
     return thelist;
@@ -63,8 +63,8 @@ async function listDiff(name, timetype, maxamnt) {
 
 async function listDiffByProp(name, prop, timetype, maxamnt) {
     // cant use require here
-    let newlist = JSON.parse(await fs.readFile(`${name}.json`));
-    let oldlist = JSON.parse(await fs.readFile(`${name}.${timetype}.json`));
+    let newlist = await utils.readJSON(`${name}.json`);
+    let oldlist = await utils.readJSON(`${name}.${timetype}.json`);
 
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);

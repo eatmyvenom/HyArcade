@@ -1,5 +1,7 @@
 const Account = require("./account");
+const cfg = require("./Config").fromJSON();
 const { getKeyByValue } = require("./utils");
+const utils = require("./utils");
 
 /**
  * Gets a list of player objects from the player json list
@@ -7,10 +9,10 @@ const { getKeyByValue } = require("./utils");
  * @param {Account[]} acclist
  * @return {Player[]}
  */
-exports.players = function players(acclist) {
+exports.players = async function players(acclist) {
     let Player = require("./player")(acclist);
 
-    let playerjson = utils.readJSON("./playerlist.json");
+    let playerjson = await utils.readJSON("./playerlist.json");
     let playerlist = [];
     for (let i = 0; i < playerjson.length; i++) {
         playerlist.push(new Player(playerjson[i].name, playerjson[i].accs, 0));
@@ -23,9 +25,9 @@ exports.players = function players(acclist) {
  *
  * @return {Object}
  */
-exports.accounts = function accounts() {
-    let acclistjson = utils.readJSON("acclist.json");
-    let disclist = utils.readJSON("disclist");
+exports.accounts = async function accounts() {
+    let acclistjson = await utils.readJSON("acclist.json");
+    let disclist = await utils.readJSON("disclist.json");
     let acclist = {};
 
     for (const sublist in acclistjson) {
@@ -45,6 +47,11 @@ exports.accounts = function accounts() {
         acclist.yt,
         acclist.pog
     );
+
+    if (cfg.mode == "test") {
+        acclist.accounts = acclist.gamers;
+    }
+
     return acclist;
 };
 
@@ -54,10 +61,10 @@ exports.accounts = function accounts() {
  * @param {Account[]} accs
  * @return {Guild[]}
  */
-exports.guilds = function gld(accs) {
+exports.guilds = async function gld(accs) {
     let accounts = accs;
     let Guild = require("./guild")(accounts);
-    let guildlistjson = utils.readJSON("guildlist.json");
+    let guildlistjson = await utils.readJSON("guildlist.json");
     let realList = [];
 
     for (const guild of guildlistjson) {

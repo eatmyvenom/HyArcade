@@ -53,6 +53,9 @@ class Player {
     async updateWins() {
         let newWins = 0;
         for (let i = 0; i < this.alts.length; i++) {
+            if (this.alts[i] == undefined) {
+                continue;
+            }
             newWins += await this.alts[i].wins;
         }
         this.wins = newWins;

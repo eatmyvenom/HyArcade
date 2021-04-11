@@ -66,11 +66,11 @@ function day() {
  * @param {Object} json the json data
  */
 async function writeJSON(path, json) {
-    await fs.writeFile(path, JSON.stringify(json, null, 4));
+    await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
 }
 
 async function readJSON(path) {
-    return JSON.parse(await fs.readFile(path));
+    return JSON.parse(await fs.readFile("data/" + path));
 }
 
 /**
@@ -91,7 +91,7 @@ function fileExists(path) {
  * @param {String} timetype the way of specifying this file
  */
 async function archiveJson(oldfile, path, timetype) {
-    old = JSON.parse(await fs.readFile(oldfile + ".json"));
+    old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 }
 
@@ -123,7 +123,7 @@ function error(content) {
 
 async function downloadFile(name, servername) {
     let response = await webRequest("http://eatmyvenom.me/share/" + servername);
-    await fs.writeFile(name, response.data);
+    await fs.writeFile("data/" + name, response.data);
 }
 
 function getKeyByValue(object, value) {

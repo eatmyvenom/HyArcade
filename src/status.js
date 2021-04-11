@@ -2,9 +2,6 @@ const { getUUIDStatus } = require("./hypixelApi");
 const { logger } = require("./utils");
 const utils = require("./utils");
 
-let cachedStatus = utils.fileExists("./status.json")
-    ? utils.readJSON("status.json")
-    : {};
 let { accounts } = require("./acclist");
 
 let rawstatus = {};
@@ -156,23 +153,8 @@ async function txtStatus(uuid) {
     }
 }
 
-/**
- * Check if a player was online when the status task was run
- *
- * @param {String} uuid
- * @return {Boolean}
- */
-function isOnlineC(uuid) {
-    if (cachedStatus[uuid] != undefined) {
-        return cachedStatus[uuid].online == true;
-    }
-    logger.err("Couldn't find UUID '" + uuid + "' in status!");
-    return true;
-}
-
 module.exports = {
     txtStatus: txtStatus,
     genStatus: genStatus,
     rawStatus: rawstatus,
-    isOnlineC: isOnlineC,
 };

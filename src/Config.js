@@ -28,7 +28,7 @@ class Config {
     }
 
     static fromJSON() {
-        return new Config(JSON.parse(ffs.readFileSync("../config.json")));
+        return new Config(JSON.parse(ffs.readFileSync("./config.json")));
     }
 
     static fromEnv() {

@@ -61,7 +61,7 @@ module.exports = async function messageHandler(msg) {
         // sanitize
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
-            let acclist = utils.readJSON("./acclist.json");
+            let acclist = await utils.readJSON("./acclist.json");
             let category =
                 acclist[msg.content.split(" ")[1]] != undefined
                     ? msg.content.split(" ")[1]

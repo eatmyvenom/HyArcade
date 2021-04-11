@@ -1,7 +1,7 @@
 const status = require("./status");
 const utils = require("./utils");
 const fs = require("fs/promises");
-let { accounts, gamers, afkers } = require("./acclist");
+const lists = require("./listParser");
 const cfg = require("./Config").fromJSON();
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || cfg.alwaysForce;
@@ -14,8 +14,8 @@ const { addAccounts } = require("./listUtils");
  */
 async function genStatus() {
     let statusObj = {};
-    let oldstatus = utils.readJSON("status.json");
-    let accdata = utils.readJSON("accounts.json");
+    let oldstatus = await utils.readJSON("status.json");
+    let accdata = await utils.readJSON("accounts.json");
 
     await Promise.all(
         accounts.map(async (account) => {
@@ -90,7 +90,7 @@ async function statusTxt() {
 
     let accs = require("./acclist").accounts;
 
-    let crntstatus = utils.readJSON("status.json");
+    let crntstatus = await utils.readJSON("status.json");
     for (const account of accs) {
         let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
         if (gamerAcc != undefined) {
@@ -116,7 +116,7 @@ async function statusTxtSorted() {
     let str = "";
     let accs = require("./acclist").accounts;
 
-    let crntstatus = utils.readJSON("status.json");
+    let crntstatus = await utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
 
     for (const sts of sortable) {
@@ -194,6 +194,8 @@ function statusSort(a, b) {
  * @return {Account[]}
  */
 async function updateAllAccounts() {
+    let acclist = await lists.accounts();
+    let accounts = acclist.accounts;
     accounts.sort(utils.winsSorter);
 
     let oldAccs = await utils.readJSON("accounts.json");

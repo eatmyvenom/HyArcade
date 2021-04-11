@@ -36,7 +36,7 @@ async function moveAcc() {
     let oldName = args[3];
     let oldCategory = args[4];
     let newCategory = args[5];
-    let acclist = utils.readJSON("../acclist.json");
+    let acclist = await utils.readJSON("../acclist.json");
     let oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
 
     if (oldVer) {
@@ -60,7 +60,7 @@ async function newPlayer() {
     let playerObj = { name: name, accs: alts };
 
     // add object to list
-    let plrlist = utils.readJSON("../playerlist.json");
+    let plrlist = await utils.readJSON("../playerlist.json");
     plrlist.push(playerObj);
 
     // write new list
@@ -84,7 +84,7 @@ async function newGuild() {
     let gldObj = { id: id, name: name };
 
     // add object to list
-    let gldLst = utils.readJSON("../guildlist.json");
+    let gldLst = await utils.readJSON("../guildlist.json");
     gldLst.push(gldObj);
 
     // write new list
@@ -115,8 +115,8 @@ async function logDaily(name) {
  *
  */
 async function checkNames() {
-    let acclist = utils.readJSON("../acclist.json");
-    let realAccs = utils.readJSON("../accounts.json");
+    let acclist = await utils.readJSON("../acclist.json");
+    let realAccs = await utils.readJSON("../accounts.json");
 
     for (let list in acclist) {
         for (let acc of acclist[list]) {
