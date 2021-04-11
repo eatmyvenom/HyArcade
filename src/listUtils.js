@@ -4,6 +4,7 @@ const { getUUID } = require("./mojangRequest");
 const { getAccountWins } = require("./hypixelApi");
 const config = require("../config.json");
 const { isValidIGN } = require("./utils");
+const Account = require("./account");
 const logger = utils.logger;
 
 /**
@@ -170,13 +171,16 @@ async function addAccounts(category, names) {
             continue;
         }
 
-        let wins = await getAccountWins(uuid);
+        let acc = new Account("", 0, uuid);
+        await acc.updateHypixel()
+        let wins = acc.wins;
+        name = acc.name;
         if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
             newAccs.push({ name: name, wins: wins, uuid: uuid });
-            logger.out(`${name} with ${wins} wins added.`);
-            res += `${name} with ${wins} wins added.\n`;
+            logger.out(`${name} with ${wins} pg wins added.`);
+            res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
     acclist = await utils.readJSON("./acclist.json");
@@ -207,8 +211,7 @@ async function stringLB(lbprop, maxamnt) {
         let num = ("000" + (i + 1)).slice(-3);
 
         let name = (
-            list[i].name.slice(0, 1).toUpperCase() +
-            list[i].name.slice(1) +
+            list[i].name +
             "                       "
         ).slice(0, 17);
         //         001) Monkey           : 5900
