@@ -20,30 +20,20 @@ class AccountEvent {
     }
 
     toString() {
-        if (this.type == "PG") {
-            return `${this.name} just hit ${this.newAmnt} Party games wins!`;
-        } else if (this.type == "HITWPB") {
+        if (this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of${this.newAmnt}! Was ${this.oldAmnt}.`;
-        } else if (this.type == "HYSAYS") {
-            return `${this.name} just hit ${this.newAmnt} Hypixel says wins!`;
-        } else if (this.type == "ARC") {
-            return `${this.name} just hit ${this.newAmnt} arcade wins!`;
-        } else if (this.type == "FH") {
-            return `${this.name} just hit ${this.newAmnt} farm hunt wins!`;
-        } else if (this.type == "HITW") {
-            return `${this.name} just hit ${this.newAmnt} hole in the wall wins!`;
         } else if (this.type == "LBPOS") {
             return `${this.name} just got to rank ${this.newAmnt + 1} on ${
                 this.modifier
             } leaderboard!`;
-        } else if (this.type == "WINS") {
-            return `${this.name} just hit ${this.newAmnt} total wins!`;
+        } else {
+            return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
         }
     }
 
     async toDiscord() {
         if (this.type == "PG") {
-            await Webhook.sendBasic(this.toString(), config.events.PG.webhook);
+            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         } else if (this.type == "HITWPB") {
             let embed = await this.getHitWEmbed();
             await Webhook.sendBasicEmbed(
@@ -56,16 +46,8 @@ class AccountEvent {
                 this.toString(),
                 config.events.HITW.webhook
             );
-        } else if (this.type == "HYSAYS") {
-            await Webhook.sendBasic(this.toString(), config.events.HS.webhook);
-        } else if (this.type == "ARC") {
-            await Webhook.sendBasic(this.toString(), config.events.ARC.webhook);
-        } else if (this.type == "FH") {
-            await Webhook.sendBasic(this.toString(), config.events.FH.webhook);
-        } else if (this.type == "LBPOS") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
-        } else if (this.type == "WINS") {
-            await Webhook.sendBasic(this.toString(), config.events.PGT.webhook);
+        } else {
+            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         }
     }
 
