@@ -14,33 +14,17 @@ const { addAccounts } = require("./listUtils");
  */
 async function genStatus() {
     let statusObj = {};
-    let oldstatus = await utils.readJSON("status.json");
     let accdata = await utils.readJSON("accounts.json");
+    let acclist = await lists.accounts();
+    let accounts = acclist.accounts;
 
     await Promise.all(
         accounts.map(async (account) => {
             let thisdata = accdata.find((acc) => acc.uuid == account.uuid);
             if (thisdata && thisdata.isLoggedIn) {
-                if (gamers.includes(account)) {
-                    statusObj[account.uuid] = JSON.parse(
-                        await hypixelAPI.getStatusRAW(account.uuid)
-                    ).session;
-                } else if (!force && afkers.includes(account)) {
-                    // get old status instead
-                    let old = oldstatus[account.uuid];
-                    if (old == undefined) {
-                        statusObj[account.uuid] = JSON.parse(
-                            await hypixelAPI.getStatusRAW(account.uuid)
-                        ).session;
-                    } else {
-                        statusObj[account.uuid] = old;
-                    }
-                } else {
-                    // force true or not afker
-                    statusObj[account.uuid] = JSON.parse(
-                        await hypixelAPI.getStatusRAW(account.uuid)
-                    ).session;
-                }
+                statusObj[account.uuid] = JSON.parse(
+                    await hypixelAPI.getStatusRAW(account.uuid)
+                ).session;
             }
         })
     );
