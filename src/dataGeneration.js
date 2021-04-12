@@ -204,7 +204,12 @@ async function updateAllAccounts() {
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
-                if (oldAcc.arcadeWins >= cfg.arcadeWinLimit) {
+                let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
+                let aboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                let belowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
+
+                if (aboveArcadeLimit && outsideCringeLimit) {
                     await account.updateData();
                 } else {
                     // ignore accounts with under 50 arcade wins
