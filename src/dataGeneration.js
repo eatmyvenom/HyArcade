@@ -98,7 +98,8 @@ async function statusTxt() {
 
 async function statusTxtSorted() {
     let str = "";
-    let accs = require("./acclist").accounts;
+    let acclist = await lists.accounts();
+    let accs = acclist.accounts;
 
     let crntstatus = await utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
