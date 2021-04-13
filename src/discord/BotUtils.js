@@ -16,7 +16,6 @@ module.exports = class BotUtils {
         string = stringify(string);
         let acclist = await utils.readJSON("./accounts.json");
         let acc;
-        // rawMessage.guild.members.fetch()
         if (string.length == 18) {
             acc = acclist.find((a) => a.discord == string);
         }
@@ -39,6 +38,16 @@ module.exports = class BotUtils {
             if (discusers.size > 0) {
                 let id = discusers.first().id;
                 acc = acclist.find((a) => a.discord == id);
+            }
+        }
+
+        if (acc == undefined) {
+            if (rawMessage.mentions.users.size > 0) {
+                let discid = "" + rawMessage.mentions.users.first();
+                acc = acclist.find(
+                    (a) =>
+                        stringify(a.discord).toLowerCase() == discid.toLowerCase()
+                );
             }
         }
 
