@@ -46,7 +46,8 @@ module.exports = class BotUtils {
                 let discid = "" + rawMessage.mentions.users.first();
                 acc = acclist.find(
                     (a) =>
-                        stringify(a.discord).toLowerCase() == discid.toLowerCase()
+                        stringify(a.discord).toLowerCase() ==
+                        discid.toLowerCase()
                 );
             }
         }

@@ -50,7 +50,9 @@ async function getLB(prop, timetype, limit) {
         embed = new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
-            .setDescription("That is too many people, please try to get a lower amount");
+            .setDescription(
+                "That is too many people, please try to get a lower amount"
+            );
     }
 
     return embed;

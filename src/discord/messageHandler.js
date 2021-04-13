@@ -24,8 +24,9 @@ module.exports = async function messageHandler(msg) {
         cmdResponse.res != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined)
     ) {
-        logger.out(msg.author.tag + " ran : " + msg.content);
-        BotUtils.logHook.send(msg.author.tag + " ran : " + msg.content);
+        let logMsg = `${msg.author.tag} ran : \`${msg.content}\``;
+        logger.out(logMsg);
+        BotUtils.logHook.send(logMsg);
         let opts = {};
         if (cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
@@ -68,7 +69,7 @@ module.exports = async function messageHandler(msg) {
                     : "others";
             logger.out(firstWord);
             BotUtils.logHook.send(
-                'Attempting to add "' + firstWord + '" to database.'
+                'Attempting to add "`' + firstWord + '`" to database.'
             );
             await addAccounts(category, [firstWord]);
         }

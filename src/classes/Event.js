@@ -27,13 +27,18 @@ class AccountEvent {
                 this.modifier
             } leaderboard!`;
         } else {
-            return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
+            return `${this.name} just hit ${this.newAmnt} ${
+                config.events[this.type].name
+            } wins!`;
         }
     }
 
     async toDiscord() {
         if (this.type == "PG") {
-            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
+            await Webhook.sendBasic(
+                this.toString(),
+                config.events[this.type].webhook
+            );
         } else if (this.type == "HITWPB") {
             let embed = await this.getHitWEmbed();
             await Webhook.sendBasicEmbed(
@@ -47,7 +52,10 @@ class AccountEvent {
                 config.events.HITW.webhook
             );
         } else {
-            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
+            await Webhook.sendBasic(
+                this.toString(),
+                config.events[this.type].webhook
+            );
         }
     }
 

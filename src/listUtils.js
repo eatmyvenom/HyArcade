@@ -159,9 +159,9 @@ async function addAccounts(category, names) {
         }
 
         if (uuid == undefined) {
-            res += `${name} does not exist!\n`
+            res += `${name} does not exist!\n`;
             continue;
-        };
+        }
 
         if (
             acclist[category].find((acc) => acc.uuid == uuid) ||

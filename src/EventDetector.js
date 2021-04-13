@@ -1,6 +1,6 @@
 const AccountEvent = require("./classes/Event");
 const { logger } = require("./utils");
-const cfg = require('./Config').fromJSON();
+const cfg = require("./Config").fromJSON();
 
 class EventDetector {
     OldAccounts = {};
@@ -73,7 +73,10 @@ class EventDetector {
     }
 
     detectWinsAuto(oldAcc, newAcc, prop, type) {
-        if (newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
+        if (
+            newAcc[prop] % cfg.events[type].winMod == 0 &&
+            newAcc[prop] > oldAcc[prop]
+        ) {
             this.Events.push(
                 new AccountEvent(
                     newAcc.name,

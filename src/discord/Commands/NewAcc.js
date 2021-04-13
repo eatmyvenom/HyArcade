@@ -20,11 +20,13 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
 
     let tmpMsg = await rawMsg.channel.send("", { embed: embed });
     let res = await addAccounts(category, args.slice(0, -1));
-    res = "```\n" + res + "\n```"
+    res = "```\n" + res + "\n```";
     let embed2 = new MessageEmbed()
         .setTitle("Accounts added")
         .setDescription(res)
-        .setFooter("It will take a little while for these accounts to be fully added to the database, please be patient.")
+        .setFooter(
+            "It will take a little while for these accounts to be fully added to the database, please be patient."
+        )
         .setTimestamp(Date.now())
         .setColor(0x44a3e7);
     await tmpMsg.delete();
