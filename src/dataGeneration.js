@@ -7,6 +7,7 @@ const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || cfg.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
 const { addAccounts } = require("./listUtils");
+const { logger } = require("./utils");
 
 /**
  * Generates the status for all of the online players
@@ -190,14 +191,15 @@ async function updateAllAccounts() {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
                 let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-                let aboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
-                let belowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                let aboveCringeLimit =
+                    oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                let belowCringeLimit =
+                    oldAcc.footballWins <= cfg.cringeGameLowerBound;
                 let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
 
                 if (aboveArcadeLimit && outsideCringeLimit) {
                     await account.updateData();
                 } else {
-                    // ignore accounts with under 50 arcade wins
                     account.setData(oldAcc);
                 }
             } else {
