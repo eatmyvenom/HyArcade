@@ -46,6 +46,13 @@ async function getLB(prop, timetype, limit) {
         .setTitle(time + " Leaderboard")
         .setDescription(res);
 
+    if (res.length > 2000) {
+        embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setColor(0xff0000)
+            .setDescription("That is too many people, please try to get a lower amount");
+    }
+
     return embed;
 }
 
