@@ -158,7 +158,10 @@ async function addAccounts(category, names) {
             uuid = await getUUID(name);
         }
 
-        if (uuid == undefined) continue;
+        if (uuid == undefined) {
+            res += `${name} does not exist!\n`
+            continue;
+        };
 
         if (
             acclist[category].find((acc) => acc.uuid == uuid) ||
@@ -195,7 +198,7 @@ function numberify(str) {
 }
 
 async function stringLB(lbprop, maxamnt) {
-    let list = await utils.readJSON("./accounts.json");
+    let list = await utils.readJSON("accounts.json");
     list = await [].concat(list).sort((b, a) => {
         return numberify(a[lbprop]) - numberify(b[lbprop]);
     });

@@ -33,7 +33,7 @@ function getHelp(cmd) {
         case "addacc":
         case "newacc": {
             title = "New Account command";
-            usage = "newAcc [name] [category?]";
+            usage = "newAcc [names...]";
             desc = 'Add an account by name to the database. The category "Gamers" will refuse someone with less than 50 party games wins.';
             break;
         }
@@ -107,7 +107,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("Help", "Get this message or get help on a specific command", false)
             .addField("Verify", "Link a your discord id to your minecraft account", false)
             .addField("Link - Trusted users only", "Link a players discord id to their minecraft account, use Verify if you aren't a trusted user", false)
-            .addField("NewAcc - Trusted users only", "Add a new account to the database", false)
+            .addField("NewAcc ", "Add a new account to the database", false)
             .addField("Leaderboard", "Get the current leaderboard or the daily leaderboard of an arcade game", false)
             .addField("Stats", "Get the stats of a player", false)
             .addField("UnlinkedStats", "Get the stats of a player that has not been added to the database", false)
