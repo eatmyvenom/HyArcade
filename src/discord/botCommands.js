@@ -47,7 +47,7 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "newacc":
         case "addacc":
-            return await newAccCmd.execute(args, author);
+            return await newAccCmd.execute(args, author, rawMsg);
             break;
 
         case "lb":
