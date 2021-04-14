@@ -187,7 +187,7 @@ async function addAccounts(category, names) {
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
-    let oldAccounts = utils.readJSON('accounts.json');
+    let oldAccounts = await utils.readJSON('accounts.json');
     let fullNewAccounts = oldAccounts.concat(newAccs);
     acclist = await utils.readJSON("./acclist.json");
     for (let acc of newAccs) {

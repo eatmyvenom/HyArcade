@@ -207,9 +207,12 @@ async function updateAllAccounts() {
             }
         })
     );
-    let addedAccounts = await utils.readJSON('accounts.json.part');
-    await fs.rm('data/accounts.json.part');
-    accounts = accounts.concat(addedAccounts);
+    if (utils.fileExists('data/accounts.json.part')) {
+        let addedAccounts = await utils.readJSON('accounts.json.part');
+        await fs.rm('data/accounts.json.part');
+        accounts = accounts.concat(addedAccounts);
+    }
+
     await accounts.sort(utils.winsSorter);
     return accounts;
 }
