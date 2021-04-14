@@ -1,4 +1,3 @@
-const utils = require("../../utils");
 const { addAccounts } = require("../../listUtils");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
@@ -6,7 +5,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     let category = "others";
-    await BotUtils.logHook.send(`Adding accounts ${args.slice(0, -1)}`);
+    await BotUtils.logHook.send(`Adding accounts ${args}`);
     let embed = new MessageEmbed()
         .setTitle("Waiting...")
         .setDescription(
@@ -19,7 +18,7 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
         );
 
     let tmpMsg = await rawMsg.channel.send("", { embed: embed });
-    let res = await addAccounts(category, args.slice(0, -1));
+    let res = await addAccounts(category, args);
     res = "```\n" + res + "\n```";
     let embed2 = new MessageEmbed()
         .setTitle("Accounts added")
