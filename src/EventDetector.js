@@ -29,6 +29,10 @@ class EventDetector {
         this.detectWinsAuto(oldAcc, newAcc, "hitwWins", "HITW");
         this.detectWinsAuto(oldAcc, newAcc, "arcadeWins", "ARC");
         this.detectWinsAuto(oldAcc, newAcc, "anyWins", "WINS");
+        this.detectWinsAuto(oldAcc, newAcc, "throwOutWins", "TO");
+        this.detectWinsAuto(oldAcc, newAcc, "miniWallsWins", "MW");
+        this.detectWinsAuto(oldAcc, newAcc, "footballWins", "FB");
+        this.detectWinsAuto(oldAcc, newAcc, "zombiesWins", "Z");
 
         this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
