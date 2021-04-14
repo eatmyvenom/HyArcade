@@ -1,4 +1,5 @@
 const cfg = require("../Config").fromJSON();
+const { addAccounts } = require("../listUtils");
 const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
 const botCommands = require("./botCommands");
