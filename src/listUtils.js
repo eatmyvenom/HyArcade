@@ -177,19 +177,26 @@ async function addAccounts(category, names) {
         await acc.updateHypixel();
         let wins = acc.wins;
         name = acc.name;
+
+
         if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
-            newAccs.push({ name: name, wins: wins, uuid: uuid });
+            newAccs.push(acc);
             logger.out(`${name} with ${wins} pg wins added.`);
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
+    let oldAccounts = utils.readJSON('accounts.json');
+    let fullNewAccounts = oldAccounts.concat(newAccs);
     acclist = await utils.readJSON("./acclist.json");
     for (let acc of newAccs) {
-        acclist[category].push(acc);
+        let lilAcc = {name : acc.name, wins : acc.wins, uuid : acc.uuid}
+        acclist[category].push(lilAcc);
     }
     await utils.writeJSON("./acclist.json", acclist);
+    await utils.writeJSON('accounts.json', fullNewAccounts);
+    await utils.writeJSON('accounts.json.part', newAccs);
     return res;
 }
 

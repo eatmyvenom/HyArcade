@@ -207,6 +207,8 @@ async function updateAllAccounts() {
             }
         })
     );
+    let addedAccounts = utils.readJSON('accounts.json.part');
+    accounts = accounts.concat(addedAccounts);
     await accounts.sort(utils.winsSorter);
     return accounts;
 }
