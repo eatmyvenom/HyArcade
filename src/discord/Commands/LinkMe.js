@@ -1,10 +1,20 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
+const cfg = require("../../Config").fromJSON();
 const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
 
 module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
     let player = args[0];
+    if (player == undefined) {
+        let embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setDescription(
+                `Input a name or uuid to link your discord to! Use ${cfg.commandCharacter}help for more info on how to use the verify command.`
+            )
+            .setColor(0xff0000);
+        return { res: "", embed: embed };
+    }
     let acclist = await utils.readJSON("./accounts.json");
     let acc = acclist.find(
         (a) =>
