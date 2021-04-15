@@ -375,6 +375,42 @@ module.exports = class BotUtils {
                 fields.push(BotUtils.emptyField(true));
                 break;
             }
+
+            case "sim":
+            case "simulator":
+            case "seasonal":
+            case "season":
+            case "sea": {
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Easter sim wins",
+                    value: acc.seasonalWins.easter,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Scuba sim wins",
+                    value: acc.seasonalWins.scuba,
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Holloween sim wins",
+                    value: acc.seasonalWins.halloween,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Grinch sim wins",
+                    value: acc.seasonalWins.grinch,
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Total sim wins",
+                    value: acc.seasonalWins.total,
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+            }
         }
 
         fields.push(BotUtils.emptyField(true));
