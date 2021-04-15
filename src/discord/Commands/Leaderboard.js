@@ -3,7 +3,7 @@ const Command = require("../../classes/Command");
 const Config = require("../../Config");
 const listUtils = require("../../listUtils");
 
-async function getLB(prop, timetype, limit) {
+async function getLB(prop, timetype, limit, category) {
     let res = "";
     let time;
 
@@ -12,7 +12,7 @@ async function getLB(prop, timetype, limit) {
         case "day":
         case "daily": {
             time = "Daily";
-            res = await listUtils.stringLBDiff(prop, limit, "day");
+            res = await listUtils.stringLBDiff(prop, limit, "day", category);
             break;
         }
 
@@ -21,7 +21,7 @@ async function getLB(prop, timetype, limit) {
         case "weak":
         case "weekly": {
             time = "Weekly";
-            res = await listUtils.stringLBDiff(prop, limit, "weekly");
+            res = await listUtils.stringLBDiff(prop, limit, "weekly", category);
             break;
         }
 
@@ -30,13 +30,18 @@ async function getLB(prop, timetype, limit) {
         case "month":
         case "monthly": {
             time = "Monthly";
-            res = await listUtils.stringLBDiff(prop, limit, "monthly");
+            res = await listUtils.stringLBDiff(
+                prop,
+                limit,
+                "monthly",
+                category
+            );
             break;
         }
 
         default: {
             time = "Lifetime";
-            res = await listUtils.stringLB(prop, limit);
+            res = await listUtils.stringLB(prop, limit, category);
             break;
         }
     }
@@ -248,6 +253,45 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "arcadecoins":
         case "arcade_coins": {
             res = await getLB("arcadeCoins", timetype, limit);
+            break;
+        }
+
+        case "easter":
+        case "eastersim":
+        case "eastersimulator":
+        case "easter-simulator": {
+            res = await getLB("easter", timetype, limit, "seasonalWins");
+            break;
+        }
+
+        case "scuba":
+        case "scubasim":
+        case "scubasimulator":
+        case "scuba-simulator": {
+            res = await getLB("scuba", timetype, limit, "seasonalWins");
+            break;
+        }
+
+        case "halloween":
+        case "halloweensim":
+        case "halloweensimulator":
+        case "halloween-simulator": {
+            res = await getLB("scuba", timetype, limit, "seasonalWins");
+            break;
+        }
+
+        case "grinch":
+        case "grinchsim":
+        case "grinchsimulator":
+        case "grinch-simulator": {
+            res = await getLB("grinch", timetype, limit, "seasonalWins");
+            break;
+        }
+
+        case "totalsim":
+        case "totalsimulator":
+        case "total-simulator": {
+            res = await getLB("total", timetype, limit, "seasonalWins");
             break;
         }
 
