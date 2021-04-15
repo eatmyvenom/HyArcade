@@ -61,7 +61,7 @@ async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
-async function listDiffByProp(name, prop, timetype, maxamnt) {
+async function listDiffByProp(name, prop, timetype, maxamnt, category) {
     // cant use require here
     let newlist = await utils.readJSON(`${name}.json`);
     let oldlist = await utils.readJSON(`${name}.${timetype}.json`);
@@ -80,10 +80,20 @@ async function listDiffByProp(name, prop, timetype, maxamnt) {
                 (g) => g.name.toLowerCase() == oldlist[i].name.toLowerCase()
             );
         }
-        // make sure acc isnt null/undefined
-        if (acc) {
-            oldlist[i][prop] =
-                numberify(acc[prop]) - numberify(oldlist[i][prop]);
+
+        if (category == undefined) {
+            // make sure acc isnt null/undefined
+            if (acc) {
+                oldlist[i][prop] =
+                    numberify(acc[prop]) - numberify(oldlist[i][prop]);
+            }
+        } else {
+            // make sure acc isnt null/undefined
+            if (acc) {
+                oldlist[i][category][prop] =
+                    numberify(acc[category][prop]) -
+                    numberify(oldlist[i][category][prop]);
+            }
         }
     }
 
@@ -178,7 +188,6 @@ async function addAccounts(category, names) {
         let wins = acc.wins;
         name = acc.name;
 
-
         if (wins < 50 && category == "gamers") {
             logger.err("Refusing to add account with under 50 wins to gamers!");
         } else {
@@ -187,16 +196,16 @@ async function addAccounts(category, names) {
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
-    let oldAccounts = await utils.readJSON('accounts.json');
+    let oldAccounts = await utils.readJSON("accounts.json");
     let fullNewAccounts = oldAccounts.concat(newAccs);
     acclist = await utils.readJSON("./acclist.json");
     for (let acc of newAccs) {
-        let lilAcc = {name : acc.name, wins : acc.wins, uuid : acc.uuid}
+        let lilAcc = { name: acc.name, wins: acc.wins, uuid: acc.uuid };
         acclist[category].push(lilAcc);
     }
     await utils.writeJSON("./acclist.json", acclist);
-    await utils.writeJSON('accounts.json', fullNewAccounts);
-    await utils.writeJSON('accounts.json.part', newAccs);
+    await utils.writeJSON("accounts.json", fullNewAccounts);
+    await utils.writeJSON("accounts.json.part", newAccs);
     return res;
 }
 
@@ -204,16 +213,27 @@ function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
-async function stringLB(lbprop, maxamnt) {
+async function stringLB(lbprop, maxamnt, category) {
     let list = await utils.readJSON("accounts.json");
-    list = await [].concat(list).sort((b, a) => {
-        return numberify(a[lbprop]) - numberify(b[lbprop]);
-    });
+    if (category == undefined) {
+        list = await [].concat(list).sort((b, a) => {
+            return numberify(a[lbprop]) - numberify(b[lbprop]);
+        });
+    } else {
+        list = await [].concat(list).sort((b, a) => {
+            return (
+                numberify(a[category][lbprop]) - numberify(b[category][lbprop])
+            );
+        });
+    }
+
     let str = "";
     list = list.slice(0, maxamnt);
     for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
-        if (list[i][lbprop] < 1 && !config.printAllWins) continue;
+        let propVal =
+            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        if (propVal < 1 && !config.printAllWins) continue;
 
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or node native for this
@@ -221,21 +241,38 @@ async function stringLB(lbprop, maxamnt) {
 
         let name = (list[i].name + "                       ").slice(0, 17);
         //         001) Monkey           : 5900
-        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+        str += `${num}) ${name}: ${propVal}\n`;
     }
     return str;
 }
 
-async function stringLBDiff(lbprop, maxamnt, timetype) {
-    let list = await listDiffByProp("accounts", lbprop, timetype, 9999);
-    list = await [].concat(list).sort((b, a) => {
-        return numberify(a[lbprop]) - numberify(b[lbprop]);
-    });
+async function stringLBDiff(lbprop, maxamnt, timetype, category) {
+    let list = await listDiffByProp(
+        "accounts",
+        lbprop,
+        timetype,
+        9999,
+        category
+    );
+    if (category == undefined) {
+        list = await [].concat(list).sort((b, a) => {
+            return numberify(a[lbprop]) - numberify(b[lbprop]);
+        });
+    } else {
+        list = await [].concat(list).sort((b, a) => {
+            return (
+                numberify(a[category][lbprop]) - numberify(b[category][lbprop])
+            );
+        });
+    }
+
     let str = "";
     list = list.slice(0, maxamnt);
     for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
-        if (numberify(list[i][lbprop]) < 1 && !config.printAllWins) continue;
+        let propVal =
+            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        if (numberify(propVal) < 1 && !config.printAllWins) continue;
 
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or node native for this
@@ -247,7 +284,7 @@ async function stringLBDiff(lbprop, maxamnt, timetype) {
             "                       "
         ).slice(0, 17);
         //         001) Monkey           : 5900
-        str += `${num}) ${name}: ${list[i][lbprop]}\n`;
+        str += `${num}) ${name}: ${propVal}\n`;
     }
     return str;
 }
