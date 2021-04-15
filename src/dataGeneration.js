@@ -207,9 +207,9 @@ async function updateAllAccounts() {
             }
         })
     );
-    if (utils.fileExists('data/accounts.json.part')) {
-        let addedAccounts = await utils.readJSON('accounts.json.part');
-        await fs.rm('data/accounts.json.part');
+    if (utils.fileExists("data/accounts.json.part")) {
+        let addedAccounts = await utils.readJSON("accounts.json.part");
+        await fs.rm("data/accounts.json.part");
         accounts = accounts.concat(addedAccounts);
     }
 
