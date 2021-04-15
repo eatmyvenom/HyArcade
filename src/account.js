@@ -2,6 +2,9 @@ const { getAccountData } = require("./hypixelApi");
 const optifineRequest = require("./optifineRequest");
 const labyRequest = require("./labyRequest");
 
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
 class Account {
     name = "";
     uuid = "";
@@ -41,6 +44,13 @@ class Account {
     ctwWoolCaptured = 0;
     arcadeWins = 0;
     anyWins = 0;
+    seasonalWins = {
+        easter: 0,
+        scuba: 0,
+        halloween: 0,
+        grinch: 0,
+        total: 0,
+    };
     hasOFCape = false;
     hasLabyCape = false;
     cloak = "";
@@ -182,12 +192,25 @@ class Account {
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
             this.hideAndSeekWins =
-                arcade.seeker_wins_hide_and_seek +
-                arcade.hider_wins_hide_and_seek;
+                numberify(arcade.seeker_wins_hide_and_seek) +
+                numberify(arcade.hider_wins_hide_and_seek);
             this.zombiesWins = arcade.wins_zombies;
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = arcade.wins_draw_their_thing;
+            this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
+            this.seasonalWins.grinch = numberify(
+                arcade.wins_grinch_simulator_v2
+            );
+            this.seasonalWins.halloween = numberify(
+                arcade.wins_halloween_simulator
+            );
+            this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
+            this.seasonalWins.total =
+                this.seasonalWins.easter +
+                this.seasonalWins.grinch +
+                this.seasonalWins.halloween +
+                this.seasonalWins.scuba;
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
