@@ -6,6 +6,6 @@ module.exports = new Command(
     ["156952208045375488"],
     async (args) => {
         await BotUtils.logHook.send("**WARNING** Bot shutdown ordered!");
-        process.exit(0);
+        await BotUtils.client.destroy();
     }
 );
