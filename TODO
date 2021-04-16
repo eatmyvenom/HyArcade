@@ -1,26 +1,3 @@
-✅ Make guilds work automatically
-✅ Have accurate leaderboard wins top 100
-✅ Make list length adjustable
-✅ add file output options for everything
-✅ move acclist.js, guildlist.js, playerlist.js to json files
-✅ embed mode for discord
-✅ move to only fs/promises
-✅ promise.all mode for updating data
-✅ Auto add everyone from party games discord with > 100 wins (requires bot integration and acclist.js to be json)
-✅  add cluster ability for offloading of certian things to other devices
-✅ timeout on hanging requests
-✅ full documentation for everything
-✅ click on player name -> player site
-✅ send message in #role-update when player hits milestone
-✅ add ability to take over HITW bot
-✅ player page
-✅ leaderboard position change event
-✅ total arcade wins
-✅ total arcade leaderboard
-✅ mobile css
-✅ github actions cluster
-❗️ weekly wins
-❗️ monthly wins
 ❗️ get list of cosmetics
 ❗️ Conserve api requests
 ❗️ watchdog incase code hangs indefinately
