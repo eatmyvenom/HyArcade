@@ -101,6 +101,14 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
             break;
         }
 
+        case "fhpoop":
+        case "poop":
+        case "poopcollected":
+        case "fmhntpoop": {
+            res = await getLB("farmhuntShit", timetype, limit);
+            break;
+        }
+
         case "hs":
         case "hys":
         case "hypixel":
