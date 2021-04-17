@@ -235,13 +235,8 @@ async function stringLB(lbprop, maxamnt, category) {
             category == undefined ? list[i][lbprop] : list[i][category][lbprop];
         if (propVal < 1 && !config.printAllWins) continue;
 
-        // this hack is because js has no real string formatting and its
-        // not worth it to use wasm or node native for this
-        let num = ("000" + (i + 1)).slice(-3);
-
-        let name = (list[i].name + "                       ").slice(0, 17);
-        //         001) Monkey           : 5900
-        str += `${num}) ${name}: ${propVal}\n`;
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${propVal})\n`;
     }
     return str;
 }
@@ -274,17 +269,8 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
             category == undefined ? list[i][lbprop] : list[i][category][lbprop];
         if (numberify(propVal) < 1 && !config.printAllWins) continue;
 
-        // this hack is because js has no real string formatting and its
-        // not worth it to use wasm or node native for this
-        let num = ("000" + (i + 1)).slice(-3);
-
-        let name = (
-            list[i].name.slice(0, 1).toUpperCase() +
-            list[i].name.slice(1) +
-            "                       "
-        ).slice(0, 17);
-        //         001) Monkey           : 5900
-        str += `${num}) ${name}: ${propVal}\n`;
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${propVal})\n`;
     }
     return str;
 }
