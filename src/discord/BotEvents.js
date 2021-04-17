@@ -1,6 +1,7 @@
 const cfg = require("../Config").fromJSON();
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
+const registerSlashCommands = require("./registerSlashCommands");
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
@@ -33,5 +34,6 @@ module.exports = class BotEvents {
         logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
         logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
         BotUtils.client.user.setPresence(cfg.discord.presence);
+        await registerSlashCommands(BotUtils.client);
     }
 };
