@@ -12,7 +12,7 @@ let ustatsCmd = require("./Commands/UnlinkedStats");
 let dataRawCmd = require("./Commands/GetDataRaw");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
-let MKinvCmd = require('./Commands/MakeInviteEmbed');
+let MKinvCmd = require("./Commands/MakeInviteEmbed");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
