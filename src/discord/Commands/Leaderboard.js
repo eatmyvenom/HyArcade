@@ -46,9 +46,10 @@ async function getLB(prop, timetype, limit, category) {
         }
     }
 
-    res = res != "" ? "```" + res + "```" : "Nobody has won.";
+    res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed()
         .setTitle(time + " Leaderboard")
+        .setColor(0x00cc66)
         .setDescription(res);
 
     if (res.length > 2000) {
@@ -67,6 +68,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     if (args.length < 2) {
         let embed = new MessageEmbed()
             .setTitle("ERROR")
+            .setColor(0x00cc66)
             .setDescription(
                 "This command requires two arguments, game and type. Use the help command for more info."
             );
