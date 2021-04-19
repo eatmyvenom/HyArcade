@@ -14,6 +14,7 @@ let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
 let MKinvCmd = require("./Commands/MakeInviteEmbed");
 let MKhookCmd = require("./Commands/MakeHook");
+let UpdRolesCmd = require("./Commands/UpdateRoles");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -125,6 +126,10 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "mkhook": {
             return await MKhookCmd.execute(args, author);
+        }
+
+        case "updroles": {
+            return await UpdRolesCmd.execute(args, author);
         }
     }
     return { res: "" };
