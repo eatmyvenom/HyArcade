@@ -13,6 +13,7 @@ let dataRawCmd = require("./Commands/GetDataRaw");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
 let MKinvCmd = require("./Commands/MakeInviteEmbed");
+let MKhookCmd = require("./Commands/MakeHook");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -120,6 +121,10 @@ async function checkCommands(rawMsg, command, args, author) {
         case "mkinv": {
             return await MKinvCmd.execute(args, author);
             break;
+        }
+
+        case "mkhook": {
+            return await MKhookCmd.execute(args, author);
         }
     }
     return { res: "" };
