@@ -24,9 +24,9 @@ module.exports = class RoleUpdater {
 
     async updateAll() {
         let acclist = await utils.readJSON('accounts.json');
-        acclist.map(async (acc) => {
-            await this.updatePlayer(acc)
-        });
+        for(let acc of acclist) {
+            await this.updatePlayer(acc);
+        }
     }
 
     async updatePlayer(acc) {
@@ -35,13 +35,15 @@ module.exports = class RoleUpdater {
         let discMember;
         try{
             discMember = await this.guild.members.fetch(discID);
+            await utils.sleep(500);
         } catch (e) {
+            await utils.sleep(500);
             return;
         }
-        await utils.sleep(500);
         let newRole = this.getRole(acc[this.prop]);
-        
         if(discMember.roles == undefined) return;
+
+        await this.removeOtherRoles(discMember, newRole.roleID);
 
         if(discMember.roles.cache != undefined) {
             if(!discMember.roles.cache.has(newRole.roleID)) {
@@ -49,8 +51,18 @@ module.exports = class RoleUpdater {
                 await discMember.roles.add(newRole.roleID);
             }
         } else {
-            await BotUtils.logHook.send(`${acc.name} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`)
+            await BotUtils.logHook.send(`${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`)
             await discMember.roles.add(newRole.roleID);
+        }
+    }
+
+    async removeOtherRoles(discMember, ignoreID) {
+        for(let role of this.roles) {
+            if(role.roleID == ignoreID) continue;
+            if(discMember.roles.cache.has(role.roleID)) {
+                await BotUtils.logHook.send(`${discMember.user.tag} is having "${role.minimumWins}+ wins" role removed in ${this.guild.name}`)
+                await discMember.roles.remove(role.roleID);
+            }
         }
     }
 }
