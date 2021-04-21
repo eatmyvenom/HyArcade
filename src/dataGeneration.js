@@ -186,7 +186,28 @@ async function updateAllAccounts() {
 
     let oldAccs = await utils.readJSON("accounts.json");
 
-    await Promise.all(
+    var i,j,temparray,chunk = 120;
+    for (i=0,j=accounts.length; i<j; i+=chunk) {
+        temparray = accounts.slice(i,i+chunk);
+        await updateAccountsInArr(temparray, oldAccs);
+    }
+
+    if (utils.fileExists("data/accounts.json.part")) {
+        let addedAccounts = await utils.readJSON("accounts.json.part");
+        await fs.rm("data/accounts.json.part");
+        accounts = accounts.concat(addedAccounts);
+    }
+
+    if(force) {
+        await fs.rm('force');
+    }
+
+    await accounts.sort(utils.winsSorter);
+    return accounts;
+}
+
+async function updateAccountsInArr(accounts, oldAccs) {
+    return await Promise.all(
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
@@ -207,14 +228,6 @@ async function updateAllAccounts() {
             }
         })
     );
-    if (utils.fileExists("data/accounts.json.part")) {
-        let addedAccounts = await utils.readJSON("accounts.json.part");
-        await fs.rm("data/accounts.json.part");
-        accounts = accounts.concat(addedAccounts);
-    }
-
-    await accounts.sort(utils.winsSorter);
-    return accounts;
 }
 
 async function addLeaderboards() {
