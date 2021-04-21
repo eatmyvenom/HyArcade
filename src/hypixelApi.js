@@ -109,7 +109,7 @@ module.exports = class hypixelAPI {
         } catch (e) {
             logger.err("Hypixel sent malformed json");
             logger.err(data);
-            process.exit(0xf4c6);
+            return await hypixelAPI.getAccountData(uuid);
         }
     }
 
