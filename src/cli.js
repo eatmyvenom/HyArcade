@@ -115,8 +115,8 @@ async function logDaily(name) {
  *
  */
 async function checkNames() {
-    let acclist = await utils.readJSON("../acclist.json");
-    let realAccs = await utils.readJSON("../accounts.json");
+    let acclist = await utils.readJSON("./acclist.json");
+    let realAccs = await utils.readJSON("./accounts.json");
 
     for (let list in acclist) {
         for (let acc of acclist[list]) {
