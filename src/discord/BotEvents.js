@@ -6,8 +6,9 @@ const registerSlashCommands = require("./registerSlashCommands");
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
         let timeout = rlInfo.timeout;
-        logger.err("Discord bot rate limited for " + timeout);
-        await BotUtils.errHook.send("Discord bot rate limited for " + timeout);
+        let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`
+        logger.err(str);
+        await BotUtils.errHook.send(str);
     }
 
     static async messageDelete(msg) {
@@ -35,5 +36,6 @@ module.exports = class BotEvents {
         logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
         BotUtils.client.user.setPresence(cfg.discord.presence);
         await registerSlashCommands(BotUtils.client);
+        BotUtils.msgCopyHook = new WebhookClient('833976428307284038', 'bTI_iq0GjHjH5h5bNaSYP957VAH7TifXNr_4hv-erA2FCMzewvUILxX2Y2HlSvNG0Pdu');
     }
 };

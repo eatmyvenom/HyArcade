@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, WebhookClient } = require("discord.js");
 const listUtils = require("../listUtils");
 const utils = require("../utils");
 const webhook = require("../webhook");
@@ -6,11 +6,22 @@ const webhook = require("../webhook");
 function stringify(str) {
     return "" + str;
 }
+let ignClient  = new WebhookClient('833970452719468544', 'MWF_fiqaP2X_iuv9QCJTWD8Rp7VTtPGpBFOpH6VgTwKM0SLMV1ndWSOK1J7pJqXlwUwG');
+let logs = [
+    {id : '779191444828323890' , hook : ignClient},
+    {id : '742761029586649148' , hook : ignClient},
+    {id : '808114257299243038' , hook : ignClient},
+    {id : '810620555073814550' , hook : ignClient},
+    {id : '805440398109573161' , hook : ignClient},
+    {id : '815619948575457311' , hook : ignClient},
+    {id : '826907021609271327' , hook : ignClient},
+]
 
 module.exports = class BotUtils {
     static logHook;
     static errHook;
     static client;
+    static msgCopyHook;
 
     static async resolveAccount(string, rawMessage) {
         string = stringify(string);
@@ -434,5 +445,26 @@ module.exports = class BotUtils {
             .addField("UUID", acc.uuid, false);
 
         return { res: "", embed: embed };
+    }
+
+    static async logIgns(msg) {
+        let channelID = msg.channel.id;
+
+        for(let logger of logs) {
+            if(channelID == logger.id) {
+                await logcopy(msg, logger.hook);
+            }
+        }
+    }
+
+    static async logcopy(msg, hook) {
+        let pfp = msg.author.avatarURL();
+        let name = "unknown";
+        if(msg.member) {
+            name = msg.member.displayName;
+        }
+
+        await hook.send(msg.content, {username : name, avatarURL : pfp});
+        await hook.send(msg.url, {username : name, avatarURL : pfp});
     }
 };
