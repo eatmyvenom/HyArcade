@@ -36,6 +36,6 @@ module.exports = class BotEvents {
         logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
         BotUtils.client.user.setPresence(cfg.discord.presence);
         await registerSlashCommands(BotUtils.client);
-        BotUtils.msgCopyHook = new WebhookClient('833976428307284038', 'bTI_iq0GjHjH5h5bNaSYP957VAH7TifXNr_4hv-erA2FCMzewvUILxX2Y2HlSvNG0Pdu');
+        BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
     }
 };
