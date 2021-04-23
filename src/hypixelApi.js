@@ -113,6 +113,18 @@ module.exports = class hypixelAPI {
         }
     }
 
+    static async getStatus(uuid) {
+        let data = await hypixelAPI.getStatusRAW(uuid);
+        try {
+            let json = JSON.parse(data);
+            return json;
+        } catch (e) {
+            logger.err("Hypixel sent malformed json");
+            logger.err(data);
+            return await hypixelAPI.getStatusRAW(uuid);
+        }
+    }
+
     /**
      * Returns the amount of players in various games
      *

@@ -23,9 +23,8 @@ async function genStatus() {
         accounts.map(async (account) => {
             let thisdata = accdata.find((acc) => acc.uuid == account.uuid);
             if (thisdata && thisdata.isLoggedIn) {
-                statusObj[account.uuid] = JSON.parse(
-                    await hypixelAPI.getStatusRAW(account.uuid)
-                ).session;
+                let response = await hypixelAPI.getStatus(account.uuid);
+                statusObj[account.uuid] = response.session;
             }
         })
     );
