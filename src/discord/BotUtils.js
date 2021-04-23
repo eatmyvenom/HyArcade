@@ -452,7 +452,7 @@ module.exports = class BotUtils {
 
         for(let logger of logs) {
             if(channelID == logger.id) {
-                await logcopy(msg, logger.hook);
+                await BotUtils.logcopy(msg, logger.hook);
             }
         }
         ignClient.destroy();

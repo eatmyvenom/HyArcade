@@ -97,17 +97,17 @@ module.exports = async function messageHandler(msg) {
         (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
-        await logCmd(msg);
-
+        
         let opts = {};
         if (cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }
-
+        
         await sanitizeCmdOpt(cmdResponse);
-
+        
         await attemptSend(msg, cmdResponse, opts);
         await addIGNs(msg);
+        await logCmd(msg);
     }
     
     await BotUtils.logIgns(msg);

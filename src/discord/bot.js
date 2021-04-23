@@ -9,17 +9,19 @@ const messageHandler = require("./messageHandler");
  *
  */
 module.exports = function doBot() {
+    let mode = process.argv[3];
     const client = new Discord.Client();
 
     client.on("ready", async () => {
         BotUtils.client = client;
-        await BotEvents.ready();
+        await BotEvents.ready(mode);
     });
 
-    client.on("message", messageHandler);
-
-    client.on("rateLimit", BotEvents.rateLimit);
-    client.on("messageDelete", BotEvents.messageDelete);
+    if(mode == undefined) {
+        client.on("message", messageHandler);
+        client.on("rateLimit", BotEvents.rateLimit);
+        client.on("messageDelete", BotEvents.messageDelete);
+    }
 
     client.login(config.discord.token);
 };

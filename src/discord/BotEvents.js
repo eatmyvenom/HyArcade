@@ -1,7 +1,9 @@
 const cfg = require("../Config").fromJSON();
+const { WebhookClient } = require("discord.js");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
+const roleHandler = require("./roleHandler");
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
@@ -19,7 +21,7 @@ module.exports = class BotEvents {
         }
     }
 
-    static async ready() {
+    static async ready(mode) {
         let errchannel = await BotUtils.client.channels.fetch(
             cfg.discord.errChannel
         );
@@ -32,10 +34,16 @@ module.exports = class BotEvents {
         let logHook = await loghooks.first();
         BotUtils.errHook = errHook;
         BotUtils.logHook = logHook;
-        logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
-        logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
-        BotUtils.client.user.setPresence(cfg.discord.presence);
-        await registerSlashCommands(BotUtils.client);
-        BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+        if(mode == "role") {
+            await roleHandler(BotUtils.client);
+            await BotUtils.client.destroy();
+        } else if (mode == "slash") {
+            await registerSlashCommands(BotUtils.client);
+        } else {
+            logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
+            logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
+            BotUtils.client.user.setPresence(cfg.discord.presence);
+            BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+        }
     }
 };
