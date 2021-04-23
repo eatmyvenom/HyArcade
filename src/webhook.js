@@ -1,5 +1,6 @@
 const config = require("./Config").fromJSON();
 const Discord = require("discord.js");
+const listUtils = require("./listUtils");
 const { logger } = require("./utils");
 
 /**
@@ -73,6 +74,18 @@ async function sendToEmbedDiscord(
     hook.destroy();
 }
 
+async function sendPGEmbed() {
+    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+    await hook.send("", {
+        embeds: [await genPGEmbed()],
+        username: config.webhook.username,
+        avatarURL: config.webhook.pfp,
+    });
+    // this closes the hook client so the nodejs doesnt hang
+    // forever
+    hook.destroy();
+}
+
 /**
  * Do not look at this... I need a better solution
  * TODO: fix
@@ -84,13 +97,30 @@ function generateEmbed(list) {
 
     let embed = new Discord.MessageEmbed()
         .setTitle("Daily Leaderboard")
-        .setColor(0x0000ff)
+        .setColor(0x44a3e7)
         .setTimestamp(Date.now());
+
+    let str = "";
 
     let len = Math.min(list.length, 24);
     for (let i = 0; i < len; i++) {
-        embed.addField(i + 1 + ") " + list[i].name, list[i].wins, true);
+        str += i + 1 + ") " + list[i].name +  " - " + list[i].wins + "\n";
     }
+    embed.setDescription(str);
+
+    return embed;
+}
+
+async function genPGEmbed() {
+    let alltime = await listUtils.stringLB("wins", 25)
+    let day = await listUtils.stringLBDaily("wins", 25);
+
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Party games leaderboards")
+        .setColor(0x44a3e7)
+        .setTimestamp(Date.now())
+        .addField("Lifetime", alltime, true)
+        .addField("Daily", day, true);
 
     return embed;
 }
@@ -101,4 +131,5 @@ module.exports = {
     sendBasic: sendBasic,
     sendBasicEmbed: sendBasicEmbed,
     generateEmbed: generateEmbed,
+    sendPGEmbed: sendPGEmbed,
 };

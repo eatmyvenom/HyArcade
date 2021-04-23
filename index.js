@@ -92,12 +92,16 @@ async function webhookLog(type = "players", maxamnt) {
  * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
  * @see webhookLog
  */
-async function webhookEmbed(type = "players", maxamnt) {
+async function webhookEmbed(type = "accounts", maxamnt) {
     let normal = await listNormal(type, maxamnt);
     let day = await listDiff(type, "day", maxamnt);
 
-    // await Webhook.sendEmbed("WINS", normal);
+    await Webhook.sendEmbed("WINS", normal);
     await Webhook.sendEmbed("", day);
+}
+
+async function sendPGDay() {
+    await Webhook.sendPGEmbed();
 }
 
 /**
@@ -319,6 +323,11 @@ async function main() {
         case "discordE":
             await webhookEmbed(args[3], args[4]);
             break;
+
+        case "discordPG":
+            await sendPGDay();
+            break;
+
         case "link":
         case "ln":
             await cli.linkDiscord();
