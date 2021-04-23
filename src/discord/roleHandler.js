@@ -1,6 +1,7 @@
 const utils = require("../utils");
 const Role = require("../classes/Role");
 const RoleUpdater = require('./RoleUpdater');
+const { logger } = require("../utils");
 
 module.exports = async function roleHandler(client) {
     let pgGuild = await client.guilds.fetch('741719121456267319');
@@ -45,5 +46,6 @@ module.exports = async function roleHandler(client) {
 
     await PG.updateAll();
     await HS.updateAll();
+    logger.out('Roles updated');
 
 }

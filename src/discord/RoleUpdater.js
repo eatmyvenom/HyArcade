@@ -41,6 +41,7 @@ module.exports = class RoleUpdater {
             return;
         }
         let newRole = this.getRole(acc[this.prop]);
+        if(newRole == undefined) return;
         if(discMember.roles == undefined) return;
 
         await this.removeOtherRoles(discMember, newRole.roleID);
