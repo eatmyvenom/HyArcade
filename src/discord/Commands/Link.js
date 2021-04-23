@@ -1,10 +1,23 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
+const BotUtils = require("../BotUtils");
 
 module.exports = new Command("link", utils.defaultAllowed, async (args) => {
     let player = args[0];
     let discord = args[1];
+
+    if(("" + player).startsWith('https://')) {
+        let channelID = player.slice(player.lastIndexOf('/') -18, player.lastIndexOf('/'));
+        let msgID = player.slice(player.lastIndexOf('/') + 1);
+
+        let channel = await BotUtils.client.channels.fetch(channelID);
+        let msg = await channel.messages.fetch(msgID);
+
+        discord = msg.author.id;
+        player = msg.content;
+    }
+
     let uuid;
     let acc;
     let acclist = await utils.readJSON("./accounts.json");
