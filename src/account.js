@@ -7,6 +7,7 @@ function numberify(str) {
 }
 class Account {
     name = "";
+    nameHist = [];
     uuid = "";
     uuidPosix = "";
     internalId = "";
@@ -50,6 +51,35 @@ class Account {
         halloween: 0,
         grinch: 0,
         total: 0,
+    };
+    totalSim = 0;
+    extras = {
+        blockingDeadKills: 0,
+        blockingDeadHeadshots: 0,
+        bountyHuntersKills: 0,
+        bountyHuntersBountyKills: 0,
+        bountyHuntersDeaths: 0,
+        dragonWarsKills: 0,
+        footballGoals: 0,
+        footballPKicks: 0,
+        footballKicks: 0,
+        galaxyWarsKills: 0,
+        galaxyWarsDeaths: 0,
+        HNSSeekerWins: 0,
+        HNSHiderWins: 0,
+        hypixelSaysRounds: 0,
+        throwOutKills: 0,
+        throwOutDeaths: 0,
+    };
+    miniWalls = {
+        kit: "",
+        arrowsHit: 0,
+        arrowsShot: 0,
+        finalKills: 0,
+        kills: 0,
+        witherKills: 0,
+        deaths: 0,
+        witherDamage: 0,
     };
     hasOFCape = false;
     hasLabyCape = false;
@@ -156,6 +186,7 @@ class Account {
             }
 
             this.name = json.player.displayname;
+            this.nameHist = json.player.knownAliases;
             this.internalId = json.player._id;
             this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
             this.version = json.player.mcVersionRp;
@@ -198,6 +229,7 @@ class Account {
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = arcade.wins_draw_their_thing;
+            
             this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
             this.seasonalWins.grinch = numberify(
                 arcade.wins_grinch_simulator_v2
@@ -206,11 +238,38 @@ class Account {
                 arcade.wins_halloween_simulator
             );
             this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
-            this.seasonalWins.total =
+            this.simTotal = this.seasonalWins.total =
                 this.seasonalWins.easter +
                 this.seasonalWins.grinch +
                 this.seasonalWins.halloween +
                 this.seasonalWins.scuba;
+
+            this.extras.blockingDeadKills = arcade.kills_dayone;
+            this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
+            this.extras.bountyHuntersKills = arcade.kills_oneinthequiver;
+            this.extras.bountyHuntersBountyKills = arcade.bounty_kills_oneinthequiver;
+            this.extras.bountyHuntersDeaths = arcade.deaths_oneinthequiver;
+            this.extras.dragonWarsKills = arcade.kills_dragonwars2;
+            this.extras.footballGoals = arcade.goals_soccer;
+            this.extras.footballPKicks = arcade.powerkicks_soccer;
+            this.extras.footballKicks = arcade.kicks_soccer;
+            this.extras.galaxyWarsKills = arcade.sw_kills;
+            this.extras.galaxyWarsDeaths = arcade.sw_deaths;
+            this.extras.HNSSeekerWins = arcade.seeker_wins_hide_and_seek;
+            this.extras.HNSHiderWins = arcade.hider_wins_hide_and_seek;
+            this.extras.hypixelSaysRounds = arcade.rounds_simon_says;
+            this.extras.throwOutKills = arcade.kills_throw_out;
+            this.extras.throwOutDeaths = arcade.deaths_throw_out;
+
+            this.miniWalls.kit = arcade.miniwalls_activeKit;
+            this.miniWalls.arrowsHit = arcade.arrows_hit_mini_walls;
+            this.miniWalls.arrowsShot = arcade.arrows_shot_mini_walls;
+            this.miniWalls.finalKills = arcade.final_kills_mini_walls;
+            this.miniWalls.kills = arcade.kills_mini_walls;
+            this.miniWalls.witherKills = arcade.wither_kills_mini_walls;
+            this.miniWalls.deaths = arcade.deaths_mini_walls;
+            this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
+
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
