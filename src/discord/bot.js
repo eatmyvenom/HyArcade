@@ -17,9 +17,10 @@ module.exports = function doBot() {
         await BotEvents.ready(mode);
     });
 
+    client.on("rateLimit", BotEvents.rateLimit);
+
     if(mode == undefined) {
         client.on("message", messageHandler);
-        client.on("rateLimit", BotEvents.rateLimit);
         client.on("messageDelete", BotEvents.messageDelete);
     }
 
