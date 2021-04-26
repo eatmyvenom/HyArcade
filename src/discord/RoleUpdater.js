@@ -1,4 +1,5 @@
 const BotUtils = require('../discord/BotUtils');
+const { logger } = require('../utils');
 const utils = require('../utils');
 
 module.exports = class RoleUpdater {
@@ -24,22 +25,16 @@ module.exports = class RoleUpdater {
 
     async updateAll() {
         let acclist = await utils.readJSON('accounts.json');
+        let mbrList = await this.guild.members.fetch();
         for(let acc of acclist) {
-            await this.updatePlayer(acc);
+            if(mbrList.has(acc.discord)) {
+                await this.updatePlayer(acc, mbrList.get(acc.discord));
+            }
         }
     }
 
-    async updatePlayer(acc) {
-        let discID = "" + acc.discord;
-        if(discID.length != 18) return;
-        let discMember;
-        try{
-            discMember = await this.guild.members.fetch(discID);
-            await utils.sleep(500);
-        } catch (e) {
-            await utils.sleep(500);
-            return;
-        }
+    async updatePlayer(acc, discMember) {
+        logger.out(`Updating ${discMember.user.tag}`);
         let newRole = this.getRole(acc[this.prop]);
         if(newRole == undefined) return;
         if(discMember.roles == undefined) return;
@@ -48,7 +43,7 @@ module.exports = class RoleUpdater {
 
         if(discMember.roles.cache != undefined) {
             if(!discMember.roles.cache.has(newRole.roleID)) {
-                await BotUtils.logHook.send(`${acc.name} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`)
+                await BotUtils.logHook.send(`${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`)
                 await discMember.roles.add(newRole.roleID);
             }
         } else {
