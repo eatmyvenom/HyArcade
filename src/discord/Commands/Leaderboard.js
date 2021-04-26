@@ -169,6 +169,12 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
             break;
         }
 
+        case "throwkills":
+        case "tokills": {
+            res = await getLB("throwOutKills", timetype, limit, "extras");
+            break;
+        }
+
         case "gw":
         case "sw":
         case "galaxy":
@@ -286,7 +292,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "halloweensim":
         case "halloweensimulator":
         case "halloween-simulator": {
-            res = await getLB("scuba", timetype, limit, "seasonalWins");
+            res = await getLB("halloween", timetype, limit, "seasonalWins");
             break;
         }
 
