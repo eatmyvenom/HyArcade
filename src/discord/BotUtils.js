@@ -147,7 +147,11 @@ module.exports = class BotUtils {
                     value: acc.hypixelSaysWins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Hypixel says Rounds",
+                    value: acc.extras.hypixelSaysRounds,
+                    inline: true,
+                });
                 break;
             }
 
@@ -188,12 +192,54 @@ module.exports = class BotUtils {
             case "pvp":
             case "miniwalls": {
                 fields.push(BotUtils.emptyField(true));
+                // <br>
                 fields.push({
                     name: "Mini walls wins",
                     value: acc.miniWallsWins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Mini walls kit",
+                    value: acc.miniWalls.kit,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls kills",
+                    value: acc.miniWalls.kills,
+                    inline: true,
+                });
+                // <br>
+                fields.push({
+                    name: "Mini walls arrows shot",
+                    value: acc.miniWalls.arrowsShot,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls arrows hit",
+                    value: acc.miniWalls.arrowsHit,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls final kills",
+                    value: acc.miniWalls.finalKills,
+                    inline: true,
+                });
+                // <br>
+                fields.push({
+                    name: "Mini walls wither kills",
+                    value: acc.miniWalls.witherKills,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls wither damage",
+                    value: acc.miniWalls.witherDamage,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls deaths",
+                    value: acc.miniWalls.deaths,
+                    inline: true,
+                });
                 break;
             }
 
@@ -205,12 +251,31 @@ module.exports = class BotUtils {
             case "shit":
             case "football": {
                 fields.push(BotUtils.emptyField(true));
+                // <br>
                 fields.push({
                     name: "Football wins",
                     value: acc.footballWins,
                     inline: true,
                 });
+                fields.push({
+                    name: "Football goals",
+                    value: acc.extras.footballGoals,
+                    inline: true,
+                });
                 fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Football power kicks",
+                    value: acc.extras.footballPKicks,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Football kicks",
+                    value: acc.extras.footballKicks,
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                // <br>
                 break;
             }
 
@@ -236,12 +301,25 @@ module.exports = class BotUtils {
             case "sumo2":
             case "throwout": {
                 fields.push(BotUtils.emptyField(true));
+                // <br>
                 fields.push({
                     name: "Throw out wins",
                     value: acc.throwOutWins,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Throw out kills",
+                    value: acc.extras.throwOutKills,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Throw out deaths",
+                    value: acc.extras.throwOutDeaths,
+                    inline: true,
+                });
                 break;
             }
 
@@ -256,6 +334,18 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Galaxy wars kills",
+                    value: acc.extras.galaxyWarsKills,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Galaxy wars deaths",
+                    value: acc.extras.galaxyWarsDeaths,
+                    inline: true,
+                });
                 break;
             }
 
@@ -266,6 +356,14 @@ module.exports = class BotUtils {
                 fields.push({
                     name: "Dragon wars wins",
                     value: acc.dragonWarsWins,
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Dragon wars kills",
+                    value: acc.extras.dragonWarsKills,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -285,6 +383,18 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Bounty hunters kills",
+                    value: acc.extras.bountyHuntersKills,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Bounty hunters deaths",
+                    value: acc.extras.bountyHuntersDeaths,
+                    inline: true,
+                });
                 break;
             }
 
@@ -300,6 +410,18 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Blocking dead kills",
+                    value: acc.extras.blockingDeadKills,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Blocking dead headshots",
+                    value: acc.extras.blockingDeadHeadshots,
+                    inline: true,
+                });
                 break;
             }
 
@@ -318,6 +440,18 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                fields.push(BotUtils.emptyField(true));
+                // <br>
+                fields.push({
+                    name: "Hide and seek seeker wins",
+                    value: acc.extras.HNSSeekerWins,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Hide and seek hider wins",
+                    value: acc.extras.HNSHiderWins,
+                    inline: true,
+                });
                 break;
             }
 
