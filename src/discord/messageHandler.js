@@ -1,5 +1,5 @@
 const cfg = require("../Config").fromJSON();
-const { WebhookClient } = require("discord.js");
+const Runtime = require('../Runtime');
 const { addAccounts } = require("../listUtils");
 const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
@@ -23,23 +23,28 @@ async function logCmd(msg) {
     logger.out(`${msg.author.tag} ran : \`${msg.content}\``);
 }
 
+async function sendAsHook(hook, cmdResponse) {
+    try {
+        await hook.send(
+            cmdResponse.res,
+            BotUtils.getWebhookObj(cmdResponse.embed)
+        );
+        return true;
+    } catch (e) {
+        logger.err(e.toString());
+        await BotUtils.errHook.send(e.toString());
+        return false;
+    }
+}
+
 async function attemptSend(msg, cmdResponse, opts) {
+    let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
-    if (hooks.size > 0) {
-        try {
-            let hook = await hooks.first();
-            await hook.send(
-                cmdResponse.res,
-                BotUtils.getWebhookObj(cmdResponse.embed)
-            );
-        } catch (e) {
-            logger.err(e.toString());
-            await BotUtils.errHook.send(e.toString());
+    if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
+        if(runtime.bot != 'backup') {
             await msg.channel.send(cmdResponse.res, opts);
         }
-    } else {
-        await msg.channel.send(cmdResponse.res, opts);
-    }
+    } 
 }
 
 async function addIGNs(msg) {
