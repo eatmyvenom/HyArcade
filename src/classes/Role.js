@@ -6,4 +6,4 @@ module.exports = class Role {
         this.minimumWins = minimumWins;
         this.roleID = roleID;
     }
-}
+};

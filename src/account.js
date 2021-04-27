@@ -229,7 +229,7 @@ class Account {
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = arcade.wins_draw_their_thing;
-            
+
             this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
             this.seasonalWins.grinch = numberify(
                 arcade.wins_grinch_simulator_v2
@@ -247,7 +247,8 @@ class Account {
             this.extras.blockingDeadKills = arcade.kills_dayone;
             this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
             this.extras.bountyHuntersKills = arcade.kills_oneinthequiver;
-            this.extras.bountyHuntersBountyKills = arcade.bounty_kills_oneinthequiver;
+            this.extras.bountyHuntersBountyKills =
+                arcade.bounty_kills_oneinthequiver;
             this.extras.bountyHuntersDeaths = arcade.deaths_oneinthequiver;
             this.extras.dragonWarsKills = arcade.kills_dragonwars2;
             this.extras.footballGoals = arcade.goals_soccer;

@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const BotUtils = require("./BotUtils");
 const config = require("../Config").fromJSON();
-const Runtime = require('../Runtime').fromJSON();
+const Runtime = require("../Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
 
@@ -20,17 +20,16 @@ module.exports = function doBot() {
 
     client.on("rateLimit", BotEvents.rateLimit);
 
-    if(mode == undefined) {
+    if (mode == undefined) {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
     }
 
-    if(Runtime.bot != "backup") {
+    if (Runtime.bot != "backup") {
         client.login(config.discord.token);
     } else {
         client.login(config.discord.backupToken);
     }
 
     setInterval(BotEvents.tick, 5000);
-
 };

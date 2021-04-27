@@ -250,8 +250,7 @@ async function miniconfig() {
  *
  */
 async function main() {
-
-    if(Runtime.apiDown) {
+    if (Runtime.apiDown) {
         process.exit(1);
     }
 

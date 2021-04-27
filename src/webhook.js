@@ -75,7 +75,10 @@ async function sendToEmbedDiscord(
 }
 
 async function sendPGEmbed() {
-    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+    let hook = new Discord.WebhookClient(
+        config.webhook.id,
+        config.webhook.token
+    );
     await hook.send("", {
         embeds: [await genPGEmbed()],
         username: config.webhook.username,
@@ -104,7 +107,7 @@ function generateEmbed(list) {
 
     let len = Math.min(list.length, 24);
     for (let i = 0; i < len; i++) {
-        str += i + 1 + ") " + list[i].name +  " - " + list[i].wins + "\n";
+        str += i + 1 + ") " + list[i].name + " - " + list[i].wins + "\n";
     }
     embed.setDescription(str);
 
@@ -112,7 +115,7 @@ function generateEmbed(list) {
 }
 
 async function genPGEmbed() {
-    let alltime = await listUtils.stringLB("wins", 25)
+    let alltime = await listUtils.stringLB("wins", 25);
     let day = await listUtils.stringLBDaily("wins", 25);
 
     let embed = new Discord.MessageEmbed()

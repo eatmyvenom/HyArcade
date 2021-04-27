@@ -9,14 +9,14 @@ module.exports = async (interaction) => {
     let opts = [].concat(interaction.data.options);
     let args = [];
     for (let i = 0; i < opts.length; i++) {
-        if(opts[i] != undefined) {
+        if (opts[i] != undefined) {
             args[i] = opts[i].value;
         } else {
             args[i] = undefined;
         }
     }
 
-    switch(interaction.data.name.toLowerCase()) {
+    switch (interaction.data.name.toLowerCase()) {
         case "stats": {
             let game = args[1];
             let acc = await InteractionUtils.resolveAccount(interaction);
@@ -43,4 +43,4 @@ module.exports = async (interaction) => {
             return { res: "", embed: embed };
         }
     }
-}
+};

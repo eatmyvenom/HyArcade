@@ -9,7 +9,9 @@ const roleHandler = require("./roleHandler");
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
         let timeout = rlInfo.timeout;
-        let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`
+        let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${
+            rlInfo.path
+        }\n`;
         logger.err(str);
         await BotUtils.errHook.send(str);
     }
@@ -35,7 +37,7 @@ module.exports = class BotEvents {
         let logHook = await loghooks.first();
         BotUtils.errHook = errHook;
         BotUtils.logHook = logHook;
-        if(mode == "role") {
+        if (mode == "role") {
             await roleHandler(BotUtils.client);
             await BotUtils.client.destroy();
         } else if (mode == "slash") {
@@ -44,13 +46,16 @@ module.exports = class BotEvents {
             logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
             BotUtils.client.user.setPresence(cfg.discord.presence);
-            BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+            BotUtils.msgCopyHook = new WebhookClient(
+                cfg.loggingHooks.copyHook.id,
+                cfg.loggingHooks.copyHook.token
+            );
         }
     }
 
     static async tick() {
         let runtime = Runtime.fromJSON();
-        if(runtime.needRoleupdate) {
+        if (runtime.needRoleupdate) {
             await roleHandler(BotUtils.client);
             await BotUtils.logHook.send("Roles Updated");
             let runtime = Runtime.fromJSON();

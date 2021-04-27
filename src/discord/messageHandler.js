@@ -86,29 +86,28 @@ async function getCmdRes(msg) {
 }
 
 module.exports = async function messageHandler(msg) {
-
-    if(msg.author.bot) return;
-    if(msg.webhookID) return;
+    if (msg.author.bot) return;
+    if (msg.webhookID) return;
 
     let cmdResponse = await getCmdRes(msg);
 
-    let isValidResponse = cmdResponse != undefined &&
+    let isValidResponse =
+        cmdResponse != undefined &&
         cmdResponse.res != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
-        
         let opts = {};
         if (cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }
-        
+
         await sanitizeCmdOpt(cmdResponse);
-        
+
         await attemptSend(msg, cmdResponse, opts);
         await addIGNs(msg);
         await logCmd(msg);
     }
-    
+
     await BotUtils.logIgns(msg);
 };

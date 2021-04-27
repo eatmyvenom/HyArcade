@@ -7,9 +7,12 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
     let player = args[0];
     let discord = args[1];
 
-    if(("" + player).startsWith('https://')) {
-        let channelID = player.slice(player.lastIndexOf('/') -18, player.lastIndexOf('/'));
-        let msgID = player.slice(player.lastIndexOf('/') + 1);
+    if (("" + player).startsWith("https://")) {
+        let channelID = player.slice(
+            player.lastIndexOf("/") - 18,
+            player.lastIndexOf("/")
+        );
+        let msgID = player.slice(player.lastIndexOf("/") + 1);
 
         let channel = await BotUtils.client.channels.fetch(channelID);
         let msg = await channel.messages.fetch(msgID);

@@ -571,15 +571,18 @@ module.exports = class BotUtils {
     }
 
     static async logIgns(msg) {
-        let ignClient = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
+        let ignClient = new WebhookClient(
+            cfg.loggingHooks.ignHook.id,
+            cfg.loggingHooks.ignHook.token
+        );
         let logs = [];
         for (let c of cfg.discord.listenChannels) {
-            logs.push({id : c, hook : ignClient});
+            logs.push({ id: c, hook: ignClient });
         }
         let channelID = msg.channel.id;
 
-        for(let logger of logs) {
-            if(channelID == logger.id) {
+        for (let logger of logs) {
+            if (channelID == logger.id) {
                 await BotUtils.logcopy(msg, logger.hook);
             }
         }
@@ -589,11 +592,11 @@ module.exports = class BotUtils {
     static async logcopy(msg, hook) {
         let pfp = msg.author.avatarURL();
         let name = "unknown";
-        if(msg.member) {
+        if (msg.member) {
             name = msg.member.displayName;
         }
 
-        await hook.send(msg.content, {username : name, avatarURL : pfp});
-        await hook.send(msg.url, {username : name, avatarURL : pfp});
+        await hook.send(msg.content, { username: name, avatarURL: pfp });
+        await hook.send(msg.url, { username: name, avatarURL: pfp });
     }
 };

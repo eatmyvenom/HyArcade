@@ -186,9 +186,12 @@ async function updateAllAccounts() {
 
     let oldAccs = await utils.readJSON("accounts.json");
 
-    var i,j,temparray,chunk = 120;
-    for (i=0,j=accounts.length; i<j; i+=chunk) {
-        temparray = accounts.slice(i,i+chunk);
+    var i,
+        j,
+        temparray,
+        chunk = 120;
+    for (i = 0, j = accounts.length; i < j; i += chunk) {
+        temparray = accounts.slice(i, i + chunk);
         await updateAccountsInArr(temparray, oldAccs);
     }
 
@@ -202,8 +205,8 @@ async function updateAllAccounts() {
     runtime.needRoleUpdate = true;
     await runtime.save();
 
-    if(force) {
-        await fs.rm('force');
+    if (force) {
+        await fs.rm("force");
     }
 
     await accounts.sort(utils.winsSorter);
