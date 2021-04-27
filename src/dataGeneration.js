@@ -186,7 +186,7 @@ async function updateAllAccounts() {
 
     let oldAccs = await utils.readJSON("accounts.json");
 
-    var i,
+    let i,
         j,
         temparray,
         chunk = 120;
