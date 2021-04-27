@@ -11,6 +11,7 @@ async function downloadFile(name, servername) {
 async function main() {
     await fs.mkdir("data");
     await downloadFile("status.json", "pgstatus.json");
+    await downloadFile("runtimeinfo.json", "runtimeinfo.json");
     await downloadFile("acclist.json", "acclist.json");
     await downloadFile("accounts.json", "accounts.json");
     await downloadFile("guild.json", "guild.json");
