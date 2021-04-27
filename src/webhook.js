@@ -131,5 +131,6 @@ module.exports = {
     sendBasic: sendBasic,
     sendBasicEmbed: sendBasicEmbed,
     generateEmbed: generateEmbed,
+    genPGEmbed: genPGEmbed,
     sendPGEmbed: sendPGEmbed,
 };

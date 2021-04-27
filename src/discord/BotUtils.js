@@ -80,8 +80,7 @@ module.exports = class BotUtils {
     }
 
     static async getPGDailyEmbed() {
-        let day = await listUtils.listDiff("accounts", "day", 999);
-        return webhook.generateEmbed(day);
+        return await webhook.genPGEmbed();
     }
 
     static emptyField(inline) {
@@ -573,15 +572,10 @@ module.exports = class BotUtils {
 
     static async logIgns(msg) {
         let ignClient = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
-        let logs = [
-            {id : '779191444828323890' , hook : ignClient},
-            {id : '742761029586649148' , hook : ignClient},
-            {id : '808114257299243038' , hook : ignClient},
-            {id : '810620555073814550' , hook : ignClient},
-            {id : '805440398109573161' , hook : ignClient},
-            {id : '815619948575457311' , hook : ignClient},
-            {id : '826907021609271327' , hook : ignClient},
-        ]
+        let logs = [];
+        for (let c of cfg.discord.listenChannels) {
+            logs.push({id : c, hook : ignClient});
+        }
         let channelID = msg.channel.id;
 
         for(let logger of logs) {
