@@ -8,6 +8,7 @@ let force = utils.fileExists("force") || cfg.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
 const { addAccounts } = require("./listUtils");
 const { logger } = require("./utils");
+const Runtime = require("./Runtime");
 
 /**
  * Generates the status for all of the online players
@@ -196,6 +197,10 @@ async function updateAllAccounts() {
         await fs.rm("data/accounts.json.part");
         accounts = accounts.concat(addedAccounts);
     }
+
+    let runtime = Runtime.fromJSON();
+    runtime.needRoleUpdate = true;
+    await runtime.save();
 
     if(force) {
         await fs.rm('force');

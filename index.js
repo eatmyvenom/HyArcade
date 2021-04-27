@@ -28,6 +28,7 @@ const task = require("./src/task");
 const Cfg = require("./src/Config");
 const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
+const Runtime = require("./src/Runtime").fromJSON();
 
 /**
  * Run the accounts task
@@ -249,6 +250,11 @@ async function miniconfig() {
  *
  */
 async function main() {
+
+    if(Runtime.apiDown) {
+        process.exit(1);
+    }
+
     await writePID();
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements

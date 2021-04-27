@@ -1,5 +1,6 @@
 const cfg = require("../Config").fromJSON();
 const { WebhookClient } = require("discord.js");
+const Runtime = require("../Runtime");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
@@ -44,6 +45,17 @@ module.exports = class BotEvents {
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
             BotUtils.client.user.setPresence(cfg.discord.presence);
             BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+        }
+    }
+
+    static async tick() {
+        let runtime = Runtime.fromJSON();
+        if(runtime.needRoleupdate) {
+            await roleHandler(BotUtils.client);
+            await BotUtils.logHook.send("Roles Updated");
+            let runtime = Runtime.fromJSON();
+            runtime.needRoleUpdate = true;
+            await runtime.save();
         }
     }
 };
