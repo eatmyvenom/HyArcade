@@ -58,8 +58,7 @@ module.exports = class BotEvents {
         if (runtime.needRoleupdate) {
             await roleHandler(BotUtils.client);
             await BotUtils.logHook.send("Roles Updated");
-            let runtime = Runtime.fromJSON();
-            runtime.needRoleUpdate = true;
+            runtime.needRoleupdate = false;
             await runtime.save();
         }
     }
