@@ -3,7 +3,7 @@ const ffs = require("fs");
 
 module.exports = class Runtime {
     async save() {
-        await utils.writeJSON("runtimeinfo", this);
+        await utils.writeJSON("runtimeinfo.json", this);
     }
 
     static fromJSON() {
