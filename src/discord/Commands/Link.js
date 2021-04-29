@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
 const Command = require("../../classes/Command");
+const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
@@ -51,6 +52,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
             return { res : "", embed: noexistEmbed };
         }
         acc = new Account(player, 0, uuid);
+        await addAccounts("others", [uuid]);
         await acc.updateHypixel();
         await tmpMsg.delete();
     }

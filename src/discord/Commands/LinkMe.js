@@ -43,6 +43,7 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
             return { res : "", embed: noexistEmbed };
         }
         acc = new Account(player, 0, uuid);
+        await addAccounts("others", [uuid]);
         await acc.updateHypixel();
         await tmpMsg.delete();
     }
