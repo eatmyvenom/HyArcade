@@ -90,6 +90,11 @@ async function getCmdRes(msg) {
     return cmdResponse;
 }
 
+async function isBlacklisted(id) {
+    let blacklist = await utils.readJSON('blacklist.json');
+    return blacklist.includes(id);
+}
+
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
@@ -102,6 +107,10 @@ module.exports = async function messageHandler(msg) {
         (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
+        if (await isBlacklisted(msg.author.id)){
+            await msg.author.dmChannel.send(BotUtils.getBlacklistRes());
+            return;
+        }
         let opts = {};
         if (cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
