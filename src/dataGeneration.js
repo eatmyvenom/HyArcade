@@ -202,7 +202,7 @@ async function updateAllAccounts() {
     }
 
     let runtime = Runtime.fromJSON();
-    runtime.needRoleUpdate = true;
+    runtime.needRoleupdate = true;
     await runtime.save();
 
     if (force) {
