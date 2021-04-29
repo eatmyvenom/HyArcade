@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const Account = require("../../account");
 const Command = require("../../classes/Command");
 const cfg = require("../../Config").fromJSON();
 const mojangRequest = require("../../mojangRequest");
@@ -23,10 +24,27 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
     );
     if (acc == undefined) {
         let embed = new MessageEmbed()
-            .setTitle("ERROR")
-            .setDescription("This player is not in the database!")
-            .setColor(0xff0000);
-        return { res: "", embed: embed };
+            .setTitle("Waiting...")
+            .setDescription(
+                "Since the the database does not contain the account it will take some time to fetch the stats. Please wait!"
+            )
+            .setThumbnail("https://i.imgur.com/GLdqYB2.gif")
+            .setColor(0xdcde19)
+
+        let tmpMsg = await rawMsg.channel.send("", { embed: embed });
+        let uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
+        if(("" + uuid).length != 32) {
+            await tmpMsg.delete();
+            let noexistEmbed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription(`The ign ${player} does not exist or has been changed.`)
+                .setColor(0xff0000)
+            
+            return { res : "", embed: noexistEmbed };
+        }
+        acc = new Account(player, 0, uuid);
+        await acc.updateHypixel();
+        await tmpMsg.delete();
     }
 
     if (
@@ -36,7 +54,7 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg) => {
         let uuid = player;
         // if its not a uuid then convert to uuid
         if (player.length < 17) {
-            uuid = await mojangRequest.getUUID(player);
+            uuid = acc.uuid;
         }
         let discord = rawMsg.author.id;
         let disclist = await utils.readJSON("./disclist.json");

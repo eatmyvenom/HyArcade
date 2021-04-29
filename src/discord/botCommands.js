@@ -28,7 +28,7 @@ async function checkCommands(rawMsg, command, args, author) {
     switch (command.toLowerCase()) {
         case "link":
         case "ln":
-            return await linkCmd.execute(args, author);
+            return await linkCmd.execute(args, author, rawMsg);
             break;
 
         case "lnm":

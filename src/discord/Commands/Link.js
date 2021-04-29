@@ -1,9 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const Account = require("../../account");
 const Command = require("../../classes/Command");
+const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
-module.exports = new Command("link", utils.defaultAllowed, async (args) => {
+module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) => {
     let player = args[0];
     let discord = args[1];
 
@@ -21,9 +23,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
         player = msg.content;
     }
 
-    let uuid;
-    let acc;
-    let acclist = await utils.readJSON("./accounts.json");
+    let uuid, acc, acclist = await utils.readJSON("./accounts.json");
     if (player.length < 17) {
         acc = acclist.find((a) => a.name.toLowerCase() == player.toLowerCase());
     } else {
@@ -32,10 +32,27 @@ module.exports = new Command("link", utils.defaultAllowed, async (args) => {
 
     if (acc == undefined) {
         let embed = new MessageEmbed()
-            .setTitle("ERROR")
-            .setDescription("This player is not in the database!")
-            .setColor(0xff0000);
-        return { res: "", embed: embed };
+            .setTitle("Waiting <a:loading:837212742301253663>")
+            .setDescription(
+                "Since the the database does not contain the account it will take some time to fetch the stats. Please wait!"
+            )
+            .setThumbnail("https://i.imgur.com/GLdqYB2.gif")
+            .setColor(0xdcde19)
+
+        let tmpMsg = await rawMsg.channel.send("", { embed: embed });
+        uuid = (player.length == 32) ? player : await mojangRequest.getUUID(player);
+        if(("" + uuid).length != 32) {
+            await tmpMsg.delete();
+            let noexistEmbed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription(`The ign ${player} does not exist or has been changed.`)
+                .setColor(0xff0000)
+            
+            return { res : "", embed: noexistEmbed };
+        }
+        acc = new Account(player, 0, uuid);
+        await acc.updateHypixel();
+        await tmpMsg.delete();
     }
 
     uuid = acc.uuid;
