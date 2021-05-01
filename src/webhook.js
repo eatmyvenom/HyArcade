@@ -122,8 +122,8 @@ async function genPGEmbed() {
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("Lifetime", alltime, true)
-        .addField("Daily", day, true);
+        .addField("Top lifetime wins", alltime, true)
+        .addField("Top daily wins", day, true);
 
     return embed;
 }
