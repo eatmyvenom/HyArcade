@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Util } = require("discord.js");
 const Command = require("../../classes/Command");
 const Config = require("../../Config");
 const listUtils = require("../../listUtils");
@@ -46,7 +46,7 @@ async function getLB(prop, timetype, limit, category) {
         }
     }
 
-    res = res != "" ? res : "Nobody has won.";
+    res = res != "" ? Util.escapeMarkdown(res) : "Nobody has won.";
     let embed = new MessageEmbed()
         .setTitle(time + " Leaderboard")
         .setColor(0x00cc66)
