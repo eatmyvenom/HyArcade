@@ -53,21 +53,33 @@ function displayData(data) {
         "hysay",
         "Hypixel says wins: " + formatNum(data.hypixelSaysWins)
     );
+    setHtmlByName("hitw", "HITW wins: " + data.hitwWins);
     setHtmlByName(
-        "hitw",
-        "HITW wins: " + data.hitwWins
+        "bd",
+        "Blocking dead wins: " + formatNum(data.blockingDeadWins)
     );
-    setHtmlByName("bd", "Blocking dead wins: " + formatNum(data.blockingDeadWins))
-    setHtmlByName("mw", "Mini walls wins: " + formatNum(data.miniWallsWins))
-    setHtmlByName("fb", "Football wins: " + formatNum(data.footballWins))
-    setHtmlByName("es", "Ender spleef wins: " + formatNum(data.enderSpleefWins))
-    setHtmlByName("to", "Throw out wins: " + formatNum(data.throwOutWins))
-    setHtmlByName("gw", "Galaxy wars wins: " + formatNum(data.galaxyWarsWins))
-    setHtmlByName("dw", "Dragon wars wins: " + formatNum(data.dragonWarsWins))
-    setHtmlByName("bh", "Bounty hunter wins: " + formatNum(data.bountyHuntersWins))
-    setHtmlByName("hns", "Hide and seek wins: " + formatNum(data.hideAndSeekWins))
-    setHtmlByName("z", "Zombie wins: " + formatNum(data.zombiesWins))
-    setHtmlByName("pp", "Pixel painter wins: " + formatNum(data.pixelPaintersWins))
+    setHtmlByName("mw", "Mini walls wins: " + formatNum(data.miniWallsWins));
+    setHtmlByName("fb", "Football wins: " + formatNum(data.footballWins));
+    setHtmlByName(
+        "es",
+        "Ender spleef wins: " + formatNum(data.enderSpleefWins)
+    );
+    setHtmlByName("to", "Throw out wins: " + formatNum(data.throwOutWins));
+    setHtmlByName("gw", "Galaxy wars wins: " + formatNum(data.galaxyWarsWins));
+    setHtmlByName("dw", "Dragon wars wins: " + formatNum(data.dragonWarsWins));
+    setHtmlByName(
+        "bh",
+        "Bounty hunter wins: " + formatNum(data.bountyHuntersWins)
+    );
+    setHtmlByName(
+        "hns",
+        "Hide and seek wins: " + formatNum(data.hideAndSeekWins)
+    );
+    setHtmlByName("z", "Zombie wins: " + formatNum(data.zombiesWins));
+    setHtmlByName(
+        "pp",
+        "Pixel painter wins: " + formatNum(data.pixelPaintersWins)
+    );
     setHtmlByName("xp", "Level: " + formatNum(data.level));
     setHtmlByName("karma", "Karma: " + formatNum(data.karma));
     setHtmlByName("name", "Name: " + data.name);
