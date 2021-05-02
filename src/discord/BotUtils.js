@@ -202,17 +202,18 @@ module.exports = class BotUtils {
                     value: acc.miniWalls.kit,
                     inline: true,
                 });
+                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls kills",
                     value: acc.miniWalls.kills,
                     inline: true,
                 });
-                // <br>
                 fields.push({
                     name: "Mini walls arrows shot",
                     value: acc.miniWalls.arrowsShot,
                     inline: true,
                 });
+                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls arrows hit",
                     value: acc.miniWalls.arrowsHit,
@@ -223,7 +224,7 @@ module.exports = class BotUtils {
                     value: acc.miniWalls.finalKills,
                     inline: true,
                 });
-                // <br>
+                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls wither kills",
                     value: acc.miniWalls.witherKills,
@@ -234,11 +235,13 @@ module.exports = class BotUtils {
                     value: acc.miniWalls.witherDamage,
                     inline: true,
                 });
+                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls deaths",
                     value: acc.miniWalls.deaths,
                     inline: true,
                 });
+                fields.push(BotUtils.emptyField(true));
                 break;
             }
 

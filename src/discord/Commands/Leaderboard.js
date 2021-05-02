@@ -46,7 +46,7 @@ async function getLB(prop, timetype, limit, category) {
         }
     }
 
-    res = res != "" ? Util.escapeMarkdown(res) : "Nobody has won.";
+    res = res != "" ? res.replace(/_/g, "\\_") : "Nobody has won.";
     let embed = new MessageEmbed()
         .setTitle(time + " Leaderboard")
         .setColor(0x00cc66)
