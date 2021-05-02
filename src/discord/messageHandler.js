@@ -1,5 +1,5 @@
 const cfg = require("../Config").fromJSON();
-const Runtime = require('../Runtime');
+const Runtime = require("../Runtime");
 const { addAccounts } = require("../listUtils");
 const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
@@ -41,10 +41,10 @@ async function attemptSend(msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
-        if(runtime.bot != 'backup') {
+        if (runtime.bot != "backup") {
             await msg.channel.send(cmdResponse.res, opts);
         }
-    } 
+    }
 }
 
 async function addIGNs(msg) {
@@ -91,7 +91,7 @@ async function getCmdRes(msg) {
 }
 
 async function isBlacklisted(id) {
-    let blacklist = await utils.readJSON('blacklist.json');
+    let blacklist = await utils.readJSON("blacklist.json");
     return blacklist.includes(id);
 }
 
@@ -107,7 +107,7 @@ module.exports = async function messageHandler(msg) {
         (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
-        if (await isBlacklisted(msg.author.id)){
+        if (await isBlacklisted(msg.author.id)) {
             await msg.author.dmChannel.send(BotUtils.getBlacklistRes());
             return;
         }

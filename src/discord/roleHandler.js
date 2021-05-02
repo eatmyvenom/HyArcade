@@ -79,27 +79,31 @@ module.exports = async function roleHandler(client) {
         "simTotal"
     );
 
-    let fhGuild = await client.guilds.fetch('810614388612136960');
-    let FH = new RoleUpdater(fhGuild, [
-        new Role(12000, '812397910758916096'),
-        new Role(11000, '836727692254380043'),
-        new Role(10000, '836727974589628417'),
-        new Role(9000, '836728057347178576'),
-        new Role(8000, '836728141107822643'),
-        new Role(7000, '836728270586249226'),
-        new Role(6000, '836728469638479982'),
-        new Role(5000, '836728557991886848'),
-        new Role(4000, '836728693342470244'),
-        new Role(3000, '836728820765163580'),
-        new Role(2000, '836729009789206528'),
-        new Role(1000, '836729101536591923'),
-        new Role(750, '836729216321585223'),
-        new Role(500, '836729390301053010'),
-        new Role(250, '836729521575165982'),
-        new Role(100, '836729854019371039'),
-        new Role(50, '836729997171490877'),
-        new Role(0, '836730103743905834')
-    ], "farmhuntWins");
+    let fhGuild = await client.guilds.fetch("810614388612136960");
+    let FH = new RoleUpdater(
+        fhGuild,
+        [
+            new Role(12000, "812397910758916096"),
+            new Role(11000, "836727692254380043"),
+            new Role(10000, "836727974589628417"),
+            new Role(9000, "836728057347178576"),
+            new Role(8000, "836728141107822643"),
+            new Role(7000, "836728270586249226"),
+            new Role(6000, "836728469638479982"),
+            new Role(5000, "836728557991886848"),
+            new Role(4000, "836728693342470244"),
+            new Role(3000, "836728820765163580"),
+            new Role(2000, "836729009789206528"),
+            new Role(1000, "836729101536591923"),
+            new Role(750, "836729216321585223"),
+            new Role(500, "836729390301053010"),
+            new Role(250, "836729521575165982"),
+            new Role(100, "836729854019371039"),
+            new Role(50, "836729997171490877"),
+            new Role(0, "836730103743905834"),
+        ],
+        "farmhuntWins"
+    );
 
     logger.out("Updating roles for Party gamers \n");
     await PG.updateAll();

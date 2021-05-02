@@ -606,9 +606,11 @@ module.exports = class BotUtils {
     static getBlacklistRes() {
         let embed = new MessageEmbed()
             .setTitle("You are blacklisted")
-            .setDescription("This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom.")
-            .setColor(0xff0000)
-            
+            .setDescription(
+                "This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom."
+            )
+            .setColor(0xff0000);
+
         return embed;
     }
 };
