@@ -105,6 +105,14 @@ async function sendPGDay() {
     await Webhook.sendPGEmbed();
 }
 
+async function sendPGWeek() {
+    await Webhook.sendPGWEmbed();
+}
+
+async function sendPGMonth() {
+    await Webhook.sendPGMEmbed();
+}
+
 /**
  * Snapshot the amount of wins into another json file
  * @param {String} timeType the inbetween of the file
@@ -331,6 +339,14 @@ async function main() {
 
         case "discordPG":
             await sendPGDay();
+            break;
+
+        case "discordPGW":
+            await sendPGWeek();
+            break;
+
+        case "discordPGM":
+            await sendPGMonth();
             break;
 
         case "link":

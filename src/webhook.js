@@ -89,6 +89,36 @@ async function sendPGEmbed() {
     hook.destroy();
 }
 
+async function sendPGWEmbed() {
+    let hook = new Discord.WebhookClient(
+        config.webhook.id,
+        config.webhook.token
+    );
+    await hook.send("", {
+        embeds: [await genPGWEmbed()],
+        username: config.webhook.username,
+        avatarURL: config.webhook.pfp,
+    });
+    // this closes the hook client so the nodejs doesnt hang
+    // forever
+    hook.destroy();
+}
+
+async function sendPGMEmbed() {
+    let hook = new Discord.WebhookClient(
+        config.webhook.id,
+        config.webhook.token
+    );
+    await hook.send("", {
+        embeds: [await genPGMEmbed()],
+        username: config.webhook.username,
+        avatarURL: config.webhook.pfp,
+    });
+    // this closes the hook client so the nodejs doesnt hang
+    // forever
+    hook.destroy();
+}
+
 /**
  * Do not look at this... I need a better solution
  * TODO: fix
@@ -122,8 +152,32 @@ async function genPGEmbed() {
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("Top lifetime wins", alltime, true)
-        .addField("Top daily wins", day, true);
+        .addField("----------- Top lifetime wins -----------", alltime, true)
+        .addField("------------- Top daily wins ------------", day, true);
+
+    return embed;
+}
+
+async function genPGWEmbed() {
+    let week = await listUtils.stringLBDiff("wins", 25, "weekly");
+
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Party games leaderboards")
+        .setColor(0x44a3e7)
+        .setTimestamp(Date.now())
+        .addField("------------ Top weekly wins ------------", week, true);
+
+    return embed;
+}
+
+async function genPGMEmbed() {
+    let month = await listUtils.stringLBDiff("wins", 25, "monthly");
+
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Party games leaderboards")
+        .setColor(0x44a3e7)
+        .setTimestamp(Date.now())
+        .addField("------------ Top monthly wins -----------", month, true);
 
     return embed;
 }
@@ -136,4 +190,6 @@ module.exports = {
     generateEmbed: generateEmbed,
     genPGEmbed: genPGEmbed,
     sendPGEmbed: sendPGEmbed,
+    sendPGWEmbed: sendPGWEmbed,
+    sendPGMEmbed: sendPGMEmbed,
 };
