@@ -12,7 +12,7 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     let tmpMsg = await rawMsg.channel.send("", { embed: embed });
     let res = await addAccounts(category, args);
     res = "```\n" + res + "\n```";
-    let embed2 = Embeds.accsAdded;
+    let embed2 = Embeds.accsAdded(res);
     await tmpMsg.delete();
     return { res: "", embed: embed2 };
 });

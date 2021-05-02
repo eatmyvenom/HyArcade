@@ -1,4 +1,6 @@
-const cfg = require("../../Config").fromJSON();
+const { MessageEmbed } = require("discord.js");
+
+const cfg = require("../Config").fromJSON();
 
 exports.waiting = new MessageEmbed()
     .setTitle("Waiting...")
@@ -11,7 +13,8 @@ exports.waiting = new MessageEmbed()
         "Please avoid using this unless they should actually be in the database, too many people slows down the overall system."
     );
 
-exports.accsAdded = new MessageEmbed()
+exports.accsAdded = function(res) {
+    return new MessageEmbed()
     .setTitle("Accounts added")
     .setDescription(res)
     .setFooter(
@@ -19,6 +22,7 @@ exports.accsAdded = new MessageEmbed()
     )
     .setTimestamp(Date.now())
     .setColor(0x44a3e7);
+}
 
 exports.errIptIgn = new MessageEmbed()
     .setTitle("ERROR")
@@ -44,7 +48,7 @@ exports.errAccLinked = new MessageEmbed()
 
 exports.linkSuccess = new MessageEmbed()
     .setTitle("Success")
-    .setDescription(`${player} linked successfully!`)
+    .setDescription(`Account linked successfully!`)
     .setColor(0x00d492);
 
 exports.errHypixelMismatch = new MessageEmbed()
