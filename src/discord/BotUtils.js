@@ -16,6 +16,7 @@ module.exports = class BotUtils {
     static async resolveAccount(string, rawMessage) {
         string = stringify(string);
         let acclist = await utils.readJSON("./accounts.json");
+        let disclist = await utils.readJSON("./disclist.json");
         let acc;
         if (string.length == 18) {
             acc = acclist.find((a) => a.discord == string);
@@ -31,33 +32,37 @@ module.exports = class BotUtils {
             );
         }
 
-        if (acc == undefined) {
+        if (string.length > 0 && acc == undefined) {
             let discusers = await rawMessage.guild.members.fetch({
                 query: string,
                 limit: 1,
             });
             if (discusers.size > 0) {
-                let id = discusers.first().id;
-                acc = acclist.find((a) => a.discord == id);
+                let usr = await discusers.first();
+                let id = usr.id;
+                let uuid = disclist[id];
+                acc = acclist.find((a) => a.uuid == uuid);
             }
         }
 
         if (acc == undefined) {
             if (rawMessage.mentions.users.size > 0) {
                 let discid = "" + rawMessage.mentions.users.first();
+                let uuid = disclist[discid];
                 acc = acclist.find(
                     (a) =>
-                        stringify(a.discord).toLowerCase() ==
-                        discid.toLowerCase()
+                        stringify(a.uuid).toLowerCase() ==
+                        uuid.toLowerCase()
                 );
             }
         }
 
         if (acc == undefined) {
             let discid = rawMessage.author.id;
+            let uuid = disclist[discid];
             acc = acclist.find(
                 (a) =>
-                    stringify(a.discord).toLowerCase() == discid.toLowerCase()
+                    stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
             );
         }
 
@@ -74,7 +79,7 @@ module.exports = class BotUtils {
         return {
             username: "Arcade Bot",
             avatarURL:
-                "https://cdn.discordapp.com/avatars/818719828352696320/e3d2cac7292077850196fe232f1e7efe.webp",
+                "https://cdn.discordapp.com/avatars/818719828352696320/bb430aeea67244e5c2c8ab56dad79194.webp",
             embeds: embeds,
         };
     }
