@@ -79,7 +79,7 @@ module.exports = class BotUtils {
         return {
             username: "Arcade Bot",
             avatarURL:
-                "https://cdn.discordapp.com/avatars/818719828352696320/bb430aeea67244e5c2c8ab56dad79194.webp",
+                "https://cdn.discordapp.com/avatars/818719828352696320/ff42f20a6cccc27a8a6656851bd01343.png",
             embeds: embeds,
         };
     }

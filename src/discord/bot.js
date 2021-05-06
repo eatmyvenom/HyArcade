@@ -32,4 +32,5 @@ module.exports = function doBot() {
     }
 
     setInterval(BotEvents.tick, 5000);
+    setInterval(BotEvents.heartBeat, 3600000);
 };

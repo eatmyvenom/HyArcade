@@ -167,8 +167,8 @@ async function genPGEmbed() {
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("------------ Top lifetime wins ------------", alltime, true)
-        .addField("-------------- Top daily wins -------------", day, true);
+        .addField("------------- Top lifetime wins -------------", alltime, true)
+        .addField("--------------- Top daily wins --------------", day, true);
 
     return embed;
 }
@@ -180,7 +180,7 @@ async function genTOKillEmbed() {
         .setTitle("Throw out leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("------------ Top lifetime kills ------------", alltime, true)
+        .addField("------------- Top lifetime kills -------------", alltime, true)
 
     return embed;
 }
@@ -192,7 +192,7 @@ async function genPGWEmbed() {
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("------------- Top weekly wins -------------", week, true);
+        .addField("-------------- Top weekly wins --------------", week, true);
 
     return embed;
 }
@@ -204,7 +204,7 @@ async function genPGMEmbed() {
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
-        .addField("------------- Top monthly wins ------------", month, true);
+        .addField("-------------- Top monthly wins -------------", month, true);
 
     return embed;
 }
