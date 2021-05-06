@@ -23,11 +23,15 @@ module.exports = class RoleUpdater {
     }
 
     async updateAll() {
+        let disclist = await utils.readJSON("disclist.json");
         let acclist = await utils.readJSON("accounts.json");
         let mbrList = await this.guild.members.fetch();
-        for (let acc of acclist) {
-            if (mbrList.has(acc.discord)) {
-                await this.updatePlayer(acc, mbrList.get(acc.discord));
+        for (let discid in disclist) {
+            if (mbrList.has(discid)) {
+                let uuid = disclist[discid];
+                let acc = acclist.find((a) => a.uuid == uuid);
+                if(acc == undefined) continue;
+                await this.updatePlayer(acc, mbrList.get(discid));
             }
         }
     }
