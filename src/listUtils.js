@@ -213,6 +213,10 @@ function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
+function formatNum(number) {
+    return Intl.NumberFormat('en').format(number)
+}
+
 async function stringLB(lbprop, maxamnt, category) {
     let list = await utils.readJSON("accounts.json");
     if (category == undefined) {
@@ -236,9 +240,9 @@ async function stringLB(lbprop, maxamnt, category) {
         if (propVal < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;
-        str += `${i + 1}) **${name}** (${propVal})\n`;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
-    return str;
+    return str.replace(/_/g, "\\_");
 }
 
 async function stringLBDiff(lbprop, maxamnt, timetype, category) {
@@ -270,9 +274,9 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
         if (numberify(propVal) < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;
-        str += `${i + 1}) **${name}** (${propVal})\n`;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
-    return str;
+    return str.replace(/_/g, "\\_");
 }
 
 async function stringLBDaily(lbprop, maxamnt) {

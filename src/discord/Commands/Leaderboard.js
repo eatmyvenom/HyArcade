@@ -46,7 +46,7 @@ async function getLB(prop, timetype, limit, category) {
         }
     }
 
-    res = res != "" ? res.replace(/_/g, "\\_") : "Nobody has won.";
+    res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed()
         .setTitle(time + " Leaderboard")
         .setColor(0x00cc66)
@@ -65,12 +65,12 @@ async function getLB(prop, timetype, limit, category) {
 }
 
 module.exports = new Command("leaderboard", ["*"], async (args) => {
-    if (args.length < 2) {
+    if (args.length < 1) {
         let embed = new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0x00cc66)
             .setDescription(
-                "This command requires two arguments, game and type. Use the help command for more info."
+                "This command a game argument. Use the help command for more info."
             );
         return {
             res: "",
@@ -79,11 +79,11 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     }
 
     let type = args[0];
-    let timetype = args[1];
+    let timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[2] != undefined ? args[2] : 10;
     let res = "";
 
-    switch (type) {
+    switch (type.toLowerCase()) {
         case "sex":
         case "sexy":
         case "party":

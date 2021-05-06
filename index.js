@@ -113,6 +113,10 @@ async function sendPGMonth() {
     await Webhook.sendPGMEmbed();
 }
 
+async function sendToKill() {
+    await Webhook.sendTOKillEmbed();
+}
+
 /**
  * Snapshot the amount of wins into another json file
  * @param {String} timeType the inbetween of the file
@@ -347,6 +351,10 @@ async function main() {
 
         case "discordPGM":
             await sendPGMonth();
+            break;
+
+        case "discordTOK":
+            await sendToKill();
             break;
 
         case "link":
