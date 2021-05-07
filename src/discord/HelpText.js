@@ -48,3 +48,7 @@ exports.games = `use any of these with the leaderboard or stats command
 There are also short versions availiable`;
 
 exports.getraw = `Get the raw data from a field of a player in the database. The field is what is stored in my database internally. Therefore the field names probably won't make sense. This command is really only here for me so I can make sure someones stats aren't messed up.`;
+
+exports.names = `Get the name history of someone. This only returns the names that they have used on hypixel. If they never logged on with a name they once had then it will not show up.`;
+
+exports.whois = `Check the discord link of a player. If the person is not linked then it will just say "undefined" instead of their id and mention.`

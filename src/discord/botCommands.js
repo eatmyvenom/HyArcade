@@ -16,6 +16,7 @@ let MKinvCmd = require("./Commands/MakeInviteEmbed");
 let MKhookCmd = require("./Commands/MakeHook");
 let UpdRolesCmd = require("./Commands/UpdateRoles");
 let NameHistCmd = require("./Commands/NameHistory");
+let WhoISCmd = require("./Commands/WhoIS");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -137,6 +138,12 @@ async function checkCommands(rawMsg, command, args, author) {
         case "namehist":
         case "namehistory": {
             return await NameHistCmd.execute(args, author, rawMsg);
+        }
+
+        case "whois":
+        case "whoam":
+        case "whos": {
+            return await WhoISCmd.execute(args, author, rawMsg);
         }
     }
     return { res: "" };
