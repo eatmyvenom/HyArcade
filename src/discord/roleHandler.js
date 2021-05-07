@@ -105,6 +105,21 @@ module.exports = async function roleHandler(client) {
         "farmhuntWins"
     );
 
+    let hnsGuild = await client.guilds.fetch("839842177755775026");
+    let HNS = new RoleUpdater(
+        hnsGuild,
+        [
+            new Role(10000, "839874994225545256"),
+            new Role(5000, "839851167651069962"),
+            new Role(2500, "839843252194377728"),
+            new Role(1000, "839850875463925822"),
+            new Role(500, "839843337904062514"),
+            new Role(100, "839843397543657502"),
+            new Role(0, "839843424575815680"),
+        ],
+        "hideAndSeekWins"
+    );
+
     logger.out("Updating roles for Party gamers \n");
     await PG.updateAll();
     // logger.out('\nUpdating roles for Hypixel Says \n')
@@ -115,5 +130,7 @@ module.exports = async function roleHandler(client) {
     await SIM.updateAll();
     logger.out("\nUpdating roles in Farm Hunt\n");
     await FH.updateAll();
+    logger.out("\nUpdating roles in Hide and seek\n");
+    await HNS.updateAll();
     logger.out("Roles updated");
 };

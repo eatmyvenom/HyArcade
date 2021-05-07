@@ -63,7 +63,7 @@ module.exports = new Command(
                 ),
                 makeField(
                     "<:HaS:779067904435028068> Hide and seek",
-                    "https://discord.gg/J6UMkQrjpV"
+                    "https://discord.gg/M4KjeH3uKq"
                 ),
                 makeField(
                     "<:HitW:779067896973230093> Hole in the Wall",
