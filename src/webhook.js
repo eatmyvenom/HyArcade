@@ -174,7 +174,7 @@ async function genPGEmbed() {
 }
 
 async function genTOKillEmbed() {
-    let alltime = await listUtils.stringLB("throwOutKills", 25, "extras");
+    let alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
 
     let embed = new Discord.MessageEmbed()
         .setTitle("Throw out leaderboards")
