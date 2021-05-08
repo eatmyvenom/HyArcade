@@ -214,7 +214,7 @@ function numberify(str) {
 }
 
 function formatNum(number) {
-    return Intl.NumberFormat('en').format(number)
+    return Intl.NumberFormat("en").format(number);
 }
 
 async function stringLB(lbprop, maxamnt, category) {

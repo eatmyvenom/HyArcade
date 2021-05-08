@@ -50,9 +50,7 @@ module.exports = class BotUtils {
                 let discid = "" + rawMessage.mentions.users.first();
                 let uuid = disclist[discid];
                 acc = acclist.find(
-                    (a) =>
-                        stringify(a.uuid).toLowerCase() ==
-                        uuid.toLowerCase()
+                    (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
                 );
             }
         }
@@ -61,8 +59,7 @@ module.exports = class BotUtils {
             let discid = rawMessage.author.id;
             let uuid = disclist[discid];
             acc = acclist.find(
-                (a) =>
-                    stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
+                (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
             );
         }
 

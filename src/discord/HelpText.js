@@ -51,4 +51,4 @@ exports.getraw = `Get the raw data from a field of a player in the database. The
 
 exports.names = `Get the name history of someone. This only returns the names that they have used on hypixel. If they never logged on with a name they once had then it will not show up.`;
 
-exports.whois = `Check the discord link of a player. If the person is not linked then it will just say "undefined" instead of their id and mention.`
+exports.whois = `Check the discord link of a player. If the person is not linked then it will just say "undefined" instead of their id and mention.`;

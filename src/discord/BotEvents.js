@@ -62,7 +62,7 @@ module.exports = class BotEvents {
             await runtime.save();
         }
     }
-    
+
     static async heartBeat() {
         logger.out("Heart beat - I'm alive!");
     }

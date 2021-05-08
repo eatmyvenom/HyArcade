@@ -3,7 +3,7 @@ const Account = require("../../account");
 const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../mojangRequest");
-const Embeds = require('../Embeds')
+const Embeds = require("../Embeds");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 

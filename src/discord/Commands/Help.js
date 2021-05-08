@@ -92,17 +92,17 @@ function getHelp(cmd) {
 
         case "names":
         case "namehist": {
-            title = "Name History"
-            usage = "namehist [name?]"
-            desc = HelpText.names
+            title = "Name History";
+            usage = "namehist [name?]";
+            desc = HelpText.names;
             break;
         }
 
         case "whos":
         case "whois": {
-            title = "Who is"
-            usage = "whois [name?]"
-            desc = HelpText.whois
+            title = "Who is";
+            usage = "whois [name?]";
+            desc = HelpText.whois;
             break;
         }
     }
@@ -131,7 +131,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("GameCounts", "Get the amount of players in either all arcade games or just one", false)
             .addField("PGDaily", "Get the daily leaderboard for party games", false)
             .addField("NameHistory", "Check the name history of a player", false)
-            .addField("WhoIS", "Check the discord link of a player", false)
+            .addField("WhoIS", "Check the discord link of a player", false);
 
         return { res: "", embed: embed };
     } else {

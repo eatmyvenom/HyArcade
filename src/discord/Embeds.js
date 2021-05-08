@@ -13,16 +13,16 @@ exports.waiting = new MessageEmbed()
         "Please avoid using this unless they should actually be in the database, too many people slows down the overall system."
     );
 
-exports.accsAdded = function(res) {
+exports.accsAdded = function (res) {
     return new MessageEmbed()
-    .setTitle("Accounts added")
-    .setDescription(res)
-    .setFooter(
-        "It will take a little while for these accounts to be fully added to the database, please be patient."
-    )
-    .setTimestamp(Date.now())
-    .setColor(0x44a3e7);
-}
+        .setTitle("Accounts added")
+        .setDescription(res)
+        .setFooter(
+            "It will take a little while for these accounts to be fully added to the database, please be patient."
+        )
+        .setTimestamp(Date.now())
+        .setColor(0x44a3e7);
+};
 
 exports.errIptIgn = new MessageEmbed()
     .setTitle("ERROR")

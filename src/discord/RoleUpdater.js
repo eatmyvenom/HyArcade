@@ -30,7 +30,7 @@ module.exports = class RoleUpdater {
             if (mbrList.has(discid)) {
                 let uuid = disclist[discid];
                 let acc = acclist.find((a) => a.uuid == uuid);
-                if(acc == undefined) continue;
+                if (acc == undefined) continue;
                 await this.updatePlayer(acc, mbrList.get(discid));
             }
         }
