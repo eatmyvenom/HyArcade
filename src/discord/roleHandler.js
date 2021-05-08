@@ -114,6 +114,7 @@ module.exports = async function roleHandler(client) {
             new Role(2500, "839843252194377728"),
             new Role(1000, "839850875463925822"),
             new Role(500, "839843337904062514"),
+            new Role(250, "840080298011787264"),
             new Role(100, "839843397543657502"),
             new Role(0, "839843424575815680"),
         ],
