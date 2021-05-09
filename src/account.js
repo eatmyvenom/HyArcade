@@ -15,6 +15,7 @@ class Account {
     version = "";
     firstLogin = 0;
     isLoggedIn = false;
+    lastLogout = 0;
     mostRecentGameType = "";
     achievementPoints = 0;
     xp = 0;
@@ -189,6 +190,7 @@ class Account {
             this.nameHist = json.player.knownAliases;
             this.internalId = json.player._id;
             this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
+            this.lastLogout = json.player.lastLogout;
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
