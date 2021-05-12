@@ -5,7 +5,7 @@ const BotUtils = require("../BotUtils");
 function makeField(name, link) {
     return {
         name: name,
-        value: `[Invite Link](${link})`,
+        value: `[<:join:841515519823708170> Invite](${link})`,
         inline: true,
     };
 }
@@ -15,6 +15,7 @@ module.exports = new Command(
     ["156952208045375488"],
     async (args) => {
         let channelID = args[0];
+        let msgID = args[1];
         let channel = await BotUtils.client.channels.fetch(channelID);
         let embed = new MessageEmbed()
             .setTitle("Arcade servers")
@@ -104,7 +105,12 @@ module.exports = new Command(
                 makeField("Arcade AP Hunters", "https://discord.gg/wXAd4UbVfy"),
             ]);
 
-        await channel.send("", { embed: embed });
+        if(msgID == undefined) {
+            await channel.send("", { embed: embed });
+        } else {
+            let message = await channel.messages.fetch(msgID);
+            await message.edit(embed);
+        }
         return { res: "list created" };
     }
 );
