@@ -8,6 +8,7 @@ module.exports = async function roleHandler(client) {
     let PG = new RoleUpdater(
         pgGuild,
         [
+            new Role(7000, "839367531747344404"),
             new Role(6000, "812401869271859201"),
             new Role(5000, "803673705221849149"),
             new Role(4000, "786711230764941332"),
