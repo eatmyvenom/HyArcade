@@ -1,11 +1,19 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const listUtils = require("../listUtils");
+const fs = require("fs/promises")
 const utils = require("../utils");
 const webhook = require("../webhook");
 
 function stringify(str) {
     return "" + str;
+}
+
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
+
+function formatNum(number) {
+    return Intl.NumberFormat("en").format(number);
 }
 module.exports = class BotUtils {
     static logHook;
@@ -108,13 +116,11 @@ module.exports = class BotUtils {
             case "party":
             case "partygames":
             case "pg": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Party games wins",
                     value: acc.wins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
                 break;
             }
 
@@ -123,7 +129,6 @@ module.exports = class BotUtils {
             case "fmhnt":
             case "farmhunt":
             case "frmhnt": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Farm hunt wins",
                     value: acc.farmhuntWins,
@@ -142,7 +147,6 @@ module.exports = class BotUtils {
             case "hypixel":
             case "says":
             case "hysays": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Hypixel says wins",
                     value: acc.hypixelSaysWins,
@@ -160,7 +164,6 @@ module.exports = class BotUtils {
             case "hit":
             case "hole":
             case "pain": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "HITW wins",
                     value: acc.hitwWins,
@@ -192,7 +195,6 @@ module.exports = class BotUtils {
             case "wall":
             case "pvp":
             case "miniwalls": {
-                fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
                     name: "Mini walls wins",
@@ -254,7 +256,6 @@ module.exports = class BotUtils {
             case "fuck":
             case "shit":
             case "football": {
-                fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
                     name: "Football wins",
@@ -289,7 +290,6 @@ module.exports = class BotUtils {
             case "enderman":
             case "trash":
             case "enderspleef": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Ender spleef wins",
                     value: acc.enderSpleefWins,
@@ -304,7 +304,6 @@ module.exports = class BotUtils {
             case "toss":
             case "sumo2":
             case "throwout": {
-                fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
                     name: "Throw out wins",
@@ -331,7 +330,6 @@ module.exports = class BotUtils {
             case "sw":
             case "galaxy":
             case "galaxywars": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Galaxy wars wins",
                     value: acc.galaxyWarsWins,
@@ -356,7 +354,6 @@ module.exports = class BotUtils {
             case "dw":
             case "dragon":
             case "dragonwars": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Dragon wars wins",
                     value: acc.dragonWarsWins,
@@ -380,7 +377,6 @@ module.exports = class BotUtils {
             case "bounty":
             case "oneinthequiver":
             case "bountyhunters": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Bounty hunters wins",
                     value: acc.bountyHuntersWins,
@@ -407,7 +403,6 @@ module.exports = class BotUtils {
             case "dayone":
             case "blocking":
             case "blockingdead": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Blocking dead wins",
                     value: acc.blockingDeadWins,
@@ -437,7 +432,6 @@ module.exports = class BotUtils {
             case "hideandseek":
             case "hidenseek":
             case "hideseek": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Hide and seek wins",
                     value: acc.hideAndSeekWins,
@@ -465,7 +459,6 @@ module.exports = class BotUtils {
             case "zomb":
             case "zbies":
             case "zombies": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Zombies wins",
                     value: acc.zombiesWins,
@@ -483,7 +476,6 @@ module.exports = class BotUtils {
             case "ctwwool":
             case "ctwwoolcaptured":
             case "ctwkills": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Ctw kills",
                     value: acc.ctwKills,
@@ -505,7 +497,6 @@ module.exports = class BotUtils {
             case "drawmything":
             case "drawtheirthing":
             case "drawing": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Pixel painters wins",
                     value: acc.pixelPaintersWins,
@@ -520,7 +511,6 @@ module.exports = class BotUtils {
             case "seasonal":
             case "season":
             case "sea": {
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Easter sim wins",
                     value: acc.seasonalWins.easter,
@@ -550,27 +540,72 @@ module.exports = class BotUtils {
                 });
                 fields.push(BotUtils.emptyField(true));
             }
+
+            default: {
+                fields.push({
+                    name: "Level",
+                    value: lvl,
+                    inline: true,
+                });
+                fields.push({
+                    name: "All Hypixel wins",
+                    value: formatNum(numberify(acc.anyWins)),
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "Arcade wins",
+                    value: formatNum(numberify(acc.arcadeWins)),
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Arcade coins",
+                    value: formatNum(numberify(acc.arcadeCoins)),
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "AP",
+                    value: formatNum(numberify(acc.achievementPoints)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Karma",
+                    value:formatNum(numberify(acc.karma)),
+                    inline: true,
+                });
+                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "UUID",
+                    value:acc.uuid,
+                    inline: true,
+                });
+            }
         }
 
         fields.push(BotUtils.emptyField(true));
         let rank = ("" + acc.rank)
             .replace(/_/g, "")
             .replace(/PLUS/g, "+")
-            .replace(/undefined/g, "non");
-        rank = rank == "" ? "Non" : rank;
+            .replace(/undefined/g, "");
+        rank = rank == "" ? "" : "[" + rank + "]";
+
+        let updatetime;
+        if (utils.fileExists("timeupdate")) {
+            updatetime = await fs.readFile("timeupdate");
+        } else {
+            updatetime = "Right now!";
+        }
+        let date = new Date(updatetime.toString())
 
         let embed = new MessageEmbed()
-            .setAuthor(acc.name, iconURL, playerURL)
-            .setTitle("Stats")
+            .setAuthor(`${rank} ${acc.name}`,null,"http://eatmyvenom.me/share/partygames/player.html?q="+ acc.name )
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
-            .addField("All wins", acc.anyWins, true)
-            .addField("Arcade wins", acc.arcadeWins, true)
             .addFields(fields)
-            .addField("Level", lvl, true)
-            .addField("Rank", rank, true)
-            .addFields([BotUtils.emptyField(true)])
-            .addField("UUID", acc.uuid, false);
+            .setFooter("Data generated at", BotUtils.client.user.avatarURL())
+            .setTimestamp(date.getTime())
 
         return { res: "", embed: embed };
     }
