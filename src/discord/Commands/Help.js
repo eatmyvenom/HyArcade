@@ -131,7 +131,8 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("GameCounts", "Get the amount of players in either all arcade games or just one", false)
             .addField("PGDaily", "Get the daily leaderboard for party games", false)
             .addField("NameHistory", "Check the name history of a player", false)
-            .addField("WhoIS", "Check the discord link of a player", false);
+            .addField("WhoIS", "Check the discord link of a player", false)
+            .addField("LastUpdate", "Get the time of the last database update", false)
 
         return { res: "", embed: embed };
     } else {
