@@ -11,7 +11,7 @@ const messageHandler = require("./messageHandler");
  */
 module.exports = function doBot() {
     let mode = process.argv[3];
-    const client = new Discord.Client();
+    const client = new Discord.Client({intents: [Discord.Intents.ALL], allowedMentions: { parse: ['users', 'roles'], repliedUser: true }});
 
     client.on("ready", async () => {
         BotUtils.client = client;
