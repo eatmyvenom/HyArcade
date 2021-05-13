@@ -1,7 +1,10 @@
 const { MessageEmbed, Util } = require("discord.js");
+const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const Config = require("../../Config");
 const listUtils = require("../../listUtils");
+const utils = require("../../utils");
+const fs = require('fs/promises')
 
 async function getLB(prop, timetype, limit, category) {
     let res = "";
@@ -39,6 +42,32 @@ async function getLB(prop, timetype, limit, category) {
             break;
         }
 
+        case "a":
+        case "all":
+        case "*": {
+            let day = await listUtils.stringLBDiff(prop, limit, "day", category);
+            let week = await listUtils.stringLBDiff(prop, limit, "weekly", category);
+            let month = await listUtils.stringLBDiff(prop, limit, "monthly", category);
+            let life = await listUtils.stringLB(prop, limit, category);
+
+            day = (day == "") ? "Nobody has won" : day;
+            week = (week == "") ? "Nobody has won" : week;
+            month = (month == "") ? "Nobody has won" : month;
+
+
+            let embed = new MessageEmbed()
+                .setColor(0x00cc66)
+                .addField("Daily", day, true)
+                .addField("Weekly", week, true)
+                .addField("\u200B", "\u200B", true)
+                .addField("Monthly", month, true)
+                .addField("Lifetime", life, true)
+                .addField("\u200B", "\u200B", true)
+
+            return embed;
+            break;
+        }
+
         default: {
             time = "Lifetime";
             res = await listUtils.stringLB(prop, limit, category);
@@ -48,7 +77,7 @@ async function getLB(prop, timetype, limit, category) {
 
     res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed()
-        .setTitle(time + " Leaderboard")
+        .setTitle(time)
         .setColor(0x00cc66)
         .setDescription(res);
 
@@ -82,6 +111,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     let timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[2] != undefined ? args[2] : 10;
     let res = "";
+    let gameName = "";
 
     switch (type.toLowerCase()) {
         case "sex":
@@ -89,6 +119,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "party":
         case "partygames":
         case "pg": {
+            gameName = "Party games";
             res = await getLB("wins", timetype, limit);
             break;
         }
@@ -99,6 +130,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "fmhnt":
         case "farmhunt":
         case "frmhnt": {
+            gameName = "Farm hunt";
             res = await getLB("farmhuntWins", timetype, limit);
             break;
         }
@@ -107,6 +139,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "poop":
         case "poopcollected":
         case "fmhntpoop": {
+            gameName = "Farm hunt poop";
             res = await getLB("farmhuntShit", timetype, limit);
             break;
         }
@@ -116,6 +149,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "hypixel":
         case "says":
         case "hysays": {
+            gameName = "Hypixel Says";
             res = await getLB("hypixelSaysWins", timetype, limit);
             break;
         }
@@ -135,6 +169,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "wall":
         case "pvp":
         case "miniwalls": {
+            gameName = "Mini walls";
             res = await getLB("miniWallsWins", timetype, limit);
             break;
         }
@@ -146,6 +181,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "fuck":
         case "shit":
         case "football": {
+            gameName = "Football";
             res = await getLB("footballWins", timetype, limit);
             break;
         }
@@ -156,6 +192,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "enderman":
         case "trash":
         case "enderspleef": {
+            gameName = "Ender spleef";
             res = await getLB("enderSpleefWins", timetype, limit);
             break;
         }
@@ -165,12 +202,14 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "toss":
         case "sumo2":
         case "throwout": {
+            gameName = "Throw out";
             res = await getLB("throwOutWins", timetype, limit);
             break;
         }
 
         case "throwkills":
         case "tokills": {
+            gameName = "Throw out kills";
             res = await getLB("throwOutKills", timetype, limit, "extras");
             break;
         }
@@ -179,6 +218,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "sw":
         case "galaxy":
         case "galaxywars": {
+            gameName = "Galaxy wars";
             res = await getLB("galaxyWarsWins", timetype, limit);
             break;
         }
@@ -186,6 +226,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "dw":
         case "dragon":
         case "dragonWars": {
+            gameName = "Dragon wars";
             res = await getLB("dragonWarsWins", timetype, limit);
             break;
         }
@@ -195,6 +236,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "one":
         case "oneinthequiver":
         case "bountyhunters": {
+            gameName = "Bounty hunters";
             res = await getLB("bountyHuntersWins", timetype, limit);
             break;
         }
@@ -204,6 +246,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "dayone":
         case "blocking":
         case "blockingdead": {
+            gameName = "Blocking dead";
             res = await getLB("blockingDeadWins", timetype, limit);
             break;
         }
@@ -211,6 +254,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "arc":
         case "arcade":
         case "all": {
+            gameName = "Arcade wins";
             res = await getLB("arcadeWins", timetype, limit);
             break;
         }
@@ -223,6 +267,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "hideandseek":
         case "hidenseek":
         case "hideseek": {
+            gameName = "Hide and seek";
             res = await getLB("hideAndSeekWins", timetype, limit);
             break;
         }
@@ -233,6 +278,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "zomb":
         case "zbies":
         case "zombies": {
+            gameName = "Zombies"
             res = await getLB("zombiesWins", timetype, limit);
             break;
         }
@@ -241,6 +287,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "capkills":
         case "capture":
         case "ctwkills": {
+            gameName = "Captrue the wool kills";
             res = await getLB("ctwKills", timetype, limit);
             break;
         }
@@ -249,6 +296,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "capwool":
         case "ctwwool":
         case "ctwwoolcaptured": {
+            gameName = "Capture the wool captures";
             res = await getLB("ctwWoolCaptured", timetype, limit);
             break;
         }
@@ -260,6 +308,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "drawmything":
         case "drawtheirthing":
         case "drawing": {
+            gameName = "Pixel painters";
             res = await getLB("pixelPaintersWins", timetype, limit);
             break;
         }
@@ -268,6 +317,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "arccoins":
         case "arcadecoins":
         case "arcade_coins": {
+            gameName = "Arcade coins";
             res = await getLB("arcadeCoins", timetype, limit);
             break;
         }
@@ -276,6 +326,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "eastersim":
         case "eastersimulator":
         case "easter-simulator": {
+            gameName = "Easter simulator";
             res = await getLB("easter", timetype, limit, "seasonalWins");
             break;
         }
@@ -284,6 +335,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "scubasim":
         case "scubasimulator":
         case "scuba-simulator": {
+            gameName = "Scuba simulator";
             res = await getLB("scuba", timetype, limit, "seasonalWins");
             break;
         }
@@ -292,6 +344,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "halloweensim":
         case "halloweensimulator":
         case "halloween-simulator": {
+            gameName = "Halloween simulator";
             res = await getLB("halloween", timetype, limit, "seasonalWins");
             break;
         }
@@ -300,6 +353,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "grinchsim":
         case "grinchsimulator":
         case "grinch-simulator": {
+            gameName = "Grinch simulator";
             res = await getLB("grinch", timetype, limit, "seasonalWins");
             break;
         }
@@ -307,6 +361,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "totalsim":
         case "totalsimulator":
         case "total-simulator": {
+            gameName = "Total simulator";
             res = await getLB("total", timetype, limit, "seasonalWins");
             break;
         }
@@ -325,5 +380,18 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
     }
 
-    return { res: "", embed: res };
+    let updatetime;
+    if (utils.fileExists("timeupdate")) {
+        updatetime = await fs.readFile("timeupdate");
+    } else {
+        updatetime = "Right now!";
+    }
+    let date = new Date(updatetime.toString())
+
+    let finalRes = res
+        .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL())
+        .setFooter("Data generated at", BotUtils.client.user.avatarURL())
+        .setTimestamp(date);
+
+    return { res: "", embed: finalRes };
 });
