@@ -126,13 +126,13 @@ module.exports = async function roleHandler(client) {
     await PG.updateAll();
     // logger.out('\nUpdating roles for Hypixel Says \n')
     // await HS.updateAll();
-    logger.out("\nUpdating roles for Throw out\n");
+    logger.out("Updating roles for Throw out");
     await TO.updateAll();
-    logger.out("\nUpdating roles for sim games \n");
+    logger.out("Updating roles for sim games");
     await SIM.updateAll();
-    logger.out("\nUpdating roles in Farm Hunt\n");
+    logger.out("Updating roles in Farm Hunt");
     await FH.updateAll();
-    logger.out("\nUpdating roles in Hide and seek\n");
+    logger.out("Updating roles in Hide and seek");
     await HNS.updateAll();
     logger.out("Roles updated");
 };

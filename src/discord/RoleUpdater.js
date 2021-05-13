@@ -37,7 +37,7 @@ module.exports = class RoleUpdater {
     }
 
     async updatePlayer(acc, discMember) {
-        logger.out(`Updating ${discMember.user.tag}`);
+        // logger.out(`Updating ${discMember.user.tag}`);
         let newRole = this.getRole(acc[this.prop]);
         if (newRole == undefined) return;
         if (discMember.roles == undefined) return;
