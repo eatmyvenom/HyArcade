@@ -5,8 +5,8 @@ const BotUtils = require("../BotUtils");
 module.exports = class InteractionUtils {
     static async resolveAccount(interaction) {
         let string = "undefinednullnonothingno";
-        if (interaction.data.options != undefined) {
-            string = interaction.data.options[0].value;
+        if (interaction.options != undefined && interaction.options[0] != undefined) {
+            string = interaction.options[0].value;
         }
         string = stringify(string);
         let acclist = await utils.readJSON("./accounts.json");
@@ -37,18 +37,7 @@ module.exports = class InteractionUtils {
     }
 
     static async sendEphemeralMsg(interaction) {
-        await BotUtils.client.api
-            .interactions(interaction.id, interaction.token)
-            .callback.post({
-                data: {
-                    type: 4,
-                    data: {
-                        content:
-                            "Since the the database does not contain the account(s) it will take some time to gather the stats. Please wait!",
-                        flags: 1 << 6,
-                    },
-                },
-            });
+        await interaction.reply("Since the the database does not contain the account(s) it will take some time to gather the stats. Please wait!", { ephemeral: true } );
     }
 };
 

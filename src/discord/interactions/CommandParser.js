@@ -3,10 +3,13 @@ const { addAccounts } = require("../../listUtils");
 const Leaderboard = require("../Commands/Leaderboard");
 const InteractionUtils = require("./InteractionUtils");
 const { MessageEmbed } = require("discord.js");
+const Account = require("../../account");
+const mojangRequest = require("../../mojangRequest");
 
 module.exports = async (interaction) => {
+    if(!interaction.isCommand()) return;
     let authorID = interaction.member.user.id;
-    let opts = [].concat(interaction.data.options);
+    let opts = [].concat(interaction.options);
     let args = [];
     for (let i = 0; i < opts.length; i++) {
         if (opts[i] != undefined) {
@@ -16,7 +19,7 @@ module.exports = async (interaction) => {
         }
     }
 
-    switch (interaction.data.name.toLowerCase()) {
+    switch (interaction.commandName) {
         case "stats": {
             let game = args[1];
             let acc = await InteractionUtils.resolveAccount(interaction);
@@ -28,7 +31,7 @@ module.exports = async (interaction) => {
         }
 
         case "addaccount": {
-            await InteractionUtils.sendEphemeralMsg(interaction);
+            await interaction.defer();
             let names = args[0].split(" ");
             let res = await addAccounts("others", names);
             res = "```\n" + res + "\n```";
@@ -41,6 +44,22 @@ module.exports = async (interaction) => {
                 .setTimestamp(Date.now())
                 .setColor(0x44a3e7);
             return { res: "", embed: embed };
+        }
+
+        case "unlinkedstats": {
+            await interaction.defer();
+            let plr = args[0];
+            let game = "" + args[args.length - 1];
+            let uuid;
+            if (plr.length > 17) {
+                uuid = plr;
+            } else {
+                uuid = await mojangRequest.getUUID(plr);
+            }
+
+            let acc = new Account("", 0, "" + uuid);
+            await acc.updateData();
+            return await BotUtils.getStats(acc, game);
         }
     }
 };
