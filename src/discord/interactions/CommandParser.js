@@ -1,6 +1,7 @@
 const BotUtils = require("../BotUtils");
 const { addAccounts } = require("../../listUtils");
 const Leaderboard = require("../Commands/Leaderboard");
+const Verify = require("../Commands/LinkMe");
 const InteractionUtils = require("./InteractionUtils");
 const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
@@ -60,6 +61,38 @@ module.exports = async (interaction) => {
             let acc = new Account("", 0, "" + uuid);
             await acc.updateData();
             return await BotUtils.getStats(acc, game);
+        }
+
+        case "namehistory": {
+            let acc = await InteractionUtils.resolveAccount(interaction);
+            let embed = new MessageEmbed()
+                .setTitle(`${acc.name} IGN history`)
+                .setDescription(acc.nameHist)
+                .setColor(0x44a3e7);
+            return { res: "", embed: embed };
+        }
+
+        case "whois": {
+            let acc = await InteractionUtils.resolveAccount(interaction);
+            let embed = new MessageEmbed()
+                .setTitle(`${acc.name} discord`)
+                .setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`)
+                .setColor(0x44a3e7);
+            return { res: "", embed: embed };
+        }
+
+        case "getdataraw": {
+            let acc = await InteractionUtils.resolveAccount(interaction, 1);
+            let path = args[0];
+            let embed = new MessageEmbed()
+                .setTitle(acc.name + "." + path)
+                .setDescription(acc[path])
+                .setColor(0x44a3e7);
+            return { res: "", embed: embed };
+        };
+
+        case "verify": {
+            return await Verify.execute(args, authorID, null, interaction);
         }
     }
 };

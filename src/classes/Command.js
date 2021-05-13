@@ -11,9 +11,9 @@ module.exports = class Command {
         this.callback = callback;
     }
 
-    async execute(args, author, rawMsg) {
+    async execute(args, author, rawMsg, interaction) {
         if (!this.allowed.includes(author) && !this.allowed.includes("*"))
             return { res: "You are not allowed to run this command." };
-        return await this.callback(args, rawMsg);
+        return await this.callback(args, rawMsg, interaction);
     }
 };

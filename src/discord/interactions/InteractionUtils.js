@@ -3,10 +3,10 @@ const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
 module.exports = class InteractionUtils {
-    static async resolveAccount(interaction) {
+    static async resolveAccount(interaction, namearg = 0) {
         let string = "undefinednullnonothingno";
-        if (interaction.options != undefined && interaction.options[0] != undefined) {
-            string = interaction.options[0].value;
+        if (interaction.options != undefined && interaction.options[namearg] != undefined) {
+            string = interaction.options[namearg].value;
         }
         string = stringify(string);
         let acclist = await utils.readJSON("./accounts.json");
