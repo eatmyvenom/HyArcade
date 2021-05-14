@@ -32,6 +32,7 @@ module.exports = function doBot() {
     if (mode == undefined) {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
+        setInterval(BotEvents.tick, 5000);
     }
 
     if (Runtime.bot != "backup") {
@@ -40,6 +41,5 @@ module.exports = function doBot() {
         client.login(config.discord.backupToken);
     }
 
-    setInterval(BotEvents.tick, 5000);
     setInterval(BotEvents.heartBeat, 3600000);
 };
