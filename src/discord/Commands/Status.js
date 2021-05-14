@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
+const InteractionUtils = require("../interactions/InteractionUtils");
 
 function format(str) {
     return formatCase(str).replace(/_/g, " ");
@@ -13,10 +14,15 @@ function formatCase(str) {
     );
 }
 
-module.exports = new Command("status", ["*"], async (args, rawMsg) => {
+module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
 
-    let acc = await BotUtils.resolveAccount(plr, rawMsg);
+    let acc;
+    if(interaction == undefined) {
+        acc = await BotUtils.resolveAccount(plr, rawMsg);
+    } else {
+        acc = await InteractionUtils.resolveAccount(interaction, 0);
+    }
     let stslist = await utils.readJSON("./status.json");
     let sts = stslist[acc.uuid];
     let embed;

@@ -2,6 +2,8 @@ const BotUtils = require("../BotUtils");
 const { addAccounts } = require("../../listUtils");
 const Leaderboard = require("../Commands/Leaderboard");
 const Verify = require("../Commands/LinkMe");
+const GameCounts = require('../Commands/GameCounts');
+const Status = require('../Commands/Status');
 const InteractionUtils = require("./InteractionUtils");
 const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
@@ -93,6 +95,14 @@ module.exports = async (interaction) => {
 
         case "verify": {
             return await Verify.execute(args, authorID, null, interaction);
+        }
+
+        case "gamecounts": {
+            return await GameCounts.execute(args, authorID, null, interaction);
+        }
+
+        case "status": {
+            return await Status.execute(args, authorID, null, interaction);
         }
     }
 };
