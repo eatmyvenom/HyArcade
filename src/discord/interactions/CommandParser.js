@@ -5,6 +5,7 @@ const Verify = require("../Commands/LinkMe");
 const GameCounts = require('../Commands/GameCounts');
 const Status = require('../Commands/Status');
 const InteractionUtils = require("./InteractionUtils");
+const Info = require('../Commands/Info')
 const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
 const mojangRequest = require("../../mojangRequest");
@@ -103,6 +104,10 @@ module.exports = async (interaction) => {
 
         case "status": {
             return await Status.execute(args, authorID, null, interaction);
+        }
+
+        case "info": {
+            return await Info.execute(args, authorID, null, interaction);
         }
     }
 };

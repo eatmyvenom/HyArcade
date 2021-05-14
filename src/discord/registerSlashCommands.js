@@ -2,7 +2,7 @@ const { WebhookClient } = require("discord.js");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
 
-const commandData = {};
+const commandData = {}
 
 async function interactionHandler(interaction) {
     let responseObj = await CommandParser(interaction);
