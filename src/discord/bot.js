@@ -9,7 +9,7 @@ const requiredIntents = [Discord.Intents.FLAGS.GUILDS,
                             Discord.Intents.FLAGS.GUILD_MESSAGES,
                             Discord.Intents.FLAGS.GUILD_WEBHOOKS,
                             Discord.Intents.FLAGS.GUILD_INTEGRATIONS,
-                            GUILD_MEMBERS]
+                            Discord.Intents.FLAGS.GUILD_MEMBERS]
 
 /**
  * Execute the discord bot
