@@ -19,7 +19,7 @@ module.exports = function doBot() {
     let mode = process.argv[3];
     const client = new Discord.Client({
         intents: requiredIntents,
-        allowedMentions: { parse: ["users", "roles"], repliedUser: false },
+        allowedMentions: { parse: [], repliedUser: false },
     });
 
     client.on("ready", async () => {
