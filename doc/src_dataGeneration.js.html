@@ -29,12 +29,14 @@
             <pre class="prettyprint source linenums"><code>const status = require("./status");
 const utils = require("./utils");
 const fs = require("fs/promises");
-const lists = require('./listParser');
+const lists = require("./listParser");
 const cfg = require("./Config").fromJSON();
 const hypixelAPI = require("./hypixelApi");
 let force = utils.fileExists("force") || cfg.alwaysForce;
 const GamesPlayed = require("./gamesPlayed");
 const { addAccounts } = require("./listUtils");
+const { logger } = require("./utils");
+const Runtime = require("./Runtime");
 
 /**
  * Generates the status for all of the online players
@@ -42,33 +44,16 @@ const { addAccounts } = require("./listUtils");
  */
 async function genStatus() {
     let statusObj = {};
-    let oldstatus = await utils.readJSON("status.json");
     let accdata = await utils.readJSON("accounts.json");
+    let acclist = await lists.accounts();
+    let accounts = acclist.accounts;
 
     await Promise.all(
         accounts.map(async (account) => {
             let thisdata = accdata.find((acc) => acc.uuid == account.uuid);
             if (thisdata &amp;&amp; thisdata.isLoggedIn) {
-                if (gamers.includes(account)) {
-                    statusObj[account.uuid] = JSON.parse(
-                        await hypixelAPI.getStatusRAW(account.uuid)
-                    ).session;
-                } else if (!force &amp;&amp; afkers.includes(account)) {
-                    // get old status instead
-                    let old = oldstatus[account.uuid];
-                    if (old == undefined) {
-                        statusObj[account.uuid] = JSON.parse(
-                            await hypixelAPI.getStatusRAW(account.uuid)
-                        ).session;
-                    } else {
-                        statusObj[account.uuid] = old;
-                    }
-                } else {
-                    // force true or not afker
-                    statusObj[account.uuid] = JSON.parse(
-                        await hypixelAPI.getStatusRAW(account.uuid)
-                    ).session;
-                }
+                let response = await hypixelAPI.getStatus(account.uuid);
+                statusObj[account.uuid] = response.session;
             }
         })
     );
@@ -142,7 +127,8 @@ async function statusTxt() {
 
 async function statusTxtSorted() {
     let str = "";
-    let accs = require("./acclist").accounts;
+    let acclist = await lists.accounts();
+    let accs = acclist.accounts;
 
     let crntstatus = await utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
@@ -228,14 +214,54 @@ async function updateAllAccounts() {
 
     let oldAccs = await utils.readJSON("accounts.json");
 
-    await Promise.all(
+    let i,
+        j,
+        temparray,
+        chunk = 120;
+    for (i = 0, j = accounts.length; i &lt; j; i += chunk) {
+        temparray = accounts.slice(i, i + chunk);
+        await updateAccountsInArr(temparray, oldAccs);
+    }
+
+    if (utils.fileExists("data/accounts.json.part")) {
+        let addedAccounts = await utils.readJSON("accounts.json.part");
+        await fs.rm("data/accounts.json.part");
+        accounts = accounts.concat(addedAccounts);
+    }
+
+    let runtime = Runtime.fromJSON();
+    runtime.needRoleupdate = true;
+    await runtime.save();
+
+    if (force) {
+        await fs.rm("force");
+    }
+
+    await accounts.sort(utils.winsSorter);
+    return accounts;
+}
+
+async function updateAccountsInArr(accounts, oldAccs) {
+    return await Promise.all(
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined &amp;&amp; !force) {
-                if (oldAcc.arcadeWins >= cfg.arcadeWinLimit) {
+                let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
+                let aboveCringeLimit =
+                    oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                let belowCringeLimit =
+                    oldAcc.footballWins &lt;= cfg.cringeGameLowerBound;
+                let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
+                let hasPlayedRecently =
+                    Date.now() - oldAcc.lastLogout &lt; 2629743000;
+
+                if (
+                    aboveArcadeLimit &amp;&amp;
+                    outsideCringeLimit &amp;&amp;
+                    hasPlayedRecently
+                ) {
                     await account.updateData();
                 } else {
-                    // ignore accounts with under 50 arcade wins
                     account.setData(oldAcc);
                 }
             } else {
@@ -243,8 +269,6 @@ async function updateAllAccounts() {
             }
         })
     );
-    await accounts.sort(utils.winsSorter);
-    return accounts;
 }
 
 async function addLeaderboards() {
@@ -294,7 +318,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Apr 11 2021 02:16:11 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri May 14 2021 01:35:34 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

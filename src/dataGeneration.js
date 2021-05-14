@@ -224,9 +224,14 @@ async function updateAccountsInArr(accounts, oldAccs) {
                 let belowCringeLimit =
                     oldAcc.footballWins <= cfg.cringeGameLowerBound;
                 let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
-                let hasPlayedRecently = (Date.now() - oldAcc.lastLogout) < 2629743000;
+                let hasPlayedRecently =
+                    Date.now() - oldAcc.lastLogout < 2629743000;
 
-                if (aboveArcadeLimit && outsideCringeLimit && hasPlayedRecently) {
+                if (
+                    aboveArcadeLimit &&
+                    outsideCringeLimit &&
+                    hasPlayedRecently
+                ) {
                     await account.updateData();
                 } else {
                     account.setData(oldAcc);

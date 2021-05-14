@@ -2,16 +2,20 @@ const { WebhookClient } = require("discord.js");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
 
-const commandData = {}
+const commandData = {};
 
 async function interactionHandler(interaction) {
     let responseObj = await CommandParser(interaction);
 
-    if(!interaction.deferred && !interaction.replied) {
-        await interaction.reply({ content: responseObj.res,
-            embeds: [responseObj.embed]});
+    if (!interaction.deferred && !interaction.replied) {
+        await interaction.reply({
+            content: responseObj.res,
+            embeds: [responseObj.embed],
+        });
     } else {
-        await interaction.webhook.send(responseObj.res, { embeds: [responseObj.embed] });
+        await interaction.webhook.send(responseObj.res, {
+            embeds: [responseObj.embed],
+        });
     }
 
     await BotUtils.logHook.send(
@@ -25,5 +29,5 @@ async function interactionHandler(interaction) {
 
 module.exports = async (client) => {
     // client.application.commands.create(commandData);
-    client.on('interaction', interactionHandler);
+    client.on("interaction", interactionHandler);
 };

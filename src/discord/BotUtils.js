@@ -1,6 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const fs = require("fs/promises")
+const fs = require("fs/promises");
 const utils = require("../utils");
 const webhook = require("../webhook");
 
@@ -45,7 +45,7 @@ module.exports = class BotUtils {
                 let usr = await discusers.first();
                 let id = usr.id;
                 let uuid = disclist[id];
-                if(uuid != undefined) {
+                if (uuid != undefined) {
                     acc = acclist.find((a) => a.uuid == uuid);
                 }
             }
@@ -55,9 +55,11 @@ module.exports = class BotUtils {
             if (rawMessage.mentions.users.size > 0) {
                 let discid = "" + rawMessage.mentions.users.first();
                 let uuid = disclist[discid];
-                if(uuid != undefined) {
+                if (uuid != undefined) {
                     acc = acclist.find(
-                        (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
+                        (a) =>
+                            stringify(a.uuid).toLowerCase() ==
+                            uuid.toLowerCase()
                     );
                 }
             }
@@ -557,7 +559,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.arcadeWins)),
                     inline: true,
                 });
-                
+
                 fields.push({
                     name: "Arcade coins",
                     value: formatNum(numberify(acc.arcadeCoins)),
@@ -571,13 +573,13 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "Karma",
-                    value:formatNum(numberify(acc.karma)),
+                    value: formatNum(numberify(acc.karma)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "UUID",
-                    value:acc.uuid,
+                    value: acc.uuid,
                     inline: true,
                 });
             }
@@ -596,15 +598,20 @@ module.exports = class BotUtils {
         } else {
             updatetime = "Right now!";
         }
-        let date = new Date(updatetime.toString())
+        let date = new Date(updatetime.toString());
 
         let embed = new MessageEmbed()
-            .setAuthor(`${rank} ${acc.name}`,null,"http://eatmyvenom.me/share/partygames/player.html?q="+ acc.name )
+            .setAuthor(
+                `${rank} ${acc.name}`,
+                null,
+                "http://eatmyvenom.me/share/partygames/player.html?q=" +
+                    acc.name
+            )
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
             .addFields(fields)
             .setFooter("Data generated at", BotUtils.client.user.avatarURL())
-            .setTimestamp(date.getTime())
+            .setTimestamp(date.getTime());
 
         return { res: "", embed: embed };
     }

@@ -42,7 +42,7 @@ async function attemptSend(msg, cmdResponse, opts) {
     let hooks = await msg.channel.fetchWebhooks();
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
         if (runtime.bot != "backup") {
-            opts.reply = { messageReference: msg.id }
+            opts.reply = { messageReference: msg.id };
             await msg.channel.send(cmdResponse.res, opts);
         }
     }

@@ -2,16 +2,16 @@ const BotUtils = require("../BotUtils");
 const { addAccounts } = require("../../listUtils");
 const Leaderboard = require("../Commands/Leaderboard");
 const Verify = require("../Commands/LinkMe");
-const GameCounts = require('../Commands/GameCounts');
-const Status = require('../Commands/Status');
+const GameCounts = require("../Commands/GameCounts");
+const Status = require("../Commands/Status");
 const InteractionUtils = require("./InteractionUtils");
-const Info = require('../Commands/Info')
+const Info = require("../Commands/Info");
 const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
 const mojangRequest = require("../../mojangRequest");
 
 module.exports = async (interaction) => {
-    if(!interaction.isCommand()) return;
+    if (!interaction.isCommand()) return;
     let authorID = interaction.member.user.id;
     let opts = [].concat(interaction.options);
     let args = [];
@@ -92,7 +92,7 @@ module.exports = async (interaction) => {
                 .setDescription(acc[path])
                 .setColor(0x44a3e7);
             return { res: "", embed: embed };
-        };
+        }
 
         case "verify": {
             return await Verify.execute(args, authorID, null, interaction);

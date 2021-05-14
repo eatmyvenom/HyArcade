@@ -30,8 +30,12 @@
 const optifineRequest = require("./optifineRequest");
 const labyRequest = require("./labyRequest");
 
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
 class Account {
     name = "";
+    nameHist = [];
     uuid = "";
     uuidPosix = "";
     internalId = "";
@@ -39,6 +43,7 @@ class Account {
     version = "";
     firstLogin = 0;
     isLoggedIn = false;
+    lastLogout = 0;
     mostRecentGameType = "";
     achievementPoints = 0;
     xp = 0;
@@ -69,6 +74,42 @@ class Account {
     ctwWoolCaptured = 0;
     arcadeWins = 0;
     anyWins = 0;
+    seasonalWins = {
+        easter: 0,
+        scuba: 0,
+        halloween: 0,
+        grinch: 0,
+        total: 0,
+    };
+    totalSim = 0;
+    extras = {
+        blockingDeadKills: 0,
+        blockingDeadHeadshots: 0,
+        bountyHuntersKills: 0,
+        bountyHuntersBountyKills: 0,
+        bountyHuntersDeaths: 0,
+        dragonWarsKills: 0,
+        footballGoals: 0,
+        footballPKicks: 0,
+        footballKicks: 0,
+        galaxyWarsKills: 0,
+        galaxyWarsDeaths: 0,
+        HNSSeekerWins: 0,
+        HNSHiderWins: 0,
+        hypixelSaysRounds: 0,
+        throwOutKills: 0,
+        throwOutDeaths: 0,
+    };
+    miniWalls = {
+        kit: "",
+        arrowsHit: 0,
+        arrowsShot: 0,
+        finalKills: 0,
+        kills: 0,
+        witherKills: 0,
+        deaths: 0,
+        witherDamage: 0,
+    };
     hasOFCape = false;
     hasLabyCape = false;
     cloak = "";
@@ -174,8 +215,10 @@ class Account {
             }
 
             this.name = json.player.displayname;
+            this.nameHist = json.player.knownAliases;
             this.internalId = json.player._id;
             this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
+            this.lastLogout = json.player.lastLogout;
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
@@ -210,12 +253,54 @@ class Account {
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
             this.hideAndSeekWins =
-                arcade.seeker_wins_hide_and_seek +
-                arcade.hider_wins_hide_and_seek;
+                numberify(arcade.seeker_wins_hide_and_seek) +
+                numberify(arcade.hider_wins_hide_and_seek);
             this.zombiesWins = arcade.wins_zombies;
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = arcade.wins_draw_their_thing;
+
+            this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
+            this.seasonalWins.grinch = numberify(
+                arcade.wins_grinch_simulator_v2
+            );
+            this.seasonalWins.halloween = numberify(
+                arcade.wins_halloween_simulator
+            );
+            this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
+            this.simTotal = this.seasonalWins.total =
+                this.seasonalWins.easter +
+                this.seasonalWins.grinch +
+                this.seasonalWins.halloween +
+                this.seasonalWins.scuba;
+
+            this.extras.blockingDeadKills = arcade.kills_dayone;
+            this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
+            this.extras.bountyHuntersKills = arcade.kills_oneinthequiver;
+            this.extras.bountyHuntersBountyKills =
+                arcade.bounty_kills_oneinthequiver;
+            this.extras.bountyHuntersDeaths = arcade.deaths_oneinthequiver;
+            this.extras.dragonWarsKills = arcade.kills_dragonwars2;
+            this.extras.footballGoals = arcade.goals_soccer;
+            this.extras.footballPKicks = arcade.powerkicks_soccer;
+            this.extras.footballKicks = arcade.kicks_soccer;
+            this.extras.galaxyWarsKills = arcade.sw_kills;
+            this.extras.galaxyWarsDeaths = arcade.sw_deaths;
+            this.extras.HNSSeekerWins = arcade.seeker_wins_hide_and_seek;
+            this.extras.HNSHiderWins = arcade.hider_wins_hide_and_seek;
+            this.extras.hypixelSaysRounds = arcade.rounds_simon_says;
+            this.extras.throwOutKills = arcade.kills_throw_out;
+            this.extras.throwOutDeaths = arcade.deaths_throw_out;
+
+            this.miniWalls.kit = arcade.miniwalls_activeKit;
+            this.miniWalls.arrowsHit = arcade.arrows_hit_mini_walls;
+            this.miniWalls.arrowsShot = arcade.arrows_shot_mini_walls;
+            this.miniWalls.finalKills = arcade.final_kills_mini_walls;
+            this.miniWalls.kills = arcade.kills_mini_walls;
+            this.miniWalls.witherKills = arcade.wither_kills_mini_walls;
+            this.miniWalls.deaths = arcade.deaths_mini_walls;
+            this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
+
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
         }
@@ -239,7 +324,7 @@ module.exports = Account;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Apr 11 2021 02:16:11 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri May 14 2021 01:35:34 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

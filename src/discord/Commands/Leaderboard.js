@@ -4,7 +4,7 @@ const Command = require("../../classes/Command");
 const Config = require("../../Config");
 const listUtils = require("../../listUtils");
 const utils = require("../../utils");
-const fs = require('fs/promises')
+const fs = require("fs/promises");
 
 async function getLB(prop, timetype, limit, category) {
     let res = "";
@@ -45,15 +45,29 @@ async function getLB(prop, timetype, limit, category) {
         case "a":
         case "all":
         case "*": {
-            let day = await listUtils.stringLBDiff(prop, limit, "day", category);
-            let week = await listUtils.stringLBDiff(prop, limit, "weekly", category);
-            let month = await listUtils.stringLBDiff(prop, limit, "monthly", category);
+            let day = await listUtils.stringLBDiff(
+                prop,
+                limit,
+                "day",
+                category
+            );
+            let week = await listUtils.stringLBDiff(
+                prop,
+                limit,
+                "weekly",
+                category
+            );
+            let month = await listUtils.stringLBDiff(
+                prop,
+                limit,
+                "monthly",
+                category
+            );
             let life = await listUtils.stringLB(prop, limit, category);
 
-            day = (day == "") ? "Nobody has won" : day;
-            week = (week == "") ? "Nobody has won" : week;
-            month = (month == "") ? "Nobody has won" : month;
-
+            day = day == "" ? "Nobody has won" : day;
+            week = week == "" ? "Nobody has won" : week;
+            month = month == "" ? "Nobody has won" : month;
 
             let embed = new MessageEmbed()
                 .setColor(0x00cc66)
@@ -62,7 +76,7 @@ async function getLB(prop, timetype, limit, category) {
                 .addField("\u200B", "\u200B", true)
                 .addField("Monthly", month, true)
                 .addField("Lifetime", life, true)
-                .addField("\u200B", "\u200B", true)
+                .addField("\u200B", "\u200B", true);
 
             return embed;
             break;
@@ -278,7 +292,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "zomb":
         case "zbies":
         case "zombies": {
-            gameName = "Zombies"
+            gameName = "Zombies";
             res = await getLB("zombiesWins", timetype, limit);
             break;
         }
@@ -386,7 +400,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     } else {
         updatetime = "Right now!";
     }
-    let date = new Date(updatetime.toString())
+    let date = new Date(updatetime.toString());
 
     let finalRes = res
         .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL())

@@ -133,7 +133,7 @@ module.exports = new Command("Help", ["*"], async (args) => {
             .addField("NameHistory", "Check the name history of a player", false)
             .addField("WhoIS", "Check the discord link of a player", false)
             .addField("LastUpdate", "Get the time of the last database update", false)
-            .addField("Info", "Get info on the bot", false)
+            .addField("Info", "Get info on the bot", false);
 
         return { res: "", embed: embed };
     } else {

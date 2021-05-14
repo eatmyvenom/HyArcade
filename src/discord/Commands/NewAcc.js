@@ -8,7 +8,7 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     let category = "others";
     await BotUtils.logHook.send(`Adding accounts ${args}`);
     let embed = Embeds.waiting;
-    if(args[0] == "") {
+    if (args[0] == "") {
         return { res: "", embed: Embeds.errIgnNull };
     }
 

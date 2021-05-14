@@ -105,7 +105,7 @@ module.exports = new Command(
                 makeField("Arcade AP Hunters", "https://discord.gg/wXAd4UbVfy"),
             ]);
 
-        if(msgID == undefined) {
+        if (msgID == undefined) {
             await channel.send("", { embed: embed });
         } else {
             let message = await channel.messages.fetch(msgID);
