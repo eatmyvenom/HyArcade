@@ -8,7 +8,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
 
     let game = "" + args[args.length - 1];
 
-    let acc = await BotUtils.resolveAccount(player, rawMsg);
+    let acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 2);
     if (acc == undefined) {
         if (player == undefined) {
             return {

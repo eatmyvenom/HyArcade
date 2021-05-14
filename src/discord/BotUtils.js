@@ -21,23 +21,19 @@ module.exports = class BotUtils {
     static client;
     static msgCopyHook;
 
-    static async resolveAccount(string, rawMessage) {
-        string = stringify(string);
-        let acclist = await utils.readJSON("./accounts.json");
-        let disclist = await utils.readJSON("./disclist.json");
+    static async resolveAccount(string, rawMessage, canbeSelf = true) {
+        string = stringify(string).toLowerCase();
+        let acclist = await utils.readJSON("accounts.json");
+        let disclist = await utils.readJSON("disclist.json");
         let acc;
         if (string.length == 18) {
             acc = acclist.find((a) => a.discord == string);
         }
 
         if (acc == undefined && string.length > 16) {
-            acc = acclist.find(
-                (a) => a.uuid.toLowerCase() == string.toLowerCase()
-            );
+            acc = acclist.find((a) => a.uuid.toLowerCase() == string);
         } else if (acc == undefined && string.length <= 16) {
-            acc = acclist.find(
-                (a) => a.name.toLowerCase() == string.toLowerCase()
-            );
+            acc = acclist.find((a) => a.name.toLowerCase() == string);
         }
 
         if (string.length > 0 && acc == undefined) {
@@ -49,7 +45,9 @@ module.exports = class BotUtils {
                 let usr = await discusers.first();
                 let id = usr.id;
                 let uuid = disclist[id];
-                acc = acclist.find((a) => a.uuid == uuid);
+                if(uuid != undefined) {
+                    acc = acclist.find((a) => a.uuid == uuid);
+                }
             }
         }
 
@@ -57,18 +55,22 @@ module.exports = class BotUtils {
             if (rawMessage.mentions.users.size > 0) {
                 let discid = "" + rawMessage.mentions.users.first();
                 let uuid = disclist[discid];
+                if(uuid != undefined) {
+                    acc = acclist.find(
+                        (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
+                    );
+                }
+            }
+        }
+
+        if (acc == undefined && canbeSelf) {
+            let discid = rawMessage.author.id;
+            let uuid = disclist[discid];
+            if (uuid != undefined) {
                 acc = acclist.find(
                     (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
                 );
             }
-        }
-
-        if (acc == undefined) {
-            let discid = rawMessage.author.id;
-            let uuid = disclist[discid];
-            acc = acclist.find(
-                (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
-            );
         }
 
         return acc;
@@ -102,11 +104,8 @@ module.exports = class BotUtils {
     }
 
     static async getStats(acc, game) {
-        let iconURL = "https://crafatar.com/avatars/" + acc.uuid + "?overlay";
         let thumbURL =
             "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
-        let playerURL =
-            "http://eatmyvenom.me/share/partygames/player.html?q=" + acc.name;
 
         let lvl = Math.round(acc.level * 100) / 100;
 
