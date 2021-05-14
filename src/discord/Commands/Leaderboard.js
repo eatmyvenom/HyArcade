@@ -182,10 +182,36 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "mwall":
         case "wall":
         case "pvp":
-        case "miniwalls": {
+        case "miniwalls":
+        case "mwwins": {
             gameName = "Mini walls";
             res = await getLB("miniWallsWins", timetype, limit);
             break;
+        }
+
+        case "mwkills" : {
+            gameName = "Mini Walls Kills";
+            res = await getLB("kills", timetype, limit, "miniWalls");
+        }
+
+        case "mwdeaths" : {
+            gameName = "Mini Walls Deaths";
+            res = await getLB("deaths", timetype, limit, "miniWalls");
+        }
+
+        case "mwwitherdmg" : {
+            gameName = "Mini Walls Wither Damage";
+            res = await getLB("witherDamage", timetype, limit, "miniWalls");
+        }
+
+        case "mwwitherkills" : {
+            gameName = "Mini Walls Wither Kills";
+            res = await getLB("witherKills", timetype, limit, "miniWalls");
+        }
+
+        case "mwfinals" : {
+            gameName = "Mini Walls Final Kills";
+            res = await getLB("finalKills", timetype, limit, "miniWalls");
         }
 
         case "sc":
