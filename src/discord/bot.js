@@ -5,6 +5,12 @@ const Runtime = require("../Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
 
+const requiredIntents = [Discord.Intents.FLAGS.GUILDS,
+                            Discord.Intents.FLAGS.GUILD_MESSAGES,
+                            Discord.Intents.FLAGS.GUILD_WEBHOOKS,
+                            Discord.Intents.FLAGS.GUILD_INTEGRATIONS,
+                            GUILD_MEMBERS]
+
 /**
  * Execute the discord bot
  *
@@ -12,7 +18,7 @@ const messageHandler = require("./messageHandler");
 module.exports = function doBot() {
     let mode = process.argv[3];
     const client = new Discord.Client({
-        intents: [Discord.Intents.ALL],
+        intents: requiredIntents,
         allowedMentions: { parse: ["users", "roles"], repliedUser: false },
     });
 
