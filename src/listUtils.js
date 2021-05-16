@@ -49,6 +49,14 @@ async function listNormal(name, maxamnt) {
     return thelist;
 }
 
+function findMatchingAccount(acc, list) {
+    return list.find(
+        (a) => (a.uuid == acc.uuid || 
+            a.name == acc.name ||
+            a.discord == acc.discord)
+    );
+}
+
 /**
  * Make a list out of the difference of two json files
  *
@@ -59,6 +67,29 @@ async function listNormal(name, maxamnt) {
  */
 async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
+}
+
+async function mklistAdv(name, timetype, maxamnt, callback) {
+    // cant use require here
+    let newlist = await utils.readJSON(`${name}.json`);
+    let oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+
+    // sort the list before hand
+    oldlist = oldlist.sort(utils.winsSorter);
+
+    for (let i = 0; i < oldlist.length; i++) {
+        let acc = findMatchingAccount(oldlist[i], newlist);
+
+        // make sure acc isnt null/undefined
+        if (acc) {
+            oldlist[i] = callback(acc, oldlist[i]);
+        }
+    }
+
+    // use old list to ensure that players added today
+    // don't show up with a crazy amount of daily wins
+    oldlist = oldlist.sort(utils.winsSorter);
+    return oldlist.slice(0, maxamnt);
 }
 
 async function listDiffByProp(name, prop, timetype, maxamnt, category) {
@@ -245,6 +276,23 @@ async function stringLB(lbprop, maxamnt, category) {
     return str.replace(/_/g, "\\_");
 }
 
+async function stringLBAdv(comparitor, parser, maxamnt) {
+    let list = await utils.readJSON("accounts.json");
+    list = list.sort(comparitor);
+
+    let str = "";
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i < list.length; i++) {
+        // don't print if player has 0 wins
+        let propVal = parser(list[i]);
+        if (propVal < 1 && !config.printAllWins) continue;
+
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
+    }
+    return str.replace(/_/g, "\\_");
+}
+
 async function stringLBDiff(lbprop, maxamnt, timetype, category) {
     let list = await listDiffByProp(
         "accounts",
@@ -279,6 +327,23 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
     return str.replace(/_/g, "\\_");
 }
 
+
+async function stringLBDiffAdv(comparitor, maxamnt, timetype, callback) {
+    let list = await mklistAdv("accounts", timetype, 9999, callback);
+    list = list.sort(comparitor);
+
+    let str = "";
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i < list.length; i++) {
+        let propVal = list[i];
+        if (numberify(propVal) < 1 && !config.printAllWins) continue;
+
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
+    }
+    return str.replace(/_/g, "\\_");
+}
+
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");
 }
@@ -294,4 +359,5 @@ module.exports = {
     stringLB: stringLB,
     stringLBDaily: stringLBDaily,
     stringLBDiff: stringLBDiff,
+    stringLBAdv: stringLBAdv,
 };
