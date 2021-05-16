@@ -28,6 +28,7 @@ const task = require("./src/task");
 const Cfg = require("./src/Config");
 const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
+const dataGeneration = require("./src/dataGeneration");
 const Runtime = require("./src/Runtime").fromJSON();
 
 /**
@@ -412,6 +413,10 @@ async function main() {
 
         case "minify":
             await miniconfig();
+            break;
+
+        case "boosters":
+            await dataGeneration.saveBoosters();
             break;
     }
 

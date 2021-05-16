@@ -16,6 +16,34 @@ async function getUUIDRaw(name) {
     return data;
 }
 
+async function getUUIDRaw(name) {
+    // promisify query
+    let response = await webRequest(
+        `https://api.mojang.com/users/profiles/minecraft/${name}`
+    );
+    let data = response.data;
+    return data;
+}
+
+async function getPlayerRaw(uuid) {
+    let response = await webRequest(
+        `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`
+    );
+    let data = response.data;
+    return data;
+}
+
+async function getPlayer(uuid) {
+    let raw = await getPlayerRaw(uuid);
+    if(raw != "") {
+        return JSON.parse(raw);
+    } else {
+        // log the missing username so i can change it
+        logger.err(`"${uuid}" does not exist`);
+        return undefined;
+    }
+}
+
 /**
  * Actual uuid from mojang
  *
@@ -35,4 +63,4 @@ async function getUUID(name) {
     }
 }
 
-module.exports = { getUUIDRaw: getUUIDRaw, getUUID: getUUID };
+module.exports = { getUUIDRaw: getUUIDRaw, getUUID: getUUID, getPlayer: getPlayer };

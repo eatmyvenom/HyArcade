@@ -65,6 +65,11 @@ async function gamesPlayed() {
     await utils.writeJSON("gamesPlayed.json", oldGames);
 }
 
+async function saveBoosters() {
+    let boosters = await hypixelAPI.getBoosters();
+    await utils.writeJSON("boosters.json", boosters);
+}
+
 /**
  * Turn the status object into a really long formatted string
  *
@@ -273,4 +278,5 @@ module.exports = {
     gamesPlayed: gamesPlayed,
     addGuild: addGuild,
     addLeaderboards: addLeaderboards,
+    saveBoosters: saveBoosters,
 };

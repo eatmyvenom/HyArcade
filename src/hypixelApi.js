@@ -125,6 +125,18 @@ module.exports = class hypixelAPI {
         }
     }
 
+    static async getBoosters() {
+        let data = await hypixelAPI.basicRequest("boosters");
+        try {
+            let json = JSON.parse(data);
+            return json;
+        } catch (e) {
+            logger.err("Hypixel sent malformed json");
+            logger.err(data);
+            return await hypixelAPI.getBoosters();
+        }
+    }
+
     /**
      * Returns the amount of players in various games
      *

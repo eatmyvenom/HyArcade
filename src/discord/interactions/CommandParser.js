@@ -3,6 +3,7 @@ const { addAccounts } = require("../../listUtils");
 const Leaderboard = require("../Commands/Leaderboard");
 const Verify = require("../Commands/LinkMe");
 const GameCounts = require("../Commands/GameCounts");
+const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
 const InteractionUtils = require("./InteractionUtils");
 const Info = require("../Commands/Info");
@@ -108,6 +109,10 @@ module.exports = async (interaction) => {
 
         case "info": {
             return await Info.execute(args, authorID, null, interaction);
+        }
+
+        case Boosters.name: {
+            return await Boosters.execute(args, authorID, null, interaction);
         }
     }
 };
