@@ -104,7 +104,7 @@ function log(content) {
     if (cfg.std.disable) {
         fs.writeFile(cfg.std.out, content, { flag: "a" });
     } else {
-        console.log(content);
+        console.log(`[${daytime()}] ${content}`);
     }
 }
 
