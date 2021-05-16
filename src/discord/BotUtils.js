@@ -247,7 +247,11 @@ module.exports = class BotUtils {
                     value: acc.miniWalls.deaths,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "KDR",
+                    value: Math.round((acc.miniWalls.kills / acc.miniWalls.deaths) * 100) / 100,
+                    inline: true
+                });
                 break;
             }
 
@@ -312,7 +316,11 @@ module.exports = class BotUtils {
                     value: acc.throwOutWins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "KDR",
+                    value: Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100,
+                    inline: true
+                });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
@@ -337,7 +345,11 @@ module.exports = class BotUtils {
                     value: acc.galaxyWarsWins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "KDR",
+                    value: Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100,
+                    inline: true
+                });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
@@ -384,7 +396,11 @@ module.exports = class BotUtils {
                     value: acc.bountyHuntersWins,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                fields.push({
+                    name: "KDR",
+                    value: Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100,
+                    inline: true
+                });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
