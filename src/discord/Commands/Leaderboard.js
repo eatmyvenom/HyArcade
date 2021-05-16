@@ -335,7 +335,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "capkills":
         case "capture":
         case "ctwkills": {
-            gameName = "Captrue the wool kills";
+            gameName = "Capture the wool kills";
             res = await getLB("ctwKills", timetype, limit);
             break;
         }
