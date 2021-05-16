@@ -1,7 +1,7 @@
 var maxLength = 50;
 
 function addstuff(ext, clazzz) {
-    fetch("http://eatmyvenom.me/share/" + ext).then((res) => {
+    fetch("http://eatmyvenom.me/share/" + ext, {cache: "no-store"}).then((res) => {
         res.text().then((txt) => {
             var arr = txt.split("\n");
             var len = Math.min(arr.length, maxLength);
