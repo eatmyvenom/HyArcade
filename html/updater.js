@@ -1,4 +1,4 @@
-var maxLength = 100;
+var maxLength = 50;
 
 function addstuff(ext, clazzz) {
     fetch("http://eatmyvenom.me/share/" + ext).then((res) => {
