@@ -95,13 +95,21 @@ async function getLB(prop, timetype, limit, category) {
         .setColor(0x00cc66)
         .setDescription(res);
 
-    if (res.length > 2000) {
-        embed = new MessageEmbed()
+    if(res.length > 6000) {
+        return new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
-            .setDescription(
-                "That is too many people, please try to get a lower amount"
-            );
+            .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+    }
+
+    if (res.length > 2000) {
+        let resArr = res.trim().split("\n");
+        embed.setDescription("")
+        while(resArr.length > 0) {
+            let end = Math.min(25, resArr.length);
+            embed.addField("\u200b", resArr.slice(0,end).join("\n"), false);
+            resArr = resArr.slice(end);
+        }
     }
 
     return embed;
