@@ -37,19 +37,21 @@ module.exports = class BotEvents {
         let logHook = await loghooks.first();
         BotUtils.errHook = errHook;
         BotUtils.logHook = logHook;
+        BotUtils.msgCopyHook = new WebhookClient(
+            cfg.loggingHooks.copyHook.id,
+            cfg.loggingHooks.copyHook.token
+        );
         if (mode == "role") {
             await roleHandler(BotUtils.client);
             await BotUtils.client.destroy();
         } else if (mode == "slash") {
             await registerSlashCommands(BotUtils.client);
+            logger.out(`Logged in as ${BotUtils.client.user.tag} - Slash command handler`);
+            logHook.send(`Logged in as ${BotUtils.client.user.tag} - Slash command handler`);
         } else {
             logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
             BotUtils.client.user.setPresence(cfg.discord.presence);
-            BotUtils.msgCopyHook = new WebhookClient(
-                cfg.loggingHooks.copyHook.id,
-                cfg.loggingHooks.copyHook.token
-            );
         }
     }
 

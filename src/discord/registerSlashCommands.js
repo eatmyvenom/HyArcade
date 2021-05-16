@@ -25,6 +25,8 @@ async function interactionHandler(interaction) {
             interaction.commandName
         }\` with options \`${JSON.stringify(interaction.options)}\``
     );
+    
+    await BotUtils.logCommand(interaction.commandName, JSON.stringify(interaction.options), interaction.member.user.id);
 }
 
 module.exports = async (client) => {

@@ -3,6 +3,7 @@ const cfg = require("../Config").fromJSON();
 const fs = require("fs/promises");
 const utils = require("../utils");
 const webhook = require("../webhook");
+const Embed = require('./Embeds');
 
 function stringify(str) {
     return "" + str;
@@ -644,6 +645,10 @@ module.exports = class BotUtils {
 
         await hook.send(msg.content, { username: name, avatarURL: pfp });
         await hook.send(msg.url, { username: name, avatarURL: pfp });
+    }
+
+    static async logCommand(command, args, author, link) {
+        await BotUtils.msgCopyHook.send(Embed.execution(command, args, author, link))
     }
 
     static getBlacklistRes() {

@@ -57,3 +57,14 @@ exports.errHypixelMismatch = new MessageEmbed()
         "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. If you are confused then just try linking via the hystats bot since it uses the same mechanism."
     )
     .setColor(0xff0000);
+
+exports.execution = function(name, args, author, link) {
+    if(args == "") args = "none";
+    return new MessageEmbed()
+        .setTitle("Command execution")
+        .setColor(0x2f3136)
+        .addField("Name", name, false)
+        .addField("Args", `\`${args}\``, false)
+        .addField("User", `<@${author}>`, false)
+        .addField("Link", `[Message Link](${link})`)
+}
