@@ -51,9 +51,8 @@ async function listNormal(name, maxamnt) {
 
 function findMatchingAccount(acc, list) {
     return list.find(
-        (a) => (a.uuid == acc.uuid || 
-            a.name == acc.name ||
-            a.discord == acc.discord)
+        (a) =>
+            a.uuid == acc.uuid || a.name == acc.name || a.discord == acc.discord
     );
 }
 
@@ -326,7 +325,6 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
     }
     return str.replace(/_/g, "\\_");
 }
-
 
 async function stringLBDiffAdv(comparitor, maxamnt, timetype, callback) {
     let list = await mklistAdv("accounts", timetype, 9999, callback);

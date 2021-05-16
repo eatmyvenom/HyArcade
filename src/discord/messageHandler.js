@@ -19,7 +19,12 @@ async function logError(msg, e) {
 }
 
 async function logCmd(msg) {
-    await BotUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg.author.id, msg.url);
+    await BotUtils.logCommand(
+        msg.content.split(" ")[0],
+        msg.content.split(" ").slice(1),
+        msg.author.id,
+        msg.url
+    );
     logger.out(`${msg.author.tag} ran : \`${msg.content}\``);
 }
 

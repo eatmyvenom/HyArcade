@@ -58,13 +58,13 @@ exports.errHypixelMismatch = new MessageEmbed()
     )
     .setColor(0xff0000);
 
-exports.execution = function(name, args, author, link) {
-    if(args == "") args = "none";
+exports.execution = function (name, args, author, link) {
+    if (args == "") args = "none";
     return new MessageEmbed()
         .setTitle("Command execution")
         .setColor(0x2f3136)
         .addField("Name", name, false)
         .addField("Args", `\`${args}\``, false)
         .addField("User", `<@${author}>`, false)
-        .addField("Link", `[Message Link](${link})`)
-}
+        .addField("Link", `[Message Link](${link})`);
+};

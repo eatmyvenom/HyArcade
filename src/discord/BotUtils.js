@@ -3,7 +3,7 @@ const cfg = require("../Config").fromJSON();
 const fs = require("fs/promises");
 const utils = require("../utils");
 const webhook = require("../webhook");
-const Embed = require('./Embeds');
+const Embed = require("./Embeds");
 
 function stringify(str) {
     return "" + str;
@@ -249,8 +249,11 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.miniWalls.kills / acc.miniWalls.deaths) * 100) / 100,
-                    inline: true
+                    value:
+                        Math.round(
+                            (acc.miniWalls.kills / acc.miniWalls.deaths) * 100
+                        ) / 100,
+                    inline: true,
                 });
                 break;
             }
@@ -318,8 +321,13 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100,
-                    inline: true
+                    value:
+                        Math.round(
+                            (acc.extras.throwOutKills /
+                                acc.extras.throwOutDeaths) *
+                                100
+                        ) / 100,
+                    inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
@@ -347,8 +355,13 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100,
-                    inline: true
+                    value:
+                        Math.round(
+                            (acc.extras.galaxyWarsKills /
+                                acc.extras.galaxyWarsDeaths) *
+                                100
+                        ) / 100,
+                    inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
@@ -398,8 +411,13 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100,
-                    inline: true
+                    value:
+                        Math.round(
+                            (acc.extras.bountyHuntersKills /
+                                acc.extras.bountyHuntersDeaths) *
+                                100
+                        ) / 100,
+                    inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
@@ -664,7 +682,9 @@ module.exports = class BotUtils {
     }
 
     static async logCommand(command, args, author, link) {
-        await BotUtils.msgCopyHook.send(Embed.execution(command, args, author, link))
+        await BotUtils.msgCopyHook.send(
+            Embed.execution(command, args, author, link)
+        );
     }
 
     static getBlacklistRes() {

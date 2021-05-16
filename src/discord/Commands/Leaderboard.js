@@ -95,19 +95,21 @@ async function getLB(prop, timetype, limit, category) {
         .setColor(0x00cc66)
         .setDescription(res);
 
-    if(res.length > 6000) {
+    if (res.length > 6000) {
         return new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
-            .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+            .setDescription(
+                "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
+            );
     }
 
     if (res.length > 2000) {
         let resArr = res.trim().split("\n");
-        embed.setDescription("")
-        while(resArr.length > 0) {
+        embed.setDescription("");
+        while (resArr.length > 0) {
             let end = Math.min(25, resArr.length);
-            embed.addField("\u200b", resArr.slice(0,end).join("\n"), false);
+            embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
         }
     }
@@ -197,27 +199,27 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
             break;
         }
 
-        case "mwkills" : {
+        case "mwkills": {
             gameName = "Mini Walls Kills";
             res = await getLB("kills", timetype, limit, "miniWalls");
         }
 
-        case "mwdeaths" : {
+        case "mwdeaths": {
             gameName = "Mini Walls Deaths";
             res = await getLB("deaths", timetype, limit, "miniWalls");
         }
 
-        case "mwwitherdmg" : {
+        case "mwwitherdmg": {
             gameName = "Mini Walls Wither Damage";
             res = await getLB("witherDamage", timetype, limit, "miniWalls");
         }
 
-        case "mwwitherkills" : {
+        case "mwwitherkills": {
             gameName = "Mini Walls Wither Kills";
             res = await getLB("witherKills", timetype, limit, "miniWalls");
         }
 
-        case "mwfinals" : {
+        case "mwfinals": {
             gameName = "Mini Walls Final Kills";
             res = await getLB("finalKills", timetype, limit, "miniWalls");
         }
