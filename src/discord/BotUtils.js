@@ -117,6 +117,7 @@ module.exports = class BotUtils {
         let fields = [];
 
         switch (game.toLowerCase()) {
+            case "12":
             case "party":
             case "partygames":
             case "pg": {
@@ -132,6 +133,7 @@ module.exports = class BotUtils {
             case "farm":
             case "fmhnt":
             case "farmhunt":
+            case "5":
             case "frmhnt": {
                 fields.push({
                     name: "Farm hunt wins",
@@ -146,6 +148,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "10":
             case "hs":
             case "hys":
             case "hypixel":
@@ -164,6 +167,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "8":
             case "hitw":
             case "hit":
             case "hole":
@@ -192,6 +196,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "11":
             case "mw":
             case "miw":
             case "mini":
@@ -260,6 +265,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "6":
             case "sc":
             case "fb":
             case "foot":
@@ -295,6 +301,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "4":
             case "es":
             case "spleeg":
             case "ender":
@@ -310,6 +317,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "15":
             case "to":
             case "throw":
             case "toss":
@@ -346,6 +354,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "7":
             case "gw":
             case "sw":
             case "galaxy":
@@ -380,6 +389,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "3":
             case "dw":
             case "dragon":
             case "dragonwars": {
@@ -400,6 +410,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "2":
             case "bh":
             case "bnt":
             case "one":
@@ -436,6 +447,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "1":
             case "bd":
             case "do":
             case "dayone":
@@ -462,6 +474,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "9":
             case "has":
             case "hide":
             case "h&s":
@@ -491,6 +504,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "16":
             case "z":
             case "zs":
             case "zbs":
@@ -527,6 +541,7 @@ module.exports = class BotUtils {
                 break;
             }
 
+            case "13":
             case "pp":
             case "draw":
             case "pixpaint":
@@ -548,6 +563,7 @@ module.exports = class BotUtils {
             case "simulator":
             case "seasonal":
             case "season":
+            case "14":
             case "sea": {
                 fields.push({
                     name: "Easter sim wins",
