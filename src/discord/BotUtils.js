@@ -122,7 +122,7 @@ module.exports = class BotUtils {
             case "pg": {
                 fields.push({
                     name: "Party games wins",
-                    value: acc.wins,
+                    value: formatNum(numberify(acc.wins)),
                     inline: true,
                 });
                 break;
@@ -135,12 +135,12 @@ module.exports = class BotUtils {
             case "frmhnt": {
                 fields.push({
                     name: "Farm hunt wins",
-                    value: acc.farmhuntWins,
+                    value: formatNum(numberify(acc.farmhuntWins)),
                     inline: true,
                 });
                 fields.push({
                     name: "Farm hunt poop",
-                    value: acc.farmhuntShit,
+                    value: formatNum(numberify(acc.farmhuntShit)),
                     inline: true,
                 });
                 break;
@@ -153,12 +153,12 @@ module.exports = class BotUtils {
             case "hysays": {
                 fields.push({
                     name: "Hypixel says wins",
-                    value: acc.hypixelSaysWins,
+                    value: formatNum(numberify(acc.hypixelSaysWins)),
                     inline: true,
                 });
                 fields.push({
                     name: "Hypixel says Rounds",
-                    value: acc.extras.hypixelSaysRounds,
+                    value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
                     inline: true,
                 });
                 break;
@@ -170,7 +170,7 @@ module.exports = class BotUtils {
             case "pain": {
                 fields.push({
                     name: "HITW wins",
-                    value: acc.hitwWins,
+                    value: formatNum(numberify(acc.hitwWins)),
                     inline: true,
                 });
                 fields.push({
@@ -186,7 +186,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "HITW walls",
-                    value: acc.hitwRounds,
+                    value: formatNum(numberify(acc.hitwRounds)),
                     inline: true,
                 });
                 break;
@@ -202,51 +202,51 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Mini walls wins",
-                    value: acc.miniWallsWins,
+                    value: formatNum(numberify(acc.miniWallsWins)),
                     inline: true,
                 });
                 fields.push({
                     name: "Mini walls kit",
-                    value: acc.miniWalls.kit,
+                    value: formatNum(numberify(acc.miniWalls.kit)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls kills",
-                    value: acc.miniWalls.kills,
+                    value: formatNum(numberify(acc.miniWalls.kills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Mini walls arrows shot",
-                    value: acc.miniWalls.arrowsShot,
+                    value: formatNum(numberify(acc.miniWalls.arrowsShot)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls arrows hit",
-                    value: acc.miniWalls.arrowsHit,
+                    value: formatNum(numberify(acc.miniWalls.arrowsHit)),
                     inline: true,
                 });
                 fields.push({
                     name: "Mini walls final kills",
-                    value: acc.miniWalls.finalKills,
+                    value: formatNum(numberify(acc.miniWalls.finalKills)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls wither kills",
-                    value: acc.miniWalls.witherKills,
+                    value: formatNum(numberify(acc.miniWalls.witherKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Mini walls wither damage",
-                    value: acc.miniWalls.witherDamage,
+                    value: formatNum(numberify(acc.miniWalls.witherDamage)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "Mini walls deaths",
-                    value: acc.miniWalls.deaths,
+                    value: formatNum(numberify(acc.miniWalls.deaths)),
                     inline: true,
                 });
                 fields.push({
@@ -270,24 +270,24 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Football wins",
-                    value: acc.footballWins,
+                    value: formatNum(numberify(acc.footballWins)),
                     inline: true,
                 });
                 fields.push({
                     name: "Football goals",
-                    value: acc.extras.footballGoals,
+                    value: formatNum(numberify(acc.extras.footballGoals)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
                     name: "Football power kicks",
-                    value: acc.extras.footballPKicks,
+                    value: formatNum(numberify(acc.extras.footballPKicks)),
                     inline: true,
                 });
                 fields.push({
                     name: "Football kicks",
-                    value: acc.extras.footballKicks,
+                    value: formatNum(numberify(acc.extras.footballKicks)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -303,7 +303,7 @@ module.exports = class BotUtils {
             case "enderspleef": {
                 fields.push({
                     name: "Ender spleef wins",
-                    value: acc.enderSpleefWins,
+                    value: formatNum(numberify(acc.enderSpleefWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -318,7 +318,7 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Throw out wins",
-                    value: acc.throwOutWins,
+                    value: formatNum(numberify(acc.throwOutWins)),
                     inline: true,
                 });
                 fields.push({
@@ -335,12 +335,12 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Throw out kills",
-                    value: acc.extras.throwOutKills,
+                    value: formatNum(numberify(acc.extras.throwOutKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Throw out deaths",
-                    value: acc.extras.throwOutDeaths,
+                    value: formatNum(numberify(acc.extras.throwOutDeaths)),
                     inline: true,
                 });
                 break;
@@ -352,7 +352,7 @@ module.exports = class BotUtils {
             case "galaxywars": {
                 fields.push({
                     name: "Galaxy wars wins",
-                    value: acc.galaxyWarsWins,
+                    value: formatNum(numberify(acc.galaxyWarsWins)),
                     inline: true,
                 });
                 fields.push({
@@ -369,12 +369,12 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Galaxy wars kills",
-                    value: acc.extras.galaxyWarsKills,
+                    value: formatNum(numberify(acc.extras.galaxyWarsKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Galaxy wars deaths",
-                    value: acc.extras.galaxyWarsDeaths,
+                    value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
                     inline: true,
                 });
                 break;
@@ -385,7 +385,7 @@ module.exports = class BotUtils {
             case "dragonwars": {
                 fields.push({
                     name: "Dragon wars wins",
-                    value: acc.dragonWarsWins,
+                    value: formatNum(numberify(acc.dragonWarsWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -393,7 +393,7 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Dragon wars kills",
-                    value: acc.extras.dragonWarsKills,
+                    value: formatNum(numberify(acc.extras.dragonWarsKills)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -408,7 +408,7 @@ module.exports = class BotUtils {
             case "bountyhunters": {
                 fields.push({
                     name: "Bounty hunters wins",
-                    value: acc.bountyHuntersWins,
+                    value: formatNum(numberify(acc.bountyHuntersWins)),
                     inline: true,
                 });
                 fields.push({
@@ -425,12 +425,12 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Bounty hunters kills",
-                    value: acc.extras.bountyHuntersKills,
+                    value: formatNum(numberify(acc.extras.bountyHuntersKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Bounty hunters deaths",
-                    value: acc.extras.bountyHuntersDeaths,
+                    value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
                     inline: true,
                 });
                 break;
@@ -443,7 +443,7 @@ module.exports = class BotUtils {
             case "blockingdead": {
                 fields.push({
                     name: "Blocking dead wins",
-                    value: acc.blockingDeadWins,
+                    value: formatNum(numberify(acc.blockingDeadWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -451,12 +451,12 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Blocking dead kills",
-                    value: acc.extras.blockingDeadKills,
+                    value: formatNum(numberify(acc.extras.blockingDeadKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Blocking dead headshots",
-                    value: acc.extras.blockingDeadHeadshots,
+                    value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
                     inline: true,
                 });
                 break;
@@ -472,7 +472,7 @@ module.exports = class BotUtils {
             case "hideseek": {
                 fields.push({
                     name: "Hide and seek wins",
-                    value: acc.hideAndSeekWins,
+                    value: formatNum(numberify(acc.hideAndSeekWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -480,12 +480,12 @@ module.exports = class BotUtils {
                 // <br>
                 fields.push({
                     name: "Hide and seek seeker wins",
-                    value: acc.extras.HNSSeekerWins,
+                    value: formatNum(numberify(acc.extras.HNSSeekerWins)),
                     inline: true,
                 });
                 fields.push({
                     name: "Hide and seek hider wins",
-                    value: acc.extras.HNSHiderWins,
+                    value: formatNum(numberify(acc.extras.HNSHiderWins)),
                     inline: true,
                 });
                 break;
@@ -499,7 +499,7 @@ module.exports = class BotUtils {
             case "zombies": {
                 fields.push({
                     name: "Zombies wins",
-                    value: acc.zombiesWins,
+                    value: formatNum(numberify(acc.zombiesWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -516,12 +516,12 @@ module.exports = class BotUtils {
             case "ctwkills": {
                 fields.push({
                     name: "Ctw kills",
-                    value: acc.ctwKills,
+                    value: formatNum(numberify(acc.ctwKills)),
                     inline: true,
                 });
                 fields.push({
                     name: "Ctw wool captured",
-                    value: acc.ctwWoolCaptured,
+                    value: formatNum(numberify(acc.ctwWoolCaptured)),
                     inline: true,
                 });
                 break;
@@ -537,7 +537,7 @@ module.exports = class BotUtils {
             case "drawing": {
                 fields.push({
                     name: "Pixel painters wins",
-                    value: acc.pixelPaintersWins,
+                    value: formatNum(numberify(acc.pixelPaintersWins)),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
