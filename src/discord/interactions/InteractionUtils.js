@@ -12,7 +12,7 @@ module.exports = class InteractionUtils {
             string = interaction.options[namearg].value;
         }
         string = stringify(string).toLowerCase();
-        let acclist = await utils.readJSON("./accounts.json");
+        let acclist = await BotUtils.fileCache.acclist;
         let acc;
         if (string.length == 18) {
             acc = acclist.find((a) => a.discord == string);

@@ -1,6 +1,7 @@
 const cfg = require("../Config").fromJSON();
 const { WebhookClient } = require("discord.js");
 const Runtime = require("../Runtime");
+const utils = require("../utils");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
@@ -25,6 +26,8 @@ module.exports = class BotEvents {
     }
 
     static async ready(mode) {
+        BotUtils.isBotInstance = true;
+        logger.out("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(
             cfg.discord.errChannel
         );
@@ -41,6 +44,11 @@ module.exports = class BotEvents {
             cfg.loggingHooks.copyHook.id,
             cfg.loggingHooks.copyHook.token
         );
+        logger.out("Initializing file cache");
+        BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
+        BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
+        BotUtils.fileCache.status = await utils.readJSON("status.json");
+        logger.out("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
             await BotUtils.client.destroy();
@@ -71,5 +79,11 @@ module.exports = class BotEvents {
 
     static async heartBeat() {
         logger.out("Heart beat - I'm alive!");
+    }
+
+    static async dataRefresh() {
+        BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
+        BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
+        BotUtils.fileCache.status = await utils.readJSON("status.json");
     }
 };

@@ -4,7 +4,20 @@ const { getUUID } = require("./mojangRequest");
 const config = require("./Config").fromJSON();
 const { isValidIGN } = require("./utils");
 const Account = require("./account");
+const BotUtils = require("./discord/BotUtils");
 const logger = utils.logger;
+
+
+async function getList(type = "") {
+    let list;
+    if(!BotUtils.isBotInstance) {
+        list = await utils.readJSON("accounts.json");
+    } else {
+        list = BotUtils.fileCache[type + "acclist"];
+    }
+    return list;
+}
+
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -29,7 +42,7 @@ async function txtPlayerList(list, maxamnt) {
             list[i].name.slice(1) +
             "                       "
         ).slice(0, 17);
-        //         001) Monkey           : 5900
+        //         001) MonkeyCity17     : 5900
         str += `${num}) ${name}: ${list[i].wins}\n`;
     }
     return str;
@@ -233,7 +246,7 @@ async function addAccounts(category, names) {
         let lilAcc = { name: acc.name, wins: acc.wins, uuid: acc.uuid };
         acclist[category].push(lilAcc);
     }
-    await utils.writeJSON("./acclist.json", acclist);
+    await utils.writeJSON("acclist.json", acclist);
     await utils.writeJSON("accounts.json", fullNewAccounts);
     await utils.writeJSON("accounts.json.part", newAccs);
     return res;
@@ -248,7 +261,7 @@ function formatNum(number) {
 }
 
 async function stringLB(lbprop, maxamnt, category) {
-    let list = await utils.readJSON("accounts.json");
+    let list = await getList();
     if (category == undefined) {
         list = await [].concat(list).sort((b, a) => {
             return numberify(a[lbprop]) - numberify(b[lbprop]);
@@ -261,22 +274,11 @@ async function stringLB(lbprop, maxamnt, category) {
         });
     }
 
-    let str = "";
-    list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
-        // don't print if player has 0 wins
-        let propVal =
-            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
-        if (propVal < 1 && !config.printAllWins) continue;
-
-        let name = list[i].name;
-        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
-    }
-    return str.replace(/_/g, "\\_");
+    return stringifyList(list, lbprop, category, maxamnt);
 }
 
 async function stringLBAdv(comparitor, parser, maxamnt) {
-    let list = await utils.readJSON("accounts.json");
+    let list = await getList();
     list = list.sort(comparitor);
 
     let str = "";
@@ -312,18 +314,7 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
         });
     }
 
-    let str = "";
-    list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
-        // don't print if player has 0 wins
-        let propVal =
-            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
-        if (numberify(propVal) < 1 && !config.printAllWins) continue;
-
-        let name = list[i].name;
-        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
-    }
-    return str.replace(/_/g, "\\_");
+    return stringifyList(list, lbprop, category, maxamnt);
 }
 
 async function stringLBDiffAdv(comparitor, maxamnt, timetype, callback) {
@@ -344,6 +335,21 @@ async function stringLBDiffAdv(comparitor, maxamnt, timetype, callback) {
 
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");
+}
+
+function stringifyList(list, lbprop, category, maxamnt) {
+    let str = "";
+    list = list.slice(0, maxamnt);
+    for (let i = 0; i < list.length; i++) {
+        // don't print if player has 0 wins
+        let propVal =
+            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        if (numberify(propVal) < 1 && !config.printAllWins) continue;
+
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
+    }
+    return str.replace(/_/g, "\\_");
 }
 
 module.exports = {

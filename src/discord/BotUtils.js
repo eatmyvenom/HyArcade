@@ -17,6 +17,9 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 module.exports = class BotUtils {
+
+    static fileCache = {};
+    static isBotInstance = false;
     static logHook;
     static errHook;
     static client;
@@ -24,8 +27,8 @@ module.exports = class BotUtils {
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
         string = stringify(string).toLowerCase();
-        let acclist = await utils.readJSON("accounts.json");
-        let disclist = await utils.readJSON("disclist.json");
+        let acclist = await BotUtils.fileCache.acclist;
+        let disclist = await BotUtils.fileCache.disclist;
         let acc;
         if (string.length == 18) {
             acc = acclist.find((a) => a.discord == string);
@@ -88,8 +91,7 @@ module.exports = class BotUtils {
         }
         return {
             username: "Arcade Bot",
-            avatarURL:
-                "https://cdn.discordapp.com/avatars/818719828352696320/ff42f20a6cccc27a8a6656851bd01343.png",
+            avatarURL: BotUtils.client.user.avatarURL(),
             embeds: embeds,
         };
     }

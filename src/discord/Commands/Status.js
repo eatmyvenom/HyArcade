@@ -26,7 +26,7 @@ module.exports = new Command(
         } else {
             acc = await InteractionUtils.resolveAccount(interaction, 0);
         }
-        let stslist = await utils.readJSON("./status.json");
+        let stslist = BotUtils.fileCache.status;
         let sts = stslist[acc.uuid];
         let embed;
         if (sts != undefined && sts.online) {
