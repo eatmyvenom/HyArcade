@@ -45,12 +45,7 @@ async function getLB(prop, timetype, limit, category) {
         case "a":
         case "all":
         case "*": {
-            let day = await listUtils.stringLBDiff(
-                prop,
-                limit,
-                "day",
-                category
-            );
+            let day = await listUtils.stringLBDiff(prop, limit, "day", category);
             let week = await listUtils.stringLBDiff(
                 prop,
                 limit,
