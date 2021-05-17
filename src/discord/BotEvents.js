@@ -50,6 +50,9 @@ module.exports = class BotEvents {
         BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
         BotUtils.fileCache.status = await utils.readJSON("status.json");
         BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
+        BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
+        BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
+        BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
         logger.out("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
