@@ -2,7 +2,9 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
-const embed = new MessageEmbed()
+
+module.exports = new Command("info", ["*"], async (args) => {
+    let embed = new MessageEmbed()
         .setTitle(BotUtils.client.user.username + " info")
         .setDescription(
             "A discord bot to allow you to get the stats and info from arcade games and arcade players!"
@@ -15,7 +17,7 @@ const embed = new MessageEmbed()
             true
         )
         .addField(
-            "Invite bot to your server",
+            "Bot invite link",
             "[Link](http://eatmyvenom.me/share/botinvite.html)",
             true
         )
@@ -25,8 +27,5 @@ const embed = new MessageEmbed()
             true
         )
         .setColor(0x2f3136);
-
-module.exports = new Command("info", ["*"], async (args) => {
-    
     return { res: "", embed: embed };
 });
