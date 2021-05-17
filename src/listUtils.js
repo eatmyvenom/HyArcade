@@ -11,7 +11,11 @@ const logger = utils.logger;
 async function getList(type = "") {
     let list;
     if(!BotUtils.isBotInstance) {
-        list = await utils.readJSON("accounts.json");
+        if (type == "") {
+            list = await utils.readJSON("accounts.json");
+        } else {
+            list = await utils.readJSON(`accounts.${type}.json`);
+        }
     } else {
         list = BotUtils.fileCache[type + "acclist"];
     }
@@ -82,10 +86,14 @@ async function listDiff(name, timetype, maxamnt) {
 }
 
 async function mklistAdv(name, timetype, maxamnt, callback) {
-    // cant use require here
-    let newlist = await utils.readJSON(`${name}.json`);
-    let oldlist = await utils.readJSON(`${name}.${timetype}.json`);
-
+    let newlist, oldlist;
+    if(name == "accounts") {
+        newlist = await getList();
+        oldlist = await getList(timetype);
+    } else {
+        newlist = await utils.readJSON(`${name}.json`);
+        oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+    }
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
 
@@ -105,9 +113,14 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
 }
 
 async function listDiffByProp(name, prop, timetype, maxamnt, category) {
-    // cant use require here
-    let newlist = await utils.readJSON(`${name}.json`);
-    let oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+    let newlist, oldlist;
+    if(name == "accounts") {
+        newlist = await getList();
+        oldlist = await getList(timetype);
+    } else {
+        newlist = await utils.readJSON(`${name}.json`);
+        oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+    }
 
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);

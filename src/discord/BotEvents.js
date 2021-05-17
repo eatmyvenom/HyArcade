@@ -84,6 +84,9 @@ module.exports = class BotEvents {
     }
 
     static async dataRefresh() {
+        BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
+        BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
+        BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
         BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
         BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
         BotUtils.fileCache.status = await utils.readJSON("status.json");
