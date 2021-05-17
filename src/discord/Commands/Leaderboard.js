@@ -430,12 +430,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
     }
 
-    let updatetime;
-    if (utils.fileExists("timeupdate")) {
-        updatetime = await fs.readFile("timeupdate");
-    } else {
-        updatetime = "Right now!";
-    }
+    let updatetime = BotUtils.fileCache.updatetime;
     let date = new Date(updatetime.toString());
 
     let finalRes = res

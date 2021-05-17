@@ -629,12 +629,7 @@ module.exports = class BotUtils {
             .replace(/undefined/g, "");
         rank = rank == "" ? "" : "[" + rank + "]";
 
-        let updatetime;
-        if (utils.fileExists("timeupdate")) {
-            updatetime = await fs.readFile("timeupdate");
-        } else {
-            updatetime = "Right now!";
-        }
+        let updatetime = await BotUtils.fileCache.updatetime;
         let date = new Date(updatetime.toString());
 
         let embed = new MessageEmbed()

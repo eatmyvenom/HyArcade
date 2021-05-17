@@ -6,6 +6,7 @@ const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
 const roleHandler = require("./roleHandler");
+const fs = require('fs/promises')
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
@@ -48,6 +49,7 @@ module.exports = class BotEvents {
         BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
         BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
         BotUtils.fileCache.status = await utils.readJSON("status.json");
+        BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
         logger.out("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
@@ -85,5 +87,6 @@ module.exports = class BotEvents {
         BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
         BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
         BotUtils.fileCache.status = await utils.readJSON("status.json");
+        BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
     }
 };
