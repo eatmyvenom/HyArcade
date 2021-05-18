@@ -38,5 +38,5 @@ module.exports = function doBot() {
     }
 
     setInterval(BotEvents.dataRefresh, 30000);
-    setInterval(BotEvents.heartBeat, 3600000);
+    setInterval(BotEvents.heartBeat, 900000);
 };
