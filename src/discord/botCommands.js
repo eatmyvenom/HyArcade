@@ -18,6 +18,7 @@ let UpdRolesCmd = require("./Commands/UpdateRoles");
 let NameHistCmd = require("./Commands/NameHistory");
 let WhoISCmd = require("./Commands/WhoIS");
 let InfoCmd = require("./Commands/Info");
+const { logger } = require("../utils");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -151,8 +152,12 @@ async function checkCommands(rawMsg, command, args, author) {
         case "botinfo": {
             return await InfoCmd.execute(args, author);
         }
+
+        default : {
+            logger.out("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.")
+            return { res : "" }
+        }
     }
-    return { res: "" };
 }
 
 module.exports = { execute: execute };

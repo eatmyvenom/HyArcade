@@ -60,6 +60,7 @@ module.exports = class BotEvents {
     }
 
     static async tick() {
+        logger.out("Bot tick handling")
         let runtime = Runtime.fromJSON();
         if (runtime.needRoleupdate) {
             await roleHandler(BotUtils.client);
@@ -74,6 +75,7 @@ module.exports = class BotEvents {
     }
 
     static async dataRefresh() {
+        logger.out("Refreshing file cache...");
         BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
         BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
         BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");

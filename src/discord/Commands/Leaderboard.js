@@ -5,6 +5,7 @@ const Config = require("../../Config");
 const listUtils = require("../../listUtils");
 const utils = require("../../utils");
 const fs = require("fs/promises");
+const { logger } = require("../../utils");
 
 async function getLB(prop, timetype, limit, category) {
     let res = "";
@@ -83,6 +84,7 @@ async function getLB(prop, timetype, limit, category) {
 }
 
 module.exports = new Command("leaderboard", ["*"], async (args) => {
+    let startTime = Date.now();
     if (args.length < 1) {
         let embed = new MessageEmbed().setTitle("ERROR").setColor(0x00cc66).setDescription("This command a game argument. Use the help command for more info.");
         return {
@@ -390,6 +392,8 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL())
         .setFooter("Data generated at", BotUtils.client.user.avatarURL())
         .setTimestamp(date);
+
+    logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
     return { res: "", embed: finalRes };
 });

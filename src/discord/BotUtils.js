@@ -1,6 +1,7 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
 const fs = require("fs/promises");
+const { logger } = require("../utils");
 const utils = require("../utils");
 const webhook = require("../webhook");
 const Embed = require("./Embeds");
@@ -25,6 +26,7 @@ module.exports = class BotUtils {
     static msgCopyHook;
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
+        logger.out("Attempting to resolve " + string + " from " + rawMessage.content);
         string = stringify(string).toLowerCase();
         let acclist = await BotUtils.fileCache.acclist;
         let disclist = await BotUtils.fileCache.disclist;
@@ -72,6 +74,7 @@ module.exports = class BotUtils {
             }
         }
 
+        logger.out("resolved as " + acc.name);
         return acc;
     }
 

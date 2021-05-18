@@ -5,6 +5,7 @@ const Embeds = require("../Embeds");
 const { MessageEmbed } = require("discord.js");
 
 module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
+    logger.out("Out of database transaction occuring!");
     let category = "others";
     await BotUtils.logHook.send(`Adding accounts ${args}`);
     let embed = Embeds.waiting;

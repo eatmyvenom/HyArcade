@@ -4,8 +4,10 @@ const Account = require("../../account");
 const mojangRequest = require("../../mojangRequest");
 const BotUtils = require("../BotUtils");
 const { MessageEmbed } = require("discord.js");
+const { logger } = require("../../utils");
 
 module.exports = new Command("UStats", ["*"], async (args, rawMsg) => {
+    logger.out("Out of database transaction occuring!");
     let embed = new MessageEmbed().setTitle("Waiting...").setDescription("Since the user is not in the database it will take some time to gather the stats. Please wait!").setThumbnail("https://i.imgur.com/GLdqYB2.gif").setColor(0xdcde19).setFooter("Please avoid using this, it slows down the overall system.");
 
     let tmpMsg = await rawMsg.channel.send("", { embed: embed });
