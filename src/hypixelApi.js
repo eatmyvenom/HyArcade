@@ -36,9 +36,7 @@ module.exports = class hypixelAPI {
         // make a new request.
         while (apiPoint.headers["retry-after"]) {
             if (config.logRateLimit) {
-                logger.err(
-                    `Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`
-                );
+                logger.err(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
             }
             await sleep(apiPoint.headers["retry-after"] * 1000);
             response = await apiPoint.makeRequest();
@@ -76,9 +74,7 @@ module.exports = class hypixelAPI {
      * @return {String}
      */
     static async getStatusRAW(uuid) {
-        return await hypixelAPI.basicRequest("status", [
-            { key: "uuid", val: uuid },
-        ]);
+        return await hypixelAPI.basicRequest("status", [{ key: "uuid", val: uuid }]);
     }
 
     /**
@@ -89,9 +85,7 @@ module.exports = class hypixelAPI {
      * @return {String}
      */
     static async getAccountDataRaw(uuid) {
-        return await hypixelAPI.basicRequest("player", [
-            { key: "uuid", val: uuid },
-        ]);
+        return await hypixelAPI.basicRequest("player", [{ key: "uuid", val: uuid }]);
     }
 
     /**
@@ -172,9 +166,7 @@ module.exports = class hypixelAPI {
      * @return {String}
      */
     static async getGuildFromPlayer(uuid) {
-        return await hypixelAPI.basicRequest("guild", [
-            { key: "player", val: uuid },
-        ]);
+        return await hypixelAPI.basicRequest("guild", [{ key: "player", val: uuid }]);
     }
 
     /**
@@ -212,9 +204,7 @@ module.exports = class hypixelAPI {
     }
 
     static async getGamesPlayedRAW(uuid) {
-        return await hypixelAPI.basicRequest("recentGames", [
-            { key: "uuid", val: uuid },
-        ]);
+        return await hypixelAPI.basicRequest("recentGames", [{ key: "uuid", val: uuid }]);
     }
 
     /**

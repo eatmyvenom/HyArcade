@@ -40,14 +40,7 @@ module.exports = async (interaction) => {
             let names = args[0].split(" ");
             let res = await addAccounts("others", names);
             res = "```\n" + res + "\n```";
-            let embed = new MessageEmbed()
-                .setTitle("Accounts added")
-                .setDescription(res)
-                .setFooter(
-                    "It will take a little while for these accounts to be fully added to the database, please be patient."
-                )
-                .setTimestamp(Date.now())
-                .setColor(0x44a3e7);
+            let embed = new MessageEmbed().setTitle("Accounts added").setDescription(res).setFooter("It will take a little while for these accounts to be fully added to the database, please be patient.").setTimestamp(Date.now()).setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
 
@@ -69,19 +62,13 @@ module.exports = async (interaction) => {
 
         case "namehistory": {
             let acc = await InteractionUtils.resolveAccount(interaction);
-            let embed = new MessageEmbed()
-                .setTitle(`${acc.name} IGN history`)
-                .setDescription(acc.nameHist)
-                .setColor(0x44a3e7);
+            let embed = new MessageEmbed().setTitle(`${acc.name} IGN history`).setDescription(acc.nameHist).setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
 
         case "whois": {
             let acc = await InteractionUtils.resolveAccount(interaction);
-            let embed = new MessageEmbed()
-                .setTitle(`${acc.name} discord`)
-                .setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`)
-                .setColor(0x44a3e7);
+            let embed = new MessageEmbed().setTitle(`${acc.name} discord`).setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`).setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
 

@@ -84,22 +84,13 @@ async function statusTxt() {
     for (const account of accs) {
         let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
         if (gamerAcc != undefined) {
-            gamerstr += await status.genStatus(
-                account.name,
-                crntstatus[account.uuid]
-            );
+            gamerstr += await status.genStatus(account.name, crntstatus[account.uuid]);
         } else {
-            nongamers += await status.genStatus(
-                account.name,
-                crntstatus[account.uuid]
-            );
+            nongamers += await status.genStatus(account.name, crntstatus[account.uuid]);
         }
     }
 
-    await fs.writeFile(
-        "status.txt",
-        `${gamerstr}\nNon gamers:\n\n${nongamers}`
-    );
+    await fs.writeFile("status.txt", `${gamerstr}\nNon gamers:\n\n${nongamers}`);
 }
 
 async function statusTxtSorted() {
@@ -224,19 +215,12 @@ async function updateAccountsInArr(accounts, oldAccs) {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
                 let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-                let aboveCringeLimit =
-                    oldAcc.footballWins >= cfg.cringeGameUpperBound;
-                let belowCringeLimit =
-                    oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                let aboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                let belowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
                 let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
-                let hasPlayedRecently =
-                    Date.now() - oldAcc.lastLogout < 2629743000;
+                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
 
-                if (
-                    aboveArcadeLimit &&
-                    outsideCringeLimit &&
-                    hasPlayedRecently
-                ) {
+                if (aboveArcadeLimit && outsideCringeLimit && hasPlayedRecently) {
                     await account.updateData();
                 } else {
                     account.setData(oldAcc);

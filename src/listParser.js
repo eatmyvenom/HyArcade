@@ -40,13 +40,7 @@ exports.accounts = async function accounts() {
         }
         acclist[sublist] = currentlist;
     }
-    acclist.accounts = acclist.gamers.concat(
-        acclist.others,
-        acclist.afkers,
-        acclist.important,
-        acclist.yt,
-        acclist.pog
-    );
+    acclist.accounts = acclist.gamers.concat(acclist.others, acclist.afkers, acclist.important, acclist.yt, acclist.pog);
 
     if (cfg.mode == "test") {
         acclist.accounts = acclist.gamers;

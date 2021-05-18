@@ -27,19 +27,9 @@ class Player {
         for (let i = 0; i < altnames.length; i++) {
             // if uuid then check uuid
             if (altnames[i].length == 32) {
-                this.alts.push(
-                    accounts.find(
-                        (acc) =>
-                            acc.uuid.toLowerCase() == altnames[i].toLowerCase()
-                    )
-                );
+                this.alts.push(accounts.find((acc) => acc.uuid.toLowerCase() == altnames[i].toLowerCase()));
             } else {
-                this.alts.push(
-                    accounts.find(
-                        (acc) =>
-                            acc.name.toLowerCase() == altnames[i].toLowerCase()
-                    )
-                );
+                this.alts.push(accounts.find((acc) => acc.name.toLowerCase() == altnames[i].toLowerCase()));
             }
         }
     }

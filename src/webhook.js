@@ -11,11 +11,7 @@ const { logger } = require("./utils");
  * @param {String} [webhookToken=config.webhook.token]
  * @return {null}
  */
-async function sendToDiscord(
-    content = "",
-    webhookID = config.webhook.id,
-    webhookToken = config.webhook.token
-) {
+async function sendToDiscord(content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
     if (content == "") {
         logger.err("Refusing to send empty message to webhook!");
         return;
@@ -57,12 +53,7 @@ async function sendBasicEmbed(content, embed, webhook) {
  * @param {String} [webhookID=config.webhook.id]
  * @param {String} [webhookToken=config.webhook.token]
  */
-async function sendToEmbedDiscord(
-    txt,
-    list,
-    webhookID = config.webhook.id,
-    webhookToken = config.webhook.token
-) {
+async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send(txt, {
         embeds: [generateEmbed(list)],
@@ -75,10 +66,7 @@ async function sendToEmbedDiscord(
 }
 
 async function sendPGEmbed() {
-    let hook = new Discord.WebhookClient(
-        config.webhook.id,
-        config.webhook.token
-    );
+    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send("", {
         embeds: [await genPGEmbed()],
         username: config.webhook.username,
@@ -90,10 +78,7 @@ async function sendPGEmbed() {
 }
 
 async function sendPGWEmbed() {
-    let hook = new Discord.WebhookClient(
-        config.webhook.id,
-        config.webhook.token
-    );
+    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send("", {
         embeds: [await genPGWEmbed()],
         username: config.webhook.username,
@@ -105,10 +90,7 @@ async function sendPGWEmbed() {
 }
 
 async function sendPGMEmbed() {
-    let hook = new Discord.WebhookClient(
-        config.webhook.id,
-        config.webhook.token
-    );
+    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send("", {
         embeds: [await genPGMEmbed()],
         username: config.webhook.username,
@@ -120,10 +102,7 @@ async function sendPGMEmbed() {
 }
 
 async function sendTOKillEmbed() {
-    let hook = new Discord.WebhookClient(
-        config.otherHooks.TO.id,
-        config.otherHooks.TO.token
-    );
+    let hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
     await hook.send("", {
         embeds: [await genTOKillEmbed()],
         username: config.otherHooks.TO.username,
@@ -143,10 +122,7 @@ async function sendTOKillEmbed() {
 function generateEmbed(list) {
     list = list.filter((item) => item.wins > 0);
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Daily Leaderboard")
-        .setColor(0x44a3e7)
-        .setTimestamp(Date.now());
+    let embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard").setColor(0x44a3e7).setTimestamp(Date.now());
 
     let str = "";
 
@@ -163,16 +139,7 @@ async function genPGEmbed() {
     let alltime = await listUtils.stringLB("wins", 25);
     let day = await listUtils.stringLBDaily("wins", 25);
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Party games leaderboards")
-        .setColor(0x44a3e7)
-        .setTimestamp(Date.now())
-        .addField(
-            "------------- Top lifetime wins -------------",
-            alltime,
-            true
-        )
-        .addField("--------------- Top daily wins --------------", day, true);
+    let embed = new Discord.MessageEmbed().setTitle("Party games leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("------------- Top lifetime wins -------------", alltime, true).addField("--------------- Top daily wins --------------", day, true);
 
     return embed;
 }
@@ -180,15 +147,7 @@ async function genPGEmbed() {
 async function genTOKillEmbed() {
     let alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Throw out leaderboards")
-        .setColor(0x44a3e7)
-        .setTimestamp(Date.now())
-        .addField(
-            "------------- Top lifetime kills -------------",
-            alltime,
-            true
-        );
+    let embed = new Discord.MessageEmbed().setTitle("Throw out leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("------------- Top lifetime kills -------------", alltime, true);
 
     return embed;
 }
@@ -196,11 +155,7 @@ async function genTOKillEmbed() {
 async function genPGWEmbed() {
     let week = await listUtils.stringLBDiff("wins", 25, "weekly");
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Party games leaderboards")
-        .setColor(0x44a3e7)
-        .setTimestamp(Date.now())
-        .addField("-------------- Top weekly wins --------------", week, true);
+    let embed = new Discord.MessageEmbed().setTitle("Party games leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("-------------- Top weekly wins --------------", week, true);
 
     return embed;
 }
@@ -208,11 +163,7 @@ async function genPGWEmbed() {
 async function genPGMEmbed() {
     let month = await listUtils.stringLBDiff("wins", 25, "monthly");
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Party games leaderboards")
-        .setColor(0x44a3e7)
-        .setTimestamp(Date.now())
-        .addField("-------------- Top monthly wins -------------", month, true);
+    let embed = new Discord.MessageEmbed().setTitle("Party games leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("-------------- Top monthly wins -------------", month, true);
 
     return embed;
 }

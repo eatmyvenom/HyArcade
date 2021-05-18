@@ -5,10 +5,7 @@ const BotUtils = require("../BotUtils");
 module.exports = class InteractionUtils {
     static async resolveAccount(interaction, namearg = 0) {
         let string = "undefinednullnonothingno";
-        if (
-            interaction.options != undefined &&
-            interaction.options[namearg] != undefined
-        ) {
+        if (interaction.options != undefined && interaction.options[namearg] != undefined) {
             string = interaction.options[namearg].value;
         }
         string = stringify(string).toLowerCase();

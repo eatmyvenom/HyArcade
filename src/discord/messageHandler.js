@@ -6,34 +6,23 @@ const { isValidIGN, logger } = require("../utils");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
 
-const longMsgStr =
-    "**WARNING** Attempted to send a message greater than 2000 characters in length!";
+const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
 async function logError(msg, e) {
-    await BotUtils.errHook.send(
-        "Error from - " + msg.content.replace(/`/g, "\\`")
-    );
+    await BotUtils.errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
     await BotUtils.errHook.send(e.toString());
     logger.err("Error from - " + msg.content);
     logger.err(e.toString());
 }
 
 async function logCmd(msg) {
-    await BotUtils.logCommand(
-        msg.content.split(" ")[0],
-        msg.content.split(" ").slice(1),
-        msg.author.id,
-        msg.url
-    );
+    await BotUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg.author.id, msg.url);
     logger.out(`${msg.author.tag} ran : \`${msg.content}\``);
 }
 
 async function sendAsHook(hook, cmdResponse) {
     try {
-        await hook.send(
-            cmdResponse.res,
-            BotUtils.getWebhookObj(cmdResponse.embed)
-        );
+        await hook.send(cmdResponse.res, BotUtils.getWebhookObj(cmdResponse.embed));
         return true;
     } catch (e) {
         logger.err(e.toString());
@@ -59,14 +48,9 @@ async function addIGNs(msg) {
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
             let acclist = await utils.readJSON("./acclist.json");
-            let category =
-                acclist[msg.content.split(" ")[1]] != undefined
-                    ? msg.content.split(" ")[1]
-                    : "others";
+            let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
-            BotUtils.logHook.send(
-                'Attempting to add "`' + firstWord + '`" to database.'
-            );
+            BotUtils.logHook.send('Attempting to add "`' + firstWord + '`" to database.');
             await addAccounts(category, [firstWord]);
         }
     }
@@ -107,10 +91,7 @@ module.exports = async function messageHandler(msg) {
 
     let cmdResponse = await getCmdRes(msg);
 
-    let isValidResponse =
-        cmdResponse != undefined &&
-        cmdResponse.res != undefined &&
-        (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {

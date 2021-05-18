@@ -7,10 +7,9 @@ const Account = require("./account");
 const BotUtils = require("./discord/BotUtils");
 const logger = utils.logger;
 
-
 async function getList(type = "") {
     let list;
-    if(!BotUtils.isBotInstance) {
+    if (!BotUtils.isBotInstance) {
         if (type == "") {
             list = await utils.readJSON("accounts.json");
         } else {
@@ -21,7 +20,6 @@ async function getList(type = "") {
     }
     return list;
 }
-
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -41,11 +39,7 @@ async function txtPlayerList(list, maxamnt) {
         // not worth it to use wasm or node native for this
         let num = ("000" + (i + 1)).slice(-3);
 
-        let name = (
-            list[i].name.slice(0, 1).toUpperCase() +
-            list[i].name.slice(1) +
-            "                       "
-        ).slice(0, 17);
+        let name = (list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1) + "                       ").slice(0, 17);
         //         001) MonkeyCity17     : 5900
         str += `${num}) ${name}: ${list[i].wins}\n`;
     }
@@ -67,10 +61,7 @@ async function listNormal(name, maxamnt) {
 }
 
 function findMatchingAccount(acc, list) {
-    return list.find(
-        (a) =>
-            a.uuid == acc.uuid || a.name == acc.name || a.discord == acc.discord
-    );
+    return list.find((a) => a.uuid == acc.uuid || a.name == acc.name || a.discord == acc.discord);
 }
 
 /**
@@ -87,7 +78,7 @@ async function listDiff(name, timetype, maxamnt) {
 
 async function mklistAdv(name, timetype, maxamnt, callback) {
     let newlist, oldlist;
-    if(name == "accounts") {
+    if (name == "accounts") {
         newlist = await getList();
         oldlist = await getList(timetype);
     } else {
@@ -114,7 +105,7 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
 
 async function listDiffByProp(name, prop, timetype, maxamnt, category) {
     let newlist, oldlist;
-    if(name == "accounts") {
+    if (name == "accounts") {
         newlist = await getList();
         oldlist = await getList(timetype);
     } else {
@@ -128,27 +119,20 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
     for (let i = 0; i < oldlist.length; i++) {
         let acc;
         if (oldlist[i].uuid) {
-            acc = newlist.find(
-                (g) => g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase()
-            );
+            acc = newlist.find((g) => g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase());
         } else {
-            acc = newlist.find(
-                (g) => g.name.toLowerCase() == oldlist[i].name.toLowerCase()
-            );
+            acc = newlist.find((g) => g.name.toLowerCase() == oldlist[i].name.toLowerCase());
         }
 
         if (category == undefined) {
             // make sure acc isnt null/undefined
             if (acc) {
-                oldlist[i][prop] =
-                    numberify(acc[prop]) - numberify(oldlist[i][prop]);
+                oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
             }
         } else {
             // make sure acc isnt null/undefined
             if (acc) {
-                oldlist[i][category][prop] =
-                    numberify(acc[category][prop]) -
-                    numberify(oldlist[i][category][prop]);
+                oldlist[i][category][prop] = numberify(acc[category][prop]) - numberify(oldlist[i][category][prop]);
             }
         }
     }
@@ -229,11 +213,7 @@ async function addAccounts(category, names) {
             continue;
         }
 
-        if (
-            acclist[category].find((acc) => acc.uuid == uuid) ||
-            acclist["gamers"].find((acc) => acc.uuid == uuid) ||
-            acclist["afkers"].find((acc) => acc.uuid == uuid)
-        ) {
+        if (acclist[category].find((acc) => acc.uuid == uuid) || acclist["gamers"].find((acc) => acc.uuid == uuid) || acclist["afkers"].find((acc) => acc.uuid == uuid)) {
             logger.err(`Refusing to add duplicate! (${name})`);
             res += `Refusing to add duplicate! (${name})\n`;
             continue;
@@ -281,9 +261,7 @@ async function stringLB(lbprop, maxamnt, category) {
         });
     } else {
         list = await [].concat(list).sort((b, a) => {
-            return (
-                numberify(a[category][lbprop]) - numberify(b[category][lbprop])
-            );
+            return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
         });
     }
 
@@ -308,22 +286,14 @@ async function stringLBAdv(comparitor, parser, maxamnt) {
 }
 
 async function stringLBDiff(lbprop, maxamnt, timetype, category) {
-    let list = await listDiffByProp(
-        "accounts",
-        lbprop,
-        timetype,
-        9999,
-        category
-    );
+    let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
         list = await [].concat(list).sort((b, a) => {
             return numberify(a[lbprop]) - numberify(b[lbprop]);
         });
     } else {
         list = await [].concat(list).sort((b, a) => {
-            return (
-                numberify(a[category][lbprop]) - numberify(b[category][lbprop])
-            );
+            return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
         });
     }
 
@@ -355,8 +325,7 @@ function stringifyList(list, lbprop, category, maxamnt) {
     list = list.slice(0, maxamnt);
     for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
-        let propVal =
-            category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
         if (numberify(propVal) < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;

@@ -11,10 +11,7 @@ module.exports = new Command("LastUpdate", ["*"], async (args) => {
         time = "Saving data!";
     }
 
-    let embed = new MessageEmbed()
-        .setTitle("Update time")
-        .setDescription(time)
-        .setColor(0x00b37b);
+    let embed = new MessageEmbed().setTitle("Update time").setDescription(time).setColor(0x00b37b);
 
     return { res: "", embed: embed };
 });

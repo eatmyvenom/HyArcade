@@ -38,21 +38,8 @@ class EventDetector {
         this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
-        if (
-            newIndex <= 24 &&
-            newIndex < oldIndex &&
-            oldAcc.wins != newAcc.wins
-        ) {
-            this.Events.push(
-                new AccountEvent(
-                    newAcc.name,
-                    "LBPOS",
-                    oldIndex,
-                    newIndex,
-                    "party games",
-                    newAcc.uuid
-                )
-            );
+        if (newIndex <= 24 && newIndex < oldIndex && oldAcc.wins != newAcc.wins) {
+            this.Events.push(new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, "party games", newAcc.uuid));
         }
     }
 
@@ -64,50 +51,25 @@ class EventDetector {
 
     detectDiff(oldAcc, newAcc, prop, type, modifier) {
         if (newAcc[prop] > oldAcc[prop]) {
-            this.Events.push(
-                new AccountEvent(
-                    newAcc.name,
-                    type,
-                    oldAcc[prop],
-                    newAcc[prop],
-                    modifier,
-                    newAcc.uuid
-                )
-            );
+            this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], modifier, newAcc.uuid));
         }
     }
 
     detectWinsAuto(oldAcc, newAcc, prop, type) {
-        if (
-            newAcc[prop] % cfg.events[type].winMod == 0 &&
-            newAcc[prop] > oldAcc[prop]
-        ) {
-            this.Events.push(
-                new AccountEvent(
-                    newAcc.name,
-                    type,
-                    oldAcc[prop],
-                    newAcc[prop],
-                    "",
-                    newAcc.uuid
-                )
-            );
+        if (newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
+            this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], "", newAcc.uuid));
         }
     }
 
     detectWins(oldWc, newWc, name, type, modifier, uuid) {
         if (newWc % 500 == 0 && newWc > oldWc) {
-            this.Events.push(
-                new AccountEvent(name, type, oldWc, newWc, modifier, uuid)
-            );
+            this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 
     detectSpecific(oldWc, newWc, amnt, name, type, modifier, uuid) {
         if (newWc == amnt && newWc > oldWc) {
-            this.Events.push(
-                new AccountEvent(name, type, oldWc, newWc, modifier, uuid)
-            );
+            this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 

@@ -10,12 +10,7 @@ const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/webhook");
 const utils = require("./src/utils");
 const cli = require("./src/cli");
-const {
-    listNormal,
-    listDiff,
-    stringNormal,
-    stringDaily,
-} = require("./src/listUtils");
+const { listNormal, listDiff, stringNormal, stringDaily } = require("./src/listUtils");
 const args = process.argv;
 const cluster = require("./src/cluster");
 const task = require("./src/task");
@@ -159,11 +154,7 @@ async function gameAmnt() {
  * @param {string} [timetype=utils.day()] the varied part of the file to distinguish it
  */
 async function archive(path = "./archive/", timetype = utils.day()) {
-    await Promise.all([
-        utils.archiveJson("guild", path, timetype),
-        utils.archiveJson("players", path, timetype),
-        utils.archiveJson("accounts", path, timetype),
-    ]);
+    await Promise.all([utils.archiveJson("guild", path, timetype), utils.archiveJson("players", path, timetype), utils.archiveJson("accounts", path, timetype)]);
 }
 
 /**
@@ -221,10 +212,7 @@ async function writePID() {
     if (!utils.fileExists(os.tmpdir() + "/pgapi")) {
         await fs.mkdir(os.tmpdir() + "/pgapi");
     }
-    await fs.writeFile(
-        os.tmpdir() + "/pgapi/" + args[2] + ".pid",
-        "" + process.pid
-    );
+    await fs.writeFile(os.tmpdir() + "/pgapi/" + args[2] + ".pid", "" + process.pid);
 }
 
 async function rmPID() {
@@ -232,14 +220,7 @@ async function rmPID() {
 }
 
 async function sendDiscordEvent() {
-    let event = new AccountEvent(
-        args[3],
-        args[4],
-        args[5],
-        args[6],
-        args[7],
-        args[8]
-    );
+    let event = new AccountEvent(args[3], args[4], args[5], args[6], args[7], args[8]);
     await event.toDiscord();
 }
 

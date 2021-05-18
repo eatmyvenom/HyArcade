@@ -46,15 +46,11 @@ module.exports = class RoleUpdater {
 
         if (discMember.roles.cache != undefined) {
             if (!discMember.roles.cache.has(newRole.roleID)) {
-                await BotUtils.logHook.send(
-                    `${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`
-                );
+                await BotUtils.logHook.send(`${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`);
                 await discMember.roles.add(newRole.roleID);
             }
         } else {
-            await BotUtils.logHook.send(
-                `${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`
-            );
+            await BotUtils.logHook.send(`${discMember.user.tag} is reciving the "${newRole.minimumWins}+ wins" role in ${this.guild.name}`);
             await discMember.roles.add(newRole.roleID);
         }
     }
@@ -63,9 +59,7 @@ module.exports = class RoleUpdater {
         for (let role of this.roles) {
             if (role.roleID == ignoreID) continue;
             if (discMember.roles.cache.has(role.roleID)) {
-                await BotUtils.logHook.send(
-                    `${discMember.user.tag} is having "${role.minimumWins}+ wins" role removed in ${this.guild.name}`
-                );
+                await BotUtils.logHook.send(`${discMember.user.tag} is having "${role.minimumWins}+ wins" role removed in ${this.guild.name}`);
                 await discMember.roles.remove(role.roleID);
             }
         }

@@ -49,83 +49,41 @@ function displayData(data) {
     setHtmlByName("arcwins", "Arcade wins: " + formatNum(data.arcadeWins));
     setHtmlByName("pg-wins", "Party games wins: " + formatNum(data.wins));
     setHtmlByName("fh-wins", "Farm hunt wins: " + formatNum(data.farmhuntWins));
-    setHtmlByName(
-        "hysay",
-        "Hypixel says wins: " + formatNum(data.hypixelSaysWins)
-    );
+    setHtmlByName("hysay", "Hypixel says wins: " + formatNum(data.hypixelSaysWins));
     setHtmlByName("hitw", "HITW wins: " + data.hitwWins);
-    setHtmlByName(
-        "bd",
-        "Blocking dead wins: " + formatNum(data.blockingDeadWins)
-    );
+    setHtmlByName("bd", "Blocking dead wins: " + formatNum(data.blockingDeadWins));
     setHtmlByName("mw", "Mini walls wins: " + formatNum(data.miniWallsWins));
     setHtmlByName("fb", "Football wins: " + formatNum(data.footballWins));
-    setHtmlByName(
-        "es",
-        "Ender spleef wins: " + formatNum(data.enderSpleefWins)
-    );
+    setHtmlByName("es", "Ender spleef wins: " + formatNum(data.enderSpleefWins));
     setHtmlByName("to", "Throw out wins: " + formatNum(data.throwOutWins));
     setHtmlByName("gw", "Galaxy wars wins: " + formatNum(data.galaxyWarsWins));
     setHtmlByName("dw", "Dragon wars wins: " + formatNum(data.dragonWarsWins));
-    setHtmlByName(
-        "bh",
-        "Bounty hunter wins: " + formatNum(data.bountyHuntersWins)
-    );
-    setHtmlByName(
-        "hns",
-        "Hide and seek wins: " + formatNum(data.hideAndSeekWins)
-    );
+    setHtmlByName("bh", "Bounty hunter wins: " + formatNum(data.bountyHuntersWins));
+    setHtmlByName("hns", "Hide and seek wins: " + formatNum(data.hideAndSeekWins));
     setHtmlByName("z", "Zombie wins: " + formatNum(data.zombiesWins));
-    setHtmlByName(
-        "pp",
-        "Pixel painter wins: " + formatNum(data.pixelPaintersWins)
-    );
+    setHtmlByName("pp", "Pixel painter wins: " + formatNum(data.pixelPaintersWins));
     setHtmlByName("xp", "Level: " + formatNum(data.level));
     setHtmlByName("karma", "Karma: " + formatNum(data.karma));
     setHtmlByName("name", "Name: " + data.name);
     setHtmlByName("uuid", "UUID: " + data.uuid);
     if (data.rank) {
-        setHtmlByName(
-            "rank",
-            "Rank: " + data.rank.replace(/_/g, "").replace(/PLUS/g, "+")
-        );
+        setHtmlByName("rank", "Rank: " + data.rank.replace(/_/g, "").replace(/PLUS/g, "+"));
     } else {
         setHtmlByName("rank", "Rank: Non");
     }
     setHtmlByName("version", "Version: " + ver);
     setHtmlByName("loggedIn", "Online: " + data.isLoggedIn);
     setHtmlByName("firstLogin", "First login: " + formatTime(data.firstLogin));
-    document
-        .getElementById("render")
-        .setAttribute(
-            "src",
-            "https://crafatar.com/renders/body/" +
-                data.uuid +
-                "?size=512&default=MHF_Steve&scale=10&overlay"
-        );
-    document
-        .getElementById("lvlimg")
-        .setAttribute(
-            "src",
-            "https://gen.plancke.io/exp/" + data.uuid + ".png"
-        );
-    document
-        .getElementById("achivimg")
-        .setAttribute(
-            "src",
-            "https://gen.plancke.io/achievementPoints/" + data.uuid + ".png"
-        );
+    document.getElementById("render").setAttribute("src", "https://crafatar.com/renders/body/" + data.uuid + "?size=512&default=MHF_Steve&scale=10&overlay");
+    document.getElementById("lvlimg").setAttribute("src", "https://gen.plancke.io/exp/" + data.uuid + ".png");
+    document.getElementById("achivimg").setAttribute("src", "https://gen.plancke.io/achievementPoints/" + data.uuid + ".png");
 
     setIcon(data.uuid);
 }
 
 function handleData(rawjson) {
     let json = JSON.parse(rawjson);
-    let playerdata = json.find(
-        (acc) =>
-            acc.name.toLowerCase() == playername.toLowerCase() ||
-            acc.uuid == playername.toLowerCase()
-    );
+    let playerdata = json.find((acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase());
     if (playerdata != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
@@ -133,19 +91,11 @@ function handleData(rawjson) {
         if (urlParams.has("q")) {
             if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
                 urlParams.set("q", playername);
-                window.history.replaceState(
-                    window.history.state,
-                    "",
-                    window.location.pathname + "?" + urlParams.toString()
-                );
+                window.history.replaceState(window.history.state, "", window.location.pathname + "?" + urlParams.toString());
             }
         } else {
             urlParams.append("q", playername);
-            window.history.replaceState(
-                window.history.state,
-                "",
-                window.location.pathname + "?" + urlParams.toString()
-            );
+            window.history.replaceState(window.history.state, "", window.location.pathname + "?" + urlParams.toString());
         }
     }
 }
@@ -160,9 +110,7 @@ function handleGamesPlayed(rawjson) {
 
     let countsStr = "";
     for (let count in sortable) {
-        countsStr += `${count.replace(/\./g, " ").replace(/_/g, " ")}: ${
-            sortable[count]
-        }\n`;
+        countsStr += `${count.replace(/\./g, " ").replace(/_/g, " ")}: ${sortable[count]}\n`;
     }
 
     setHtmlByName("gamesPlayed", countsStr);

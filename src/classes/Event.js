@@ -23,61 +23,36 @@ class AccountEvent {
         if (this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of${this.newAmnt}! Was ${this.oldAmnt}.`;
         } else if (this.type == "LBPOS") {
-            return `${this.name} just got to rank ${this.newAmnt + 1} on ${
-                this.modifier
-            } leaderboard!`;
+            return `${this.name} just got to rank ${this.newAmnt + 1} on ${this.modifier} leaderboard!`;
         } else {
-            return `${this.name} just hit ${this.newAmnt} ${
-                config.events[this.type].name
-            } wins!`;
+            return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
         }
     }
 
     async toDiscord() {
         if (this.type == "PG") {
-            await Webhook.sendBasic(
-                this.toString(),
-                config.events[this.type].webhook
-            );
+            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         } else if (this.type == "HITWPB") {
             let embed = await this.getHitWEmbed();
-            await Webhook.sendBasicEmbed(
-                "",
-                [embed],
-                config.events.HITW.webhook
-            );
+            await Webhook.sendBasicEmbed("", [embed], config.events.HITW.webhook);
         } else if (this.type == "HITW") {
-            await Webhook.sendBasic(
-                this.toString(),
-                config.events.HITW.webhook
-            );
+            await Webhook.sendBasic(this.toString(), config.events.HITW.webhook);
         } else {
-            await Webhook.sendBasic(
-                this.toString(),
-                config.events[this.type].webhook
-            );
+            await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         }
     }
 
     async getHitWEmbed() {
-        let avatar =
-            "https://crafatar.com/renders/body/" +
-            this.uuid +
-            ".png?size=512&default=MHF_Steve&scale=10&overlay";
+        let avatar = "https://crafatar.com/renders/body/" + this.uuid + ".png?size=512&default=MHF_Steve&scale=10&overlay";
 
-        let thumb =
-            "https://crafatar.com/avatars/" +
-            this.uuid +
-            ".png?size=512?default=MHF_Steve&scale=10&overlay";
+        let thumb = "https://crafatar.com/avatars/" + this.uuid + ".png?size=512?default=MHF_Steve&scale=10&overlay";
 
         let embed = new MessageEmbed()
             .setAuthor(this.name, thumb)
             .setThumbnail(avatar)
             .setFooter("UUID: " + this.uuid)
             .setColor(0x0066cc)
-            .setTitle(
-                `${this.name} just got a new **${this.modifier}** Personal Best!`
-            )
+            .setTitle(`${this.name} just got a new **${this.modifier}** Personal Best!`)
             .addField("Old PB", `**${this.oldAmnt}**`, true)
             .addField("New PB", `**${this.newAmnt}**`, true)
             .addField("Increase", `**${this.newAmnt - this.oldAmnt}**`, true);

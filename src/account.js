@@ -121,11 +121,7 @@ class Account {
      * @memberof account
      */
     async updateData() {
-        await Promise.all([
-            this.updateHypixel(),
-            this.updateOptifine(),
-            this.updateLaby(),
-        ]);
+        await Promise.all([this.updateHypixel(), this.updateOptifine(), this.updateLaby()]);
     }
 
     /**
@@ -164,25 +160,14 @@ class Account {
             if (arcade.wins_party_3) wins += arcade.wins_party_3;
             this.wins = wins;
 
-            this.ranksGifted =
-                json.player.giftingMeta != undefined
-                    ? json.player.giftingMeta.ranksGiven
-                    : 0;
+            this.ranksGifted = json.player.giftingMeta != undefined ? json.player.giftingMeta.ranksGiven : 0;
 
-            this.rank =
-                json.player.newPackageRank != undefined
-                    ? json.player.newPackageRank
-                    : json.player.packageRank;
+            this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
 
-            if (json.player.monthlyPackageRank == "SUPERSTAR")
-                this.rank = "MVP_PLUS_PLUS";
+            if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
 
-            if (
-                json.player.socialMedia &&
-                json.player.socialMedia.links &&
-                json.player.socialMedia.links.DISCORD
-            ) {
+            if (json.player.socialMedia && json.player.socialMedia.links && json.player.socialMedia.links.DISCORD) {
                 this.hypixelDiscord = json.player.socialMedia.links.DISCORD;
             }
 
@@ -194,13 +179,7 @@ class Account {
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
-            this.level =
-                1.0 +
-                -8750.0 / 2500.0 +
-                Math.sqrt(
-                    ((-8750.0 / 2500.0) * -8750.0) / 2500.0 +
-                        (2.0 / 2500.0) * this.xp
-                );
+            this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
             this.firstLogin = json.player.firstLogin;
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
@@ -224,33 +203,22 @@ class Account {
             this.dragonWarsWins = arcade.wins_dragonwars2;
             this.bountyHuntersWins = arcade.wins_oneinthequiver;
             this.blockingDeadWins = arcade.wins_dayone;
-            this.hideAndSeekWins =
-                numberify(arcade.seeker_wins_hide_and_seek) +
-                numberify(arcade.hider_wins_hide_and_seek);
+            this.hideAndSeekWins = numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
             this.zombiesWins = arcade.wins_zombies;
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = arcade.wins_draw_their_thing;
 
             this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
-            this.seasonalWins.grinch = numberify(
-                arcade.wins_grinch_simulator_v2
-            );
-            this.seasonalWins.halloween = numberify(
-                arcade.wins_halloween_simulator
-            );
+            this.seasonalWins.grinch = numberify(arcade.wins_grinch_simulator_v2);
+            this.seasonalWins.halloween = numberify(arcade.wins_halloween_simulator);
             this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
-            this.simTotal = this.seasonalWins.total =
-                this.seasonalWins.easter +
-                this.seasonalWins.grinch +
-                this.seasonalWins.halloween +
-                this.seasonalWins.scuba;
+            this.simTotal = this.seasonalWins.total = this.seasonalWins.easter + this.seasonalWins.grinch + this.seasonalWins.halloween + this.seasonalWins.scuba;
 
             this.extras.blockingDeadKills = arcade.kills_dayone;
             this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
             this.extras.bountyHuntersKills = arcade.kills_oneinthequiver;
-            this.extras.bountyHuntersBountyKills =
-                arcade.bounty_kills_oneinthequiver;
+            this.extras.bountyHuntersBountyKills = arcade.bounty_kills_oneinthequiver;
             this.extras.bountyHuntersDeaths = arcade.deaths_oneinthequiver;
             this.extras.dragonWarsKills = arcade.kills_dragonwars2;
             this.extras.footballGoals = arcade.goals_soccer;

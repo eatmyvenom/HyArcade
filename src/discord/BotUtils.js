@@ -17,7 +17,6 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 module.exports = class BotUtils {
-
     static fileCache = {};
     static isBotInstance = false;
     static logHook;
@@ -60,11 +59,7 @@ module.exports = class BotUtils {
                 let discid = "" + rawMessage.mentions.users.first();
                 let uuid = disclist[discid];
                 if (uuid != undefined) {
-                    acc = acclist.find(
-                        (a) =>
-                            stringify(a.uuid).toLowerCase() ==
-                            uuid.toLowerCase()
-                    );
+                    acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase());
                 }
             }
         }
@@ -73,9 +68,7 @@ module.exports = class BotUtils {
             let discid = rawMessage.author.id;
             let uuid = disclist[discid];
             if (uuid != undefined) {
-                acc = acclist.find(
-                    (a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase()
-                );
+                acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase());
             }
         }
 
@@ -109,8 +102,7 @@ module.exports = class BotUtils {
     }
 
     static async getStats(acc, game) {
-        let thumbURL =
-            "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
+        let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;
 
@@ -256,10 +248,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value:
-                        Math.round(
-                            (acc.miniWalls.kills / acc.miniWalls.deaths) * 100
-                        ) / 100,
+                    value: Math.round((acc.miniWalls.kills / acc.miniWalls.deaths) * 100) / 100,
                     inline: true,
                 });
                 break;
@@ -331,12 +320,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value:
-                        Math.round(
-                            (acc.extras.throwOutKills /
-                                acc.extras.throwOutDeaths) *
-                                100
-                        ) / 100,
+                    value: Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -366,12 +350,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value:
-                        Math.round(
-                            (acc.extras.galaxyWarsKills /
-                                acc.extras.galaxyWarsDeaths) *
-                                100
-                        ) / 100,
+                    value: Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -424,12 +403,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value:
-                        Math.round(
-                            (acc.extras.bountyHuntersKills /
-                                acc.extras.bountyHuntersDeaths) *
-                                100
-                        ) / 100,
+                    value: Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
@@ -649,12 +623,7 @@ module.exports = class BotUtils {
         let date = new Date(updatetime.toString());
 
         let embed = new MessageEmbed()
-            .setAuthor(
-                `${rank} ${acc.name}`,
-                null,
-                "http://eatmyvenom.me/share/partygames/player.html?q=" +
-                    acc.name
-            )
+            .setAuthor(`${rank} ${acc.name}`, null, "http://eatmyvenom.me/share/partygames/player.html?q=" + acc.name)
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
             .addFields(fields)
@@ -665,10 +634,7 @@ module.exports = class BotUtils {
     }
 
     static async logIgns(msg) {
-        let ignClient = new WebhookClient(
-            cfg.loggingHooks.ignHook.id,
-            cfg.loggingHooks.ignHook.token
-        );
+        let ignClient = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
         let logs = [];
         for (let c of cfg.discord.listenChannels) {
             logs.push({ id: c, hook: ignClient });
@@ -695,18 +661,11 @@ module.exports = class BotUtils {
     }
 
     static async logCommand(command, args, author, link) {
-        await BotUtils.msgCopyHook.send(
-            Embed.execution(command, args, author, link)
-        );
+        await BotUtils.msgCopyHook.send(Embed.execution(command, args, author, link));
     }
 
     static getBlacklistRes() {
-        let embed = new MessageEmbed()
-            .setTitle("You are blacklisted")
-            .setDescription(
-                "This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom."
-            )
-            .setColor(0xff0000);
+        let embed = new MessageEmbed().setTitle("You are blacklisted").setDescription("This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom.").setColor(0xff0000);
 
         return embed;
     }

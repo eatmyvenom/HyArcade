@@ -9,17 +9,13 @@ const webRequest = require("./webRequest");
  */
 async function getUUIDRaw(name) {
     // promisify query
-    let response = await webRequest(
-        `https://api.mojang.com/users/profiles/minecraft/${name}`
-    );
+    let response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
     let data = response.data;
     return data;
 }
 
 async function getPlayerRaw(uuid) {
-    let response = await webRequest(
-        `https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`
-    );
+    let response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
     let data = response.data;
     return data;
 }

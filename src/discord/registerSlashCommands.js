@@ -19,16 +19,12 @@ async function interactionHandler(interaction) {
         });
     }
 
-    let logString =  `${interaction.member.user.tag} invoked interaction \`${interaction.commandName}\` with options \`${JSON.stringify(interaction.options)}\``;
+    let logString = `${interaction.member.user.tag} invoked interaction \`${interaction.commandName}\` with options \`${JSON.stringify(interaction.options)}\``;
 
     logger.out(logString);
     await BotUtils.logHook.send(logString);
 
-    await BotUtils.logCommand(
-        interaction.commandName,
-        JSON.stringify(interaction.options),
-        interaction.member.user.id
-    );
+    await BotUtils.logCommand(interaction.commandName, JSON.stringify(interaction.options), interaction.member.user.id);
 }
 
 module.exports = async (client) => {
