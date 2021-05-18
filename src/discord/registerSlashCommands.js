@@ -1,4 +1,5 @@
 const { WebhookClient } = require("discord.js");
+const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
 
@@ -18,13 +19,10 @@ async function interactionHandler(interaction) {
         });
     }
 
-    await BotUtils.logHook.send(
-        `${interaction.member.user.username}#${
-            interaction.member.user.discriminator
-        } invoked interaction \`${
-            interaction.commandName
-        }\` with options \`${JSON.stringify(interaction.options)}\``
-    );
+    let logString =  `${interaction.member.user.tag} invoked interaction \`${interaction.commandName}\` with options \`${JSON.stringify(interaction.options)}\``;
+
+    logger.out(logString);
+    await BotUtils.logHook.send(logString);
 
     await BotUtils.logCommand(
         interaction.commandName,
