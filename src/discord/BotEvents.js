@@ -60,7 +60,6 @@ module.exports = class BotEvents {
     }
 
     static async tick() {
-        logger.out("Bot tick handling")
         let runtime = Runtime.fromJSON();
         if (runtime.needRoleupdate) {
             await roleHandler(BotUtils.client);
