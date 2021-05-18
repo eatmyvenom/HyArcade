@@ -27,18 +27,19 @@ class EventDetector {
         this.detectWinsAuto(oldAcc, newAcc, "hypixelSaysWins", "HYSAYS");
         this.detectWinsAuto(oldAcc, newAcc, "farmhuntWins", "FH");
         this.detectWinsAuto(oldAcc, newAcc, "hitwWins", "HITW");
-        this.detectWinsAuto(oldAcc, newAcc, "arcadeWins", "ARC");
-        this.detectWinsAuto(oldAcc, newAcc, "anyWins", "WINS");
         this.detectWinsAuto(oldAcc, newAcc, "throwOutWins", "TO");
         this.detectWinsAuto(oldAcc, newAcc, "miniWallsWins", "MW");
         this.detectWinsAuto(oldAcc, newAcc, "footballWins", "FB");
         this.detectWinsAuto(oldAcc, newAcc, "zombiesWins", "Z");
+        this.detectWinsAuto(oldAcc, newAcc, "blockingDeadWins", "BD");
+        this.detectWinsAuto(oldAcc, newAcc, "dragonWarsWins", "DW");
+        this.detectWinsAuto(oldAcc, newAcc, "bountyHuntersWins", "BH");
 
         this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
         if (
-            newIndex <= 25 &&
+            newIndex <= 24 &&
             newIndex < oldIndex &&
             oldAcc.wins != newAcc.wins
         ) {
