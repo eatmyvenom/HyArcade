@@ -31,7 +31,21 @@ async function sendAsHook(hook, cmdResponse) {
     }
 }
 
+function randomBtw() {
+    let randomVal = Math.round(Math.random() * 15);
+    let str = "By the way, I have slash commands you can run right now which are alot better in the backend than the normal way of running commands! Try em out some time.";
+    logger.out(randomVal)
+    if(randomVal == 0) {
+        return str;
+    }
+    if(randomVal == 1) {
+        return "I have slash commands you can use, currently the normal commands are being phased out. Please try the slash commands instead."
+    }
+    return "";
+}
+
 async function attemptSend(msg, cmdResponse, opts) {
+    cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
