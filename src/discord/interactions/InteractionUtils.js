@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const utils = require("../../utils");
+const { client } = require("../BotUtils");
 const BotUtils = require("../BotUtils");
 
 module.exports = class InteractionUtils {
@@ -21,10 +22,25 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => a.name.toLowerCase() == string);
         }
 
+        if(acc == undefined) {
+            acc = acclist.find((a) => {
+                if(a.nameHist && a.nameHist.length > 0) {
+                    for(let name of a.nameHist) {
+                        if(name.toLowerCase().startsWith(string)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+        }
+
         if (acc == undefined) {
             let discid = interaction.member.user.id;
             acc = acclist.find((a) => stringify(a.discord) == discid);
         }
+
+        
 
         return acc;
     }
