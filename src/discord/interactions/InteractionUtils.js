@@ -22,6 +22,18 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => a.name.toLowerCase() == string);
         }
 
+        if (acc == undefined && string.length <= 16) {
+            acc = acclist.find((a) => a.name.toLowerCase().startsWith(string));
+        }
+
+        if(acc == undefined && string.length == "22") {
+            acc = acclist.find((a) => a.discord == string.slice(3,-1));
+        }
+
+        if(acc == undefined && string.length == "21") {
+            acc = acclist.find((a) => a.discord == string.slice(2,-1));
+        }
+
         if(acc == undefined) {
             acc = acclist.find((a) => {
                 if(a.nameHist && a.nameHist.length > 0) {
