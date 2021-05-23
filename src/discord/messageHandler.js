@@ -102,6 +102,7 @@ async function isBlacklisted(id) {
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
+    if (msg.guild.id == '808077828842455090') return;
 
     let cmdResponse = await getCmdRes(msg);
 

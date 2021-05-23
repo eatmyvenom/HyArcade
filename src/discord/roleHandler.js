@@ -27,32 +27,6 @@ module.exports = async function roleHandler(client) {
         "wins"
     );
 
-    let hsGuild = await client.guilds.fetch("808077828842455090");
-    let HS = new RoleUpdater(
-        hsGuild,
-        [
-            new Role(20000, "808084296714682429"),
-            new Role(15000, "808082861982482483"),
-            new Role(10000, "808082803404439592"),
-            new Role(7500, "808082131993493515"),
-            new Role(5000, "808084994047868928"),
-            new Role(4000, "808085583263301653"),
-            new Role(3000, "808082280626782218"),
-            new Role(2000, "808081952179617863"),
-            new Role(1000, "808084025113575425"),
-            new Role(500, "808081875167870996"),
-            new Role(420, "826989171700138015"),
-            new Role(250, "808081595784232980"),
-            new Role(100, "808088119802593290"),
-            new Role(69, "827336403746422826"),
-            new Role(50, "808084702439014471"),
-            new Role(25, "818251516728836136"),
-            new Role(1, "809189689247662111"),
-            new Role(0, "808083629964001350"),
-        ],
-        "hypixelSaysWins"
-    );
-
     let toGuild = await client.guilds.fetch("809959535174352946");
     let TO = new RoleUpdater(toGuild, [new Role(1000, "815629891034546216"), new Role(500, "815629891395518485"), new Role(300, "815629894453166100"), new Role(100, "815629895303430184"), new Role(50, "815629895303430184")], "throwOutWins");
 
@@ -88,17 +62,11 @@ module.exports = async function roleHandler(client) {
     let hnsGuild = await client.guilds.fetch("839842177755775026");
     let HNS = new RoleUpdater(hnsGuild, [new Role(10000, "839874994225545256"), new Role(5000, "839851167651069962"), new Role(2500, "839843252194377728"), new Role(1000, "839850875463925822"), new Role(500, "839843337904062514"), new Role(250, "840080298011787264"), new Role(100, "839843397543657502"), new Role(0, "839843424575815680")], "hideAndSeekWins");
 
-    // logger.out("Updating roles for Party gamers");
     await PG.updateAll();
-    // logger.out('\nUpdating roles for Hypixel Says \n')
-    // await HS.updateAll();
-    // logger.out("Updating roles for Throw out");
+
     await TO.updateAll();
-    // logger.out("Updating roles for sim games");
     await SIM.updateAll();
-    // logger.out("Updating roles in Farm Hunt");
     await FH.updateAll();
-    // logger.out("Updating roles in Hide and seek");
     await HNS.updateAll();
     logger.out("Roles updated");
 };
