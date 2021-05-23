@@ -23,7 +23,7 @@ class AccountEvent {
         if (this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of${this.newAmnt}! Was ${this.oldAmnt}.`;
         } else if (this.type == "LBPOS") {
-            return `${this.name} just got to rank ${this.newAmnt + 1} on ${this.modifier} leaderboard!`;
+            return `${this.name} just passed ${this.modifier} and got to rank ${this.newAmnt + 1} on the party games leaderboard!`;
         } else {
             return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
         }

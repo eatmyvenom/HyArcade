@@ -13,6 +13,7 @@ const mojangRequest = require("../../mojangRequest");
 
 module.exports = async (interaction) => {
     if (!interaction.isCommand()) return;
+    if (interaction.guildID == '808077828842455090') return;
     let authorID = interaction.member.user.id;
     let opts = [].concat(interaction.options);
     let args = [];
@@ -100,6 +101,14 @@ module.exports = async (interaction) => {
 
         case Boosters.name: {
             return await Boosters.execute(args, authorID, null, interaction);
+        }
+
+        case "help": {
+            if(args.length == 0) {
+                return { res : "" , embed : InteractionUtils.helpEmbed()};
+            } else {
+                return { res : "" , embed : InteractionUtils.helpTopic(args[0])};
+            }
         }
     }
 };
