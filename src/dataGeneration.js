@@ -215,17 +215,24 @@ async function updateAccountsInArr(accounts, oldAccs) {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
                 let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-                let aboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
-                let belowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
-                let outsideCringeLimit = belowCringeLimit || aboveCringeLimit;
+                let fbAboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                let fbBelowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                let fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
+                let mwAboveCringeLimit = oldAcc.miniWallsWins >= cfg.cringeGameUpperBound;
+                let mwBelowCringeLimit = oldAcc.miniWallsWins <= cfg.cringeGameLowerBound;
+                let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
+                let isLinked = oldAcc.discord ? true : false;
                 let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
 
-                if (aboveArcadeLimit && outsideCringeLimit && hasPlayedRecently) {
+                if (isLinked || (aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit && hasPlayedRecently)) {
+                    logger.out(`Updating ${oldAcc.name}'s data`);
                     await account.updateData();
                 } else {
+                    logger.out(`Ignoring ${oldAcc.name} for this refresh`)
                     account.setData(oldAcc);
                 }
             } else {
+                logger.out(`Forced refresh of ${oldAcc.name}`)
                 await account.updateData();
             }
         })
