@@ -101,10 +101,11 @@ async function archiveJson(oldfile, path, timetype) {
  * @param {String} content
  */
 function log(content) {
+    let str = `[${daytime()}] ${content}`;
     if (cfg.std.disable) {
-        fs.writeFile(cfg.std.out, content, { flag: "a" });
+        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
     } else {
-        console.log(`[${daytime()}] ${content}`);
+        console.log(str);
     }
 }
 
@@ -114,10 +115,11 @@ function log(content) {
  * @param {String} content
  */
 function error(content) {
+    let str = daytime() + "ERROR: " + ("" + content).trim()
     if (cfg.std.disable) {
-        fs.writeFile(cfg.std.error, content, { flag: "a" });
+        require("fs").writeFileSync(cfg.std.err, str + "\n", { flag: "a" });
     } else {
-        console.error(daytime() + "ERROR: " + ("" + content).trim());
+        console.error(str);
     }
 }
 
