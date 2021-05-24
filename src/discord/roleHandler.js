@@ -27,6 +27,31 @@ module.exports = async function roleHandler(client) {
         "wins"
     );
 
+    let hsGuild = await client.guilds.fetch("846141095448150018");
+    let HS = new RoleUpdater(
+        hsGuild,
+        [
+            new Role(20000, "846141095719993373"),
+            new Role(15000, "846141095719993372"),
+            new Role(10000, "846141095719993371"),
+            new Role(7500, "846141095719993370"),
+            new Role(5000, "846141095719993369"),
+            new Role(4000, "846141095719993368"),
+            new Role(3000, "846141095719993367"),
+            new Role(2000, "846141095719993366"),
+            new Role(1000, "846141095719993365"),
+            new Role(500, "846141095719993364"),
+            new Role(420, "846141095708327975"),
+            new Role(250, "846141095708327974"),
+            new Role(100, "846141095708327973"),
+            new Role(69, "846141095708327972"),
+            new Role(50, "846141095708327971"),
+            new Role(25, "846141095708327970"),
+            new Role(1, "846141095708327969"),
+        ],
+        "hypixelSaysWins"
+    );
+
     let toGuild = await client.guilds.fetch("809959535174352946");
     let TO = new RoleUpdater(toGuild, [new Role(1000, "815629891034546216"), new Role(500, "815629891395518485"), new Role(300, "815629894453166100"), new Role(100, "815629895303430184"), new Role(50, "815629895303430184")], "throwOutWins");
 
@@ -63,7 +88,7 @@ module.exports = async function roleHandler(client) {
     let HNS = new RoleUpdater(hnsGuild, [new Role(10000, "839874994225545256"), new Role(5000, "839851167651069962"), new Role(2500, "839843252194377728"), new Role(1000, "839850875463925822"), new Role(500, "839843337904062514"), new Role(250, "840080298011787264"), new Role(100, "839843397543657502"), new Role(0, "839843424575815680")], "hideAndSeekWins");
 
     await PG.updateAll();
-
+    await HS.updateAll();
     await TO.updateAll();
     await SIM.updateAll();
     await FH.updateAll();

@@ -65,16 +65,32 @@ async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webh
     hook.destroy();
 }
 
-async function sendPGEmbed() {
-    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+async function sendEmbed(embed, webhook) {
+    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send("", {
-        embeds: [await genPGEmbed()],
-        username: config.webhook.username,
-        avatarURL: config.webhook.pfp,
+        embeds: [embed],
+        username: webhook.username,
+        avatarURL: webhook.pfp,
     });
     // this closes the hook client so the nodejs doesnt hang
     // forever
-    hook.destroy();
+    await hook.destroy();
+}
+
+async function sendPGEmbed() {
+    await sendEmbed(await genPGEmbed(), config.webhook);
+}
+
+async function sendHSEmbed() {
+    await sendEmbed(await genHSEmbed(), config.otherHooks.HS);
+}
+
+async function sendHSWEmbed() {
+    await sendEmbed(await genHSWEmbed(), config.otherHooks.HS);
+}
+
+async function sendHSMEmbed() {
+    await sendEmbed(await genHSMEmbed(), config.otherHooks.HS);
 }
 
 async function sendPGWEmbed() {
@@ -168,6 +184,31 @@ async function genPGMEmbed() {
     return embed;
 }
 
+async function genHSEmbed() {
+    let alltime = await listUtils.stringLB("hypixelSaysWins", 25);
+    let day = await listUtils.stringLBDaily("hypixelSaysWins", 25);
+
+    let embed = new Discord.MessageEmbed().setTitle("Hypixel says leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("------------- Top lifetime wins -------------", alltime, true).addField("--------------- Top daily wins --------------", day, true);
+
+    return embed;
+}
+
+async function genHSWEmbed() {
+    let week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
+
+    let embed = new Discord.MessageEmbed().setTitle("Hypixel says leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("-------------- Top weekly wins --------------", week, true);
+
+    return embed;
+}
+
+async function genHSMEmbed() {
+    let month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
+
+    let embed = new Discord.MessageEmbed().setTitle("Hypixel says leaderboards").setColor(0x44a3e7).setTimestamp(Date.now()).addField("-------------- Top monthly wins -------------", month, true);
+
+    return embed;
+}
+
 module.exports = {
     send: sendToDiscord,
     sendEmbed: sendToEmbedDiscord,
@@ -178,5 +219,8 @@ module.exports = {
     sendPGEmbed: sendPGEmbed,
     sendPGWEmbed: sendPGWEmbed,
     sendPGMEmbed: sendPGMEmbed,
+    sendHSEmbed: sendHSEmbed,
+    sendHSWEmbed: sendHSWEmbed,
+    sendHSMEmbed: sendHSMEmbed,
     sendTOKillEmbed: sendTOKillEmbed,
 };

@@ -335,6 +335,18 @@ async function main() {
             await sendPGMonth();
             break;
 
+        case "discordHS":
+            await Webhook.sendHSEmbed();
+            break;
+
+        case "discordHSW":
+            await Webhook.sendHSWEmbed();
+            break;
+
+        case "discordHSM":
+            await Webhook.sendHSMEmbed();
+            break;
+
         case "discordTOK":
             await sendToKill();
             break;
