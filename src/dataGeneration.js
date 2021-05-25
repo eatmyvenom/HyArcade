@@ -232,7 +232,6 @@ async function updateAccountsInArr(accounts, oldAccs) {
                     account.setData(oldAcc);
                 }
             } else {
-                logger.out(`Forced refresh of ${oldAcc.name}`)
                 await account.updateData();
             }
         })
