@@ -51,7 +51,7 @@ function displayData(data) {
     setHtmlByName("fh-wins", "Farm hunt wins: " + formatNum(data.farmhuntWins));
     setHtmlByName("hysay", "Hypixel says wins: " + formatNum(data.hypixelSaysWins));
     setHtmlByName("hitw", "HITW wins: " + data.hitwWins);
-    setHtmlByName("bd", "Blocking dead wins: " + formatNum(data.blockingDeadWins));
+    setHtmlByName("bd", `BD: W:${formatNum(data.blockingDeadWins)} / K:${formatNum(data.extras.blockingDeadKills)} / HS:${formatNum(data.extras.blockingDeadHeadshots)}`);
     setHtmlByName("mw", "Mini walls wins: " + formatNum(data.miniWallsWins));
     setHtmlByName("fb", "Football wins: " + formatNum(data.footballWins));
     setHtmlByName("es", "Ender spleef wins: " + formatNum(data.enderSpleefWins));
