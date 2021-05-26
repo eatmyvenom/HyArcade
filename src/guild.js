@@ -19,9 +19,8 @@ class Guild {
      * @param {String} uuid
      * @memberof Guild
      */
-    constructor(name, uuid) {
+    constructor(uuid) {
         this.uuid = uuid;
-        this.name = name;
     }
 
     /**

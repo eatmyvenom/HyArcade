@@ -62,7 +62,7 @@ exports.guilds = async function gld(accs) {
     let realList = [];
 
     for (const guild of guildlistjson) {
-        realList.push(new Guild(guild.name, guild.id));
+        realList.push(new Guild(guild));
     }
     return realList;
 };
