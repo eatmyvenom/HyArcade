@@ -110,7 +110,8 @@ module.exports = async function messageHandler(msg) {
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
-            await msg.author.dmChannel.send(BotUtils.getBlacklistRes());
+            let dmchannel = await msg.author.createDM();
+            await dmchannel.send(BotUtils.getBlacklistRes());
             return;
         }
         let opts = {};
