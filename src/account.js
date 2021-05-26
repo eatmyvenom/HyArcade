@@ -53,7 +53,7 @@ class Account {
         grinch: 0,
         total: 0,
     };
-    totalSim = 0;
+    simTotal = 0;
     extras = {
         blockingDeadKills: 0,
         blockingDeadHeadshots: 0,
