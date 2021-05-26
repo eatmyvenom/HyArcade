@@ -86,13 +86,13 @@ async function load() {
 
             let roundsL = document.createElement("div");
             roundsL.setAttribute("class", "life");
-            roundsL.title = "Lifetime rounds";
+            roundsL.title = "Lifetime walls";
             roundsL.id = "hitwRounds";
             main.appendChild(roundsL);
 
             let roundsD = document.createElement("div");
             roundsD.setAttribute("class", "day");
-            roundsD.title = "Daily rounds";
+            roundsD.title = "Daily walls";
             roundsD.id = "hitwRounds";
             main.appendChild(roundsD);
 
@@ -462,6 +462,49 @@ async function load() {
             lifetime.id = "zombiesWins";
             daily.title = "Daily wins"
             daily.id = "zombiesWins";
+            
+            let z1L = document.createElement("div");
+            z1L.setAttribute("class", "life");
+            z1L.title = "Lifetime rounds"
+            z1L.id = "total_rounds_survived_zombies";
+            z1L.setAttribute("zombies", z1L.id);
+            main.appendChild(z1L);
+            
+            let z1D = document.createElement("div");
+            z1D.setAttribute("class", "day");
+            z1D.title = "Daily rounds"
+            z1D.id = "total_rounds_survived_zombies";
+            z1D.setAttribute("zombies", z1D.id); 
+            main.appendChild(z1D);
+
+            let z2L = document.createElement("div");
+            z2L.setAttribute("class", "life");
+            z2L.title = "Lifetime deaths"
+            z2L.id = "deaths_zombies";
+            z2L.setAttribute("zombies", z2L.id);
+            main.appendChild(z2L);
+
+            let z2D = document.createElement("div");
+            z2D.setAttribute("class", "day");
+            z2D.title = "Daily deaths"
+            z2D.id = "deaths_zombies";
+            z2D.setAttribute("zombies", z2D.id); 
+            main.appendChild(z2D);
+
+
+            let z3L = document.createElement("div");
+            z3L.setAttribute("class", "life");
+            z3L.title = "Lifetime revives"
+            z3L.id = "players_revived_zombies";
+            z3L.setAttribute("zombies", z3L.id);
+            main.appendChild(z3L);
+
+            let z3D = document.createElement("div");
+            z3D.setAttribute("class", "day");
+            z3D.title = "Daily revives"
+            z3D.id = "players_revived_zombies";
+            z3D.setAttribute("zombies", z3D.id); 
+            main.appendChild(z3D);
             break;
         }
 
@@ -679,6 +722,23 @@ async function handleLifetimes() {
                     return formatLine(pos, acc.name, acc.seasonalWins[e.getAttribute("seasonalWins")], acc.uuid);
                 }
             );
+        } else if(e.hasAttribute("zombies")) {
+            e.innerHTML = "<h2>" + e.getAttribute("title") + "</h2>" + formatData(accdata,
+                (a,b) => {
+                    if(a.zombies == undefined || a.zombies[e.getAttribute("zombies")] == undefined) {
+                        return -1;
+                    } else if(b.zombies == undefined || b.zombies[e.getAttribute("zombies")] == undefined) {
+                        return 1;
+                    }
+                    return a.zombies[e.getAttribute("zombies")] - b.zombies[e.getAttribute("zombies")];
+                },
+                (pos, acc) => {
+                    if(acc.zombies == undefined) {
+                        return "";
+                    }
+                    return formatLine(pos, acc.name, acc.zombies[e.getAttribute("zombies")], acc.uuid);
+                }
+            );
         } else if(e.hasAttribute("miniWalls")) {
             e.innerHTML = "<h2>" + e.getAttribute("title") + "</h2>" + formatData(accdata,
                 (a,b) => {
@@ -790,6 +850,40 @@ async function handleTimed(timetype) {
                         return "";
                     }
                     return formatLine(pos, acc.name, acc.seasonalWins[e.getAttribute("seasonalWins")], acc.uuid);
+                }
+            );
+        } else if(e.hasAttribute("zombies")) {
+            e.innerHTML = "<h2>" + e.getAttribute("title") + "</h2>" + formatTimed(accdata, accold,
+                (acc, oldAcc) => {
+                    if(acc.zombies == undefined) {
+                        acc.zombies = {};
+                    }
+                    if(oldAcc.zombies == undefined) {
+                        acc.zombies = {};
+                    }
+
+                    if(acc.zombies[e.getAttribute("zombies")] == undefined) {
+                        acc.zombies[e.getAttribute("zombies")] = 0;
+                    }
+                    if(oldAcc.zombies[e.getAttribute("zombies")] == undefined) {
+                        oldAcc.zombies[e.getAttribute("zombies")] = 0;
+                    }
+                    acc.zombies[e.getAttribute("zombies")] -= oldAcc.zombies[e.getAttribute("zombies")];
+                    return acc;
+                },
+                (a,b) => {
+                    if(a.zombies == undefined || a.zombies[e.getAttribute("zombies")] == undefined) {
+                        return 1;
+                    } else if(b.zombies == undefined || b.zombies[e.getAttribute("zombies")] == undefined) {
+                        return -1;
+                    }
+                    return a.zombies[e.getAttribute("zombies")] - b.zombies[e.getAttribute("zombies")];
+                },
+                (pos, acc) => {
+                    if(acc.zombies == undefined) {
+                        return "";
+                    }
+                    return formatLine(pos, acc.name, acc.zombies[e.getAttribute("zombies")], acc.uuid);
                 }
             );
         } else if(e.hasAttribute("miniWalls")) {
