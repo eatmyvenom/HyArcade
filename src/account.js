@@ -82,6 +82,7 @@ class Account {
         deaths: 0,
         witherDamage: 0,
     };
+    zombies = {};
     hasOFCape = false;
     hasLabyCape = false;
     cloak = "";
@@ -214,6 +215,12 @@ class Account {
             this.seasonalWins.halloween = numberify(arcade.wins_halloween_simulator);
             this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
             this.simTotal = this.seasonalWins.total = this.seasonalWins.easter + this.seasonalWins.grinch + this.seasonalWins.halloween + this.seasonalWins.scuba;
+
+            for(let stat in arcade) {
+                if(stat.includes("zombie")) {
+                    this.zombies[stat] = arcade[stat];
+                }
+            }
 
             this.extras.blockingDeadKills = arcade.kills_dayone;
             this.extras.blockingDeadHeadshots = arcade.headshots_dayone;
