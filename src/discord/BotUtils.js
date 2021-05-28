@@ -471,7 +471,6 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                fields.push(BotUtils.emptyField(true));
                 // <br>
                 fields.push({
                     name: "Hide and seek seeker wins",
