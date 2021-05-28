@@ -1,7 +1,7 @@
 {
-    "name": "pg-api",
-    "version": "1.1.2",
-    "description": "A js endpoint for accessing various party games related hypixel stats",
+    "name": "arcade-system",
+    "version": "1.2.0",
+    "description": "A full system for gathering and displaying peoples arcade games stats",
     "main": "index.js",
     "scripts": {
         "status": "node . status",
