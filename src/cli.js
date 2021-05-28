@@ -172,6 +172,11 @@ async function addGuildMembers(args) {
     await dataGeneration.addGuild(uuid);
 }
 
+async function addGIDMembers(args) {
+    let uuid = args[3];
+    await dataGeneration.addGuildID(uuid);
+}
+
 module.exports = {
     newAcc: newAcc,
     newGuild: newGuild,
@@ -182,6 +187,7 @@ module.exports = {
     logD: logD,
     checkNames: checkNames,
     addGuildMembers: addGuildMembers,
+    addGIDMembers: addGIDMembers,
     getUUID: getUUIDCli,
     moveAcc: moveAcc,
     linkDiscord: linkDiscord,

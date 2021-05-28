@@ -261,12 +261,24 @@ async function addGuild(uuid) {
     await addAccounts("others", uuids);
 }
 
+async function addGuildID(id) {
+    let guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
+    let members = guild.guild.members;
+    let uuids = [];
+    for (let m of members) {
+        uuids.push(m.uuid);
+    }
+
+    await addAccounts("others", uuids);
+}
+
 module.exports = {
     genStatus: genStatus,
     updateAllAccounts: updateAllAccounts,
     statusTxtSorted: statusTxtSorted,
     gamesPlayed: gamesPlayed,
     addGuild: addGuild,
+    addGuildID: addGuildID,
     addLeaderboards: addLeaderboards,
     saveBoosters: saveBoosters,
 };

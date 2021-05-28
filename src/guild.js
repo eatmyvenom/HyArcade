@@ -62,12 +62,18 @@ class Guild {
      */
     async updateWins() {
         await this.updateData();
-        let newWins = 0;
+        this.wins = 0;
+        this.arcadeCoins = 0;
+        this.combinedAP = 0;
+        this.arcadeWins = 0;
         for (let i = 0; i < this.members.length; i++) {
-            let memberwins = await this.members[i].wins;
-            newWins += memberwins;
+            let member = this.members[i];
+            this.wins += member.wins;
+            this.arcadeCoins += member.arcadeCoins;
+            this.combinedAP += member.achievementPoints;
+            this.arcadeWins += member.combinedArcadeWins;
         }
-        this.wins = newWins;
-        return newWins;
+        this.members = undefined;
+        return this.wins;
     }
 }

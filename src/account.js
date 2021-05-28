@@ -45,7 +45,9 @@ class Account {
     ctwKills = 0;
     ctwWoolCaptured = 0;
     arcadeWins = 0;
+    combinedArcadeWins = 0;
     anyWins = 0;
+    hnsKills = 0;
     seasonalWins = {
         easter: 0,
         scuba: 0,
@@ -159,7 +161,7 @@ class Account {
             if (arcade.wins_party) wins += arcade.wins_party;
             if (arcade.wins_party_2) wins += arcade.wins_party_2;
             if (arcade.wins_party_3) wins += arcade.wins_party_3;
-            this.wins = wins;
+            this.wins = numberify(wins);
 
             this.ranksGifted = json.player.giftingMeta != undefined ? json.player.giftingMeta.ranksGiven : 0;
 
@@ -184,31 +186,32 @@ class Account {
             this.firstLogin = json.player.firstLogin;
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
-            this.achievementPoints = json.player.achievementPoints;
+            this.achievementPoints = numberify(json.player.achievementPoints);
             this.plusColor = json.player.rankPlusColor;
             this.cloak = json.player.currentCloak;
             this.hat = json.player.currentHat;
             this.clickEffect = json.player.currentClickEffect;
-            this.arcadeCoins = arcade.coins;
+            this.arcadeCoins = numberify(arcade.coins);
             this.hitwFinal = arcade.hitw_record_f;
             this.hitwQual = arcade.hitw_record_q;
-            this.hitwWins = arcade.wins_hole_in_the_wall;
+            this.hitwWins = numberify(arcade.wins_hole_in_the_wall);
             this.hitwRounds = arcade.rounds_hole_in_the_wall;
-            this.farmhuntWins = arcade.wins_farm_hunt;
+            this.farmhuntWins = numberify(arcade.wins_farm_hunt);
             this.farmhuntShit = arcade.poop_collected;
-            this.miniWallsWins = arcade.wins_mini_walls;
-            this.footballWins = arcade.wins_soccer;
-            this.enderSpleefWins = arcade.wins_ender;
-            this.throwOutWins = arcade.wins_throw_out;
-            this.galaxyWarsWins = arcade.sw_game_wins;
-            this.dragonWarsWins = arcade.wins_dragonwars2;
-            this.bountyHuntersWins = arcade.wins_oneinthequiver;
-            this.blockingDeadWins = arcade.wins_dayone;
+            this.miniWallsWins = numberify(arcade.wins_mini_walls);
+            this.footballWins = numberify(arcade.wins_soccer);
+            this.enderSpleefWins = numberify(arcade.wins_ender);
+            this.throwOutWins = numberify(arcade.wins_throw_out);
+            this.galaxyWarsWins = numberify(arcade.sw_game_wins);
+            this.dragonWarsWins = numberify(arcade.wins_dragonwars2);
+            this.bountyHuntersWins = numberify(arcade.wins_oneinthequiver);
+            this.blockingDeadWins = numberify(arcade.wins_dayone);
             this.hideAndSeekWins = numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
-            this.zombiesWins = arcade.wins_zombies;
+            this.zombiesWins = numberify(arcade.wins_zombies);
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
-            this.pixelPaintersWins = arcade.wins_draw_their_thing;
+            this.pixelPaintersWins = numberify(arcade.wins_draw_their_thing);
+            this.hnsKills = numberify(json.player.achievements.arcade_hide_and_seek_hider_kills);
 
             this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
             this.seasonalWins.grinch = numberify(arcade.wins_grinch_simulator_v2);
@@ -250,6 +253,24 @@ class Account {
 
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
+
+            this.combinedArcadeWins = 
+                numberify(this.wins) +
+                numberify(this.hitwWins) +
+                numberify(this.farmhuntWins) +
+                numberify(this.hypixelSaysWins) +
+                numberify(this.miniWallsWins) +
+                numberify(this.footballWins) +
+                numberify(this.enderSpleefWins) +
+                numberify(this.throwOutWins) +
+                numberify(this.galaxyWarsWins) +
+                numberify(this.dragonWarsWins) +
+                numberify(this.bountyHuntersWins) +
+                numberify(this.blockingDeadWins) +
+                numberify(this.hideAndSeekWins) +
+                numberify(this.zombiesWins) +
+                numberify(this.pixelPaintersWins) +
+                numberify(this.simTotal)
         }
     }
 }
