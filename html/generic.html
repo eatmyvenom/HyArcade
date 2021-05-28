@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="og:site_name" content="Hypixel arcade stats" />
+    <meta name="og:title" content="Arcade Leaderboard" />
+    <meta id="embed-desc" name="og:description" content="Check a hypixel arcade games leaderboard" />
+    <meta name="og:locale" content="en" />
+    <meta name="theme-color" content="#7873f5" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <title>Arcade Leaderboard</title>
     <style>
         * {
@@ -30,16 +36,25 @@
             grid-column-start: 4;
         }
 
-        div:hover {
+        body > a {
+            margin-left: 0.4%;
+            padding: 0.4%;
+            color:white;
+        }
+
+        body > a:hover, div:hover {
             box-shadow: -2px -2px 5px 1px #bb00dd, 2px 2px 5px 1px #0066cc;
         }
 
-        div {
-            padding: 10px;
+        body > a, div {
             transition: all 0.25s ease-in-out;
             border: 2px solid transparent;
             border-image:  linear-gradient(to bottom right, #bb00dd, #44a3e7);
             border-image-slice: 1;
+        }
+
+        div {
+            padding: 10px;
         }
 
         address a {
@@ -99,6 +114,7 @@
     <script src="generic.js"></script>
 </head>
 <body>
+    <a href="."><span class="material-icons md-light">home</span></a>
     <h1></h1>
     <address></address>
     <aside>

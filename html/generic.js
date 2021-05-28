@@ -428,6 +428,20 @@ async function load() {
 
             hiderL.id = "HNSHiderWins";
             hiderL.setAttribute("extras", hiderL.id);
+
+
+            let hiderKL = document.createElement("div");
+            hiderKL.setAttribute("class", "life");
+            hiderKL.title = "Lifetime kills";
+            main.appendChild(hiderKL);
+
+            let hiderKD = document.createElement("div");
+            hiderKD.setAttribute("class", "day");
+            hiderKD.title = "Daily kills";
+            main.appendChild(hiderKD);
+            hiderKD.id = "hnsKills";
+            hiderKL.id = "hnsKills";
+
             break;
         }
 
@@ -668,7 +682,7 @@ async function load() {
     }
 
     await refresh();
-    setInterval(refresh, '5000')
+    setInterval(refresh, 25000)
 
 }
 
@@ -678,13 +692,13 @@ async function refresh() {
     servertime = await servertime.text();
     let formatted = new Date(servertime);
     time.innerHTML = "Last database update : " + formatted.toLocaleTimeString();
-    await handleLifetimes();
-    await handleTimed("day");
-}
-
-async function handleLifetimes() {
     let accdata = await fetch("http://eatmyvenom.me/share/accounts.json", { cache: "no-store" });
     accdata = await accdata.text();
+    await handleLifetimes(accdata);
+    await handleTimed("day", accdata);
+}
+
+async function handleLifetimes(accdata) {
     accdata = JSON.parse(accdata);
     let elements = document.querySelectorAll(".life");
     for(let e of elements) {
@@ -774,10 +788,8 @@ async function handleLifetimes() {
     }
 }
 
-async function handleTimed(timetype) {
-    let accdata = await fetch(`http://eatmyvenom.me/share/accounts.json`, { cache: "no-store" });
+async function handleTimed(timetype, accdata) {
     let accold = await fetch(`http://eatmyvenom.me/share/accounts.${timetype}.json`, { cache: "no-store" });
-    accdata = await accdata.text();
     accdata = JSON.parse(accdata);
     accold = await accold.text();
     accold = JSON.parse(accold);
@@ -982,7 +994,7 @@ function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
 
 function formatLine(pos, name, value, uuid) {
     let longName = (pos +  ") " + name + "                         ").slice(0, 21);
-    longName = `<a href="http://eatmyvenom.me/share/partygames/player.html?q=${uuid}">${longName}</a>`
+    longName = `<a href="player.html?q=${uuid}">${longName}</a>`
     if(value > 0) {
         return `${longName}: ${formatNum(value)}\n`;
     } else {

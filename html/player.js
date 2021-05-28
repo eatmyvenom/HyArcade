@@ -16,7 +16,7 @@ function refresh() {
 }
 
 function home() {
-    window.location.href = "http://eatmyvenom.me/share/arcade/";
+    window.location.href = ".";
 }
 
 function formatTime(time) {
