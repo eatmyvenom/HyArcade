@@ -465,6 +465,11 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.hideAndSeekWins)),
                     inline: true,
                 });
+                fields.push({
+                    name: "Hide and seek kills",
+                    value: formatNum(numberify(acc.hnsKills)),
+                    inline: true,
+                });
                 fields.push(BotUtils.emptyField(true));
                 fields.push(BotUtils.emptyField(true));
                 // <br>
