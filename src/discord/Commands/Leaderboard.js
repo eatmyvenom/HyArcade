@@ -284,6 +284,17 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
             break;
         }
 
+        case "hnskills":
+        case "haskills":
+        case "hidekills":
+        case "hiderkills":
+        case "seekerkills":
+        case "hide and seek kills": {
+            gameName = "Hide and seek kills";
+            res = await getLB("hnsKills", timetype, limit);
+            break;
+        }
+
         case "z":
         case "zs":
         case "zbs":
