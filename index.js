@@ -390,6 +390,10 @@ async function main() {
             await cli.addGuildMembers(args);
             break;
 
+        case "addGID":
+            await cli.addGIDMembers(args);
+            break;
+
         case "bot":
             await discordBot();
             break;
