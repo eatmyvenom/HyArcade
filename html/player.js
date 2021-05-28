@@ -118,7 +118,7 @@ function handleGamesPlayed(rawjson) {
 
 function loadData() {
     if (playername != undefined) {
-        let url = "http://eatmyvenom.me/share/accounts.json";
+        let url = "https://eatmyvenom.me/share/accounts.json";
         fetch(url).then(fetchResponse);
     }
 }
@@ -128,7 +128,7 @@ function fetchResponse(res) {
 }
 
 function loadGamesPlayed() {
-    fetch("http://eatmyvenom.me/share/gamesPlayed.json").then((res) => {
+    fetch("https://eatmyvenom.me/share/gamesPlayed.json").then((res) => {
         res.text().then(handleGamesPlayed);
     });
 }
