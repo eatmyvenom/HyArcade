@@ -3,6 +3,8 @@ let maxLength = 25;
 async function load() {
     let game = window.location.pathname.slice(0,-5);
     game = game.substring(game.lastIndexOf('/') + 1);
+    let guildpage = document.querySelector(".guildver");
+    guildpage.setAttribute("href", "./guilds/" + game + ".html");
     let main = document.querySelector("main");
     let mainTitle = document.querySelector("h1");
     let address = document.querySelector("address");
