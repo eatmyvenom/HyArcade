@@ -26,6 +26,5 @@ async function interactionHandler(interaction) {
 }
 
 module.exports = async (client) => {
-    client.application.commands.create(helpCommand);
     client.on("interaction", interactionHandler);
 };
