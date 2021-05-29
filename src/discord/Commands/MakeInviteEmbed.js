@@ -31,7 +31,7 @@ module.exports = new Command("mkdisclist", ["156952208045375488"], async (args) 
             makeField("<:GW:779067916737314816> Galaxy Wars", "https://discord.gg/4fBMNA9M4B"),
             makeField("<:HaS:779067904435028068> Hide and seek", "https://discord.gg/M4KjeH3uKq"),
             makeField("<:HitW:779067896973230093> Hole in the Wall", "https://discord.gg/Gh24vw5b54"),
-            makeField("<:HS:779067888983474187> Hypixel says", "https://discord.gg/tYfEsjbq7A"),
+            makeField("<:HS:779067888983474187> Hypixel says", "https://discord.gg/GzjN5c4zze"),
             makeField("<:MiW:779067880696315994> Mini Walls", "https://discord.gg/a3mFVpMPaf"),
             makeField("<:PG:779067862165487616> Party Games", "https://discord.gg/zkBV2j7"),
             makeField("<:PP:779067828241956885> Pixel painters", "https://discord.gg/NpmtSqD23y"),
