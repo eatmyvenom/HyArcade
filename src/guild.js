@@ -85,7 +85,6 @@ class Guild {
 	this.hideAndSeekWins = 0;
 	this.zombiesWins = 0;
 	this.pixelPaintersWins = 0;
-    this.footballWatever = "";
 	this.simWins = 0;
         for (let i = 0; i < this.members.length; i++) {
             let member = this.members[i];
