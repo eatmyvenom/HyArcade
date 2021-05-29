@@ -80,7 +80,7 @@ module.exports = class InteractionUtils {
         let e = new MessageEmbed();
         let topic = topicName.slice(6)
 
-        e.setTitle(topicName);
+        e.setTitle(topic);
         e.setColor(0x0066cc);
 
         e.setDescription(helpText[topic]);
