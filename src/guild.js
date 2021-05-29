@@ -75,7 +75,7 @@ class Guild {
 	this.hitwWins = 0;
 	this.farmhuntWins = 0;
 	this.miniWallsWins = 0;
-	this.footballWins - 0;
+	this.footballWins = 0;
 	this.enderSpleefWins = 0;
 	this.throwOutWins = 0;
 	this.galaxyWarsWins = 0;
@@ -98,7 +98,6 @@ class Guild {
             this.hitwWins += numberify(member.hitwWins);
             this.farmhuntWins += numberify(member.farmhuntWins);
             this.miniWallsWins += numberify(member.miniWallsWins);
-            this.footballWatever += member.footballWins + "\n";
             this.footballWins += numberify(member.footballWins);
             this.enderSpleefWins += numberify(member.enderSpleefWins);
             this.throwOutWins += numberify(member.throwOutWins);
