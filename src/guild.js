@@ -85,6 +85,7 @@ class Guild {
 	this.hideAndSeekWins = 0;
 	this.zombiesWins = 0;
 	this.pixelPaintersWins = 0;
+    this.footballWatever = "";
 	this.simWins = 0;
         for (let i = 0; i < this.members.length; i++) {
             let member = this.members[i];
@@ -97,6 +98,7 @@ class Guild {
             this.hitwWins += numberify(member.hitwWins);
             this.farmhuntWins += numberify(member.farmhuntWins);
             this.miniWallsWins += numberify(member.miniWallsWins);
+            this.footballWatever += member.footballWins + "\n";
             this.footballWins += numberify(member.footballWins);
             this.enderSpleefWins += numberify(member.enderSpleefWins);
             this.throwOutWins += numberify(member.throwOutWins);
