@@ -78,65 +78,12 @@ module.exports = class InteractionUtils {
 
     static helpTopic(topicName) {
         let e = new MessageEmbed();
+        let topic = topicName.slice(6)
+
         e.setTitle(topicName);
         e.setColor(0x0066cc);
 
-        switch(topicName) {
-            case "Help" : {
-                e.setDescription(helpText.help);
-                break;
-            }
-
-            case "Verify" : {
-                e.setDescription(helpText.verify);
-                break;
-            }
-
-            case "AddAccount" : {
-                e.setDescription(helpText.newacc);
-                break;
-            }
-
-            case "Stats" : {
-                e.setDescription(helpText.stats);
-                break;
-            }
-
-            case "Unlinked Stats" : {
-                e.setDescription(helpText.unlinkedstats);
-                break;
-            }
-
-            case "Leaderboard" : {
-                e.setDescription(helpText.lb);
-                break;
-            }
-
-            case "Games" : {
-                e.setDescription(helpText.games);
-                break;
-            }
-
-            case "GetDataRaw" : {
-                e.setDescription(helpText.getraw);
-                break;
-            }
-
-            case "Name History" : {
-                e.setDescription(helpText.names);
-                break;
-            }
-
-            case "Who is" : {
-                e.setDescription(helpText.whois);
-                break;
-            }
-
-            default : {
-                e.setDescription("This is an unknown help topic");
-                break;
-            }
-        }
+        e.setDescription(helpText[topic]);
         return e;
     }
 };
