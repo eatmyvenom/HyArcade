@@ -103,7 +103,7 @@ module.exports = async (interaction) => {
             return await Boosters.execute(args, authorID, null, interaction);
         }
 
-        case "help": {
+        case "arcadehelp": {
             if(args.length == 0) {
                 return { res : "" , embed : InteractionUtils.helpEmbed()};
             } else {
