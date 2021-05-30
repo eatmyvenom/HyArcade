@@ -37,3 +37,7 @@ jobs:
         configjson: ${{secrets.CONFIGJSON}}
       run: npm run autoconfig
     - run: npm test
+    - uses: actions/upload-artifact@v2
+      with:
+        name: accounts.json
+        path: data/accounts.json
