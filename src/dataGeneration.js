@@ -197,6 +197,18 @@ async function updateAllAccounts() {
         accounts = accounts.concat(addedAccounts);
     }
 
+    if(utils.fileExists("data/accounts.json.full")) {
+        let fullList = await utils.readJSON("accounts.json.full");
+        await fs.rm("data/accounts.json.full");
+        for(let i = 0; i < accounts.length; i++) {
+            let acc = accounts[i];
+            let newAcc = fullList.find(a=>a.uuid==acc.uuid);
+            if(newAcc.xp > acc.xp) {
+                acc.setData(newAcc);
+            }
+        }
+    }
+
     let runtime = Runtime.fromJSON();
     runtime.needRoleupdate = true;
     await runtime.save();
