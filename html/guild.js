@@ -209,11 +209,11 @@ async function load() {
 
 async function refresh() {
     let time = document.querySelector("time");
-    let servertime = await fetch("https://eatmyvenom.me/share/partygames/timeupdate", {cache : "no-store"});
+    let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {cache : "no-store"});
     servertime = await servertime.text();
     let formatted = new Date(servertime);
     time.innerHTML = "Last database update : " + formatted.toLocaleTimeString();
-    let accdata = await fetch("https://eatmyvenom.me/share/guild.json", { cache: "no-store" });
+    let accdata = await fetch("https://hyarcade.xyz/resources/guild.json", { cache: "no-store" });
     accdata = await accdata.text();
     await handleLifetimes(accdata);
     await handleTimed("day", accdata);
@@ -310,7 +310,7 @@ async function handleLifetimes(accdata) {
 }
 
 async function handleTimed(timetype, accdata) {
-    let accold = await fetch(`https://eatmyvenom.me/share/guild.${timetype}.json`, { cache: "no-store" });
+    let accold = await fetch(`https://hyarcade.xyz/resources/guild.${timetype}.json`, { cache: "no-store" });
     accdata = JSON.parse(accdata);
     accold = await accold.text();
     accold = JSON.parse(accold);
