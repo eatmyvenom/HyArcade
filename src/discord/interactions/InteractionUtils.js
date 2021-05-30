@@ -3,9 +3,11 @@ const utils = require("../../utils");
 const { client } = require("../BotUtils");
 const helpText = require('../HelpText');
 const BotUtils = require("../BotUtils");
+const { logger } = require("../../utils");
 
 module.exports = class InteractionUtils {
     static async resolveAccount(interaction, namearg = 0) {
+        logger.out("Attempting to resolve account from " + JSON.stringify(interaction.options));
         let string = "undefinednullnonothingno";
         if (interaction.options != undefined && interaction.options[namearg] != undefined) {
             string = interaction.options[namearg].value;
@@ -53,7 +55,9 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => stringify(a.discord) == discid);
         }
 
-        
+        if(acc) {
+            logger.out(`Resolved as ${acc.name}`);
+        }
 
         return acc;
     }
