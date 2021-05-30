@@ -683,6 +683,16 @@ async function load() {
 
     }
 
+    let lifetimes = document.querySelectorAll(".life");
+    for(let e in lifetimes) {
+        e.innerHTML = "Loading..."
+    }
+
+    let days = document.querySelectorAll(".day");
+    for(let e in days) {
+        e.innerHTML = "Loading..."
+    }
+
     await refresh();
     setInterval(refresh, 25000)
 
