@@ -1,4 +1,5 @@
 let maxLength = 25;
+let interval;
 
 async function load() {
     let game = window.location.pathname.slice(0,-5);
@@ -694,7 +695,8 @@ async function load() {
     }
 
     await refresh();
-    setInterval(refresh, 25000)
+    clearInterval(interval);
+    interval = setInterval(refresh, 25000)
 
 }
 
@@ -1027,4 +1029,18 @@ function formatNum(number) {
     }
 }
 
+function gainFocus() {
+    console.log("Focus gained");
+    clearInterval(interval);
+    interval = setInterval(refresh, 25000);
+}
+
+function loseFocus() {
+    console.log("Focus lost");
+    clearInterval(interval);
+    interval = setInterval(refresh, 120000);
+}
+
+window.addEventListener("focus", gainFocus);
+window.addEventListener("blur", loseFocus);
 window.addEventListener("load", load);
