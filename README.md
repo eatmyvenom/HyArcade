@@ -1,8 +1,8 @@
-# party-games-site
+# HyArcade
 
 View at
-http://eatmyvenom.me/share/partygames
+https://hyarcade.xyz
 
 ## Whats this
 
-A backend for a site that provides a realtime accurate leaderboard of hypixel party gamers
+A backend for a site that provides an accurate leaderboard of all arcade games
