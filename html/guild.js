@@ -203,13 +203,13 @@ async function load() {
     }
 
     let lifetimes = document.querySelectorAll(".life");
-    for(let e in lifetimes) {
-        e.innerHTML = "Loading..."
+    for(let e of lifetimes) {
+        e.innerHTML = "Loading...";
     }
 
     let days = document.querySelectorAll(".day");
-    for(let e in days) {
-        e.innerHTML = "Loading..."
+    for(let e of days) {
+        e.innerHTML = "Loading...";
     }
 
     await refresh();
