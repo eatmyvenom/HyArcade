@@ -28,7 +28,7 @@ module.exports = function doBot() {
     if (mode == undefined) {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
-        setInterval(BotEvents.tick, 5000);
+        setInterval(BotEvents.tick, 10000);
     }
 
     if (Runtime.bot != "backup") {
