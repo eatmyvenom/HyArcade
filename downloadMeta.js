@@ -4,7 +4,7 @@ const webRequest = require("./src/webRequest");
 const fs = require("fs/promises");
 
 async function downloadFile(name, servername) {
-    let response = await webRequest("http://eatmyvenom.me/share/" + servername);
+    let response = await webRequest("https://hyarcade.xyz/resources/" + servername);
     await fs.writeFile("data/" + name, response.data);
 }
 
