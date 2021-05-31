@@ -202,6 +202,8 @@ async function load() {
 
     }
 
+    mainTitle.innerHTML += " guilds";
+
     let lifetimes = document.querySelectorAll(".life");
     for(let e of lifetimes) {
         e.innerHTML = "Loading...";
