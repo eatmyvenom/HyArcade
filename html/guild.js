@@ -158,6 +158,20 @@ async function load() {
             killsD.id = "arcadeCoins";
 
             killsL.id = "arcadeCoins";
+            
+            let gxpL = document.createElement("div");
+            gxpL.setAttribute("class", "life");
+            gxpL.title = "Lifetime GXP"
+            main.appendChild(gxpL);
+            
+            let gxpD = document.createElement("div");
+            gxpD.setAttribute("class", "day");
+            gxpD.title = "Daily GXP"
+            main.appendChild(gxpD);
+            
+            gxpD.id = "gxp";
+            
+            gxpL.id = "gxp";
             break;
         }
 
