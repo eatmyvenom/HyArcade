@@ -15,6 +15,7 @@ class Guild {
     name = "";
     wins = 0;
     arcadeEXP = 0;
+    gxp = 0;
     uuid = "";
 
     /**
@@ -36,6 +37,7 @@ class Guild {
         let data = await this.getGuild();
         this.name = data.guild.name_lower;
         this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
+        this.gxp = data.guild.exp;
 
         let gmembers = data.guild.members;
         for (let i = 0; i < gmembers.length; i++) {
@@ -71,21 +73,21 @@ class Guild {
         this.combinedAP = 0;
         this.arcadeWins = 0;
         this.karma = 0;
-	this.ranksGifted = 0;
-	this.hitwWins = 0;
-	this.farmhuntWins = 0;
-	this.miniWallsWins = 0;
-	this.footballWins = 0;
-	this.enderSpleefWins = 0;
-	this.throwOutWins = 0;
-	this.galaxyWarsWins = 0;
-	this.dragonWarsWins = 0;
-	this.bountyHuntersWins = 0;
-	this.blockingDeadWins = 0;
-	this.hideAndSeekWins = 0;
-	this.zombiesWins = 0;
-	this.pixelPaintersWins = 0;
-	this.simWins = 0;
+        this.ranksGifted = 0;
+        this.hitwWins = 0;
+        this.farmhuntWins = 0;
+        this.miniWallsWins = 0;
+        this.footballWins = 0;
+        this.enderSpleefWins = 0;
+        this.throwOutWins = 0;
+        this.galaxyWarsWins = 0;
+        this.dragonWarsWins = 0;
+        this.bountyHuntersWins = 0;
+        this.blockingDeadWins = 0;
+        this.hideAndSeekWins = 0;
+        this.zombiesWins = 0;
+        this.pixelPaintersWins = 0;
+        this.simWins = 0;
         for (let i = 0; i < this.members.length; i++) {
             let member = this.members[i];
             this.wins += member.wins;

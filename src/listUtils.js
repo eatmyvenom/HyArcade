@@ -76,6 +76,14 @@ async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
+/**
+ * 
+ * @param {String} name 
+ * @param {String} timetype 
+ * @param {Number} maxamnt Max amount of players in 
+ * @param {Function} callback Callback used to get the stats out of each account
+ * @returns 
+ */
 async function mklistAdv(name, timetype, maxamnt, callback) {
     let newlist, oldlist;
     if (name == "accounts") {
