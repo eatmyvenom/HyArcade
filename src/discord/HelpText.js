@@ -52,3 +52,19 @@ exports.getraw = `Get the raw data from a field of a player in the database. The
 exports.names = `Get the name history of someone. This only returns the names that they have used on hypixel. If they never logged on with a name they once had then it will not show up.`;
 
 exports.whois = `Check the discord link of a player. If the person is not linked then it will just say "undefined" instead of their id and mention.`;
+
+exports.searching = 
+`The bot searches for a player by going down a list of possiblilites for who a player can be it goes through each of these until one of them returns a valid account
+
+1) If the input is 18 characters long then it tries to get the account whos discord ID matches the input.
+2) If the input is 16 characters or less in length it tries to get the account whos ign matches the input.
+3) If the input is longer than 16 characters then it tries to get the account whos uuid matches the input.
+4) If the input is 16 characters or less in length it tries to get the account whos name starts with the input.
+5) If the input is 22 characters in length (a ping on mobile) it tries to get the account whos discord ID matches the ID specified in the ping
+6) If the input is 21 characters in length (a ping on desktop) it tries to get the account whos discord ID matches the ID specified in the ping
+7) It iterates through each previous name of each account and checks if the name starts with the input.
+8) It gets the account whos discord ID matches the user who sent the command.`;
+
+exports.Role_Handling =
+`Every time the database updates its data it sets a flag in the shared runtime file. Every 10 seconds the process handling the bot checks this file for that flag. If the flag is detected then it goes through every discord with a role handler and grabs all the members. For every member if their discord ID matches an account in the bots database (basically if they are linked) it checks that role handlers specific stat against the role of the account. It iterates the roles top down, if the account doesn't have above a specific win count it moves on to the next win count. When it finds the win count role appropriate for the user it checks if they have the role already, if so then it moves on the next person. If the correct role is not assigned then it assigns it. It then goes through the rest of the win count roles and makes sure they are not set. If there is another win count role set then it removes it from the user and then moves on to the next person.`
+
