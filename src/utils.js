@@ -101,7 +101,7 @@ async function archiveJson(oldfile, path, timetype) {
  * @param {String} content
  */
 function log(content) {
-    let str = `[${daytime()}] ${content}`;
+    let str = `[${daytime().trim()}] ${content}`;
     if (cfg.std.disable) {
         require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
     } else {
