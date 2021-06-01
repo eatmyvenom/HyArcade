@@ -7,6 +7,7 @@ function numberify(str) {
 }
 class Account {
     name = "";
+    name_lower = "";
     nameHist = [];
     uuid = "";
     uuidPosix = "";
@@ -175,6 +176,7 @@ class Account {
             }
 
             this.name = json.player.displayname;
+            this.name_lower = this.name.toLowerCase();
             this.nameHist = json.player.knownAliases;
             this.internalId = json.player._id;
             this.isLoggedIn = json.player.lastLogin > json.player.lastLogout;
