@@ -1,4 +1,6 @@
 const config = require("../Config").fromJSON();
+const embeds = require("./Embeds");
+
 let linkCmd = require("./Commands/Link");
 let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
@@ -19,9 +21,13 @@ let NameHistCmd = require("./Commands/NameHistory");
 let WhoISCmd = require("./Commands/WhoIS");
 let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
+const Runtime = require("../Runtime");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
+        if(Runtime.fromJSON().dbERROR) {
+            return { res :"", embed: embeds.dbded }
+        }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     }

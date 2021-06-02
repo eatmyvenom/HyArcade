@@ -1,15 +1,17 @@
 const BotUtils = require("../BotUtils");
+const Account = require("../../account");
 const { addAccounts } = require("../../listUtils");
+const { MessageEmbed } = require("discord.js");
+const InteractionUtils = require("./InteractionUtils");
+const mojangRequest = require("../../mojangRequest");
+const Runtime = require('../../Runtime');
+
 const Leaderboard = require("../Commands/Leaderboard");
 const Verify = require("../Commands/LinkMe");
 const GameCounts = require("../Commands/GameCounts");
 const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
-const InteractionUtils = require("./InteractionUtils");
 const Info = require("../Commands/Info");
-const { MessageEmbed } = require("discord.js");
-const Account = require("../../account");
-const mojangRequest = require("../../mojangRequest");
 
 module.exports = async (interaction) => {
     if (!interaction.isCommand()) return;
@@ -23,6 +25,10 @@ module.exports = async (interaction) => {
         } else {
             args[i] = undefined;
         }
+    }
+
+    if(Runtime.fromJSON().dbERROR) {
+        return { res :"", embed: embeds.dbded }
     }
 
     switch (interaction.commandName) {

@@ -29,3 +29,8 @@ exports.execution = function (name, args, author, link) {
     if (args == "") args = "none";
     return new MessageEmbed().setTitle("Command execution").setColor(0x2f3136).addField("Name", name, false).addField("Args", `\`${args}\``, false).addField("User", `<@${author}>`, false).addField("Link", `[Message Link](${link})`);
 };
+
+exports.dbded = new MessageEmbed()
+    .setTitle("Command will not process")
+    .setColor(0xff0000)
+    .setDescription("Due to a database error this command will not be processed!")

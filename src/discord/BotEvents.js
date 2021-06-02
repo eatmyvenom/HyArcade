@@ -75,12 +75,20 @@ module.exports = class BotEvents {
 
     static async dataRefresh() {
         logger.out("Refreshing file cache...");
-        BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
-        BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
-        BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
-        BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
-        BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
-        BotUtils.fileCache.status = await utils.readJSON("status.json");
-        BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
+        try{
+            BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
+            BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
+            BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
+            BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
+            BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
+            BotUtils.fileCache.status = await utils.readJSON("status.json");
+            BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
+        } catch (e) {
+            let run = Runtime.fromJSON()
+            run.dbERROR = true;
+            await run.save();
+            logger.err("Database broken please fix me");
+            await BotUtils.errHook.send("Database broken please fix me");
+        }
     }
 };
