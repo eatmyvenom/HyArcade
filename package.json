@@ -20,7 +20,8 @@
     "author": "EatMyVenom",
     "license": "MPL-2.0",
     "dependencies": {
-        "discord.js": "github:discordjs/discord.js"
+        "discord.js": "github:discordjs/discord.js",
+        "mongo": "^0.1.0"
     },
     "devDependencies": {
         "jsdoc": "^3.6.6",

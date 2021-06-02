@@ -24,7 +24,11 @@ const Cfg = require("./src/Config");
 const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
 const dataGeneration = require("./src/dataGeneration");
+const Connection = require("./src/mongo/Connection");
+const AccountUpdater = require("./src/mongo/AccountUpdater");
+const Translator = require("./src/mongo/Translator");
 const Runtime = require("./src/Runtime").fromJSON();
+
 
 /**
  * Run the accounts task
@@ -244,6 +248,8 @@ async function miniconfig() {
  *
  */
 async function main() {
+    let database = await Connection();
+    let db = database.db("hyarcade");
     if (Runtime.apiDown) {
         process.exit(1);
     }
@@ -415,8 +421,21 @@ async function main() {
         case "boosters":
             await dataGeneration.saveBoosters();
             break;
+
+        case "mNewAcc":
+            await cli.mNewAcc(db);
+            break;
+
+        case "updateMongo":
+            await AccountUpdater(db);
+            break;
+
+        case "translateDb" : 
+            await Translator();
+            break;
     }
 
+    await database.close();
     await rmPID();
 }
 

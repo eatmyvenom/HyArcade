@@ -3,6 +3,8 @@ const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
 const utils = require("./utils");
 const mojangRequest = require("./mojangRequest");
 const dataGeneration = require("./dataGeneration");
+const Account = require("./account");
+const AccountCreator = require("./mongo/AccountCreator");
 const args = process.argv;
 const logger = utils.logger;
 
@@ -14,6 +16,18 @@ async function newAcc() {
     let category = args[args.length - 1];
     let nameArr = args.slice(3, -1);
     await addAccounts(category, nameArr);
+}
+
+async function mNewAcc(database) {
+    let player = args[3];
+    let uuid = player;
+    if (player.length < 16) {
+        uuid = await mojangRequest.getUUID(player);
+    }
+
+    let acc = new Account(player, 0, uuid);
+    await acc.updateData();
+    await AccountCreator(database, acc);
 }
 
 async function linkDiscord() {
@@ -191,4 +205,5 @@ module.exports = {
     getUUID: getUUIDCli,
     moveAcc: moveAcc,
     linkDiscord: linkDiscord,
+    mNewAcc: mNewAcc
 };
