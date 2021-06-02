@@ -34,3 +34,10 @@ exports.dbded = new MessageEmbed()
     .setTitle("Command will not process")
     .setColor(0xff0000)
     .setDescription("Due to a database error this command will not be processed!")
+
+exports.useSlash = function (cmd, slashver) {
+    return new MessageEmbed()
+        .setTitle(`The command ${cmd} is only available as "/${slashver}"!`)
+        .setColor(0xff0000)
+        .setDescription("This command has been retired and will no longer function using the usual method. Please use the slash command variation instead.")
+}

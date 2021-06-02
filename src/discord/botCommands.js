@@ -100,7 +100,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "getdata":
         case "rawdata":
         case "dataraw": {
-            return await dataRawCmd.execute(args, author, rawMsg);
+            return { res : "", embed : embeds.useSlash("getdataraw", "getdataraw") };
             break;
         }
 
@@ -110,7 +110,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "counts":
         case "amounts":
         case "gamecounts": {
-            return await countCmd.execute(args, author);
+            return { res : "", embed : embeds.useSlash("gamecounts", "gamecounts") };
             break;
         }
 
@@ -125,7 +125,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return await helpCmd.execute(args, author);
+            return { res : "", embed : embeds.useSlash("help", "arcadehelp") };
             break;
         }
 
@@ -145,13 +145,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "names":
         case "namehist":
         case "namehistory": {
-            return await NameHistCmd.execute(args, author, rawMsg);
+            return { res : "", embed : embeds.useSlash("namehistory", "namehistory") };
         }
 
         case "whois":
         case "whoam":
         case "whos": {
-            return await WhoISCmd.execute(args, author, rawMsg);
+            return { res : "", embed : embeds.useSlash("whois", "whois") };
         }
 
         case "info":
