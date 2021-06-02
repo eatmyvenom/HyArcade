@@ -74,7 +74,11 @@ module.exports = class BotUtils {
             }
         }
 
-        logger.out("resolved as " + acc.name);
+        if(acc) {
+            logger.out("resolved as " + acc.name);
+        } else {
+            logger.out("Unable to resolve");
+        }
         return acc;
     }
 
