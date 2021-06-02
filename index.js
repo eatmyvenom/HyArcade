@@ -248,8 +248,8 @@ async function miniconfig() {
  *
  */
 async function main() {
-    let database = await Connection();
-    let db = database.db("hyarcade");
+    // let database = await Connection();
+    // let db = database.db("hyarcade");
     if (Runtime.apiDown) {
         process.exit(1);
     }
@@ -435,7 +435,7 @@ async function main() {
             break;
     }
 
-    await database.close();
+    // await database.close();
     await rmPID();
 }
 
