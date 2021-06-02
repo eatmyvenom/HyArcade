@@ -69,9 +69,6 @@ async function writeJSON(path, json) {
     await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
     try {
         let writtenJson = await readJSON(path);
-        if(writtenJson != json) {
-            await writeJSON(path,json);
-        }
     } catch(e) {
         await writeJSON(path, json);
     }

@@ -4,6 +4,7 @@ const Command = require("../../classes/Command");
 const Embeds = require("../Embeds");
 const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
+const { addAccounts } = require("../../listUtils");
 
 module.exports = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
