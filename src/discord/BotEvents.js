@@ -75,6 +75,8 @@ module.exports = class BotEvents {
 
     static async dataRefresh() {
         logger.out("Refreshing file cache...");
+        let run = Runtime.fromJSON();
+        let error = false;
         try{
             BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
             BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
@@ -84,11 +86,17 @@ module.exports = class BotEvents {
             BotUtils.fileCache.status = await utils.readJSON("status.json");
             BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
         } catch (e) {
-            let run = Runtime.fromJSON()
+            error = true;
             run.dbERROR = true;
             await run.save();
             logger.err("Database broken please fix me");
             await BotUtils.errHook.send("Database broken please fix me");
+        }
+
+        if(!error && run.dbERROR) {
+            run.dbERROR = false;
+            await run.save();
+            await BotUtils.logHook.send("Database restored");
         }
     }
 };
