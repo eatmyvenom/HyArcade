@@ -88,6 +88,7 @@ module.exports = class BotEvents {
 
             let hackers = await fs.readFile("data/hackerlist");
             hackers = hackers.toString().split('\n');
+            console.log(hackers)
 
             BotUtils.fileCache.hackers = hackers;
         } catch (e) {
