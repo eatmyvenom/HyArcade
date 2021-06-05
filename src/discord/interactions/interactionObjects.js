@@ -62,6 +62,6 @@ exports.cheatDetector = {
         name: 'player',
         type: 'STRING',
         description: 'The player you would like to check',
-        required: false
+        required: true // Most likely people will need to check someone else
     }],
 }
