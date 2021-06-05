@@ -1,4 +1,5 @@
 const AccountEvent = require("./classes/Event");
+const utils = require("./utils");
 const { logger } = require("./utils");
 const cfg = require("./Config").fromJSON();
 
@@ -77,6 +78,15 @@ class EventDetector {
         for (let evt of this.Events) {
             await evt.toDiscord();
         }
+    }
+
+    async saveEvents() {
+        let oldEvents = utils.readJSON("events.json");
+        for(let event of this.Events) {
+            oldEvents.unshift(event);
+        }
+
+        oldEvents = oldEvents.slice(0,Math.min(oldEvents.length, 100));
     }
 
     logEvents() {
