@@ -23,7 +23,6 @@ function addstuff(ext, clazzz) {
 function main() {
     addstuff("pgd.txt", ".daily");
     addstuff("pg.txt", ".lb");
-    addstuff("pgstatus.txt", ".status");
     addstuff("pgG.txt", ".guild");
     addstuff("pgGd.txt", ".guildday");
     addstuff("pgA.txt", ".accounts");
