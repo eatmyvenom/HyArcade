@@ -12,6 +12,7 @@ class Account {
     uuid = "";
     uuidPosix = "";
     internalId = "";
+    guildID = "";
     rank = "";
     version = "";
     firstLogin = 0;

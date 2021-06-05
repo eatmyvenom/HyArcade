@@ -3,6 +3,15 @@ const cfg = require("./Config").fromJSON();
 const { getKeyByValue } = require("./utils");
 const utils = require("./utils");
 
+
+function getGuild(guildlist, uuid) {
+    for(let guild of guildlist) {
+        if(guild.memberUUIDs.includes(uuid)) {
+            return guild.uuid;
+        }
+    }
+}
+
 /**
  * Gets a list of player objects from the player json list
  *
@@ -28,6 +37,7 @@ exports.players = async function players(acclist) {
 exports.accounts = async function accounts() {
     let acclistjson = await utils.readJSON("acclist.json");
     let disclist = await utils.readJSON("disclist.json");
+    let guilds = await utils.readJSON("guild.json")
     let acclist = {};
 
     for (const sublist in acclistjson) {
@@ -35,7 +45,9 @@ exports.accounts = async function accounts() {
         for (const args of acclistjson[sublist]) {
             let acc = new Account(args.name, args.wins, args.uuid);
             let disc = getKeyByValue(disclist, args.uuid);
+            let guildId = getGuild(guilds, args.uuid);
             acc.discord = disc;
+            acc.guildID = guildId;
             currentlist.push(acc);
         }
         acclist[sublist] = currentlist;
