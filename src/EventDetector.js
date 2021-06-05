@@ -111,6 +111,7 @@ class EventDetector {
         }
 
         oldEvents = oldEvents.slice(0,Math.min(oldEvents.length, 100));
+        utils.writeJSON("events.json", oldEvents);
     }
 
     logEvents() {
