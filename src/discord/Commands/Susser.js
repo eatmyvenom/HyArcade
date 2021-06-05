@@ -8,6 +8,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     let hax = 0;
     let reasons = [];
     let plr = args[0];
+    let haxlist = BotUtils.fileCache.hacks;
     let acc;
     if (interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);
@@ -39,6 +40,11 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     if(acc.name.toLowerCase().includes("tajik")) {
         hax += 30;
         reasons.push("Has a name associated with cheating guild \"Tajik\"");
+    }
+
+    if(haxlist.includes(acc.uuid) || haxlist.includes(acc.name)) {
+        hax += 100;
+        reasons.push("Is a known hacker either by footage or by admission");
     }
 
 
