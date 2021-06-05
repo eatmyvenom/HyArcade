@@ -17,6 +17,7 @@ class Guild {
     arcadeEXP = 0;
     gxp = 0;
     uuid = "";
+    memberUUIDs = [];
 
     /**
      * Creates an instance of Guild.
@@ -45,6 +46,7 @@ class Guild {
             let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
             // dont add empty accounts
             if (gamer != undefined) {
+                this.memberUUIDs.push(gamer.uuid);
                 this.members.push(gamer);
             }
         }
