@@ -6,7 +6,7 @@ const utils = require("./utils");
 
 function getGuild(guildlist, uuid) {
     for(let guild of guildlist) {
-        if(guild.memberUUIDs.includes(uuid)) {
+        if(guild.memberUUIDs.includes(uuid.toLowerCase())) {
             return guild.uuid;
         }
     }
