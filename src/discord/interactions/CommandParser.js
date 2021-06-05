@@ -12,6 +12,7 @@ const GameCounts = require("../Commands/GameCounts");
 const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
 const Info = require("../Commands/Info");
+const Susser = require("../Commands/Susser");
 
 module.exports = async (interaction) => {
     if (!interaction.isCommand()) return;
@@ -115,6 +116,10 @@ module.exports = async (interaction) => {
             } else {
                 return { res : "" , embed : InteractionUtils.helpTopic(args[0])};
             }
+        }
+
+        case Susser.name: {
+            return await Susser.execute(args, authorID, null, interaction);
         }
     }
 };

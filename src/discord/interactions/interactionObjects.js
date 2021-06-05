@@ -54,3 +54,14 @@ exports.helpCommand = {
 exports.statsCommand = {
     
 }
+
+exports.cheatDetector = {
+    name: 'cheatdetector',
+    description: 'Check the likelyhood that a player is cheating',
+    options: [{
+        name: 'player',
+        type: 'STRING',
+        description: 'The player you would like to check',
+        required: false
+    }],
+}
