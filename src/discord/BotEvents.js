@@ -44,6 +44,10 @@ module.exports = class BotEvents {
         BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
         BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
         BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
+        let hackers = await fs.readFile("data/hackerlist");
+        hackers = hackers.toString().split('\n');
+
+        BotUtils.fileCache.hackers = hackers;
         logger.out("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
@@ -88,7 +92,6 @@ module.exports = class BotEvents {
 
             let hackers = await fs.readFile("data/hackerlist");
             hackers = hackers.toString().split('\n');
-            console.log(hackers)
 
             BotUtils.fileCache.hackers = hackers;
         } catch (e) {
