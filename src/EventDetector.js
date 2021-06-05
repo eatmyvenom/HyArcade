@@ -42,6 +42,30 @@ class EventDetector {
         if (newIndex <= 24 && newIndex < oldIndex && oldAcc.wins != newAcc.wins) {
             this.Events.push(new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid));
         }
+
+        if(oldAcc.name != newAcc.name) {
+            this.Events.push(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid);
+        }
+
+        if(oldAcc.discord != newAcc.discord) {
+            this.Events.push(newAcc.name, "LINK", oldAcc.discord, newAcc.discord, "", newAcc.uuid);
+        }
+
+        if(Date.now() - oldAcc.lastLogout > 2629743000 && newAcc.lastLogout != oldAcc.lastLogout) {
+            this.Events.push(newAcc.name, "LOGIN", oldAcc.lastLogout, newAcc.lastLogout, "", newAcc.uuid);
+        }
+
+        if(oldAcc.rank != newAcc.rank) {
+            this.Events.push(newAcc.name, "RANK", oldAcc.rank, newAcc.rank, "", newAcc.uuid);
+        }
+
+        if(oldAcc.ranksGifted != newAcc.ranksGifted) {
+            this.Events.push(newAcc.name, "SIMP", oldAcc.ranksGifted, newAcc.ranksGifted, "", newAcc.uuid);
+        }
+
+        if(oldAcc.hasOptifineCape != newAcc.hasOptifineCape) {
+            this.Events.push(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid);
+        }
     }
 
     runDetection() {
@@ -83,7 +107,7 @@ class EventDetector {
     async saveEvents() {
         let oldEvents = utils.readJSON("events.json");
         for(let event of this.Events) {
-            oldEvents.unshift(event);
+            oldEvents.unshift([event, event.toString()]);
         }
 
         oldEvents = oldEvents.slice(0,Math.min(oldEvents.length, 100));

@@ -1,6 +1,7 @@
 const Webhook = require("./webhook");
 const { stringNormal, stringDaily } = require("./listUtils");
 const utils = require("./utils");
+const config = require("./Config").fromJSON();
 const dataGen = require("./dataGeneration");
 const DiscordBot = require("./discord/bot");
 const EventDetector = require("./EventDetector");
@@ -20,10 +21,13 @@ async function accs() {
     let old = await utils.readJSON("accounts.json");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
-    let ED = new EventDetector(old, accounts);
-    await ED.runDetection();
-    await ED.logEvents();
-    await ED.sendEvents();
+    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
+        let ED = new EventDetector(old, accounts);
+        await ED.runDetection();
+        await ED.logEvents();
+        await ED.sendEvents();
+        await ED.saveEvents();
+    }
     await utils.writeJSON("accounts.json", accounts);
     return ["accounts.json"];
 }
