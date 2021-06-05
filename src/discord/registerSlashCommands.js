@@ -1,7 +1,6 @@
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
-const { helpCommand } = require("./interactions/interactionObjects");
 
 async function interactionHandler(interaction) {
     let responseObj = await CommandParser(interaction);
