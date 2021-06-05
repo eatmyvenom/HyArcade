@@ -36,8 +36,14 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
         reasons.push("Has died less than 1.5 times per mini walls win");
     }
 
+    if(acc.name.toLowerCase().includes("tajik")) {
+        hax += 30;
+        reasons.push("Has a name associated with cheating guild \"Tajik\"");
+    }
+
     let embed = new MessageEmbed()
         .setTitle("Cheat level of " + acc.name)
+        .setColor(0x8c54fe)
         .setDescription("Cheat levels above 40 should be considered most likely cheating. Levels above 25 should most likely be dodged in queue.")
         .addField("Cheat level", hax, false)
         .addField("Reasons", reasons, false);
