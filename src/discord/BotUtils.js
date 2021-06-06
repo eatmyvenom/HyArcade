@@ -4,6 +4,8 @@ const fs = require("fs/promises");
 const { logger } = require("../utils");
 const utils = require("../utils");
 const webhook = require("../webhook");
+const mojangRequest = require("../../mojangRequest");
+const Account = require("../account");
 const Embed = require("./Embeds");
 
 function stringify(str) {
