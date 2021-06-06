@@ -24,7 +24,7 @@ async function formatPage(events) {
     let content = document.getElementById("evtWrapper");
     let newContent = "";
     for(let evt of events) {
-        newContent += evt[1];
+        newContent += evt[1] + "\n";
     }
     content.innerHTML = newContent;
 } 
