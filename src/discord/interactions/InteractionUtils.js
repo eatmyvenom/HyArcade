@@ -4,6 +4,8 @@ const { client } = require("../BotUtils");
 const helpText = require('../HelpText');
 const BotUtils = require("../BotUtils");
 const { logger } = require("../../utils");
+const mojangRequest = require("../../mojangRequest");
+const Account = require("../../account");
 
 module.exports = class InteractionUtils {
     static async resolveAccount(interaction, namearg = 0) {
@@ -56,7 +58,20 @@ module.exports = class InteractionUtils {
         }
 
         if(acc) {
-            logger.out(`Resolved as ${acc.name}`);
+            logger.out("resolved as " + acc.name);
+        } else {
+            logger.out("Unable to resolve, getting by ign from hypixel.");
+        
+            let plr = string;
+            let uuid;
+            if (plr.length > 17) {
+                uuid = plr;
+            } else {
+                uuid = await mojangRequest.getUUID(plr);
+            }
+        
+            acc = new Account("", 0, "" + uuid);
+            await acc.updateData();
         }
 
         return acc;
