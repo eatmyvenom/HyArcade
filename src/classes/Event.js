@@ -9,6 +9,7 @@ class AccountEvent {
     newAmnt = 0;
     modifier = "";
     uuid = "";
+    time = 0;
 
     constructor(name, type, old, neww, modifier, uuid) {
         this.name = name;
@@ -17,6 +18,7 @@ class AccountEvent {
         this.newAmnt = neww;
         this.modifier = modifier;
         this.uuid = uuid;
+        this.time = Date.now();
     }
 
     toString() {
