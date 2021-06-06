@@ -211,7 +211,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "Mini walls kit",
-                    value: formatNum(numberify(acc.miniWalls.kit)),
+                    value: acc.miniWalls.kit,
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
