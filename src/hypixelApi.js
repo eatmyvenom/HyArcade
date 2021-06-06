@@ -1,4 +1,3 @@
-const BotUtils = require("./discord/BotUtils");
 const hypixelReq = require("./hypixelReq");
 const { sleep, logger } = require("./utils");
 const config = require("./Config").fromJSON();
