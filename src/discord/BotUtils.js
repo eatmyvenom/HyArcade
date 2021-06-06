@@ -80,9 +80,6 @@ module.exports = class BotUtils {
             logger.out("resolved as " + acc.name);
         } else {
             logger.out("Unable to resolve, getting by ign from hypixel.");
-            let embed = new MessageEmbed().setTitle("Waiting...").setDescription("Since the user is not in the database it will take some time to gather the stats. Please wait!").setThumbnail("https://i.imgur.com/GLdqYB2.gif").setColor(0xdcde19).setFooter("Please avoid using this, it slows down the overall system.");
-
-            let tmpMsg = await rawMessage.channel.send("", { embed: embed });
         
             let plr = string;
             let uuid;
@@ -94,7 +91,6 @@ module.exports = class BotUtils {
         
             acc = new Account("", 0, "" + uuid);
             await acc.updateData();
-            await tmpMsg.delete();
         }
         return acc;
     }
