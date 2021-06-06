@@ -61,6 +61,7 @@ module.exports = class InteractionUtils {
         if(acc) {
             logger.out("resolved as " + acc.name);
         } else {
+            interaction.defer();
             logger.out("Unable to resolve, getting by ign from hypixel.");
         
             let plr = string;
