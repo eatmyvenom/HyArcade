@@ -14,6 +14,7 @@ module.exports = class InteractionUtils {
         if (interaction.options != undefined && interaction.options[namearg] != undefined) {
             string = interaction.options[namearg].value;
         }
+        let canbeSelf = string != "";
         string = stringify(string).toLowerCase();
         let acclist = await BotUtils.fileCache.acclist;
         let acc;
@@ -52,7 +53,7 @@ module.exports = class InteractionUtils {
             });
         }
 
-        if (acc == undefined) {
+        if (acc == undefined && canbeSelf) {
             let discid = interaction.member.user.id;
             acc = acclist.find((a) => stringify(a.discord) == discid);
         }
