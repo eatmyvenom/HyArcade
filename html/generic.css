@@ -1,0 +1,101 @@
+* {
+    font-family: 'Fira Code', monospace;
+}
+html, body {margin :0; background: #181c30; color:white;}
+
+.material-icons {
+    text-align: center;
+    vertical-align: middle;
+}
+
+div {
+    white-space: pre;
+    display: inline-block;
+    margin: 2%;
+}
+main { 
+    display: grid;
+    grid-template-columns: 24vw auto auto 24vw;
+}
+
+.lifetime {
+    grid-column-start: 0;
+}
+
+.day {
+    grid-column-start: 4;
+}
+
+body > a {
+    margin-left: 0.4%;
+    padding: 0.4%;
+    color:white;
+}
+
+body > a:hover, div:hover {
+    box-shadow: -2px -2px 5px 1px #bb00dd, 2px 2px 5px 1px #0066cc;
+}
+
+body > a, div {
+    transition: all 0.25s ease-in-out;
+    border: 2px solid transparent;
+    border-image:  linear-gradient(to bottom right, #bb00dd, #44a3e7);
+    border-image-slice: 1;
+}
+
+div {
+    padding: 10px;
+}
+
+address a {
+    text-decoration: none;
+    color: #44a3e7;
+}
+
+address {
+    text-decoration: none;
+    font-style: normal;
+    margin: 0.4%;
+    display: inline-block;
+}
+
+h1 {
+    display: inline-block;
+    margin: 0.4%;
+}
+
+aside {
+    margin: 0.4%;
+    right: 0.4%;
+    position: absolute;
+    display: inline-block;
+}
+
+div a {
+    text-decoration: none;
+    color: white;
+}
+
+input {
+    border-color:#44a3e7;
+    border-style: solid;
+    background-color: #181c30;
+    color:white;
+}
+
+@media only screen and (max-width: 600px) {
+        main {
+            display: block;
+        }
+
+        div {
+            display: block;
+            width: 91%;
+        }
+
+        aside {
+            display: block;
+            float: none;
+            position: relative;
+        }
+}
