@@ -14,7 +14,7 @@ module.exports = class InteractionUtils {
         if (interaction.options != undefined && interaction.options[namearg] != undefined) {
             string = interaction.options[namearg].value;
         }
-        let canbeSelf = string != "";
+        let canbeSelf = string == "";
         string = stringify(string).toLowerCase();
         let acclist = await BotUtils.fileCache.acclist;
         let acc;
