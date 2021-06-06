@@ -4,7 +4,7 @@ const { getUUID } = require("./mojangRequest");
 const config = require("./Config").fromJSON();
 const { isValidIGN } = require("./utils");
 const Account = require("./account");
-const BotUtils = require("./discord/BotRuntime");
+const BotUtils = require("./discord/BotUtils");
 const logger = utils.logger;
 
 async function getList(type = "") {
