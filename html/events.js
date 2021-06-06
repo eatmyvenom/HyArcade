@@ -13,7 +13,7 @@ async function refresh() {
     servertime = await servertime.text();
     let formatted = new Date(servertime);
     time.innerHTML = "Last database update : " + formatted.toLocaleTimeString();
-    let events = await fetch("https://hyarcade.xyz/resources/accounts.json", { cache: "no-store" });
+    let events = await fetch("https://hyarcade.xyz/resources/events.json", { cache: "no-store" });
     events = await events.text();
     await formatPage(events);
 }
