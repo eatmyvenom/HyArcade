@@ -47,7 +47,7 @@ class EventDetector {
             this.Events.push(new AccountEvent(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid));
         }
 
-        if(oldAcc.discord != newAcc.discord) {
+        if(oldAcc.discord != newAcc.discord && newAcc.discord != undefined && newAcc.discord != "" && newAcc.discord != 0) {
             this.Events.push(new AccountEvent(newAcc.name, "LINK", oldAcc.discord, newAcc.discord, "", newAcc.uuid));
         }
 
