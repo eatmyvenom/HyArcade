@@ -12,6 +12,9 @@ function getKey() {
     if (config.cluster) {
         key = config.clusters[config.cluster].key;
     }
+    if (BotUtils.isBotInstance) {
+        key = config.clusters["serverbot"].key; 
+    }
     if (config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
     }
