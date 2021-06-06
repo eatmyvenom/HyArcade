@@ -228,7 +228,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "Mini walls kit",
-                    value: acc.miniWalls.kit,
+                    value: ("" + acc.miniWalls.kit).replace(/undefined/g, "none"),
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
