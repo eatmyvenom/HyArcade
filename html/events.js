@@ -20,6 +20,7 @@ async function refresh() {
 
 async function formatPage(events) {
     events = JSON.parse(events);
+    console.log(events)
     let content = document.getElementById("evtWrapper");
     let newContent = "";
     for(let evt of events) {
