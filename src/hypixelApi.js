@@ -13,7 +13,7 @@ function getKey() {
     if (config.cluster) {
         key = config.clusters[config.cluster].key;
     }
-    if (BotUtils.isBotInstance) {
+    if (process.argv[2] == "bot") {
         key = config.clusters["serverbot"].key; 
     }
     if (config.mode == "test") {

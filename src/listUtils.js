@@ -9,7 +9,7 @@ const logger = utils.logger;
 
 async function getList(type = "") {
     let list;
-    if (!BotUtils.isBotInstance) {
+    if (process.argv[2] != "bot") {
         if (type == "") {
             list = await utils.readJSON("accounts.json");
         } else {
