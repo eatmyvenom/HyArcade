@@ -47,8 +47,10 @@ exports.accounts = async function accounts() {
             let disc = getKeyByValue(disclist, args.uuid);
             let guild = getGuild(guilds, args.uuid);
             acc.discord = disc;
-            acc.guildID = guild.uuid;
-            acc.guild = guild.name;
+            if(guild) {
+                acc.guildID = guild.uuid;
+                acc.guild = guild.name;
+            }
             currentlist.push(acc);
         }
         acclist[sublist] = currentlist;
