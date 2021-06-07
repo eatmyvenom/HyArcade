@@ -67,8 +67,8 @@ class EventDetector {
             this.Events.push(new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid));
         }
 
-        if(Math.floor(oldAcc.level) < Math.floor(newAcc.level) && newAcc.level != undefined && newAcc.level != 0 && newAcc.level != 1) {
-            this.Events.push(new AccountEvent(newAcc.name, "LVL", oldAcc.level, newAcc.level, "", newAcc.uuid));
+        if(Math.floor(oldAcc.level) < Math.floor(newAcc.level) && newAcc.level != undefined && newAcc.level != 0 && newAcc.level != 1 && Math.floor(newAcc) % 10 == 0) {
+            this.Events.push(new AccountEvent(newAcc.name, "LVL",  Math.floor(oldAcc.level),  Math.floor(newAcc.level), "", newAcc.uuid));
         }
 
         if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
