@@ -213,8 +213,8 @@ async function updateAllAccounts() {
     runtime.needRoleupdate = true;
     await runtime.save();
 
-    if (force) {
-        await fs.rm(utils.fileExists("force"));
+    if (force && utils.fileExists("force")) {
+        await fs.rm("force");
     }
 
     await accounts.sort(utils.winsSorter);
