@@ -38,6 +38,10 @@ class AccountEvent {
             return `${this.name} gifted rank(s)`;
         } else if (this.type == "OF") {
             return `${this.name} just purchased an optifine cape!`;
+        } else if (this.type == "LVL") {
+            return `${this.name} just leveled up to ${this.newAmnt}!`;
+        } else if (this.type == "PLUS") {
+            return `${this.name} just set their plus color to ${this.newAmnt}!`;
         } else {
             return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
         }

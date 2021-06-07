@@ -66,6 +66,14 @@ class EventDetector {
         if(oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
             this.Events.push(new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid));
         }
+
+        if(Math.floor(oldAcc.level) < Math.floor(newAcc.level) && newAcc.level != undefined && newAcc.level != 0 && newAcc.level != 1) {
+            this.Events.push(new AccountEvent(newAcc.name, "LVL", oldAcc.level, newAcc.level, "", newAcc.uuid));
+        }
+
+        if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
+            this.Events.push(new AccountEvent(newAcc.name, "PLUS", oldAcc.plusColor, newAcc.plusColor, "", newAcc.uuid));
+        }
     }
 
     runDetection() {
