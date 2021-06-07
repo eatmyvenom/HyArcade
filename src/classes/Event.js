@@ -33,7 +33,7 @@ class AccountEvent {
         } else if (this.type == "LOGIN") {
             return `${this.name} Logged in for the first time in a while!`
         } else if (this.type == "RANK") {
-            return `${this.name}'s rank changed to ${this.newAmnt.replace(/_PLUS/g,"+")} from ${this.oldAmnt}`;
+            return `${this.name}'s rank changed to ${this.newAmnt.replace(/_PLUS/g,"+")} from ${this.oldAmnt.replace(/_PLUS/g,"+")}`;
         } else if (this.type == "SIMP") {
             return `${this.name} gifted rank(s)`;
         } else if (this.type == "OF") {
