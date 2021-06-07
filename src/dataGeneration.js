@@ -214,7 +214,7 @@ async function updateAllAccounts() {
     await runtime.save();
 
     if (force) {
-        await fs.rm("force");
+        await fs.rm(utils.fileExists("force"));
     }
 
     await accounts.sort(utils.winsSorter);
