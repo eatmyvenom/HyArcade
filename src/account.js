@@ -13,6 +13,7 @@ class Account {
     uuidPosix = "";
     internalId = "";
     guildID = "";
+    guild = undefined;
     rank = "";
     version = "";
     firstLogin = 0;

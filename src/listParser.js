@@ -7,7 +7,7 @@ const utils = require("./utils");
 function getGuild(guildlist, uuid) {
     for(let guild of guildlist) {
         if(guild.memberUUIDs.includes(uuid.toLowerCase())) {
-            return guild.uuid;
+            return guild;
         }
     }
 }
@@ -45,9 +45,10 @@ exports.accounts = async function accounts() {
         for (const args of acclistjson[sublist]) {
             let acc = new Account(args.name, args.wins, args.uuid);
             let disc = getKeyByValue(disclist, args.uuid);
-            let guildId = getGuild(guilds, args.uuid);
+            let guild = getGuild(guilds, args.uuid);
             acc.discord = disc;
-            acc.guildID = guildId;
+            acc.guildID = guild.uuid;
+            acc.guild = guild.name;
             currentlist.push(acc);
         }
         acclist[sublist] = currentlist;
