@@ -13,7 +13,7 @@ function formatN(str) {
 
 module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
     let plr = args[0];
-    let acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    let acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
     let stats = `Wins: **${formatN(acc.miniWallsWins)}**\n` +
                 `Kills: **${formatN(acc.miniWalls.kills)}**\n` +
                 `Finals: **${formatN(acc.miniWalls.finalKills)}**\n` +
