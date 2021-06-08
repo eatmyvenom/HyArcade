@@ -22,8 +22,8 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
                 `Deaths: **${formatN(acc.miniWalls.deaths)}**\n`;
 
     let deaths = acc.miniWalls.deaths
-    let ratios = `K/D: **${formatR(acc.miniWalls.kills / deaths)}**\n` +
-                    `K/D (no finals): **${formatR((acc.miniWalls.kills - acc.miniWalls.finalKills) / deaths)}**\n` +
+    let ratios = `K/D: **${formatR((acc.miniWalls.kills + acc.miniWalls.finalKills) / deaths)}**\n` +
+                    `K/D (no finals): **${formatR((acc.miniWalls.kills) / deaths)}**\n` +
                     `F/D: **${formatR(acc.miniWalls.finalKills / deaths)}**\n` +
                     `WD/D: **${formatR(acc.miniWalls.witherDamage / deaths)}**\n` +
                     `WK/D: **${formatR(acc.miniWalls.witherKills / deaths)}**\n` +
@@ -32,7 +32,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
     let embed = new MessageEmbed()
         .setTitle("Player: " + acc.name)
         .setColor(0x7873f5)
-        .addField("━━━━━ Stats: ━━━━━", stats, true)
+        .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
     return { res: "", embed: embed };
