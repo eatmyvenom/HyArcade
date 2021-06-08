@@ -50,7 +50,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
 
     uuid = acc.uuid;
 
-    let disclist = await utils.readJSON("./disclist.json");
+    let disclist = BotUtils.fileCache.disclist;
     if (disclist[discord]) {
         let embed = Embeds.errPlayerLinked;
         return { res: "", embed: embed };
