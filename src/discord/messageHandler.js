@@ -63,6 +63,23 @@ async function miniWallsVerify(msg) {
     }
 }
 
+async function pgVerify(msg) {
+    let ign = msg.content.trim();
+    let uuid = await mojangRequest.getUUID(ign);
+    let tag = msg.author.tag;
+    let id = msg.author.id;
+    let acc = new Account(ign, 0, uuid);
+    await acc.updateData();
+    if(acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
+        await addAccounts("others", [uuid]);
+        let disclist = BotUtils.fileCache.disclist;
+        disclist[id] = uuid;
+        await utils.writeJSON("disclist.json", disclist);
+        logger.out(`${tag} was autoverified in party gamers as ${ign}`);
+        msg.member.roles.add('841092980931952660');
+    }
+}
+
 async function attemptSend(msg, cmdResponse, opts) {
     cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     let runtime = Runtime.fromJSON();
@@ -124,6 +141,7 @@ module.exports = async function messageHandler(msg) {
     if (msg.guild.id == '808077828842455090') return;
 
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
+    if(msg.channel.id == '742761029586649148') await pgVerify(msg);
 
     let cmdResponse = await getCmdRes(msg);
 
