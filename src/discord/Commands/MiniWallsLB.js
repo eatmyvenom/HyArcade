@@ -91,7 +91,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     let res = "";
     let gameName = "";
 
-    switch (type.toLowerCase()) {
+    switch (("" + type).toLowerCase()) {
 
         case "w":
         case "ws":
