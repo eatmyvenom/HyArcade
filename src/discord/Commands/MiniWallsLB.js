@@ -50,7 +50,7 @@ async function getLB(prop, timetype, limit, category) {
             week = week == "" ? "Nobody has won" : week;
             month = month == "" ? "Nobody has won" : month;
 
-            let embed = new MessageEmbed().setColor(0x00cc66).addField("Daily", day, true).addField("Weekly", week, true).addField("\u200B", "\u200B", true).addField("Monthly", month, true).addField("Lifetime", life, true).addField("\u200B", "\u200B", true);
+            let embed = new MessageEmbed().setColor(0x984daf).addField("Daily", day, true).addField("Weekly", week, true).addField("\u200B", "\u200B", true).addField("Monthly", month, true).addField("Lifetime", life, true).addField("\u200B", "\u200B", true);
 
             return embed;
             break;
@@ -64,7 +64,7 @@ async function getLB(prop, timetype, limit, category) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time).setColor(0x00cc66).setDescription(res);
+    let embed = new MessageEmbed().setTitle(time).setColor(0x984daf).setDescription(res);
 
     if (res.length > 6000) {
         return new MessageEmbed().setTitle("ERROR").setColor(0xff0000).setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
@@ -160,8 +160,8 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     let date = new Date(updatetime.toString());
 
     let finalRes = res
-        .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL())
-        .setFooter("Data generated at", BotUtils.client.user.avatarURL())
+        .setAuthor(gameName + " leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg")
+        .setFooter("Data generated at")
         .setTimestamp(date);
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
