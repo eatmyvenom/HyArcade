@@ -19,7 +19,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
                 `Finals: **${formatN(acc.miniWalls.finalKills)}**\n` +
                 `Wither Damage: **${formatN(acc.miniWalls.witherDamage)}**\n` +
                 `Wither Kills: **${formatN(acc.miniWalls.witherKills)}**\n` +
-                `Deaths: **${formatN(acc.miniWalls.deaths)}**`;
+                `Deaths: **${formatN(acc.miniWalls.deaths)}**\n`;
 
     let deaths = acc.miniWalls.deaths
     let ratios = `K/D: **${formatR(acc.miniWalls.kills / deaths)}**\n` +
@@ -27,7 +27,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
                     `F/D: **${formatR(acc.miniWalls.finalKills / deaths)}**\n` +
                     `WD/D: **${formatR(acc.miniWalls.witherDamage / deaths)}**\n` +
                     `WK/D: **${formatR(acc.miniWalls.witherKills / deaths)}**\n` +
-                    `Arrow Accuracy: **${formatR(acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot)}**`
+                    `Arrow Accuracy: **${formatR(acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot)}**\n`
                     
     let embed = new MessageEmbed()
         .setTitle("Player: " + acc.name)
