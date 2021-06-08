@@ -5,6 +5,8 @@ const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
+const Account = require("../account");
+const mojangRequest = require("../mojangRequest");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -44,6 +46,23 @@ function randomBtw() {
     return "";
 }
 
+async function miniWallsVerify(msg) {
+    let ign = msg.content.trim();
+    let uuid = await mojangRequest.getUUID(ign);
+    let tag = msg.author.tag;
+    let id = msg.author.id;
+    let acc = new Account(ign, 0, uuid);
+    await acc.updateData();
+    if(acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
+        await addAccounts("others", [uuid]);
+        let disclist = BotUtils.fileCache.disclist;
+        disclist[id] = uuid;
+        await utils.writeJSON("./disclist.json", disclist);
+        logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
+        msg.member.roles.remove('850033543425949736');
+    }
+}
+
 async function attemptSend(msg, cmdResponse, opts) {
     cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     let runtime = Runtime.fromJSON();
@@ -61,7 +80,7 @@ async function addIGNs(msg) {
         // sanitize
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
-            let acclist = await utils.readJSON("./acclist.json");
+            let acclist = await utils.readJSON("acclist.json");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
             BotUtils.logHook.send('Attempting to add "`' + firstWord + '`" to database.');
@@ -103,6 +122,8 @@ module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
+
+    if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
 
     let cmdResponse = await getCmdRes(msg);
 
