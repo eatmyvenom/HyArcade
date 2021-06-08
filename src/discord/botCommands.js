@@ -23,6 +23,7 @@ let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
+const MiniWallsLB = require("./Commands/MiniWallsLB");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -92,6 +93,14 @@ async function checkCommands(rawMsg, command, args, author) {
         case "mw":
         case "miniwalls": {
             return await MiniWalls.execute(args, author, rawMsg);
+            break;
+        }
+
+        case "mwlb":
+        case "mlb":
+        case "miniwallsleaderboard":
+        case "miniwallslb": {
+            return await MiniWallsLB.execute(args,author,rawMsg);
             break;
         }
 
