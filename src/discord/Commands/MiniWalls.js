@@ -32,8 +32,8 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
     let embed = new MessageEmbed()
         .setTitle("Player: " + acc.name)
         .setColor(0x7873f5)
-        .addField("Stats:", stats, true)
-        .addField("Ratios:", ratios, true);
+        .addField("------------ Stats: ----------- ", stats, true)
+        .addField("------------ Ratios: -----------", ratios, true);
 
     return { res: "", embed: embed };
 });
