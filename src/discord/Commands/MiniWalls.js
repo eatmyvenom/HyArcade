@@ -8,7 +8,8 @@ function formatR(n) {
 }
 
 function formatN(str) {
-    return Intl.NumberFormat("en").format(Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0)));
+    let r = Intl.NumberFormat("en").format(Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0)));
+    r = (r == NaN) ? r = "N/A" : r;
 }
 
 module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
