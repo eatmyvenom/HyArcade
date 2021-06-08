@@ -27,11 +27,11 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
                     `F/D: **${formatR(acc.miniWalls.finalKills / deaths)}**\n` +
                     `WD/D: **${formatR(acc.miniWalls.witherDamage / deaths)}**\n` +
                     `WK/D: **${formatR(acc.miniWalls.witherKills / deaths)}**\n` +
-                    `Arrow Accuracy: **${formatR(acc.miniWalls.arrowsShot / acc.miniWalls.arrowsHit)}**`
+                    `Arrow Accuracy: **${formatR(acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot)}**`
                     
     let embed = new MessageEmbed()
-        .setTitle(acc.name + "'s Mini walls stats")
-        .setColor(0x44a3e7)
+        .setTitle("Player: " + acc.name)
+        .setColor(0x8c54fe)
         .addField("Stats:", stats, true)
         .addField("Ratios:", ratios, true);
 
