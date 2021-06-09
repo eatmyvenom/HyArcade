@@ -103,6 +103,13 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "witherKills": {
             comparitor = (b,a) => {
+                if(a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                    return 1;
+                }
                 return a.miniWalls.witherKills - b.miniWalls.witherKills;
             }
             parser = (a) => {
@@ -112,6 +119,13 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "finalKills": {
             comparitor = (b,a) => {
+                if(a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+                    return 1;
+                }
                 return a.miniWalls.finalKills - b.miniWalls.finalKills;
             }
             parser = (a) => {
