@@ -13,6 +13,7 @@ const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
 const Info = require("../Commands/Info");
 const Susser = require("../Commands/Susser");
+const Compare = require("../Commands/Compare");
 
 module.exports = async (interaction) => {
     if (!interaction.isCommand()) return;
@@ -120,6 +121,10 @@ module.exports = async (interaction) => {
 
         case Susser.name: {
             return await Susser.execute(args, authorID, null, interaction);
+        }
+
+        case Compare.name: {
+            return await Compare.execute(args, authorID, undefined, interaction);
         }
     }
 };

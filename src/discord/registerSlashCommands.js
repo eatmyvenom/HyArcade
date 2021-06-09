@@ -26,7 +26,5 @@ async function interactionHandler(interaction) {
 }
 
 module.exports = async (client) => {
-    let gld = await client.guilds.fetch('677552571568619531')
-    await gld.commands.create(compare);
     client.on("interaction", interactionHandler);
 };
