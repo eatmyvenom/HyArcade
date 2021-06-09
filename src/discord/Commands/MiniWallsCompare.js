@@ -61,10 +61,10 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
     let deaths1 = acc1.miniWalls.deaths
     let deaths2 = acc2.miniWalls.deaths
     let ratios = lineR((acc1.miniWalls.kills + acc1.miniWalls.finalKills) / deaths1, (acc2.miniWalls.kills + acc2.miniWalls.finalKills) / deaths2, "K/D") +
-                    lineR((acc1.miniWalls.kills) / deaths1, (acc1.miniWalls.kills) / deaths2, "K/D (no finals)") +
-                    lineR((acc1.miniWalls.finalKills) / deaths1, (acc1.miniWalls.finalKills) / deaths2, "F/D") +
-                    lineR((acc1.miniWalls.witherDamage) / deaths1, (acc1.miniWalls.witherDamage) / deaths2, "WD/D") +
-                    lineR((acc1.miniWalls.witherKills) / deaths1, (acc1.miniWalls.witherKills) / deaths2, "WK/D") +
+                    lineR((acc1.miniWalls.kills) / deaths1, (acc2.miniWalls.kills) / deaths2, "K/D (no finals)") +
+                    lineR((acc1.miniWalls.finalKills) / deaths1, (acc2.miniWalls.finalKills) / deaths2, "F/D") +
+                    lineR((acc1.miniWalls.witherDamage) / deaths1, (acc2.miniWalls.witherDamage) / deaths2, "WD/D") +
+                    lineR((acc1.miniWalls.witherKills) / deaths1, (acc2.miniWalls.witherKills) / deaths2, "WK/D") +
                     lineR((acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100, (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100, "Arrow Accuracy");
 
     embed.setTitle(`${acc1.name} VS ${acc2.name}`)
