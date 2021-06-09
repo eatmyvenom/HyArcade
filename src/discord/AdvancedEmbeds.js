@@ -60,14 +60,14 @@ module.exports = class AdvancedEmbeds {
             case "hole":
             case "pain": {
                 side1 += `**HITW wins**\n${formatNum(numberify(acc1.hitwWins))}\n` +
-                            `**HITW qualifiers**\n${formatNum(numberify(acc1.hitwQual))}` +
-                            `**HITW finals**\n${formatNum(numberify(acc1.hitwFinal))}` +
+                            `**HITW qualifiers**\n${formatNum(numberify(acc1.hitwQual))}\n` +
+                            `**HITW finals**\n${formatNum(numberify(acc1.hitwFinal))}\n` +
                             `**HITW walls**\n${formatNum(numberify(acc1.hitwRounds))}`
 
 
                 side2 += `**HITW wins**\n${formatNum(numberify(acc2.hitwWins))}\n` +
-                            `**HITW qualifiers**\n${formatNum(numberify(acc2.hitwQual))}` +
-                            `**HITW finals**\n${formatNum(numberify(acc2.hitwFinal))}` +
+                            `**HITW qualifiers**\n${formatNum(numberify(acc2.hitwQual))}\n` +
+                            `**HITW finals**\n${formatNum(numberify(acc2.hitwFinal))}\n` +
                             `**HITW walls**\n${formatNum(numberify(acc2.hitwRounds))}`
                 break;
             }
@@ -81,17 +81,17 @@ module.exports = class AdvancedEmbeds {
             case "pvp":
             case "miniwalls": {
                 side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWallsWins))}\n` +
-                            `**Mini walls kills**\n${formatNum(numberify(acc1.miniWalls.kills))}` +
-                            `**Mini walls finals**\n${formatNum(numberify(acc1.miniWalls.finalKills))}` +
-                            `**Mini walls wither damage**\n${formatNum(numberify(acc1.miniWalls.witherDamage))}` +
-                            `**Mini walls wither kills**\n${formatNum(numberify(acc1.miniWalls.witherKills))}` +
+                            `**Mini walls kills**\n${formatNum(numberify(acc1.miniWalls.kills))}\n` +
+                            `**Mini walls finals**\n${formatNum(numberify(acc1.miniWalls.finalKills))}\n` +
+                            `**Mini walls wither damage**\n${formatNum(numberify(acc1.miniWalls.witherDamage))}\n` +
+                            `**Mini walls wither kills**\n${formatNum(numberify(acc1.miniWalls.witherKills))}\n` +
                             `**Mini walls deaths**\n${formatNum(numberify(acc1.miniWalls.deaths))}`
 
                 side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWallsWins))}\n` +
-                            `**Mini walls kills**\n${formatNum(numberify(acc2.miniWalls.kills))}` +
-                            `**Mini walls finals**\n${formatNum(numberify(acc2.miniWalls.finalKills))}` +
-                            `**Mini walls wither damage**\n${formatNum(numberify(acc2.miniWalls.witherDamage))}` +
-                            `**Mini walls wither kills**\n${formatNum(numberify(acc2.miniWalls.witherKills))}` +
+                            `**Mini walls kills**\n${formatNum(numberify(acc2.miniWalls.kills))}\n` +
+                            `**Mini walls finals**\n${formatNum(numberify(acc2.miniWalls.finalKills))}\n` +
+                            `**Mini walls wither damage**\n${formatNum(numberify(acc2.miniWalls.witherDamage))}\n` +
+                            `**Mini walls wither kills**\n${formatNum(numberify(acc2.miniWalls.witherKills))}\n` +
                             `**Mini walls deaths**\n${formatNum(numberify(acc2.miniWalls.deaths))}`
                 break;
             }
@@ -105,13 +105,13 @@ module.exports = class AdvancedEmbeds {
             case "shit":
             case "football": {
                 side1 += `**Football wins**\n${formatNum(numberify(acc1.footballWins))}\n` +
-                            `**Football goals**\n${formatNum(numberify(acc1.extras.footballGoals))}` +
-                            `**Football power kicks**\n${formatNum(numberify(acc1.extras.footballPKicks))}` +
+                            `**Football goals**\n${formatNum(numberify(acc1.extras.footballGoals))}\n` +
+                            `**Football power kicks**\n${formatNum(numberify(acc1.extras.footballPKicks))}\n` +
                             `**Football kicks**\n${formatNum(numberify(acc1.extras.footballKicks))}`
 
                 side2 += `**Football wins**\n${formatNum(numberify(acc2.footballWins))}\n` +
-                            `**Football goals**\n${formatNum(numberify(acc2.extras.footballGoals))}` +
-                            `**Football power kicks**\n${formatNum(numberify(acc2.extras.footballPKicks))}` +
+                            `**Football goals**\n${formatNum(numberify(acc2.extras.footballGoals))}\n` +
+                            `**Football power kicks**\n${formatNum(numberify(acc2.extras.footballPKicks))}\n` +
                             `**Football kicks**\n${formatNum(numberify(acc2.extras.footballKicks))}`
 
                 break;
@@ -136,11 +136,11 @@ module.exports = class AdvancedEmbeds {
             case "sumo2":
             case "throwout": {
                 side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOutWins))}\n` +
-                            `**Throw out kills**\n${formatNum(numberify(acc1.extras.throwOutKills))}` +
+                            `**Throw out kills**\n${formatNum(numberify(acc1.extras.throwOutKills))}\n` +
                             `**Throw out deaths**\n${formatNum(numberify(acc1.extras.throwOutDeaths))}`
 
                 side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOutWins))}\n` +
-                            `**Throw out kills**\n${formatNum(numberify(acc2.extras.throwOutKills))}` +
+                            `**Throw out kills**\n${formatNum(numberify(acc2.extras.throwOutKills))}\n` +
                             `**Throw out deaths**\n${formatNum(numberify(acc2.extras.throwOutDeaths))}`
 
                 break;
@@ -152,11 +152,11 @@ module.exports = class AdvancedEmbeds {
             case "galaxy":
             case "galaxywars": {
                 side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWarsWins))}\n` +
-                            `**Galaxy wars kills**\n${formatNum(numberify(acc1.extras.galaxyWarsKills))}` +
+                            `**Galaxy wars kills**\n${formatNum(numberify(acc1.extras.galaxyWarsKills))}\n` +
                             `**Galaxy wars deaths**\n${formatNum(numberify(acc1.extras.galaxyWarsDeaths))}`
 
                 side2 += `**Galaxy wars wins**\n${formatNum(numberify(acc2.galaxyWarsWins))}\n` +
-                            `**Galaxy wars kills**\n${formatNum(numberify(acc2.extras.galaxyWarsKills))}` +
+                            `**Galaxy wars kills**\n${formatNum(numberify(acc2.extras.galaxyWarsKills))}\n` +
                             `**Galaxy wars deaths**\n${formatNum(numberify(acc2.extras.galaxyWarsDeaths))}`
 
                 break;
@@ -183,11 +183,11 @@ module.exports = class AdvancedEmbeds {
             case "oneinthequiver":
             case "bountyhunters": {
                 side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHuntersWins))}\n` +
-                            `**Bounty hunters kills**\n${formatNum(numberify(acc1.extras.bountyHuntersKills))}` +
+                            `**Bounty hunters kills**\n${formatNum(numberify(acc1.extras.bountyHuntersKills))}\n` +
                             `**Bounty hunters deaths**\n${formatNum(numberify(acc1.extras.bountyHuntersDeaths))}`
 
                 side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHuntersWins))}\n` +
-                            `**Bounty hunters kills**\n${formatNum(numberify(acc2.extras.bountyHuntersKills))}` +
+                            `**Bounty hunters kills**\n${formatNum(numberify(acc2.extras.bountyHuntersKills))}\n` +
                             `**Bounty hunters deaths**\n${formatNum(numberify(acc2.extras.bountyHuntersDeaths))}`
 
                 break;
@@ -200,11 +200,11 @@ module.exports = class AdvancedEmbeds {
             case "blocking":
             case "blockingdead": {
                 side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDeadWins))}\n` +
-                            `**Blocking dead kills**\n${formatNum(numberify(acc1.extras.blockingDeadKills))}` +
+                            `**Blocking dead kills**\n${formatNum(numberify(acc1.extras.blockingDeadKills))}\n` +
                             `**Blocking dead headshots**\n${formatNum(numberify(acc1.extras.blockingDeadHeadshots))}`
 
                 side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDeadWins))}\n` +
-                            `**Blocking dead kills**\n${formatNum(numberify(acc2.extras.blockingDeadKills))}` +
+                            `**Blocking dead kills**\n${formatNum(numberify(acc2.extras.blockingDeadKills))}\n` +
                             `**Blocking dead headshots**\n${formatNum(numberify(acc2.extras.blockingDeadHeadshots))}`
 
                 break;
@@ -220,13 +220,13 @@ module.exports = class AdvancedEmbeds {
             case "hidenseek":
             case "hideseek": {
                 side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeekWins))}\n` +
-                            `**Hide and seek kills**\n${formatNum(numberify(acc1.hnsKills))}` +
-                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc1.extras.HNSSeekerWins))}` +
+                            `**Hide and seek kills**\n${formatNum(numberify(acc1.hnsKills))}\n` +
+                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc1.extras.HNSSeekerWins))}\n` +
                             `**Hide and seek hider wins**\n${formatNum(numberify(acc1.extras.HNSHiderWins))}`
 
                 side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeekWins))}\n` +
-                            `**Hide and seek kills**\n${formatNum(numberify(acc2.hnsKills))}` +
-                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc2.extras.HNSSeekerWins))}` +
+                            `**Hide and seek kills**\n${formatNum(numberify(acc2.hnsKills))}\n` +
+                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc2.extras.HNSSeekerWins))}\n` +
                             `**Hide and seek hider wins**\n${formatNum(numberify(acc2.extras.HNSHiderWins))}`
 
                 break;
