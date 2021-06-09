@@ -84,7 +84,7 @@ async function listDiff(name, timetype, maxamnt) {
  * @param {Function} callback Callback used to get the stats out of each account
  * @returns 
  */
-async function mklistAdv(name, timetype, maxamnt, callback, excludedUUIDs) {
+async function mklistAdv(name, timetype, maxamnt, callback) {
     let newlist, oldlist;
     if (name == "accounts") {
         newlist = await getList();
@@ -104,8 +104,6 @@ async function mklistAdv(name, timetype, maxamnt, callback, excludedUUIDs) {
             oldlist[i] = callback(acc, oldlist[i]);
         }
     }
-
-    oldlist.filter(a => {return !excludedUUIDs.includes(a.uuid)});
 
     // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
@@ -311,8 +309,9 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
 }
 
 async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, excludedUUIDs) {
-    let list = await mklistAdv("accounts", timetype, 9999, callback, excludedUUIDs);
+    let list = await mklistAdv("accounts", timetype, 9999, callback);
     list = list.sort(comparitor);
+    list = list.filter(a => !excludedUUIDs.includes(a.uuid));
 
     let str = "";
     list = list.slice(0, maxamnt);
