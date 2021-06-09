@@ -7,16 +7,94 @@ const utils = require("../../utils");
 const fs = require("fs/promises");
 const { logger } = require("../../utils");
 
+function wComp(a,b) {
+    return a.miniWallsWins - b.miniWallsWins;
+}
+
+function kComp(a,b) {
+    return a.miniWalls.kills - b.miniWalls.kills;
+}
+
+function dComp(a,b) {
+    return a.miniWalls.deaths - b.miniWalls.deaths;
+}
+
+function cb(n,o) {
+    o.miniWallsWins = n.miniWallsWins - o.miniWallsWins;
+    o.miniWalls.kills = n.miniWalls.kills - o.miniWalls.kills;
+    o.miniWalls.deaths = n.miniWalls.deaths - o.miniWalls.deaths;
+    o.miniWalls.witherDamage = n.miniWalls.witherDamage - o.miniWalls.witherDamage;
+    o.miniWalls.witherKills = n.miniWalls.witherKills - o.miniWalls.witherKills;
+    o.miniWalls.finalKills = n.miniWalls.finalKills - o.miniWalls.finalKills;
+    return o;
+}
+
 async function getLB(prop, timetype, limit, category) {
     let res = "";
     let time;
+
+    let comparitor = null;
+    let parser = null;
+    switch(prop) {
+        case "miniWallsWins": {
+            comparitor = wComp;
+            parser = (a) => {
+                return a.miniWallsWins;
+            }
+            break;
+        }
+
+        case "kills": {
+            comparitor = kComp;
+            parser = (a) => {
+                return a.miniWalls.kills;
+            }
+            break;
+        }
+
+        case "deaths" : {
+            comparitor = dComp;
+            parser = (a) => {
+                return a.miniWalls.deaths;
+            }
+            break;
+        }
+
+        case "witherDamage": {
+            comparitor = (a,b) => {
+                return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
+            }
+            parser = (a) => {
+                return a.miniWalls.witherDamage;
+            }
+            break;
+        }
+        case "witherKills": {
+            comparitor = (a,b) => {
+                return a.miniWalls.witherKills - b.miniWalls.witherKills;
+            }
+            parser = (a) => {
+                return a.miniWalls.witherKills;
+            }
+            break;
+        }
+        case "finalKills": {
+            comparitor = (a,b) => {
+                return a.miniWalls.finalKills - b.miniWalls.finalKills;
+            }
+            parser = (a) => {
+                return a.miniWalls.finalKills;
+            }
+            break;
+        }
+    }
 
     switch (timetype) {
         case "d":
         case "day":
         case "daily": {
             time = "Daily";
-            res = await listUtils.stringLBDiff(prop, limit, "day", category);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", cb, BotUtils.fileCache.hackers);
             break;
         }
 
@@ -25,7 +103,7 @@ async function getLB(prop, timetype, limit, category) {
         case "weak":
         case "weekly": {
             time = "Weekly";
-            res = await listUtils.stringLBDiff(prop, limit, "weekly", category);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", cb, BotUtils.fileCache.hackers);
             break;
         }
 
@@ -34,17 +112,17 @@ async function getLB(prop, timetype, limit, category) {
         case "month":
         case "monthly": {
             time = "Monthly";
-            res = await listUtils.stringLBDiff(prop, limit, "monthly", category);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", cb, BotUtils.fileCache.hackers);
             break;
         }
 
         case "a":
         case "all":
         case "*": {
-            let day = await listUtils.stringLBDiff(prop, limit, "day", category);
-            let week = await listUtils.stringLBDiff(prop, limit, "weekly", category);
-            let month = await listUtils.stringLBDiff(prop, limit, "monthly", category);
-            let life = await listUtils.stringLB(prop, limit, category);
+            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", cb, BotUtils.fileCache.hackers);
+            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", cb, BotUtils.fileCache.hackers);
+            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", cb, BotUtils.fileCache.hackers);
+            let life = await listUtils.stringLBAdv(comparitor, parser, limit, BotUtils.fileCache.hackers);
 
             day = day == "" ? "Nobody has won" : day;
             week = week == "" ? "Nobody has won" : week;
@@ -58,7 +136,7 @@ async function getLB(prop, timetype, limit, category) {
 
         default: {
             time = "Lifetime";
-            res = await listUtils.stringLB(prop, limit, category);
+            res = await listUtils.stringLBAdv(comparitor, parser, limit, BotUtils.fileCache.hackers);
             break;
         }
     }
@@ -164,7 +242,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         .setFooter("Data generated at")
         .setTimestamp(date);
 
-    logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
+    logger.out("MW Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
     return { res: "", embed: finalRes };
 });
