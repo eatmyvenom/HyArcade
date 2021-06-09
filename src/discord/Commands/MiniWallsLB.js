@@ -7,15 +7,15 @@ const utils = require("../../utils");
 const fs = require("fs/promises");
 const { logger } = require("../../utils");
 
-function wComp(a,b) {
+function wComp(b,a) {
     return a.miniWallsWins - b.miniWallsWins;
 }
 
-function kComp(a,b) {
+function kComp(b,a) {
     return a.miniWalls.kills - b.miniWalls.kills;
 }
 
-function dComp(a,b) {
+function dComp(b,a) {
     return a.miniWalls.deaths - b.miniWalls.deaths;
 }
 
