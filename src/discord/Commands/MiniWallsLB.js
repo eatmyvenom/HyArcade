@@ -40,7 +40,7 @@ function dComp(b,a) {
     return a.miniWalls.deaths - b.miniWalls.deaths;
 }
 
-function cb(n,o) {
+function cb(o,n) {
     o.miniWallsWins = n.miniWallsWins - o.miniWallsWins;
     o.miniWalls.kills = n.miniWalls.kills - o.miniWalls.kills;
     o.miniWalls.deaths = n.miniWalls.deaths - o.miniWalls.deaths;
