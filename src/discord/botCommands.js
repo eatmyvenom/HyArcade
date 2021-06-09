@@ -108,7 +108,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "mwcompare":
         case "mwc":
         case "comparemw": {
-            return MiniWallsCompare(args,author,rawMsg);
+            return MiniWallsCompare.execute(args,author,rawMsg);
             break;
         }
 
