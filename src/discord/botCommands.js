@@ -24,6 +24,7 @@ const { logger } = require("../utils");
 const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
+const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -101,6 +102,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "miniwallsleaderboard":
         case "miniwallslb": {
             return await MiniWallsLB.execute(args,author,rawMsg);
+            break;
+        }
+
+        case "mwcompare":
+        case "mwc":
+        case "comparemw": {
+            return MiniWallsCompare(args,author,rawMsg);
             break;
         }
 
