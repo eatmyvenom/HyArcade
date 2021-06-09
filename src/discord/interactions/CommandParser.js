@@ -36,7 +36,7 @@ module.exports = async (interaction) => {
     switch (interaction.commandName) {
         case "stats": {
             let game = args[1];
-            let acc = await InteractionUtils.resolveAccount(interaction);
+            let acc = await InteractionUtils.resolveAccount(interaction, 0);
             return await BotUtils.getStats(acc, "" + game);
         }
 
