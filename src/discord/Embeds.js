@@ -41,3 +41,10 @@ exports.useSlash = function (cmd, slashver) {
         .setColor(0xff0000)
         .setDescription("This command has been retired and will no longer function using the usual method. Please use the slash command variation instead.")
 }
+
+exports.errLen = function(len) {
+    return new MessageEmbed()
+        .setTitle("ERROR")
+        .setColor(0xff0000)
+        .setDescription(`This command requires ${len} arguments`);
+}

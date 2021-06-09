@@ -1,6 +1,7 @@
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
+const { compare } = require("./interactions/interactionObjects");
 
 async function interactionHandler(interaction) {
     let responseObj = await CommandParser(interaction);
@@ -25,5 +26,7 @@ async function interactionHandler(interaction) {
 }
 
 module.exports = async (client) => {
+    let gld = await client.guilds.fetch('677552571568619531')
+    await gld.commands.create(compare);
     client.on("interaction", interactionHandler);
 };
