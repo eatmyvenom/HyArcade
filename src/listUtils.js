@@ -84,7 +84,7 @@ async function listDiff(name, timetype, maxamnt) {
  * @param {Function} callback Callback used to get the stats out of each account
  * @returns 
  */
-async function mklistAdv(name, timetype, maxamnt, callback) {
+async function mklistAdv(name, timetype, maxamnt, callback, excludedUUIDs) {
     let newlist, oldlist;
     if (name == "accounts") {
         newlist = await getList();
@@ -98,12 +98,14 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
 
     for (let i = 0; i < oldlist.length; i++) {
         let acc = findMatchingAccount(oldlist[i], newlist);
-
+        
         // make sure acc isnt null/undefined
         if (acc) {
             oldlist[i] = callback(acc, oldlist[i]);
         }
     }
+
+    oldlist.filter(a => !excludedUUIDs.includes(a.uuid));
 
     // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
@@ -276,9 +278,10 @@ async function stringLB(lbprop, maxamnt, category) {
     return stringifyList(list, lbprop, category, maxamnt);
 }
 
-async function stringLBAdv(comparitor, parser, maxamnt) {
+async function stringLBAdv(comparitor, parser, maxamnt, excludedUUIDs) {
     let list = await getList();
     list = list.sort(comparitor);
+    list = list.filter(a => !excludedUUIDs.includes(a.uuid));
 
     let str = "";
     list = list.slice(0, maxamnt);
@@ -308,14 +311,14 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
     return stringifyList(list, lbprop, category, maxamnt);
 }
 
-async function stringLBDiffAdv(comparitor, maxamnt, timetype, callback) {
-    let list = await mklistAdv("accounts", timetype, 9999, callback);
+async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, excludedUUIDs) {
+    let list = await mklistAdv("accounts", timetype, 9999, callback, excludedUUIDs);
     list = list.sort(comparitor);
 
     let str = "";
     list = list.slice(0, maxamnt);
     for (let i = 0; i < list.length; i++) {
-        let propVal = list[i];
+        let propVal = parser(list[i]);
         if (numberify(propVal) < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;
@@ -354,4 +357,5 @@ module.exports = {
     stringLBDaily: stringLBDaily,
     stringLBDiff: stringLBDiff,
     stringLBAdv: stringLBAdv,
+    stringDiffAdv: stringLBDiffAdv,
 };
