@@ -280,6 +280,6 @@ module.exports = class AdvancedEmbeds {
         embed.addField(acc1.name, side1, true);
         embed.addField(acc2.name, side2, true);
 
-        return
+        return embed;
     }
 }
