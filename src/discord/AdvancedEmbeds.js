@@ -18,7 +18,7 @@ module.exports = class AdvancedEmbeds {
     
     let embed = new MessageEmbed()
         .setTitle(`${acc1.name} vs ${acc2.name}`)
-        .color(0xbb00dd);
+        .setColor(0xbb00dd);
 
     let side1 = "";
     let side2 = "";
