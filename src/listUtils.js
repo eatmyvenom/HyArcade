@@ -105,7 +105,7 @@ async function mklistAdv(name, timetype, maxamnt, callback, excludedUUIDs) {
         }
     }
 
-    oldlist.filter(a => !excludedUUIDs.includes(a.uuid));
+    oldlist.filter(a => {return !excludedUUIDs.includes(a.uuid)});
 
     // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
