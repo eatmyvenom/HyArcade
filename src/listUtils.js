@@ -61,7 +61,7 @@ async function listNormal(name, maxamnt) {
 }
 
 function findMatchingAccount(acc, list) {
-    return list.find((a) => a.uuid == acc.uuid || a.name == acc.name || a.discord == acc.discord);
+    return list.find((a) => a.uuid == acc.uuid);
 }
 
 /**
@@ -97,11 +97,12 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
     oldlist = oldlist.sort(utils.winsSorter);
 
     for (let i = 0; i < oldlist.length; i++) {
-        let acc = findMatchingAccount(oldlist[i], newlist);
+        let oldacc = oldlist[i];
+        let newacc = findMatchingAccount(oldacc, newlist);
         
         // make sure acc isnt null/undefined
-        if (acc) {
-            oldlist[i] = callback(acc, oldlist[i]);
+        if (newacc) {
+            oldlist[i] = callback(oldacc, oldlist[i]);
         }
     }
 
