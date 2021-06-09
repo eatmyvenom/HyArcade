@@ -8,6 +8,13 @@ const fs = require("fs/promises");
 const { logger } = require("../../utils");
 
 function wComp(b,a) {
+    if(a.miniWallsWins == undefined) {
+        return 1;
+    }
+
+    if(b.miniWallsWins == undefined) {
+        return -1;
+    }
     return a.miniWallsWins - b.miniWallsWins;
 }
 
@@ -16,6 +23,13 @@ function kComp(b,a) {
 }
 
 function dComp(b,a) {
+    if(a.miniWallsWins == undefined) {
+        return 1;
+    }
+
+    if(b.miniWallsWins == undefined) {
+        return -1;
+    }
     return a.miniWalls.deaths - b.miniWalls.deaths;
 }
 
@@ -61,7 +75,7 @@ async function getLB(prop, timetype, limit, category) {
         }
 
         case "witherDamage": {
-            comparitor = (a,b) => {
+            comparitor = (b,a) => {
                 return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
             }
             parser = (a) => {
@@ -70,7 +84,7 @@ async function getLB(prop, timetype, limit, category) {
             break;
         }
         case "witherKills": {
-            comparitor = (a,b) => {
+            comparitor = (b,a) => {
                 return a.miniWalls.witherKills - b.miniWalls.witherKills;
             }
             parser = (a) => {
@@ -79,7 +93,7 @@ async function getLB(prop, timetype, limit, category) {
             break;
         }
         case "finalKills": {
-            comparitor = (a,b) => {
+            comparitor = (b,a) => {
                 return a.miniWalls.finalKills - b.miniWalls.finalKills;
             }
             parser = (a) => {
