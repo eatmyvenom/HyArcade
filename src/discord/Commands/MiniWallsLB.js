@@ -24,11 +24,11 @@ function kComp(b,a) {
 
 function dComp(b,a) {
     if(a.miniWallsWins == undefined) {
-        return 1;
+        return -1;
     }
 
     if(b.miniWallsWins == undefined) {
-        return -1;
+        return 1;
     }
     return a.miniWalls.deaths - b.miniWalls.deaths;
 }
