@@ -64,20 +64,7 @@ async function miniWallsVerify(msg) {
 }
 
 async function pgVerify(msg) {
-    let ign = msg.content.trim();
-    let uuid = await mojangRequest.getUUID(ign);
-    let tag = msg.author.tag;
-    let id = msg.author.id;
-    let acc = new Account(ign, 0, uuid);
-    await acc.updateData();
-    if(acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
-        await addAccounts("others", [uuid]);
-        let disclist = BotUtils.fileCache.disclist;
-        disclist[id] = uuid;
-        await utils.writeJSON("disclist.json", disclist);
-        logger.out(`${tag} was autoverified in party gamers as ${ign}`);
-        msg.member.roles.add('841092980931952660');
-    }
+    msg.member.roles.add('841092980931952660');
 }
 
 async function attemptSend(msg, cmdResponse, opts) {
