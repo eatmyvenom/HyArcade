@@ -28,6 +28,13 @@ module.exports = class AdvancedEmbeds {
             case "party":
             case "partygames":
             case "pg": {
+                if(acc1.wins > acc2.wins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
                 side1 += `**Party games wins**\n${formatNum(numberify(acc1.wins))}`
                 side2 += `**Party games wins**\n${formatNum(numberify(acc2.wins))}`
                 break;
@@ -39,8 +46,26 @@ module.exports = class AdvancedEmbeds {
             case "farmhunt":
             case "5":
             case "frmhnt": {
-                side1 += `**Farm hunt wins**\n${formatNum(numberify(acc1.farmhuntWins))}\n**Farm hunt poop**\n${formatNum(numberify(acc1.farmhuntShit))}`
-                side2 += `**Farm hunt wins**\n${formatNum(numberify(acc2.farmhuntWins))}\n**Farm hunt poop**\n${formatNum(numberify(acc2.farmhuntShit))}`
+                if(acc1.farmhuntWins > acc2.farmhuntWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+                side1 += `**Farm hunt wins**\n${formatNum(numberify(acc1.farmhuntWins))}\n`;
+                side2 += `**Farm hunt wins**\n${formatNum(numberify(acc2.farmhuntWins))}\n`
+
+                if(acc1.farmhuntShit > acc2.farmhuntShit) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Farm hunt poop**\n${formatNum(numberify(acc1.farmhuntShit))}`
+                side2 +=`**Farm hunt poop**\n${formatNum(numberify(acc2.farmhuntShit))}`
                 break;
             }
             case "10":
@@ -49,8 +74,27 @@ module.exports = class AdvancedEmbeds {
             case "hypixel":
             case "says":
             case "hysays": {
-                side1 += `**Hypixel says wins**\n${formatNum(numberify(acc1.hypixelSaysWins))}\n**Hypixel says Rounds**\n${formatNum(numberify(acc1.hypixelSaysWins))}`
-                side2 += `**Hypixel says wins**\n${formatNum(numberify(acc2.extras.hypixelSaysRounds))}\n**Hypixel says Rounds**\n${formatNum(numberify(acc2.extras.hypixelSaysRounds))}`
+                if(acc1.hypixelSaysWins > acc2.hypixelSaysWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hypixel says wins**\n${formatNum(numberify(acc1.hypixelSaysWins))}\n`
+                side2 += `**Hypixel says wins**\n${formatNum(numberify(acc2.hypixelSaysWins))}\n`
+
+                if(acc1.extras.hypixelSaysRounds > acc2.extras.hypixelSaysRounds) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hypixel says Rounds**\n${formatNum(numberify(acc1.extras.hypixelSaysRounds))}`
+                side2 += `**Hypixel says Rounds**\n${formatNum(numberify(acc2.extras.hypixelSaysRounds))}`
                 break;
             }
 
@@ -59,16 +103,49 @@ module.exports = class AdvancedEmbeds {
             case "hit":
             case "hole":
             case "pain": {
-                side1 += `**HITW wins**\n${formatNum(numberify(acc1.hitwWins))}\n` +
-                            `**HITW qualifiers**\n${formatNum(numberify(acc1.hitwQual))}\n` +
-                            `**HITW finals**\n${formatNum(numberify(acc1.hitwFinal))}\n` +
-                            `**HITW walls**\n${formatNum(numberify(acc1.hitwRounds))}`
+                if(acc1.hitwWins > acc2.hitwWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
 
+                side1 += `**HITW wins**\n${formatNum(numberify(acc1.hitwWins))}\n`
+                side2 += `**HITW wins**\n${formatNum(numberify(acc2.hitwWins))}\n`
 
-                side2 += `**HITW wins**\n${formatNum(numberify(acc2.hitwWins))}\n` +
-                            `**HITW qualifiers**\n${formatNum(numberify(acc2.hitwQual))}\n` +
-                            `**HITW finals**\n${formatNum(numberify(acc2.hitwFinal))}\n` +
-                            `**HITW walls**\n${formatNum(numberify(acc2.hitwRounds))}`
+                if(acc1.hitwQual > acc2.hitwQual) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**HITW qualifiers**\n${formatNum(numberify(acc1.hitwQual))}\n`
+                side2 += `**HITW qualifiers**\n${formatNum(numberify(acc2.hitwQual))}\n`
+
+                if(acc1.hitwFinal > acc2.hitwFinal) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**HITW finals**\n${formatNum(numberify(acc1.hitwFinal))}\n`
+                side2 += `**HITW finals**\n${formatNum(numberify(acc2.hitwFinal))}\n`
+
+                if(acc1.hitwRounds > acc2.hitwRounds) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**HITW walls**\n${formatNum(numberify(acc1.hitwRounds))}`
+                side2 += `**HITW walls**\n${formatNum(numberify(acc2.hitwRounds))}`
                 break;
             }
 
