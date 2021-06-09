@@ -87,6 +87,13 @@ async function getLB(prop, timetype, limit, category) {
 
         case "witherDamage": {
             comparitor = (b,a) => {
+                if(a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                    return 1;
+                }
                 return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
             }
             parser = (a) => {
