@@ -68,8 +68,9 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
                     lineR((acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100, (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100, "Arrow Accuracy");
 
     embed.setTitle(`${acc1.name} VS ${acc2.name}`)
-        .addField('Stats', stats)
-        .addField('Ratios', ratios);
+        .setColor(0x7873f5)
+        .addField('━━━━━━ Stats: ━━━━━', stats, true)
+        .addField('━━━━━ Ratios: ━━━━━', ratios, true);
 
 
     return { res: "", embed: embed };
