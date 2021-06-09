@@ -40,13 +40,17 @@ function dComp(b,a) {
     return a.miniWalls.deaths - b.miniWalls.deaths;
 }
 
-function cb(o,n) {
-    o.miniWallsWins = n.miniWallsWins - o.miniWallsWins;
-    o.miniWalls.kills = n.miniWalls.kills - o.miniWalls.kills;
-    o.miniWalls.deaths = n.miniWalls.deaths - o.miniWalls.deaths;
-    o.miniWalls.witherDamage = n.miniWalls.witherDamage - o.miniWalls.witherDamage;
-    o.miniWalls.witherKills = n.miniWalls.witherKills - o.miniWalls.witherKills;
-    o.miniWalls.finalKills = n.miniWalls.finalKills - o.miniWalls.finalKills;
+function int(n) {
+    return new Number(("" +n).replace(/undefined/g, "0").replace(/null/g, "0"));
+}
+
+function cb(n,o) {
+    o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
+    o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
+    o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
+    o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
+    o.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
+    o.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
     return o;
 }
 
