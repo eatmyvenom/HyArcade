@@ -4,12 +4,15 @@ const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
 function formatR(n) {
-    return Math.round(n * 100) / 100
+    let r = Math.round(n * 100) / 100
+    r = (r == NaN) ? r = "N/A" : r;
+    return r;
 }
 
 function formatN(str) {
     let r = Intl.NumberFormat("en").format(Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0)));
     r = (r == NaN) ? r = "N/A" : r;
+    return r;
 }
 
 module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
