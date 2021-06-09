@@ -109,7 +109,6 @@ async function mklistAdv(name, timetype, maxamnt, callback, excludedUUIDs) {
 
     // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
-    oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
 }
 
