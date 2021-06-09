@@ -8,26 +8,33 @@ const fs = require("fs/promises");
 const { logger } = require("../../utils");
 
 function wComp(b,a) {
-    if(a.miniWallsWins == undefined) {
+    if(a.miniWallsWins == undefined || a.miniWallsWins == NaN) {
         return 1;
     }
 
-    if(b.miniWallsWins == undefined) {
+    if(b.miniWallsWins == undefined || b.miniWallsWins == NaN) {
         return -1;
     }
     return a.miniWallsWins - b.miniWallsWins;
 }
 
 function kComp(b,a) {
+    if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+        return -1;
+    }
+
+    if(b.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+        return 1;
+    }
     return a.miniWalls.kills - b.miniWalls.kills;
 }
 
 function dComp(b,a) {
-    if(a.miniWallsWins == undefined) {
+    if(a.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
         return -1;
     }
 
-    if(b.miniWallsWins == undefined) {
+    if(b.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
         return 1;
     }
     return a.miniWalls.deaths - b.miniWalls.deaths;
