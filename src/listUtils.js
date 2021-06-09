@@ -61,7 +61,7 @@ async function listNormal(name, maxamnt) {
 }
 
 function findMatchingAccount(acc, list) {
-    return list.find((a) => a.uuid == acc.uuid);
+    return list.find((a) => a.uuid.toLowerCase() == acc.uuid.toLowerCase());
 }
 
 /**
