@@ -157,19 +157,71 @@ module.exports = class AdvancedEmbeds {
             case "wall":
             case "pvp":
             case "miniwalls": {
-                side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWallsWins))}\n` +
-                            `**Mini walls kills**\n${formatNum(numberify(acc1.miniWalls.kills))}\n` +
-                            `**Mini walls finals**\n${formatNum(numberify(acc1.miniWalls.finalKills))}\n` +
-                            `**Mini walls wither damage**\n${formatNum(numberify(acc1.miniWalls.witherDamage))}\n` +
-                            `**Mini walls wither kills**\n${formatNum(numberify(acc1.miniWalls.witherKills))}\n` +
-                            `**Mini walls deaths**\n${formatNum(numberify(acc1.miniWalls.deaths))}`
+                if(acc1.miniWallsWins > acc2.miniWallsWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+                side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWallsWins))}\n`
+                side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWallsWins))}\n`
 
-                side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWallsWins))}\n` +
-                            `**Mini walls kills**\n${formatNum(numberify(acc2.miniWalls.kills))}\n` +
-                            `**Mini walls finals**\n${formatNum(numberify(acc2.miniWalls.finalKills))}\n` +
-                            `**Mini walls wither damage**\n${formatNum(numberify(acc2.miniWalls.witherDamage))}\n` +
-                            `**Mini walls wither kills**\n${formatNum(numberify(acc2.miniWalls.witherKills))}\n` +
-                            `**Mini walls deaths**\n${formatNum(numberify(acc2.miniWalls.deaths))}`
+                if(acc1.miniWalls.kills > acc2.miniWalls.kills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Mini walls kills**\n${formatNum(numberify(acc1.miniWalls.kills))}\n`
+                side2 += `**Mini walls kills**\n${formatNum(numberify(acc2.miniWalls.kills))}\n`
+
+                if(acc1.miniWalls.finalKills > acc2.miniWalls.finalKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Mini walls finals**\n${formatNum(numberify(acc1.miniWalls.finalKills))}\n`
+                side2 += `**Mini walls finals**\n${formatNum(numberify(acc2.miniWalls.finalKills))}\n`
+
+                if(acc1.miniWalls.witherDamage > acc2.miniWalls.witherDamage) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Mini walls wither damage**\n${formatNum(numberify(acc1.miniWalls.witherDamage))}\n`
+                side2 += `**Mini walls wither damage**\n${formatNum(numberify(acc2.miniWalls.witherDamage))}\n`
+
+                if(acc1.miniWalls.witherKills > acc2.miniWalls.witherKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Mini walls wither kills**\n${formatNum(numberify(acc1.miniWalls.witherKills))}\n`
+                side2 += `**Mini walls wither kills**\n${formatNum(numberify(acc2.miniWalls.witherKills))}\n`
+
+                if(acc1.miniWalls.deaths > acc2.miniWalls.deaths) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Mini walls deaths**\n${formatNum(numberify(acc1.miniWalls.deaths))}`
+                side2 += `**Mini walls deaths**\n${formatNum(numberify(acc2.miniWalls.deaths))}`
+
                 break;
             }
 
@@ -181,16 +233,49 @@ module.exports = class AdvancedEmbeds {
             case "fuck":
             case "shit":
             case "football": {
-                side1 += `**Football wins**\n${formatNum(numberify(acc1.footballWins))}\n` +
-                            `**Football goals**\n${formatNum(numberify(acc1.extras.footballGoals))}\n` +
-                            `**Football power kicks**\n${formatNum(numberify(acc1.extras.footballPKicks))}\n` +
-                            `**Football kicks**\n${formatNum(numberify(acc1.extras.footballKicks))}`
+                if(acc1.footballWins > acc2.footballWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
 
-                side2 += `**Football wins**\n${formatNum(numberify(acc2.footballWins))}\n` +
-                            `**Football goals**\n${formatNum(numberify(acc2.extras.footballGoals))}\n` +
-                            `**Football power kicks**\n${formatNum(numberify(acc2.extras.footballPKicks))}\n` +
-                            `**Football kicks**\n${formatNum(numberify(acc2.extras.footballKicks))}`
+                side1 += `**Football wins**\n${formatNum(numberify(acc1.footballWins))}\n`
+                side2 += `**Football wins**\n${formatNum(numberify(acc2.footballWins))}\n`
 
+                if(acc1.extras.footballGoals > acc2.extras.footballGoals) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Football goals**\n${formatNum(numberify(acc1.extras.footballGoals))}\n`
+                side2 += `**Football goals**\n${formatNum(numberify(acc2.extras.footballGoals))}\n`
+
+                if(acc1.extras.footballPKicks > acc2.extras.footballPKicks) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Football power kicks**\n${formatNum(numberify(acc1.extras.footballPKicks))}\n`
+                side2 += `**Football power kicks**\n${formatNum(numberify(acc2.extras.footballPKicks))}\n`
+
+                if(acc1.extras.footballKicks > acc2.extras.footballKicks) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Football kicks**\n${formatNum(numberify(acc1.extras.footballKicks))}`
+                side2 += `**Football kicks**\n${formatNum(numberify(acc2.extras.footballKicks))}`
                 break;
             }
 
@@ -201,6 +286,13 @@ module.exports = class AdvancedEmbeds {
             case "enderman":
             case "trash":
             case "enderspleef": {
+                if(acc1.enderSpleefWins > acc2.enderSpleefWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
                 side1 += `**Ender spleef wins**\n${formatNum(numberify(acc1.enderSpleefWins))}`
                 side2 += `**Ender spleef wins**\n${formatNum(numberify(acc2.enderSpleefWins))}`
                 break;
@@ -212,13 +304,39 @@ module.exports = class AdvancedEmbeds {
             case "toss":
             case "sumo2":
             case "throwout": {
-                side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOutWins))}\n` +
-                            `**Throw out kills**\n${formatNum(numberify(acc1.extras.throwOutKills))}\n` +
-                            `**Throw out deaths**\n${formatNum(numberify(acc1.extras.throwOutDeaths))}`
 
-                side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOutWins))}\n` +
-                            `**Throw out kills**\n${formatNum(numberify(acc2.extras.throwOutKills))}\n` +
-                            `**Throw out deaths**\n${formatNum(numberify(acc2.extras.throwOutDeaths))}`
+                if(acc1.throwOutWins > acc2.throwOutWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOutWins))}\n`
+                side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOutWins))}\n`
+
+                if(acc1.extras.throwOutKills > acc2.extras.throwOutKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Throw out kills**\n${formatNum(numberify(acc1.extras.throwOutKills))}\n`
+                side2 += `**Throw out kills**\n${formatNum(numberify(acc2.extras.throwOutKills))}\n`
+
+                if(acc1.extras.throwOutDeaths > acc2.extras.throwOutDeaths) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Throw out deaths**\n${formatNum(numberify(acc1.extras.throwOutDeaths))}`
+                side2 += `**Throw out deaths**\n${formatNum(numberify(acc2.extras.throwOutDeaths))}`
 
                 break;
             }
@@ -228,13 +346,39 @@ module.exports = class AdvancedEmbeds {
             case "sw":
             case "galaxy":
             case "galaxywars": {
-                side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWarsWins))}\n` +
-                            `**Galaxy wars kills**\n${formatNum(numberify(acc1.extras.galaxyWarsKills))}\n` +
-                            `**Galaxy wars deaths**\n${formatNum(numberify(acc1.extras.galaxyWarsDeaths))}`
 
-                side2 += `**Galaxy wars wins**\n${formatNum(numberify(acc2.galaxyWarsWins))}\n` +
-                            `**Galaxy wars kills**\n${formatNum(numberify(acc2.extras.galaxyWarsKills))}\n` +
-                            `**Galaxy wars deaths**\n${formatNum(numberify(acc2.extras.galaxyWarsDeaths))}`
+                if(acc1.galaxyWarsWins> acc2.galaxyWarsWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWarsWins))}\n`
+                side2 += `**Galaxywars wins**\n${formatNum(numberify(acc2.galaxyWarsWins))}\n`
+
+                if(acc1.extras.galaxyWarsKills > acc2.extras.galaxyWarsKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Galaxy wars kills**\n${formatNum(numberify(acc1.extras.galaxyWarsKills))}\n`
+                side2 += `**Galaxy wars kills**\n${formatNum(numberify(acc2.extras.galaxyWarsKills))}\n`
+
+                if(acc1.extras.galaxyWarsDeaths > acc2.extras.galaxyWarsDeaths) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Galaxy wars deaths**\n${formatNum(numberify(acc1.extras.galaxyWarsDeaths))}`
+                side2 += `**Galaxy wars deaths**\n${formatNum(numberify(acc2.extras.galaxyWarsDeaths))}` 
 
                 break;
             }
@@ -243,11 +387,28 @@ module.exports = class AdvancedEmbeds {
             case "dw":
             case "dragon":
             case "dragonwars": {
-                side1 += `**Dragon wars wins**\n${formatNum(numberify(acc1.dragonWarsWins))}\n` +
-                            `**Dragon wars kills**\n${formatNum(numberify(acc1.extras.dragonWarsKills))}`
 
-                side2 += `**Dragon wars wins**\n${formatNum(numberify(acc2.dragonWarsWins))}\n` +
-                            `**Dragon wars kills**\n${formatNum(numberify(acc2.extras.dragonWarsKills))}`
+                if(acc1.dragonWarsWins > acc2.dragonWarsWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Dragon wars wins**\n${formatNum(numberify(acc1.dragonWarsWins))}\n`
+                side2 += `**Dragon wars wins**\n${formatNum(numberify(acc2.dragonWarsWins))}\n`
+
+                if(acc1.extras.dragonWarsKills > acc2.extras.dragonWarsKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Dragon wars kills**\n${formatNum(numberify(acc1.extras.dragonWarsKills))}`
+                side2 += `**Dragon wars kills**\n${formatNum(numberify(acc2.extras.dragonWarsKills))}`
 
                 break;
             }
@@ -259,13 +420,39 @@ module.exports = class AdvancedEmbeds {
             case "bounty":
             case "oneinthequiver":
             case "bountyhunters": {
-                side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHuntersWins))}\n` +
-                            `**Bounty hunters kills**\n${formatNum(numberify(acc1.extras.bountyHuntersKills))}\n` +
-                            `**Bounty hunters deaths**\n${formatNum(numberify(acc1.extras.bountyHuntersDeaths))}`
 
-                side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHuntersWins))}\n` +
-                            `**Bounty hunters kills**\n${formatNum(numberify(acc2.extras.bountyHuntersKills))}\n` +
-                            `**Bounty hunters deaths**\n${formatNum(numberify(acc2.extras.bountyHuntersDeaths))}`
+                if(acc1.bountyHuntersWins > acc2.bountyHuntersWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHuntersWins))}\n`
+                side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHuntersWins))}\n`
+
+                if(acc1.extras.bountyHuntersKills > acc2.extras.bountyHuntersKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Bounty hunters kills**\n${formatNum(numberify(acc1.extras.bountyHuntersKills))}\n`
+                side2 += `**Bounty hunters kills**\n${formatNum(numberify(acc2.extras.bountyHuntersKills))}\n`
+
+                if(acc1.extras.bountyHuntersDeaths > acc2.extras.bountyHuntersDeaths) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Bounty hunters deaths**\n${formatNum(numberify(acc1.extras.bountyHuntersDeaths))}`
+                side2 += `**Bounty hunters deaths**\n${formatNum(numberify(acc2.extras.bountyHuntersDeaths))}`
 
                 break;
             }
@@ -276,13 +463,39 @@ module.exports = class AdvancedEmbeds {
             case "dayone":
             case "blocking":
             case "blockingdead": {
-                side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDeadWins))}\n` +
-                            `**Blocking dead kills**\n${formatNum(numberify(acc1.extras.blockingDeadKills))}\n` +
-                            `**Blocking dead headshots**\n${formatNum(numberify(acc1.extras.blockingDeadHeadshots))}`
 
-                side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDeadWins))}\n` +
-                            `**Blocking dead kills**\n${formatNum(numberify(acc2.extras.blockingDeadKills))}\n` +
-                            `**Blocking dead headshots**\n${formatNum(numberify(acc2.extras.blockingDeadHeadshots))}`
+                if(acc1.blockingDeadWins > acc2.blockingDeadWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDeadWins))}\n`
+                side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDeadWins))}\n`
+
+                if(acc1.extras.blockingDeadKills > acc2.extras.blockingDeadKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Blocking dead kills**\n${formatNum(numberify(acc1.extras.blockingDeadKills))}\n`
+                side2 += `**Blocking dead kills**\n${formatNum(numberify(acc2.extras.blockingDeadKills))}\n`
+
+                if(acc1.extras.blockingDeadHeadshots > acc2.extras.blockingDeadHeadshots) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Blocking dead headshots**\n${formatNum(numberify(acc1.extras.blockingDeadHeadshots))}`
+                side2 += `**Blocking dead headshots**\n${formatNum(numberify(acc2.extras.blockingDeadHeadshots))}`
 
                 break;
             }
@@ -296,15 +509,50 @@ module.exports = class AdvancedEmbeds {
             case "hideandseek":
             case "hidenseek":
             case "hideseek": {
-                side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeekWins))}\n` +
-                            `**Hide and seek kills**\n${formatNum(numberify(acc1.hnsKills))}\n` +
-                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc1.extras.HNSSeekerWins))}\n` +
-                            `**Hide and seek hider wins**\n${formatNum(numberify(acc1.extras.HNSHiderWins))}`
 
-                side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeekWins))}\n` +
-                            `**Hide and seek kills**\n${formatNum(numberify(acc2.hnsKills))}\n` +
-                            `**Hide and seek seeker wins**\n${formatNum(numberify(acc2.extras.HNSSeekerWins))}\n` +
-                            `**Hide and seek hider wins**\n${formatNum(numberify(acc2.extras.HNSHiderWins))}`
+                if(acc1.hideAndSeekWins > acc2.hideAndSeekWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeekWins))}\n`
+                side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeekWins))}\n`
+
+                if(acc1.hnsKills > acc2.hnsKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hide and seek kills**\n${formatNum(numberify(acc1.hnsKills))}\n`
+                side2 += `**Hide and seek kills**\n${formatNum(numberify(acc2.hnsKills))}\n`
+
+                if(acc1.extras.HNSSeekerWins > acc2.extras.HNSSeekerWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hide and seek seeker wins**\n${formatNum(numberify(acc1.extras.HNSSeekerWins))}\n`
+                side2 += `**Hide and seek seeker wins**\n${formatNum(numberify(acc2.extras.HNSSeekerWins))}\n`
+
+                if(acc1.extras.HNSHiderWins > acc2.extras.HNSHiderWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+
+                side1 += `**Hide and seek hider wins**\n${formatNum(numberify(acc1.extras.HNSHiderWins))}`
+                side2 += `**Hide and seek hider wins**\n${formatNum(numberify(acc2.extras.HNSHiderWins))}`
 
                 break;
             }
@@ -316,6 +564,13 @@ module.exports = class AdvancedEmbeds {
             case "zomb":
             case "zbies":
             case "zombies": {
+                if(acc1.zombiesWins > acc2.zombiesWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
                 side1 += `**Zombies wins**\n${formatNum(numberify(acc1.zombiesWins))}`
                 side2 += `**Zombies wins**\n${formatNum(numberify(acc2.zombiesWins))}`
                 break;
@@ -329,11 +584,26 @@ module.exports = class AdvancedEmbeds {
             case "ctwwool":
             case "ctwwoolcaptured":
             case "ctwkills": {
-                side1 += `**CTW kills**\n${formatNum(numberify(acc1.ctwKills))}\n` +
-                            `**CTW wool captured**\n${formatNum(numberify(acc1.ctwWoolCaptured))}`
-
-                side2 += `**CTW kills**\n${formatNum(numberify(acc2.ctwKills))}\n` +
-                            `**CTW wool captured**\n${formatNum(numberify(acc2.ctwWoolCaptured))}`
+                if(acc1.ctwKills > acc2.ctwKills) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+                side1 += `**CTW kills**\n${formatNum(numberify(acc1.ctwKills))}\n`
+                side2 += `**CTW kills**\n${formatNum(numberify(acc2.ctwKills))}\n`
+                
+                if(acc1.ctwWoolCaptured > acc2.ctwWoolCaptured) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
+                
+                side1 += `**CTW wool captured**\n${formatNum(numberify(acc1.ctwWoolCaptured))}`
+                side2 += `**CTW wool captured**\n${formatNum(numberify(acc2.ctwWoolCaptured))}`
 
                 break;
             }
@@ -347,6 +617,13 @@ module.exports = class AdvancedEmbeds {
             case "drawmything":
             case "drawtheirthing":
             case "drawing": {
+                if(acc1.pixelPaintersWins > acc2.pixelPaintersWins) {
+                    side1 += " :green_square: ";
+                    side2 += " :red_square: "
+                } else {
+                    side2 += " :green_square: ";
+                    side1 += " :red_square: "
+                }
                 side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPaintersWins))}`
                 side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPaintersWins))}`
 
