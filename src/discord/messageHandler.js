@@ -139,6 +139,7 @@ async function mwMode(msg) {
     if(msg.guild.id == '789718245015289886') {
         cmdResponse = await getMWCmdRes(msg);
     }
+    isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
             let dmchannel = await msg.author.createDM();
@@ -162,7 +163,7 @@ module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
-    if (msg.content.startsWith('.') && msg.guild.id == '789718245015289886') return await mwMode(msg);
+    if (BotUtils.botMode == "mw" && msg.content.startsWith('.') && msg.guild.id == '789718245015289886') return await mwMode(msg);
 
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
