@@ -57,7 +57,7 @@ module.exports = class BotEvents {
             await registerSlashCommands(BotUtils.client);
             logger.out(`Logged in as ${BotUtils.client.user.tag} - Slash command handler`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - Slash command handler`);
-        } else if (mode == "mw") {
+        } else if (BotUtils.botMode == "mw") {
             logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
         } else {
