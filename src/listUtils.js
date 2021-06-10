@@ -99,11 +99,11 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
     for (let i = 0; i < oldlist.length; i++) {
         let oldacc = oldlist[i];
         let newacc;
-        newacc = newlist.find((g) => g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase());
+        newacc = newlist.find((g) => g.uuid.toLowerCase() == oldacc.uuid.toLowerCase());
         
         // make sure acc isnt null/undefined
         if (newacc) {
-            oldlist[i] = callback(newacc, oldlist[i]);
+            oldlist[i] = callback(newacc, oldacc);
         }
     }
 
