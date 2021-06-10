@@ -7,6 +7,7 @@ const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
 const Account = require("../account");
 const mojangRequest = require("../mojangRequest");
+const MiniWallsCommands = require("./MiniWallsCommands");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -117,6 +118,17 @@ async function getCmdRes(msg) {
     return cmdResponse;
 }
 
+async function getMWCmdRes(msg) {
+    let cmdResponse;
+    try {
+        cmdResponse = await MiniWallsCommands.execute(msg, msg.author.id);
+    } catch (e) {
+        await logError(msg, e);
+    }
+
+    return cmdResponse;
+}
+
 async function isBlacklisted(id) {
     let blacklist = await utils.readJSON("blacklist.json");
     return blacklist.includes(id);
@@ -130,7 +142,13 @@ module.exports = async function messageHandler(msg) {
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
 
-    let cmdResponse = await getCmdRes(msg);
+
+    let cmdResponse;
+    if(msg.guild.id != '789718245015289886'){
+        cmdResponse = await getCmdRes(msg);
+    } else {
+        cmdResponse = await getMWCmdRes(msg);
+    }
 
     let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
 

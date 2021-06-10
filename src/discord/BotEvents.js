@@ -26,6 +26,7 @@ module.exports = class BotEvents {
 
     static async ready(mode) {
         BotUtils.isBotInstance = true;
+        BotUtils.botMode = mode;
         logger.out("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
@@ -65,7 +66,7 @@ module.exports = class BotEvents {
 
     static async tick() {
         let runtime = Runtime.fromJSON();
-        if (runtime.needRoleupdate) {
+        if (runtime.needRoleupdate && BotUtils.botMode == undefined) {
             await roleHandler(BotUtils.client);
             await BotUtils.logHook.send("Roles Updated");
             runtime.needRoleupdate = false;

@@ -89,28 +89,6 @@ async function checkCommands(rawMsg, command, args, author) {
             return await statusCmd.execute(args, author, rawMsg);
             break;
         }
-        
-
-        case "mw":
-        case "miniwalls": {
-            return await MiniWalls.execute(args, author, rawMsg);
-            break;
-        }
-
-        case "mwlb":
-        case "mlb":
-        case "miniwallsleaderboard":
-        case "miniwallslb": {
-            return await MiniWallsLB.execute(args,author,rawMsg);
-            break;
-        }
-
-        case "mwcompare":
-        case "mwc":
-        case "comparemw": {
-            return MiniWallsCompare.execute(args,author,rawMsg);
-            break;
-        }
 
         case "quit":
         case "stopbot":

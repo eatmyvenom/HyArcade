@@ -26,6 +26,7 @@ module.exports = class BotUtils {
     static errHook;
     static client;
     static msgCopyHook;
+    static botMode;
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
         logger.out("Attempting to resolve " + string + " from " + rawMessage.content);
