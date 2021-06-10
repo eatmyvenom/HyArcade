@@ -103,7 +103,7 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
         
         // make sure acc isnt null/undefined
         if (newacc) {
-            oldlist[i] = callback(oldacc, oldlist[i]);
+            oldlist[i] = callback(newacc, oldlist[i]);
         }
     }
 
