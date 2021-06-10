@@ -38,16 +38,21 @@ function lineR(stat1, stat2, name) {
 }
 
 module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
-    if(args.length < 2) {
-        return {res : "", embed:  errLen(2)};
+    if(args.length < 1) {
+        return {res : "", embed:  errLen(1)};
     }
 
     let plr1 = args[0];
     let plr2 = args[1];
     let acc1, acc2;
     if (interaction == undefined) {
-        acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
-        acc2 = await BotUtils.resolveAccount(plr2, rawMsg, false);
+        if(plr2 == undefined) {
+            acc1 = await BotUtils.resolveAccount(undefined, rawMsg, false);
+            acc2 = await BotUtils.resolveAccount(plr1, rawMsg, false);
+        } else {
+            acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
+            acc2 = await BotUtils.resolveAccount(plr2, rawMsg, false);
+        }
     } else {
         acc1 = await InteractionUtils.resolveAccount(interaction, 0);
         acc2 = await InteractionUtils.resolveAccount(interaction, 1);
