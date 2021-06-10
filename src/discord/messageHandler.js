@@ -160,7 +160,7 @@ module.exports = async function messageHandler(msg) {
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
     if (BotUtils.botMode == "mw") {
-        if(msg.content.startsWith('.') && msg.guild.id == '789718245015289886'){
+        if(msg.guild.id == '789718245015289886'){
             await mwMode(msg);
             return;
         } else {
