@@ -81,7 +81,7 @@ module.exports = class BotEvents {
         logger.out("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
-        let dayacclist, weeklyacclist, monthlyacclist, acclist, acclist, disclist, status, updatetime, hackers
+        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers
         try {
             dayacclist = await utils.readJSON("accounts.day.json");
             weeklyacclist = await utils.readJSON("accounts.weekly.json");
