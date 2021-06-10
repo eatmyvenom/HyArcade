@@ -98,7 +98,8 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
 
     for (let i = 0; i < oldlist.length; i++) {
         let oldacc = oldlist[i];
-        let newacc = findMatchingAccount(oldacc, newlist);
+        let newacc;
+        newacc = newlist.find((g) => g.uuid.toLowerCase() == oldlist[i].uuid.toLowerCase());
         
         // make sure acc isnt null/undefined
         if (newacc) {
