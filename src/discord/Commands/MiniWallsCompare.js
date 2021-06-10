@@ -47,7 +47,7 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
     let acc1, acc2;
     if (interaction == undefined) {
         if(plr2 == undefined) {
-            acc1 = await BotUtils.resolveAccount("undefinednullnothingnononononononono", rawMsg, false);
+            acc1 = await BotUtils.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);
             acc2 = await BotUtils.resolveAccount(plr1, rawMsg, false);
         } else {
             acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
