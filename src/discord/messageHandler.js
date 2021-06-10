@@ -162,7 +162,7 @@ module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
-    if (msg.guild.id == '789718245015289886') return await mwMode(msg);
+    if (msg.content.startsWith('.') && msg.guild.id == '789718245015289886') return await mwMode(msg);
 
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
