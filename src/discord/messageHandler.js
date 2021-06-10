@@ -144,7 +144,7 @@ module.exports = async function messageHandler(msg) {
 
     let cmdResponse;
     let isValidResponse = false;
-    if(msg.guild.id == '789718245015289886'){
+    if(BotUtils.botMode == "mw" && msg.guild.id == '789718245015289886'){
         cmdResponse = await getMWCmdRes(msg);
         isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
     }
