@@ -134,6 +134,7 @@ async function isBlacklisted(id) {
 }
 
 async function mwMode(msg) {
+    logger.out(msg);
     let cmdResponse = await getMWCmdRes(msg);
     let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
     if (isValidResponse) {
