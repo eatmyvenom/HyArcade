@@ -134,12 +134,8 @@ async function isBlacklisted(id) {
 }
 
 async function mwMode(msg) {
-    let cmdResponse;
-    let isValidResponse = false;
-    if(msg.guild.id == '789718245015289886') {
-        cmdResponse = await getMWCmdRes(msg);
-    }
-    isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    let cmdResponse = await getMWCmdRes(msg);
+    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
             let dmchannel = await msg.author.createDM();
