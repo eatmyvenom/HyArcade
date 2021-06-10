@@ -81,19 +81,17 @@ module.exports = class BotEvents {
         logger.out("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
+        let dayacclist, weeklyacclist, monthlyacclist, acclist, acclist, disclist, status, updatetime, hackers
         try {
-            BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
-            BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
-            BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
-            BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
-            BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
-            BotUtils.fileCache.status = await utils.readJSON("status.json");
-            BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
-
-            let hackers = await fs.readFile("data/hackerlist");
+            dayacclist = await utils.readJSON("accounts.day.json");
+            weeklyacclist = await utils.readJSON("accounts.weekly.json");
+            monthlyacclist = await utils.readJSON("accounts.monthly.json");
+            acclist = await utils.readJSON("accounts.json");
+            disclist = await utils.readJSON("disclist.json");
+            status = await utils.readJSON("status.json");
+            updatetime = await fs.readFile("timeupdate");
+            hackers = await fs.readFile("data/hackerlist");
             hackers = hackers.toString().split('\n');
-
-            BotUtils.fileCache.hackers = hackers;
         } catch (e) {
             error = true;
             run.dbERROR = true;
@@ -101,6 +99,17 @@ module.exports = class BotEvents {
             logger.err("Database broken please fix me");
             await BotUtils.errHook.send("Database broken please fix me");
         }
+
+        BotUtils.fileCache.dayacclist = dayacclist
+        BotUtils.fileCache.weeklyacclist = weeklyacclist
+        BotUtils.fileCache.monthlyacclist = monthlyacclist
+        BotUtils.fileCache.acclist = acclist
+        BotUtils.fileCache.disclist = disclist
+        BotUtils.fileCache.status = status
+        BotUtils.fileCache.updatetime = updatetime
+        BotUtils.fileCache.hackers = hackers;
+
+
 
         if(!error && run.dbERROR) {
             run.dbERROR = false;
