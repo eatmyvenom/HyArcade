@@ -133,10 +133,36 @@ async function isBlacklisted(id) {
     return blacklist.includes(id);
 }
 
+async function mwMode(msg) {
+    let cmdResponse;
+    let isValidResponse = false;
+    if(msg.guild.id == '789718245015289886') {
+        cmdResponse = await getMWCmdRes(msg);
+    }
+    if (isValidResponse) {
+        if (await isBlacklisted(msg.author.id)) {
+            let dmchannel = await msg.author.createDM();
+            await dmchannel.send(BotUtils.getBlacklistRes());
+            return;
+        }
+        let opts = {};
+        if (cmdResponse.embed) {
+            opts.embed = cmdResponse.embed;
+        }
+
+        await sanitizeCmdOpt(cmdResponse);
+
+        await attemptSend(msg, cmdResponse, opts);
+        await addIGNs(msg);
+        await logCmd(msg);
+    }
+}
+
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
+    if (msg.guild.id == '789718245015289886') return await mwMode(msg);
 
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
@@ -144,19 +170,7 @@ module.exports = async function messageHandler(msg) {
 
     let cmdResponse;
     let isValidResponse = false;
-    if(BotUtils.botMode == "mw") {
-        if(msg.guild.id == '789718245015289886') {
-            cmdResponse = await getMWCmdRes(msg);
-            isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
-        }
-    } else {
-        if(msg.guild.id == '789718245015289886') {
-            return;
-        }
-    }
-    if(!isValidResponse) {
-        cmdResponse = await getCmdRes(msg);
-    }
+    cmdResponse = await getCmdRes(msg);
 
     isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
