@@ -265,6 +265,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
 
         case "f":
+        case "fk":
         case "finalkill":
         case "fkill":
         case "finals": {
