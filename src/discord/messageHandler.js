@@ -150,7 +150,6 @@ async function mwMode(msg) {
         await sanitizeCmdOpt(cmdResponse);
 
         await attemptSend(msg, cmdResponse, opts);
-        await addIGNs(msg);
         await logCmd(msg);
     }
 }
@@ -159,7 +158,13 @@ module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == '808077828842455090') return;
-    if (BotUtils.botMode == "mw" && msg.content.startsWith('.') && msg.guild.id == '789718245015289886') return await mwMode(msg);
+    if (BotUtils.botMode == "mw") {
+        if(msg.content.startsWith('.') && msg.guild.id == '789718245015289886'){
+            return await mwMode(msg);
+        } else {
+            return;
+        }
+    }
 
     if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
