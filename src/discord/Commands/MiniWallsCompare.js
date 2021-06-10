@@ -29,6 +29,10 @@ function lineN(stat1, stat2, name) {
     return `${clr(stat1, stat2)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
+function lineNS(stat1, stat2, name) {
+    return `${clr(stat2, stat1)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
+}
+
 function lineR(stat1, stat2, name) {
     return `${clr(stat1, stat2)} **${name}**:\n${formatR(stat1)} | ${formatR(stat2)}\n`;
 }
@@ -56,7 +60,7 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
                 lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals") +
                 lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage") +
                 lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills") +
-                lineN(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths");
+                lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths");
 
     let deaths1 = acc1.miniWalls.deaths
     let deaths2 = acc2.miniWalls.deaths
