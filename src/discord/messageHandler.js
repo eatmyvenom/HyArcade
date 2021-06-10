@@ -69,7 +69,6 @@ async function pgVerify(msg) {
 }
 
 async function attemptSend(msg, cmdResponse, opts) {
-    cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
@@ -111,6 +110,7 @@ async function getCmdRes(msg) {
     let cmdResponse;
     try {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
+        cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     } catch (e) {
         await logError(msg, e);
     }
