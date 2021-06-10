@@ -25,7 +25,7 @@ module.exports = function doBot() {
 
     client.on("rateLimit", BotEvents.rateLimit);
 
-    if (mode == undefined) {
+    if (mode == undefined || mode == "mw") {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 10000);
