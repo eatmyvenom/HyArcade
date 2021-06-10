@@ -143,13 +143,16 @@ module.exports = async function messageHandler(msg) {
 
 
     let cmdResponse;
-    if(msg.guild.id != '789718245015289886'){
-        cmdResponse = await getCmdRes(msg);
-    } else {
+    let isValidResponse = false;
+    if(msg.guild.id == '789718245015289886'){
         cmdResponse = await getMWCmdRes(msg);
+        isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    }
+    if(!isValidResponse) {
+        cmdResponse = await getCmdRes(msg);
     }
 
-    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
