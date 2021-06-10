@@ -144,9 +144,15 @@ module.exports = async function messageHandler(msg) {
 
     let cmdResponse;
     let isValidResponse = false;
-    if(BotUtils.botMode == "mw" && msg.guild.id == '789718245015289886'){
-        cmdResponse = await getMWCmdRes(msg);
-        isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    if(BotUtils.botMode == "mw") {
+        if(msg.guild.id == '789718245015289886') {
+            cmdResponse = await getMWCmdRes(msg);
+            isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+        }
+    } else {
+        if(msg.guild.id == '789718245015289886') {
+            return;
+        }
     }
     if(!isValidResponse) {
         cmdResponse = await getCmdRes(msg);
