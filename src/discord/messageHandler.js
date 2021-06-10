@@ -110,7 +110,6 @@ async function getCmdRes(msg) {
     let cmdResponse;
     try {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
-        cmdResponse.res = (cmdResponse.res == "") ? randomBtw() : cmdResponse.res;
     } catch (e) {
         await logError(msg, e);
     }
