@@ -64,7 +64,7 @@ function hackerTransformer(list) {
 
 function top150Transformer(list) {
     list = list.sort(wComp);
-    list = list.slice(0,Math.min(list.length, 150));
+    list = list.slice(0,Math.min(list.length, 50));
     return list;
 }
 
