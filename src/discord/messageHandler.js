@@ -67,6 +67,7 @@ async function miniWallsVerify(msg) {
         logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
         await msg.member.roles.remove('850033543425949736');
         await msg.member.roles.add('789721304722178069');
+        await msg.member.setNickname(acc.name)
         await msg.channel.send(linkSuccess);
     } else {
         await msg.channel.send(errHypixelMismatch);
