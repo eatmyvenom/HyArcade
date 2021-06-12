@@ -89,3 +89,5 @@ exports.compare = {
         }
     ],
 }
+
+module.exports.miniwalls = require('./Commands/MiniWalls');

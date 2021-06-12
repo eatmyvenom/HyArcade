@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
+const InteractionUtils = require("../interactions/InteractionUtils");
 
 function formatR(n) {
     let r = Math.round(n * 100) / 100
@@ -15,9 +16,14 @@ function formatN(str) {
     return r;
 }
 
-module.exports = new Command("miniwalls", ["*"], async (args, rawMsg) => {
+module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
-    let acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
+    let acc;
+    if(interaction == undefined) {
+        acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
+    } else {
+        acc = await InteractionUtils.resolveAccount(interaction, 0);
+    }
     let stats = `Wins: **${formatN(acc.miniWallsWins)}**\n` +
                 `Kills: **${formatN(acc.miniWalls.kills)}**\n` +
                 `Finals: **${formatN(acc.miniWalls.finalKills)}**\n` +
