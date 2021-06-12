@@ -8,7 +8,7 @@ const BotUtils = require("./BotUtils");
 const Account = require("../account");
 const mojangRequest = require("../mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
-const { errHypixelMismatch, errIgnNull } = require("./Embeds");
+const { errHypixelMismatch, errIgnNull, linkSuccess } = require("./Embeds");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
