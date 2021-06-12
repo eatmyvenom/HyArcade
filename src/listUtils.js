@@ -310,10 +310,10 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
     return stringifyList(list, lbprop, category, maxamnt);
 }
 
-async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, excludedUUIDs) {
+async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
     let list = await mklistAdv("accounts", timetype, 9999, callback);
+    list = listTransformer(list);
     list = list.sort(comparitor);
-    list = list.filter(a => !excludedUUIDs.includes(a.uuid));
 
     let str = "";
     list = list.slice(0, maxamnt);
