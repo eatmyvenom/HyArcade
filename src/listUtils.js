@@ -312,7 +312,7 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
 
 async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
     let list = await mklistAdv("accounts", timetype, 9999, callback);
-    list = listTransformer(list);
+    list = await listTransformer(list);
     list = list.sort(comparitor);
 
     let str = "";

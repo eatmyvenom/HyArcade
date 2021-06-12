@@ -64,15 +64,17 @@ function hackerTransformer(list) {
 }
 
 function top150Transformer(list) {
-    console.log(list[0]);
+    logger.out(list[0]);
     list = list.sort(wComp);
-    console.log(list[0])
+    logger.out(list[0])
     list = list.slice(0,Math.min(list.length, 50));
     return list;
 }
 
 function ratioTransformer(list) {
-    return top150Transformer(hackerTransformer(list));
+    list = hackerTransformer(list);
+    list = top150Transformer(list);
+    return list;
 }
 
 async function getLB(prop, timetype, limit, category) {
@@ -81,7 +83,7 @@ async function getLB(prop, timetype, limit, category) {
 
     let comparitor = null;
     let callback = cb;
-    let transformer = hackerTransformer;
+    let transformer = ratioTransformer;
     let parser = null;
     switch(prop) {
         case "miniWallsWins": {
