@@ -147,6 +147,7 @@ async function getLB(prop, timetype, limit, category) {
                 return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths)
             }
             parser = (a) => { return (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths };
+            break;
         }
     }
 
@@ -286,6 +287,14 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "finals": {
             gameName = "Final Kills";
             res = await getLB("finalKills", timetype, limit, "miniWalls");
+            break;
+        }
+
+        case "kd":
+        case "kdr":
+        case "killdeath": {
+            gameName = "Kill death ratios";
+            res = await getLB("kd", timetype, limit, "miniWalls");
             break;
         }
 
