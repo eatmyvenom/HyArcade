@@ -59,11 +59,14 @@ function rcb(n,o) {
 }
 
 function hackerTransformer(list) {
-    return list.filter(a => !BotUtils.fileCache.hackers.includes(a.uuid))
+    list = list.filter(a => !BotUtils.fileCache.hackers.includes(a.uuid));
+    return list;
 }
 
 function top150Transformer(list) {
+    console.log(list[0]);
     list = list.sort(wComp);
+    console.log(list[0])
     list = list.slice(0,Math.min(list.length, 50));
     return list;
 }
