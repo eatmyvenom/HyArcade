@@ -8,6 +8,7 @@ const BotUtils = require("./BotUtils");
 const Account = require("../account");
 const mojangRequest = require("../mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
+const { errHypixelMismatch } = require("./Embeds");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -60,7 +61,11 @@ async function miniWallsVerify(msg) {
         disclist[id] = uuid;
         await utils.writeJSON("./disclist.json", disclist);
         logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
-        msg.member.roles.remove('850033543425949736');
+        await msg.member.roles.remove('850033543425949736');
+        await msg.member.roles.add('789721304722178069');
+        await msg.channel.send(linkSuccess);
+    } else {
+        await msg.channel.send(errHypixelMismatch);
     }
 }
 
