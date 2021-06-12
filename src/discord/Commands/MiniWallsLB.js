@@ -54,11 +54,16 @@ function cb(n,o) {
     return o;
 }
 
+function rcb(n,o) {
+    return n;
+}
+
 async function getLB(prop, timetype, limit, category) {
     let res = "";
     let time;
 
     let comparitor = null;
+    let callback = cb;
     let parser = null;
     switch(prop) {
         case "miniWallsWins": {
@@ -133,6 +138,16 @@ async function getLB(prop, timetype, limit, category) {
             }
             break;
         }
+
+        case "kd" : {
+            callback = rcb;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths };
+        }
     }
 
     switch (timetype) {
@@ -140,7 +155,7 @@ async function getLB(prop, timetype, limit, category) {
         case "day":
         case "daily": {
             time = "Daily";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", cb, BotUtils.fileCache.hackers);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, BotUtils.fileCache.hackers);
             break;
         }
 
@@ -149,7 +164,7 @@ async function getLB(prop, timetype, limit, category) {
         case "weak":
         case "weekly": {
             time = "Weekly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", cb, BotUtils.fileCache.hackers);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, BotUtils.fileCache.hackers);
             break;
         }
 
@@ -158,16 +173,16 @@ async function getLB(prop, timetype, limit, category) {
         case "month":
         case "monthly": {
             time = "Monthly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", cb, BotUtils.fileCache.hackers);
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, BotUtils.fileCache.hackers);
             break;
         }
 
         case "a":
         case "all":
         case "*": {
-            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", cb, BotUtils.fileCache.hackers);
-            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", cb, BotUtils.fileCache.hackers);
-            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", cb, BotUtils.fileCache.hackers);
+            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, BotUtils.fileCache.hackers);
+            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, BotUtils.fileCache.hackers);
+            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, BotUtils.fileCache.hackers);
             let life = await listUtils.stringLBAdv(comparitor, parser, limit, BotUtils.fileCache.hackers);
 
             day = day == "" ? "Nobody has won" : day;
