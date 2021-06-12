@@ -27,7 +27,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
         reasons.push("Has gotten more than 8 kills per mini walls win");
     }
 
-    if(acc.miniWalls.kills > acc.miniWalls.deaths * 3) {
+    if((acc.miniWalls.kills + acc.miniWalls.finalKills) > acc.miniWalls.deaths * 3) {
         hax += 25;
         reasons.push("Has greater than 3 KDR in miniwalls");
     }
