@@ -8,7 +8,7 @@ const BotUtils = require("./BotUtils");
 const Account = require("../account");
 const mojangRequest = require("../mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
-const { errHypixelMismatch } = require("./Embeds");
+const { errHypixelMismatch, errIgnNull } = require("./Embeds");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -51,6 +51,10 @@ function randomBtw() {
 async function miniWallsVerify(msg) {
     let ign = msg.content.trim();
     let uuid = await mojangRequest.getUUID(ign);
+    if(uuid == undefined) {
+        await msg.channel.send(errIgnNull);
+        return;
+    }
     let tag = msg.author.tag;
     let id = msg.author.id;
     let acc = new Account(ign, 0, uuid);
