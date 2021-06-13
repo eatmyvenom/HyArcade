@@ -509,16 +509,16 @@ async function getLB(prop, timetype, limit, category) {
     return embed;
 }
 
-async function getMW(prop) {
-    return await getLB(prop, "l", 25);
+async function getMW(prop, a) {
+    return await getLB(prop, "l", a);
 }
 
 async function sendMW() {
-    let wins = await getMW("miniWallsWins");
-    let kills = await getMW("kills");
-    let finals = await getMW("finalKills");
-    let witherdmg = await getMW("witherDamage");
-    let witherkills = await getMW("witherKills");
+    let wins = await getMW("miniWallsWins", 25);
+    let kills = await getMW("kills", 10);
+    let finals = await getMW("finalKills", 10);
+    let witherdmg = await getMW("witherDamage", 10);
+    let witherkills = await getMW("witherKills", 10);
 
     wins.setTitle("Lifetime Wins");
     kills.setTitle("Lifetime Kills");
