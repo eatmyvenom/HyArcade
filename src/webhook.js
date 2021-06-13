@@ -1,7 +1,9 @@
 const config = require("./Config").fromJSON();
 const Discord = require("discord.js");
 const listUtils = require("./listUtils");
+const utils = require("./utils");
 const { logger } = require("./utils");
+const fs = require('fs/promises');
 
 /**
  * Send text to a discord webhook
@@ -209,6 +211,311 @@ async function genHSMEmbed() {
     return embed;
 }
 
+function wComp(b,a) {
+    if(a.miniWallsWins == undefined || a.miniWallsWins == NaN) {
+        return 1;
+    }
+
+    if(b.miniWallsWins == undefined || b.miniWallsWins == NaN) {
+        return -1;
+    }
+    return a.miniWallsWins - b.miniWallsWins;
+}
+
+function kComp(b,a) {
+    if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+        return -1;
+    }
+
+    if(b.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+        return 1;
+    }
+    return a.miniWalls.kills - b.miniWalls.kills;
+}
+
+function dComp(b,a) {
+    if(a.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
+        return -1;
+    }
+
+    if(b.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
+        return 1;
+    }
+    return a.miniWalls.deaths - b.miniWalls.deaths;
+}
+
+function int(n) {
+    return new Number(("" +n).replace(/undefined/g, "0").replace(/null/g, "0"));
+}
+
+function cb(n,o) {
+    o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
+    o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
+    o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
+    o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
+    o.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
+    o.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
+    return o;
+}
+
+function rcb(n,o) {
+    return n;
+}
+
+async function hackerTransformer(list) {
+    let hackerlist = (await fs.readFile("data/hackerlist")).toString();
+    list = list.filter(a => hackerlist.includes(a.uuid));
+    return list;
+}
+
+function top150Transformer(list) {
+    list = list.sort(wComp);
+    list = list.slice(0,Math.min(list.length, 150));
+    return list;
+}
+
+async function ratioTransformer(list) {
+    list = await hackerTransformer(list);
+    list = top150Transformer(list);
+    return list;
+}
+
+async function getLB(prop, timetype, limit, category) {
+    let res = "";
+    let time;
+
+    let comparitor = null;
+    let callback = cb;
+    let transformer = hackerTransformer;
+    let parser = null;
+    switch(prop) {
+        case "miniWallsWins": {
+            comparitor = wComp;
+            parser = (a) => {
+                return a.miniWallsWins;
+            }
+            break;
+        }
+
+        case "kills": {
+            comparitor = kComp;
+            parser = (a) => {
+                return a.miniWalls.kills;
+            }
+            break;
+        }
+
+        case "deaths" : {
+            comparitor = dComp;
+            parser = (a) => {
+                return a.miniWalls.deaths;
+            }
+            break;
+        }
+
+        case "witherDamage": {
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                    return 1;
+                }
+                return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
+            }
+            parser = (a) => {
+                return a.miniWalls.witherDamage;
+            }
+            break;
+        }
+        case "witherKills": {
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                    return 1;
+                }
+                return a.miniWalls.witherKills - b.miniWalls.witherKills;
+            }
+            parser = (a) => {
+                return a.miniWalls.witherKills;
+            }
+            break;
+        }
+        case "finalKills": {
+            comparitor = (b,a) => {
+                if(a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+                    return -1;
+                }
+            
+                if(b.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+                    return 1;
+                }
+                return a.miniWalls.finalKills - b.miniWalls.finalKills;
+            }
+            parser = (a) => {
+                return a.miniWalls.finalKills;
+            }
+            break;
+        }
+
+        case "kd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "kdnf" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.kills) / a.miniWalls.deaths) - ((b.miniWalls.kills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.kills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+
+        case "fd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.finalKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "wdd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) return -1;
+                if(b.miniWalls.witherDamage == undefined || b.miniWalls.witherDamage == NaN) return 1;
+                return ((a.miniWalls.witherDamage) / a.miniWalls.deaths) - ((b.miniWalls.witherDamage) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.witherDamage) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "wkd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) return -1;
+                if(b.miniWalls.witherKills == undefined || b.miniWalls.witherKills == NaN) return 1;
+                return ((a.miniWalls.witherKills) / a.miniWalls.deaths) - ((b.miniWalls.witherKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.witherKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "aa" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.arrowsShot == undefined || a.miniWalls.arrowsShot == NaN) return -1;
+                if(b.miniWalls.arrowsShot == undefined || b.miniWalls.arrowsShot == NaN) return 1;
+                return ((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot) - ((b.miniWalls.arrowsHit) / b.miniWalls.arrowsShot)
+            }
+            parser = (a) => { return (((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot) * 100).toFixed(3) };
+            break;
+        }
+    }
+
+    switch (timetype) {
+        case "d":
+        case "day":
+        case "daily": {
+            time = "Daily";
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+            break;
+        }
+
+        case "w":
+        case "week":
+        case "weak":
+        case "weekly": {
+            time = "Weekly";
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+            break;
+        }
+
+        case "m":
+        case "mon":
+        case "month":
+        case "monthly": {
+            time = "Monthly";
+            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+            break;
+        }
+
+        case "a":
+        case "all":
+        case "*": {
+            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+            let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+
+            day = day == "" ? "Nobody has won" : day;
+            week = week == "" ? "Nobody has won" : week;
+            month = month == "" ? "Nobody has won" : month;
+
+            let embed = new MessageEmbed().setColor(0x984daf).addField("Daily", day, true).addField("Weekly", week, true).addField("\u200B", "\u200B", true).addField("Monthly", month, true).addField("Lifetime", life, true).addField("\u200B", "\u200B", true);
+
+            return embed;
+            break;
+        }
+
+        default: {
+            time = "Lifetime";
+            res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+            break;
+        }
+    }
+
+    res = res != "" ? res : "Nobody has won.";
+    let embed = new MessageEmbed().setTitle(time).setColor(0x984daf).setDescription(res);
+
+    if (res.length > 6000) {
+        return new MessageEmbed().setTitle("ERROR").setColor(0xff0000).setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+    }
+
+    if (res.length > 2000) {
+        let resArr = res.trim().split("\n");
+        embed.setDescription("");
+        while (resArr.length > 0) {
+            let end = Math.min(25, resArr.length);
+            embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
+            resArr = resArr.slice(end);
+        }
+    }
+
+    return embed;
+}
+
+async function getMW(prop) {
+    return await getLB(prop, "l", 25);
+}
+
+async function sendMW(prop) {
+    return await getMW(prop);
+}
+
 module.exports = {
     send: sendToDiscord,
     sendEmbed: sendToEmbedDiscord,
@@ -223,4 +530,5 @@ module.exports = {
     sendHSWEmbed: sendHSWEmbed,
     sendHSMEmbed: sendHSMEmbed,
     sendTOKillEmbed: sendTOKillEmbed,
+    sendMW: sendMW
 };

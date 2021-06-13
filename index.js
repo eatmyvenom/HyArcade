@@ -357,6 +357,10 @@ async function main() {
             await sendToKill();
             break;
 
+        case "discordMW":
+            await Webhook.sendMW(args[3]);
+            break;
+
         case "link":
         case "ln":
             await cli.linkDiscord();
