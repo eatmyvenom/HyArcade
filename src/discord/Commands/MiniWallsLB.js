@@ -404,6 +404,8 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         }
         
         case "fdr":
+        case "f/d":
+        case "fkd":
         case "fkdr":
         case "finaldeath":
         case "fd": {
