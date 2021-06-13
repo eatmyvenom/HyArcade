@@ -277,17 +277,16 @@ async function stringLB(lbprop, maxamnt, category) {
     return stringifyList(list, lbprop, category, maxamnt);
 }
 
-async function stringLBAdv(comparitor, parser, maxamnt, excludedUUIDs) {
+async function stringLBAdv(comparitor, parser, maxamnt, listTransformer) {
     let list = await getList();
+    list = await listTransformer(list);
     list = list.sort(comparitor);
-    list = list.filter(a => !excludedUUIDs.includes(a.uuid));
 
     let str = "";
     list = list.slice(0, maxamnt);
     for (let i = 0; i < list.length; i++) {
         // don't print if player has 0 wins
         let propVal = parser(list[i]);
-        if (propVal < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
