@@ -6,7 +6,7 @@ const { errLen } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
 function formatR(n) {
-    let r = Math.round(n * 100) / 100
+    let r = Math.round(n * 1000) / 1000
     r = (r == NaN) ? r = "N/A" : r;
     return r;
 }
