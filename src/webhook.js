@@ -513,11 +513,21 @@ async function getMW(prop) {
     return await getLB(prop, "l", 25);
 }
 
-async function sendMW(prop) {
-    let wins = await getMW(prop);
+async function sendMW() {
+    let wins = await getMW("miniWallsWins");
+    let kills = await getMW("kills");
+    let finals = await getMW("finalKills");
+    let witherdmg = await getMW("witherDamage");
+    let witherkills = await getMW("witherKills");
+
+    wins.setTitle("Lifetime Wins");
+    kills.setTitle("Lifetime Kills");
+    finals.setTitle("Lifetime Finals");
+    witherdmg.setTitle("Lifetime Wither Damage");
+    witherkills.setTitle("Lifetime Wither Kills");
     let hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
     await hook.send("", {
-        embeds: [wins],
+        embeds: [wins, kills, finals, witherdmg, witherkills],
         username: config.otherHooks.MW.username,
         avatarURL: config.otherHooks.MW.pfp,
     });
