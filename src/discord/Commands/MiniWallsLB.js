@@ -381,10 +381,9 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         case "f+kdr":
         case "k+fdr":
         case "k+fd":
-        case "fkdr":
         case "kfdr":
         case "killdeath": {
-            gameName = "Kill / death ratios";
+            gameName = "Kills+Finals/Deaths";
             res = await getLB("kd", timetype, limit, "miniWalls");
             break;
         }
@@ -398,7 +397,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         case "nfkdr":
         case "kdrnf":
         case "kdnofinal": {
-            gameName = "Kill (no finals) / death ratios";
+            gameName = "Kills/Deaths ratios";
             res = await getLB("kdnf", timetype, limit);
             break;
         }
@@ -409,7 +408,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         case "fkdr":
         case "finaldeath":
         case "fd": {
-            gameName = "Final kill / death ratios";
+            gameName = "Finals/Deaths";
             res = await getLB("fd", timetype, limit);
             break;
         }
@@ -418,7 +417,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         case "wdr":
         case "wddr":
         case "witherdamagedeath": {
-            gameName = "Wither damage / death ratios";
+            gameName = "Wither Damage/Deaths";
             res = await getLB("wdd", timetype, limit);
             break;
         }
@@ -429,7 +428,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         case "witherkilldeath":
         case "witherkill+d":
         case "wikdr": {
-            gameName = "Wither kill / death ratios";
+            gameName = "Wither Kills/Deaths";
             res = await getLB("wkd", timetype, limit);
             break;
         }
