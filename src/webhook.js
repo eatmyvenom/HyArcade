@@ -1,5 +1,6 @@
 const config = require("./Config").fromJSON();
 const Discord = require("discord.js");
+const MessageEmbed = Discord.MessageEmbed;
 const listUtils = require("./listUtils");
 const utils = require("./utils");
 const { logger } = require("./utils");
