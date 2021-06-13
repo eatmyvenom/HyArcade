@@ -37,7 +37,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
                     `F/D: **${formatR(acc.miniWalls.finalKills / deaths)}**\n` +
                     `WD/D: **${formatR(acc.miniWalls.witherDamage / deaths)}**\n` +
                     `WK/D: **${formatR(acc.miniWalls.witherKills / deaths)}**\n` +
-                    `Arrow Accuracy: **${formatR(acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot)}**\n`
+                    `Arrow Accuracy: **${formatR((acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot) * 100)}**\n`
                     
     let embed = new MessageEmbed()
         .setTitle("Player: " + acc.name)

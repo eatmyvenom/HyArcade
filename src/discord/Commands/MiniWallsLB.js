@@ -226,7 +226,7 @@ async function getLB(prop, timetype, limit, category) {
                 if(b.miniWalls.arrowsShot == undefined || b.miniWalls.arrowsShot == NaN) return 1;
                 return ((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot) - ((b.miniWalls.arrowsHit) / b.miniWalls.arrowsShot)
             }
-            parser = (a) => { return ((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot).toFixed(3) };
+            parser = (a) => { return (((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot) * 100).toFixed(3) };
             break;
         }
     }
