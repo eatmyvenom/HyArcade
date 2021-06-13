@@ -513,7 +513,13 @@ async function getMW(prop) {
 }
 
 async function sendMW(prop) {
-    return await getMW(prop);
+    let wins = await getMW(prop);
+    let hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
+    await hook.send("", {
+        embeds: [wins],
+        username: config.otherHooks.MW.username,
+        avatarURL: config.otherHooks.MW.pfp,
+    });
 }
 
 module.exports = {
