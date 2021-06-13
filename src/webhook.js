@@ -5,6 +5,7 @@ const listUtils = require("./listUtils");
 const utils = require("./utils");
 const { logger } = require("./utils");
 const fs = require('fs/promises');
+const Runtime = require("./Runtime");
 
 /**
  * Send text to a discord webhook
@@ -514,6 +515,10 @@ async function getMW(prop, a) {
 }
 
 async function sendMW() {
+
+    let run = Runtime.fromJSON();
+    let mwMsg = run.mwMsg;
+
     let wins = await getMW("miniWallsWins", 25);
     let kills = await getMW("kills", 10);
     let finals = await getMW("finalKills", 10);
@@ -526,11 +531,15 @@ async function sendMW() {
     witherdmg.setTitle("Lifetime Wither Damage");
     witherkills.setTitle("Lifetime Wither Kills");
     let hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
-    await hook.send("", {
+    await hook.deleteMessage(mwMsg);
+    let newMsg = await hook.send("", {
         embeds: [wins, kills, finals, witherdmg, witherkills],
         username: config.otherHooks.MW.username,
         avatarURL: config.otherHooks.MW.pfp,
     });
+
+    run.mwMsg = newMsg.id;
+    run.save();
 }
 
 module.exports = {
