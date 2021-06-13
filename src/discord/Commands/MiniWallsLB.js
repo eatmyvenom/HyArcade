@@ -308,7 +308,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
-    if(limit == type) {
+    if((new Number(limit)) != limit) {
         limit = 10;
     }
     let res = "";
