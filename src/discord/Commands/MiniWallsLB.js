@@ -452,7 +452,7 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
     let date = new Date(updatetime.toString());
 
     let finalRes = res
-        .setAuthor(gameName + " leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg")
+        .setAuthor(gameName + " Leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg")
         .setFooter("Data generated at")
         .setTimestamp(date);
 
