@@ -377,21 +377,25 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
             break;
         }
 
-        case "kd":
-        case "k/d":
-        case "k/dr":
-        case "kdr":
+        case "f+kd":
+        case "f+kdr":
+        case "k+fdr":
+        case "k+fd":
+        case "fkdr":
+        case "kfdr":
         case "killdeath": {
             gameName = "Kill / death ratios";
             res = await getLB("kd", timetype, limit, "miniWalls");
             break;
         }
 
-        case "f+kd":
-        case "f+kdr":
-        case "k+fdr":
-        case "k+fd":
+        case "kd":
+        case "k/d":
+        case "k/dr":
+        case "kdr":
         case "kdnf":
+        case "nfkd":
+        case "nfkdr":
         case "kdrnf":
         case "kdnofinal": {
             gameName = "Kill (no finals) / death ratios";
