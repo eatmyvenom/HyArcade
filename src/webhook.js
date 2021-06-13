@@ -265,7 +265,7 @@ function rcb(n,o) {
 
 async function hackerTransformer(list) {
     let hackerlist = (await fs.readFile("data/hackerlist")).toString();
-    list = list.filter(a => hackerlist.includes(a.uuid));
+    list = list.filter(a => !hackerlist.includes(a.uuid));
     return list;
 }
 
