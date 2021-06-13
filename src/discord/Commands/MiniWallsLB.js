@@ -64,10 +64,8 @@ function hackerTransformer(list) {
 }
 
 function top150Transformer(list) {
-    logger.out(list[0]);
     list = list.sort(wComp);
-    logger.out(list[0])
-    list = list.slice(0,Math.min(list.length, 50));
+    list = list.slice(0,Math.min(list.length, 150));
     return list;
 }
 
@@ -83,7 +81,7 @@ async function getLB(prop, timetype, limit, category) {
 
     let comparitor = null;
     let callback = cb;
-    let transformer = ratioTransformer;
+    let transformer = hackerTransformer;
     let parser = null;
     switch(prop) {
         case "miniWallsWins": {
@@ -167,7 +165,68 @@ async function getLB(prop, timetype, limit, category) {
                 if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
                 return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths)
             }
-            parser = (a) => { return (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths };
+            parser = (a) => { return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "kdnf" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.kills) / a.miniWalls.deaths) - ((b.miniWalls.kills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.kills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+
+        case "fd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if(b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                return ((a.miniWalls.finalKills) / a.miniWalls.deaths) - ((b.miniWalls.finalKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "wdd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) return -1;
+                if(b.miniWalls.witherDamage == undefined || b.miniWalls.witherDamage == NaN) return 1;
+                return ((a.miniWalls.witherDamage) / a.miniWalls.deaths) - ((b.miniWalls.witherDamage) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.witherDamage) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "wkd" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) return -1;
+                if(b.miniWalls.witherKills == undefined || b.miniWalls.witherKills == NaN) return 1;
+                return ((a.miniWalls.witherKills) / a.miniWalls.deaths) - ((b.miniWalls.witherKills) / b.miniWalls.deaths)
+            }
+            parser = (a) => { return ((a.miniWalls.witherKills) / a.miniWalls.deaths).toFixed(3) };
+            break;
+        }
+
+        case "aa" : {
+            callback = rcb;
+            transformer = ratioTransformer;
+            comparitor = (b,a) => {
+                if(a.miniWalls.arrowsShot == undefined || a.miniWalls.arrowsShot == NaN) return -1;
+                if(b.miniWalls.arrowsShot == undefined || b.miniWalls.arrowsShot == NaN) return 1;
+                return ((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot) - ((b.miniWalls.arrowsHit) / b.miniWalls.arrowsShot)
+            }
+            parser = (a) => { return ((a.miniWalls.arrowsHit) / a.miniWalls.arrowsShot).toFixed(3) };
             break;
         }
     }
@@ -219,7 +278,7 @@ async function getLB(prop, timetype, limit, category) {
 
         default: {
             time = "Lifetime";
-            res = await listUtils.stringLBAdv(comparitor, parser, limit, BotUtils.fileCache.hackers);
+            res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
             break;
         }
     }
@@ -244,11 +303,14 @@ async function getLB(prop, timetype, limit, category) {
     return embed;
 }
 
-module.exports = new Command("leaderboard", ["*"], async (args) => {
+module.exports = new Command("mwlb", ["*"], async (args) => {
     let startTime = Date.now();
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
-    let limit = args[2] != undefined ? args[2] : 10;
+    let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
+    if(limit == type) {
+        limit = 10;
+    }
     let res = "";
     let gameName = "";
 
@@ -256,6 +318,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
 
         case "w":
         case "ws":
+        case "win":
         case "wins": {
             gameName = "Wins";
             res = await getLB("miniWallsWins", timetype, limit);
@@ -293,6 +356,8 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
 
         case "wk":
+        case "witherskilled":
+        case "killwither":
         case "witherk":
         case "witherkill":
         case "witherkills": {
@@ -305,6 +370,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "fk":
         case "finalkill":
         case "fkill":
+        case "final":
         case "finals": {
             gameName = "Final Kills";
             res = await getLB("finalKills", timetype, limit, "miniWalls");
@@ -312,10 +378,62 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
 
         case "kd":
+        case "k/d":
+        case "k/dr":
         case "kdr":
         case "killdeath": {
-            gameName = "Kill death ratios";
+            gameName = "Kill / death ratios";
             res = await getLB("kd", timetype, limit, "miniWalls");
+            break;
+        }
+
+        case "f+kd":
+        case "f+kdr":
+        case "k+fdr":
+        case "k+fd":
+        case "kdnf":
+        case "kdrnf":
+        case "kdnofinal": {
+            gameName = "Kill (no finals) / death ratios";
+            res = await getLB("kdnf", timetype, limit);
+            break;
+        }
+        
+        case "fdr":
+        case "fkdr":
+        case "finaldeath":
+        case "fd": {
+            gameName = "Final kill / death ratios";
+            res = await getLB("fd", timetype, limit);
+            break;
+        }
+
+        case "wdd":
+        case "wdr":
+        case "wddr":
+        case "witherdamagedeath": {
+            gameName = "Wither damage / death ratios";
+            res = await getLB("wdd", timetype, limit);
+            break;
+        }
+
+        case "wkd":
+        case "wkdr":
+        case "wk/d":
+        case "witherkilldeath":
+        case "witherkill+d":
+        case "wikdr": {
+            gameName = "Wither kill / death ratios";
+            res = await getLB("wkd", timetype, limit);
+            break;
+        }
+
+        case "aa":
+        case "arrowacc":
+        case "ahm":
+        case "arrowhit/miss": {
+            gameName = "Arrow accuracy";
+            res = await getLB("aa", timetype, limit);
             break;
         }
 
