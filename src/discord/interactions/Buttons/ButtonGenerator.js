@@ -186,7 +186,7 @@ module.exports = class ButtonGenerator {
                         .setStyle("SECONDARY");
 
         let right = new MessageButton()
-                        .setCustomID(`lb:${lb}:${time}:${currentIndex - 10}`)
+                        .setCustomID(`lb:${lb}:${time}:${currentIndex + 10}`)
                         .setLabel("10 >>")
                         .setStyle('PRIMARY');
 

@@ -96,7 +96,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[2] != undefined ? args[2] : 10;
-    let startingIndex = args[3] != undefined ? args[3] : 0;
+    let startingIndex = args[3] != undefined ? Number(args[3]) : 0;
     let res = "";
     let gid = "";
     let gameName = "";

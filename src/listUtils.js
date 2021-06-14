@@ -332,7 +332,9 @@ async function stringLBDaily(lbprop, maxamnt) {
 
 function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
-    list = list.slice(startingIndex, maxamnt + startingIndex);
+    let size = maxamnt + Number(startingIndex);
+    size = (size > list.length) ? list.length : size;
+    list = list.slice(0, );
     for (let i = startingIndex; i < list.length; i++) {
         // don't print if player has 0 wins
         let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
