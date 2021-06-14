@@ -126,7 +126,7 @@ module.exports = class BotUtils {
         let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;
-        let game = "";
+        let gamename = "";
 
         let fields = [];
 
@@ -140,7 +140,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.wins)),
                     inline: true,
                 });
-                game = "pg";
+                gamename = "pg";
                 break;
             }
 
@@ -160,7 +160,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.farmhuntShit)),
                     inline: true,
                 });
-                game = "fh"
+                gamename = "fh"
                 break;
             }
 
@@ -180,7 +180,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
                     inline: true,
                 });
-                game = "hs"
+                gamename = "hs"
                 break;
             }
 
@@ -210,7 +210,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.hitwRounds)),
                     inline: true,
                 });
-                game = "hitw"
+                gamename = "hitw"
                 break;
             }
 
@@ -277,7 +277,7 @@ module.exports = class BotUtils {
                     value: Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100,
                     inline: true,
                 });
-                game = "mw";
+                gamename = "mw";
                 break;
             }
 
@@ -313,7 +313,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                game = "fb"
+                gamename = "fb"
                 break;
             }
 
@@ -330,7 +330,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                game = "es"
+                gamename = "es"
                 break;
             }
 
@@ -363,7 +363,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.throwOutDeaths)),
                     inline: true,
                 });
-                game = "to"
+                gamename = "to"
                 break;
             }
 
@@ -394,7 +394,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
                     inline: true,
                 });
-                game = "gw"
+                gamename = "gw"
                 break;
             }
 
@@ -416,7 +416,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                game = "dw"
+                gamename = "dw"
                 break;
             }
 
@@ -449,7 +449,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
                     inline: true,
                 });
-                game = "bh"
+                gamename = "bh"
                 break;
             }
 
@@ -477,7 +477,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
                     inline: true,
                 });
-                game = "bd"
+                gamename = "bd"
                 break;
             }
 
@@ -512,7 +512,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.HNSHiderWins)),
                     inline: true,
                 });
-                game = "hns"
+                gamename = "hns"
                 break;
             }
 
@@ -529,7 +529,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                game = "z"
+                gamename = "z"
                 break;
             }
 
@@ -551,7 +551,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.ctwWoolCaptured)),
                     inline: true,
                 });
-                game = "ctw"
+                gamename = "ctw"
                 break;
             }
 
@@ -570,7 +570,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                game = "pp";
+                gamename = "pp";
                 break;
             }
 
@@ -607,7 +607,7 @@ module.exports = class BotUtils {
                     value: acc.seasonalWins.total,
                     inline: true,
                 });
-                game = "sim"
+                gamename = "sim"
                 fields.push(BotUtils.emptyField(true));
             }
 
@@ -651,7 +651,8 @@ module.exports = class BotUtils {
                     value: acc.uuid,
                     inline: true,
                 });
-                game = "arc"
+                gamename = "arc"
+                break;
             }
         }
 
@@ -673,7 +674,7 @@ module.exports = class BotUtils {
             .setFooter("Data generated at", BotUtils.client.user.avatarURL())
             .setTimestamp(date.getTime());
 
-        return { res: "", embed: embed, game : game };
+        return { res: "", embed: embed, game : gamename };
     }
 
     static async logIgns(msg) {
