@@ -1,4 +1,4 @@
-const { MessageButton } = require("discord.js");
+const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = class ButtonGenerator {
     static async getStatsButtons(currentGame, uuid) {
