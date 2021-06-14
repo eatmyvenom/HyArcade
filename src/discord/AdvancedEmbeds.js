@@ -636,4 +636,554 @@ module.exports = class AdvancedEmbeds {
 
         return embed;
     }
+
+    static async getStats(acc, game) {
+        let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
+
+        let lvl = Math.round(acc.level * 100) / 100;
+        lvl = "" + lvl;
+        let gamename = "";
+
+        let fields = [];
+
+        switch (game.toLowerCase()) {
+            case "12":
+            case "party":
+            case "partygames":
+            case "pg": {
+                fields.push({
+                    name: "Party games wins",
+                    value: formatNum(numberify(acc.wins)),
+                    inline: true,
+                });
+                gamename = "pg";
+                break;
+            }
+
+            case "fh":
+            case "farm":
+            case "fmhnt":
+            case "farmhunt":
+            case "5":
+            case "frmhnt": {
+                fields.push({
+                    name: "Farm hunt wins",
+                    value: formatNum(numberify(acc.farmhuntWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Farm hunt poop",
+                    value: formatNum(numberify(acc.farmhuntShit)),
+                    inline: true,
+                });
+                gamename = "fh"
+                break;
+            }
+
+            case "10":
+            case "hs":
+            case "hys":
+            case "hypixel":
+            case "says":
+            case "hysays": {
+                fields.push({
+                    name: "Hypixel says wins",
+                    value: formatNum(numberify(acc.hypixelSaysWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Hypixel says Rounds",
+                    value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
+                    inline: true,
+                });
+                gamename = "hs"
+                break;
+            }
+
+            case "8":
+            case "hitw":
+            case "hit":
+            case "hole":
+            case "pain": {
+                fields.push({
+                    name: "HITW wins",
+                    value: formatNum(numberify(acc.hitwWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "HITW qualifiers",
+                    value: "" + acc.hitwQual,
+                    inline: true,
+                });
+                fields.push({
+                    name: "HITW finals",
+                    value: "" + acc.hitwFinal,
+                    inline: true,
+                });
+                fields.push({
+                    name: "HITW walls",
+                    value: formatNum(numberify(acc.hitwRounds)),
+                    inline: true,
+                });
+                gamename = "hitw"
+                break;
+            }
+
+            case "11":
+            case "mw":
+            case "miw":
+            case "mini":
+            case "mwall":
+            case "wall":
+            case "pvp":
+            case "miniwalls": {
+                // <br>
+                fields.push({
+                    name: "Mini walls wins",
+                    value: formatNum(numberify(acc.miniWallsWins)),
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Mini walls kills",
+                    value: formatNum(numberify(acc.miniWalls.kills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls arrows shot",
+                    value: formatNum(numberify(acc.miniWalls.arrowsShot)),
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Mini walls arrows hit",
+                    value: formatNum(numberify(acc.miniWalls.arrowsHit)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls final kills",
+                    value: formatNum(numberify(acc.miniWalls.finalKills)),
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Mini walls wither kills",
+                    value: formatNum(numberify(acc.miniWalls.witherKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Mini walls wither damage",
+                    value: formatNum(numberify(acc.miniWalls.witherDamage)),
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Mini walls deaths",
+                    value: formatNum(numberify(acc.miniWalls.deaths)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100),
+                    inline: true,
+                });
+                gamename = "mw";
+                break;
+            }
+
+            case "6":
+            case "sc":
+            case "fb":
+            case "foot":
+            case "ballin":
+            case "fuck":
+            case "shit":
+            case "football": {
+                // <br>
+                fields.push({
+                    name: "Football wins",
+                    value: formatNum(numberify(acc.footballWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Football goals",
+                    value: formatNum(numberify(acc.extras.footballGoals)),
+                    inline: true,
+                });
+                
+                // <br>
+                fields.push({
+                    name: "Football power kicks",
+                    value: formatNum(numberify(acc.extras.footballPKicks)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Football kicks",
+                    value: formatNum(numberify(acc.extras.footballKicks)),
+                    inline: true,
+                });
+                
+                gamename = "fb"
+                break;
+            }
+
+            case "4":
+            case "es":
+            case "spleeg":
+            case "ender":
+            case "enderman":
+            case "trash":
+            case "enderspleef": {
+                fields.push({
+                    name: "Ender spleef wins",
+                    value: formatNum(numberify(acc.enderSpleefWins)),
+                    inline: true,
+                });
+                
+                gamename = "es"
+                break;
+            }
+
+            case "15":
+            case "to":
+            case "throw":
+            case "toss":
+            case "sumo2":
+            case "throwout": {
+                // <br>
+                fields.push({
+                    name: "Throw out wins",
+                    value: formatNum(numberify(acc.throwOutWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
+                    inline: true,
+                });
+                
+                // <br>
+                fields.push({
+                    name: "Throw out kills",
+                    value: formatNum(numberify(acc.extras.throwOutKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Throw out deaths",
+                    value: formatNum(numberify(acc.extras.throwOutDeaths)),
+                    inline: true,
+                });
+                gamename = "to"
+                break;
+            }
+
+            case "7":
+            case "gw":
+            case "sw":
+            case "galaxy":
+            case "galaxywars": {
+                fields.push({
+                    name: "Galaxy wars wins",
+                    value: formatNum(numberify(acc.galaxyWarsWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
+                    inline: true,
+                });
+                
+                // <br>
+                fields.push({
+                    name: "Galaxy wars kills",
+                    value: formatNum(numberify(acc.extras.galaxyWarsKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Galaxy wars deaths",
+                    value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
+                    inline: true,
+                });
+                gamename = "gw"
+                break;
+            }
+
+            case "3":
+            case "dw":
+            case "dragon":
+            case "dragonwars": {
+                fields.push({
+                    name: "Dragon wars wins",
+                    value: formatNum(numberify(acc.dragonWarsWins)),
+                    inline: true,
+                });
+                
+                
+                // <br>
+                fields.push({
+                    name: "Dragon wars kills",
+                    value: formatNum(numberify(acc.extras.dragonWarsKills)),
+                    inline: true,
+                });
+                
+                gamename = "dw"
+                break;
+            }
+
+            case "2":
+            case "bh":
+            case "bnt":
+            case "one":
+            case "bounty":
+            case "oneinthequiver":
+            case "bountyhunters": {
+                fields.push({
+                    name: "Bounty hunters wins",
+                    value: formatNum(numberify(acc.bountyHuntersWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
+                    inline: true,
+                });
+                
+                // <br>
+                fields.push({
+                    name: "Bounty hunters kills",
+                    value: formatNum(numberify(acc.extras.bountyHuntersKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Bounty hunters deaths",
+                    value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
+                    inline: true,
+                });
+                gamename = "bh"
+                break;
+            }
+
+            case "1":
+            case "bd":
+            case "do":
+            case "dayone":
+            case "blocking":
+            case "blockingdead": {
+                fields.push({
+                    name: "Blocking dead wins",
+                    value: formatNum(numberify(acc.blockingDeadWins)),
+                    inline: true,
+                });
+                
+                
+                // <br>
+                fields.push({
+                    name: "Blocking dead kills",
+                    value: formatNum(numberify(acc.extras.blockingDeadKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Blocking dead headshots",
+                    value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
+                    inline: true,
+                });
+                gamename = "bd"
+                break;
+            }
+
+            case "9":
+            case "has":
+            case "hide":
+            case "h&s":
+            case "hns":
+            case "probotkeptspammingthisshit":
+            case "hideandseek":
+            case "hidenseek":
+            case "hideseek": {
+                fields.push({
+                    name: "Hide and seek wins",
+                    value: formatNum(numberify(acc.hideAndSeekWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Hide and seek kills",
+                    value: formatNum(numberify(acc.hnsKills)),
+                    inline: true,
+                });
+                
+                // <br>
+                fields.push({
+                    name: "Hide and seek seeker wins",
+                    value: formatNum(numberify(acc.extras.HNSSeekerWins)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Hide and seek hider wins",
+                    value: formatNum(numberify(acc.extras.HNSHiderWins)),
+                    inline: true,
+                });
+                gamename = "hns"
+                break;
+            }
+
+            case "16":
+            case "z":
+            case "zs":
+            case "zbs":
+            case "zomb":
+            case "zbies":
+            case "zombies": {
+                fields.push({
+                    name: "Zombies wins",
+                    value: formatNum(numberify(acc.zombiesWins)),
+                    inline: true,
+                });
+                
+                gamename = "z"
+                break;
+            }
+
+            case "ctw":
+            case "ctwool":
+            case "capkills":
+            case "capture":
+            case "capwool":
+            case "ctwwool":
+            case "ctwwoolcaptured":
+            case "ctwkills": {
+                fields.push({
+                    name: "Ctw kills",
+                    value: formatNum(numberify(acc.ctwKills)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Ctw wool captured",
+                    value: formatNum(numberify(acc.ctwWoolCaptured)),
+                    inline: true,
+                });
+                gamename = "ctw"
+                break;
+            }
+
+            case "13":
+            case "pp":
+            case "draw":
+            case "pixpaint":
+            case "pixelpaint":
+            case "pixelpainters":
+            case "drawmything":
+            case "drawtheirthing":
+            case "drawing": {
+                fields.push({
+                    name: "Pixel painters wins",
+                    value: formatNum(numberify(acc.pixelPaintersWins)),
+                    inline: true,
+                });
+                
+                gamename = "pp";
+                break;
+            }
+
+            case "sim":
+            case "simulator":
+            case "seasonal":
+            case "season":
+            case "14":
+            case "sea": {
+                fields.push({
+                    name: "Easter sim wins",
+                    value: "" + acc.seasonalWins.easter,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Scuba sim wins",
+                    value: "" + acc.seasonalWins.scuba,
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Holloween sim wins",
+                    value: "" + acc.seasonalWins.halloween,
+                    inline: true,
+                });
+                fields.push({
+                    name: "Grinch sim wins",
+                    value: "" + acc.seasonalWins.grinch,
+                    inline: true,
+                });
+                
+                fields.push({
+                    name: "Total sim wins",
+                    value: "" + acc.seasonalWins.total,
+                    inline: true,
+                });
+                gamename = "sim"
+                
+                break;
+            }
+
+            default: {
+                fields.push({
+                    name: "Level",
+                    value: lvl,
+                    inline: true,
+                });
+                fields.push({
+                    name: "All Hypixel wins",
+                    value: formatNum(numberify(acc.anyWins)),
+                    inline: true,
+                });
+                // 
+                fields.push({
+                    name: "Arcade wins",
+                    value: formatNum(numberify(acc.arcadeWins)),
+                    inline: true,
+                });
+
+                fields.push({
+                    name: "Arcade coins",
+                    value: formatNum(numberify(acc.arcadeCoins)),
+                    inline: true,
+                });
+                // 
+                fields.push({
+                    name: "AP",
+                    value: formatNum(numberify(acc.achievementPoints)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "Karma",
+                    value: formatNum(numberify(acc.karma)),
+                    inline: true,
+                });
+                // 
+                fields.push({
+                    name: "UUID",
+                    value: acc.uuid,
+                    inline: true,
+                });
+                gamename = "arc"
+                break;
+            }
+        }
+
+        let rank = ("" + acc.rank)
+            .replace(/_/g, "")
+            .replace(/PLUS/g, "+")
+            .replace(/undefined/g, "");
+        rank = rank == "" ? "" : "[" + rank + "]";
+
+        let updatetime = await BotUtils.fileCache.updatetime;
+        let date = new Date(updatetime.toString());
+
+        let embed = new MessageEmbed()
+            .setAuthor(`${rank} ${acc.name}`, null, "http://eatmyvenom.me/share/partygames/player.html?q=" + acc.name)
+            .setThumbnail(thumbURL)
+            .setColor(0x44a3e7)
+            .addFields(fields)
+            .setFooter("Data generated at", BotUtils.client.user.avatarURL())
+            .setTimestamp(date.getTime());
+
+        return { res: "", embed: embed, game : gamename };
+    }
 }
