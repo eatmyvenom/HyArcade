@@ -39,7 +39,10 @@ module.exports = async (interaction) => {
         case "stats": {
             let game = args[1];
             let acc = await InteractionUtils.resolveAccount(interaction, 0);
-            return await BotUtils.getStats(acc, "" + game);
+            let res = await BotUtils.getStats(acc, "" + game);
+            let e = res.embed;
+            let buttons = await InteractionUtils.getStatsButtons(res.game);
+            return { res : "", embed : e, b: buttons };
         }
 
         case "leaderboard": {

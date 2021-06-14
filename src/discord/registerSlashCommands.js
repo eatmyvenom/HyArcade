@@ -2,7 +2,7 @@ const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const CommandParser = require("./interactions/CommandParser");
 
-async function interactionHandler(interaction) {
+async function commandHandler(interaction) {
     let responseObj = await CommandParser(interaction);
 
     if (!interaction.deferred && !interaction.replied) {
@@ -22,6 +22,19 @@ async function interactionHandler(interaction) {
     await BotUtils.logHook.send(logString);
 
     await BotUtils.logCommand(interaction.commandName, JSON.stringify(interaction.options), interaction.member.user.id);
+}
+
+async function buttonHandler(interaction) {
+    let updatedData = await ButtonParser(interaction);
+    await interaction.update(updatedData.toDiscord());
+}
+
+async function interactionHandler(interaction) {
+    if(interaction.isCommand()) {
+        await commandHandler(interaction);
+    } else if(interaction.isButton()) {
+        await buttonHandler(interaction);
+    }
 }
 
 module.exports = async (client) => {

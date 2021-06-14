@@ -1,4 +1,4 @@
-const { MessageEmbed, Message } = require("discord.js");
+const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const utils = require("../../utils");
 const { client } = require("../BotUtils");
 const helpText = require('../HelpText');
@@ -8,6 +8,185 @@ const mojangRequest = require("../../mojangRequest");
 const Account = require("../../account");
 
 module.exports = class InteractionUtils {
+
+    static async getStatsButtons(currentGame) {
+
+        let leftTxt = "";
+        let rightTxt = "";
+        let leftID = "";
+        let rightID = "";
+
+        switch(currentGame) {
+            case "arc" : {
+                leftTxt = "Seasonal games";
+                leftID = "sim";
+                rightTxt = "Party games";
+                rightID = "pg";
+                break;
+            }
+
+            case "pg" : {
+                leftTxt = "Arcade";
+                leftID = "arc";
+                rightTxt = "Farm hunt";
+                rightID = "fh"
+                break;
+            }
+
+            case "fh" : {
+                leftTxt = "Party games";
+                leftID = "pg";
+                rightTxt = "Hole in the wall";
+                rightID = "hitw"
+                break;
+            }
+
+            case "hitw" : {
+                leftTxt = "Farm hunt";
+                leftID = "fh";
+                rightTxt = "Hypixel Says";
+                rightID = "hs"
+                break;
+            }
+
+            case "hs" : {
+                leftTxt = "Hole in the wall";
+                leftID = "hitw";
+                rightTxt = "Blocking dead";
+                rightID = "bd"
+                break;
+            }
+
+            case "bd" : {
+                leftTxt = "Hypixel Says";
+                leftID = "hs";
+                rightTxt = "Mini walls";
+                rightID = "mw"
+                break;
+            }
+
+            case "mw" : {
+                leftTxt = "bd";
+                leftID = "Blocking dead";
+                rightTxt = "Football";
+                rightID = "fb"
+                break;
+            }
+
+            case "fb" : {
+                leftTxt = "Mini walls";
+                leftID = "mw";
+                rightTxt = "Ender spleef";
+                rightID = "es";
+                break;
+            }
+
+            case "es" : {
+                leftTxt = "Football";
+                leftID = "fb";
+                rightTxt = "Throw out";
+                rightID = "to";
+                break;
+            }
+
+            case "to" : {
+                leftTxt = "Ender spleef";
+                leftID = "es";
+                rightTxt = "Galaxy wars";
+                rightID = "gw";
+                break;
+            }
+
+            case "gw" : {
+                leftTxt = "Throw out";
+                leftID = "to";
+                rightTxt = "Dragon wars";
+                rightID = "dw";
+                break;
+            }
+
+            case "dw" : {
+                leftTxt = "Galaxy wars";
+                leftID = "gw";
+                rightTxt = "Bounty hunters";
+                rightID = "bh";
+                break;
+            }
+
+            case "bh" : {
+                leftTxt = "Dragon wars";
+                leftID = "dw";
+                rightTxt = "Hide and seek";
+                rightID = "hns";
+                break;
+            }
+
+            case "hns" : {
+                leftTxt = "Bounty hunters";
+                leftID = "bh";
+                rightTxt = "Zombies";
+                rightID = "z";
+                break;
+            }
+
+            case "z" : {
+                leftTxt = "Hide and seek";
+                leftID = "hns";
+                rightTxt = "pp";
+                rightID = "Pixel Painters";
+                break;
+            }
+
+            case "pp" : {
+                leftTxt = "Zombies";
+                leftID = "z";
+                rightTxt = "Capture the wool";
+                rightID = "ctw"
+                break;
+            }
+
+            case "ctw": {
+                leftTxt = "Pixel Painters";
+                leftID = "pp";
+                rightTxt = "Seasonal games";
+                rightID = "sim";
+            }
+
+            case "sim" : {
+                leftTxt = "Capture the wool";
+                leftID = "ctw";
+                rightTxt = "Arcade";
+                rightID = "arc";
+            }
+        }
+
+        let row = new MessageActionRow();
+        let left = new MessageButton()
+                        .setCustomID(leftID)
+                        .setLabel(leftTxt)
+                        .setStyle('PRIMARY');
+
+        let right = new MessageButton()
+                        .setCustomID(rightID)
+                        .setLabel(rightTxt)
+                        .setStyle('PRIMARY');
+
+        row.addComponents(left, right);
+        return row;
+    }
+
+    static async accFromUUID(uuid) {
+        let acclist = await BotUtils.fileCache.acclist;
+        let acc = acclist.find((a) => a.uuid == uuid);
+
+        if(acc == undefined) {
+            acc = new Account("", 0, "" + uuid);
+            await acc.updateData();
+        }
+
+        return acc;
+    }
+
     static async resolveAccount(interaction, namearg = 0) {
         logger.out("Attempting to resolve account from " + JSON.stringify(interaction.options));
         let string = "undefinednullnonothingno";

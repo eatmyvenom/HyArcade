@@ -126,6 +126,7 @@ module.exports = class BotUtils {
         let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;
+        let game = "";
 
         let fields = [];
 
@@ -139,6 +140,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.wins)),
                     inline: true,
                 });
+                game = "pg";
                 break;
             }
 
@@ -158,6 +160,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.farmhuntShit)),
                     inline: true,
                 });
+                game = "fh"
                 break;
             }
 
@@ -177,6 +180,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
                     inline: true,
                 });
+                game = "hs"
                 break;
             }
 
@@ -206,6 +210,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.hitwRounds)),
                     inline: true,
                 });
+                game = "hitw"
                 break;
             }
 
@@ -269,9 +274,10 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.miniWalls.kills / acc.miniWalls.deaths) * 100) / 100,
+                    value: Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100,
                     inline: true,
                 });
+                game = "mw";
                 break;
             }
 
@@ -307,7 +313,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
-                // <br>
+                game = "fb"
                 break;
             }
 
@@ -324,6 +330,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                game = "es"
                 break;
             }
 
@@ -356,6 +363,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.throwOutDeaths)),
                     inline: true,
                 });
+                game = "to"
                 break;
             }
 
@@ -386,6 +394,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
                     inline: true,
                 });
+                game = "gw"
                 break;
             }
 
@@ -407,6 +416,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                game = "dw"
                 break;
             }
 
@@ -439,6 +449,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
                     inline: true,
                 });
+                game = "bh"
                 break;
             }
 
@@ -466,6 +477,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
                     inline: true,
                 });
+                game = "bd"
                 break;
             }
 
@@ -500,6 +512,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.HNSHiderWins)),
                     inline: true,
                 });
+                game = "hns"
                 break;
             }
 
@@ -516,6 +529,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                game = "z"
                 break;
             }
 
@@ -537,6 +551,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.ctwWoolCaptured)),
                     inline: true,
                 });
+                game = "ctw"
                 break;
             }
 
@@ -555,6 +570,7 @@ module.exports = class BotUtils {
                     inline: true,
                 });
                 fields.push(BotUtils.emptyField(true));
+                game = "pp";
                 break;
             }
 
@@ -591,6 +607,7 @@ module.exports = class BotUtils {
                     value: acc.seasonalWins.total,
                     inline: true,
                 });
+                game = "sim"
                 fields.push(BotUtils.emptyField(true));
             }
 
@@ -634,6 +651,7 @@ module.exports = class BotUtils {
                     value: acc.uuid,
                     inline: true,
                 });
+                game = "arc"
             }
         }
 
@@ -655,7 +673,7 @@ module.exports = class BotUtils {
             .setFooter("Data generated at", BotUtils.client.user.avatarURL())
             .setTimestamp(date.getTime());
 
-        return { res: "", embed: embed };
+        return { res: "", embed: embed, game : game };
     }
 
     static async logIgns(msg) {

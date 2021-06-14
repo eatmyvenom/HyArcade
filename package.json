@@ -1,6 +1,6 @@
 {
     "name": "arcade-system",
-    "version": "1.2.0",
+    "version": "1.4.1",
     "description": "A full system for gathering and displaying peoples arcade games stats",
     "main": "index.js",
     "scripts": {
