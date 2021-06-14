@@ -182,12 +182,12 @@ module.exports = class ButtonGenerator {
         
         let mid = new MessageButton()
                         .setCustomID(`lb:${lb}:${time}:${currentIndex}`)
-                        .setLabel("Refresh")
+                        .setLabel("↻ Refresh")
                         .setStyle("SECONDARY");
 
         let right = new MessageButton()
                         .setCustomID(`lb:${lb}:${time}:${currentIndex - 10}`)
-                        .setLabel("<< 10")
+                        .setLabel("10 >>")
                         .setStyle('PRIMARY');
 
         if(currentIndex - 10 < 0) {

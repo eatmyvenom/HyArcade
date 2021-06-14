@@ -6,6 +6,7 @@
 const BotUtils = require("../../BotUtils");
 const Leaderboard = require("../../Commands/Leaderboard");
 const InteractionUtils = require("../InteractionUtils");
+const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
 module.exports = async function ButtonParser(interaction) {
@@ -34,6 +35,6 @@ async function statsHandler(accUUID, game) {
     let statsRes = await BotUtils.getStats(accData, game);
     let embed = statsRes.embed;
 
-    let buttons = await InteractionUtils.getStatsButtons(game, accData.uuid);
+    let buttons = await ButtonGenerator.getStatsButtons(game, accData.uuid);
     return new ButtonResponse("", [ embed ], buttons);
 }
