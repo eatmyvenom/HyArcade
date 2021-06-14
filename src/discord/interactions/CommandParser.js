@@ -50,8 +50,8 @@ module.exports = async (interaction) => {
         case "leaderboard": {
             let res = await Leaderboard.execute([ getArg(interaction, "game"), getArg(interaction, "type"), getArg(interaction, "amount"), getArg(interaction, "start") ], authorID);
             let e = res.embed;
-            if( res.game ) {
-                let buttons = await ButtonGenerator.getLBButtons(res.start, res.game);
+            if(res.game != undefined) {
+                let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, getArg(interaction, "type"));
                 return { res : "", embed : e, b: buttons};
             }
             return { res : "", embed : e};

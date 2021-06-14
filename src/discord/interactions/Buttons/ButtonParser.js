@@ -4,6 +4,7 @@
 // Stats example - s:92a5199614ac4bd181d1f3c951fb719f:pg
 
 const BotUtils = require("../../BotUtils");
+const Leaderboard = require("../../Commands/Leaderboard");
 const InteractionUtils = require("../InteractionUtils");
 const ButtonResponse = require("./ButtonResponse");
 
@@ -12,7 +13,7 @@ module.exports = async function ButtonParser(interaction) {
     let commandType = data[0];
     switch(commandType) {
         case "lb" : {
-            return leaderboardHandler(data[1], data[2]);
+            return leaderboardHandler(interaction, data[1], data[2], data[3]);
         }
 
         case "s" : {
@@ -21,8 +22,11 @@ module.exports = async function ButtonParser(interaction) {
     }
 }
 
-async function leaderboardHandler(interaction, index, leaderboard) {
-
+async function leaderboardHandler(interaction, leaderboard, time, index) {
+    let res = Leaderboard.execute([leaderboard, time, 10, index], interaction.member.user.id, undefined, interaction);
+    let e = res.embed;
+    let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, getArg(interaction, "type"));
+    return new ButtonResponse("", [ e ], buttons);
 }
 
 async function statsHandler(accUUID, game) {
