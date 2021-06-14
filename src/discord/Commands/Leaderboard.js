@@ -466,5 +466,5 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
-    return { res: "", embed: finalRes, gid : gid, start : startingIndex };
+    return { res: "", embed: finalRes, game : gid, start : startingIndex };
 });

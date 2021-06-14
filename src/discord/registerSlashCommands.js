@@ -2,7 +2,6 @@ const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const CommandParser = require("./interactions/CommandParser");
-const Leaderboard = require("./interactions/Commands/Leaderboard");
 
 async function commandHandler(interaction) {
     let responseObj = await CommandParser(interaction);
