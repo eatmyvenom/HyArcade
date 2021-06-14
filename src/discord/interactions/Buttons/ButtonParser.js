@@ -26,7 +26,7 @@ module.exports = async function ButtonParser(interaction) {
 async function leaderboardHandler(interaction, leaderboard, time, index) {
     let res = Leaderboard.execute([leaderboard, time, 10, index], interaction.member.user.id, undefined, interaction);
     let e = res.embed;
-    let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, getArg(interaction, "type"));
+    let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, time);
     return new ButtonResponse("", [ e ], buttons);
 }
 
