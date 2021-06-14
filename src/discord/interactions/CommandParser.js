@@ -17,6 +17,7 @@ const Susser = require("../Commands/Susser");
 const Compare = require("../Commands/Compare");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
+const ButtonGenerator = require("./Buttons/ButtonGenerator");
 
 function getArg(i,a) {
     let v = i.options.get(a);
@@ -42,12 +43,18 @@ module.exports = async (interaction) => {
             let acc = await InteractionUtils.resolveAccount(interaction, "player");
             let res = await BotUtils.getStats(acc, "" + game);
             let e = res.embed;
-            let buttons = await InteractionUtils.getStatsButtons(res.game, acc.uuid);
+            let buttons = await ButtonGenerator.getStatsButtons(res.game, acc.uuid);
             return { res : "", embed : e, b: buttons };
         }
 
         case "leaderboard": {
-            return await Leaderboard.execute([ getArg(interaction, "game"), getArg(interaction, "type"), getArg(interaction, "amount") ], authorID);
+            let res = await Leaderboard.execute([ getArg(interaction, "game"), getArg(interaction, "type"), getArg(interaction, "amount"), getArg(interaction, "start") ], authorID);
+            let e = res.embed;
+            if( res.game ) {
+                let buttons = await ButtonGenerator.getLBButtons(res.start, res.game);
+                return { res : "", embed : e, b: buttons};
+            }
+            return { res : "", embed : e};
         }
 
         case "addaccount": {

@@ -262,7 +262,7 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-async function stringLB(lbprop, maxamnt, category) {
+async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
     let list = await getList();
     if (category == undefined) {
         list = await [].concat(list).sort((b, a) => {
@@ -274,7 +274,7 @@ async function stringLB(lbprop, maxamnt, category) {
         });
     }
 
-    return stringifyList(list, lbprop, category, maxamnt);
+    return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
 
 async function stringLBAdv(comparitor, parser, maxamnt, listTransformer) {
@@ -294,7 +294,7 @@ async function stringLBAdv(comparitor, parser, maxamnt, listTransformer) {
     return str.replace(/_/g, "\\_");
 }
 
-async function stringLBDiff(lbprop, maxamnt, timetype, category) {
+async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
         list = await [].concat(list).sort((b, a) => {
@@ -306,7 +306,7 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category) {
         });
     }
 
-    return stringifyList(list, lbprop, category, maxamnt);
+    return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
 
 async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
@@ -330,10 +330,10 @@ async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");
 }
 
-function stringifyList(list, lbprop, category, maxamnt) {
+function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
-    list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
+    list = list.slice(startingIndex, maxamnt + startingIndex);
+    for (let i = startingIndex; i < list.length; i++) {
         // don't print if player has 0 wins
         let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
         if (numberify(propVal) < 1 && !config.printAllWins) continue;
