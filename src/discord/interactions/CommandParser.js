@@ -5,6 +5,7 @@ const { MessageEmbed } = require("discord.js");
 const InteractionUtils = require("./InteractionUtils");
 const mojangRequest = require("../../mojangRequest");
 const Runtime = require('../../Runtime');
+const embeds = require('../Embeds');
 
 const Leaderboard = require("../Commands/Leaderboard");
 const Verify = require("../Commands/LinkMe");
@@ -16,6 +17,14 @@ const Susser = require("../Commands/Susser");
 const Compare = require("../Commands/Compare");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
+
+function getArg(i,a) {
+    let v = i.options.get(a);
+    if(v != undefined) {
+        return v.value;
+    }
+    return undefined;
+}
 
 module.exports = async (interaction) => {
     if (!interaction.isCommand()) return;
@@ -29,7 +38,7 @@ module.exports = async (interaction) => {
 
     switch (interaction.commandName) {
         case "stats": {
-            let game = opts.get("game");
+            let game = getArg(interaction, "game")
             let acc = await InteractionUtils.resolveAccount(interaction, "player");
             let res = await BotUtils.getStats(acc, "" + game);
             let e = res.embed;
@@ -38,13 +47,13 @@ module.exports = async (interaction) => {
         }
 
         case "leaderboard": {
-            return await Leaderboard.execute([ opts.get('game'), opts.get('type'), opts.get("amount") ], authorID);
+            return await Leaderboard.execute([ getArg(interaction, "game"), getArg(interaction, "type"), getArg(interaction, "amount") ], authorID);
         }
 
         case "addaccount": {
             await interaction.defer();
 
-            let names = opts.get("accounts").split(" ");
+            let names = opts.get("accounts").value.split(" ");
             let res = await addAccounts("others", names);
             res = "```\n" + res + "\n```";
             let embed = new MessageEmbed().setTitle("Accounts added").setDescription(res).setFooter("It will take a little while for these accounts to be fully added to the database, please be patient.").setTimestamp(Date.now()).setColor(0x44a3e7);
@@ -53,8 +62,8 @@ module.exports = async (interaction) => {
 
         case "unlinkedstats": {
             await interaction.defer();
-            let plr = opts.get("player");
-            let game = "" + opts.get("game");
+            let plr = getArg(interaction, "player");
+            let game = "" + getArg(interaction, "game");
             let uuid;
             if (plr.length > 17) {
                 uuid = plr;
@@ -81,7 +90,7 @@ module.exports = async (interaction) => {
 
         case "getdataraw": {
             let acc = await InteractionUtils.resolveAccount(interaction);
-            let path = opts.get("path");
+            let path = opts.get("path").value;
             let embed = new MessageEmbed()
                 .setTitle(acc.name + "." + path)
                 .setDescription(acc[path])
@@ -90,15 +99,15 @@ module.exports = async (interaction) => {
         }
 
         case "verify": {
-            return await Verify.execute([ opts.get("player") ], authorID, null, interaction);
+            return await Verify.execute([ getArg(interaction, "player") ], authorID, null, interaction);
         }
 
         case "gamecounts": {
-            return await GameCounts.execute([ opts.get("game") ], authorID, null, interaction);
+            return await GameCounts.execute([ getArg(interaction, "game") ], authorID, null, interaction);
         }
 
         case "status": {
-            return await Status.execute([ opts.get("player") ], authorID, null, interaction);
+            return await Status.execute([ getArg(interaction, "player")], authorID, null, interaction);
         }
 
         case "info": {
@@ -113,16 +122,16 @@ module.exports = async (interaction) => {
             if(opts.size) {
                 return { res : "" , embed : InteractionUtils.helpEmbed()};
             } else {
-                return { res : "" , embed : InteractionUtils.helpTopic(opts.get("topic"))};
+                return { res : "" , embed : InteractionUtils.helpTopic(opts.get("topic").value)};
             }
         }
 
         case Susser.name: {
-            return await Susser.execute([ opts.get("player") ], authorID, null, interaction);
+            return await Susser.execute([ getArg(interaction, "player") ], authorID, null, interaction);
         }
 
         case Compare.name: {
-            return await Compare.execute([ opts.get("player1"), opts.get("player2"), opts.get("game") ], authorID, undefined, interaction);
+            return await Compare.execute([ getArg(interaction, "player1"), getArg(interaction, "player2"), getArg(interaction, "game") ], authorID, undefined, interaction);
         }
     }
 

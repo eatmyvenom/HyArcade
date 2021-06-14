@@ -6,10 +6,12 @@ const CommandParser = require("./interactions/CommandParser");
 async function commandHandler(interaction) {
     let responseObj = await CommandParser(interaction);
 
+    let c = responseObj.b ? [ responseObj.b ] : undefined;
+
     if (!interaction.deferred && !interaction.replied) {
         await interaction.reply({
             embeds: [responseObj.embed],
-            components : [ responseObj.b ]
+            components : c
         });
     } else {
         await interaction.webhook.send(responseObj.res, {
