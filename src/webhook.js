@@ -41,7 +41,7 @@ async function sendBasic(content, webhook) {
 
 async function sendBasicEmbed(content, embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
-    await hook.send(content, {
+    await hook.send({
         embeds: embed,
         username: webhook.username,
         avatarURL: webhook.pfp,
@@ -59,7 +59,7 @@ async function sendBasicEmbed(content, embed, webhook) {
  */
 async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
-    await hook.send(txt, {
+    await hook.send({
         embeds: [generateEmbed(list)],
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
@@ -71,7 +71,7 @@ async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webh
 
 async function sendEmbed(embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
-    await hook.send("", {
+    await hook.send({
         embeds: [embed],
         username: webhook.username,
         avatarURL: webhook.pfp,
@@ -99,7 +99,7 @@ async function sendHSMEmbed() {
 
 async function sendPGWEmbed() {
     let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
-    await hook.send("", {
+    await hook.send({
         embeds: [await genPGWEmbed()],
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
@@ -111,7 +111,7 @@ async function sendPGWEmbed() {
 
 async function sendPGMEmbed() {
     let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
-    await hook.send("", {
+    await hook.send({
         embeds: [await genPGMEmbed()],
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
@@ -123,7 +123,7 @@ async function sendPGMEmbed() {
 
 async function sendTOKillEmbed() {
     let hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
-    await hook.send("", {
+    await hook.send({
         embeds: [await genTOKillEmbed()],
         username: config.otherHooks.TO.username,
         avatarURL: config.otherHooks.TO.pfp,
@@ -531,8 +531,13 @@ async function sendMW() {
     witherdmg.setTitle("Lifetime Wither Damage");
     witherkills.setTitle("Lifetime Wither Kills");
     let hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
-    await hook.deleteMessage(mwMsg);
-    let newMsg = await hook.send("", {
+    try {
+        await hook.deleteMessage(mwMsg);
+    }
+    catch (e) {
+        logger.err(e);
+    }
+    let newMsg = await hook.send({
         embeds: [wins, kills, finals, witherdmg, witherkills],
         username: config.otherHooks.MW.username,
         avatarURL: config.otherHooks.MW.pfp,
