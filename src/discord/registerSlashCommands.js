@@ -1,5 +1,6 @@
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
+const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const CommandParser = require("./interactions/CommandParser");
 
 async function commandHandler(interaction) {
@@ -7,8 +8,8 @@ async function commandHandler(interaction) {
 
     if (!interaction.deferred && !interaction.replied) {
         await interaction.reply({
-            content: responseObj.res,
             embeds: [responseObj.embed],
+            components : [ responseObj.b ]
         });
     } else {
         await interaction.webhook.send(responseObj.res, {
@@ -21,7 +22,7 @@ async function commandHandler(interaction) {
     logger.out(logString);
     await BotUtils.logHook.send(logString);
 
-    await BotUtils.logCommand(interaction.commandName, JSON.stringify(interaction.options), interaction.member.user.id);
+    // await BotUtils.logCommand(interaction.commandName, JSON.stringify(interaction.options), interaction.member.user.id);
 }
 
 async function buttonHandler(interaction) {

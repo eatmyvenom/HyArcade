@@ -30,6 +30,6 @@ async function statsHandler(accUUID, game) {
     let statsRes = await BotUtils.getStats(accData, game);
     let embed = statsRes.embed;
 
-    let buttons = await InteractionUtils.getStatsButtons(game);
+    let buttons = await InteractionUtils.getStatsButtons(game, accData.uuid);
     return new ButtonResponse("", [ embed ], buttons);
 }

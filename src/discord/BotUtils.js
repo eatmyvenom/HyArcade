@@ -126,6 +126,7 @@ module.exports = class BotUtils {
         let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;
+        lvl = "" + lvl;
         let gamename = "";
 
         let fields = [];
@@ -196,13 +197,12 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "HITW qualifiers",
-                    value: acc.hitwQual,
+                    value: "" + acc.hitwQual,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
                 fields.push({
                     name: "HITW finals",
-                    value: acc.hitwFinal,
+                    value: "" + acc.hitwFinal,
                     inline: true,
                 });
                 fields.push({
@@ -228,12 +228,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.miniWallsWins)),
                     inline: true,
                 });
-                fields.push({
-                    name: "Mini walls kit",
-                    value: ("" + acc.miniWalls.kit).replace(/undefined/g, "none"),
-                    inline: true,
-                });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Mini walls kills",
                     value: formatNum(numberify(acc.miniWalls.kills)),
@@ -244,7 +239,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.miniWalls.arrowsShot)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Mini walls arrows hit",
                     value: formatNum(numberify(acc.miniWalls.arrowsHit)),
@@ -255,7 +250,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.miniWalls.finalKills)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Mini walls wither kills",
                     value: formatNum(numberify(acc.miniWalls.witherKills)),
@@ -266,7 +261,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.miniWalls.witherDamage)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Mini walls deaths",
                     value: formatNum(numberify(acc.miniWalls.deaths)),
@@ -274,7 +269,7 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100,
+                    value: "" + (Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100),
                     inline: true,
                 });
                 gamename = "mw";
@@ -300,7 +295,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.footballGoals)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 // <br>
                 fields.push({
                     name: "Football power kicks",
@@ -312,7 +307,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.extras.footballKicks)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 gamename = "fb"
                 break;
             }
@@ -329,7 +324,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.enderSpleefWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 gamename = "es"
                 break;
             }
@@ -348,10 +343,10 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100,
+                    value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 // <br>
                 fields.push({
                     name: "Throw out kills",
@@ -379,10 +374,10 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100,
+                    value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 // <br>
                 fields.push({
                     name: "Galaxy wars kills",
@@ -407,15 +402,15 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.dragonWarsWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
-                fields.push(BotUtils.emptyField(true));
+                
+                
                 // <br>
                 fields.push({
                     name: "Dragon wars kills",
                     value: formatNum(numberify(acc.extras.dragonWarsKills)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 gamename = "dw"
                 break;
             }
@@ -434,10 +429,10 @@ module.exports = class BotUtils {
                 });
                 fields.push({
                     name: "KDR",
-                    value: Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100,
+                    value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 // <br>
                 fields.push({
                     name: "Bounty hunters kills",
@@ -464,8 +459,8 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.blockingDeadWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
-                fields.push(BotUtils.emptyField(true));
+                
+                
                 // <br>
                 fields.push({
                     name: "Blocking dead kills",
@@ -500,7 +495,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.hnsKills)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 // <br>
                 fields.push({
                     name: "Hide and seek seeker wins",
@@ -528,7 +523,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.zombiesWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 gamename = "z"
                 break;
             }
@@ -569,7 +564,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.pixelPaintersWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 gamename = "pp";
                 break;
             }
@@ -582,33 +577,34 @@ module.exports = class BotUtils {
             case "sea": {
                 fields.push({
                     name: "Easter sim wins",
-                    value: acc.seasonalWins.easter,
+                    value: "" + acc.seasonalWins.easter,
                     inline: true,
                 });
                 fields.push({
                     name: "Scuba sim wins",
-                    value: acc.seasonalWins.scuba,
+                    value: "" + acc.seasonalWins.scuba,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Holloween sim wins",
-                    value: acc.seasonalWins.halloween,
+                    value: "" + acc.seasonalWins.halloween,
                     inline: true,
                 });
                 fields.push({
                     name: "Grinch sim wins",
-                    value: acc.seasonalWins.grinch,
+                    value: "" + acc.seasonalWins.grinch,
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                
                 fields.push({
                     name: "Total sim wins",
-                    value: acc.seasonalWins.total,
+                    value: "" + acc.seasonalWins.total,
                     inline: true,
                 });
                 gamename = "sim"
-                fields.push(BotUtils.emptyField(true));
+                
+                break;
             }
 
             default: {
@@ -622,7 +618,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.anyWins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                // 
                 fields.push({
                     name: "Arcade wins",
                     value: formatNum(numberify(acc.arcadeWins)),
@@ -634,7 +630,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.arcadeCoins)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                // 
                 fields.push({
                     name: "AP",
                     value: formatNum(numberify(acc.achievementPoints)),
@@ -645,7 +641,7 @@ module.exports = class BotUtils {
                     value: formatNum(numberify(acc.karma)),
                     inline: true,
                 });
-                fields.push(BotUtils.emptyField(true));
+                // 
                 fields.push({
                     name: "UUID",
                     value: acc.uuid,
@@ -656,7 +652,6 @@ module.exports = class BotUtils {
             }
         }
 
-        fields.push(BotUtils.emptyField(true));
         let rank = ("" + acc.rank)
             .replace(/_/g, "")
             .replace(/PLUS/g, "+")

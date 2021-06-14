@@ -9,7 +9,7 @@ const Account = require("../../account");
 
 module.exports = class InteractionUtils {
 
-    static async getStatsButtons(currentGame) {
+    static async getStatsButtons(currentGame, uuid) {
 
         let leftTxt = "";
         let rightTxt = "";
@@ -66,8 +66,8 @@ module.exports = class InteractionUtils {
             }
 
             case "mw" : {
-                leftTxt = "bd";
-                leftID = "Blocking dead";
+                leftTxt = "Blocking dead";
+                leftID = "bd";
                 rightTxt = "Football";
                 rightID = "fb"
                 break;
@@ -132,8 +132,8 @@ module.exports = class InteractionUtils {
             case "z" : {
                 leftTxt = "Hide and seek";
                 leftID = "hns";
-                rightTxt = "pp";
-                rightID = "Pixel Painters";
+                rightTxt = "Pixel Painters";
+                rightID = "pp";
                 break;
             }
 
@@ -150,6 +150,7 @@ module.exports = class InteractionUtils {
                 leftID = "pp";
                 rightTxt = "Seasonal games";
                 rightID = "sim";
+                break;
             }
 
             case "sim" : {
@@ -157,21 +158,27 @@ module.exports = class InteractionUtils {
                 leftID = "ctw";
                 rightTxt = "Arcade";
                 rightID = "arc";
+                break;
             }
         }
 
         let row = new MessageActionRow();
         let left = new MessageButton()
-                        .setCustomID(leftID)
-                        .setLabel(leftTxt)
+                        .setCustomID(`s:${uuid}:${leftID}`)
+                        .setLabel("<< " + leftTxt)
                         .setStyle('PRIMARY');
+
+        let m = new MessageButton()
+                        .setCustomID(`s:${uuid}:${currentGame}`)
+                        .setLabel("↻ Refresh")
+                        .setStyle('SECONDARY');
 
         let right = new MessageButton()
-                        .setCustomID(rightID)
-                        .setLabel(rightTxt)
+                        .setCustomID(`s:${uuid}:${rightID}`)
+                        .setLabel(rightTxt + " >>")
                         .setStyle('PRIMARY');
 
-        row.addComponents(left, right);
+        row.addComponents(left, m, right);
         return row;
     }
 

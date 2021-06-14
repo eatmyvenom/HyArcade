@@ -11,9 +11,8 @@ module.exports = class ButtonResponse {
 
     toDiscord() {
         return {
-            content: this.content,
             embeds : this.embeds,
-            components : this.newButtons
+            components : [ this.newButtons ]
         }
     }
 }

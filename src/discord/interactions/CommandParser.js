@@ -41,7 +41,7 @@ module.exports = async (interaction) => {
             let acc = await InteractionUtils.resolveAccount(interaction, 0);
             let res = await BotUtils.getStats(acc, "" + game);
             let e = res.embed;
-            let buttons = await InteractionUtils.getStatsButtons(res.game);
+            let buttons = await InteractionUtils.getStatsButtons(res.game, acc.uuid);
             return { res : "", embed : e, b: buttons };
         }
 
