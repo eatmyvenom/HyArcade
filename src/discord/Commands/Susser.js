@@ -13,7 +13,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     if (interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);
     } else {
-        acc = await InteractionUtils.resolveAccount(interaction, 0);
+        acc = await InteractionUtils.resolveAccount(interaction);
     }
 
 

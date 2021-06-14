@@ -17,8 +17,8 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
         acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
         acc2 = await BotUtils.resolveAccount(plr2, rawMsg, false);
     } else {
-        acc1 = await InteractionUtils.resolveAccount(interaction, 0);
-        acc2 = await InteractionUtils.resolveAccount(interaction, 1);
+        acc1 = await InteractionUtils.resolveAccount(interaction, "player1");
+        acc2 = await InteractionUtils.resolveAccount(interaction, "player2");
     }
     let embed = AdvancedEmbeds.compareStats(acc1, acc2, game);
     return { res: "", embed: embed };

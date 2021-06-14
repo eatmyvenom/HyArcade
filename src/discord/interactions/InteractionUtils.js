@@ -194,12 +194,10 @@ module.exports = class InteractionUtils {
         return acc;
     }
 
-    static async resolveAccount(interaction, namearg = 0) {
+    static async resolveAccount(interaction, namearg = "player") {
         logger.out("Attempting to resolve account from " + JSON.stringify(interaction.options));
         let string = "undefinednullnonothingno";
-        if (interaction.options != undefined && interaction.options[namearg] != undefined) {
-            string = interaction.options[namearg].value;
-        }
+        string = interaction.options.get(namearg);
         let canbeSelf = string == "" || string == "undefinednullnonothingno";
         string = stringify(string).toLowerCase();
         let acclist = await BotUtils.fileCache.acclist;

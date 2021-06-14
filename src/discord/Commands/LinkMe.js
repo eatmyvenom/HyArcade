@@ -44,7 +44,7 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg, interaction) 
     if (interaction == undefined) {
         tag = rawMsg.author.tag.toLowerCase();
     } else {
-        tag = interaction.member.user.tag.tpLowerCase();
+        tag = interaction.member.user.tag.toLowerCase();
     }
 
     if (("" + acc.hypixelDiscord).toLowerCase() == tag) {

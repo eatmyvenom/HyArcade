@@ -19,7 +19,7 @@ module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) 
     if (interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);
     } else {
-        acc = await InteractionUtils.resolveAccount(interaction, 0);
+        acc = await InteractionUtils.resolveAccount(interaction);
     }
     let stslist = BotUtils.fileCache.status;
     let sts = stslist[acc.uuid];
