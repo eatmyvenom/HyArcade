@@ -50,7 +50,7 @@ module.exports = class BotEvents {
 
         BotUtils.fileCache.hackers = hackers;
         let ezmsgs = await fs.readFile("data/ez");
-        ezmsgs = hackers.toString().split('\n');
+        ezmsgs = ezmsgs.toString().split('\n');
         BotUtils.fileCache.ezmsgs = ezmsgs;
         logger.out("Selecting mode");
         if (mode == "role") {
