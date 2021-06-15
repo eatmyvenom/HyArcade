@@ -49,7 +49,7 @@ module.exports = class BotEvents {
         hackers = hackers.toString().split('\n');
 
         BotUtils.fileCache.hackers = hackers;
-        ezmsgs = await fs.readFile("data/ez");
+        let ezmsgs = await fs.readFile("data/ez");
         ezmsgs = hackers.toString().split('\n');
         BotUtils.fileCache.ezmsgs = ezmsgs;
         logger.out("Selecting mode");
