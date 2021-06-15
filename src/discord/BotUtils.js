@@ -116,7 +116,7 @@ module.exports = class BotUtils {
     }
 
     static async getStats(acc, game) {
-        return await AdvancedEmbeds.getStats(acc,game);
+        return await AdvancedEmbeds.getStats(acc,game, await BotUtils.fileCache.updatetime, BotUtils.client.user.avatarURL());
     }
 
     static async logIgns(msg) {
