@@ -15,7 +15,7 @@ async function commandHandler(interaction) {
             components : c
         });
     } else {
-        await interaction.webhook.send(responseObj.res, {
+        await interaction.webhook.send({
             embeds: [responseObj.embed],
         });
     }
