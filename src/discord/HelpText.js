@@ -63,7 +63,8 @@ exports.searching =
 5) If the input is 22 characters in length (a ping on mobile) it tries to get the account whos discord ID matches the ID specified in the ping
 6) If the input is 21 characters in length (a ping on desktop) it tries to get the account whos discord ID matches the ID specified in the ping
 7) It iterates through each previous name of each account and checks if the name starts with the input.
-8) It gets the account whos discord ID matches the user who sent the command.`;
+8) If the result is allowed to be the executing user it gets the account whos discord ID matches the user who sent the command.
+9) After all of that it just gets the uuid from the ign from mojang api and then gets the stats from hypixel`;
 
 exports.Role_Handling =
 `Every time the database updates its data it sets a flag in the shared runtime file. Every 10 seconds the process handling the bot checks this file for that flag. If the flag is detected then it goes through every discord with a role handler and grabs all the members. For every member if their discord ID matches an account in the bots database (basically if they are linked) it checks that role handlers specific stat against the role of the account. It iterates the roles top down, if the account doesn't have above a specific win count it moves on to the next win count. When it finds the win count role appropriate for the user it checks if they have the role already, if so then it moves on the next person. If the correct role is not assigned then it assigns it. It then goes through the rest of the win count roles and makes sure they are not set. If there is another win count role set then it removes it from the user and then moves on to the next person.`

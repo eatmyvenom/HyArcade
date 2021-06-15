@@ -68,24 +68,17 @@ module.exports = async (interaction) => {
         }
 
         case "unlinkedstats": {
-            await interaction.defer();
-            let plr = getArg(interaction, "player");
-            let game = "" + getArg(interaction, "game");
-            let uuid;
-            if (plr.length > 17) {
-                uuid = plr;
-            } else {
-                uuid = await mojangRequest.getUUID(plr);
-            }
+            let embed = new MessageEmbed()
+                .setTitle("Use /stats")
+                .setColor(0xd69323)
+                .setDescription("This command has been merged with /stats! If you are having troubles getting an unlinked player then use their uuid instead.")
 
-            let acc = new Account("", 0, "" + uuid);
-            await acc.updateData();
-            return await BotUtils.getStats(acc, game);
+            return { res : undefined, embed : embed };
         }
 
         case "namehistory": {
             let acc = await InteractionUtils.resolveAccount(interaction);
-            let embed = new MessageEmbed().setTitle(`${acc.name} IGN history`).setDescription(acc.nameHist).setColor(0x44a3e7);
+            let embed = new MessageEmbed().setTitle(`${acc.name} IGN history`).setDescription(acc.nameHist.split("\n")).setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
 

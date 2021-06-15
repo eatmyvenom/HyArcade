@@ -26,7 +26,11 @@ async function logCmd(msg) {
 
 async function sendAsHook(hook, cmdResponse) {
     try {
-        await hook.send(cmdResponse.res, BotUtils.getWebhookObj(cmdResponse.embed));
+        let obj = BotUtils.getWebhookObj(cmdResponse.embed);
+        if(cmdResponse.res != "") {
+            obj.content = cmdResponse.res;
+        }
+        await hook.send(obj);
         return true;
     } catch (e) {
         logger.err(e.toString());
@@ -84,7 +88,10 @@ async function attemptSend(msg, cmdResponse, opts) {
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
         if (runtime.bot != "backup") {
             opts.reply = { messageReference: msg.id };
-            await msg.channel.send(cmdResponse.res, opts);
+            if(cmdResponse.res != "") {
+                opts.content = cmdResponse.res;
+            }
+            await msg.channel.send(opts);
         }
     }
 }

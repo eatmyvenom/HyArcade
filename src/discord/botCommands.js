@@ -11,24 +11,18 @@ let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
 let ustatsCmd = require("./Commands/UnlinkedStats");
-let dataRawCmd = require("./Commands/GetDataRaw");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
 let MKinvCmd = require("./Commands/MakeInviteEmbed");
 let MKhookCmd = require("./Commands/MakeHook");
 let UpdRolesCmd = require("./Commands/UpdateRoles");
-let NameHistCmd = require("./Commands/NameHistory");
-let WhoISCmd = require("./Commands/WhoIS");
 let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
-const MiniWalls = require("./Commands/MiniWalls");
-const MiniWallsLB = require("./Commands/MiniWallsLB");
-const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
-        if(Runtime.fromJSON().dbERROR) {
+        if(Runtime.fromJSON().dbERROR || Runtime.fromJSON().apiDown) {
             return { res :"", embed: embeds.dbded }
         }
         let cmdArr = msg.content.slice(1).split(" ");
