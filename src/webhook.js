@@ -21,7 +21,8 @@ async function sendToDiscord(content = "", webhookID = config.webhook.id, webhoo
         return;
     }
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
-    await hook.send("" + content, {
+    await hook.send({
+        content: content,
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
     });
@@ -32,7 +33,8 @@ async function sendToDiscord(content = "", webhookID = config.webhook.id, webhoo
 
 async function sendBasic(content, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
-    await hook.send(content, {
+    await hook.send({
+        content : content,
         username: webhook.username,
         avatarURL: webhook.pfp,
     });
