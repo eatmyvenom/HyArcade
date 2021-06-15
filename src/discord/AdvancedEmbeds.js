@@ -1182,7 +1182,7 @@ module.exports = class AdvancedEmbeds {
         let date = new Date(updateTime.toString());
 
         let embed = new MessageEmbed()
-            .setTitle(title)
+            .setTitle(`:mag_right: ${title} stats`)
             .setAuthor(`${rank} ${acc.name}`, null, "https://hyarcade.xyz/player.html?q=" + acc.name)
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
