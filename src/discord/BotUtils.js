@@ -142,12 +142,12 @@ module.exports = class BotUtils {
             name = msg.member.displayName;
         }
 
-        await hook.send(msg.content, { username: name, avatarURL: pfp });
-        await hook.send(msg.url, { username: name, avatarURL: pfp });
+        await hook.send({content: msg.content, username: name, avatarURL: pfp });
+        await hook.send({content: msg.url, username: name, avatarURL: pfp });
     }
 
     static async logCommand(command, args, author, link) {
-        await BotUtils.msgCopyHook.send(Embed.execution(command, args, author, link));
+        await BotUtils.msgCopyHook.send({ embeds : [Embed.execution(command, args, author, link)]});
     }
 
     static getBlacklistRes() {
