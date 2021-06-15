@@ -18,7 +18,7 @@ module.exports = class ButtonGenerator {
             }
 
             case "pg" : {
-                leftTxt = "Arcade";
+                leftTxt = "Overall";
                 leftID = "arc";
                 rightTxt = "Farm hunt";
                 rightID = "fh"
@@ -148,7 +148,7 @@ module.exports = class ButtonGenerator {
             case "sim" : {
                 leftTxt = "Capture the wool";
                 leftID = "ctw";
-                rightTxt = "Arcade";
+                rightTxt = "Overall";
                 rightID = "arc";
                 break;
             }

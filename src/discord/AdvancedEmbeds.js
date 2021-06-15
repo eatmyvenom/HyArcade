@@ -643,6 +643,7 @@ module.exports = class AdvancedEmbeds {
         let lvl = Math.round(acc.level * 100) / 100;
         lvl = "" + lvl;
         let gamename = "";
+        let title = "";
 
         let fields = [];
 
@@ -652,11 +653,12 @@ module.exports = class AdvancedEmbeds {
             case "partygames":
             case "pg": {
                 fields.push({
-                    name: "Party games wins",
+                    name: "Wins",
                     value: formatNum(numberify(acc.wins)),
                     inline: true,
                 });
                 gamename = "pg";
+                title = "Party games"
                 break;
             }
 
@@ -676,6 +678,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.farmhuntShit)),
                     inline: true,
                 });
+                title = "Farm hunt"
                 gamename = "fh"
                 break;
             }
@@ -696,6 +699,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
                     inline: true,
                 });
+                title = "Hypixel says"
                 gamename = "hs"
                 break;
             }
@@ -730,6 +734,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.hitwRounds)),
                     inline: true,
                 });
+                title = "Hole in the wall"
                 gamename = "hitw"
                 break;
             }
@@ -792,6 +797,7 @@ module.exports = class AdvancedEmbeds {
                     value: "" + (Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100),
                     inline: true,
                 });
+                title = "Mini walls";
                 gamename = "mw";
                 break;
             }
@@ -827,7 +833,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.extras.footballKicks)),
                     inline: true,
                 });
-                
+                title = "Football"
                 gamename = "fb"
                 break;
             }
@@ -844,7 +850,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.enderSpleefWins)),
                     inline: true,
                 });
-                
+                title = "Ender spleef"
                 gamename = "es"
                 break;
             }
@@ -877,6 +883,7 @@ module.exports = class AdvancedEmbeds {
                     value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
                     inline: true,
                 });
+                title = "Throw out"
                 gamename = "to"
                 break;
             }
@@ -906,6 +913,7 @@ module.exports = class AdvancedEmbeds {
                     value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
                     inline: true,
                 });
+                title = "Galaxy wars";
                 gamename = "gw"
                 break;
             }
@@ -924,7 +932,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.extras.dragonWarsKills)),
                     inline: true,
                 });
-                
+                title = "Dragon wars";
                 gamename = "dw"
                 break;
             }
@@ -956,6 +964,7 @@ module.exports = class AdvancedEmbeds {
                     value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
                     inline: true,
                 });
+                title = "Bounty hunters";
                 gamename = "bh"
                 break;
             }
@@ -981,6 +990,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
                     inline: true,
                 });
+                title = "Blocking dead";
                 gamename = "bd"
                 break;
             }
@@ -1014,6 +1024,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.extras.HNSHiderWins)),
                     inline: true,
                 });
+                title = "Hide and seek";
                 gamename = "hns"
                 break;
             }
@@ -1030,7 +1041,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.zombiesWins)),
                     inline: true,
                 });
-                
+                title = "Zombies"
                 gamename = "z"
                 break;
             }
@@ -1053,6 +1064,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.ctwWoolCaptured)),
                     inline: true,
                 });
+                title = "Capture the wool"
                 gamename = "ctw"
                 break;
             }
@@ -1071,7 +1083,7 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.pixelPaintersWins)),
                     inline: true,
                 });
-                
+                title = "Pixel painters"
                 gamename = "pp";
                 break;
             }
@@ -1110,7 +1122,7 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 gamename = "sim"
-                
+                title = "Seasonal Games"
                 break;
             }
 
@@ -1155,6 +1167,7 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 gamename = "arc"
+                title = "Overall"
                 break;
             }
         }
@@ -1169,6 +1182,7 @@ module.exports = class AdvancedEmbeds {
         let date = new Date(updateTime.toString());
 
         let embed = new MessageEmbed()
+            .setTitle(title)
             .setAuthor(`${rank} ${acc.name}`, null, "https://hyarcade.xyz/player.html?q=" + acc.name)
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
