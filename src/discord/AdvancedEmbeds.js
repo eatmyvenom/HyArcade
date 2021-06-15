@@ -721,6 +721,11 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 fields.push({
+                    name: "HITW qf",
+                    value : `${acc.hitwQual + acc.hitwFinal}`,
+                    inline : true
+                });
+                fields.push({
                     name: "HITW walls",
                     value: formatNum(numberify(acc.hitwRounds)),
                     inline: true,
@@ -739,51 +744,51 @@ module.exports = class AdvancedEmbeds {
             case "miniwalls": {
                 // <br>
                 fields.push({
-                    name: "Mini walls wins",
+                    name: "MW wins",
                     value: formatNum(numberify(acc.miniWallsWins)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Mini walls kills",
+                    name: "MW kills",
                     value: formatNum(numberify(acc.miniWalls.kills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Mini walls arrows shot",
+                    name: "MW arrows shot",
                     value: formatNum(numberify(acc.miniWalls.arrowsShot)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Mini walls arrows hit",
+                    name: "MW arrows hit",
                     value: formatNum(numberify(acc.miniWalls.arrowsHit)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Mini walls final kills",
+                    name: "MW final kills",
                     value: formatNum(numberify(acc.miniWalls.finalKills)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Mini walls wither kills",
+                    name: "MW wither kills",
                     value: formatNum(numberify(acc.miniWalls.witherKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Mini walls wither damage",
+                    name: "MW wither damage",
                     value: formatNum(numberify(acc.miniWalls.witherDamage)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Mini walls deaths",
+                    name: "MW deaths",
                     value: formatNum(numberify(acc.miniWalls.deaths)),
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
+                    name: "MW KDR",
                     value: "" + (Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100),
                     inline: true,
                 });
@@ -856,12 +861,6 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.throwOutWins)),
                     inline: true,
                 });
-                fields.push({
-                    name: "KDR",
-                    value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
-                    inline: true,
-                });
-                
                 // <br>
                 fields.push({
                     name: "Throw out kills",
@@ -871,6 +870,11 @@ module.exports = class AdvancedEmbeds {
                 fields.push({
                     name: "Throw out deaths",
                     value: formatNum(numberify(acc.extras.throwOutDeaths)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
                     inline: true,
                 });
                 gamename = "to"
@@ -888,13 +892,6 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
-                    value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
-                    inline: true,
-                });
-                
-                // <br>
-                fields.push({
                     name: "Galaxy wars kills",
                     value: formatNum(numberify(acc.extras.galaxyWarsKills)),
                     inline: true,
@@ -902,6 +899,11 @@ module.exports = class AdvancedEmbeds {
                 fields.push({
                     name: "Galaxy wars deaths",
                     value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
                     inline: true,
                 });
                 gamename = "gw"
@@ -917,9 +919,6 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.dragonWarsWins)),
                     inline: true,
                 });
-                
-                
-                // <br>
                 fields.push({
                     name: "Dragon wars kills",
                     value: formatNum(numberify(acc.extras.dragonWarsKills)),
@@ -943,13 +942,6 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
-                    value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
-                    inline: true,
-                });
-                
-                // <br>
-                fields.push({
                     name: "Bounty hunters kills",
                     value: formatNum(numberify(acc.extras.bountyHuntersKills)),
                     inline: true,
@@ -957,6 +949,11 @@ module.exports = class AdvancedEmbeds {
                 fields.push({
                     name: "Bounty hunters deaths",
                     value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
+                    inline: true,
+                });
+                fields.push({
+                    name: "KDR",
+                    value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
                     inline: true,
                 });
                 gamename = "bh"
@@ -974,9 +971,6 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.blockingDeadWins)),
                     inline: true,
                 });
-                
-                
-                // <br>
                 fields.push({
                     name: "Blocking dead kills",
                     value: formatNum(numberify(acc.extras.blockingDeadKills)),
@@ -1010,8 +1004,6 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.hnsKills)),
                     inline: true,
                 });
-                
-                // <br>
                 fields.push({
                     name: "Hide and seek seeker wins",
                     value: formatNum(numberify(acc.extras.HNSSeekerWins)),
