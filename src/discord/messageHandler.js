@@ -91,6 +91,9 @@ async function attemptSend(msg, cmdResponse, opts) {
             if(cmdResponse.res != "") {
                 opts.content = cmdResponse.res;
             }
+            if(cmdResponse.embed != undefined) {
+                opts.embeds = [ cmdResponse.embed ];
+            }
             await msg.channel.send(opts);
         }
     }
