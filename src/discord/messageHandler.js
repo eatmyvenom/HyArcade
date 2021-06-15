@@ -56,7 +56,7 @@ async function miniWallsVerify(msg) {
     let ign = msg.content.trim();
     let uuid = await mojangRequest.getUUID(ign);
     if(uuid == undefined) {
-        await msg.channel.send(errIgnNull);
+        await msg.channel.send({ embeds : [errIgnNull]});
         return;
     }
     let tag = msg.author.tag;
@@ -72,9 +72,9 @@ async function miniWallsVerify(msg) {
         await msg.member.roles.remove('850033543425949736');
         await msg.member.roles.add('789721304722178069');
         await msg.member.setNickname(acc.name)
-        await msg.channel.send(linkSuccess);
+        await msg.channel.send({ embeds : [linkSuccess]});
     } else {
-        await msg.channel.send(errHypixelMismatch);
+        await msg.channel.send({ embeds : [errHypixelMismatch]});
     }
 }
 
