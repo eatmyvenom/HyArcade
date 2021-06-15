@@ -19,6 +19,7 @@ let UpdRolesCmd = require("./Commands/UpdateRoles");
 let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
+const EZ = require("./Commands/EZ");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -133,6 +134,10 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "mkhook": {
             return await MKhookCmd.execute(args, author);
+        }
+
+        case "ez": {
+            return await EZ.execute(args, author);
         }
 
         case "updroles": {

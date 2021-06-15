@@ -49,6 +49,9 @@ module.exports = class BotEvents {
         hackers = hackers.toString().split('\n');
 
         BotUtils.fileCache.hackers = hackers;
+        ezmsgs = await fs.readFile("data/ez");
+        ezmsgs = hackers.toString().split('\n');
+        BotUtils.fileCache.ezmsgs = ezmsgs;
         logger.out("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
@@ -85,7 +88,7 @@ module.exports = class BotEvents {
         logger.out("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
-        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers
+        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs
         try {
             dayacclist = await utils.readJSON("accounts.day.json");
             weeklyacclist = await utils.readJSON("accounts.weekly.json");
@@ -96,6 +99,8 @@ module.exports = class BotEvents {
             updatetime = await fs.readFile("timeupdate");
             hackers = await fs.readFile("data/hackerlist");
             hackers = hackers.toString().split('\n');
+            ezmsgs = await fs.readFile("data/ez");
+            ezmsgs = ezmsgs.toString().split('\n');
         } catch (e) {
             error = true;
             run.dbERROR = true;
@@ -112,6 +117,7 @@ module.exports = class BotEvents {
         BotUtils.fileCache.status = status
         BotUtils.fileCache.updatetime = updatetime
         BotUtils.fileCache.hackers = hackers;
+        BotUtils.fileCache.ezmsgs = ezmsgs;
 
 
 
