@@ -1,6 +1,7 @@
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
+const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 
 async function commandHandler(interaction) {
@@ -28,8 +29,10 @@ async function commandHandler(interaction) {
 }
 
 async function buttonHandler(interaction) {
-    let updatedData = await ButtonParser(interaction);
-    await interaction.update(updatedData.toDiscord());
+    if(await ForceOGuser(interaction)) {
+        let updatedData = await ButtonParser(interaction);
+        await interaction.update(updatedData.toDiscord());
+    }
 }
 
 async function interactionHandler(interaction) {
