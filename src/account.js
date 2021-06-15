@@ -96,6 +96,7 @@ class Account {
     hat = "";
     hypixelDiscord = "";
     discord = "";
+    updateTime = 0;
 
     /**
      * Creates an instance of Account.
@@ -158,6 +159,7 @@ class Account {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
         if (json.player && json.player.stats && json.player.stats.Arcade) {
+            this.updateTime = Date.now();
             let arcade = json.player.stats.Arcade;
 
             let wins = 0;
