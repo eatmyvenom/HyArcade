@@ -200,6 +200,6 @@ exports.gamecounts = {
             "required": false
         }
     ]
- }
+}
 
 exports.leaderboard = require("./Commands/Leaderboard");

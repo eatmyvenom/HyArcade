@@ -6,7 +6,14 @@ const CommandParser = require("./interactions/CommandParser");
 const interactionObjects = require("./interactions/interactionObjects")
 
 async function commandHandler(interaction) {
-    let responseObj = await CommandParser(interaction);
+    let responseObj;
+    try{
+        responseObj = await CommandParser(interaction);
+    } catch(e) {
+        logger.err(e);
+        await BotUtils.errHook.send({ content : e.toString() });
+        return;
+    }
 
     let c = responseObj.b ? [ responseObj.b ] : undefined;
     let content = responseObj.res != "" ? responseObj.res : undefined

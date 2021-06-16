@@ -119,7 +119,7 @@ module.exports = async (interaction) => {
         }
 
         case "arcadehelp": {
-            if(opts.size) {
+            if(opts.size > 0) {
                 return { res : "" , embed : InteractionUtils.helpEmbed()};
             } else {
                 return { res : "" , embed : InteractionUtils.helpTopic(opts.get("topic").value)};
