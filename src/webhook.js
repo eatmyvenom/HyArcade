@@ -493,7 +493,7 @@ async function getLB(prop, timetype, limit, category) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time).setColor(0x984daf).setDescription(res);
+    let embed = new MessageEmbed().setTitle(time).setColor(0xc60532).setDescription(res);
 
     if (res.length > 6000) {
         return new MessageEmbed().setTitle("ERROR").setColor(0xff0000).setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
