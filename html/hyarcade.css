@@ -72,14 +72,9 @@ footer {
 footer > a {
     display:block;
     color: #44a3e7 !important;
-    border : none!important;
 }
 
-footer > a:hover {
-    border : none;
-}
-
-footer > div {
+footer > a, footer > div, footer > a:hover, footer > div:hover {
     border : none;
 }
 

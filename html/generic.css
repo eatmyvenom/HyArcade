@@ -116,7 +116,18 @@ footer > a:hover {
     border : none;
 }
 
-footer > div {
+footer {
+    margin-top : 1%;
+    border-top : 1px solid #ff3399;
+    display: block;
+}
+
+footer > a {
+    display:block;
+    color: #44a3e7 !important;
+}
+
+footer > a, footer > div, footer > a:hover, footer > div:hover {
     border : none;
 }
 
