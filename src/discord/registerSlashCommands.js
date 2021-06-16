@@ -16,8 +16,6 @@ async function commandHandler(interaction) {
         return;
     }
 
-    await logCmd(interaction);
-
     let c = responseObj.b ? [ responseObj.b ] : undefined;
     let content = responseObj.res != "" ? responseObj.res : undefined
 
@@ -38,6 +36,7 @@ async function commandHandler(interaction) {
     let logString = `${interaction.member.user.tag} invoked command interaction \`${interaction.commandName}\` with options \`${JSON.stringify(interaction.options)}\``;
     logger.out(logString.replace(/`/g, "'"));
     await BotUtils.logHook.send(logString);
+    await logCmd(interaction);
 }
 
 async function logCmd(interaction) {
