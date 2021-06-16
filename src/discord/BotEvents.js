@@ -119,8 +119,6 @@ module.exports = class BotEvents {
         BotUtils.fileCache.hackers = hackers;
         BotUtils.fileCache.ezmsgs = ezmsgs;
 
-
-
         if(!error && run.dbERROR) {
             run.dbERROR = false;
             await run.save();
