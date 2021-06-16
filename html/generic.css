@@ -130,6 +130,7 @@ footer > a {
 
 footer > a, footer > div, footer > a:hover, footer > div:hover {
     border : none!important;
+    box-shadow: none;
 }
 
 footer > * {
