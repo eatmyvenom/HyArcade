@@ -70,6 +70,8 @@ footer {
 }
 
 footer > a {
+    display:block;
+    color: #44a3e7 !important;
     border : none!important;
 }
 
