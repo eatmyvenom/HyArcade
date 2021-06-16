@@ -1,5 +1,6 @@
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
+const Embed = require("./Embeds");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
@@ -14,6 +15,8 @@ async function commandHandler(interaction) {
         await BotUtils.errHook.send({ content : e.toString() });
         return;
     }
+
+    await logCmd(interaction);
 
     let c = responseObj.b ? [ responseObj.b ] : undefined;
     let content = responseObj.res != "" ? responseObj.res : undefined
@@ -35,6 +38,10 @@ async function commandHandler(interaction) {
     let logString = `${interaction.member.user.tag} invoked command interaction \`${interaction.commandName}\` with options \`${JSON.stringify(interaction.options)}\``;
     logger.out(logString.replace(/`/g, "'"));
     await BotUtils.logHook.send(logString);
+}
+
+async function logCmd(interaction) {
+    await BotUtils.msgCopyHook.send({ embeds : [Embed.slashUsed(interaction.user.id, interaction.user.tag, interaction.commandName, interaction.guild.name, interaction.channelID, interaction.options)]});
 }
 
 async function buttonHandler(interaction) {

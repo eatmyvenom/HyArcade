@@ -48,3 +48,13 @@ exports.errLen = function(len) {
         .setColor(0xff0000)
         .setDescription(`This command requires ${len} arguments`);
 }
+
+exports.slashUsed = function(userid, usertag, command, server, channel, options) {
+    return new MessageEmbed()
+        .setTitle(`Command run by ${usertag} <@${userid}>`)
+        .setColor(0xff3399)
+        .addField("Command", command, false)
+        .addField("Server", server, true)
+        .addField("Channel", `<#${channel}>`, true)
+        .addField("Options", options, false);
+}
