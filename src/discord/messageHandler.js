@@ -30,6 +30,9 @@ async function sendAsHook(hook, cmdResponse) {
         if(cmdResponse.res != "") {
             obj.content = cmdResponse.res;
         }
+        if(cmdResponse.img != undefined) {
+            obj.files = [ cmdResponse.img ];
+        }
         await hook.send(obj);
         return true;
     } catch (e) {
@@ -53,6 +56,7 @@ function randomBtw() {
 }
 
 async function miniWallsVerify(msg) {
+    if(msg.author.id == '156952208045375488') { return; }
     let ign = msg.content.trim();
     let uuid = await mojangRequest.getUUID(ign);
     if(uuid == undefined) {
@@ -97,6 +101,9 @@ async function attemptSend(msg, cmdResponse, opts) {
             }
             if(cmdResponse.embed != undefined) {
                 opts.embeds = [ cmdResponse.embed ];
+            }
+            if(cmdResponse.img != undefined) {
+                opts.files = [ cmdResponse.img ];
             }
             await msg.channel.send(opts);
         }
@@ -194,7 +201,7 @@ module.exports = async function messageHandler(msg) {
     if(msg.channel.id == '742761029586649148') await pgVerify(msg);
 
     let cmdResponse = await getCmdRes(msg);
-    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined);
+    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
