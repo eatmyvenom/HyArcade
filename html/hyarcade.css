@@ -70,5 +70,9 @@ footer {
 }
 
 footer > a {
+    border : none!important;
+}
+
+footer > a:hover {
     border : none;
 }

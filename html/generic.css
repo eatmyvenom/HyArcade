@@ -99,3 +99,17 @@ input {
             position: relative;
         }
 }
+
+footer {
+    margin-top : 1%;
+    border-top : 1px solid #ff3399;
+    display: block;
+}
+
+footer > a {
+    border : none!important;
+}
+
+footer > a:hover {
+    border : none;
+}
