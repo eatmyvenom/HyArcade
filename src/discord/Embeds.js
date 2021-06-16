@@ -10,24 +10,52 @@ exports.waiting = new MessageEmbed()
     .setFooter("Please avoid using this unless they should actually be in the database, too many people slows down the overall system.");
 
 exports.accsAdded = function (res) {
-    return new MessageEmbed().setTitle("Accounts added").setDescription(res).setFooter("It will take a little while for these accounts to be fully added to the database, please be patient.").setTimestamp(Date.now()).setColor(0x44a3e7);
+    return new MessageEmbed()
+        .setTitle("Accounts added")
+        .setDescription(res)
+        .setFooter("It will take a little while for these accounts to be fully added to the database, please be patient.")
+        .setTimestamp(Date.now())
+        .setColor(0x44a3e7);
 };
 
-exports.errIptIgn = new MessageEmbed().setTitle("ERROR").setDescription(`Input a name or uuid to link your discord to! Use ${cfg.commandCharacter}help for more info on how to use the verify command.`).setColor(0xff0000);
+exports.errIptIgn = new MessageEmbed()
+                        .setTitle("ERROR")
+                        .setDescription(`Input a name or uuid to link your discord to! Use ${cfg.commandCharacter}help for more info on how to use the verify command.`)
+                        .setColor(0xc60532);
 
-exports.errIgnNull = new MessageEmbed().setTitle("ERROR").setDescription(`The ign you specified does not exist or has been changed.`).setColor(0xff0000);
+exports.errIgnNull = new MessageEmbed()
+                        .setTitle("ERROR")
+                        .setDescription(`The ign you specified does not exist or has been changed.`)
+                        .setColor(0xc60532);
 
-exports.errPlayerLinked = new MessageEmbed().setTitle("ERROR").setDescription("This player has already been linked!").setColor(0xff0000);
+exports.errPlayerLinked = new MessageEmbed()
+                            .setTitle("ERROR")
+                            .setDescription("This player has already been linked!")
+                            .setColor(0xc60532);
 
-exports.errAccLinked = new MessageEmbed().setTitle("ERROR").setDescription("This user has already been linked!").setColor(0xff0000);
+exports.errAccLinked = new MessageEmbed()
+                            .setTitle("ERROR")
+                            .setDescription("This user has already been linked!")
+                            .setColor(0xc60532);
 
-exports.linkSuccess = new MessageEmbed().setTitle("Success").setDescription(`Account linked successfully!`).setColor(0x00d492);
+exports.linkSuccess = new MessageEmbed()
+                            .setTitle("Success")
+                            .setDescription(`Account linked successfully!`)
+                            .setColor(0x00cc66);
 
-exports.errHypixelMismatch = new MessageEmbed().setTitle("ERROR").setDescription("Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. If you are confused then just try linking via the hystats bot since it uses the same mechanism.").setColor(0xff0000);
+exports.errHypixelMismatch = new MessageEmbed()
+                                .setTitle("ERROR")
+                                .setDescription("Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Try `/arcadehelp Verify` if you are still confused")
+                                .setColor(0x00cc66);
 
 exports.execution = function (name, args, author, link) {
     if (args == "") args = "none";
-    return new MessageEmbed().setTitle("Command execution").setColor(0x2f3136).addField("Name", name, true).addField("Args", `\`${args}\``, true).addField("User", `<@${author}>`, true).addField("Link", `[Message Link](${link})`, true);
+    return new MessageEmbed()
+                .setTitle("Command execution")
+                .setColor(0x2eb8a3).addField("Name", name, true)
+                .addField("Args", `\`${args}\``, true)
+                .addField("User", `<@${author}>`, true)
+                .addField("Link", `[Message Link](${link})`, true);
 };
 
 exports.dbded = new MessageEmbed()
