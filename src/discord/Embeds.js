@@ -56,5 +56,5 @@ exports.slashUsed = function(userid, usertag, command, server, channel, options)
         .addField("Command", command, false)
         .addField("Server", server, true)
         .addField("Channel", `<#${channel}>`, true)
-        .addField("Options", options, false);
+        .addField("Options", JSON.stringify(options), false);
 }
