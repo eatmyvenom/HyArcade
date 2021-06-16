@@ -27,7 +27,7 @@ exports.errHypixelMismatch = new MessageEmbed().setTitle("ERROR").setDescription
 
 exports.execution = function (name, args, author, link) {
     if (args == "") args = "none";
-    return new MessageEmbed().setTitle("Command execution").setColor(0x2f3136).addField("Name", name, false).addField("Args", `\`${args}\``, false).addField("User", `<@${author}>`, false).addField("Link", `[Message Link](${link})`);
+    return new MessageEmbed().setTitle("Command execution").setColor(0x2f3136).addField("Name", name, true).addField("Args", `\`${args}\``, true).addField("User", `<@${author}>`, true).addField("Link", `[Message Link](${link})`, true);
 };
 
 exports.dbded = new MessageEmbed()
