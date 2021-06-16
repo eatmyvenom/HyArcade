@@ -204,6 +204,7 @@ async function updateAllAccounts() {
             let acc = accounts[i];
             let newAcc = fullList.find(a=>a.uuid==acc.uuid);
             if(newAcc.xp > acc.xp) {
+                logger.out(`Setting ${newAcc}'s data from outside source!`);
                 acc.setData(newAcc);
             }
         }
