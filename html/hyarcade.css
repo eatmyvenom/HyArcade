@@ -62,3 +62,13 @@ article {
         grid-template-columns: auto auto auto auto;
     }
 }
+
+footer {
+    margin-top : 1%;
+    border-top : 1px solid #ff3399;
+    display: block;
+}
+
+footer > a {
+    border : none;
+}
