@@ -115,3 +115,11 @@ footer > a {
 footer > a:hover {
     border : none;
 }
+
+footer > div {
+    border : none;
+}
+
+footer > * {
+    margin : 1.5%;
+}
