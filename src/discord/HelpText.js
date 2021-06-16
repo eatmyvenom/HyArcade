@@ -8,7 +8,7 @@ Link your discord to your account
 To link, your discord first has to be set in your hypixel social media.
 
 To set this value do the following on hypixel:
-Go to lobby -> Click the player head -> Click "Social Media" -> Click discord -> put your discord tag in the chat.`;
+Go to lobby -> Click the player head -> Click "Social Media" -> Click discord -> put your discord tag (username#numbers) in the chat.`;
 
 exports.link = `\`/link [player] [discord]\`
 Link a minecraft account to a discord ID. This is only for trusted users as it means that any discord account can be linked to any minecraft account

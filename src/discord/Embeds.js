@@ -46,7 +46,7 @@ exports.linkSuccess = new MessageEmbed()
 exports.errHypixelMismatch = new MessageEmbed()
                                 .setTitle("ERROR")
                                 .setDescription("Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Try `/arcadehelp Verify` if you are still confused")
-                                .setColor(0x00cc66);
+                                .setColor(0xc60532);
 
 exports.execution = function (name, args, author, link) {
     if (args == "") args = "none";
