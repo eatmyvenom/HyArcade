@@ -51,9 +51,10 @@ exports.errLen = function(len) {
 
 exports.slashUsed = function(userid, usertag, command, server, channel, options) {
     return new MessageEmbed()
-        .setTitle(`Command run by ${usertag} <@${userid}>`)
+        .setTitle(`Command run by ${usertag}`)
         .setColor(0xff3399)
         .addField("Command", command, false)
+        .addField("User", `<@${userid}>`, true)
         .addField("Server", server, true)
         .addField("Channel", `<#${channel}>`, true)
         .addField("Options", JSON.stringify(options), false);
