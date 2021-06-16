@@ -52,7 +52,8 @@ exports.execution = function (name, args, author, link) {
     if (args == "") args = "none";
     return new MessageEmbed()
                 .setTitle("Command execution")
-                .setColor(0x2eb8a3).addField("Name", name, true)
+                .setColor(0x2eb8a3)
+                .addField("Name", name, true)
                 .addField("Args", `\`${args}\``, true)
                 .addField("User", `<@${author}>`, true)
                 .addField("Link", `[Message Link](${link})`, true);
