@@ -46,3 +46,9 @@ a {
 .ipttxt {
     display: none;
 }
+
+footer {
+    margin-top : 1%;
+    border-top : 1px solid #ff3399;
+    display: block;
+}
