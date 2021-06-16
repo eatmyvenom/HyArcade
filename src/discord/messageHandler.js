@@ -63,6 +63,10 @@ async function miniWallsVerify(msg) {
     let id = msg.author.id;
     let acc = new Account(ign, 0, uuid);
     await acc.updateData();
+    let dbAcc = BotUtils.resolveAccount(uuid, msg, false);
+    if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
+        return;
+    }
     if(acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
         await addAccounts("others", [uuid]);
         let disclist = BotUtils.fileCache.disclist;
