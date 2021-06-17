@@ -34,7 +34,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
     if (acc == undefined) {
         let embed = Embeds.waiting;
 
-        let tmpMsg = await rawMsg.channel.send("", { embed: embed });
+        let tmpMsg = await rawMsg.channel.send({ embed: embed });
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
             await tmpMsg.delete();
@@ -53,14 +53,14 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
     let disclist = BotUtils.fileCache.disclist;
     if (disclist[discord]) {
         let embed = Embeds.errPlayerLinked;
-        return { res: "", embed: embed };
+        return { res: undefined, embed: embed };
     } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
         let embed = Embeds.errAccLinked;
-        return { res: "", embed: embed };
+        return { res: undefined, embed: embed };
     }
 
     disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
     let embed = Embeds.linkSuccess;
-    return { res: "", embed: embed };
+    return { res: undefined, embed: embed };
 });
