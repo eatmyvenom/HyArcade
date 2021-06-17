@@ -18,7 +18,7 @@ module.exports = class ImageGenerator {
         this.context.fill();
     }
 
-    writeText(txt, x, y, align, color = "#ffffff", size = "32px") {
+    writeText(txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
         this.context.font = `${size} Fira Code`;
         this.context.fillStyle = color;
         this.context.textAlign = align;
@@ -26,12 +26,12 @@ module.exports = class ImageGenerator {
         txt = txt.split("\n");
         for(let t of txt) {
             this.context.fillText(t, x, y);
-            y += 36;
+            y += spacing;
         }
     }
 
-    writeTextCenter(txt) {
-        this.writeText(txt, this.canvas.width / 2, 84, "center");
+    writeTextCenter(txt, spacing = 36) {
+        this.writeText(txt, this.canvas.width / 2, 96, "center", "#ffffff", "32px", spacing);
     }
 
     writeTitle(txt) {

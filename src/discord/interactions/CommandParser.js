@@ -18,6 +18,7 @@ const Compare = require("../Commands/Compare");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
+const Profile = require("../Commands/Profile");
 
 function getArg(i,a) {
     let v = i.options.get(a);
@@ -132,6 +133,10 @@ module.exports = async (interaction) => {
 
         case Compare.name: {
             return await Compare.execute([ getArg(interaction, "player1"), getArg(interaction, "player2"), getArg(interaction, "game") ], authorID, undefined, interaction);
+        }
+
+        case Profile.name: {
+            return await Profile.execute([ getArg(interaction, "player")], authorID, null, interaction);
         }
     }
 
