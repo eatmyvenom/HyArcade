@@ -23,7 +23,8 @@ async function commandHandler(interaction) {
         await interaction.reply({
             content : content,
             embeds: [responseObj.embed],
-            components : c
+            components : c,
+            files : [ responseObj.img ]
         });
     } else {
         await interaction.webhook.send({

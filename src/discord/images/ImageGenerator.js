@@ -14,7 +14,7 @@ module.exports = class ImageGenerator {
         this.context.drawImage(bg, 0, 0, this.canvas.width, this.canvas.height);
         this.context.beginPath();
         this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.fillStyle = "#181c3088";
+        this.context.fillStyle = "#181c3099";
         this.context.fill();
     }
 
