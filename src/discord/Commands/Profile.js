@@ -43,6 +43,14 @@ function getMain(acc) {
     return `${game.replace(/_/g, " ")} wins - ${numberify(max)}`;
 }
 
+function lastSeen(acc) {
+    if(acc.isLoggedIn) {
+        return "right now"
+    } else {
+        timeAgo.format(acc.lastLogout)
+    }
+}
+
 module.exports = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
     let acc;
@@ -64,7 +72,7 @@ module.exports = new Command("profile", ["*"], async (args, rawMsg, interaction)
         `Achievements - ${numberify(acc.achievementPoints)}\n` +
         `Karma - ${numberify(acc.karma)}\n` +
         getMain(acc) + "\n" +
-        `Last seen - ${timeAgo.format(acc.lastLogout)}`;
+        `Last seen - ${lastSeen(acc)}`;
 
     img.writeTextCenter(txt, 42);
     let attachment = img.toDiscord();
