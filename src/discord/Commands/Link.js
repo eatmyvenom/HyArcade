@@ -53,14 +53,14 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
     let disclist = BotUtils.fileCache.disclist;
     if (disclist[discord]) {
         let embed = Embeds.errPlayerLinked;
-        return { res: undefined, embed: embed };
+        return { res: "", embed: embed };
     } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
         let embed = Embeds.errAccLinked;
-        return { res: undefined, embed: embed };
+        return { res: "", embed: embed };
     }
 
     disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
     let embed = Embeds.linkSuccess;
-    return { res: undefined, embed: embed };
+    return { res: "", embed: embed };
 });
