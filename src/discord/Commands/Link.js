@@ -34,7 +34,6 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
     if (acc == undefined) {
         let embed = Embeds.waiting;
 
-        let tmpMsg = await rawMsg.channel.send({ embed: embed });
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
             await tmpMsg.delete();
@@ -45,7 +44,6 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
         acc = new Account(player, 0, uuid);
         await addAccounts("others", [uuid]);
         await acc.updateHypixel();
-        await tmpMsg.delete();
     }
 
     uuid = acc.uuid;
