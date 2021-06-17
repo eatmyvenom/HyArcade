@@ -47,7 +47,7 @@ function lastSeen(acc) {
     if(acc.isLoggedIn) {
         return "right now"
     } else {
-        timeAgo.format(acc.lastLogout)
+        return timeAgo.format(acc.lastLogout)
     }
 }
 
