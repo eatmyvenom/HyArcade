@@ -16,21 +16,24 @@ async function commandHandler(interaction) {
         return;
     }
 
+    let e = responseObj.embed ? [ responseObj.embed ] : undefined;
+    let f = responseObj.img ? [ responseObj.img ] : undefined;
     let c = responseObj.b ? [ responseObj.b ] : undefined;
-    let content = responseObj.res != "" ? responseObj.res : undefined
+    let content = responseObj.res != "" ? responseObj.res : undefined;
 
     if (!interaction.deferred && !interaction.replied) {
         await interaction.reply({
             content : content,
-            embeds: [responseObj.embed],
+            embeds: e,
             components : c,
-            files : [ responseObj.img ]
+            files : f
         });
     } else {
         await interaction.webhook.send({
             content: content,
-            embeds: [responseObj.embed],
-            components : c
+            embeds: e,
+            components : c,
+            files : f
         });
     }
 
