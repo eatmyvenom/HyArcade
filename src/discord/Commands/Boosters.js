@@ -2,7 +2,6 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const mojangRequest = require("../../mojangRequest");
 const utils = require("../../utils");
-const BotUtils = require("../BotUtils");
 
 module.exports = new Command("boosters", ["*"], async (args, rawMsg, interaction) => {
     let data = await utils.readJSON("boosters.json");

@@ -1,5 +1,4 @@
 const Command = require("../../classes/Command");
-const utils = require("../../utils");
 const Account = require("../../account");
 const mojangRequest = require("../../mojangRequest");
 const BotUtils = require("../BotUtils");

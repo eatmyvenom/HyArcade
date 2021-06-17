@@ -1,4 +1,3 @@
-const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const config = require("../../Config").fromJSON();
 const BotUtils = require("../BotUtils");

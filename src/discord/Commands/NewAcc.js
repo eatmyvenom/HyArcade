@@ -2,7 +2,6 @@ const { addAccounts } = require("../../listUtils");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const Embeds = require("../Embeds");
-const { MessageEmbed } = require("discord.js");
 const { logger } = require("../../utils");
 
 module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {

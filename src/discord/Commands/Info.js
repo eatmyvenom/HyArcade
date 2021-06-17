@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
-const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
 module.exports = new Command("info", ["*"], async (args) => {

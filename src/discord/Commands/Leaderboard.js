@@ -1,10 +1,7 @@
-const { MessageEmbed, Util } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
-const Config = require("../../Config");
 const listUtils = require("../../listUtils");
-const utils = require("../../utils");
-const fs = require("fs/promises");
 const { logger } = require("../../utils");
 
 async function getLB(prop, timetype, limit, category, start) {

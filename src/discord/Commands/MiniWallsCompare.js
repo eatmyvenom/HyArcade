@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
-const AdvancedEmbeds = require("../AdvancedEmbeds");
 const BotUtils = require("../BotUtils");
 const { errLen } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");

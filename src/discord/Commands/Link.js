@@ -1,4 +1,3 @@
-const { MessageEmbed } = require("discord.js");
 const Account = require("../../account");
 const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
