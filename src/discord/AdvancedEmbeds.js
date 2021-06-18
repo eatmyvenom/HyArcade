@@ -1160,7 +1160,6 @@ module.exports = class AdvancedEmbeds {
                     value: formatNum(numberify(acc.karma)),
                     inline: true,
                 });
-                // 
                 fields.push({
                     name: "UUID",
                     value: acc.uuid,
