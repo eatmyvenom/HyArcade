@@ -81,6 +81,9 @@ module.exports = class BotEvents {
     }
 
     static async heartBeat() {
+        let runtime = Runtime.fromJSON();
+        runtime[BotUtils.botMode + "HeartBeat"] = Date.now();
+        await runtime.save()
         logger.out("Heart beat - I'm alive!");
     }
 
