@@ -71,6 +71,6 @@ async function registerAll(client) {
 }
 
 module.exports = async (client) => {
-    await registerAll(client)
+    // await registerAll(client)
     client.on("interaction", interactionHandler);
 };

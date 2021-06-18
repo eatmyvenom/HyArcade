@@ -6,7 +6,6 @@ let statsCommand = require("./Commands/Stats");
 let newAccCmd = require("./Commands/NewAcc");
 let helpCmd = require("./Commands/Help");
 let lbCmd = require("./Commands/Leaderboard");
-let verifyCmd = require("./Commands/LinkMe");
 let countCmd = require("./Commands/GameCounts");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
@@ -45,7 +44,8 @@ async function checkCommands(rawMsg, command, args, author) {
         case "lnm":
         case "verify":
         case "linkme": {
-            return await verifyCmd.execute(args, author, rawMsg);
+            const { Verify } = await import("./Commands/LinkMe.mjs");
+            return await Verify.execute(args, author, rawMsg);
         }
 
         case "stats":

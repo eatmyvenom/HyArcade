@@ -2,7 +2,6 @@ const config = require("../Config").fromJSON();
 const embeds = require("./Embeds");
 
 let linkCmd = require("./Commands/Link");
-let verifyCmd = require("./Commands/LinkMe");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
@@ -25,14 +24,8 @@ async function execute(msg, senderID) {
 async function checkCommands(rawMsg, command, args, author) {
     switch (command.toLowerCase()) {
         case "link":
-        case "ln":
+        case "ln": {
             return await linkCmd.execute(args, author, rawMsg);
-            break;
-
-        case "lnm":
-        case "verify":
-        case "linkme": {
-            return await verifyCmd.execute(args, author, rawMsg);
         }
 
         case "s":

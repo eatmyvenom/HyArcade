@@ -1,11 +1,8 @@
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const ImageGenerator = require("../images/ImageGenerator");
-const TimeAgo = require("javascript-time-ago")
-const en = require('javascript-time-ago/locale/en');
-const InteractionUtils = require("../interactions/InteractionUtils");
-TimeAgo.addDefaultLocale(en)
-const timeAgo = new TimeAgo('en-US');
+import Command from "../../classes/Command.js";
+import BotUtils from "../BotUtils.js";
+import ImageGenerator from "../images/ImageGenerator.js";
+import InteractionUtils from "../interactions/InteractionUtils.js";
+import TimeFormatter from "../Utils/TimeFormatter.js"
 
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(("" + n).replace(/undefined/g, 0).replace(/null/g, 0)));
@@ -47,11 +44,11 @@ function lastSeen(acc) {
     if(acc.isLoggedIn) {
         return "right now"
     } else {
-        return timeAgo.format(acc.lastLogout)
+        return TimeFormatter(acc.lastLogout);
     }
 }
 
-module.exports = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
+export let Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
     let acc;
     if(interaction == undefined) {

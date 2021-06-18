@@ -1,11 +1,11 @@
-const Account = require("../../account");
-const Command = require("../../classes/Command");
-const Embeds = require("../Embeds");
-const mojangRequest = require("../../mojangRequest");
-const utils = require("../../utils");
-const { addAccounts } = require("../../listUtils");
+import Account from "../../account.js";
+import Command from "../../classes/Command.js";
+import Embeds from "../Embeds.js";
+import mojangRequest from "../../mojangRequest.js";
+import utils from "../../utils.js";
+import { addAccounts } from "../../listUtils.js";
 
-module.exports = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
+export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
     if (player == undefined) {
         let embed = Embeds.errIptIgn;
@@ -14,19 +14,8 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg, interaction) 
     let acclist = await utils.readJSON("./accounts.json");
     let acc = acclist.find((a) => a.uuid.toLowerCase() == player.toLowerCase() || a.name.toLowerCase() == player.toLowerCase());
     if (acc == undefined) {
-        let embed = Embeds.waiting;
-
-        let tmpMsg;
-        if (interaction == undefined) {
-            tmpMsg = await rawMsg.channel.send("", { embed: embed });
-        } else {
-            interaction.defer();
-        }
         let uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
-            if (interaction == undefined) {
-                await tmpMsg.delete();
-            }
             let noexistEmbed = Embeds.errIgnNull;
 
             return { res: "", embed: noexistEmbed };
@@ -34,9 +23,6 @@ module.exports = new Command("linkme", ["*"], async (args, rawMsg, interaction) 
         acc = new Account(player, 0, uuid);
         await addAccounts("others", [uuid]);
         await acc.updateHypixel();
-        if (interaction == undefined) {
-            await tmpMsg.delete();
-        }
     }
 
     let tag;

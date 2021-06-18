@@ -1,25 +1,21 @@
 const BotUtils = require("../BotUtils");
-const Account = require("../../account");
 const { addAccounts } = require("../../listUtils");
 const { MessageEmbed } = require("discord.js");
 const InteractionUtils = require("./InteractionUtils");
-const mojangRequest = require("../../mojangRequest");
 const Runtime = require('../../Runtime');
 const embeds = require('../Embeds');
 
 const Leaderboard = require("../Commands/Leaderboard");
-const Verify = require("../Commands/LinkMe");
 const GameCounts = require("../Commands/GameCounts");
 const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
 const Info = require("../Commands/Info");
 const Susser = require("../Commands/Susser");
-const Compare = require("../Commands/Compare");
+const Compare = require("../Commands/Compare.mjs");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
-const Profile = require("../Commands/Profile");
-
+let Commands = null;
 function getArg(i,a) {
     let v = i.options.get(a);
     if(v != undefined) {
@@ -29,6 +25,18 @@ function getArg(i,a) {
 }
 
 module.exports = async (interaction) => {
+    if(Commands == null) {
+        Commands = {};
+        let { Profile } = await import("../Commands/Profile.mjs");
+        let { WhoIS } = await import("../Commands/WhoIS.mjs");
+        let { Verify } = await import("../Commands/LinkMe.mjs");3
+        let { Compare } = await import("../Commands/Compare.mjs");
+        Commands.Profile = Profile;
+        Commands.WhoIS = WhoIS;
+        Commands.Verify = Verify;
+        Commands.Compare = Compare;
+    }
+
     if (!interaction.isCommand()) return;
     if (interaction.guildID == '808077828842455090') return;
     let authorID = interaction.member.user.id;
@@ -83,14 +91,12 @@ module.exports = async (interaction) => {
 
         case "namehistory": {
             let acc = await InteractionUtils.resolveAccount(interaction);
-            let embed = new MessageEmbed().setTitle(`${acc.name} IGN history`).setDescription(acc.nameHist.split("\n")).setColor(0x44a3e7);
+            let embed = new MessageEmbed().setTitle(`${acc.name} IGN history`).setDescription([].concat(acc.nameHist).split("\n")).setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
 
         case "whois": {
-            let acc = await InteractionUtils.resolveAccount(interaction);
-            let embed = new MessageEmbed().setTitle(`${acc.name} discord`).setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`).setColor(0x44a3e7);
-            return { res: "", embed: embed };
+            return await Commands.WhoIS.execute([ getArg(interaction, "player") ], authorID, null, interaction);
         }
 
         case "getdataraw": {
@@ -104,7 +110,7 @@ module.exports = async (interaction) => {
         }
 
         case "verify": {
-            return await Verify.execute([ getArg(interaction, "player") ], authorID, null, interaction);
+            return await Commands.Verify.execute([ getArg(interaction, "player") ], authorID, null, interaction);
         }
 
         case "gamecounts": {
@@ -135,12 +141,12 @@ module.exports = async (interaction) => {
             return await Susser.execute([ getArg(interaction, "player") ], authorID, null, interaction);
         }
 
-        case Compare.name: {
-            return await Compare.execute([ getArg(interaction, "player1"), getArg(interaction, "player2"), getArg(interaction, "game") ], authorID, undefined, interaction);
+        case Commands.Compare.name: {
+            return await Commands.Compare.execute([ getArg(interaction, "player1"), getArg(interaction, "player2"), getArg(interaction, "game") ], authorID, undefined, interaction);
         }
 
-        case Profile.name: {
-            return await Profile.execute([ getArg(interaction, "player")], authorID, null, interaction);
+        case Commands.Profile.name: {
+            return await Commands.Profile.execute([ getArg(interaction, "player")], authorID, null, interaction);
         }
     }
 

@@ -1,10 +1,10 @@
-const Command = require("../../classes/Command");
-const AdvancedEmbeds = require("../AdvancedEmbeds");
-const BotUtils = require("../BotUtils");
-const { errLen } = require("../Embeds");
-const InteractionUtils = require("../interactions/InteractionUtils");
+import Command from "../../classes/Command.js";
+import AdvancedEmbeds from "../AdvancedEmbeds.js";
+import BotUtils from "../BotUtils.js";
+import { errLen } from "../Embeds.js";
+import InteractionUtils from "../interactions/InteractionUtils.js";
 
-module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
+export let Compare = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
     if(args.length < 3) {
         return {res : "", embed:  errLen(3)};
     }
