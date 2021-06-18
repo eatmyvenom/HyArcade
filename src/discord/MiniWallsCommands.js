@@ -1,4 +1,3 @@
-const config = require("../Config").fromJSON();
 const embeds = require("./Embeds");
 
 let linkCmd = require("./Commands/Link");

@@ -13,7 +13,7 @@ function numberify(n) {
 function getMain(acc) {
     let games = {
         Party_games : acc.wins,
-        Hole_in_the_wall : acc.hitwWins,
+        HITW : acc.hitwWins,
         Farm_hunt : acc.farmhuntWins,
         Hypixel_says : acc.hypixelSaysWins,
         Mini_walls : acc.miniWallsWins,
@@ -59,19 +59,20 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
     let lvl = Math.round(acc.level * 100) / 100;
     let img = new ImageGenerator(640, 400);
     await img.addBackground("resources/arc.png");
+    await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 96, "04")
 
-    img.writeTitle(acc.name);
+    img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
 
-    let txt = 
-        `Level - ${lvl}\n` +
-        `Arcade wins - ${numberify(acc.arcadeWins)}\n` +
-        `Coins - ${numberify(acc.arcadeCoins)}\n` +
-        `Achievements - ${numberify(acc.achievementPoints)}\n` +
-        `Karma - ${numberify(acc.karma)}\n` +
-        getMain(acc) + "\n" +
-        `Last seen - ${lastSeen(acc)}`;
+    let y = 112;
 
-    img.writeTextCenter(txt, 42);
+    img.writeTextRight(`Level - ${lvl}`, y, "#00AAAA", 42);
+    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, y+=42, "#FF55FF", 42);
+    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, y+=42, "#00AA00", 42);
+    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, y+=42, "#FFAA00", 42);
+    img.writeTextRight(`Arcade wins - ${numberify(Math.max(acc.arcadeWins,acc.combinedArcadeWins))}`, y+=42, "#FFFF55", 42);
+    img.writeTextRight(getMain(acc), y+=42, "#55FF55", 42);
+    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, y+=42, "#55FFFF", 42);
+
     let attachment = img.toDiscord();
 
     return { res : "", img : attachment };
