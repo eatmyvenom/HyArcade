@@ -251,7 +251,8 @@ async function main() {
     // let database = await Connection();
     // let db = database.db("hyarcade");
     if (Runtime.apiDown) {
-        if(args[2] != "bot" || args[2] != "checkStatus") {
+        if(args[2] == "bot" || args[2] == "checkStatus") {
+        } else {
             process.exit(1);
         }
     }
