@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message } = require("discord.js");
 
 const cfg = require("../Config").fromJSON();
 
@@ -61,7 +61,7 @@ exports.execution = function (name, args, author, link) {
 
 exports.dbded = new MessageEmbed()
     .setTitle("Command will not process")
-    .setColor(0xff0000)
+    .setColor(0xc60532)
     .setDescription("Due to a database error this command will not be processed!")
 
 exports.useSlash = function (cmd, slashver) {
@@ -88,3 +88,9 @@ exports.slashUsed = function(userid, usertag, command, server, channel, options)
         .addField("Channel", `<#${channel}>`, true)
         .addField("Options", JSON.stringify(options), false);
 }
+
+exports.apiDed = 
+            new MessageEmbed()
+                .setTitle("ERROR")
+                .setColor(0xc60532)
+                .setDescription("Due to a hypixel api outage all commands are disabled to prevent errors.");

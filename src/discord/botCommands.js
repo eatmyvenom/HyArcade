@@ -23,8 +23,11 @@ const EZ = require("./Commands/EZ");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
-        if(Runtime.fromJSON().dbERROR || Runtime.fromJSON().apiDown) {
+        if(Runtime.fromJSON().dbERROR) {
             return { res :"", embed: embeds.dbded }
+        }
+        if(Runtime.fromJSON().apiDown) {
+            return { res :"", embed: embeds.apiDed }
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);

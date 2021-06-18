@@ -34,8 +34,12 @@ module.exports = async (interaction) => {
     let authorID = interaction.member.user.id;
     let opts = interaction.options;
 
-    if(Runtime.fromJSON().dbERROR || Runtime.fromJSON().apiDown) {
+    if(Runtime.fromJSON().dbERROR) {
         return { res :"", embed: embeds.dbded }
+    }
+
+    if(Runtime.fromJSON().apiDown) {
+        return { res :"", embed: embeds.apiDed }
     }
 
     switch (interaction.commandName) {
