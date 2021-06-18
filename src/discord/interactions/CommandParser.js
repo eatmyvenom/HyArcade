@@ -11,7 +11,6 @@ const Boosters = require("../Commands/Boosters");
 const Status = require("../Commands/Status");
 const Info = require("../Commands/Info");
 const Susser = require("../Commands/Susser");
-const Compare = require("../Commands/Compare.mjs");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
