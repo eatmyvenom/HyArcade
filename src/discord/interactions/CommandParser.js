@@ -29,7 +29,7 @@ module.exports = async (interaction) => {
         Commands = {};
         let { Profile } = await import("../Commands/Profile.mjs");
         let { WhoIS } = await import("../Commands/WhoIS.mjs");
-        let { Verify } = await import("../Commands/LinkMe.mjs");3
+        let { Verify } = await import("../Commands/LinkMe.mjs");
         let { Compare } = await import("../Commands/Compare.mjs");
         Commands.Profile = Profile;
         Commands.WhoIS = WhoIS;
