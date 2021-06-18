@@ -250,7 +250,7 @@ async function miniconfig() {
 async function main() {
     // let database = await Connection();
     // let db = database.db("hyarcade");
-    if (Runtime.apiDown) {
+    if (args[2] != "bot" && Runtime.apiDown) {
         process.exit(1);
     }
 
