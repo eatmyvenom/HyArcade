@@ -5,6 +5,8 @@ const mojangRequest = require("./mojangRequest");
 const dataGeneration = require("./dataGeneration");
 const Account = require("./account");
 const AccountCreator = require("./mongo/AccountCreator");
+const webRequest = require("./webRequest");
+const Runtime = require("./Runtime");
 const args = process.argv;
 const logger = utils.logger;
 
@@ -191,6 +193,30 @@ async function addGIDMembers(args) {
     await dataGeneration.addGuildID(uuid);
 }
 
+async function getServerStatus() {
+    let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
+    let hyStatus = JSON.parse(hyStatusRaw.data);
+    let mojangStatusRaw = await webRequest("https://status.mojang.com/check");
+    let mojangStatus = JSON.parse(mojangStatusRaw.data);
+    let runtime = Runtime.fromJSON();
+    let mwBot = runtime.mwHeartBeat;
+    let arcadeBot = runtime.undefinedHeartBeat;
+    let interactions = runtime.slashHeartBeat;
+    let database = runtime.dbERROR;
+
+    let obj = {
+        Hypixel : hyStatus.status.indicator,
+        MSession : mojangStatus[1]["session.minecraft.net"],
+        MAcc : mojangStatus[2]["account.mojang.com"],
+        MAuth : mojangStatus[3]["authserver.mojang.com"],
+        mw : (Date.now() - mwBot) > 900000,
+        arc : (Date.now() - arcadeBot) > 900000,
+        slash : (Date.now() - interactions) > 900000,
+        database : !database
+    }
+    return obj
+}
+
 module.exports = {
     newAcc: newAcc,
     newGuild: newGuild,
@@ -205,5 +231,6 @@ module.exports = {
     getUUID: getUUIDCli,
     moveAcc: moveAcc,
     linkDiscord: linkDiscord,
-    mNewAcc: mNewAcc
+    mNewAcc: mNewAcc,
+    getServerStatus: getServerStatus
 };

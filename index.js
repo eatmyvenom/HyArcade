@@ -437,6 +437,11 @@ async function main() {
         case "translateDb" : 
             await Translator();
             break;
+
+        case "checkStatus" : {
+            console.log(await cli.getServerStatus())
+            break;
+        }
     }
 
     // await database.close();
