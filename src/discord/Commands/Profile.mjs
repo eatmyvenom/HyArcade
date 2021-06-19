@@ -65,13 +65,13 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
 
     let y = 112;
 
-    img.writeTextRight(`Level - ${lvl}`, y, "#00AAAA", 42);
-    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, y+=42, "#FF55FF", 42);
-    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, y+=42, "#00AA00", 42);
-    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, y+=42, "#FFAA00", 42);
-    img.writeTextRight(`Arcade wins - ${numberify(Math.max(acc.arcadeWins,acc.combinedArcadeWins))}`, y+=42, "#FFFF55", 42);
-    img.writeTextRight(getMain(acc), y+=42, "#55FF55", 42);
-    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, y+=42, "#55FFFF", 42);
+    img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 42);
+    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, y+=42, "#dd66ff", 42);
+    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, y+=42, "#00cc66", 42);
+    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, y+=42, "#d69323", 42);
+    img.writeTextRight(`Arcade wins - ${numberify(Math.max(acc.arcadeWins,acc.combinedArcadeWins))}`, y+=42, "#00ddff", 42);
+    img.writeTextRight(getMain(acc), y+=42, "#ee0061", 42);
+    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, y+=42, "#a6ee31", 42);
 
     let attachment = img.toDiscord();
 
