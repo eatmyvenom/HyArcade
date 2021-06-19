@@ -214,6 +214,7 @@ async function getServerStatus() {
         slash : (Date.now() - interactions) < 900000,
         database : !database
     }
+    await utils.writeJSON("serverStatus.json", obj);
     return obj
 }
 
