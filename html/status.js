@@ -16,4 +16,4 @@ async function load() {
     div.innerHTML += `Database : ${db}`;
 }
 
-document.addEventListener("load", load);
+window.addEventListener("load", load);
