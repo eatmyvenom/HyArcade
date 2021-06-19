@@ -653,7 +653,7 @@ module.exports = class AdvancedEmbeds {
             case "partygames":
             case "pg": {
                 fields.push({
-                    name: "Wins",
+                    name: ":crown: Wins",
                     value: formatNum(numberify(acc.wins)),
                     inline: true,
                 });
@@ -669,12 +669,12 @@ module.exports = class AdvancedEmbeds {
             case "5":
             case "frmhnt": {
                 fields.push({
-                    name: "Farm hunt wins",
+                    name: ":crown: Farm hunt wins",
                     value: formatNum(numberify(acc.farmhuntWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Farm hunt poop",
+                    name: ":poop: Farm hunt poop",
                     value: formatNum(numberify(acc.farmhuntShit)),
                     inline: true,
                 });
@@ -690,12 +690,12 @@ module.exports = class AdvancedEmbeds {
             case "says":
             case "hysays": {
                 fields.push({
-                    name: "Hypixel says wins",
+                    name: ":crown: Hypixel says wins",
                     value: formatNum(numberify(acc.hypixelSaysWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Hypixel says Rounds",
+                    name: ":video_game: Hypixel says Rounds",
                     value: formatNum(numberify(acc.extras.hypixelSaysRounds)),
                     inline: true,
                 });
@@ -710,7 +710,7 @@ module.exports = class AdvancedEmbeds {
             case "hole":
             case "pain": {
                 fields.push({
-                    name: "HITW wins",
+                    name: ":crown: HITW wins",
                     value: formatNum(numberify(acc.hitwWins)),
                     inline: true,
                 });
@@ -749,51 +749,51 @@ module.exports = class AdvancedEmbeds {
             case "miniwalls": {
                 // <br>
                 fields.push({
-                    name: "MW wins",
+                    name: ":crown: MW wins",
                     value: formatNum(numberify(acc.miniWallsWins)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "MW kills",
+                    name: ":crossed_swords: MW kills",
                     value: formatNum(numberify(acc.miniWalls.kills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "MW arrows shot",
+                    name: ":bow_and_arrow: MW arrows shot",
                     value: formatNum(numberify(acc.miniWalls.arrowsShot)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "MW arrows hit",
+                    name: ":bow_and_arrow: MW arrows hit",
                     value: formatNum(numberify(acc.miniWalls.arrowsHit)),
                     inline: true,
                 });
                 fields.push({
-                    name: "MW final kills",
+                    name: ":crossed_swords: MW final kills",
                     value: formatNum(numberify(acc.miniWalls.finalKills)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "MW wither kills",
+                    name: ":crossed_swords: MW wither kills",
                     value: formatNum(numberify(acc.miniWalls.witherKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "MW wither damage",
+                    name: ":crossed_swords: MW wither damage",
                     value: formatNum(numberify(acc.miniWalls.witherDamage)),
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "MW deaths",
+                    name: ":skull_crossbones: MW deaths",
                     value: formatNum(numberify(acc.miniWalls.deaths)),
                     inline: true,
                 });
                 fields.push({
-                    name: "MW KDR",
+                    name: ":crossed_swords: MW KDR",
                     value: "" + (Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100),
                     inline: true,
                 });
@@ -812,24 +812,24 @@ module.exports = class AdvancedEmbeds {
             case "football": {
                 // <br>
                 fields.push({
-                    name: "Football wins",
+                    name: ":crown: Football wins",
                     value: formatNum(numberify(acc.footballWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Football goals",
+                    name: ":goal: Football goals",
                     value: formatNum(numberify(acc.extras.footballGoals)),
                     inline: true,
                 });
                 
                 // <br>
                 fields.push({
-                    name: "Football power kicks",
+                    name: ":athletic_shoe: Football power kicks",
                     value: formatNum(numberify(acc.extras.footballPKicks)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Football kicks",
+                    name: ":athletic_shoe: Football kicks",
                     value: formatNum(numberify(acc.extras.footballKicks)),
                     inline: true,
                 });
@@ -846,7 +846,7 @@ module.exports = class AdvancedEmbeds {
             case "trash":
             case "enderspleef": {
                 fields.push({
-                    name: "Ender spleef wins",
+                    name: ":crown: Ender spleef wins",
                     value: formatNum(numberify(acc.enderSpleefWins)),
                     inline: true,
                 });
@@ -863,23 +863,23 @@ module.exports = class AdvancedEmbeds {
             case "throwout": {
                 // <br>
                 fields.push({
-                    name: "Throw out wins",
+                    name: ":crown: Throw out wins",
                     value: formatNum(numberify(acc.throwOutWins)),
                     inline: true,
                 });
                 // <br>
                 fields.push({
-                    name: "Throw out kills",
+                    name: ":crossed_swords: Throw out kills",
                     value: formatNum(numberify(acc.extras.throwOutKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Throw out deaths",
+                    name: ":skull_crossbones: Throw out deaths",
                     value: formatNum(numberify(acc.extras.throwOutDeaths)),
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
+                    name: ":crossed_swords: KDR",
                     value: "" + (Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100),
                     inline: true,
                 });
@@ -894,22 +894,22 @@ module.exports = class AdvancedEmbeds {
             case "galaxy":
             case "galaxywars": {
                 fields.push({
-                    name: "Galaxy wars wins",
+                    name: ":crown: Galaxy wars wins",
                     value: formatNum(numberify(acc.galaxyWarsWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Galaxy wars kills",
+                    name: ":crossed_swords: Galaxy wars kills",
                     value: formatNum(numberify(acc.extras.galaxyWarsKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Galaxy wars deaths",
+                    name: ":skull_crossbones: Galaxy wars deaths",
                     value: formatNum(numberify(acc.extras.galaxyWarsDeaths)),
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
+                    name: ":crossed_swords: KDR",
                     value: "" + (Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100),
                     inline: true,
                 });
@@ -923,12 +923,12 @@ module.exports = class AdvancedEmbeds {
             case "dragon":
             case "dragonwars": {
                 fields.push({
-                    name: "Dragon wars wins",
+                    name: ":crown: Dragon wars wins",
                     value: formatNum(numberify(acc.dragonWarsWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Dragon wars kills",
+                    name: ":crossed_swords: Dragon wars kills",
                     value: formatNum(numberify(acc.extras.dragonWarsKills)),
                     inline: true,
                 });
@@ -945,22 +945,22 @@ module.exports = class AdvancedEmbeds {
             case "oneinthequiver":
             case "bountyhunters": {
                 fields.push({
-                    name: "Bounty hunters wins",
+                    name: ":crown: Bounty hunters wins",
                     value: formatNum(numberify(acc.bountyHuntersWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Bounty hunters kills",
+                    name: ":crossed_swords: Bounty hunters kills",
                     value: formatNum(numberify(acc.extras.bountyHuntersKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Bounty hunters deaths",
+                    name: ":skull_crossbones: Bounty hunters deaths",
                     value: formatNum(numberify(acc.extras.bountyHuntersDeaths)),
                     inline: true,
                 });
                 fields.push({
-                    name: "KDR",
+                    name: ":crossed_swords: KDR",
                     value: "" + (Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100),
                     inline: true,
                 });
@@ -976,17 +976,17 @@ module.exports = class AdvancedEmbeds {
             case "blocking":
             case "blockingdead": {
                 fields.push({
-                    name: "Blocking dead wins",
+                    name: ":crown: Blocking dead wins",
                     value: formatNum(numberify(acc.blockingDeadWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Blocking dead kills",
+                    name: ":crossed_swords: Blocking dead kills",
                     value: formatNum(numberify(acc.extras.blockingDeadKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Blocking dead headshots",
+                    name: ":exploding_head: Blocking dead headshots",
                     value: formatNum(numberify(acc.extras.blockingDeadHeadshots)),
                     inline: true,
                 });
@@ -1005,22 +1005,22 @@ module.exports = class AdvancedEmbeds {
             case "hidenseek":
             case "hideseek": {
                 fields.push({
-                    name: "Hide and seek wins",
+                    name: ":crown: Hide and seek wins",
                     value: formatNum(numberify(acc.hideAndSeekWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Hide and seek kills",
+                    name: ":crossed_swords: Hide and seek kills",
                     value: formatNum(numberify(acc.hnsKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Hide and seek seeker wins",
+                    name: ":crossed_swords: Hide and seek seeker wins",
                     value: formatNum(numberify(acc.extras.HNSSeekerWins)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Hide and seek hider wins",
+                    name: ":see_no_evil: Hide and seek hider wins",
                     value: formatNum(numberify(acc.extras.HNSHiderWins)),
                     inline: true,
                 });
@@ -1037,7 +1037,7 @@ module.exports = class AdvancedEmbeds {
             case "zbies":
             case "zombies": {
                 fields.push({
-                    name: "Zombies wins",
+                    name: ":crown: Zombies wins",
                     value: formatNum(numberify(acc.zombiesWins)),
                     inline: true,
                 });
@@ -1055,12 +1055,12 @@ module.exports = class AdvancedEmbeds {
             case "ctwwoolcaptured":
             case "ctwkills": {
                 fields.push({
-                    name: "Ctw kills",
+                    name: ":crossed_swords: Ctw kills",
                     value: formatNum(numberify(acc.ctwKills)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Ctw wool captured",
+                    name: ":goal: Ctw wool captured",
                     value: formatNum(numberify(acc.ctwWoolCaptured)),
                     inline: true,
                 });
@@ -1079,7 +1079,7 @@ module.exports = class AdvancedEmbeds {
             case "drawtheirthing":
             case "drawing": {
                 fields.push({
-                    name: "Pixel painters wins",
+                    name: ":crown: Pixel painters wins",
                     value: formatNum(numberify(acc.pixelPaintersWins)),
                     inline: true,
                 });
@@ -1095,29 +1095,29 @@ module.exports = class AdvancedEmbeds {
             case "14":
             case "sea": {
                 fields.push({
-                    name: "Easter sim wins",
+                    name: ":crown: Easter sim wins",
                     value: "" + acc.seasonalWins.easter,
                     inline: true,
                 });
                 fields.push({
-                    name: "Scuba sim wins",
+                    name: ":crown: Scuba sim wins",
                     value: "" + acc.seasonalWins.scuba,
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Holloween sim wins",
+                    name: ":crown: Holloween sim wins",
                     value: "" + acc.seasonalWins.halloween,
                     inline: true,
                 });
                 fields.push({
-                    name: "Grinch sim wins",
+                    name: ":crown: Grinch sim wins",
                     value: "" + acc.seasonalWins.grinch,
                     inline: true,
                 });
                 
                 fields.push({
-                    name: "Total sim wins",
+                    name: ":crown: Total sim wins",
                     value: "" + acc.seasonalWins.total,
                     inline: true,
                 });
@@ -1133,35 +1133,35 @@ module.exports = class AdvancedEmbeds {
                     inline: true,
                 });
                 fields.push({
-                    name: "All Hypixel wins",
+                    name: ":crown: All Hypixel wins",
                     value: formatNum(numberify(acc.anyWins)),
                     inline: true,
                 });
                 // 
                 fields.push({
-                    name: "Arcade wins",
+                    name: ":crown: Arcade wins",
                     value: formatNum(numberify(acc.arcadeWins)),
                     inline: true,
                 });
 
                 fields.push({
-                    name: "Arcade coins",
+                    name: ":coin: Arcade coins",
                     value: formatNum(numberify(acc.arcadeCoins)),
                     inline: true,
                 });
                 // 
                 fields.push({
-                    name: "AP",
+                    name: ":trophy: AP",
                     value: formatNum(numberify(acc.achievementPoints)),
                     inline: true,
                 });
                 fields.push({
-                    name: "Karma",
+                    name: ":thumbsup: Karma",
                     value: formatNum(numberify(acc.karma)),
                     inline: true,
                 });
                 fields.push({
-                    name: "UUID",
+                    name: ":receipt: UUID",
                     value: acc.uuid,
                     inline: true,
                 });
