@@ -58,6 +58,7 @@ function randomBtw() {
 async function miniWallsVerify(msg) {
     if(msg.author.id == '156952208045375488') { return; }
     let ign = msg.content.trim();
+    if(await isBlacklisted(id)) return;
     let uuid = await mojangRequest.getUUID(ign);
     if(uuid == undefined) {
         await msg.channel.send({ embeds : [errIgnNull]});
