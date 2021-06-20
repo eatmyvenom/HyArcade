@@ -9,10 +9,10 @@ module.exports = class DatabaseReader {
 
     static async getAccount(uuid) {
         let database = MongoUtils.database;
-        return await database.collection("accounts").find({ uuid : uuid })
+        return await database.collection("accounts").find({ uuid: uuid });
     }
 
     static async toJSON(path) {
         await utils.writeJSON(path, await this.getArray());
     }
-}
+};

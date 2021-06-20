@@ -46,11 +46,11 @@ module.exports = class BotEvents {
         BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
         BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
         let hackers = await fs.readFile("data/hackerlist");
-        hackers = hackers.toString().split('\n');
+        hackers = hackers.toString().split("\n");
 
         BotUtils.fileCache.hackers = hackers;
         let ezmsgs = await fs.readFile("data/ez");
-        ezmsgs = ezmsgs.toString().split('\n');
+        ezmsgs = ezmsgs.toString().split("\n");
         BotUtils.fileCache.ezmsgs = ezmsgs;
         logger.out("Selecting mode");
         if (mode == "role") {
@@ -83,7 +83,7 @@ module.exports = class BotEvents {
     static async heartBeat() {
         let runtime = Runtime.fromJSON();
         runtime[BotUtils.botMode + "HeartBeat"] = Date.now();
-        await runtime.save()
+        await runtime.save();
         logger.out("Heart beat - I'm alive!");
     }
 
@@ -91,7 +91,7 @@ module.exports = class BotEvents {
         logger.out("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
-        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs
+        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs;
         try {
             dayacclist = await utils.readJSON("accounts.day.json");
             weeklyacclist = await utils.readJSON("accounts.weekly.json");
@@ -101,9 +101,9 @@ module.exports = class BotEvents {
             status = await utils.readJSON("status.json");
             updatetime = await fs.readFile("timeupdate");
             hackers = await fs.readFile("data/hackerlist");
-            hackers = hackers.toString().split('\n');
+            hackers = hackers.toString().split("\n");
             ezmsgs = await fs.readFile("data/ez");
-            ezmsgs = ezmsgs.toString().split('\n');
+            ezmsgs = ezmsgs.toString().split("\n");
         } catch (e) {
             error = true;
             run.dbERROR = true;
@@ -112,17 +112,17 @@ module.exports = class BotEvents {
             await BotUtils.errHook.send("Database broken please fix me");
         }
 
-        BotUtils.fileCache.dayacclist = dayacclist
-        BotUtils.fileCache.weeklyacclist = weeklyacclist
-        BotUtils.fileCache.monthlyacclist = monthlyacclist
-        BotUtils.fileCache.acclist = acclist
-        BotUtils.fileCache.disclist = disclist
-        BotUtils.fileCache.status = status
-        BotUtils.fileCache.updatetime = updatetime
+        BotUtils.fileCache.dayacclist = dayacclist;
+        BotUtils.fileCache.weeklyacclist = weeklyacclist;
+        BotUtils.fileCache.monthlyacclist = monthlyacclist;
+        BotUtils.fileCache.acclist = acclist;
+        BotUtils.fileCache.disclist = disclist;
+        BotUtils.fileCache.status = status;
+        BotUtils.fileCache.updatetime = updatetime;
         BotUtils.fileCache.hackers = hackers;
         BotUtils.fileCache.ezmsgs = ezmsgs;
 
-        if(!error && run.dbERROR) {
+        if (!error && run.dbERROR) {
             run.dbERROR = false;
             await run.save();
             await BotUtils.logHook.send("Database restored");

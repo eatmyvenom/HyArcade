@@ -20,11 +20,11 @@ const EZ = require("./Commands/EZ");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
-        if(Runtime.fromJSON().dbERROR) {
-            return { res :"", embed: embeds.dbded }
+        if (Runtime.fromJSON().dbERROR) {
+            return { res: "", embed: embeds.dbded };
         }
-        if(Runtime.fromJSON().apiDown) {
-            return { res :"", embed: embeds.apiDed }
+        if (Runtime.fromJSON().apiDown) {
+            return { res: "", embed: embeds.apiDed };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
@@ -99,7 +99,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "getdata":
         case "rawdata":
         case "dataraw": {
-            return { res : "", embed : embeds.useSlash("getdataraw", "getdataraw") };
+            return { res: "", embed: embeds.useSlash("getdataraw", "getdataraw") };
             break;
         }
 
@@ -109,7 +109,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "counts":
         case "amounts":
         case "gamecounts": {
-            return { res : "", embed : embeds.useSlash("gamecounts", "gamecounts") };
+            return { res: "", embed: embeds.useSlash("gamecounts", "gamecounts") };
             break;
         }
 
@@ -124,7 +124,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return { res : "", embed : embeds.useSlash("help", "arcadehelp") };
+            return { res: "", embed: embeds.useSlash("help", "arcadehelp") };
             break;
         }
 
@@ -148,13 +148,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "names":
         case "namehist":
         case "namehistory": {
-            return { res : "", embed : embeds.useSlash("namehistory", "namehistory") };
+            return { res: "", embed: embeds.useSlash("namehistory", "namehistory") };
         }
 
         case "whois":
         case "whoam":
         case "whos": {
-            return { res : "", embed : embeds.useSlash("whois", "whois") };
+            return { res: "", embed: embeds.useSlash("whois", "whois") };
         }
 
         case "info":
@@ -162,9 +162,9 @@ async function checkCommands(rawMsg, command, args, author) {
             return await InfoCmd.execute(args, author);
         }
 
-        default : {
-            logger.out("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.")
-            return { res : "" }
+        default: {
+            logger.out('Nonexistent command "' + command.toLowerCase() + '" was attempted.');
+            return { res: "" };
         }
     }
 }

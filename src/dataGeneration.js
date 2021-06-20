@@ -197,13 +197,13 @@ async function updateAllAccounts() {
         accounts = accounts.concat(addedAccounts);
     }
 
-    if(utils.fileExists("data/accounts.json.full")) {
+    if (utils.fileExists("data/accounts.json.full")) {
         let fullList = await utils.readJSON("accounts.json.full");
         await fs.rm("data/accounts.json.full");
-        for(let i = 0; i < accounts.length; i++) {
+        for (let i = 0; i < accounts.length; i++) {
             let acc = accounts[i];
-            let newAcc = fullList.find(a=>a.uuid==acc.uuid);
-            if(newAcc.xp > acc.xp) {
+            let newAcc = fullList.find((a) => a.uuid == acc.uuid);
+            if (newAcc.xp > acc.xp) {
                 logger.out(`Setting ${newAcc.name}'s data from outside source!`);
                 acc.setData(newAcc);
             }
@@ -237,11 +237,14 @@ async function updateAccountsInArr(accounts, oldAccs) {
                 let isLinked = oldAcc.discord ? true : false;
                 let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
 
-                if (isLinked || (aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit && hasPlayedRecently)) {
+                if (
+                    isLinked ||
+                    (aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit && hasPlayedRecently)
+                ) {
                     logger.out(`Updating ${oldAcc.name}'s data`);
                     await account.updateData();
                 } else {
-                    logger.out(`Ignoring ${oldAcc.name} for this refresh`)
+                    logger.out(`Ignoring ${oldAcc.name} for this refresh`);
                     account.setData(oldAcc);
                 }
             } else {

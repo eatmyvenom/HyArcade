@@ -12,22 +12,27 @@ const ButtonResponse = require("./ButtonResponse");
 module.exports = async function ButtonParser(interaction) {
     let data = interaction.customID.split(":");
     let commandType = data[0];
-    switch(commandType) {
-        case "lb" : {
+    switch (commandType) {
+        case "lb": {
             return leaderboardHandler(interaction, data[1], data[2], data[3]);
         }
 
-        case "s" : {
+        case "s": {
             return statsHandler(data[1], data[2]);
         }
     }
-}
+};
 
 async function leaderboardHandler(interaction, leaderboard, time, index) {
-    let res = await Leaderboard.execute([leaderboard, time, 10, index], interaction.member.user.id, undefined, interaction);
+    let res = await Leaderboard.execute(
+        [leaderboard, time, 10, index],
+        interaction.member.user.id,
+        undefined,
+        interaction
+    );
     let e = res.embed;
     let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, time);
-    return new ButtonResponse("", [ e ], buttons);
+    return new ButtonResponse("", [e], buttons);
 }
 
 async function statsHandler(accUUID, game) {
@@ -36,5 +41,5 @@ async function statsHandler(accUUID, game) {
     let embed = statsRes.embed;
 
     let buttons = await ButtonGenerator.getStatsButtons(game, accData.uuid);
-    return new ButtonResponse("", [ embed ], buttons);
+    return new ButtonResponse("", [embed], buttons);
 }

@@ -40,39 +40,80 @@ class EventDetector {
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
         if (newIndex <= 24 && newIndex < oldIndex && oldAcc.wins != newAcc.wins) {
-            this.Events.push(new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid));
+            this.Events.push(
+                new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid)
+            );
         }
 
-        if(oldAcc.name != newAcc.name) {
+        if (oldAcc.name != newAcc.name) {
             this.Events.push(new AccountEvent(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid));
         }
 
-        if(oldAcc.discord != newAcc.discord && newAcc.discord != undefined && newAcc.discord != "" && newAcc.discord != 0) {
+        if (
+            oldAcc.discord != newAcc.discord &&
+            newAcc.discord != undefined &&
+            newAcc.discord != "" &&
+            newAcc.discord != 0
+        ) {
             this.Events.push(new AccountEvent(newAcc.name, "LINK", oldAcc.discord, newAcc.discord, "", newAcc.uuid));
         }
 
-        if(Date.now() - oldAcc.lastLogout > 2629743000 && newAcc.lastLogout != oldAcc.lastLogout && newAcc.lastLogout != "" && newAcc.lastLogout != 0 && newAcc.lastLogout != undefined) {
-            this.Events.push(new AccountEvent(newAcc.name, "LOGIN", oldAcc.lastLogout, newAcc.lastLogout, "", newAcc.uuid));
+        if (
+            Date.now() - oldAcc.lastLogout > 2629743000 &&
+            newAcc.lastLogout != oldAcc.lastLogout &&
+            newAcc.lastLogout != "" &&
+            newAcc.lastLogout != 0 &&
+            newAcc.lastLogout != undefined
+        ) {
+            this.Events.push(
+                new AccountEvent(newAcc.name, "LOGIN", oldAcc.lastLogout, newAcc.lastLogout, "", newAcc.uuid)
+            );
         }
 
-        if(oldAcc.rank != newAcc.rank && newAcc.rank != "" && newAcc.rank != undefined ) {
+        if (oldAcc.rank != newAcc.rank && newAcc.rank != "" && newAcc.rank != undefined) {
             this.Events.push(new AccountEvent(newAcc.name, "RANK", oldAcc.rank, newAcc.rank, "", newAcc.uuid));
         }
 
-        if(oldAcc.ranksGifted != newAcc.ranksGifted && newAcc.ranksGifted != 0 && newAcc.ranksGifted != "" && newAcc.ranksGifted != undefined) {
-            this.Events.push(new AccountEvent(newAcc.name, "SIMP", oldAcc.ranksGifted, newAcc.ranksGifted, "", newAcc.uuid));
+        if (
+            oldAcc.ranksGifted != newAcc.ranksGifted &&
+            newAcc.ranksGifted != 0 &&
+            newAcc.ranksGifted != "" &&
+            newAcc.ranksGifted != undefined
+        ) {
+            this.Events.push(
+                new AccountEvent(newAcc.name, "SIMP", oldAcc.ranksGifted, newAcc.ranksGifted, "", newAcc.uuid)
+            );
         }
 
-        if(oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
-            this.Events.push(new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid));
+        if (oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
+            this.Events.push(
+                new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid)
+            );
         }
 
-        if(Math.floor(oldAcc.level) < Math.floor(newAcc.level) && newAcc.level != undefined && newAcc.level != 0 && newAcc.level != 1 && Math.floor(newAcc) % 10 == 0) {
-            this.Events.push(new AccountEvent(newAcc.name, "LVL",  Math.floor(oldAcc.level),  Math.floor(newAcc.level), "", newAcc.uuid));
+        if (
+            Math.floor(oldAcc.level) < Math.floor(newAcc.level) &&
+            newAcc.level != undefined &&
+            newAcc.level != 0 &&
+            newAcc.level != 1 &&
+            Math.floor(newAcc) % 10 == 0
+        ) {
+            this.Events.push(
+                new AccountEvent(
+                    newAcc.name,
+                    "LVL",
+                    Math.floor(oldAcc.level),
+                    Math.floor(newAcc.level),
+                    "",
+                    newAcc.uuid
+                )
+            );
         }
 
-        if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
-            this.Events.push(new AccountEvent(newAcc.name, "PLUS", oldAcc.plusColor, newAcc.plusColor, "", newAcc.uuid));
+        if (oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
+            this.Events.push(
+                new AccountEvent(newAcc.name, "PLUS", oldAcc.plusColor, newAcc.plusColor, "", newAcc.uuid)
+            );
         }
     }
 
@@ -114,11 +155,11 @@ class EventDetector {
 
     async saveEvents() {
         let oldEvents = await utils.readJSON("events.json");
-        for(let event of this.Events) {
+        for (let event of this.Events) {
             oldEvents.unshift([event, event.toString()]);
         }
 
-        oldEvents = oldEvents.slice(0,Math.min(oldEvents.length, 100));
+        oldEvents = oldEvents.slice(0, Math.min(oldEvents.length, 100));
         await utils.writeJSON("events.json", oldEvents);
     }
 

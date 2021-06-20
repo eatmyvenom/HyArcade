@@ -21,7 +21,7 @@ async function accs() {
     let old = await utils.readJSON("accounts.json");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
-    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
+    if (!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
         let ED = new EventDetector(old, accounts);
         await ED.runDetection();
         await ED.logEvents();

@@ -12,7 +12,9 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         return { res: "", embed: embed };
     }
     let acclist = await utils.readJSON("./accounts.json");
-    let acc = acclist.find((a) => a.uuid.toLowerCase() == player.toLowerCase() || a.name.toLowerCase() == player.toLowerCase());
+    let acc = acclist.find(
+        (a) => a.uuid.toLowerCase() == player.toLowerCase() || a.name.toLowerCase() == player.toLowerCase()
+    );
     if (acc == undefined) {
         let uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {

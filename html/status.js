@@ -2,10 +2,10 @@ async function load() {
     let status = await fetch("https://hyarcade.xyz/resources/serverStatus.json", { cache: "no-store" });
     status = await status.json();
     let main = document.querySelector("main");
-    let mw = (status.mw) ? "Online" : "Inactive";
-    let arc = (status.arc) ? "Online" : "Inactive";
-    let interact = (status.slash) ? "Online" : "Inactive";
-    let db = (status.database) ? "Operational" : "Corrupted";
+    let mw = status.mw ? "Online" : "Inactive";
+    let arc = status.arc ? "Online" : "Inactive";
+    let interact = status.slash ? "Online" : "Inactive";
+    let db = status.database ? "Operational" : "Corrupted";
     main.innerHTML = `Hypixel status : ${status.Hypixel}\n`;
     main.innerHTML += `Mojang session servers : ${status.MSession}\n`;
     main.innerHTML += `Mojang account servers : ${status.MAcc}\n`;

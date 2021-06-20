@@ -47,7 +47,14 @@ async function getLB(prop, timetype, limit, category, start) {
             week = week == "" ? "Nobody has won" : week;
             month = month == "" ? "Nobody has won" : month;
 
-            let embed = new MessageEmbed().setColor(0x00cc66).addField("Daily", day, true).addField("Weekly", week, true).addField("\u200B", "\u200B", true).addField("Monthly", month, true).addField("Lifetime", life, true).addField("\u200B", "\u200B", true);
+            let embed = new MessageEmbed()
+                .setColor(0x00cc66)
+                .addField("Daily", day, true)
+                .addField("Weekly", week, true)
+                .addField("\u200B", "\u200B", true)
+                .addField("Monthly", month, true)
+                .addField("Lifetime", life, true)
+                .addField("\u200B", "\u200B", true);
 
             return embed;
             break;
@@ -64,7 +71,12 @@ async function getLB(prop, timetype, limit, category, start) {
     let embed = new MessageEmbed().setTitle(time).setColor(0x00cc66).setDescription(res);
 
     if (res.length > 6000) {
-        return new MessageEmbed().setTitle("ERROR").setColor(0xff0000).setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+        return new MessageEmbed()
+            .setTitle("ERROR")
+            .setColor(0xff0000)
+            .setDescription(
+                "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
+            );
     }
 
     if (res.length > 2000) {
@@ -83,7 +95,10 @@ async function getLB(prop, timetype, limit, category, start) {
 module.exports = new Command("leaderboard", ["*"], async (args) => {
     let startTime = Date.now();
     if (args.length < 1) {
-        let embed = new MessageEmbed().setTitle("ERROR").setColor(0x00cc66).setDescription("This command a game argument. Use the help command for more info.");
+        let embed = new MessageEmbed()
+            .setTitle("ERROR")
+            .setColor(0x00cc66)
+            .setDescription("This command a game argument. Use the help command for more info.");
         return {
             res: "",
             embed: embed,
@@ -154,7 +169,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "pain": {
             game = "Hole in the wall";
             res = await getLB("hitwWins", timetype, limit, undefined, startingIndex);
-            gid = "hitw"
+            gid = "hitw";
             break;
         }
 
@@ -331,7 +346,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "hide and seek kills": {
             gameName = "Hide and seek kills";
             res = await getLB("hnsKills", timetype, limit, undefined, startingIndex);
-            gid = "hnsk"
+            gid = "hnsk";
             break;
         }
 
@@ -381,7 +396,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
             break;
         }
 
-        case "c": 
+        case "c":
         case "coins":
         case "arccoins":
         case "arcadecoins":
@@ -399,7 +414,7 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         case "easter-simulator": {
             gameName = "Easter simulator";
             res = await getLB("easter", timetype, limit, "seasonalWins", startingIndex);
-            gid = "esim"
+            gid = "esim";
             break;
         }
 
@@ -447,7 +462,12 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
         }
 
         default: {
-            let embed = new MessageEmbed().setTitle("ERROR").setDescription(`Sorry that category does not exist, use the command \`/arcadehelp games\` to see what is available.`).setColor(0xff0000);
+            let embed = new MessageEmbed()
+                .setTitle("ERROR")
+                .setDescription(
+                    `Sorry that category does not exist, use the command \`/arcadehelp games\` to see what is available.`
+                )
+                .setColor(0xff0000);
             return { res: "", embed: embed };
             break;
         }
@@ -463,5 +483,5 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
-    return { res: "", embed: finalRes, game : gid, start : startingIndex };
+    return { res: "", embed: finalRes, game: gid, start: startingIndex };
 });

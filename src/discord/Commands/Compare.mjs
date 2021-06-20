@@ -5,8 +5,8 @@ import { errLen } from "../Embeds.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 
 export let Compare = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
-    if(args.length < 3) {
-        return {res : "", embed:  errLen(3)};
+    if (args.length < 3) {
+        return { res: "", embed: errLen(3) };
     }
 
     let plr1 = args[0];

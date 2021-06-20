@@ -11,11 +11,11 @@ const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(".")) {
-        if(Runtime.fromJSON().dbERROR) {
-            return { res :"", embed: embeds.dbded }
+        if (Runtime.fromJSON().dbERROR) {
+            return { res: "", embed: embeds.dbded };
         }
-        if(Runtime.fromJSON().apiDown) {
-            return { res :"", embed: embeds.apiDed }
+        if (Runtime.fromJSON().apiDown) {
+            return { res: "", embed: embeds.apiDed };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
@@ -44,16 +44,16 @@ async function checkCommands(rawMsg, command, args, author) {
         case "mlb":
         case "miniwallsleaderboard":
         case "miniwallslb": {
-            return await MiniWallsLB.execute(args,author,rawMsg);
+            return await MiniWallsLB.execute(args, author, rawMsg);
             break;
         }
 
         case "mwcompare":
         case "mwc":
         case "c":
-        case "compare": 
+        case "compare":
         case "comparemw": {
-            return MiniWallsCompare.execute(args,author,rawMsg);
+            return MiniWallsCompare.execute(args, author, rawMsg);
             break;
         }
 
@@ -72,9 +72,9 @@ async function checkCommands(rawMsg, command, args, author) {
             return await InfoCmd.execute(args, author);
         }
 
-        default : {
-            logger.out("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.")
-            return { res : "" }
+        default: {
+            logger.out('Nonexistent command "' + command.toLowerCase() + '" was attempted.');
+            return { res: "" };
         }
     }
 }

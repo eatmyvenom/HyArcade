@@ -78,11 +78,11 @@ module.exports = class BotUtils {
             }
         }
 
-        if(acc) {
+        if (acc) {
             logger.out("resolved as " + acc.name);
         } else {
             logger.out("Unable to resolve, getting by ign from hypixel.");
-        
+
             let plr = string;
             let uuid;
             if (plr.length > 17) {
@@ -90,7 +90,7 @@ module.exports = class BotUtils {
             } else {
                 uuid = await mojangRequest.getUUID(plr);
             }
-        
+
             acc = new Account("", 0, "" + uuid);
             await acc.updateData();
         }
@@ -116,7 +116,12 @@ module.exports = class BotUtils {
     }
 
     static async getStats(acc, game) {
-        return await AdvancedEmbeds.getStats(acc,game, await BotUtils.fileCache.updatetime, BotUtils.client.user.avatarURL());
+        return await AdvancedEmbeds.getStats(
+            acc,
+            game,
+            await BotUtils.fileCache.updatetime,
+            BotUtils.client.user.avatarURL()
+        );
     }
 
     static async logIgns(msg) {
@@ -142,16 +147,21 @@ module.exports = class BotUtils {
             name = msg.member.displayName;
         }
 
-        await hook.send({content: msg.content, username: name, avatarURL: pfp });
-        await hook.send({content: msg.url, username: name, avatarURL: pfp });
+        await hook.send({ content: msg.content, username: name, avatarURL: pfp });
+        await hook.send({ content: msg.url, username: name, avatarURL: pfp });
     }
 
     static async logCommand(command, args, author, link) {
-        await BotUtils.msgCopyHook.send({ embeds : [Embed.execution(command, args, author, link)]});
+        await BotUtils.msgCopyHook.send({ embeds: [Embed.execution(command, args, author, link)] });
     }
 
     static getBlacklistRes() {
-        let embed = new MessageEmbed().setTitle("You are blacklisted").setDescription("This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom.").setColor(0xff0000);
+        let embed = new MessageEmbed()
+            .setTitle("You are blacklisted")
+            .setDescription(
+                "This means you can not use the bots commands, all attempts will be ignored and you will instead be sent this message in dm's. This action will not expire over time. Should you wish to become unblacklisted then talk to EatMyVenom."
+            )
+            .setColor(0xff0000);
 
         return embed;
     }

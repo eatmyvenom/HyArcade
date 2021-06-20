@@ -2,7 +2,7 @@ module.exports = class ButtonResponse {
     content = "";
     embeds = [];
     newButtons = [];
-    
+
     constructor(content, embeds, newButtons) {
         this.content = content;
         this.embeds = embeds;
@@ -11,8 +11,8 @@ module.exports = class ButtonResponse {
 
     toDiscord() {
         return {
-            embeds : this.embeds,
-            components : [ this.newButtons ]
-        }
+            embeds: this.embeds,
+            components: [this.newButtons],
+        };
     }
-}
+};

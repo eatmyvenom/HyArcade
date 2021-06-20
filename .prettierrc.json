@@ -4,7 +4,7 @@
     "semi": true,
     "arrowParens": "always",
     "trailingComma": "es5",
-    "printWidth": 500,
+    "printWidth": 120,
     "overrides": [
         {
             "files": "src/discord/Commands/Help.js",

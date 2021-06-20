@@ -51,7 +51,12 @@ function displayData(data) {
     setHtmlByName("fh-wins", "Farm hunt wins: " + formatNum(data.farmhuntWins));
     setHtmlByName("hysay", "Hypixel says wins: " + formatNum(data.hypixelSaysWins));
     setHtmlByName("hitw", "HITW wins: " + data.hitwWins);
-    setHtmlByName("bd", `BD: W:${formatNum(data.blockingDeadWins)} / K:${formatNum(data.extras.blockingDeadKills)} / HS:${formatNum(data.extras.blockingDeadHeadshots)}`);
+    setHtmlByName(
+        "bd",
+        `BD: W:${formatNum(data.blockingDeadWins)} / K:${formatNum(data.extras.blockingDeadKills)} / HS:${formatNum(
+            data.extras.blockingDeadHeadshots
+        )}`
+    );
     setHtmlByName("mw", "Mini walls wins: " + formatNum(data.miniWallsWins));
     setHtmlByName("fb", "Football wins: " + formatNum(data.footballWins));
     setHtmlByName("es", "Ender spleef wins: " + formatNum(data.enderSpleefWins));
@@ -74,16 +79,25 @@ function displayData(data) {
     setHtmlByName("version", "Version: " + ver);
     setHtmlByName("loggedIn", "Online: " + data.isLoggedIn);
     setHtmlByName("firstLogin", "First login: " + formatTime(data.firstLogin));
-    document.getElementById("render").setAttribute("src", "https://crafatar.com/renders/body/" + data.uuid + "?size=512&default=MHF_Steve&scale=10&overlay");
+    document
+        .getElementById("render")
+        .setAttribute(
+            "src",
+            "https://crafatar.com/renders/body/" + data.uuid + "?size=512&default=MHF_Steve&scale=10&overlay"
+        );
     document.getElementById("lvlimg").setAttribute("src", "https://gen.plancke.io/exp/" + data.uuid + ".png");
-    document.getElementById("achivimg").setAttribute("src", "https://gen.plancke.io/achievementPoints/" + data.uuid + ".png");
+    document
+        .getElementById("achivimg")
+        .setAttribute("src", "https://gen.plancke.io/achievementPoints/" + data.uuid + ".png");
 
     setIcon(data.uuid);
 }
 
 function handleData(rawjson) {
     let json = JSON.parse(rawjson);
-    let playerdata = json.find((acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase());
+    let playerdata = json.find(
+        (acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase()
+    );
     if (playerdata != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
@@ -91,11 +105,19 @@ function handleData(rawjson) {
         if (urlParams.has("q")) {
             if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
                 urlParams.set("q", playername);
-                window.history.replaceState(window.history.state, "", window.location.pathname + "?" + urlParams.toString());
+                window.history.replaceState(
+                    window.history.state,
+                    "",
+                    window.location.pathname + "?" + urlParams.toString()
+                );
             }
         } else {
             urlParams.append("q", playername);
-            window.history.replaceState(window.history.state, "", window.location.pathname + "?" + urlParams.toString());
+            window.history.replaceState(
+                window.history.state,
+                "",
+                window.location.pathname + "?" + urlParams.toString()
+            );
         }
     }
 }

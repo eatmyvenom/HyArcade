@@ -205,17 +205,17 @@ async function getServerStatus() {
     let database = runtime.dbERROR;
 
     let obj = {
-        Hypixel : hyStatus.status.indicator,
-        MSession : mojangStatus[1]["session.minecraft.net"],
-        MAcc : mojangStatus[2]["account.mojang.com"],
-        MAuth : mojangStatus[3]["authserver.mojang.com"],
-        mw : (Date.now() - mwBot) < 900000,
-        arc : (Date.now() - arcadeBot) < 900000,
-        slash : (Date.now() - interactions) < 900000,
-        database : !database
-    }
+        Hypixel: hyStatus.status.indicator,
+        MSession: mojangStatus[1]["session.minecraft.net"],
+        MAcc: mojangStatus[2]["account.mojang.com"],
+        MAuth: mojangStatus[3]["authserver.mojang.com"],
+        mw: Date.now() - mwBot < 900000,
+        arc: Date.now() - arcadeBot < 900000,
+        slash: Date.now() - interactions < 900000,
+        database: !database,
+    };
     await utils.writeJSON("serverStatus.json", obj);
-    return obj
+    return obj;
 }
 
 module.exports = {
@@ -233,5 +233,5 @@ module.exports = {
     moveAcc: moveAcc,
     linkDiscord: linkDiscord,
     mNewAcc: mNewAcc,
-    getServerStatus: getServerStatus
+    getServerStatus: getServerStatus,
 };

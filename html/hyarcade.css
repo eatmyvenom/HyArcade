@@ -1,5 +1,5 @@
 * {
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
 }
 main {
     display: grid;
@@ -8,16 +8,16 @@ main {
 
 a {
     text-decoration: none;
-    color: #44a3e7!important;
+    color: #44a3e7 !important;
     display: inline-block;
     padding: 1%;
     border: 2px solid transparent;
     border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
     border-image-slice: 1;
     margin: 2%;
-    margin-left:auto;
-    margin-right:auto;
-    width:max-content;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
     transition-duration: 0.3s;
     text-align: center;
 }
@@ -28,33 +28,33 @@ a:hover {
 
 a img {
     display: block;
-    padding:5%;
+    padding: 5%;
     width: max(188px, 11vw);
 }
 
 .pd {
     margin-left: auto;
     margin-right: auto;
-    display:block;
+    display: block;
 }
 
 article {
-    margin:1%;
+    margin: 1%;
 }
 
 @media only screen and (max-width: 768px) {
-        main {
-            display: block;
-        }
+    main {
+        display: block;
+    }
 
-        a {
-            display: block;
-            width: max-content;
-        }
+    a {
+        display: block;
+        width: max-content;
+    }
 
-        a img {
-            width: 60vw;
-        }
+    a img {
+        width: 60vw;
+    }
 }
 
 @media only screen and (max-width: 1000px) {
@@ -64,22 +64,25 @@ article {
 }
 
 footer {
-    margin-top : 1%;
-    border-top : 1px solid #ff3399;
+    margin-top: 1%;
+    border-top: 1px solid #ff3399;
     display: block;
 }
 
 footer > a {
     text-decoration: none;
-    display:block;
+    display: block;
     color: #44a3e7 !important;
 }
 
-footer > a, footer > div, footer > a:hover, footer > div:hover {
-    border : none!important;
+footer > a,
+footer > div,
+footer > a:hover,
+footer > div:hover {
+    border: none !important;
     box-shadow: none;
 }
 
 footer > * {
-    margin : 1.5%;
+    margin: 1.5%;
 }

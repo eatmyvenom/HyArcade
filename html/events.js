@@ -4,12 +4,12 @@ let interval;
 async function load() {
     await refresh();
     clearInterval(interval);
-    interval = setInterval(refresh, 25000)
+    interval = setInterval(refresh, 25000);
 }
 
 async function refresh() {
     let time = document.querySelector("time");
-    let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {cache : "no-store"});
+    let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", { cache: "no-store" });
     servertime = await servertime.text();
     let formatted = new Date(servertime);
     time.innerHTML = "Last database update : " + formatted.toLocaleTimeString();
@@ -20,14 +20,14 @@ async function refresh() {
 
 async function formatPage(events) {
     events = JSON.parse(events);
-    console.log(events)
+    console.log(events);
     let content = document.getElementById("evtWrapper");
     let newContent = "";
-    for(let evt of events) {
+    for (let evt of events) {
         newContent += evt[1] + "\n\n";
     }
     content.innerHTML = newContent;
-} 
+}
 
 function formatNum(number) {
     let str = new Number(number);

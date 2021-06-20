@@ -2,14 +2,13 @@ const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = class ButtonGenerator {
     static async getStatsButtons(currentGame, uuid) {
-
         let leftTxt = "";
         let rightTxt = "";
         let leftID = "";
         let rightID = "";
 
-        switch(currentGame) {
-            case "arc" : {
+        switch (currentGame) {
+            case "arc": {
                 leftTxt = "Seasonal games";
                 leftID = "sim";
                 rightTxt = "Party games";
@@ -17,55 +16,55 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "pg" : {
+            case "pg": {
                 leftTxt = "Overall";
                 leftID = "arc";
                 rightTxt = "Farm hunt";
-                rightID = "fh"
+                rightID = "fh";
                 break;
             }
 
-            case "fh" : {
+            case "fh": {
                 leftTxt = "Party games";
                 leftID = "pg";
                 rightTxt = "Hole in the wall";
-                rightID = "hitw"
+                rightID = "hitw";
                 break;
             }
 
-            case "hitw" : {
+            case "hitw": {
                 leftTxt = "Farm hunt";
                 leftID = "fh";
                 rightTxt = "Hypixel Says";
-                rightID = "hs"
+                rightID = "hs";
                 break;
             }
 
-            case "hs" : {
+            case "hs": {
                 leftTxt = "Hole in the wall";
                 leftID = "hitw";
                 rightTxt = "Blocking dead";
-                rightID = "bd"
+                rightID = "bd";
                 break;
             }
 
-            case "bd" : {
+            case "bd": {
                 leftTxt = "Hypixel Says";
                 leftID = "hs";
                 rightTxt = "Mini walls";
-                rightID = "mw"
+                rightID = "mw";
                 break;
             }
 
-            case "mw" : {
+            case "mw": {
                 leftTxt = "Blocking dead";
                 leftID = "bd";
                 rightTxt = "Football";
-                rightID = "fb"
+                rightID = "fb";
                 break;
             }
 
-            case "fb" : {
+            case "fb": {
                 leftTxt = "Mini walls";
                 leftID = "mw";
                 rightTxt = "Ender spleef";
@@ -73,7 +72,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "es" : {
+            case "es": {
                 leftTxt = "Football";
                 leftID = "fb";
                 rightTxt = "Throw out";
@@ -81,7 +80,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "to" : {
+            case "to": {
                 leftTxt = "Ender spleef";
                 leftID = "es";
                 rightTxt = "Galaxy wars";
@@ -89,7 +88,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "gw" : {
+            case "gw": {
                 leftTxt = "Throw out";
                 leftID = "to";
                 rightTxt = "Dragon wars";
@@ -97,7 +96,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "dw" : {
+            case "dw": {
                 leftTxt = "Galaxy wars";
                 leftID = "gw";
                 rightTxt = "Bounty hunters";
@@ -105,7 +104,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "bh" : {
+            case "bh": {
                 leftTxt = "Dragon wars";
                 leftID = "dw";
                 rightTxt = "Hide and seek";
@@ -113,7 +112,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "hns" : {
+            case "hns": {
                 leftTxt = "Bounty hunters";
                 leftID = "bh";
                 rightTxt = "Zombies";
@@ -121,7 +120,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "z" : {
+            case "z": {
                 leftTxt = "Hide and seek";
                 leftID = "hns";
                 rightTxt = "Pixel Painters";
@@ -129,11 +128,11 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "pp" : {
+            case "pp": {
                 leftTxt = "Zombies";
                 leftID = "z";
                 rightTxt = "Capture the wool";
-                rightID = "ctw"
+                rightID = "ctw";
                 break;
             }
 
@@ -145,7 +144,7 @@ module.exports = class ButtonGenerator {
                 break;
             }
 
-            case "sim" : {
+            case "sim": {
                 leftTxt = "Capture the wool";
                 leftID = "ctw";
                 rightTxt = "Overall";
@@ -156,19 +155,16 @@ module.exports = class ButtonGenerator {
 
         let row = new MessageActionRow();
         let left = new MessageButton()
-                        .setCustomID(`s:${uuid}:${leftID}`)
-                        .setLabel("<< " + leftTxt)
-                        .setStyle('PRIMARY');
+            .setCustomID(`s:${uuid}:${leftID}`)
+            .setLabel("<< " + leftTxt)
+            .setStyle("PRIMARY");
 
-        let m = new MessageButton()
-                        .setCustomID(`s:${uuid}:${currentGame}`)
-                        .setLabel("↻ Refresh")
-                        .setStyle('SECONDARY');
+        let m = new MessageButton().setCustomID(`s:${uuid}:${currentGame}`).setLabel("↻ Refresh").setStyle("SECONDARY");
 
         let right = new MessageButton()
-                        .setCustomID(`s:${uuid}:${rightID}`)
-                        .setLabel(rightTxt + " >>")
-                        .setStyle('PRIMARY');
+            .setCustomID(`s:${uuid}:${rightID}`)
+            .setLabel(rightTxt + " >>")
+            .setStyle("PRIMARY");
 
         row.addComponents(left, m, right);
         return row;
@@ -176,27 +172,26 @@ module.exports = class ButtonGenerator {
 
     static async getLBButtons(currentIndex, lb, time) {
         let left = new MessageButton()
-                        .setCustomID(`lb:${lb}:${time}:${currentIndex - 10}`)
-                        .setLabel("<< 10")
-                        .setStyle('PRIMARY');
-        
+            .setCustomID(`lb:${lb}:${time}:${currentIndex - 10}`)
+            .setLabel("<< 10")
+            .setStyle("PRIMARY");
+
         let mid = new MessageButton()
-                        .setCustomID(`lb:${lb}:${time}:${currentIndex}`)
-                        .setLabel("↻ Refresh")
-                        .setStyle("SECONDARY");
+            .setCustomID(`lb:${lb}:${time}:${currentIndex}`)
+            .setLabel("↻ Refresh")
+            .setStyle("SECONDARY");
 
         let right = new MessageButton()
-                        .setCustomID(`lb:${lb}:${time}:${currentIndex + 10}`)
-                        .setLabel("10 >>")
-                        .setStyle('PRIMARY');
+            .setCustomID(`lb:${lb}:${time}:${currentIndex + 10}`)
+            .setLabel("10 >>")
+            .setStyle("PRIMARY");
 
-        if(currentIndex - 10 < 0) {
+        if (currentIndex - 10 < 0) {
             left.setDisabled(true);
         }
 
-        let row = new MessageActionRow()
-            .addComponents(left, mid, right);
+        let row = new MessageActionRow().addComponents(left, mid, right);
 
         return row;
     }
-}
+};

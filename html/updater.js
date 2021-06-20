@@ -11,7 +11,9 @@ function addstuff(ext, clazzz) {
                 for (var i = 0; i < newArr.length; i++) {
                     if (newArr[i].trim() != "") {
                         let line = newArr[i].split(":");
-                        newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0].replace(/[0-9][0-9][0-9]\)/g, "").trim()}'>${line[0]}</a>:${line[1]}`;
+                        newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0]
+                            .replace(/[0-9][0-9][0-9]\)/g, "")
+                            .trim()}'>${line[0]}</a>:${line[1]}`;
                     }
                 }
             }

@@ -29,7 +29,6 @@ const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
 const Runtime = require("./src/Runtime").fromJSON();
 
-
 /**
  * Run the accounts task
  *
@@ -158,7 +157,11 @@ async function gameAmnt() {
  * @param {string} [timetype=utils.day()] the varied part of the file to distinguish it
  */
 async function archive(path = "./archive/", timetype = utils.day()) {
-    await Promise.all([utils.archiveJson("guild", path, timetype), utils.archiveJson("players", path, timetype), utils.archiveJson("accounts", path, timetype)]);
+    await Promise.all([
+        utils.archiveJson("guild", path, timetype),
+        utils.archiveJson("players", path, timetype),
+        utils.archiveJson("accounts", path, timetype),
+    ]);
 }
 
 /**
@@ -251,7 +254,7 @@ async function main() {
     // let database = await Connection();
     // let db = database.db("hyarcade");
     if (Runtime.apiDown) {
-        if(args[2] == "bot" || args[2] == "checkStatus") {
+        if (args[2] == "bot" || args[2] == "checkStatus") {
         } else {
             process.exit(1);
         }
@@ -437,12 +440,12 @@ async function main() {
             await AccountUpdater(db);
             break;
 
-        case "translateDb" : 
+        case "translateDb":
             await Translator();
             break;
 
-        case "checkStatus" : {
-            console.log(await cli.getServerStatus())
+        case "checkStatus": {
+            console.log(await cli.getServerStatus());
             break;
         }
     }

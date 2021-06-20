@@ -3,10 +3,9 @@ const cfg = require("./Config").fromJSON();
 const { getKeyByValue } = require("./utils");
 const utils = require("./utils");
 
-
 function getGuild(guildlist, uuid) {
-    for(let guild of guildlist) {
-        if(guild.memberUUIDs.includes(uuid.toLowerCase())) {
+    for (let guild of guildlist) {
+        if (guild.memberUUIDs.includes(uuid.toLowerCase())) {
             return guild;
         }
     }
@@ -37,7 +36,7 @@ exports.players = async function players(acclist) {
 exports.accounts = async function accounts() {
     let acclistjson = await utils.readJSON("acclist.json");
     let disclist = await utils.readJSON("disclist.json");
-    let guilds = await utils.readJSON("guild.json")
+    let guilds = await utils.readJSON("guild.json");
     let acclist = {};
 
     for (const sublist in acclistjson) {
@@ -47,7 +46,7 @@ exports.accounts = async function accounts() {
             let disc = getKeyByValue(disclist, args.uuid);
             let guild = getGuild(guilds, args.uuid);
             acc.discord = disc;
-            if(guild) {
+            if (guild) {
                 acc.guildID = guild.uuid;
                 acc.guild = guild.name;
             }
@@ -55,7 +54,13 @@ exports.accounts = async function accounts() {
         }
         acclist[sublist] = currentlist;
     }
-    acclist.accounts = acclist.gamers.concat(acclist.others, acclist.afkers, acclist.important, acclist.yt, acclist.pog);
+    acclist.accounts = acclist.gamers.concat(
+        acclist.others,
+        acclist.afkers,
+        acclist.important,
+        acclist.yt,
+        acclist.pog
+    );
 
     if (cfg.mode == "test") {
         acclist.accounts = acclist.gamers;

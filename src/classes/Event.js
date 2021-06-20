@@ -25,15 +25,19 @@ class AccountEvent {
         if (this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of ${this.newAmnt}! Was ${this.oldAmnt}.`;
         } else if (this.type == "LBPOS") {
-            return `${this.name} just passed ${this.modifier} and got to rank ${this.newAmnt + 1} on the party games leaderboard!`;
+            return `${this.name} just passed ${this.modifier} and got to rank ${
+                this.newAmnt + 1
+            } on the party games leaderboard!`;
         } else if (this.type == "NAME") {
             return `${this.oldAmnt} has renamed themselves to ${this.name}`;
         } else if (this.type == "LINK") {
             return `${this.name} has been linked.`;
         } else if (this.type == "LOGIN") {
-            return `${this.name} Logged in for the first time in a while!`
+            return `${this.name} Logged in for the first time in a while!`;
         } else if (this.type == "RANK") {
-            return `${this.name}'s rank changed to ${this.newAmnt.replace(/_PLUS/g,"+")} from ${("" + this.oldAmnt).replace(/_PLUS/g,"+")}`;
+            return `${this.name}'s rank changed to ${this.newAmnt.replace(/_PLUS/g, "+")} from ${(
+                "" + this.oldAmnt
+            ).replace(/_PLUS/g, "+")}`;
         } else if (this.type == "SIMP") {
             return `${this.name} gifted rank(s)`;
         } else if (this.type == "OF") {
@@ -56,14 +60,15 @@ class AccountEvent {
         } else if (this.type == "HITW") {
             await Webhook.sendBasic(this.toString(), config.events.HITW.webhook);
         } else {
-            if(config.events[this.type]) {
+            if (config.events[this.type]) {
                 await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
             }
         }
     }
 
     async getHitWEmbed() {
-        let avatar = "https://crafatar.com/renders/body/" + this.uuid + ".png?size=512&default=MHF_Steve&scale=10&overlay";
+        let avatar =
+            "https://crafatar.com/renders/body/" + this.uuid + ".png?size=512&default=MHF_Steve&scale=10&overlay";
 
         let thumb = "https://crafatar.com/avatars/" + this.uuid + ".png?size=512?default=MHF_Steve&scale=10&overlay";
 

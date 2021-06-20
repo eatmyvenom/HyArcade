@@ -188,7 +188,8 @@ class Account {
             this.version = json.player.mcVersionRp;
             this.mostRecentGameType = json.player.mostRecentGameType;
             this.xp = json.player.networkExp;
-            this.level = 1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
+            this.level =
+                1.0 + -8750.0 / 2500.0 + Math.sqrt(((-8750.0 / 2500.0) * -8750.0) / 2500.0 + (2.0 / 2500.0) * this.xp);
             this.firstLogin = json.player.firstLogin;
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
@@ -212,7 +213,8 @@ class Account {
             this.dragonWarsWins = numberify(arcade.wins_dragonwars2);
             this.bountyHuntersWins = numberify(arcade.wins_oneinthequiver);
             this.blockingDeadWins = numberify(arcade.wins_dayone);
-            this.hideAndSeekWins = numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
+            this.hideAndSeekWins =
+                numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
             this.zombiesWins = numberify(arcade.wins_zombies);
             this.ctwKills = json.player.achievements.arcade_ctw_slayer;
             this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
@@ -223,10 +225,14 @@ class Account {
             this.seasonalWins.grinch = numberify(arcade.wins_grinch_simulator_v2);
             this.seasonalWins.halloween = numberify(arcade.wins_halloween_simulator);
             this.seasonalWins.scuba = numberify(arcade.wins_scuba_simulator);
-            this.simTotal = this.seasonalWins.total = this.seasonalWins.easter + this.seasonalWins.grinch + this.seasonalWins.halloween + this.seasonalWins.scuba;
+            this.simTotal = this.seasonalWins.total =
+                this.seasonalWins.easter +
+                this.seasonalWins.grinch +
+                this.seasonalWins.halloween +
+                this.seasonalWins.scuba;
 
-            for(let stat in arcade) {
-                if(stat.includes("zombie")) {
+            for (let stat in arcade) {
+                if (stat.includes("zombie")) {
                     this.zombies[stat] = arcade[stat];
                 }
             }
@@ -260,7 +266,7 @@ class Account {
             this.arcadeWins = json.player.achievements.arcade_arcade_winner;
             this.anyWins = json.player.achievements.general_wins;
 
-            this.combinedArcadeWins = 
+            this.combinedArcadeWins =
                 numberify(this.wins) +
                 numberify(this.hitwWins) +
                 numberify(this.farmhuntWins) +
@@ -276,7 +282,7 @@ class Account {
                 numberify(this.hideAndSeekWins) +
                 numberify(this.zombiesWins) +
                 numberify(this.pixelPaintersWins) +
-                numberify(this.simTotal)
+                numberify(this.simTotal);
         }
     }
 }

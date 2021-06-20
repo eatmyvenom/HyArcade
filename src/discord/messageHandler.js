@@ -27,11 +27,11 @@ async function logCmd(msg) {
 async function sendAsHook(hook, cmdResponse) {
     try {
         let obj = BotUtils.getWebhookObj(cmdResponse.embed);
-        if(cmdResponse.res != "") {
+        if (cmdResponse.res != "") {
             obj.content = cmdResponse.res;
         }
-        if(cmdResponse.img != undefined) {
-            obj.files = [ cmdResponse.img ];
+        if (cmdResponse.img != undefined) {
+            obj.files = [cmdResponse.img];
         }
         await hook.send(obj);
         return true;
@@ -44,54 +44,57 @@ async function sendAsHook(hook, cmdResponse) {
 
 function randomBtw() {
     let randomVal = Math.round(Math.random() * 15);
-    let str = "By the way, I have slash commands you can run right now which are alot better in the backend than the normal way of running commands! Try em out some time.";
-    logger.out(randomVal)
-    if(randomVal == 0) {
+    let str =
+        "By the way, I have slash commands you can run right now which are alot better in the backend than the normal way of running commands! Try em out some time.";
+    logger.out(randomVal);
+    if (randomVal == 0) {
         return str;
     }
-    if(randomVal == 1) {
-        return "I have slash commands you can use, currently the normal commands are being phased out. Please try the slash commands instead."
+    if (randomVal == 1) {
+        return "I have slash commands you can use, currently the normal commands are being phased out. Please try the slash commands instead.";
     }
     return "";
 }
 
 async function miniWallsVerify(msg) {
-    if(msg.author.id == '156952208045375488') { return; }
+    if (msg.author.id == "156952208045375488") {
+        return;
+    }
     let ign = msg.content.trim();
-    if(await isBlacklisted(id)) return;
+    if (await isBlacklisted(id)) return;
     let uuid = await mojangRequest.getUUID(ign);
-    if(uuid == undefined) {
-        await msg.channel.send({ embeds : [errIgnNull]});
+    if (uuid == undefined) {
+        await msg.channel.send({ embeds: [errIgnNull] });
         return;
     }
     let tag = msg.author.tag;
     let id = msg.author.id;
-    if(Runtime.fromJSON().apiDown) {
-        return { res :"", embed: embeds.apiDed }
+    if (Runtime.fromJSON().apiDown) {
+        return { res: "", embed: embeds.apiDed };
     }
     let acc = new Account(ign, 0, uuid);
     await acc.updateData();
     let dbAcc = BotUtils.resolveAccount(uuid, msg, false);
-    if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
+    if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
         return;
     }
-    if(acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
+    if (acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
         await addAccounts("others", [uuid]);
         let disclist = BotUtils.fileCache.disclist;
         disclist[id] = uuid;
         await utils.writeJSON("./disclist.json", disclist);
         logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
-        await msg.member.roles.remove('850033543425949736');
-        await msg.member.roles.add('789721304722178069');
-        await msg.member.setNickname(acc.name)
-        await msg.channel.send({ embeds : [linkSuccess]});
+        await msg.member.roles.remove("850033543425949736");
+        await msg.member.roles.add("789721304722178069");
+        await msg.member.setNickname(acc.name);
+        await msg.channel.send({ embeds: [linkSuccess] });
     } else {
-        await msg.channel.send({ embeds : [errHypixelMismatch]});
+        await msg.channel.send({ embeds: [errHypixelMismatch] });
     }
 }
 
 async function pgVerify(msg) {
-    msg.member.roles.add('841092980931952660');
+    msg.member.roles.add("841092980931952660");
 }
 
 async function attemptSend(msg, cmdResponse, opts) {
@@ -100,14 +103,14 @@ async function attemptSend(msg, cmdResponse, opts) {
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
         if (runtime.bot != "backup") {
             opts.reply = { messageReference: msg.id };
-            if(cmdResponse.res != "") {
+            if (cmdResponse.res != "") {
                 opts.content = cmdResponse.res;
             }
-            if(cmdResponse.embed != undefined) {
-                opts.embeds = [ cmdResponse.embed ];
+            if (cmdResponse.embed != undefined) {
+                opts.embeds = [cmdResponse.embed];
             }
-            if(cmdResponse.img != undefined) {
-                opts.files = [ cmdResponse.img ];
+            if (cmdResponse.img != undefined) {
+                opts.files = [cmdResponse.img];
             }
             await msg.channel.send(opts);
         }
@@ -170,7 +173,10 @@ async function isBlacklisted(id) {
 
 async function mwMode(msg) {
     let cmdResponse = await getMWCmdRes(msg);
-    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+    let isValidResponse =
+        cmdResponse != undefined &&
+        cmdResponse.res != undefined &&
+        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
             let dmchannel = await msg.author.createDM();
@@ -192,19 +198,22 @@ async function mwMode(msg) {
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
-    if (msg.guild.id == '808077828842455090') return;
+    if (msg.guild.id == "808077828842455090") return;
     if (BotUtils.botMode == "mw") {
-        if(msg.guild.id == '789718245015289886') {
+        if (msg.guild.id == "789718245015289886") {
             await mwMode(msg);
             return;
         } else {
             return;
         }
     }
-    if(msg.channel.id == '791122377333407784') await miniWallsVerify(msg);
+    if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
 
     let cmdResponse = await getCmdRes(msg);
-    let isValidResponse = cmdResponse != undefined && cmdResponse.res != undefined && (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+    let isValidResponse =
+        cmdResponse != undefined &&
+        cmdResponse.res != undefined &&
+        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {

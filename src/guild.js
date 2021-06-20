@@ -2,7 +2,7 @@ const hypixelApi = require("./hypixelApi");
 let accounts = [];
 
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0))
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 module.exports = function Gld(acclist) {

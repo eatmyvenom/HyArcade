@@ -1,19 +1,18 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
 const utils = require("../../utils");
 const { client } = require("../BotUtils");
-const helpText = require('../HelpText');
+const helpText = require("../HelpText");
 const BotUtils = require("../BotUtils");
 const { logger } = require("../../utils");
 const mojangRequest = require("../../mojangRequest");
 const Account = require("../../account");
 
 module.exports = class InteractionUtils {
-
     static async accFromUUID(uuid) {
         let acclist = await BotUtils.fileCache.acclist;
         let acc = acclist.find((a) => a.uuid == uuid);
 
-        if(acc == undefined) {
+        if (acc == undefined) {
             acc = new Account("", 0, "" + uuid);
             await acc.updateData();
         }
@@ -24,7 +23,7 @@ module.exports = class InteractionUtils {
     static async resolveAccount(interaction, namearg = "player") {
         logger.out("Attempting to resolve account from " + JSON.stringify(interaction.options));
         let string = "undefinednullnonothingno";
-        if(interaction.options.get(namearg) != undefined) {
+        if (interaction.options.get(namearg) != undefined) {
             string = interaction.options.get(namearg).value;
         }
         let canbeSelf = string == "" || string == "undefinednullnonothingno";
@@ -45,19 +44,19 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => a.name.toLowerCase().startsWith(string));
         }
 
-        if(acc == undefined && string.length == "22") {
-            acc = acclist.find((a) => a.discord == string.slice(3,-1));
+        if (acc == undefined && string.length == "22") {
+            acc = acclist.find((a) => a.discord == string.slice(3, -1));
         }
 
-        if(acc == undefined && string.length == "21") {
-            acc = acclist.find((a) => a.discord == string.slice(2,-1));
+        if (acc == undefined && string.length == "21") {
+            acc = acclist.find((a) => a.discord == string.slice(2, -1));
         }
 
-        if(acc == undefined) {
+        if (acc == undefined) {
             acc = acclist.find((a) => {
-                if(a.nameHist && a.nameHist.length > 0) {
-                    for(let name of a.nameHist) {
-                        if(name.toLowerCase().startsWith(string)) {
+                if (a.nameHist && a.nameHist.length > 0) {
+                    for (let name of a.nameHist) {
+                        if (name.toLowerCase().startsWith(string)) {
                             return true;
                         }
                     }
@@ -71,12 +70,12 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => stringify(a.discord) == discid);
         }
 
-        if(acc) {
+        if (acc) {
             logger.out("resolved as " + acc.name);
         } else {
             interaction.defer();
             logger.out("Unable to resolve, getting by ign from hypixel.");
-        
+
             let plr = string;
             let uuid;
             if (plr.length > 17) {
@@ -84,7 +83,7 @@ module.exports = class InteractionUtils {
             } else {
                 uuid = await mojangRequest.getUUID(plr);
             }
-        
+
             acc = new Account("", 0, "" + uuid);
             await acc.updateData();
         }
@@ -107,12 +106,15 @@ module.exports = class InteractionUtils {
             .addField("/verify", "Verify yourself with the arcade bot")
             .addField("/whois", "Get the linked discord account of a player")
             .addField("/help", "Get a list of commands of help on a specific topic")
-            .addField("Other help topics", "games - the names of all the available games for commands like /stats and /leaderboard\nsearching - an explanation on how the bot searches for an account when you give input\nrole handling - an explantion on how role handling happens within the bot")
+            .addField(
+                "Other help topics",
+                "games - the names of all the available games for commands like /stats and /leaderboard\nsearching - an explanation on how the bot searches for an account when you give input\nrole handling - an explantion on how role handling happens within the bot"
+            );
     }
 
     static helpTopic(topicName) {
         let e = new MessageEmbed();
-        let topic = topicName.slice(6)
+        let topic = topicName.slice(6);
 
         e.setTitle(topic);
         e.setColor(0x0066cc);
@@ -125,4 +127,3 @@ module.exports = class InteractionUtils {
 function stringify(str) {
     return "" + str;
 }
-

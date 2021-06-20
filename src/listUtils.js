@@ -39,7 +39,10 @@ async function txtPlayerList(list, maxamnt) {
         // not worth it to use wasm or node native for this
         let num = ("000" + (i + 1)).slice(-3);
 
-        let name = (list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1) + "                       ").slice(0, 17);
+        let name = (list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1) + "                       ").slice(
+            0,
+            17
+        );
         //         001) MonkeyCity17     : 5900
         str += `${num}) ${name}: ${list[i].wins}\n`;
     }
@@ -77,12 +80,12 @@ async function listDiff(name, timetype, maxamnt) {
 }
 
 /**
- * 
- * @param {String} name 
- * @param {String} timetype 
- * @param {Number} maxamnt Max amount of players in 
+ *
+ * @param {String} name
+ * @param {String} timetype
+ * @param {Number} maxamnt Max amount of players in
  * @param {Function} callback Callback used to get the stats out of each account
- * @returns 
+ * @returns
  */
 async function mklistAdv(name, timetype, maxamnt, callback) {
     let newlist, oldlist;
@@ -100,7 +103,7 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
         let oldacc = oldlist[i];
         let newacc;
         newacc = newlist.find((g) => g.uuid.toLowerCase() == oldacc.uuid.toLowerCase());
-        
+
         // make sure acc isnt null/undefined
         if (newacc) {
             oldlist[i] = callback(newacc, oldacc);
@@ -222,7 +225,11 @@ async function addAccounts(category, names) {
             continue;
         }
 
-        if (acclist[category].find((acc) => acc.uuid == uuid) || acclist["gamers"].find((acc) => acc.uuid == uuid) || acclist["afkers"].find((acc) => acc.uuid == uuid)) {
+        if (
+            acclist[category].find((acc) => acc.uuid == uuid) ||
+            acclist["gamers"].find((acc) => acc.uuid == uuid) ||
+            acclist["afkers"].find((acc) => acc.uuid == uuid)
+        ) {
             logger.err(`Refusing to add duplicate! (${name})`);
             res += `Refusing to add duplicate! (${name})\n`;
             continue;
@@ -333,7 +340,7 @@ async function stringLBDaily(lbprop, maxamnt) {
 function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
     let size = maxamnt + Number(startingIndex);
-    size = (size > list.length) ? list.length : size;
+    size = size > list.length ? list.length : size;
     list = list.slice(0, size);
     for (let i = startingIndex; i < list.length; i++) {
         // don't print if player has 0 wins

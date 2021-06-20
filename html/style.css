@@ -48,11 +48,11 @@ a {
 }
 
 footer {
-    margin-top : 1%;
-    border-top : 1px solid #ff3399;
+    margin-top: 1%;
+    border-top: 1px solid #ff3399;
     display: block;
 }
 
 footer > a {
-    border : none;
+    border: none;
 }

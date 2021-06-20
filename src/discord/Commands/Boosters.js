@@ -27,6 +27,8 @@ module.exports = new Command("boosters", ["*"], async (args, rawMsg, interaction
 
     return {
         res: "",
-        embed: new MessageEmbed().setTitle("Arcade Network boosters").setDescription(list.split("\n").slice(0, 30).join("\n")),
+        embed: new MessageEmbed()
+            .setTitle("Arcade Network boosters")
+            .setDescription(list.split("\n").slice(0, 30).join("\n")),
     };
 });

@@ -53,10 +53,31 @@ module.exports = async function roleHandler(client) {
     );
 
     let toGuild = await client.guilds.fetch("809959535174352946");
-    let TO = new RoleUpdater(toGuild, [new Role(1000, "815629891034546216"), new Role(500, "815629891395518485"), new Role(300, "815629894453166100"), new Role(100, "815629895303430184"), new Role(50, "815629895303430184")], "throwOutWins");
+    let TO = new RoleUpdater(
+        toGuild,
+        [
+            new Role(1000, "815629891034546216"),
+            new Role(500, "815629891395518485"),
+            new Role(300, "815629894453166100"),
+            new Role(100, "815629895303430184"),
+            new Role(50, "815629895303430184"),
+        ],
+        "throwOutWins"
+    );
 
     let simGuild = await client.guilds.fetch("826906189404176415");
-    let SIM = new RoleUpdater(simGuild, [new Role(5000, "826929696443859014"), new Role(2500, "826929634352168960"), new Role(1000, "826929551308226580"), new Role(500, "826929551308226580"), new Role(250, "826929365648146483"), new Role(100, "826929192062681099")], "simTotal");
+    let SIM = new RoleUpdater(
+        simGuild,
+        [
+            new Role(5000, "826929696443859014"),
+            new Role(2500, "826929634352168960"),
+            new Role(1000, "826929551308226580"),
+            new Role(500, "826929551308226580"),
+            new Role(250, "826929365648146483"),
+            new Role(100, "826929192062681099"),
+        ],
+        "simTotal"
+    );
 
     let fhGuild = await client.guilds.fetch("810614388612136960");
     let FH = new RoleUpdater(
@@ -85,19 +106,36 @@ module.exports = async function roleHandler(client) {
     );
 
     let hnsGuild = await client.guilds.fetch("839842177755775026");
-    let HNS = new RoleUpdater(hnsGuild, [new Role(10000, "839874994225545256"), new Role(5000, "839851167651069962"), new Role(2500, "839843252194377728"), new Role(1000, "839850875463925822"), new Role(500, "839843337904062514"), new Role(250, "840080298011787264"), new Role(100, "839843397543657502"), new Role(0, "839843424575815680")], "hideAndSeekWins");
-    let HNSK = new RoleUpdater(hnsGuild, [
-        new Role(40000, "847464019497320499"),
-        new Role(30000, "847463969454948362"),
-        new Role(20000, "847463926660464670"),
-        new Role(10000, "847463872960266300"),
-        new Role(5000, "847463831814012939"),
-        new Role(2500, "847463780552146944"),
-        new Role(1000, "847463739632386088"),
-        new Role(500, "847463690239213568"),
-        new Role(250, "847463651224322078"),
-        new Role(100, "847463463253049435"),
-    ], "hnsKills")
+    let HNS = new RoleUpdater(
+        hnsGuild,
+        [
+            new Role(10000, "839874994225545256"),
+            new Role(5000, "839851167651069962"),
+            new Role(2500, "839843252194377728"),
+            new Role(1000, "839850875463925822"),
+            new Role(500, "839843337904062514"),
+            new Role(250, "840080298011787264"),
+            new Role(100, "839843397543657502"),
+            new Role(0, "839843424575815680"),
+        ],
+        "hideAndSeekWins"
+    );
+    let HNSK = new RoleUpdater(
+        hnsGuild,
+        [
+            new Role(40000, "847464019497320499"),
+            new Role(30000, "847463969454948362"),
+            new Role(20000, "847463926660464670"),
+            new Role(10000, "847463872960266300"),
+            new Role(5000, "847463831814012939"),
+            new Role(2500, "847463780552146944"),
+            new Role(1000, "847463739632386088"),
+            new Role(500, "847463690239213568"),
+            new Role(250, "847463651224322078"),
+            new Role(100, "847463463253049435"),
+        ],
+        "hnsKills"
+    );
 
     await PG.updateAll();
     await HS.updateAll();
