@@ -24,6 +24,7 @@ const Cfg = require("./src/Config");
 const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
 const dataGeneration = require("./src/dataGeneration");
+const Server = require("./src/server/Wrap");
 const Connection = require("./src/mongo/Connection");
 const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
@@ -446,6 +447,11 @@ async function main() {
 
         case "checkStatus": {
             console.log(await cli.getServerStatus());
+            break;
+        }
+
+        case "serveDB" : {
+            await Server.listen(6000, "0.0.0.0");
             break;
         }
     }
