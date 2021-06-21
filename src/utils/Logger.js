@@ -9,9 +9,9 @@ function daytime() {
         : "";
 }
 
-function print(type, string) {
+function print(type, string, color = "\x1b[0m") {
     for(let s of string.split("\n")) {
-        println(type, s);
+        println(type, s, color);
     }
 }
 
