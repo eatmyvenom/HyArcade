@@ -1,11 +1,10 @@
-const config = require("./Config").fromJSON();
+const config = require("../Config").fromJSON();
 const Discord = require("discord.js");
 const MessageEmbed = Discord.MessageEmbed;
-const listUtils = require("./listUtils");
-const utils = require("./utils");
-const { logger } = require("./utils");
+const listUtils = require("../listUtils");
+const { logger } = require("../utils");
 const fs = require("fs/promises");
-const Runtime = require("./Runtime");
+const Runtime = require("../Runtime");
 
 /**
  * Send text to a discord webhook
