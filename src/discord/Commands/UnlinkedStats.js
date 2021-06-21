@@ -1,6 +1,6 @@
 const Command = require("../../classes/Command");
-const Account = require("../../account");
-const mojangRequest = require("../../mojangRequest");
+const Account = require("../../classes/account");
+const mojangRequest = require("../../request/mojangRequest");
 const BotUtils = require("../BotUtils");
 const { MessageEmbed } = require("discord.js");
 const { logger } = require("../../utils");

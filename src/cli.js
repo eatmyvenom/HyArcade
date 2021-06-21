@@ -1,11 +1,11 @@
 const { getGuildFromPlayer } = require("./hypixelApi");
 const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
 const utils = require("./utils");
-const mojangRequest = require("./mojangRequest");
+const mojangRequest = require("./request/mojangRequest");
 const dataGeneration = require("./dataGeneration");
-const Account = require("./account");
+const Account = require("./classes/account");
 const AccountCreator = require("./mongo/AccountCreator");
-const webRequest = require("./webRequest");
+const webRequest = require("./request/webRequest");
 const Runtime = require("./Runtime");
 const args = process.argv;
 const logger = utils.logger;

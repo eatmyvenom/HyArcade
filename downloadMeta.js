@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const webRequest = require("./src/webRequest");
+const webRequest = require("./src/request/webRequest");
 const fs = require("fs/promises");
 
 async function downloadFile(name, servername) {

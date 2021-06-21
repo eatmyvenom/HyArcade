@@ -1,4 +1,4 @@
-const { logger } = require("./utils");
+const { logger } = require("../utils");
 const webRequest = require("./webRequest");
 
 /**

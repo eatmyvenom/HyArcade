@@ -14,11 +14,11 @@ module.exports = async (req, res) => {
     let lbprop = url.searchParams.get("path");
     let category = url.searchParams.get("category");
     let timePeriod = url.searchParams.get("time");
-    if(req.method == "GET") {
-        res.setHeader('Content-Type', 'application/json');
-        let accounts = await utils.readJSON('accounts.json');
+    if (req.method == "GET") {
+        res.setHeader("Content-Type", "application/json");
+        let accounts = await utils.readJSON("accounts.json");
 
-        if(timePeriod == undefined) {
+        if (timePeriod == undefined) {
             if (category == null) {
                 accounts = await [].concat(accounts).sort((b, a) => {
                     return numberify(a[lbprop]) - numberify(b[lbprop]);
@@ -40,4 +40,4 @@ module.exports = async (req, res) => {
         res.statusCode = 404;
         res.end();
     }
-}
+};

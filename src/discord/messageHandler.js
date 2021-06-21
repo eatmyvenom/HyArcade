@@ -5,8 +5,8 @@ const utils = require("../utils");
 const { isValidIGN, logger } = require("../utils");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
-const Account = require("../account");
-const mojangRequest = require("../mojangRequest");
+const Account = require("../classes/account");
+const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
 const { errHypixelMismatch, errIgnNull, linkSuccess } = require("./Embeds");
 

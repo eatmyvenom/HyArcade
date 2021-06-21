@@ -1,7 +1,7 @@
 const Config = require("./Config");
 const cfg = Config.fromJSON();
 const fs = require("fs/promises");
-const webRequest = require("./webRequest");
+const webRequest = require("./request/webRequest");
 
 /**
  * Halt execution for a specified amount of time

@@ -1,4 +1,4 @@
-const Account = require("../account");
+const Account = require("../classes/account");
 const utils = require("../utils");
 const logger = utils.logger;
 const cfg = require("../Config").fromJSON();

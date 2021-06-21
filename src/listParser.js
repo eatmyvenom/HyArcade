@@ -1,4 +1,4 @@
-const Account = require("./account");
+const Account = require("./classes/account");
 const cfg = require("./Config").fromJSON();
 const { getKeyByValue } = require("./utils");
 const utils = require("./utils");
@@ -18,7 +18,7 @@ function getGuild(guildlist, uuid) {
  * @return {Player[]}
  */
 exports.players = async function players(acclist) {
-    let Player = require("./player")(acclist);
+    let Player = require("./classes/player")(acclist);
 
     let playerjson = await utils.readJSON("./playerlist.json");
     let playerlist = [];
@@ -77,7 +77,7 @@ exports.accounts = async function accounts() {
  */
 exports.guilds = async function gld(accs) {
     let accounts = accs;
-    let Guild = require("./guild")(accounts);
+    let Guild = require("./classes/guild")(accounts);
     let guildlistjson = await utils.readJSON("guildlist.json");
     let realList = [];
 

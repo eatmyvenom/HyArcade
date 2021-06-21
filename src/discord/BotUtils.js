@@ -4,8 +4,8 @@ const fs = require("fs/promises");
 const { logger } = require("../utils");
 const utils = require("../utils");
 const webhook = require("../webhook");
-const mojangRequest = require("../mojangRequest");
-const Account = require("../account");
+const mojangRequest = require("../request/mojangRequest");
+const Account = require("../classes/account");
 const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 

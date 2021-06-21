@@ -1,4 +1,4 @@
-const hypixelReq = require("./hypixelReq");
+const hypixelReq = require("./request/hypixelReq");
 const { sleep, logger } = require("./utils");
 const config = require("./Config").fromJSON();
 

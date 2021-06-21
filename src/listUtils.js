@@ -1,9 +1,9 @@
 const fs = require("fs/promises");
 const utils = require("./utils");
-const { getUUID } = require("./mojangRequest");
+const { getUUID } = require("./request/mojangRequest");
 const config = require("./Config").fromJSON();
 const { isValidIGN } = require("./utils");
-const Account = require("./account");
+const Account = require("./classes/account");
 const BotUtils = require("./discord/BotUtils");
 const logger = utils.logger;
 

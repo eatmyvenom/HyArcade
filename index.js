@@ -450,7 +450,7 @@ async function main() {
             break;
         }
 
-        case "serveDB" : {
+        case "serveDB": {
             await Server.listen(6000, "0.0.0.0");
             break;
         }

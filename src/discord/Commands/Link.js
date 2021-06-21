@@ -1,7 +1,7 @@
-const Account = require("../../account");
+const Account = require("../../classes/account");
 const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
-const mojangRequest = require("../../mojangRequest");
+const mojangRequest = require("../../request/mojangRequest");
 const Embeds = require("../Embeds");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");

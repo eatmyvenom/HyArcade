@@ -78,7 +78,7 @@ async function statusTxt() {
     let gamerstr = "";
     let nongamers = "";
 
-    let accs = require("./acclist").accounts;
+    let accs = require("./listParser").accounts.accounts;
 
     let crntstatus = await utils.readJSON("status.json");
     for (const account of accs) {

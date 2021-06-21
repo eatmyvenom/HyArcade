@@ -1,6 +1,6 @@
-const { getAccountData } = require("./hypixelApi");
-const optifineRequest = require("./optifineRequest");
-const labyRequest = require("./labyRequest");
+const { getAccountData } = require("../hypixelApi");
+const optifineRequest = require("../request/optifineRequest");
+const labyRequest = require("../request/labyRequest");
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));

@@ -4,8 +4,8 @@ const { client } = require("../BotUtils");
 const helpText = require("../HelpText");
 const BotUtils = require("../BotUtils");
 const { logger } = require("../../utils");
-const mojangRequest = require("../../mojangRequest");
-const Account = require("../../account");
+const mojangRequest = require("../../request/mojangRequest");
+const Account = require("../../classes/account");
 
 module.exports = class InteractionUtils {
     static async accFromUUID(uuid) {
