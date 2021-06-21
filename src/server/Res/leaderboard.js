@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     let category = url.searchParams.get("category");
     let timePeriod = url.searchParams.get("time");
     if(req.method == "GET") {
-        res.setHeader('Content-Type', 'text/json');
+        res.setHeader('Content-Type', 'application/json');
         let accounts = await utils.readJSON('accounts.json');
 
         if(timePeriod == undefined) {

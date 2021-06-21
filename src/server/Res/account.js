@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     console.log(player);
     player = player.toLowerCase();
     if(req.method == "GET") {
-        res.setHeader('Content-Type', 'text/json');
+        res.setHeader('Content-Type', 'application/json');
         let accounts = await utils.readJSON('accounts.json');
         let acc;
         if(player.length == 32) {
