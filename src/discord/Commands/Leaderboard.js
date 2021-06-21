@@ -92,7 +92,7 @@ async function getLB(prop, timetype, limit, category, start) {
     return embed;
 }
 
-module.exports = new Command("leaderboard", ["*"], async (args) => {
+module.exports = new Command("leaderboard", ["*"], async (args, rawMsg, interaction) => {
     let startTime = Date.now();
     if (args.length < 1) {
         let embed = new MessageEmbed()
@@ -483,5 +483,9 @@ module.exports = new Command("leaderboard", ["*"], async (args) => {
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
-    return { res: "", embed: finalRes, game: gid, start: startingIndex };
+    let response = { res: "", embed: finalRes, game: gid, start: startingIndex };
+    if(interaction == undefined) {
+        response.res = "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
+    }
+    return response;
 });
