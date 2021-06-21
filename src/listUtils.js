@@ -354,6 +354,7 @@ function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
 }
 
 module.exports = {
+    listDiffByProp: listDiffByProp,
     txtPlayerList: txtPlayerList,
     listNormal: listNormal,
     listDiff: listDiff,
