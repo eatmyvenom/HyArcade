@@ -7,7 +7,7 @@ if (!require("fs").existsSync("./config.json")) {
 const os = require("os");
 const fs = require("fs/promises");
 const gameAmount = require("./src/gameAmount");
-const Webhook = require("./src/webhook");
+const Webhook = require("./src/events/webhook");
 const utils = require("./src/utils");
 const cli = require("./src/cli");
 const { listNormal, listDiff, stringNormal, stringDaily } = require("./src/listUtils");

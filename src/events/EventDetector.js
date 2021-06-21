@@ -1,7 +1,7 @@
-const AccountEvent = require("./classes/Event");
-const utils = require("./utils");
-const { logger } = require("./utils");
-const cfg = require("./Config").fromJSON();
+const AccountEvent = require("../classes/Event");
+const utils = require("../utils");
+const { logger } = require("../utils");
+const cfg = require("../Config").fromJSON();
 
 class EventDetector {
     OldAccounts = {};

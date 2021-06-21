@@ -1,4 +1,4 @@
-const Webhook = require("../webhook");
+const Webhook = require("../events/webhook");
 const config = require("../Config").fromJSON();
 const { MessageEmbed } = require("discord.js");
 
