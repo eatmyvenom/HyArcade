@@ -68,7 +68,7 @@ function day() {
 async function writeJSON(path, json) {
     await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
     try {
-        let writtenJson = await readJSON(path);
+        await readJSON(path);
     } catch (e) {
         await writeJSON(path, json);
     }
@@ -98,34 +98,6 @@ function fileExists(path) {
 async function archiveJson(oldfile, path, timetype) {
     old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
-}
-
-/**
- * Log content to stdout or a file
- *
- * @param {String} content
- */
-function log(content) {
-    let str = `[${daytime().trim()}] ${content}`;
-    if (cfg.std.disable) {
-        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
-    } else {
-        console.log(str);
-    }
-}
-
-/**
- * Log content to stderr or a file
- *
- * @param {String} content
- */
-function error(content) {
-    let str = daytime() + "ERROR: " + ("" + content).trim();
-    if (cfg.std.disable) {
-        require("fs").writeFileSync(cfg.std.err, str + "\n", { flag: "a" });
-    } else {
-        console.error(str);
-    }
 }
 
 async function downloadFile(name, servername) {
@@ -179,8 +151,5 @@ module.exports = {
     defaultAllowed: defaultAllowed,
     getKeyByValue: getKeyByValue,
     cacheMiss: [],
-    logger: {
-        out: log,
-        err: error,
-    },
+    logger: require('./utils/Logger')
 };
