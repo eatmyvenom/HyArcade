@@ -19,7 +19,7 @@ module.exports = class BotEvents {
     static async messageDelete(msg) {
         if (msg.content.charAt(0) == cfg.commandCharacter) {
             let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
-            logger.out(str);
+            logger.err(str);
             await BotUtils.errHook.send(str);
         }
     }
@@ -27,7 +27,7 @@ module.exports = class BotEvents {
     static async ready(mode) {
         BotUtils.isBotInstance = true;
         BotUtils.botMode = mode;
-        logger.out("Fetching logging channels");
+        logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
         let errhooks = await errchannel.fetchWebhooks();
@@ -37,7 +37,7 @@ module.exports = class BotEvents {
         BotUtils.errHook = errHook;
         BotUtils.logHook = logHook;
         BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
-        logger.out("Initializing file cache");
+        logger.info("Initializing file cache");
         BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
         BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
         BotUtils.fileCache.status = await utils.readJSON("status.json");
@@ -52,7 +52,7 @@ module.exports = class BotEvents {
         let ezmsgs = await fs.readFile("data/ez");
         ezmsgs = ezmsgs.toString().split("\n");
         BotUtils.fileCache.ezmsgs = ezmsgs;
-        logger.out("Selecting mode");
+        logger.info("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
             await BotUtils.client.destroy();
@@ -84,11 +84,11 @@ module.exports = class BotEvents {
         let runtime = Runtime.fromJSON();
         runtime[BotUtils.botMode + "HeartBeat"] = Date.now();
         await runtime.save();
-        logger.out("Heart beat - I'm alive!");
+        logger.info("Heart beat - I'm alive!");
     }
 
     static async dataRefresh() {
-        logger.out("Refreshing file cache...");
+        logger.info("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
         let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs;
