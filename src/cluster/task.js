@@ -1,14 +1,14 @@
-const Webhook = require("./events/webhook");
-const { stringNormal, stringDaily } = require("./listUtils");
-const utils = require("./utils");
-const config = require("./Config").fromJSON();
-const dataGen = require("./dataGeneration");
-const DiscordBot = require("./discord/bot");
-const EventDetector = require("./events/EventDetector");
+const Webhook = require("../events/webhook");
+const { stringNormal, stringDaily } = require("../listUtils");
+const utils = require("../utils");
+const config = require("../Config").fromJSON();
+const dataGen = require("../dataGeneration");
+const DiscordBot = require("../discord/bot");
+const EventDetector = require("../events/EventDetector");
 
-const lists = require("./listParser");
+const lists = require("../listParser");
 let accounts = [];
-const { winsSorter } = require("./utils");
+const { winsSorter } = require("../utils");
 
 /**
  * Run the generate the data for all accounts

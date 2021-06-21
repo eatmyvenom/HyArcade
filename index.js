@@ -12,8 +12,8 @@ const utils = require("./src/utils");
 const cli = require("./src/cli");
 const { listNormal, listDiff, stringNormal, stringDaily } = require("./src/listUtils");
 const args = process.argv;
-const cluster = require("./src/cluster");
-const task = require("./src/task");
+const cluster = require("./src/cluster/cluster");
+const task = require("./src/cluster/task");
 
 // So you may be wondering, "why use such a horrible config
 // format venom?" Well you see this is a nodejs project, this

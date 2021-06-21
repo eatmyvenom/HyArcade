@@ -1,6 +1,6 @@
-const cfg = require("./Config").fromJSON();
+const cfg = require("../Config").fromJSON();
 const task = require("./task");
-const { logger } = require("./utils");
+const { logger } = require("../utils");
 const { exec } = require("child_process");
 
 /**
