@@ -9,6 +9,36 @@ function daytime() {
         : "";
 }
 
+function print(type, string) {
+    for(let s of string.split("\n")) {
+        println(type, s);
+    }
+}
+
+function println(type, string, color = "\x1b[0m") {
+    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`
+    if (cfg.std.disable) {
+        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
+    } else {
+        console.log(str);
+    }
+}
+
+function error(string) {
+    for(let s of string.split("\n")) {
+        errorln(s);
+    }
+}
+
+function errorln(string) {
+    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`
+    if (cfg.std.disable) {
+        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
+    } else {
+        console.log(str);
+    }
+}
+
 module.exports = class Logger {
     /**
      * Log content to stdout or a file
@@ -16,12 +46,7 @@ module.exports = class Logger {
      * @param {String} content
      */
     static log(content) {
-        let str = `[${daytime().trim()}] [LOG] ${content}`;
-        if (cfg.std.disable) {
-            require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
-        } else {
-            console.log(str);
-        }
+        print("LOG" , content);
     }
 
     static out = this.log;
@@ -32,12 +57,7 @@ module.exports = class Logger {
      * @param {String} content
      */
     static info(content) {
-        let str = `[${daytime().trim()}] [INFO] ${content}`;
-        if (cfg.std.disable) {
-            require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
-        } else {
-            console.log(str);
-        }
+        print("INFO", content, "\x1b[32m");
     }
 
     /**
@@ -46,12 +66,7 @@ module.exports = class Logger {
      * @param {String} content
      */
     static error(content) {
-        let str = `[${daytime().trim()}] [ERROR] ${content}`;
-        if (cfg.std.disable) {
-            require("fs").writeFileSync(cfg.std.err, str + "\n", { flag: "a" });
-        } else {
-            console.error(str);
-        }
+        error(content);
     }
 
     static err = this.error
