@@ -13,13 +13,6 @@ function stringify(str) {
     return "" + str;
 }
 
-function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
-}
-
-function formatNum(number) {
-    return Intl.NumberFormat("en").format(number);
-}
 module.exports = class BotUtils {
     static fileCache = {};
     static isBotInstance = false;
@@ -39,9 +32,9 @@ module.exports = class BotUtils {
             acc = acclist.find((a) => a.discord == string);
         }
 
-        if (acc == undefined && string.length > 16) {
+        if (acc == undefined && string.length != 0 && string.length > 16) {
             acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == string);
-        } else if (acc == undefined && string.length <= 16) {
+        } else if (acc == undefined && string.length != 0 && string.length <= 16) {
             acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
         }
 
@@ -73,6 +66,7 @@ module.exports = class BotUtils {
         if (acc == undefined && canbeSelf) {
             let discid = rawMessage.author.id;
             let uuid = disclist[discid];
+            logger.debug(`Resolved as ${uuid} from discord account list`)
             if (uuid != undefined) {
                 acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase());
             }
