@@ -4,7 +4,6 @@ const utils = require("../../utils");
 module.exports = async (req, res) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
     let player = url.searchParams.get("q");
-    console.log(player);
     player = player.toLowerCase();
     if (req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
