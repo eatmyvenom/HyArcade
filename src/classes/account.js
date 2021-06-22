@@ -1,6 +1,7 @@
 const { getAccountData } = require("../hypixelApi");
 const optifineRequest = require("../request/optifineRequest");
 const labyRequest = require("../request/labyRequest");
+const Logger = require("../utils/Logger");
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
@@ -109,12 +110,18 @@ class Account {
         this.name = name;
         this.wins = wins;
         this.uuid = uuid;
-        let timeLow = uuid.slice(0, 8);
-        let timeMid = uuid.slice(8, 12);
-        let version = uuid.slice(12, 16);
-        let varient = uuid.slice(16, 20);
-        let node = uuid.slice(-12);
-        this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
+        try {
+            let timeLow = uuid.slice(0, 8);
+            let timeMid = uuid.slice(8, 12);
+            let version = uuid.slice(12, 16);
+            let varient = uuid.slice(16, 20);
+            let node = uuid.slice(-12);
+            this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
+        } catch (e) {
+            Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
+            Logger.error(e);
+        }
+
     }
 
     setData(oldAcc) {
