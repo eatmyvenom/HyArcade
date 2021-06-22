@@ -18,7 +18,7 @@ let server = http.createServer(async (request, response) => {
         response.end();
     } else {
         try {
-            logger.out(url);
+            logger.out("Getting data for " + url);
             await mod(request, response);
         } catch (e) {
             logger.err(e);

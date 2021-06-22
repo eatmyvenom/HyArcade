@@ -453,6 +453,7 @@ async function main() {
         }
 
         case "serveDB": {
+            logger.out("Starting server for database and listening on port 6000");
             await Server.listen(6000, "0.0.0.0");
             break;
         }
