@@ -28,6 +28,7 @@ const Server = require("./src/server/Wrap");
 const Connection = require("./src/mongo/Connection");
 const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
+const { logger } = require("./src/utils");
 const Runtime = require("./src/Runtime").fromJSON();
 
 /**
@@ -257,6 +258,7 @@ async function main() {
     if (Runtime.apiDown) {
         if (args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {
         } else {
+            logger.err("Refusing to run while api is down");
             process.exit(1);
         }
     }
