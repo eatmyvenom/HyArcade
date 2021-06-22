@@ -1,7 +1,7 @@
-import Account from "../../account.js";
+import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
 import Embeds from "../Embeds.js";
-import mojangRequest from "../../mojangRequest.js";
+import mojangRequest from "../../request/mojangRequest.js";
 import utils from "../../utils.js";
 import { addAccounts } from "../../listUtils.js";
 
