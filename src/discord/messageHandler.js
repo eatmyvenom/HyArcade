@@ -122,9 +122,8 @@ async function attemptSend(msg, cmdResponse, opts) {
 }
 
 async function addIGNs(msg) {
-    logger.info("IGN channel message detected, automatically adding to database.")
     if (cfg.discord.listenChannels.includes(msg.channel.id)) {
-        // sanitize
+        logger.info("IGN channel message detected, automatically adding to database.")
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
             let acclist = await utils.readJSON("acclist.json");
