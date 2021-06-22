@@ -1,14 +1,24 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
+const fs = require("fs/promises");
 const { logger } = require("../utils");
-const webhook = require("../events/webhook");
-const mojangRequest = require("../request/mojangRequest");
-const Account = require("../classes/account");
+const utils = require("../utils");
+const webhook = require("../webhook");
+const mojangRequest = require("../mojangRequest");
+const Account = require("../account");
 const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 
 function stringify(str) {
     return "" + str;
+}
+
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
+
+function formatNum(number) {
+    return Intl.NumberFormat("en").format(number);
 }
 module.exports = class BotUtils {
     static fileCache = {};
@@ -30,9 +40,9 @@ module.exports = class BotUtils {
         }
 
         if (acc == undefined && string.length > 16) {
-            acc = acclist.find((a) => a.uuid.toLowerCase() == string);
+            acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == string);
         } else if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => a.name.toLowerCase() == string);
+            acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
         }
 
         if (string.length > 0 && acc == undefined) {
