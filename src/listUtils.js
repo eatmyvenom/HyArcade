@@ -1,11 +1,7 @@
-const fs = require("fs/promises");
 const utils = require("./utils");
-const { getUUID } = require("./request/mojangRequest");
 const config = require("./Config").fromJSON();
-const { isValidIGN } = require("./utils");
-const Account = require("./classes/account");
 const BotUtils = require("./discord/BotUtils");
-const logger = utils.logger;
+const logger = require("./utils/Logger");
 
 async function getList(type = "") {
     let list;
@@ -16,6 +12,7 @@ async function getList(type = "") {
             list = await utils.readJSON(`accounts.${type}.json`);
         }
     } else {
+        logger.debug("Getting account data from file cache instead of reading.")
         list = BotUtils.fileCache[type + "acclist"];
     }
     return list;
@@ -191,76 +188,6 @@ async function stringDaily(name, maxamnt) {
     return await stringDiff(name, "day", maxamnt);
 }
 
-/**
- * Add a list of accounts to another list
- *
- * @param {String} category
- * @param {String[]} names
- * @return {null}
- */
-async function addAccounts(category, names) {
-    let res = "";
-    let acclist = await utils.readJSON("./acclist.json");
-    let newAccs = [];
-    if (acclist[category] == undefined) {
-        logger.err("Please input a valid category!");
-        return "Please input a valid category!";
-    }
-    let nameArr = names;
-    for (let name of nameArr) {
-        let uuid;
-        if (name.length == 32 || name.length == 36) {
-            uuid = name.replace(/-/g, "");
-        } else {
-            if (!isValidIGN(name)) {
-                logger.err(`${name} is not a valid IGN!`);
-                res += `${name} is not a valid IGN!\n`;
-                continue;
-            }
-            uuid = await getUUID(name);
-        }
-
-        if (uuid == undefined) {
-            res += `${name} does not exist!\n`;
-            continue;
-        }
-
-        if (
-            acclist[category].find((acc) => acc.uuid == uuid) ||
-            acclist["gamers"].find((acc) => acc.uuid == uuid) ||
-            acclist["afkers"].find((acc) => acc.uuid == uuid)
-        ) {
-            logger.err(`Refusing to add duplicate! (${name})`);
-            res += `Refusing to add duplicate! (${name})\n`;
-            continue;
-        }
-
-        let acc = new Account("", 0, uuid);
-        await acc.updateHypixel();
-        let wins = acc.wins;
-        name = acc.name;
-
-        if (wins < 50 && category == "gamers") {
-            logger.err("Refusing to add account with under 50 wins to gamers!");
-        } else {
-            newAccs.push(acc);
-            logger.out(`${name} with ${wins} pg wins added.`);
-            res += `${name} with ${acc.arcadeWins} wins added.\n`;
-        }
-    }
-    let oldAccounts = await utils.readJSON("accounts.json");
-    let fullNewAccounts = oldAccounts.concat(newAccs);
-    acclist = await utils.readJSON("./acclist.json");
-    for (let acc of newAccs) {
-        let lilAcc = { name: acc.name, wins: acc.wins, uuid: acc.uuid };
-        acclist[category].push(lilAcc);
-    }
-    await utils.writeJSON("acclist.json", acclist);
-    await utils.writeJSON("accounts.json", fullNewAccounts);
-    await utils.writeJSON("accounts.json.part", newAccs);
-    return res;
-}
-
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
@@ -361,7 +288,7 @@ module.exports = {
     stringNormal: stringNormal,
     stringDiff: stringDiff,
     stringDaily: stringDaily,
-    addAccounts: addAccounts,
+    addAccounts: require("./datagen/addAccounts"),
     stringLB: stringLB,
     stringLBDaily: stringLBDaily,
     stringLBDiff: stringLBDiff,

@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const ffs = require("fs");
+const { logger } = require("./utils");
 
 class Config {
     key = "";
@@ -28,14 +29,17 @@ class Config {
     }
 
     static fromJSON() {
+        logger.info("Reading config from json");
         return new Config(JSON.parse(ffs.readFileSync("./config.json")));
     }
 
     static fromEnv() {
+        logger.info("Reading config from environment");
         return new Config(JSON.parse(process.env.configjson));
     }
 
     async writeConfig() {
+        logger.info("Writing config to json")
         await fs.writeFile("./config.json", JSON.stringify(this, null, 4));
     }
 }
