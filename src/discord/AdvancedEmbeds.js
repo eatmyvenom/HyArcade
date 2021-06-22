@@ -1121,7 +1121,7 @@ module.exports = class AdvancedEmbeds {
 
             default: {
                 fields.push({
-                    name: "Level",
+                    name: ":trophy: Level",
                     value: lvl,
                     inline: true,
                 });
