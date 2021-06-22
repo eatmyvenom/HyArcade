@@ -14,6 +14,7 @@ const Susser = require("../Commands/Susser");
 const MiniWalls = require("../Commands/MiniWalls");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
+const { logger } = require("../../utils");
 let Commands = null;
 function getArg(i, a) {
     let v = i.options.get(a);
@@ -25,6 +26,8 @@ function getArg(i, a) {
 
 module.exports = async (interaction) => {
     if (Commands == null) {
+        logger.debug("EMCA modules are null, they need to be added!");
+        logger.info("Initializing EMCA modules");
         Commands = {};
         let { Profile } = await import("../Commands/Profile.mjs");
         let { WhoIS } = await import("../Commands/WhoIS.mjs");
@@ -42,10 +45,12 @@ module.exports = async (interaction) => {
     let opts = interaction.options;
 
     if (Runtime.fromJSON().dbERROR) {
+        logger.warn("Refusing to run command because database is corrupted!");
         return { res: "", embed: embeds.dbded };
     }
 
     if (Runtime.fromJSON().apiDown) {
+        logger.warn("Refusing to run command because API is down!");
         return { res: "", embed: embeds.apiDed };
     }
 
@@ -55,6 +60,7 @@ module.exports = async (interaction) => {
             let acc = await InteractionUtils.resolveAccount(interaction, "player");
             let res = await BotUtils.getStats(acc, "" + game);
             let e = res.embed;
+            logger.debug("Adding stats buttons to message");
             let buttons = await ButtonGenerator.getStatsButtons(res.game, acc.uuid);
             return { res: "", embed: e, b: buttons };
         }

@@ -33,6 +33,7 @@ async function execute(msg, senderID) {
 }
 
 async function checkCommands(rawMsg, command, args, author) {
+    logger.debug(`Parsing command ${rawMsg.content}`);
     switch (command.toLowerCase()) {
         case "link":
         case "ln":

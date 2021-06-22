@@ -30,12 +30,14 @@ module.exports = class BotEvents {
         logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
+        logger.info("Fetching logging hooks");
         let errhooks = await errchannel.fetchWebhooks();
         let loghooks = await logchannel.fetchWebhooks();
         let errHook = await errhooks.first();
         let logHook = await loghooks.first();
         BotUtils.errHook = errHook;
         BotUtils.logHook = logHook;
+        logger.info("Creating message copy hook");
         BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
         logger.info("Initializing file cache");
         BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
@@ -88,7 +90,7 @@ module.exports = class BotEvents {
     }
 
     static async dataRefresh() {
-        logger.info("Refreshing file cache...");
+        logger.debug("Refreshing file cache...");
         let run = Runtime.fromJSON();
         let error = false;
         let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs;

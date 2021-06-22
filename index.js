@@ -266,6 +266,7 @@ async function main() {
     await writePID();
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
+    logger.debug(`Args are [${args}] - executing`);
     switch (args[2]) {
         case "logG":
             await cli.logNormal("guild");

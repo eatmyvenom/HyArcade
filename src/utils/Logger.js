@@ -67,8 +67,12 @@ module.exports = class Logger {
      *
      * @param {String} content
      */
-     static warn(content) {
+    static warn(content) {
         print("WARN", content, "\x1b[33m");
+    }
+
+    static debug(content) {
+        print("DEBUG", content, "\x1b[95m");
     }
 
     /**
