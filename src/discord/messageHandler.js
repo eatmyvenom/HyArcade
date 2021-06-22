@@ -60,22 +60,27 @@ async function miniWallsVerify(msg) {
     if (msg.author.id == "156952208045375488") {
         return;
     }
+    let tag = msg.author.tag;
+    let id = msg.author.id;
     let ign = msg.content.trim();
     if (await isBlacklisted(id)) return;
     let uuid = await mojangRequest.getUUID(ign);
     if (uuid == undefined) {
+        logger.warn("Someone tried to verify as an account that doesn't exist!")
         await msg.channel.send({ embeds: [errIgnNull] });
         return;
     }
-    let tag = msg.author.tag;
-    let id = msg.author.id;
+
     if (Runtime.fromJSON().apiDown) {
+        logger.warn("Someone tried to verify while API is down!");
         return { res: "", embed: embeds.apiDed };
     }
+
     let acc = new Account(ign, 0, uuid);
     await acc.updateData();
     let dbAcc = BotUtils.resolveAccount(uuid, msg, false);
     if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
+        logger.warn("Hacker tried to verify!");
         return;
     }
     if (acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
@@ -93,14 +98,12 @@ async function miniWallsVerify(msg) {
     }
 }
 
-async function pgVerify(msg) {
-    msg.member.roles.add("841092980931952660");
-}
-
 async function attemptSend(msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
+    logger.info("Attempting to send response as webhook");
     if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
+        logger.info("No webhook availiable. Sending normally");
         if (runtime.bot != "backup") {
             opts.reply = { messageReference: msg.id };
             if (cmdResponse.res != "") {
@@ -118,6 +121,7 @@ async function attemptSend(msg, cmdResponse, opts) {
 }
 
 async function addIGNs(msg) {
+    logger.info("IGN channel message detected, automatically adding to database.")
     if (cfg.discord.listenChannels.includes(msg.channel.id)) {
         // sanitize
         let firstWord = msg.content.split(" ")[0];
@@ -198,7 +202,10 @@ async function mwMode(msg) {
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
-    if (msg.guild.id == "808077828842455090") return;
+    if (msg.guild.id == "808077828842455090") {
+        logger.warn("Ignored guild message detected!")
+        return;
+    };
     if (BotUtils.botMode == "mw") {
         if (msg.guild.id == "789718245015289886") {
             await mwMode(msg);

@@ -125,6 +125,7 @@ module.exports = class BotEvents {
         if (!error && run.dbERROR) {
             run.dbERROR = false;
             await run.save();
+            logger.log("Database restored");
             await BotUtils.logHook.send("Database restored");
         }
     }

@@ -1,8 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const fs = require("fs/promises");
 const { logger } = require("../utils");
-const utils = require("../utils");
 const webhook = require("../events/webhook");
 const mojangRequest = require("../request/mojangRequest");
 const Account = require("../classes/account");
@@ -11,14 +9,6 @@ const AdvancedEmbeds = require("./AdvancedEmbeds");
 
 function stringify(str) {
     return "" + str;
-}
-
-function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
-}
-
-function formatNum(number) {
-    return Intl.NumberFormat("en").format(number);
 }
 module.exports = class BotUtils {
     static fileCache = {};

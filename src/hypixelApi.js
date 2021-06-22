@@ -39,7 +39,7 @@ module.exports = class hypixelAPI {
         // make a new request.
         while (apiPoint.headers["retry-after"]) {
             if (config.logRateLimit) {
-                logger.err(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
+                logger.warn(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
             }
             await sleep(apiPoint.headers["retry-after"] * 1000);
             response = await apiPoint.makeRequest();

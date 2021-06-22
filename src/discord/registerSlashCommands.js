@@ -76,6 +76,7 @@ async function interactionHandler(interaction) {
 }
 
 async function registerAll(client) {
+    logger.info("Registering global commands with discord");
     let cmdarr = [];
     for (let c in interactionObjects) {
         cmdarr.push(interactionObjects[c]);
@@ -84,6 +85,6 @@ async function registerAll(client) {
 }
 
 module.exports = async (client) => {
-    // await registerAll(client)
+    await registerAll(client)
     client.on("interaction", interactionHandler);
 };

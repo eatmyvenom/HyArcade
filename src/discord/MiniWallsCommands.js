@@ -12,9 +12,11 @@ const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 async function execute(msg, senderID) {
     if (msg.content.startsWith(".")) {
         if (Runtime.fromJSON().dbERROR) {
+            logger.warn("Someone tried to run a command while the database is corrupted!");
             return { res: "", embed: embeds.dbded };
         }
         if (Runtime.fromJSON().apiDown) {
+            logger.warn("Someone tried to run a command while the API is down!");
             return { res: "", embed: embeds.apiDed };
         }
         let cmdArr = msg.content.slice(1).split(" ");

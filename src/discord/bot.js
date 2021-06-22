@@ -4,6 +4,7 @@ const config = require("../Config").fromJSON();
 const Runtime = require("../Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
+const { logger } = require("../utils");
 
 const requiredIntents = [
     Discord.Intents.FLAGS.GUILDS,
@@ -38,8 +39,10 @@ module.exports = function doBot() {
     }
 
     if (Runtime.bot != "backup") {
+        logger.info("Logging in to discord");
         client.login(config.discord.token);
     } else {
+        logger.info("Logging in to discord as backup");
         client.login(config.discord.backupToken);
     }
 
