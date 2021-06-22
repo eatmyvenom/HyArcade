@@ -34,11 +34,11 @@ module.exports = class BotUtils {
 
         if (acc == undefined && string.length != 0 && string.length > 16) {
             acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == string);
-        } else if (acc == undefined && string.length != 0 && string.length <= 16) {
+        } else if (acc == undefined && string.length != 0 && string != "undefined" && string.length <= 16) {
             acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
         }
 
-        if (string.length > 0 && acc == undefined) {
+        if (string.length > 1 && acc == undefined) {
             let discusers = await rawMessage.guild.members.fetch({
                 query: string,
                 limit: 1,
