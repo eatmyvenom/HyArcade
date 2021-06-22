@@ -204,7 +204,7 @@ async function updateAllAccounts() {
             let acc = accounts[i];
             let newAcc = fullList.find((a) => a.uuid == acc.uuid);
             if (newAcc.xp > acc.xp) {
-                logger.out(`Setting ${newAcc.name}'s data from outside source!`);
+                logger.info(`Setting ${newAcc.name}'s data from outside source!`);
                 acc.setData(newAcc);
             }
         }
@@ -244,7 +244,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
                     logger.out(`Updating ${oldAcc.name}'s data`);
                     await account.updateData();
                 } else {
-                    logger.out(`Ignoring ${oldAcc.name} for this refresh`);
+                    logger.info(`Ignoring ${oldAcc.name} for this refresh`);
                     account.setData(oldAcc);
                 }
             } else {
