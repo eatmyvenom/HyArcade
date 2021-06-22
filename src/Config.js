@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const ffs = require("fs");
-const { logger } = require("./utils");
+const logger = require("./utils/Logger")
 
 class Config {
     key = "";
