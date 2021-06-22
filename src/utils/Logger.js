@@ -10,6 +10,7 @@ function daytime() {
 }
 
 function print(type, string, color = "\x1b[0m") {
+    string = "" + string;
     for(let s of string.split("\n")) {
         println(type, s, color);
     }
@@ -25,6 +26,7 @@ function println(type, string, color = "\x1b[0m") {
 }
 
 function error(string) {
+    string = "" + string;
     for(let s of string.split("\n")) {
         errorln(s);
     }
