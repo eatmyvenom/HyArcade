@@ -158,7 +158,7 @@ class Account {
     async updateHypixel() {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
-        if (json.player && json.player.stats && json.player.stats.Arcade) {
+        if (json.player && json.player.stats && json.player.stats.Arcade && json.player.achievements) {
             this.updateTime = Date.now();
             let arcade = json.player.stats.Arcade;
 
@@ -283,6 +283,10 @@ class Account {
                 numberify(this.zombiesWins) +
                 numberify(this.pixelPaintersWins) +
                 numberify(this.simTotal);
+        } else {
+            for (let prop in this) {
+                this[prop] = undefined;
+            }
         }
     }
 }
