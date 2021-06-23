@@ -1,23 +1,8 @@
 const utils = require("./utils");
 const config = require("./Config").fromJSON();
-const BotUtils = require("./discord/BotUtils");
-const logger = require("./utils/Logger");
-
-async function getList(type = "") {
-    let list;
-    if (process.argv[2] != "bot") {
-        if (type == "") {
-            list = await utils.readJSON("accounts.json");
-        } else {
-            list = await utils.readJSON(`accounts.${type}.json`);
-        }
-    } else {
-        logger.debug("Getting account data from file cache instead of reading.");
-        let copylist = JSON.parse(JSON.stringify(BotUtils.fileCache[type + "acclist"]));
-        list = copylist;
-    }
-    return list;
-}
+const listDiffByProp = require('./utils/leaderboard/LBFromProp');
+const { getList } = require("./utils/leaderboard/ListUtils");
+const mklistAdv = require('./utils/leaderboard/MakeLeaderboardAdv');
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -61,10 +46,6 @@ async function listNormal(name, maxamnt) {
     return thelist;
 }
 
-function findMatchingAccount(acc, list) {
-    return list.find((a) => a.uuid.toLowerCase() == acc.uuid.toLowerCase());
-}
-
 /**
  * Make a list out of the difference of two json files
  *
@@ -77,82 +58,7 @@ async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
-/**
- *
- * @param {String} name
- * @param {String} timetype
- * @param {Number} maxamnt Max amount of players in
- * @param {Function} callback Callback used to get the stats out of each account
- * @returns
- */
-async function mklistAdv(name, timetype, maxamnt, callback) {
-    let newlist, oldlist;
-    if (name == "accounts") {
-        newlist = await getList();
-        oldlist = await getList(timetype);
-    } else {
-        newlist = await utils.readJSON(`${name}.json`);
-        oldlist = await utils.readJSON(`${name}.${timetype}.json`);
-    }
 
-    // sort the list before hand
-    oldlist = oldlist.sort(utils.winsSorter);
-
-    for (let i = 0; i < oldlist.length; i++) {
-        let oldacc = oldlist[i];
-        let newacc;
-        newacc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldacc.uuid).toLowerCase());
-
-        // make sure acc isnt null/undefined
-        if (newacc) {
-            oldlist[i] = callback(newacc, oldacc);
-        }
-    }
-
-    // use old list to ensure that players added today
-    // don't show up with a crazy amount of daily wins
-    return oldlist.slice(0, maxamnt);
-}
-
-async function listDiffByProp(name, prop, timetype, maxamnt, category) {
-    let newlist, oldlist;
-    if (name == "accounts") {
-        newlist = await getList();
-        oldlist = await getList(timetype);
-    } else {
-        newlist = await utils.readJSON(`${name}.json`);
-        oldlist = await utils.readJSON(`${name}.${timetype}.json`);
-    }
-
-    // sort the list before hand
-    oldlist = oldlist.sort(utils.winsSorter);
-
-    for (let i = 0; i < oldlist.length; i++) {
-        let acc;
-        if (oldlist[i].uuid) {
-            acc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldlist[i].uuid).toLowerCase());
-        } else {
-            acc = newlist.find((g) => ("" + g.name).toLowerCase() == ("" + oldlist[i].name).toLowerCase());
-        }
-
-        if (category == undefined) {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
-            }
-        } else {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                oldlist[i][category][prop] = numberify(acc[category][prop]) - numberify(oldlist[i][category][prop]);
-            }
-        }
-    }
-
-    // use old list to ensure that players added today
-    // don't show up with a crazy amount of daily wins
-    oldlist = oldlist.sort(utils.winsSorter);
-    return oldlist.slice(0, maxamnt);
-}
 
 /**
  * Turn a json file into a formatted list
