@@ -124,7 +124,7 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
     }
 
     if(newlist[0].name != oldlist[0].name) {
-        logger.debug(newList[0].name)
+        logger.debug(newlist[0].name)
         logger.debug(oldlist[0].name)
         logger.debug([].concat(oldlist).indexOf(oldlist.find(a=>a.name==newlist[0].name)))
     }
