@@ -60,6 +60,7 @@ function rcb(n, o) {
 
 function hackerTransformer(list) {
     list = list.filter((a) => !BotUtils.fileCache.hackers.includes(a.uuid));
+    list = list.filter((a) => a.name != undefined || a.name != "");
     return list;
 }
 
