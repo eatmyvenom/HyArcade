@@ -13,9 +13,7 @@ async function getList(type = "") {
         }
     } else {
         logger.debug("Getting account data from file cache instead of reading.");
-        logger.debug("Getting the type '" + type + "' from cache");
         list = await BotUtils.fileCache[type + "acclist"];
-        logger.debug(JSON.stringify(list.length))
     }
     return list;
 }
@@ -95,6 +93,9 @@ async function mklistAdv(name, timetype, maxamnt, callback) {
         newlist = await utils.readJSON(`${name}.json`);
         oldlist = await utils.readJSON(`${name}.${timetype}.json`);
     }
+
+    logger.debug(newlist == oldlist);
+
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
 
