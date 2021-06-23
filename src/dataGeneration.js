@@ -219,6 +219,7 @@ async function updateAllAccounts() {
     }
 
     await accounts.sort(utils.winsSorter);
+    await accounts.filter(a => a.name != "", a.uuidPosix != undefined)
     return accounts;
 }
 
