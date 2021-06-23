@@ -123,7 +123,7 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
         oldlist = await utils.readJSON(`${name}.${timetype}.json`);
     }
 
-    logger.out(newlist[0] == oldlist[0])
+    logger.out(newlist[0].name == oldlist[0].name)
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
 
