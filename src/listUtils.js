@@ -14,7 +14,10 @@ async function getList(type = "") {
     } else {
         logger.debug("Getting account data from file cache instead of reading.");
         let cachedList = BotUtils.fileCache[type + "acclist"];
-        list = [...cachedList];
+        let copylist = [];
+        for(let a of cachedList) {
+            copylist.push(a);
+        }
     }
     return list;
 }
