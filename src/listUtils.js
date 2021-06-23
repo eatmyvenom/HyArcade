@@ -14,11 +14,6 @@ async function getList(type = "") {
     } else {
         logger.debug("Getting account data from file cache instead of reading.");
         list = await BotUtils.fileCache[type + "acclist"];
-        if(type != "") {
-            while(list == BotUtils.fileCache["acclist"]) {
-                list = await BotUtils.fileCache[type + "acclist"];
-            }
-        }
     }
     return list;
 }
@@ -128,6 +123,7 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
         oldlist = await utils.readJSON(`${name}.${timetype}.json`);
     }
 
+    logger.out(newlist[0] == oldlist[0])
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
 
