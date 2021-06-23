@@ -1,4 +1,4 @@
-const hypixelApi = require("./hypixelApi");
+const hypixelApi = require("../hypixelApi");
 let accounts = [];
 
 function numberify(str) {
