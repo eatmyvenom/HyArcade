@@ -1,8 +1,10 @@
 const utils = require("./utils");
 const config = require("./Config").fromJSON();
 const listDiffByProp = require('./utils/leaderboard/LBFromProp');
-const { getList } = require("./utils/leaderboard/ListUtils");
-const mklistAdv = require('./utils/leaderboard/MakeLeaderboardAdv');
+const { stringifyList } = require("./utils/leaderboard/ListUtils");
+const stringLBAdv = require('./utils/leaderboard/StringifyLBAdv');
+const stringLBDiffAdv = require('./utils/leaderboard/StringifyLBDiffAdv');
+const stringLB = require("./utils/leaderboard/StringifyLB")
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -104,37 +106,7 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
-    let list = await getList();
-    if (category == undefined) {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[lbprop]) - numberify(b[lbprop]);
-        });
-    } else {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
-        });
-    }
 
-    return stringifyList(list, lbprop, category, maxamnt, startingIndex);
-}
-
-async function stringLBAdv(comparitor, parser, maxamnt, listTransformer) {
-    let list = await getList();
-    list = await listTransformer(list);
-    list = list.sort(comparitor);
-
-    let str = "";
-    list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
-        // don't print if player has 0 wins
-        let propVal = parser(list[i]);
-
-        let name = list[i].name;
-        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
-    }
-    return str.replace(/_/g, "\\_");
-}
 
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
@@ -151,41 +123,9 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex =
     return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
 
-async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
-    let list = await mklistAdv("accounts", timetype, 9999, callback);
-    list = await listTransformer(list);
-    list = list.sort(comparitor);
-
-    let str = "";
-    list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
-        let propVal = parser(list[i]);
-        if (numberify(propVal) < 1 && !config.printAllWins) continue;
-
-        let name = list[i].name;
-        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
-    }
-    return str.replace(/_/g, "\\_");
-}
 
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");
-}
-
-function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
-    let str = "";
-    let size = maxamnt + Number(startingIndex);
-    size = size > list.length ? list.length : size;
-    list = list.slice(0, size);
-    for (let i = startingIndex; i < list.length; i++) {
-        // don't print if player has 0 wins
-        let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
-        if (numberify(propVal) < 1 && !config.printAllWins) continue;
-
-        let name = list[i].name;
-        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
-    }
-    return str.replace(/_/g, "\\_");
 }
 
 module.exports = {

@@ -18,3 +18,19 @@ exports.getList = async function getList(type = "") {
     }
     return list;
 }
+
+exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
+    let str = "";
+    let size = maxamnt + Number(startingIndex);
+    size = size > list.length ? list.length : size;
+    list = list.slice(0, size);
+    for (let i = startingIndex; i < list.length; i++) {
+        // don't print if player has 0 wins
+        let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        if (numberify(propVal) < 1 && !config.printAllWins) continue;
+
+        let name = list[i].name;
+        str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
+    }
+    return str.replace(/_/g, "\\_");
+}
