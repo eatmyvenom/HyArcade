@@ -1,6 +1,10 @@
 const utils = require("../../utils");
 const { getList } = require("./ListUtils");
 
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
+
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category) {
     let newlist, oldlist;
     if (name == "accounts") {
