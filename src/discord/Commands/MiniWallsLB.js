@@ -61,6 +61,7 @@ function rcb(n, o) {
 function hackerTransformer(list) {
     list = list.filter((a) => !BotUtils.fileCache.hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
+    list = list.filter((a) => a.miniWalls != undefined)
     return list;
 }
 
@@ -111,11 +112,11 @@ async function getLB(prop, timetype, limit, category) {
 
         case "witherDamage": {
             comparitor = (b, a) => {
-                if (a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                if (a.miniWalls == undefined || a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
                     return -1;
                 }
 
-                if (b.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                if (b.miniWalls == undefined || b.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
                     return 1;
                 }
                 return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
@@ -127,11 +128,11 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "witherKills": {
             comparitor = (b, a) => {
-                if (a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                if (a.miniWalls == undefined || a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
                     return -1;
                 }
 
-                if (b.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                if (b.miniWalls == undefined || b.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
                     return 1;
                 }
                 return a.miniWalls.witherKills - b.miniWalls.witherKills;
@@ -143,11 +144,13 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "finalKills": {
             comparitor = (b, a) => {
-                if (a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+
+
+                if (a.miniWalls == undefined || a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
                     return -1;
                 }
 
-                if (b.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
+                if (b.miniWalls == undefined || b.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
                     return 1;
                 }
                 return a.miniWalls.finalKills - b.miniWalls.finalKills;
@@ -162,8 +165,8 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
-                if (b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
+                if (a.miniWalls == undefined || a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
+                if (b.miniWalls == undefined || b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
                 return (
                     (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths -
                     (b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths
