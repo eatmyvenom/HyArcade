@@ -128,7 +128,7 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
         logger.debug(newlist[0].uuid)
         logger.debug(oldlist[0].name)
         logger.debug(oldlist[0].uuid)
-        let d = oldlist.find(a=>a.name==newlist[0].name)
+        let d = oldlist.find(a=>a.name.toLowerCase()==newlist[0].name.toLowerCase())
         logger.debug([].concat(oldlist).indexOf(d))
         logger.debug(d.name);
     }
