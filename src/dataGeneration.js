@@ -203,7 +203,7 @@ async function updateAllAccounts() {
         for (let i = 0; i < accounts.length; i++) {
             let acc = accounts[i];
             let newAcc = fullList.find((a) => a.uuid == acc.uuid);
-            if (newAcc.xp > acc.xp) {
+            if (newAcc != undefined && newAcc.xp > acc.xp) {
                 logger.info(`Setting ${newAcc.name}'s data from outside source!`);
                 acc.setData(newAcc);
             }
