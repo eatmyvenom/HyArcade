@@ -43,11 +43,14 @@ function int(n) {
 
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
-    o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
-    o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
-    o.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
-    o.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
+    if(n.miniWalls != undefined && o.miniWalls == undefined) {
+        o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
+        o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
+        o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
+        o.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
+        o.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
+    }
+
     return o;
 }
 
