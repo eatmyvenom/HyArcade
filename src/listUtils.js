@@ -15,7 +15,7 @@ async function getList(type = "") {
         logger.debug("Getting account data from file cache instead of reading.");
         logger.debug("Getting the type '" + type + "' from cache");
         list = await BotUtils.fileCache[type + "acclist"];
-        logger.debug(JSON.stringify(list[0]))
+        logger.debug(JSON.stringify(list.length))
     }
     return list;
 }
