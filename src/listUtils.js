@@ -13,11 +13,7 @@ async function getList(type = "") {
         }
     } else {
         logger.debug("Getting account data from file cache instead of reading.");
-        let cachedList = BotUtils.fileCache[type + "acclist"];
-        let copylist = [];
-        for(let a of cachedList) {
-            copylist.push(a);
-        }
+        let copylist = JSON.parse(JSON.stringify(BotUtils.fileCache[type + "acclist"]));
         list = copylist;
     }
     return list;
