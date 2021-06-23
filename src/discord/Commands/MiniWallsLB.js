@@ -43,7 +43,7 @@ function int(n) {
 
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    if(n.miniWalls != undefined && o.miniWalls == undefined) {
+    if(n.miniWalls != undefined && o.miniWalls != undefined) {
         o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
         o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
         o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
