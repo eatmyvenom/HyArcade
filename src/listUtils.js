@@ -128,7 +128,9 @@ async function listDiffByProp(name, prop, timetype, maxamnt, category) {
         logger.debug(newlist[0].uuid)
         logger.debug(oldlist[0].name)
         logger.debug(oldlist[0].uuid)
-        logger.debug([].concat(oldlist).indexOf(oldlist.find(a=>a.name==newlist[0].name)))
+        let d = oldlist.find(a=>a.name==newlist[0].name)
+        logger.debug([].concat(oldlist).indexOf(d))
+        logger.debug(d.name);
     }
     // sort the list before hand
     oldlist = oldlist.sort(utils.winsSorter);
