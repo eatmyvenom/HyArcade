@@ -12,7 +12,8 @@ async function getList(type = "") {
             list = await utils.readJSON(`accounts.${type}.json`);
         }
     } else {
-        logger.debug("Getting account data from file cache instead of reading.")
+        logger.debug("Getting account data from file cache instead of reading.");
+        logger.debug("Getting the type '" + type + "' from cache");
         list = BotUtils.fileCache[type + "acclist"];
     }
     return list;
