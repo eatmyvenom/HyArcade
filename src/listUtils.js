@@ -18,6 +18,7 @@ async function getList(type = "") {
         for(let a of cachedList) {
             copylist.push(a);
         }
+        list = copylist;
     }
     return list;
 }
