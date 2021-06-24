@@ -21,7 +21,7 @@ module.exports = class InteractionUtils {
     }
 
     static async resolveAccount(interaction, namearg = "player") {
-        logger.out("Attempting to resolve account from " + JSON.stringify(interaction.options));
+        logger.info("Attempting to resolve account from " + JSON.stringify(interaction.options));
         let string = "undefinednullnonothingno";
         if (interaction.options.get(namearg) != undefined) {
             string = interaction.options.get(namearg).value;
@@ -71,10 +71,10 @@ module.exports = class InteractionUtils {
         }
 
         if (acc) {
-            logger.out("resolved as " + acc.name);
+            logger.info("resolved as " + acc.name);
         } else {
             interaction.defer();
-            logger.out("Unable to resolve, getting by ign from hypixel.");
+            logger.info("Unable to resolve, getting by ign from hypixel.");
 
             let plr = string;
             let uuid;

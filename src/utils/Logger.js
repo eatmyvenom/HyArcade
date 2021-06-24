@@ -1,5 +1,8 @@
+const { argv } = require("process");
 const Config = require("../Config");
 const cfg = Config.fromJSON();
+let name = argv[2];
+name = name == "bot" ? argv[argv.length] : name;
 
 function daytime() {
     return cfg.showDaytime
@@ -18,11 +21,10 @@ function print(type, string, color = "\x1b[0m") {
 
 function println(type, string, color = "\x1b[0m") {
     let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`
-    if (cfg.std.disable) {
-        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
-    } else {
+    if (!cfg.std.disable) {
         console.log(str);
     }
+    require("fs").writeFile(cfg.std.out, str + "\n", { flag: "a" });
 }
 
 function error(string) {
@@ -33,12 +35,11 @@ function error(string) {
 }
 
 function errorln(string) {
-    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`
-    if (cfg.std.disable) {
-        require("fs").writeFileSync(cfg.std.out, str + "\n", { flag: "a" });
-    } else {
+    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [\x1b[31mERROR\x1b[0m]\x1b[31m ${string}\x1b[0m`
+    if (!cfg.std.disable) {
         console.log(str);
     }
+    require("fs").writeFileSync(cfg.std.err, str + "\n", { flag: "a" });
 }
 
 module.exports = class Logger {
