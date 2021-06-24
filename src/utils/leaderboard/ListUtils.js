@@ -1,5 +1,14 @@
 const BotUtils = require("../../discord/BotUtils");
+const utils = require("../../utils");
 const logger = require("../Logger");
+
+function numberify(str) {
+    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+}
+
+function formatNum(number) {
+    return Intl.NumberFormat("en").format(number);
+}
 
 exports.getList = async function getList(type = "") {
     let list;
