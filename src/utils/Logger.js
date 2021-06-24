@@ -24,7 +24,7 @@ function println(type, string, color = "\x1b[0m") {
     if (!cfg.std.disable) {
         console.log(str);
     }
-    require("fs").writeFile(cfg.std.out, str + "\n", { flag: "a" });
+    require("fs").writeFile(cfg.std.out, str + "\n", { flag: "a" }, ()=>{});
 }
 
 function error(string) {
@@ -39,7 +39,7 @@ function errorln(string) {
     if (!cfg.std.disable) {
         console.log(str);
     }
-    require("fs").writeFileSync(cfg.std.err, str + "\n", { flag: "a" });
+    require("fs").writeFile(cfg.std.err, str + "\n", { flag: "a" }, ()=>{});
 }
 
 module.exports = class Logger {
