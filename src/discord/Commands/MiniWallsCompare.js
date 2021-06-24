@@ -57,6 +57,14 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
         acc2 = await InteractionUtils.resolveAccount(interaction, 1);
     }
 
+    if(BotUtils.fileCache.hackers.includes(acc1.uuid)) {
+        acc1 = { miniWallsWins: 0, miniWalls: {}}
+    }
+
+    if(BotUtils.fileCache.hackers.includes(acc2.uuid)) {
+        acc2 = { miniWallsWins: 0, miniWalls: {}}
+    }
+
     let embed = new MessageEmbed();
 
     let stats =
