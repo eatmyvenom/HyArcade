@@ -20,7 +20,7 @@ function print(type, string, color = "\x1b[0m") {
 }
 
 function println(type, string, color = "\x1b[0m") {
-    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`
+    let str = `[\x1b[36m${daytime().trim()}\x1b[0m] [\x1b[36m${name.trim()}\x1b[0m] [${color}${type}\x1b[0m]${color} ${string}\x1b[0m`
     if (!cfg.std.disable) {
         console.log(str);
     }
