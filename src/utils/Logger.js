@@ -2,7 +2,7 @@ const { argv } = require("process");
 const Config = require("../Config");
 const cfg = Config.fromJSON();
 let name = argv[2];
-name = name == "bot" ? argv[argv.length] : name;
+name = name == "bot" ? argv[argv.length - 1] : name;
 
 function daytime() {
     return cfg.showDaytime
