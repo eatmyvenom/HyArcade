@@ -23,6 +23,11 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
     } else {
         acc = await InteractionUtils.resolveAccount(interaction, 0);
     }
+
+    if(BotUtils.fileCache.hackers.includes(acc1.uuid)) {
+        return {};
+    }
+
     let stats =
         `Wins: **${formatN(acc.miniWallsWins)}**\n` +
         `Kills: **${formatN(acc.miniWalls.kills)}**\n` +
