@@ -37,11 +37,11 @@ module.exports = class InteractionUtils {
         if (acc == undefined && string.length > 16) {
             acc = acclist.find((a) => a.uuid == string);
         } else if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => a.name.toLowerCase() == string);
+            acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
         }
 
         if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => a.name.toLowerCase().startsWith(string));
+            acc = acclist.find((a) => stringify(a.name).toLowerCase().startsWith(string));
         }
 
         if (acc == undefined && string.length == "22") {
@@ -67,7 +67,7 @@ module.exports = class InteractionUtils {
 
         if (acc == undefined && canbeSelf) {
             let discid = interaction.member.user.id;
-            acc = acclist.find((a) => stringify(a.discord) == discid);
+            acc = acclist.find((a) => a.discord == discid);
         }
 
         if (acc) {
