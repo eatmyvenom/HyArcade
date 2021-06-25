@@ -3,6 +3,10 @@ const Account = require("../../classes/account");
 const mojangRequest = require("../../request/mojangRequest");
 const { logger } = require("../../utils");
 
+function stringify(str) {
+    return "" + str;
+}
+
 /**
  * 
  * @param {String} string 

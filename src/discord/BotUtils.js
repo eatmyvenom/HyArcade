@@ -1,19 +1,9 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const fs = require("fs/promises");
-const { logger } = require("../utils");
-const utils = require("../utils");
 const webhook = require("../events/webhook");
-const mojangRequest = require("../request/mojangRequest");
-const Account = require("../classes/account");
 const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
-
-function stringify(str) {
-    return "" + str;
-}
-
 module.exports = class BotUtils {
     static fileCache = {};
     static isBotInstance = false;
