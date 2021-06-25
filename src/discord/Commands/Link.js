@@ -25,9 +25,9 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
         acc,
         acclist = await utils.readJSON("./accounts.json");
     if (player.length < 17) {
-        acc = acclist.find((a) => a.name.toLowerCase() == player.toLowerCase());
+        acc = acclist.find((a) => ("" + a.name).toLowerCase() == player.toLowerCase());
     } else {
-        acc = acclist.find((a) => a.uuid.toLowerCase() == player.toLowerCase());
+        acc = acclist.find((a) => ("" + a.uuid).toLowerCase() == player.toLowerCase());
     }
 
     if (acc == undefined) {
