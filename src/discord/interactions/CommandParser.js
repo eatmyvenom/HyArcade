@@ -26,8 +26,8 @@ function getArg(i, a) {
 
 module.exports = async (interaction) => {
     if (Commands == null) {
-        logger.debug("EMCA modules are null, they need to be added!");
-        logger.info("Initializing EMCA modules");
+        logger.debug("ECMA modules are null, they need to be added!");
+        logger.info("Initializing ECMA modules");
         Commands = {};
         let { Profile } = await import("../Commands/Profile.mjs");
         let { WhoIS } = await import("../Commands/WhoIS.mjs");
