@@ -8,6 +8,7 @@ const mojangRequest = require("../request/mojangRequest");
 const Account = require("../classes/account");
 const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
+const AccountResolver = require("./Utils/AccountResolver");
 
 function stringify(str) {
     return "" + str;
@@ -23,72 +24,7 @@ module.exports = class BotUtils {
     static botMode;
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
-        logger.out("Attempting to resolve " + string + " from " + rawMessage.content);
-        string = stringify(string).toLowerCase();
-        let acclist = await BotUtils.fileCache.acclist;
-        let disclist = await BotUtils.fileCache.disclist;
-        let acc;
-        if (string.length == 18) {
-            acc = acclist.find((a) => a.discord == string);
-        }
-
-        if (acc == undefined && string.length != 0 && string.length > 16) {
-            acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == string);
-        } else if (acc == undefined && string.length != 0 && string != "undefined" && string.length <= 16) {
-            acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
-        }
-
-        if (string.length > 1 && acc == undefined) {
-            let discusers = await rawMessage.guild.members.fetch({
-                query: string,
-                limit: 1,
-            });
-            if (discusers.size > 0) {
-                let usr = await discusers.first();
-                let id = usr.id;
-                let uuid = disclist[id];
-                if (uuid != undefined) {
-                    acc = acclist.find((a) => a.uuid == uuid);
-                }
-            }
-        }
-
-        if (acc == undefined) {
-            if (rawMessage.mentions.users.size > 0) {
-                let discid = "" + rawMessage.mentions.users.first();
-                let uuid = disclist[discid];
-                if (uuid != undefined) {
-                    acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase());
-                }
-            }
-        }
-
-        if (acc == undefined && canbeSelf) {
-            let discid = rawMessage.author.id;
-            let uuid = disclist[discid];
-            logger.debug(`Resolved as ${uuid} from discord account list`)
-            if (uuid != undefined) {
-                acc = acclist.find((a) => stringify(a.uuid).toLowerCase() == uuid.toLowerCase());
-            }
-        }
-
-        if (acc) {
-            logger.out("resolved as " + acc.name);
-        } else {
-            logger.out("Unable to resolve, getting by ign from hypixel.");
-
-            let plr = string;
-            let uuid;
-            if (plr.length > 17) {
-                uuid = plr;
-            } else {
-                uuid = await mojangRequest.getUUID(plr);
-            }
-
-            acc = new Account("", 0, "" + uuid);
-            await acc.updateData();
-        }
-        return acc;
+        return await AccountResolver(string, rawMessage, canbeSelf, BotUtils.fileCache.acclist, BotUtils.fileCache.disclist);
     }
 
     static getWebhookObj(embed) {
