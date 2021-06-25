@@ -14,7 +14,7 @@ function stringify(str) {
  * @param {Account[]} acclist 
  * @returns {Account}
  */
-module.exports = function resolveAccount(interaction, namearg, acclist) {
+module.exports = async function resolveAccount(interaction, namearg, acclist) {
     logger.info("Attempting to resolve account from " + JSON.stringify(interaction.options));
     let string = "undefinednullnonothingno";
     if (interaction.options.get(namearg) != undefined) {
