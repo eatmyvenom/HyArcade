@@ -1,7 +1,7 @@
 const BotUtils = require("../../discord/BotUtils");
 const utils = require("../../utils");
 const logger = require("../Logger");
-const config = require("./Config").fromJSON();
+const config = require("../../Config").fromJSON();
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));

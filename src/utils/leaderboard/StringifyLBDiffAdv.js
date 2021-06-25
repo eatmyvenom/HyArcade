@@ -1,5 +1,5 @@
 const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
-const config = require("./Config").fromJSON();
+const config = require("../../Config").fromJSON();
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
