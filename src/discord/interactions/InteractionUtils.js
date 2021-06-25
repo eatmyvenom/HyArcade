@@ -1,16 +1,22 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
-const utils = require("../../utils");
-const { client } = require("../BotUtils");
+const { MessageEmbed } = require("discord.js");
 const helpText = require("../HelpText");
 const BotUtils = require("../BotUtils");
-const { logger } = require("../../utils");
-const mojangRequest = require("../../request/mojangRequest");
 const Account = require("../../classes/account");
+const AccountResolver = require("./Utils/AccountResolver");
+const { help } = require("../Embeds");
 
 module.exports = class InteractionUtils {
+
+    /**
+     * Get an account just purely from a uuid without going 
+     * through the full resolver
+     * @static
+     * @param {String} uuid
+     * @return {Account}
+     */
     static async accFromUUID(uuid) {
         let acclist = await BotUtils.fileCache.acclist;
-        let acc = acclist.find((a) => a.uuid == uuid);
+        let acc = acclist.find((a) => a?.uuid == uuid);
 
         if (acc == undefined) {
             acc = new Account("", 0, "" + uuid);
@@ -21,95 +27,11 @@ module.exports = class InteractionUtils {
     }
 
     static async resolveAccount(interaction, namearg = "player") {
-        logger.info("Attempting to resolve account from " + JSON.stringify(interaction.options));
-        let string = "undefinednullnonothingno";
-        if (interaction.options.get(namearg) != undefined) {
-            string = interaction.options.get(namearg).value;
-        }
-        let canbeSelf = string == "" || string == "undefinednullnonothingno";
-        string = stringify(string).toLowerCase();
-        let acclist = await BotUtils.fileCache.acclist;
-        let acc;
-        if (string.length == 18) {
-            acc = acclist.find((a) => a.discord == string);
-        }
-
-        if (acc == undefined && string.length > 16) {
-            acc = acclist.find((a) => a.uuid == string);
-        } else if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => stringify(a.name).toLowerCase() == string);
-        }
-
-        if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => stringify(a.name).toLowerCase().startsWith(string));
-        }
-
-        if (acc == undefined && string.length == "22") {
-            acc = acclist.find((a) => a.discord == string.slice(3, -1));
-        }
-
-        if (acc == undefined && string.length == "21") {
-            acc = acclist.find((a) => a.discord == string.slice(2, -1));
-        }
-
-        if (acc == undefined) {
-            acc = acclist.find((a) => {
-                if (a.nameHist && a.nameHist.length > 0) {
-                    for (let name of a.nameHist) {
-                        if (name.toLowerCase().startsWith(string)) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
-        }
-
-        if (acc == undefined && canbeSelf) {
-            let discid = interaction.member.user.id;
-            acc = acclist.find((a) => a.discord == discid);
-        }
-
-        if (acc) {
-            logger.info("resolved as " + acc.name);
-        } else {
-            interaction.defer();
-            logger.info("Unable to resolve, getting by ign from hypixel.");
-
-            let plr = string;
-            let uuid;
-            if (plr.length > 17) {
-                uuid = plr;
-            } else {
-                uuid = await mojangRequest.getUUID(plr);
-            }
-
-            acc = new Account("", 0, "" + uuid);
-            await acc.updateData();
-        }
-
-        return acc;
+        return await AccountResolver(interaction, namearg, BotUtils.fileCache.acclist)
     }
 
     static helpEmbed() {
-        return new MessageEmbed()
-            .setTitle("Arcade bot help")
-            .setColor(0x0066cc)
-            .addField("/addaccount", "Add account(s) to the data base by current ign or by uuid")
-            .addField("/getdataraw", "Get some raw data from a player")
-            .addField("/info", "Get info about the bot")
-            .addField("/leaderboard", "Get an arcade leaderboard")
-            .addField("/namehistory", "Get the list of previous names from a player")
-            .addField("/stats", "Get the stats of a specified player")
-            .addField("/status", "Get the status of a player")
-            .addField("/unlinkedstats", "Get the stats of a player not in the arcade bot database")
-            .addField("/verify", "Verify yourself with the arcade bot")
-            .addField("/whois", "Get the linked discord account of a player")
-            .addField("/help", "Get a list of commands of help on a specific topic")
-            .addField(
-                "Other help topics",
-                "games - the names of all the available games for commands like /stats and /leaderboard\nsearching - an explanation on how the bot searches for an account when you give input\nrole handling - an explantion on how role handling happens within the bot"
-            );
+        return help;
     }
 
     static helpTopic(topicName) {
@@ -123,7 +45,3 @@ module.exports = class InteractionUtils {
         return e;
     }
 };
-
-function stringify(str) {
-    return "" + str;
-}
