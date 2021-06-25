@@ -1,9 +1,5 @@
 const { getUUIDStatus } = require("./hypixelApi");
-const { logger } = require("./utils");
-const utils = require("./utils");
-
 let { accounts } = require("./listParser").accounts;
-
 let rawstatus = {};
 
 /**
