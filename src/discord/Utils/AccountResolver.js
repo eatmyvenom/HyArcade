@@ -1,6 +1,7 @@
 const { Message } = require("discord.js");
 const Account = require("../../classes/account");
 const mojangRequest = require("../../request/mojangRequest");
+const { logger } = require("../../utils");
 
 /**
  * 
