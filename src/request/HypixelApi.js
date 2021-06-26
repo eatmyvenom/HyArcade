@@ -1,6 +1,6 @@
 const url = require('url');
 const hypixelReq = require('./hypixelReq');
-const config = require("./Config").fromJSON();
+const config = require("../Config").fromJSON();
 const { sleep, logger } = require("./utils");
 
 /**
@@ -130,6 +130,66 @@ module.exports = class HypixelApi {
             logger.err("Hypixel sent malformed json data");
             logger.err(data);
             return await HypixelApi.guild(something);
+        }
+    }
+
+    static async achievements() {
+        let Api = new HypixelApi("resources/achievements");
+        let data = await Api.makeRequest();
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            logger.err("Hypixel sent malformed json data");
+            logger.err(data);
+            return await HypixelApi.achievements();
+        }
+    }
+
+    static async challenges() {
+        let Api = new HypixelApi("resources/challenges");
+        let data = await Api.makeRequest();
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            logger.err("Hypixel sent malformed json data");
+            logger.err(data);
+            return await HypixelApi.challenges();
+        }
+    }
+
+    static async boosters() {
+        let Api = new HypixelApi("boosters");
+        let data = await Api.makeRequest();
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            logger.err("Hypixel sent malformed json data");
+            logger.err(data);
+            return await HypixelApi.boosters();
+        }
+    }
+
+    static async counts() {
+        let Api = new HypixelApi("counts");
+        let data = await Api.makeRequest();
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            logger.err("Hypixel sent malformed json data");
+            logger.err(data);
+            return await HypixelApi.counts();
+        }
+    }
+
+    static async leaderboards() {
+        let Api = new HypixelApi("leaderboards");
+        let data = await Api.makeRequest();
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            logger.err("Hypixel sent malformed json data");
+            logger.err(data);
+            return await HypixelApi.leaderboards();
         }
     }
 }
