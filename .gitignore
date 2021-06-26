@@ -12,3 +12,4 @@ force
 pid
 data/*
 timeupdate
+*.log
