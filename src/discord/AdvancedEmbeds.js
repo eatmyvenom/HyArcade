@@ -1,7 +1,9 @@
 const { MessageEmbed } = require("discord.js");
 
-function stringify(str) {
-    return "" + str;
+function formatR(n) {
+    let r = Math.round(n * 100) / 100;
+    r = r == NaN ? (r = "N/A") : r;
+    return r;
 }
 
 function numberify(str) {
@@ -785,8 +787,7 @@ module.exports = class AdvancedEmbeds {
                 fields.push({
                     name: ":crossed_swords: MW KDR",
                     value:
-                        "" +
-                        Math.round((acc.miniWalls.kills + acc.miniWalls.finalKills / acc.miniWalls.deaths) * 100) / 100,
+                        "" + formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths),
                     inline: true,
                 });
                 title = "Mini walls";
