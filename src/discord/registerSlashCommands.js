@@ -1,3 +1,4 @@
+const { Client, Interaction } = require("discord.js");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const Embed = require("./Embeds");
@@ -6,6 +7,10 @@ const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 const interactionObjects = require("./interactions/interactionObjects");
 
+/**
+ * 
+ * @param {Interaction} interaction 
+ */
 async function commandHandler(interaction) {
     let responseObj;
     try {
@@ -45,6 +50,10 @@ async function commandHandler(interaction) {
     await logCmd(interaction);
 }
 
+/**
+ * 
+ * @param {Interaction} interaction 
+ */
 async function logCmd(interaction) {
     await BotUtils.msgCopyHook.send({
         embeds: [
@@ -60,6 +69,10 @@ async function logCmd(interaction) {
     });
 }
 
+/**
+ * 
+ * @param {Interaction} interaction 
+ */
 async function buttonHandler(interaction) {
     if (await ForceOGuser(interaction)) {
         let updatedData = await ButtonParser(interaction);
@@ -67,6 +80,10 @@ async function buttonHandler(interaction) {
     }
 }
 
+/**
+ * 
+ * @param {Interaction} interaction 
+ */
 async function interactionHandler(interaction) {
     if (interaction.isCommand()) {
         await commandHandler(interaction);
@@ -75,6 +92,10 @@ async function interactionHandler(interaction) {
     }
 }
 
+/**
+ * 
+ * @param {Client} client 
+ */
 async function registerAll(client) {
     logger.info("Registering global commands with discord");
     let cmdarr = [];
@@ -84,7 +105,11 @@ async function registerAll(client) {
     await client.application.commands.set(cmdarr);
 }
 
+/**
+ * 
+ * @param {Client} client 
+ */
 module.exports = async (client) => {
-    await registerAll(client)
+    await registerAll(client);
     client.on("interaction", interactionHandler);
 };
