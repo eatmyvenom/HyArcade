@@ -164,26 +164,25 @@ class Account {
     async updateHypixel() {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
-        if (json.player && json.player.stats && json.player.stats.Arcade && json.player.achievements) {
+        if (json.player.stats?.Arcade != undefined) {
             this.updateTime = Date.now();
-            let arcade = json.player.stats.Arcade;
+            let arcade = json.player.stats?.Arcade;
 
             let wins = 0;
-            if (arcade.wins_party) wins += arcade.wins_party;
-            if (arcade.wins_party_2) wins += arcade.wins_party_2;
-            if (arcade.wins_party_3) wins += arcade.wins_party_3;
+            if (arcade?.wins_party) wins += arcade?.wins_party;
+            if (arcade?.wins_party_2) wins += arcade?.wins_party_2;
+            if (arcade?.wins_party_3) wins += arcade?.wins_party_3;
             this.wins = numberify(wins);
 
-            this.ranksGifted = json.player.giftingMeta != undefined ? json.player.giftingMeta.ranksGiven : 0;
+            this.ranksGifted = json.player.giftingMeta?.ranksGiven;
+            this.ranksGifted = this.ranksGifted == undefined ? 0 : this.ranksGifted; 
 
             this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
 
             if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
 
-            if (json.player.socialMedia && json.player.socialMedia.links && json.player.socialMedia.links.DISCORD) {
-                this.hypixelDiscord = json.player.socialMedia.links.DISCORD;
-            }
+            this.hypixelDiscord = json.player.socialMedia.links?.DISCORD;
 
             this.name = json.player.displayname;
             this.name_lower = this.name.toLowerCase();
@@ -199,7 +198,7 @@ class Account {
             this.firstLogin = json.player.firstLogin;
             this.karma = json.player.karma;
             this.hypixelSaysWins = arcade.wins_simon_says;
-            this.achievementPoints = numberify(json.player.achievementPoints);
+            this.achievementPoints = numberify(json.player?.achievementPoints);
             this.plusColor = json.player.rankPlusColor;
             this.cloak = json.player.currentCloak;
             this.hat = json.player.currentHat;
@@ -222,10 +221,10 @@ class Account {
             this.hideAndSeekWins =
                 numberify(arcade.seeker_wins_hide_and_seek) + numberify(arcade.hider_wins_hide_and_seek);
             this.zombiesWins = numberify(arcade.wins_zombies);
-            this.ctwKills = json.player.achievements.arcade_ctw_slayer;
-            this.ctwWoolCaptured = json.player.achievements.arcade_ctw_oh_sheep;
+            this.ctwKills = json.player.achievements?.arcade_ctw_slayer;
+            this.ctwWoolCaptured = json.player.achievements?.arcade_ctw_oh_sheep;
             this.pixelPaintersWins = numberify(arcade.wins_draw_their_thing);
-            this.hnsKills = numberify(json.player.achievements.arcade_hide_and_seek_hider_kills);
+            this.hnsKills = numberify(json.player.achievements?.arcade_hide_and_seek_hider_kills);
 
             this.seasonalWins.easter = numberify(arcade.wins_easter_simulator);
             this.seasonalWins.grinch = numberify(arcade.wins_grinch_simulator_v2);
@@ -269,8 +268,8 @@ class Account {
             this.miniWalls.deaths = arcade.deaths_mini_walls;
             this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
 
-            this.arcadeWins = json.player.achievements.arcade_arcade_winner;
-            this.anyWins = json.player.achievements.general_wins;
+            this.arcadeWins = json.player.achievements?.arcade_arcade_winner;
+            this.anyWins = json.player.achievements?.general_wins;
 
             this.combinedArcadeWins =
                 numberify(this.wins) +
