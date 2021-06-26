@@ -111,11 +111,11 @@ class Account {
         this.wins = wins;
         this.uuid = uuid;
         try {
-            let timeLow = uuid.slice(0, 8);
-            let timeMid = uuid.slice(8, 12);
-            let version = uuid.slice(12, 16);
-            let varient = uuid.slice(16, 20);
-            let node = uuid.slice(-12);
+            let timeLow = uuid?.slice(0, 8);
+            let timeMid = uuid?.slice(8, 12);
+            let version = uuid?.slice(12, 16);
+            let varient = uuid?.slice(16, 20);
+            let node = uuid?.slice(-12);
             this.uuidPosix = `${timeLow}-${timeMid}-${version}-${varient}-${node}`;
         } catch (e) {
             Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
