@@ -6,7 +6,7 @@ const utils = require("../../utils");
 module.exports = new Command("LastUpdate", ["*"], async (args) => {
     let time;
     if (utils.fileExists("timeupdate")) {
-        time = await fs.readFile("timeupdate");
+        time = await (await fs.readFile("timeupdate")).toString();
     } else {
         time = "Saving data!";
     }
