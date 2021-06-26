@@ -18,4 +18,4 @@ module.exports = async function stringLBAdv(comparitor, parser, maxamnt, listTra
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
     return str.replace(/_/g, "\\_");
-}
+};

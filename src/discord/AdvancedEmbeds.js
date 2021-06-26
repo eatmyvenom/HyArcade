@@ -786,8 +786,7 @@ module.exports = class AdvancedEmbeds {
                 });
                 fields.push({
                     name: ":crossed_swords: MW KDR",
-                    value:
-                        "" + formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths),
+                    value: "" + formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths),
                     inline: true,
                 });
                 title = "Mini walls";

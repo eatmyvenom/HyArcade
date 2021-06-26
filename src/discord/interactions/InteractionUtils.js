@@ -6,9 +6,8 @@ const AccountResolver = require("./Utils/AccountResolver");
 const { help } = require("../Embeds");
 
 module.exports = class InteractionUtils {
-
     /**
-     * Get an account just purely from a uuid without going 
+     * Get an account just purely from a uuid without going
      * through the full resolver
      * @static
      * @param {String} uuid
@@ -27,7 +26,7 @@ module.exports = class InteractionUtils {
     }
 
     static async resolveAccount(interaction, namearg = "player") {
-        return await AccountResolver(interaction, namearg, BotUtils.fileCache.acclist)
+        return await AccountResolver(interaction, namearg, BotUtils.fileCache.acclist);
     }
 
     static helpEmbed() {

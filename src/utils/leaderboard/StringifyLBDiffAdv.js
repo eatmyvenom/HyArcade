@@ -24,4 +24,4 @@ module.exports = async function stringLBDiffAdv(comparitor, parser, maxamnt, tim
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
     return str.replace(/_/g, "\\_");
-}
+};

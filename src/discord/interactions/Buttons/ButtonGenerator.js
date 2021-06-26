@@ -194,4 +194,12 @@ module.exports = class ButtonGenerator {
 
         return row;
     }
+
+    static async getEZ() {
+        let ez = new MessageButton().setCustomID(`ez:null`).setLabel("EZ").setStyle("SECONDARY");
+
+        let row = new MessageActionRow().addComponents(ez);
+
+        return row;
+    }
 };

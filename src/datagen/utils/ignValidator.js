@@ -22,4 +22,4 @@ module.exports = function isValidIGN(txt) {
         txt != "yea" &&
         txt != "okay"
     );
-}
+};

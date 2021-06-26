@@ -14,11 +14,15 @@ module.exports = async function ButtonParser(interaction) {
     let commandType = data[0];
     switch (commandType) {
         case "lb": {
-            return leaderboardHandler(interaction, data[1], data[2], data[3]);
+            return await leaderboardHandler(interaction, data[1], data[2], data[3]);
         }
 
         case "s": {
-            return statsHandler(data[1], data[2]);
+            return await statsHandler(data[1], data[2]);
+        }
+
+        case "ez": {
+            return await ezHandler();
         }
     }
 };
@@ -42,4 +46,11 @@ async function statsHandler(accUUID, game) {
 
     let buttons = await ButtonGenerator.getStatsButtons(game, accData.uuid);
     return new ButtonResponse("", [embed], buttons);
+}
+
+async function ezHandler() {
+    let msgs = await BotUtils.fileCache.ezmsgs;
+    let msg = msgs[Math.floor(Math.random() * msgs.length)];
+    let buttons = await ButtonGenerator.getEZ();
+    return new ButtonResponse(msg, undefined, buttons);
 }

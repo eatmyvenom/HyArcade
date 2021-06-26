@@ -14,7 +14,13 @@ module.exports = class BotUtils {
     static botMode;
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
-        return await AccountResolver(string, rawMessage, canbeSelf, BotUtils.fileCache.acclist, BotUtils.fileCache.disclist);
+        return await AccountResolver(
+            string,
+            rawMessage,
+            canbeSelf,
+            BotUtils.fileCache.acclist,
+            BotUtils.fileCache.disclist
+        );
     }
 
     static getWebhookObj(embed) {

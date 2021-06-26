@@ -484,8 +484,9 @@ module.exports = new Command("leaderboard", ["*"], async (args, rawMsg, interact
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
     let response = { res: "", embed: finalRes, game: gid, start: startingIndex };
-    if(interaction == undefined) {
-        response.res = "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
+    if (interaction == undefined) {
+        response.res =
+            "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
     }
     return response;
 });

@@ -72,4 +72,4 @@ module.exports = async function addAccounts(category, names) {
     await utils.writeJSON("accounts.json", fullNewAccounts);
     await utils.writeJSON("accounts.json.part", newAccs);
     return res;
-}
+};

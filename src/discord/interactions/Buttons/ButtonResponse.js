@@ -4,13 +4,16 @@ module.exports = class ButtonResponse {
     newButtons = [];
 
     constructor(content, embeds, newButtons) {
-        this.content = content;
+        if (content != "") {
+            this.content = content;
+        }
         this.embeds = embeds;
         this.newButtons = newButtons;
     }
 
     toDiscord() {
         return {
+            content: this.content,
             embeds: this.embeds,
             components: [this.newButtons],
         };

@@ -17,4 +17,4 @@ module.exports = async function stringLB(lbprop, maxamnt, category, startingInde
     }
 
     return stringifyList(list, lbprop, category, maxamnt, startingIndex);
-}
+};

@@ -1,10 +1,10 @@
 const utils = require("./utils");
 const config = require("./Config").fromJSON();
-const listDiffByProp = require('./utils/leaderboard/LBFromProp');
+const listDiffByProp = require("./utils/leaderboard/LBFromProp");
 const { stringifyList } = require("./utils/leaderboard/ListUtils");
-const stringLBAdv = require('./utils/leaderboard/StringifyLBAdv');
-const stringLBDiffAdv = require('./utils/leaderboard/StringifyLBDiffAdv');
-const stringLB = require("./utils/leaderboard/StringifyLB")
+const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
+const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
+const stringLB = require("./utils/leaderboard/StringifyLB");
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -60,8 +60,6 @@ async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
-
-
 /**
  * Turn a json file into a formatted list
  *
@@ -106,8 +104,6 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-
-
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
@@ -122,7 +118,6 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex =
 
     return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
-
 
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");

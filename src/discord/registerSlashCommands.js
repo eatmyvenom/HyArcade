@@ -8,8 +8,8 @@ const CommandParser = require("./interactions/CommandParser");
 const interactionObjects = require("./interactions/interactionObjects");
 
 /**
- * 
- * @param {Interaction} interaction 
+ *
+ * @param {Interaction} interaction
  */
 async function commandHandler(interaction) {
     let responseObj;
@@ -51,8 +51,8 @@ async function commandHandler(interaction) {
 }
 
 /**
- * 
- * @param {Interaction} interaction 
+ *
+ * @param {Interaction} interaction
  */
 async function logCmd(interaction) {
     await BotUtils.msgCopyHook.send({
@@ -70,8 +70,8 @@ async function logCmd(interaction) {
 }
 
 /**
- * 
- * @param {Interaction} interaction 
+ *
+ * @param {Interaction} interaction
  */
 async function buttonHandler(interaction) {
     if (await ForceOGuser(interaction)) {
@@ -81,8 +81,8 @@ async function buttonHandler(interaction) {
 }
 
 /**
- * 
- * @param {Interaction} interaction 
+ *
+ * @param {Interaction} interaction
  */
 async function interactionHandler(interaction) {
     if (interaction.isCommand()) {
@@ -93,8 +93,8 @@ async function interactionHandler(interaction) {
 }
 
 /**
- * 
- * @param {Client} client 
+ *
+ * @param {Client} client
  */
 async function registerAll(client) {
     logger.info("Registering global commands with discord");
@@ -106,8 +106,8 @@ async function registerAll(client) {
 }
 
 /**
- * 
- * @param {Client} client 
+ *
+ * @param {Client} client
  */
 module.exports = async (client) => {
     await registerAll(client);

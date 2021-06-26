@@ -27,7 +27,7 @@ exports.getList = async function getList(type = "") {
         list = copylist;
     }
     return list;
-}
+};
 
 exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
@@ -43,4 +43,4 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
     return str.replace(/_/g, "\\_");
-}
+};

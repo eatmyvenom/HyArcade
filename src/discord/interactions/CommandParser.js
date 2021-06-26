@@ -1,20 +1,24 @@
-const BotUtils = require("../BotUtils");
-const { addAccounts } = require("../../listUtils");
-const { MessageEmbed } = require("discord.js");
-const InteractionUtils = require("./InteractionUtils");
-const Runtime = require("../../Runtime");
 const embeds = require("../Embeds");
+const BotUtils = require("../BotUtils");
+const Runtime = require("../../Runtime");
+const { logger } = require("../../utils");
+const { addAccounts } = require("../../listUtils");
+const InteractionUtils = require("./InteractionUtils");
+const { MessageEmbed, Interaction } = require("discord.js");
 
-const Leaderboard = require("../Commands/Leaderboard");
-const GameCounts = require("../Commands/GameCounts");
-const Boosters = require("../Commands/Boosters");
-const Status = require("../Commands/Status");
+const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
+const Link = require("../Commands/Link");
+const Status = require("../Commands/Status");
 const Susser = require("../Commands/Susser");
+const Boosters = require("../Commands/Boosters");
 const MiniWalls = require("../Commands/MiniWalls");
+const GameCounts = require("../Commands/GameCounts");
+const LastUpdate = require("../Commands/LastUpdate");
+const Leaderboard = require("../Commands/Leaderboard");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
-const { logger } = require("../../utils");
+
 let Commands = null;
 function getArg(i, a) {
     let v = i.options.get(a);
@@ -24,6 +28,11 @@ function getArg(i, a) {
     return undefined;
 }
 
+/**
+ *
+ * @param {Interaction} interaction
+ * @returns
+ */
 module.exports = async (interaction) => {
     if (Commands == null) {
         logger.debug("ECMA modules are null, they need to be added!");
@@ -177,6 +186,20 @@ module.exports = async (interaction) => {
 
         case Commands.Profile.name: {
             return await Commands.Profile.execute([getArg(interaction, "player")], authorID, null, interaction);
+        }
+
+        case "arcade": {
+            if (interaction.options.get("ez") != undefined) {
+                logger.debug("Adding ez button to message");
+                let buttons = await ButtonGenerator.getEZ();
+                let res = await EZ.execute([], authorID, null, interaction);
+                res.b = buttons;
+                return res;
+            }
+
+            if (interaction.options.get("lastupdate") != undefined) {
+                return await LastUpdate.execute([], authorID, null, interaction);
+            }
         }
     }
 

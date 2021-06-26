@@ -124,5 +124,5 @@ module.exports = {
     defaultAllowed: defaultAllowed,
     getKeyByValue: getKeyByValue,
     cacheMiss: [],
-    logger: require('./utils/Logger')
+    logger: require("./utils/Logger"),
 };

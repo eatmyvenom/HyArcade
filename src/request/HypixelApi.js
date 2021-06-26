@@ -1,5 +1,5 @@
-const url = require('url');
-const hypixelReq = require('./hypixelReq');
+const url = require("url");
+const hypixelReq = require("./hypixelReq");
 const config = require("../Config").fromJSON();
 const { sleep, logger } = require("./utils");
 
@@ -23,16 +23,15 @@ function getKey() {
 }
 
 module.exports = class HypixelApi {
-
     endpoint = "";
     args = {};
     reqUrl = "";
 
-    constructor(endpoint, args= {}) {
+    constructor(endpoint, args = {}) {
         this.endpoint = endpoint;
         this.args = args;
         args.key = getKey();
-        let urlargs = new url.URLSearchParams(args)
+        let urlargs = new url.URLSearchParams(args);
         this.reqUrl = new url.URL(`${endpoint}?${urlargs.toString()}`, "https://api.hypixel.net");
     }
 
@@ -67,7 +66,7 @@ module.exports = class HypixelApi {
     }
 
     static async player(uuid) {
-        let Api = new HypixelApi("player", {uuid : uuid});
+        let Api = new HypixelApi("player", { uuid: uuid });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -79,7 +78,7 @@ module.exports = class HypixelApi {
     }
 
     static async friends(uuid) {
-        let Api = new HypixelApi("friends", {uuid : uuid});
+        let Api = new HypixelApi("friends", { uuid: uuid });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -91,7 +90,7 @@ module.exports = class HypixelApi {
     }
 
     static async recentgames(uuid) {
-        let Api = new HypixelApi("recentgames", {uuid : uuid});
+        let Api = new HypixelApi("recentgames", { uuid: uuid });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -103,7 +102,7 @@ module.exports = class HypixelApi {
     }
 
     static async status(uuid) {
-        let Api = new HypixelApi("status", {uuid : uuid});
+        let Api = new HypixelApi("status", { uuid: uuid });
         let data = await Api.makeRequest();
         try {
             return JSON.parse(data);
@@ -116,12 +115,12 @@ module.exports = class HypixelApi {
 
     static async guild(something) {
         let Api;
-        if(something.length == 24) {
-            Api = new HypixelApi("guild", {id : something});
+        if (something.length == 24) {
+            Api = new HypixelApi("guild", { id: something });
         } else if (something.length == 32 || something.length == 36) {
-            Api = new HypixelApi("guild", {player : something});
+            Api = new HypixelApi("guild", { player: something });
         } else {
-            Api = new HypixelApi("guild", {name : something});
+            Api = new HypixelApi("guild", { name: something });
         }
         let data = await Api.makeRequest();
         try {
@@ -192,4 +191,4 @@ module.exports = class HypixelApi {
             return await HypixelApi.leaderboards();
         }
     }
-}
+};

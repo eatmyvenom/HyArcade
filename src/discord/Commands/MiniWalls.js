@@ -24,7 +24,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
         acc = await InteractionUtils.resolveAccount(interaction, 0);
     }
 
-    if(BotUtils.fileCache.hackers.includes(acc.uuid)) {
+    if (BotUtils.fileCache.hackers.includes(acc.uuid)) {
         return {};
     }
 

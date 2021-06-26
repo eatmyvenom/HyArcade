@@ -1,5 +1,5 @@
 const utils = require("../../utils");
-const { getList } = require('./ListUtils');
+const { getList } = require("./ListUtils");
 
 /**
  *
@@ -36,4 +36,4 @@ module.exports = async function mklistAdv(name, timetype, maxamnt, callback) {
     // use old list to ensure that players added today
     // don't show up with a crazy amount of daily wins
     return oldlist.slice(0, maxamnt);
-}
+};

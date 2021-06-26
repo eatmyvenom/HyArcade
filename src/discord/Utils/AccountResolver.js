@@ -8,13 +8,13 @@ function stringify(str) {
 }
 
 /**
- * 
- * @param {String} string 
- * @param {Message} rawMessage 
- * @param {Boolean} canbeSelf 
- * @param {Account[]} acclist 
- * @param {Object} disclist 
- * @returns 
+ *
+ * @param {String} string
+ * @param {Message} rawMessage
+ * @param {Boolean} canbeSelf
+ * @param {Account[]} acclist
+ * @param {Object} disclist
+ * @returns
  */
 module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {
     logger.info("Attempting to resolve " + string + " from " + rawMessage.content);
@@ -58,7 +58,7 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
     if (acc == undefined && canbeSelf) {
         let discid = rawMessage.author.id;
         let uuid = disclist[discid];
-        logger.debug(`Resolved as ${uuid} from discord account list`)
+        logger.debug(`Resolved as ${uuid} from discord account list`);
         if (uuid != undefined) {
             acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
         }
@@ -81,4 +81,4 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
         await acc.updateData();
     }
     return acc;
-}
+};

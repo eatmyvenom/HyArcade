@@ -17,6 +17,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg) => {
         return { res: player + " is not in the database" };
     }
     let response = await BotUtils.getStats(acc, game);
-    response.res = "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/stats` instead!";
+    response.res =
+        "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/stats` instead!";
     return response;
 });

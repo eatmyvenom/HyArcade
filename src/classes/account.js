@@ -121,7 +121,6 @@ class Account {
             Logger.error(`Error caused from the uuid of ${name} : ${uuid}`);
             Logger.error(e);
         }
-
     }
 
     setData(oldAcc) {

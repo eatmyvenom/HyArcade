@@ -8,10 +8,10 @@ function stringify(str) {
 }
 
 /**
- * 
- * @param {Interaction} interaction 
- * @param {String} namearg 
- * @param {Account[]} acclist 
+ *
+ * @param {Interaction} interaction
+ * @param {String} namearg
+ * @param {Account[]} acclist
  * @returns {Account}
  */
 module.exports = async function resolveAccount(interaction, namearg, acclist) {
@@ -82,4 +82,4 @@ module.exports = async function resolveAccount(interaction, namearg, acclist) {
     }
 
     return acc;
-}
+};

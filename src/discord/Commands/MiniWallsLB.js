@@ -43,7 +43,7 @@ function int(n) {
 
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    if(n.miniWalls != undefined && o.miniWalls != undefined) {
+    if (n.miniWalls != undefined && o.miniWalls != undefined) {
         o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
         o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
         o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
@@ -61,7 +61,7 @@ function rcb(n, o) {
 function hackerTransformer(list) {
     list = list.filter((a) => !BotUtils.fileCache.hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
-    list = list.filter((a) => a.miniWalls != undefined)
+    list = list.filter((a) => a.miniWalls != undefined);
     return list;
 }
 
@@ -112,11 +112,19 @@ async function getLB(prop, timetype, limit, category) {
 
         case "witherDamage": {
             comparitor = (b, a) => {
-                if (a.miniWalls == undefined || a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                if (
+                    a.miniWalls == undefined ||
+                    a.miniWalls.witherDamage == undefined ||
+                    a.miniWalls.witherDamage == NaN
+                ) {
                     return -1;
                 }
 
-                if (b.miniWalls == undefined || b.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) {
+                if (
+                    b.miniWalls == undefined ||
+                    b.miniWalls.witherDamage == undefined ||
+                    a.miniWalls.witherDamage == NaN
+                ) {
                     return 1;
                 }
                 return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
@@ -128,11 +136,19 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "witherKills": {
             comparitor = (b, a) => {
-                if (a.miniWalls == undefined || a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                if (
+                    a.miniWalls == undefined ||
+                    a.miniWalls.witherKills == undefined ||
+                    a.miniWalls.witherKills == NaN
+                ) {
                     return -1;
                 }
 
-                if (b.miniWalls == undefined || b.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) {
+                if (
+                    b.miniWalls == undefined ||
+                    b.miniWalls.witherKills == undefined ||
+                    a.miniWalls.witherKills == NaN
+                ) {
                     return 1;
                 }
                 return a.miniWalls.witherKills - b.miniWalls.witherKills;
@@ -144,8 +160,6 @@ async function getLB(prop, timetype, limit, category) {
         }
         case "finalKills": {
             comparitor = (b, a) => {
-
-
                 if (a.miniWalls == undefined || a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
                     return -1;
                 }

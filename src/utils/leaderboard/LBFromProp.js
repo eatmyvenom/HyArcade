@@ -43,4 +43,4 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
     // don't show up with a crazy amount of daily wins
     oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
-}
+};

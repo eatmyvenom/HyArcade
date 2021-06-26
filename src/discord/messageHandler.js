@@ -3,7 +3,7 @@ const Runtime = require("../Runtime");
 const { addAccounts } = require("../listUtils");
 const utils = require("../utils");
 const logger = utils.logger;
-const isValidIGN = require('../datagen/utils/ignValidator');
+const isValidIGN = require("../datagen/utils/ignValidator");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
 const Account = require("../classes/account");
@@ -67,7 +67,7 @@ async function miniWallsVerify(msg) {
     if (await isBlacklisted(id)) return;
     let uuid = await mojangRequest.getUUID(ign);
     if (uuid == undefined) {
-        logger.warn("Someone tried to verify as an account that doesn't exist!")
+        logger.warn("Someone tried to verify as an account that doesn't exist!");
         await msg.channel.send({ embeds: [errIgnNull] });
         return;
     }
@@ -123,7 +123,7 @@ async function attemptSend(msg, cmdResponse, opts) {
 
 async function addIGNs(msg) {
     if (cfg.discord.listenChannels.includes(msg.channel.id)) {
-        logger.info("IGN channel message detected, automatically adding to database.")
+        logger.info("IGN channel message detected, automatically adding to database.");
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
             let acclist = await utils.readJSON("acclist.json");
@@ -203,9 +203,9 @@ module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
     if (msg.guild.id == "808077828842455090") {
-        logger.warn("Ignored guild message detected!")
+        logger.warn("Ignored guild message detected!");
         return;
-    };
+    }
     if (BotUtils.botMode == "mw") {
         if (msg.guild.id == "789718245015289886") {
             await mwMode(msg);
