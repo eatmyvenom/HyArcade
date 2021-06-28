@@ -182,7 +182,7 @@ class Account {
             if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
 
-            this.hypixelDiscord = json.player.socialMedia.links?.DISCORD;
+            this.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD;
 
             this.name = json.player.displayname;
             this.name_lower = this.name.toLowerCase();
