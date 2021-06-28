@@ -31,6 +31,11 @@ module.exports = function doBot() {
     });
 
     client.on("rateLimit", BotEvents.rateLimit);
+    client.on("warn", BotEvents.warn);
+    client.on("invalidated", BotEvents.invalidated);
+    client.on("guildCreate", BotEvents.guildCreate);
+    client.on("error", BotEvents.error);
+    client.on("webhookUpdate", BotEvents.webhookUpdate);
 
     if (mode == undefined || mode == "mw") {
         client.on("message", messageHandler);

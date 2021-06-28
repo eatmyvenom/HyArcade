@@ -1,5 +1,5 @@
 const cfg = require("../Config").fromJSON();
-const { WebhookClient } = require("discord.js");
+const { WebhookClient, TextChannel } = require("discord.js");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
 const { logger } = require("../utils");
@@ -130,5 +130,38 @@ module.exports = class BotEvents {
             logger.log("Database restored");
             await BotUtils.logHook.send("Database restored");
         }
+    }
+
+    static async warn(info) {
+        logger.warn(`Discord sent a warning:`);
+        logger.warn(info);
+    }
+
+    static async invalidated() {
+        logger.error("Discord session invalidated!");
+    }
+
+    static async guildCreate(guild) {
+        logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
+        logger.debug(`Guild owner: ${guild.ownerID}`);
+        logger.debug(`Guild ID: ${guild.id}`);
+    }
+
+    /**
+     * 
+     * @param {Error} error 
+     */
+    static async error(error) {
+        logger.err("Discord encountered an error");
+        logger.err(`${error.name} : ${error.message}`);
+        logger.err(`Current stack:\n${error.stack}`);
+    }
+
+    /**
+     * 
+     * @param {TextChannel} channel 
+     */
+    static async webhookUpdate(channel) {
+        logger.debug(`${channel.guild.name}#${channel.name} had a webhook change`);
     }
 };
