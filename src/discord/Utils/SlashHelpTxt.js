@@ -4,7 +4,7 @@ const { Message } = require("discord.js")
  * 
  * @param {Message} msg 
  */
-module.exports = async function SlashHelpTxt(msg) {
+module.exports = function SlashHelpTxt(msg) {
     if(msg.content.startsWith("/")) {
         let firstWord = msg.content.split(" ")[0].slice(1).toLowerCase();
         switch(firstWord) {

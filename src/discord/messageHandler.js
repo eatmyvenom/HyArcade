@@ -217,7 +217,7 @@ module.exports = async function messageHandler(msg) {
 
     if(!isValidResponse) {
 
-        let cmdResponse = await SlashHelpTxt(msg);
+        cmdResponse = SlashHelpTxt(msg);
 
         isValidResponse =
             cmdResponse != undefined &&
