@@ -10,6 +10,8 @@ const Account = require("../classes/account");
 const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
 const { errHypixelMismatch, errIgnNull, linkSuccess } = require("./Embeds");
+const SlashHelpTxt = require("./Utils/SlashHelpTxt");
+const { Message } = require("discord.js");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -41,20 +43,6 @@ async function sendAsHook(hook, cmdResponse) {
         await BotUtils.errHook.send(e.toString());
         return false;
     }
-}
-
-function randomBtw() {
-    let randomVal = Math.round(Math.random() * 15);
-    let str =
-        "By the way, I have slash commands you can run right now which are alot better in the backend than the normal way of running commands! Try em out some time.";
-    logger.out(randomVal);
-    if (randomVal == 0) {
-        return str;
-    }
-    if (randomVal == 1) {
-        return "I have slash commands you can use, currently the normal commands are being phased out. Please try the slash commands instead.";
-    }
-    return "";
 }
 
 async function miniWallsVerify(msg) {
@@ -199,6 +187,11 @@ async function mwMode(msg) {
     }
 }
 
+/**
+ * 
+ * @param {Message} msg 
+ * @returns 
+ */
 module.exports = async function messageHandler(msg) {
     if (msg.author.bot) return;
     if (msg.webhookID) return;
@@ -221,6 +214,17 @@ module.exports = async function messageHandler(msg) {
         cmdResponse != undefined &&
         cmdResponse.res != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+
+    if(!isValidResponse) {
+
+        let cmdResponse = await SlashHelpTxt(msg);
+
+        isValidResponse =
+            cmdResponse != undefined &&
+            cmdResponse.res != undefined &&
+            (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+    }
+
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
