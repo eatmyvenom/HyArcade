@@ -6,7 +6,9 @@ module.exports = class ButtonResponse {
     constructor(content, embeds, newButtons) {
         if (content != "") {
             this.content = content;
-        }
+        } else {
+            this.content = undefined;
+        } 
         this.embeds = embeds;
         this.newButtons = newButtons;
     }
