@@ -228,20 +228,19 @@ async function updateAccountsInArr(accounts, oldAccs) {
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
-                let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-                let fbAboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
-                let fbBelowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                let aboveArcadeLimit = oldAcc.arcadeWins >= 900;
+                let fbAboveCringeLimit = oldAcc.footballWins >= 15000;
+                let fbBelowCringeLimit = oldAcc.footballWins <= 150;
                 let fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
-                let mwAboveCringeLimit = oldAcc.miniWallsWins >= cfg.cringeGameUpperBound;
-                let mwBelowCringeLimit = oldAcc.miniWallsWins <= cfg.cringeGameLowerBound;
+                let mwAboveCringeLimit = oldAcc.miniWallsWins >= 150;
+                let mwBelowCringeLimit = oldAcc.miniWallsWins <= 12000;
                 let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
                 let isLinked = oldAcc.discord ? true : false;
-                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
+                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 1314871500;
 
-                if (
-                    isLinked ||
-                    (aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit && hasPlayedRecently)
-                ) {
+                let hasImportantStats = aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit
+
+                if ((isLinked || hasImportantStats) && hasPlayedRecently) {
                     logger.out(`Updating ${oldAcc.name}'s data`);
                     await account.updateData();
                 } else {
