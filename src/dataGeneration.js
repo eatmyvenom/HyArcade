@@ -236,7 +236,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
                 let mwBelowCringeLimit = oldAcc.miniWallsWins <= 12000;
                 let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
                 let isLinked = oldAcc.discord ? true : false;
-                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 60480000;
+                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 604800000;
 
                 let hasImportantStats = aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit
 
