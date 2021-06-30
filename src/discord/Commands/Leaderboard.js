@@ -94,6 +94,9 @@ async function getLB(prop, timetype, limit, category, start) {
 
 module.exports = new Command("leaderboard", ["*"], async (args, rawMsg, interaction) => {
     let startTime = Date.now();
+    if(interaction != undefined) {
+        interaction.defer();
+    }
     if (args.length < 1) {
         let embed = new MessageEmbed()
             .setTitle("ERROR")
