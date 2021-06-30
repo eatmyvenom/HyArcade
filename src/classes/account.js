@@ -15,6 +15,8 @@ class Account {
     internalId = "";
     guildID = "";
     guild = undefined;
+    guildTag = undefined;
+    guildTagColor = undefined;
     rank = "";
     version = "";
     firstLogin = 0;
@@ -164,9 +166,9 @@ class Account {
     async updateHypixel() {
         let json = await getAccountData(this.uuid);
         // make sure player has stats to be checked
-        if (json.player.stats?.Arcade != undefined) {
+        if (json.player?.stats?.Arcade != undefined) {
             this.updateTime = Date.now();
-            let arcade = json.player.stats?.Arcade;
+            let arcade = json.player?.stats?.Arcade;
 
             let wins = 0;
             if (arcade?.wins_party) wins += arcade?.wins_party;

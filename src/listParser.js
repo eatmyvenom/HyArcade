@@ -49,6 +49,8 @@ exports.accounts = async function accounts() {
             if (guild) {
                 acc.guildID = guild.uuid;
                 acc.guild = guild.name;
+                acc.guildTag = guild.tag;
+                acc.guildTagColor = guild.color;
             }
             currentlist.push(acc);
         }
