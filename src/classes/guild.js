@@ -18,6 +18,8 @@ class Guild {
     gxp = 0;
     uuid = "";
     memberUUIDs = [];
+    color = "";
+    tag = "";
 
     /**
      * Creates an instance of Guild.
@@ -39,6 +41,8 @@ class Guild {
         this.name = data.guild.name_lower;
         this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
         this.gxp = data.guild.exp;
+        this.color = data.guild.tagColor;
+        this.tag = data.guild.tag;
 
         let gmembers = data.guild.members;
         for (let i = 0; i < gmembers.length; i++) {
