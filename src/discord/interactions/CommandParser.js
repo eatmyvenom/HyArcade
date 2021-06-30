@@ -82,7 +82,9 @@ module.exports = async (interaction) => {
                     getArg(interaction, "amount"),
                     getArg(interaction, "start"),
                 ],
-                authorID
+                authorID,
+                undefined,
+                interaction
             );
             let e = res.embed;
             if (res.game != undefined) {
