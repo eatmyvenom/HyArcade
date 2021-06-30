@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message, Interaction, CommandInteraction } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
@@ -92,10 +92,19 @@ async function getLB(prop, timetype, limit, category, start) {
     return embed;
 }
 
-module.exports = new Command("leaderboard", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("leaderboard", ["*"], hander);
+
+/**
+ * 
+ * @param {String[]} args 
+ * @param {Message} rawMsg 
+ * @param {CommandInteraction} interaction 
+ * @returns 
+ */
+async function hander(args, rawMsg, interaction) {
     let startTime = Date.now();
     if(interaction != undefined) {
-        interaction.defer();
+        await interaction.defer();
     }
     if (args.length < 1) {
         let embed = new MessageEmbed()
@@ -492,4 +501,4 @@ module.exports = new Command("leaderboard", ["*"], async (args, rawMsg, interact
             "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
     }
     return response;
-});
+}
