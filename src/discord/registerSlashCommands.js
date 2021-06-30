@@ -1,4 +1,4 @@
-const { Client, Interaction } = require("discord.js");
+const { Client, Interaction, CommandInteraction } = require("discord.js");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const Embed = require("./Embeds");
@@ -9,7 +9,7 @@ const interactionObjects = require("./interactions/interactionObjects");
 
 /**
  *
- * @param {Interaction} interaction
+ * @param {CommandInteraction} interaction
  */
 async function commandHandler(interaction) {
     let responseObj;
@@ -34,7 +34,7 @@ async function commandHandler(interaction) {
             files: f,
         });
     } else {
-        await interaction.webhook.send({
+        await interaction.followUp({
             content: content,
             embeds: e,
             components: c,
