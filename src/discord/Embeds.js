@@ -132,3 +132,8 @@ exports.help = new MessageEmbed()
         "Other help topics",
         "games - the names of all the available games\nsearching - how the bot searches for an account\nrole handling - an explantion on how role handling happens"
     );
+
+exports.errNoPlayer = new MessageEmbed()
+    .setTitle("ERROR")
+    .setColor(red)
+    .setDescription("The player you specified does not seem to exist!");

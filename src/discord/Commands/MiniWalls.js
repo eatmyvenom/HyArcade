@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
+const { errNoPlayer } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
 function formatR(n) {
@@ -26,6 +27,10 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
 
     if (BotUtils.fileCache.hackers.includes(acc.uuid)) {
         return {};
+    }
+
+    if(acc.uuid == undefined) {
+        return { res = "", embed = errNoPlayer };
     }
 
     let stats =
