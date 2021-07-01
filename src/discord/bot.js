@@ -20,10 +20,18 @@ const requiredIntents = [
  */
 module.exports = function doBot() {
     let mode = process.argv[3];
-    const client = new Discord.Client({
-        intents: requiredIntents,
-        allowedMentions: { parse: [], repliedUser: false },
-    });
+    let client;
+    if(mode == "mini") {
+        client = new Discord.Client({
+            intents: [ Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILDS ],
+            allowedMentions: { parse: [], repliedUser: false },
+        });
+    } else {
+        client = new Discord.Client({
+            intents: requiredIntents,
+            allowedMentions: { parse: [], repliedUser: false },
+        });
+    }
 
     client.on("ready", async () => {
         BotUtils.client = client;
@@ -37,15 +45,20 @@ module.exports = function doBot() {
     client.on("error", BotEvents.error);
     client.on("webhookUpdate", BotEvents.webhookUpdate);
 
-    if (mode == undefined || mode == "mw") {
+    if (mode == undefined || mode == "mw" || mode == "mini") {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 10000);
     }
 
     if (Runtime.bot != "backup") {
-        logger.info("Logging in to discord");
-        client.login(config.discord.token);
+        if(mode == "mini") {
+            logger.info("Logging in to micro arcade module");
+            client.login(config.discord.miniToken);
+        } else {
+            logger.info("Logging in to discord");
+            client.login(config.discord.token);
+        }
     } else {
         logger.info("Logging in to discord as backup");
         client.login(config.discord.backupToken);

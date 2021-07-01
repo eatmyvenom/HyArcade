@@ -62,6 +62,10 @@ module.exports = class BotEvents {
             await registerSlashCommands(BotUtils.client);
             logger.out(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
+        } else if (mode == "mini") {
+            await registerSlashCommands(BotUtils.client);
+            logger.out(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
+            logHook.send(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
         } else if (BotUtils.botMode == "mw") {
             logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);

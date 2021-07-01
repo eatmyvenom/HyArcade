@@ -5,7 +5,6 @@ const Embed = require("./Embeds");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
-const interactionObjects = require("./interactions/interactionObjects");
 
 /**
  *
@@ -97,10 +96,20 @@ async function interactionHandler(interaction) {
  * @param {Client} client
  */
 async function registerAll(client) {
+    let interactionObjects = require("./interactions/interactionObjects");
     logger.info("Registering global commands with discord");
     let cmdarr = [];
+    if(BotUtils.botMode == "mini") {
+        interactionObjects = require("./interactions/microInteractionObjects");
+    }
     for (let c in interactionObjects) {
         cmdarr.push(interactionObjects[c]);
+    }
+
+    let guilds = client.guilds;
+    guilds.cache.array();
+    for (let g of guilds.cache.array()) {
+        g.commands.set([]);
     }
     await client.application.commands.set(cmdarr);
 }
