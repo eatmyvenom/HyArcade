@@ -25,10 +25,6 @@ module.exports = exports.helpCommand = {
                     value: "topic_stats",
                 },
                 {
-                    name: "Unlinked Stats",
-                    value: "topic_us",
-                },
-                {
                     name: "Leaderboard",
                     value: "topic_lb",
                 },
