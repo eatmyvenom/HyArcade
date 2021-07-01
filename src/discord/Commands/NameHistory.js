@@ -7,7 +7,7 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg) => {
     let acc = await BotUtils.resolveAccount(plr, rawMsg);
     let embed = new MessageEmbed()
         .setTitle(`${acc.name} IGN history`)
-        .setDescription([].concat(acc.nameHist).split("\n"))
+        .setDescription(([].concat(acc.nameHist)).join("\n"))
         .setColor(0x44a3e7);
     return { res: "", embed: embed };
 });
