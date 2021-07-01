@@ -101,6 +101,22 @@ class Account {
         quakeKills : 0,
         quakeDeaths : 0,
         quakeWins : 0,
+    };
+    challenges = {
+        zombies : 0,
+        partyGames : 0,
+        galaxyWars : 0,
+        hitw : 0,
+        hypixelSays : 0,
+        creeperAttack : 0,
+        blockingDead : 0,
+        enderSpleef : 0,
+        football : 0,
+        miniWalls : 0,
+        hns : 0,
+        farmHunt : 0,
+        dragonWars : 0,
+        throwOut : 0,
     }
     zombies = {};
     hasOFCape = false;
@@ -108,6 +124,7 @@ class Account {
     cloak = "";
     clickEffect = "";
     plusColor = "";
+    mvpColor = "";
     hat = "";
     hypixelDiscord = "";
     discord = "";
@@ -192,6 +209,7 @@ class Account {
             this.ranksGifted = this.ranksGifted == undefined ? 0 : this.ranksGifted; 
 
             this.rank = json.player.newPackageRank != undefined ? json.player.newPackageRank : json.player.packageRank;
+            this.mvpColor = json.player?.monthlyRankColor;
 
             if (json.player.monthlyPackageRank == "SUPERSTAR") this.rank = "MVP_PLUS_PLUS";
             if (json.player.rank) this.rank = json.player.rank;
@@ -281,6 +299,20 @@ class Account {
             this.miniWalls.witherKills = arcade.wither_kills_mini_walls;
             this.miniWalls.deaths = arcade.deaths_mini_walls;
             this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
+
+            this.challenges.blockingDead = json.player.stats?.challenges?.ARCADE__blocking_dead_challenge;
+            this.challenges.creeperAttack = json.player.stats?.challenges?.ARCADE__creeper_attack_challenge;
+            this.challenges.dragonWars = json.player.stats?.challenges?.ARCADE__dragon_wars_challenge;
+            this.challenges.enderSpleef = json.player.stats?.challenges?.ARCADE__ender_spleef_challenge;
+            this.challenges.farmHunt = json.player.stats?.challenges?.ARCADE__farm_hunt_challenge;
+            this.challenges.galaxyWars = json.player.stats?.challenges?.ARCADE__galaxy_wars_challenge;
+            this.challenges.hitw = json.player.stats?.challenges?.ARCADE__hole_in_the_wall_challenge;
+            this.challenges.hns = json.player.stats?.challenges?.ARCADE__hide_and_seek_challenge;
+            this.challenges.hypixelSays = json.player.stats?.challenges?.ARCADE__hypixel_says_challenge;
+            this.challenges.miniWalls = json.player.stats?.challenges?.ARCADE__mini_walls_challenge;
+            this.challenges.partyGames = json.player.stats?.challenges?.ARCADE__party_games_challenge;
+            this.challenges.throwOut = json.player.stats?.challenges?.ARCADE__throw_out_challenge;
+            this.challenges.zombies = json.player.stats?.challenges?.ARCADE__zombies_challenge;
 
             this.other.murderMysteryGames = json.player.stats?.MurderMystery?.games;
             this.other.murderMysteryWins = json.player.stats?.MurderMystery?.wins;
