@@ -7,6 +7,80 @@ module.exports = {
             name: "game",
             description: "The game you want to see the leaderboard of ",
             required: true,
+            choices: [
+                {
+                    name : "Overall",
+                    value: "arc",
+                },
+                {
+                    name : "Party games",
+                    value: "pg",
+                },
+                {
+                    name : "Farm hunt",
+                    value: "fh",
+                },
+                {
+                    name : "Hole in the wall",
+                    value: "hitw",
+                },
+                {
+                    name : "Hypixel says",
+                    value: "hs",
+                },
+                {
+                    name : "Blocking dead",
+                    value: "bd",
+                },
+                {
+                    name : "Mini walls",
+                    value: "mw",
+                },
+                {
+                    name : "Football",
+                    value: "fb",
+                },
+                {
+                    name : "Ender spleef",
+                    value: "es",
+                },
+                {
+                    name : "Throw out",
+                    value: "to",
+                },
+                {
+                    name : "Galaxy wars",
+                    value: "gw",
+                },
+                {
+                    name : "Dragon wars",
+                    value: "dw",
+                },
+                {
+                    name : "Bounty hunters",
+                    value: "bh",
+                },
+                {
+                    name : "Hide and seek",
+                    value: "hns",
+                },
+                {
+                    name : "Zombies",
+                    value: "z",
+                },
+                {
+                    name : "Pixel painters",
+                    value: "pp",
+                },
+                {
+                    name : "Capture the wool",
+                    value: "ctw",
+                },
+                {
+                    name : "Seasonal games",
+                    value: "sim",
+                },
+            ]
         },
         {
             type: 3,
@@ -14,6 +88,10 @@ module.exports = {
             description: "The time type of the leaderboard you want",
             required: true,
             choices: [
+                {
+                    name: "lifetime",
+                    value: "l",
+                },
                 {
                     name: "daily",
                     value: "d",
@@ -27,9 +105,9 @@ module.exports = {
                     value: "m",
                 },
                 {
-                    name: "lifetime",
-                    value: "l",
-                },
+                    name: "all",
+                    value: "a",
+                }
             ],
         },
         {
