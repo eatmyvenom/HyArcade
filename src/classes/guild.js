@@ -20,6 +20,26 @@ class Guild {
     memberUUIDs = [];
     color = "";
     tag = "";
+    wins = 0;
+    arcadeCoins = 0;
+    combinedAP = 0;
+    arcadeWins = 0;
+    karma = 0;
+    ranksGifted = 0;
+    hitwWins = 0;
+    farmhuntWins = 0;
+    miniWallsWins = 0;
+    footballWins = 0;
+    enderSpleefWins = 0;
+    throwOutWins = 0;
+    galaxyWarsWins = 0;
+    dragonWarsWins = 0;
+    bountyHuntersWins = 0;
+    blockingDeadWins = 0;
+    hideAndSeekWins = 0;
+    zombiesWins = 0;
+    pixelPaintersWins = 0;
+    simWins = 0;
 
     /**
      * Creates an instance of Guild.
@@ -38,7 +58,7 @@ class Guild {
      */
     async updateData() {
         let data = await this.getGuild();
-        this.name = data.guild.name_lower;
+        this.name = data.guild.name;
         this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
         this.gxp = data.guild.exp;
         this.color = data.guild.tagColor;
