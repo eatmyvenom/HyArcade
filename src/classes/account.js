@@ -90,6 +90,17 @@ class Account {
         deaths: 0,
         witherDamage: 0,
     };
+    other = {
+        murderMysteryWins = 0,
+        murderMysteryGames = 0,
+        buildBattleGames = 0,
+        buildBattleScore = 0,
+        buildBattleVotes = 0,
+        buildBattleWins = 0,
+        quakeKills = 0,
+        quakeDeaths = 0,
+        quakeWins = 0,
+    }
     zombies = {};
     hasOFCape = false;
     hasLabyCape = false;
@@ -269,6 +280,16 @@ class Account {
             this.miniWalls.witherKills = arcade.wither_kills_mini_walls;
             this.miniWalls.deaths = arcade.deaths_mini_walls;
             this.miniWalls.witherDamage = arcade.wither_damage_mini_walls;
+
+            this.other.murderMysteryGames = json.player.stats?.MurderMystery?.games;
+            this.other.murderMysteryWins = json.player.stats?.MurderMystery?.wins;
+            this.other.buildBattleGames = json.player.stats?.BuildBattle?.games_played;
+            this.other.buildBattleScore = json.player.stats?.BuildBattle?.score;
+            this.other.buildBattleVotes = json.player.stats?.BuildBattle?.total_votes;
+            this.other.buildBattleWins = json.player.stats?.BuildBattle?.wins;
+            this.other.quakeDeaths = json.player.stats?.Quake?.deaths;
+            this.other.quakeKills = json.player.stats?.Quake?.kills;
+            this.other.quakeWins = json.player.stats?.Quake?.wins;
 
             this.arcadeWins = json.player.achievements?.arcade_arcade_winner;
             this.anyWins = json.player.achievements?.general_wins;
