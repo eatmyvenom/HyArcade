@@ -9,7 +9,7 @@ module.exports = new Command("info", ["*"], async (args) => {
         .setThumbnail(BotUtils.client.user.avatarURL())
         .addField("Developer", "<@156952208045375488>", false)
         .addField("Github", "[Link](https://github.com/eatmyvenom/party-games-site)", true)
-        .addField("Bot invite link", "[Link](https://eatmyvenom.me/share/botinvite.html)", true)
+        .addField("Bot invite link", "[Link](https://hyarcade.xyz/botinvite.html)", true)
         .addField("Support server", "[Invite](https://discord.gg/W4fkQJsxMd)", true)
         .addField("Website", "[Link](https://hyarcade.xyz)", true)
         .setColor(0x2f3136);
