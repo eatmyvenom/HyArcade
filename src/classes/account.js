@@ -91,15 +91,15 @@ class Account {
         witherDamage: 0,
     };
     other = {
-        murderMysteryWins = 0,
-        murderMysteryGames = 0,
-        buildBattleGames = 0,
-        buildBattleScore = 0,
-        buildBattleVotes = 0,
-        buildBattleWins = 0,
-        quakeKills = 0,
-        quakeDeaths = 0,
-        quakeWins = 0,
+        murderMysteryWins : 0,
+        murderMysteryGames : 0,
+        buildBattleGames : 0,
+        buildBattleScore : 0,
+        buildBattleVotes : 0,
+        buildBattleWins : 0,
+        quakeKills : 0,
+        quakeDeaths : 0,
+        quakeWins : 0,
     }
     zombies = {};
     hasOFCape = false;
