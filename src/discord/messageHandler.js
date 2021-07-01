@@ -52,9 +52,6 @@ async function sendAsHook(hook, cmdResponse) {
 }
 
 async function miniWallsVerify(msg) {
-    if (msg.author.id == "156952208045375488") {
-        return;
-    }
     let tag = msg.author.tag;
     let id = msg.author.id;
     let ign = msg.content.trim();
