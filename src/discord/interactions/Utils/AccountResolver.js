@@ -66,7 +66,7 @@ module.exports = async function resolveAccount(interaction, namearg, acclist) {
     if (acc) {
         logger.info("resolved as " + acc.name);
     } else {
-        interaction.defer();
+        await interaction.defer();
         logger.info("Unable to resolve, getting by ign from hypixel.");
 
         let plr = string;
