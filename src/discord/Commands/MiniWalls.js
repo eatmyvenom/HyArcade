@@ -30,7 +30,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
     }
 
     if(acc.uuid == undefined) {
-        return { res = "", embed = errNoPlayer };
+        return { res : "", embed : errNoPlayer };
     }
 
     let stats =
