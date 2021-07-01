@@ -2,6 +2,7 @@ const { getAccountData } = require("../hypixelApi");
 const optifineRequest = require("../request/optifineRequest");
 const labyRequest = require("../request/labyRequest");
 const Logger = require("../utils/Logger");
+const { logger } = require("../utils");
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
@@ -312,6 +313,7 @@ class Account {
                 numberify(this.pixelPaintersWins) +
                 numberify(this.simTotal);
         } else {
+            logger.err(`Data failure, clearing account data for ${this.name} - ${this.uuid}!`);
             for (let prop in this) {
                 this[prop] = undefined;
             }
