@@ -5,6 +5,7 @@ const listUtils = require("../listUtils");
 const { logger } = require("../utils");
 const fs = require("fs/promises");
 const Runtime = require("../Runtime");
+const utils = require("../utils");
 
 /**
  * Send text to a discord webhook
@@ -575,11 +576,28 @@ async function sendMW() {
     let run = Runtime.fromJSON();
     let mwMsg = run.mwMsg;
 
+    let guildlist = await utils.readJSON("guild.json");
+    guildlist.sort((a,b)=>{
+        return b.miniWallsWins - a.miniWallsWins;
+    });
+
+    let str = "";
+    for(let i = 0;i < Math.min(10, guildlist.length); i++) {
+        let g = guildlist[i];
+        str += `${i + 1}) **${g.name}** (${g.miniWallsWins})\n`
+    }
+
+    let gEmbed = new MessageEmbed()
+        .setTitle("Lifetime Guild Wins")
+        .setDescription(str)
+        .setColor(0xff0000);
+
     let wins = await getMW("miniWallsWins", 25);
     let kills = await getMW("kills", 10);
     let finals = await getMW("finalKills", 10);
     let witherdmg = await getMW("witherDamage", 10);
     let witherkills = await getMW("witherKills", 10);
+    let guilds = gEmbed;
 
     wins.setTitle("Lifetime Wins");
     kills.setTitle("Lifetime Kills");
@@ -593,7 +611,7 @@ async function sendMW() {
         logger.err(e);
     }
     let newMsg = await hook.send({
-        embeds: [wins, kills, finals, witherdmg, witherkills],
+        embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
         username: config.otherHooks.MW.username,
         avatarURL: config.otherHooks.MW.pfp,
     });
