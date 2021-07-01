@@ -15,11 +15,17 @@ const { Message } = require("discord.js");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
+/**
+ * 
+ * @param {Message} msg 
+ * @param {Error} e 
+ */
 async function logError(msg, e) {
     await BotUtils.errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
     await BotUtils.errHook.send(e.toString());
     logger.err("Error from - " + msg.content);
     logger.err(e.toString());
+    logger.err(e.stack);
 }
 
 async function logCmd(msg) {
