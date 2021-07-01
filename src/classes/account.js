@@ -117,7 +117,12 @@ class Account {
         farmHunt : 0,
         dragonWars : 0,
         throwOut : 0,
-    }
+    };
+    quests = {
+        arcadeGamer : 0,
+        arcadeWinner : 0,
+        arcadeSpecialist : 0,
+    };
     zombies = {};
     hasOFCape = false;
     hasLabyCape = false;
@@ -313,6 +318,10 @@ class Account {
             this.challenges.partyGames = json.player.stats?.challenges?.ARCADE__party_games_challenge;
             this.challenges.throwOut = json.player.stats?.challenges?.ARCADE__throw_out_challenge;
             this.challenges.zombies = json.player.stats?.challenges?.ARCADE__zombies_challenge;
+
+            this.quests.arcadeGamer = json.player?.quests?.arcade_gamer?.completions?.length;
+            this.quests.arcadeSpecialist = json.player?.quests?.arcade_specialist?.completions?.length;
+            this.quests.arcadeWinner = json.player?.quests?.arcade_winner?.completions?.length;
 
             this.other.murderMysteryGames = json.player.stats?.MurderMystery?.games;
             this.other.murderMysteryWins = json.player.stats?.MurderMystery?.wins;
