@@ -42,12 +42,17 @@ module.exports = class BotUtils {
     }
 
     static async getStats(acc, game) {
-        return await AdvancedEmbeds.getStats(
+        /**
+         * @type {MessageEmbed}
+         */
+        let embed = await AdvancedEmbeds.getStats(
             acc,
             game,
             await BotUtils.fileCache.updatetime,
-            BotUtils.client.user.avatarURL()
+            BotUtils.client.user.avatarURL(),
+            BotUtils.botMode
         );
+        return embed;
     }
 
     static async logIgns(msg) {

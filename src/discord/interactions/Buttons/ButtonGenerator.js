@@ -159,7 +159,7 @@ module.exports = class ButtonGenerator {
             .setLabel("<< " + leftTxt)
             .setStyle("PRIMARY");
 
-        let m = new MessageButton().setCustomID(`s:${uuid}:${currentGame}`).setLabel("↻ Refresh").setStyle("SECONDARY");
+        let m = new MessageButton().setCustomID(`s:${uuid}:${currentGame}`).setLabel("↻").setStyle("SECONDARY");
 
         let right = new MessageButton()
             .setCustomID(`s:${uuid}:${rightID}`)

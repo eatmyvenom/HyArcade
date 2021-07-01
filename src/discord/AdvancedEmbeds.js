@@ -629,7 +629,7 @@ module.exports = class AdvancedEmbeds {
         return embed;
     }
 
-    static async getStats(acc, game, updateTime, avatar) {
+    static async getStats(acc, game, updateTime, avatar, mode) {
         let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;
@@ -1177,9 +1177,12 @@ module.exports = class AdvancedEmbeds {
             .setAuthor(`${rank} ${acc.name}`, null, "https://hyarcade.xyz/player.html?q=" + acc.name)
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
-            .addFields(fields)
-            .setFooter("Data generated at", avatar)
-            .setTimestamp(date.getTime());
+            .addFields(fields);
+
+        if(mode != "mini") {
+            embed.setFooter("Data generated at", avatar)
+                .setTimestamp(date.getTime());
+        }
 
         return { res: "", embed: embed, game: gamename };
     }

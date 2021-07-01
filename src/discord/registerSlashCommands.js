@@ -111,6 +111,7 @@ async function registerAll(client) {
     for (let g of guilds.cache.array()) {
         g.commands.set([]);
     }
+
     await client.application.commands.set(cmdarr);
 }
 
