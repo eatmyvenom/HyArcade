@@ -126,7 +126,7 @@ module.exports = async (interaction) => {
             let acc = await InteractionUtils.resolveAccount(interaction);
             let embed = new MessageEmbed()
                 .setTitle(`${acc.name} IGN history`)
-                .setDescription([].concat(acc.nameHist).split("\n"))
+                .setDescription(([].concat(acc.nameHist)).join("\n"))
                 .setColor(0x44a3e7);
             return { res: "", embed: embed };
         }
