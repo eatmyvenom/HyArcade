@@ -594,7 +594,7 @@ async function sendMW() {
     let gEmbed = new MessageEmbed()
         .setTitle("Lifetime Guild Wins")
         .setDescription(str)
-        .setColor(0xff0000);
+        .setColor(0xc60532);
 
     let wins = await getMW("miniWallsWins", 25);
     let kills = await getMW("kills", 10);
