@@ -75,7 +75,7 @@ async function miniWallsVerify(msg) {
         logger.warn("Hacker tried to verify!");
         return;
     }
-    if (acc.hypixelDiscord.toLowerCase() == tag.toLowerCase()) {
+    if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
         await addAccounts("others", [uuid]);
         let disclist = BotUtils.fileCache.disclist;
         disclist[id] = uuid;
