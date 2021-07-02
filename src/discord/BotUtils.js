@@ -31,7 +31,7 @@ module.exports = class BotUtils {
             embeds = [embed];
         }
         return {
-            username: "Arcade Bot",
+            username: BotUtils.client.user.username,
             avatarURL: BotUtils.client.user.avatarURL(),
             embeds: embeds,
         };

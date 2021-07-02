@@ -26,6 +26,11 @@ module.exports = function doBot() {
             intents: [ Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILDS ],
             allowedMentions: { parse: [], repliedUser: false },
         });
+    } else if(mode == "mw") {
+        client = new Discord.Client({
+            intents: [ Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILDS ],
+            allowedMentions: { parse: [], repliedUser: false },
+        });
     } else {
         client = new Discord.Client({
             intents: requiredIntents,
@@ -55,8 +60,11 @@ module.exports = function doBot() {
         if(mode == "mini") {
             logger.info("Logging in to micro arcade module");
             client.login(config.discord.miniToken);
+        } else if(mode == "mw") {
+            logger.info("Logging in to mini walls module");
+            client.login(config.discord.mwToken);
         } else {
-            logger.info("Logging in to discord");
+            logger.info("Logging in to arcade bot");
             client.login(config.discord.token);
         }
     } else {

@@ -203,14 +203,14 @@ module.exports = async function messageHandler(msg) {
         return;
     }
     if (BotUtils.botMode == "mw") {
-        if (msg.guild.id == "789718245015289886") {
+        if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
+        if (msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
             await mwMode(msg);
             return;
         } else {
             return;
         }
     }
-    if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
 
     let cmdResponse = await getCmdRes(msg);
     let isValidResponse =
