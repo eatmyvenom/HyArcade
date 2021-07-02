@@ -572,6 +572,10 @@ async function getMW(prop, a) {
     return await getLB(prop, "l", a);
 }
 
+function formatNum(number) {
+    return Intl.NumberFormat("en").format(number);
+}
+
 async function sendMW() {
     let run = Runtime.fromJSON();
     let mwMsg = run.mwMsg;
@@ -584,7 +588,7 @@ async function sendMW() {
     let str = "";
     for(let i = 0;i < Math.min(10, guildlist.length); i++) {
         let g = guildlist[i];
-        str += `${i + 1}) **${g.name}** (${g.miniWallsWins})\n`
+        str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`
     }
 
     let gEmbed = new MessageEmbed()
