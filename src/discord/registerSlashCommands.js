@@ -6,11 +6,17 @@ const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 
+async function isBlacklisted(id) {
+    let blacklist = await utils.readJSON("blacklist.json");
+    return blacklist.includes(id);
+}
+
 /**
  *
  * @param {CommandInteraction} interaction
  */
 async function commandHandler(interaction) {
+    if(await isBlacklisted(interaction.user.id)) { return };
     let responseObj;
     try {
         responseObj = await CommandParser(interaction);
