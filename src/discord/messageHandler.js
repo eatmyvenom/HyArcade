@@ -21,11 +21,11 @@ const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 ch
  * @param {Error} e 
  */
 async function logError(msg, e) {
-    await BotUtils.errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
-    await BotUtils.errHook.send(e.toString());
     logger.err("Error from - " + msg.content);
     logger.err(e.toString());
     logger.err(e.stack);
+    await BotUtils.errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
+    await BotUtils.errHook.send(e.toString());
 }
 
 async function logCmd(msg) {

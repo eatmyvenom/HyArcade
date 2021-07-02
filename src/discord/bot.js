@@ -50,7 +50,7 @@ module.exports = function doBot() {
     client.on("error", BotEvents.error);
     client.on("webhookUpdate", BotEvents.webhookUpdate);
 
-    if (mode == undefined || mode == "mw" || mode == "mini") {
+    if (mode == undefined || mode == "mw") {
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 10000);
