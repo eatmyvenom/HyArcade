@@ -1,5 +1,5 @@
 const cfg = require("../Config").fromJSON();
-const { WebhookClient, TextChannel } = require("discord.js");
+const { WebhookClient, TextChannel, Guild } = require("discord.js");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
 const { logger } = require("../utils");
@@ -17,10 +17,18 @@ module.exports = class BotEvents {
     }
 
     static async messageDelete(msg) {
-        if (msg.content.charAt(0) == cfg.commandCharacter) {
-            let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
-            logger.err(str);
-            await BotUtils.errHook.send(str);
+        if(BotUtils.botMode == "mw") {
+            if (msg.content.charAt(0) == ".") {
+                let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
+                logger.warn(str);
+                await BotUtils.logHook.send(str);
+            }
+        } else {
+            if(msg.content.charAt(0) == cfg.commandCharacter) {
+                let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
+                logger.warn(str);
+                await BotUtils.logHook.send(str);
+            }
         }
     }
 
@@ -145,6 +153,10 @@ module.exports = class BotEvents {
         logger.error("Discord session invalidated!");
     }
 
+    /**
+     * 
+     * @param {Guild} guild 
+     */
     static async guildCreate(guild) {
         logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
         logger.debug(`Guild owner: ${guild.ownerID}`);
