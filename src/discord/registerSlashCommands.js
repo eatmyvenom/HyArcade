@@ -64,10 +64,10 @@ async function logCmd(interaction) {
     await BotUtils.msgCopyHook.send({
         embeds: [
             Embed.slashUsed(
-                interaction.user.id,
-                interaction.user.tag,
+                interaction.user?.id,
+                interaction.user?.tag,
                 interaction.commandName,
-                interaction.guild.name,
+                interaction.guild?.name,
                 interaction.channelID,
                 interaction.options
             ),
