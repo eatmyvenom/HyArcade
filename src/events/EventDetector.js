@@ -39,7 +39,7 @@ class EventDetector {
         this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
-        if (newIndex <= 24 && newIndex < oldIndex && oldAcc.wins != newAcc.wins) {
+        if (newIndex <= 24 && newIndex == (oldIndex + 1) && oldAcc.wins != newAcc.wins) {
             this.Events.push(
                 new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid)
             );
