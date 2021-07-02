@@ -28,9 +28,13 @@ async function logError(msg, e) {
     await BotUtils.errHook.send(e.toString());
 }
 
+/**
+ * 
+ * @param {Message} msg 
+ */
 async function logCmd(msg) {
-    await BotUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg.author.id, msg.url);
-    logger.out(`${msg.author.tag} ran : \`${msg.content}\``);
+    await BotUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
+    logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
 async function sendAsHook(hook, cmdResponse) {

@@ -82,8 +82,8 @@ module.exports = class BotUtils {
         await hook.send({ content: msg.url, username: name, avatarURL: pfp });
     }
 
-    static async logCommand(command, args, author, link) {
-        await BotUtils.msgCopyHook.send({ embeds: [Embed.execution(command, args, author, link)] });
+    static async logCommand(command, args, message) {
+        await BotUtils.msgCopyHook.send({ embeds: [Embed.execution(command, args, message)] });
     }
 
     static getBlacklistRes() {

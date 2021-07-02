@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message } = require("discord.js");
 
 const cfg = require("../Config").fromJSON();
 const yellow = 0xdcde19;
@@ -62,15 +62,23 @@ exports.errHypixelMismatch = new MessageEmbed()
     )
     .setColor(red);
 
-exports.execution = function (name, args, author, link) {
+/**
+ * 
+ * @param {String} name 
+ * @param {String[]} args 
+ * @param {Message} message 
+ * @returns 
+ */
+exports.execution = function (name, args, message) {
     if (args == "") args = "none";
     return new MessageEmbed()
         .setTitle("Command execution")
         .setColor(0x2eb8a3)
         .addField("Name", name, true)
         .addField("Args", `\`${args}\``, true)
-        .addField("User", `<@${author}>`, true)
-        .addField("Link", `[Message Link](${link})`, true);
+        .addField("User", `${message.author.tag} - <@${message.author.id}>`, true)
+        .addField("Location", `${message.guild.name}#${message.channel.name}`, true)
+        .addField("Link", `[Message Link](${message.url})`, true);
 };
 
 exports.dbded = new MessageEmbed()
@@ -95,7 +103,7 @@ exports.slashUsed = function (userid, usertag, command, server, channel, options
     return new MessageEmbed()
         .setTitle(`Command run by ${usertag}`)
         .setColor(0xff3399)
-        .addField("Command", command, false)
+        .addField("Command", "" + command, false)
         .addField("User", `<@${userid}>`, true)
         .addField("Server", "" + server, true)
         .addField("Channel", `<#${channel}>`, true)
