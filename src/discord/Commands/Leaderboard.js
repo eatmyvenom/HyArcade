@@ -103,7 +103,7 @@ module.exports = new Command("leaderboard", ["*"], hander);
  */
 async function hander(args, rawMsg, interaction) {
     let startTime = Date.now();
-    if(interaction != undefined) {
+    if(interaction != undefined && !interaction.isButton()) {
         logger.debug("Deferring interaction");
         await interaction.defer();
     }
