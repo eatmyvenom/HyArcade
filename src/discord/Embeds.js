@@ -145,3 +145,8 @@ exports.errNoPlayer = new MessageEmbed()
     .setTitle("ERROR")
     .setColor(red)
     .setDescription("The player you specified does not seem to exist!");
+
+exports.ERROR_UNKNOWN = new MessageEmbed()
+        .setTitle("ERROR")
+        .setColor(red)
+        .setDescription("The command you tried to run caused an unknown error!")

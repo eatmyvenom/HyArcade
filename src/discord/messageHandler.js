@@ -9,7 +9,7 @@ const BotUtils = require("./BotUtils");
 const Account = require("../classes/account");
 const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
-const { errHypixelMismatch, errIgnNull, linkSuccess } = require("./Embeds");
+const { errHypixelMismatch, errIgnNull, linkSuccess, ERROR_UNKNOWN } = require("./Embeds");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const { Message } = require("discord.js");
 
@@ -149,17 +149,24 @@ async function getCmdRes(msg) {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
     } catch (e) {
         await logError(msg, e);
+        cmdResponse = ({ res : "", embed : [ERROR_UNKNOWN]});
     }
 
     return cmdResponse;
 }
 
+/**
+ * 
+ * @param {Message} msg 
+ * @returns 
+ */
 async function getMWCmdRes(msg) {
     let cmdResponse;
     try {
         cmdResponse = await MiniWallsCommands.execute(msg, msg.author.id);
     } catch (e) {
         await logError(msg, e);
+        cmdResponse = ({ res : "", embed : [ERROR_UNKNOWN]});
     }
 
     return cmdResponse;
