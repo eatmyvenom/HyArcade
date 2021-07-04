@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, User } = require("discord.js");
 
 function formatR(n) {
     let r = Math.round(n * 100) / 100;
@@ -1185,5 +1185,20 @@ module.exports = class AdvancedEmbeds {
         }
 
         return { res: "", embed: embed, game: gamename };
+    }
+
+    /**
+     * 
+     * @param {String} ign 
+     * @param {User} user 
+     */
+    static async playerLink(ign, user) {
+        let embed = new MessageEmbed()
+            .setTitle("Success")
+            .setColor(0x00cc66)
+            .setDescription(`<@${user}> was linked as ${ign}`)
+            .setFooter(`${user.id}`)
+
+        return embed;
     }
 };

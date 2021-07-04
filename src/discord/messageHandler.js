@@ -12,6 +12,7 @@ const MiniWallsCommands = require("./MiniWallsCommands");
 const { errHypixelMismatch, errIgnNull, linkSuccess, ERROR_UNKNOWN } = require("./Embeds");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const { Message } = require("discord.js");
+const AdvancedEmbeds = require("./AdvancedEmbeds");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -55,6 +56,11 @@ async function sendAsHook(hook, cmdResponse) {
     }
 }
 
+/**
+ * 
+ * @param {Message} msg 
+ * @returns {null}
+ */
 async function miniWallsVerify(msg) {
     let tag = msg.author.tag;
     let id = msg.author.id;
@@ -88,7 +94,7 @@ async function miniWallsVerify(msg) {
         await msg.member.roles.remove("850033543425949736");
         await msg.member.roles.add("789721304722178069");
         await msg.member.setNickname(acc.name);
-        await msg.channel.send({ embeds: [linkSuccess] });
+        await msg.channel.send({ embeds: [AdvancedEmbeds.playerLink(acc.name, msg.author)] });
     } else {
         await msg.channel.send({ embeds: [errHypixelMismatch] });
     }
