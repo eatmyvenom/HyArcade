@@ -1196,7 +1196,7 @@ module.exports = class AdvancedEmbeds {
         let embed = new MessageEmbed()
             .setTitle("Success")
             .setColor(0x00cc66)
-            .setDescription(`<@${user}> was linked as ${ign}`)
+            .setDescription(`<@${user.id}> was linked as ${ign}`)
             .setFooter(`${user.id}`)
 
         return embed;
