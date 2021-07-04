@@ -1192,7 +1192,7 @@ module.exports = class AdvancedEmbeds {
      * @param {String} ign 
      * @param {User} user 
      */
-    static async playerLink(ign, user) {
+    static playerLink(ign, user) {
         let embed = new MessageEmbed()
             .setTitle("Success")
             .setColor(0x00cc66)
