@@ -55,12 +55,12 @@ module.exports = async (interaction) => {
 
     if (Runtime.fromJSON().dbERROR) {
         logger.warn("Refusing to run command because database is corrupted!");
-        return { res: "", embed: embeds.dbded };
+        return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
     }
 
     if (Runtime.fromJSON().apiDown) {
         logger.warn("Refusing to run command because API is down!");
-        return { res: "", embed: embeds.apiDed };
+        return { res: "", embed: embeds.ERROR_API_DOWN };
     }
 
     switch (interaction.commandName) {

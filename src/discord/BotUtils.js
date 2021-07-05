@@ -83,7 +83,7 @@ module.exports = class BotUtils {
     }
 
     static async logCommand(command, args, message) {
-        await BotUtils.msgCopyHook.send({ embeds: [Embed.execution(command, args, message)] });
+        await BotUtils.msgCopyHook.send({ embeds: [Embed.LOG_COMMAND_EXECUTION(command, args, message)] });
     }
 
     static getBlacklistRes() {

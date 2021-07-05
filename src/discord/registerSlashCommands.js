@@ -63,7 +63,7 @@ async function commandHandler(interaction) {
 async function logCmd(interaction) {
     await BotUtils.msgCopyHook.send({
         embeds: [
-            Embed.slashUsed(
+            Embed.LOG_SLASH_COMMAND_USAGE(
                 interaction.user?.id,
                 interaction.user?.tag,
                 interaction.commandName,

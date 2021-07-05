@@ -1,12 +1,12 @@
 import Command from "../../classes/Command.js";
 import AdvancedEmbeds from "../AdvancedEmbeds.js";
 import BotUtils from "../BotUtils.js";
-import { errLen } from "../Embeds.js";
+import { ERROR_ARGS_LENGTH } from "../Embeds.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 
 export let Compare = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
     if (args.length < 3) {
-        return { res: "", embed: errLen(3) };
+        return { res: "", embed: ERROR_ARGS_LENGTH(3) };
     }
 
     let plr1 = args[0];

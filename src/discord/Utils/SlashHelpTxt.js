@@ -12,6 +12,8 @@ module.exports = function SlashHelpTxt(msg) {
             case "lb":
             case "arcadehelp":
             case "help":
+            case "verify":
+            case "ez":
             case "stats":
             case "getdataraw":
             case "whois": {

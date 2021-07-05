@@ -1,7 +1,7 @@
 import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
-import { Whois as embedGen } from "../Embeds.js";
+import { INFO_WHOIS as embedGen } from "../Embeds.js";
 
 export let WhoIS = new Command("whois", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];

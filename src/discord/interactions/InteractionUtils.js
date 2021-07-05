@@ -3,7 +3,7 @@ const helpText = require("../HelpText");
 const BotUtils = require("../BotUtils");
 const Account = require("../../classes/account");
 const AccountResolver = require("./Utils/AccountResolver");
-const { help } = require("../Embeds");
+const { FULL_HELP: help } = require("../Embeds");
 
 module.exports = class InteractionUtils {
     /**

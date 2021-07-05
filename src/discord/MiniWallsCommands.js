@@ -13,11 +13,11 @@ async function execute(msg, senderID) {
     if (msg.content.startsWith(".")) {
         if (Runtime.fromJSON().dbERROR) {
             logger.warn("Someone tried to run a command while the database is corrupted!");
-            return { res: "", embed: embeds.dbded };
+            return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
         }
         if (Runtime.fromJSON().apiDown) {
             logger.warn("Someone tried to run a command while the API is down!");
-            return { res: "", embed: embeds.apiDed };
+            return { res: "", embed: embeds.ERROR_API_DOWN };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);

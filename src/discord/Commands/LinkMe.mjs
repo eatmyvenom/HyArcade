@@ -8,7 +8,7 @@ import { addAccounts } from "../../listUtils.js";
 export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
     if (player == undefined) {
-        let embed = Embeds.errIptIgn;
+        let embed = Embeds.ERROR_INPUT_IGN;
         return { res: "", embed: embed };
     }
     let acclist = await utils.readJSON("./accounts.json");
@@ -19,7 +19,7 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
     if (acc == undefined) {
         let uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
-            let noexistEmbed = Embeds.errIgnNull;
+            let noexistEmbed = Embeds.ERROR_IGN_UNDEFINED;
 
             return { res: "", embed: noexistEmbed };
         }
@@ -50,20 +50,20 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         let disclist = await utils.readJSON("./disclist.json");
         // make sure player isnt linked
         if (disclist[discord]) {
-            let embed = Embeds.errPlayerLinked;
+            let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;
             return { res: "", embed: embed };
             // make sure user isnt linked
         } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
-            let embed = Embeds.errAccLinked;
+            let embed = Embeds.ERROR_ACCOUNT_PREVIOUSLY_LINKED;
             return { res: "", embed: embed };
         }
 
         disclist[discord] = uuid;
         await utils.writeJSON("./disclist.json", disclist);
-        let embed = Embeds.linkSuccess;
+        let embed = Embeds.INFO_LINK_SUCCESS;
         return { res: "", embed: embed };
     } else {
-        let embed = Embeds.errHypixelMismatch;
+        let embed = Embeds.ERROR_LINK_HYPIXEL_MISMATCH;
         return { res: "", embed: embed };
     }
 });

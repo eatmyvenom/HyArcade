@@ -8,15 +8,15 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     logger.out("Out of database transaction occuring!");
     let category = "others";
     await BotUtils.logHook.send(`Adding accounts ${args}`);
-    let embed = Embeds.waiting;
+    let embed = Embeds.WARN_WAITING;
     if (args[0] == "") {
-        return { res: "", embed: Embeds.errIgnNull };
+        return { res: "", embed: Embeds.ERROR_IGN_UNDEFINED };
     }
 
     let tmpMsg = await rawMsg.channel.send("", { embed: embed });
     let res = await addAccounts(category, args);
     res = "```\n" + res + "\n```";
-    let embed2 = Embeds.accsAdded(res);
+    let embed2 = Embeds.INFO_ACCOUNTS_ADDED(res);
     await tmpMsg.delete();
     return { res: "", embed: embed2 };
 });

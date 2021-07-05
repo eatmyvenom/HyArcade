@@ -9,7 +9,7 @@ const BotUtils = require("./BotUtils");
 const Account = require("../classes/account");
 const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
-const { errHypixelMismatch, errIgnNull, linkSuccess, ERROR_UNKNOWN } = require("./Embeds");
+const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_UNKNOWN } = require("./Embeds");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const { Message } = require("discord.js");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
@@ -69,18 +69,18 @@ async function miniWallsVerify(msg) {
     let uuid = await mojangRequest.getUUID(ign);
     if (uuid == undefined) {
         logger.warn("Someone tried to verify as an account that doesn't exist!");
-        await msg.channel.send({ embeds: [errIgnNull] });
+        await msg.channel.send({ embeds: [ERROR_IGN_UNDEFINED] });
         return;
     }
 
     if (Runtime.fromJSON().apiDown) {
         logger.warn("Someone tried to verify while API is down!");
-        return { res: "", embed: embeds.apiDed };
+        return { res: "", embed: embeds.ERROR_API_DOWN };
     }
 
     let acc = new Account(ign, 0, uuid);
     await acc.updateData();
-    let dbAcc = BotUtils.resolveAccount(uuid, msg, false);
+    let dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
     if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
         logger.warn("Hacker tried to verify!");
         return;
@@ -96,7 +96,7 @@ async function miniWallsVerify(msg) {
         await msg.member.setNickname(acc.name);
         await msg.channel.send({ embeds: [AdvancedEmbeds.playerLink(acc.name, msg.author)] });
     } else {
-        await msg.channel.send({ embeds: [errHypixelMismatch] });
+        await msg.channel.send({ embeds: [ERROR_LINK_HYPIXEL_MISMATCH] });
     }
 }
 

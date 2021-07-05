@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { errNoPlayer } = require("../Embeds");
+const { ERROR_NEED_PLAYER: errNoPlayer } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
 function formatR(n) {

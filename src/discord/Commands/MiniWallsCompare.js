@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { errLen } = require("../Embeds");
+const { ERROR_ARGS_LENGTH } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
 function formatR(n) {
@@ -38,7 +38,7 @@ function lineR(stat1, stat2, name) {
 
 module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
     if (args.length < 1) {
-        return { res: "", embed: errLen(1) };
+        return { res: "", embed: ERROR_ARGS_LENGTH(1) };
     }
 
     let plr1 = args[0];

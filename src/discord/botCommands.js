@@ -20,10 +20,10 @@ const EZ = require("./Commands/EZ");
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
         if (Runtime.fromJSON().dbERROR) {
-            return { res: "", embed: embeds.dbded };
+            return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
         }
         if (Runtime.fromJSON().apiDown) {
-            return { res: "", embed: embeds.apiDed };
+            return { res: "", embed: embeds.ERROR_API_DOWN };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
@@ -49,12 +49,6 @@ async function checkCommands(rawMsg, command, args, author) {
         case "stats":
         case "s":
             return await statsCommand.execute(args, author, rawMsg);
-            break;
-
-        case "ustats":
-        case "unlinkedstats":
-        case "us":
-            return await ustatsCmd.execute(args, author, rawMsg);
             break;
 
         case "newacc":
@@ -99,7 +93,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "getdata":
         case "rawdata":
         case "dataraw": {
-            return { res: "", embed: embeds.useSlash("getdataraw", "getdataraw") };
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw") };
             break;
         }
 
@@ -109,7 +103,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "counts":
         case "amounts":
         case "gamecounts": {
-            return { res: "", embed: embeds.useSlash("gamecounts", "gamecounts") };
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts") };
             break;
         }
 
@@ -124,7 +118,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return { res: "", embed: embeds.useSlash("help", "arcadehelp") };
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("help", "arcadehelp") };
             break;
         }
 
@@ -148,13 +142,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "names":
         case "namehist":
         case "namehistory": {
-            return { res: "", embed: embeds.useSlash("namehistory", "namehistory") };
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("namehistory", "namehistory") };
         }
 
         case "whois":
         case "whoam":
         case "whos": {
-            return { res: "", embed: embeds.useSlash("whois", "whois") };
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("whois", "whois") };
         }
 
         case "info":
