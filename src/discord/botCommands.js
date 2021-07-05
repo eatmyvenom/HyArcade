@@ -7,7 +7,6 @@ let newAccCmd = require("./Commands/NewAcc");
 let lbCmd = require("./Commands/Leaderboard");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
-let ustatsCmd = require("./Commands/UnlinkedStats");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
 let MKinvCmd = require("./Commands/MakeInviteEmbed");
