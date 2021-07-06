@@ -48,19 +48,19 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "stats":
         case "s":
-            return await statsCommand.execute(args, author, rawMsg);
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("s", "stats") };
             break;
 
         case "newacc":
         case "addacc":
-            return await newAccCmd.execute(args, author, rawMsg);
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("addacc", "addaccount") };
             break;
 
         case "lb":
         case "lead":
         case "leaderboard":
         case "leadb": {
-            return await lbCmd.execute(args, author);
+            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("lb", "leaderboard") };
             break;
         }
 
