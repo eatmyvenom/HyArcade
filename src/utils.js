@@ -67,7 +67,7 @@ function day() {
  * @param {Object} json the json data
  */
 async function writeJSON(path, json) {
-    await BSONwriter(path, json);
+    // await BSONwriter(path, json);
     await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
     try {
         await readJSON(path);
