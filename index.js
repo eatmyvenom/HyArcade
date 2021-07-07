@@ -29,6 +29,7 @@ const Connection = require("./src/mongo/Connection");
 const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
 const { logger } = require("./src/utils");
+const BSONreader = require("./src/utils/files/BSONreader");
 const Runtime = require("./src/Runtime").fromJSON();
 
 /**
@@ -248,6 +249,11 @@ async function miniconfig() {
     await fs.writeFile("./config.min.json", JSON.stringify(conf));
 }
 
+async function logGames() {
+    let games = await BSONreader("gameCounts.bson");
+    console.log(JSON.stringify(games, null , 4))
+}
+
 /**
  * Main function in a async wrapper to use other async functions
  *
@@ -322,6 +328,10 @@ async function main() {
 
         case "gamesPlayed":
             await gamesPlayed();
+            break;
+
+        case "logGames":
+            await logGames();
             break;
 
         case "games":
