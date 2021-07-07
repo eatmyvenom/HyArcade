@@ -2,6 +2,7 @@ const Config = require("./Config");
 const cfg = Config.fromJSON();
 const fs = require("fs/promises");
 const webRequest = require("./request/webRequest");
+const BSONwriter = require("./utils/files/BSONwriter");
 
 /**
  * Halt execution for a specified amount of time
@@ -66,6 +67,7 @@ function day() {
  * @param {Object} json the json data
  */
 async function writeJSON(path, json) {
+    await BSONwriter(path, json);
     await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
     try {
         await readJSON(path);
