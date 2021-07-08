@@ -5,11 +5,12 @@ let name = argv[2];
 name = name == "bot" ? argv[argv.length - 1] : name;
 
 function daytime() {
-    return cfg.showDaytime
-        ? Date()
-              .replace(/.*20[0-9][0-9] /, "")
-              .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " "
-        : "";
+    if(cfg.showDaytime) {
+        let d = new Date();
+        return `${d.getMonth()}/${d.getDate()}-${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`
+    } else {
+        return "";
+    }
 }
 
 function print(type, string, color = "\x1b[0m") {
