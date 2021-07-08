@@ -30,11 +30,8 @@ function sleep(time) {
 
 async function main() {
     interactions = child_process.fork("index.js", ["bot", "slash"], { silent : false});
-    await sleep(4000);
     arcade = child_process.fork("index.js", ["bot"], { silent : false});
-    await sleep(4000);
     mini = child_process.fork("index.js", ["bot", "mini"], { silent : false});
-    await sleep(4000);
     mw = child_process.fork("index.js", ["bot", "mw"], { silent : false});
 
     interactions.on("exit", restartInteraction);
