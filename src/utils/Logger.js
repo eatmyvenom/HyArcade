@@ -82,6 +82,8 @@ module.exports = class Logger {
         print("DEBUG", content, "\x1b[95m");
     }
 
+    static dbg = this.debug;
+
     /**
      * Log content to stderr or a file
      *
