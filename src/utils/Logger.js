@@ -7,7 +7,7 @@ name = name == "bot" ? argv[argv.length - 1] : name;
 function daytime() {
     if(cfg.showDaytime) {
         let d = new Date();
-        return `${d.getMonth()}/${d.getDate()}-${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`
+        return `${("0" + d.getMonth()).slice(-2)}/${("0" +d.getDate()).slice(-2)}-${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}:${("00" + d.getMinutes()).slice(-3)}`
     } else {
         return "";
     }
