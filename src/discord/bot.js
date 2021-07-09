@@ -51,6 +51,7 @@ module.exports = function doBot() {
     client.on("webhookUpdate", BotEvents.webhookUpdate);
 
     if (mode == undefined || mode == "mw") {
+        logger.debug("Registering message event");
         client.on("message", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 10000);
