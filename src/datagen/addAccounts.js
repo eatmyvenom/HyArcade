@@ -70,8 +70,8 @@ module.exports = async function addAccounts(category, names) {
     }
 
     acclist.others = acclist.others.filter(a => { return a.uuid != undefined });
-    fullNewAccounts.filter(a => { a.uuid != undefined });
-    newAccs.filter(a => { a.uuid != undefined });
+    fullNewAccounts.filter(a => { return a.uuid != undefined });
+    newAccs.filter(a => { return a.uuid != undefined });
 
     await utils.writeJSON("acclist.json", acclist);
     await utils.writeJSON("accounts.json", fullNewAccounts);
