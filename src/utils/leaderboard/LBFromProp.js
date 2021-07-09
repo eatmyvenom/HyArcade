@@ -8,8 +8,8 @@ function numberify(str) {
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
     let newlist, oldlist;
     if(fileCache != undefined) {
-        newlist = fileCache[`${name}`];
-        oldlist = fileCache[`${timetype}${name}`];
+        newlist = JSON.parse(JSON.stringify(fileCache[`${name}`]));
+        oldlist = JSON.parse(JSON.stringify(fileCache[`${timetype}${name}`]));
     } else {
         if (name == "accounts") {
             newlist = await getList();
