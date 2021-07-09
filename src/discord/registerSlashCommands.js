@@ -116,10 +116,10 @@ async function registerAll(client) {
     let guilds = client.guilds;
     guilds.cache.array();
     for (let g of guilds.cache.array()) {
-        g.commands.set([]);
+        // g.commands.set([]);
     }
 
-    await client.application.commands.set(cmdarr);
+    // await client.application.commands.set(cmdarr);
 }
 
 /**

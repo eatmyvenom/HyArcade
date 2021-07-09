@@ -10,7 +10,8 @@ function numberify(n) {
 }
 
 function hackerTransformer(list) {
-    list = list.filter((a) => !BotUtils.fileCache.hackers.includes(a.uuid));
+    let hackers = await BotUtils.getFromDB("hackerlist")
+    list = list.filter((a) => !hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
     list = list.filter((a) => a.miniWalls != undefined);
     return list;

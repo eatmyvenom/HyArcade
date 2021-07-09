@@ -14,7 +14,7 @@ module.exports = class InteractionUtils {
      * @return {Account}
      */
     static async accFromUUID(uuid) {
-        let acclist = await BotUtils.fileCache.acclist;
+        let acclist = await BotUtils.getFromDB("accounts");
         let acc = acclist.find((a) => a?.uuid == uuid);
 
         if (acc == undefined) {
@@ -26,7 +26,7 @@ module.exports = class InteractionUtils {
     }
 
     static async resolveAccount(interaction, namearg = "player") {
-        return await AccountResolver(interaction, namearg, BotUtils.fileCache.acclist);
+        return await AccountResolver(interaction, namearg);
     }
 
     static helpEmbed() {

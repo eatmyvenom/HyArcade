@@ -1,4 +1,5 @@
 const listUtils = require("../../listUtils");
+const FileCache = require("../../utils/files/FileCache")
 const utils = require("../../utils");
 
 function numberify(str) {
@@ -9,14 +10,20 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-module.exports = async (req, res) => {
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {FileCache} fileCache 
+ */
+module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
     let lbprop = url.searchParams.get("path");
     let category = url.searchParams.get("category");
     let timePeriod = url.searchParams.get("time");
     if (req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
-        let accounts = await utils.readJSON("accounts.json");
+        let accounts = fileCache.accounts;
 
         if (timePeriod == undefined) {
             if (category == null) {
@@ -29,7 +36,7 @@ module.exports = async (req, res) => {
                 });
             }
         } else {
-            accounts = await listUtils.listDiffByProp("accounts", lbprop, "day", 300, category);
+            accounts = await listUtils.listDiffByProp("accounts", lbprop, "day", 300, category, fileCache);
         }
 
         accounts = accounts.slice(0, Math.min(accounts.length, 300));

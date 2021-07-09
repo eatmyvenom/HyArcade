@@ -1,12 +1,9 @@
-const { Interaction } = require("discord.js");
+const { CommandInteraction } = require("discord.js");
 const Account = require("../../../classes/account");
-const mojangRequest = require("../../../request/mojangRequest");
+const fetch = require('node-fetch');
 const logger = require("../../../utils/Logger");
+const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
-
-function stringify(str) {
-    return "" + str;
-}
 
 async function getFromHypixel(string, interaction) {
     await interaction.defer();
@@ -14,7 +11,7 @@ async function getFromHypixel(string, interaction) {
 
     let plr = string;
     let uuid;
-    if (plr.length > 17) {
+    if (plr?.length > 17) {
         uuid = plr;
     } else {
         uuid = await mojangRequest.getUUID(plr);
@@ -27,75 +24,34 @@ async function getFromHypixel(string, interaction) {
 
 /**
  *
- * @param {Interaction} interaction
+ * @param {CommandInteraction} interaction
  * @param {String} namearg
  * @param {Account[]} acclist
  * @returns {Account}
  */
-module.exports = async function resolveAccount(interaction, namearg, acclist) {
-    let acc;
-    if(BotUtils.botMode != "mini") {
-        logger.info("Attempting to resolve account from " + JSON.stringify(interaction.options));
-        let string = "undefinednullnonothingno";
-        if (interaction.options.get(namearg) != undefined) {
-            string = interaction.options.get(namearg).value;
-        }
-        let canbeSelf = string == "" || string == "undefinednullnonothingno";
-        string = stringify(string).toLowerCase();
-
-        if (string.length == 18) {
-            acc = acclist.find((a) => a?.discord == string);
-        }
-
-        if (acc == undefined && string.length > 16) {
-            acc = acclist.find((a) => a.uuid == string);
-        } else if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => a.name?.toLowerCase() == string);
-        }
-
-        if (acc == undefined && string.length <= 16) {
-            acc = acclist.find((a) => stringify(a.name).toLowerCase().startsWith(string));
-        }
-
-        if (acc == undefined && string.length == "22") {
-            acc = acclist.find((a) => a?.discord == string.slice(3, -1));
-        }
-
-        if (acc == undefined && string.length == "21") {
-            acc = acclist.find((a) => a.discord == string.slice(2, -1));
-        }
-
-        if (acc == undefined) {
-            acc = acclist.find((a) => {
-                if (a.nameHist && a.nameHist.length > 0) {
-                    for (let name of a.nameHist) {
-                        if (name.toLowerCase().startsWith(string)) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
-        }
-
-        if (acc == undefined && canbeSelf) {
-            let discid = interaction.member.user.id;
-            acc = acclist.find((a) => a?.discord == discid);
-        }
-
-        if (acc) {
-            logger.info("resolved as " + acc.name);
-        } else {
-            acc = await getFromHypixel(string, interaction);
-        }
+module.exports = async function resolveAccount(interaction, namearg = "player") {
+    let str = interaction.options?.get(namearg)?.value;
+    if(BotUtils.botMode == "mini") {
+        return await getFromHypixel(str, interaction);
+    }
+    let url = new URL("account", "http://localhost:6000")
+    let urlArgs = url.searchParams
+    if(str?.length == 32) {
+        urlArgs.set("uuid", str.toLowerCase());
+    } else if(str?.length == 36) {
+        urlArgs.set("uuid", str.toLowerCase().replace(/-/g,""));
+    } else if(str != undefined) {
+        urlArgs.set("ign", str.toLowerCase());
     } else {
-        let string = "undefinednullnonothingno";
-        if (interaction.options.get(namearg) != undefined) {
-            string = interaction.options.get(namearg).value;
-        }
-        string = stringify(string).toLowerCase();
-        acc = await getFromHypixel(string, interaction);
+        urlArgs.set("discid", interaction.user.id);
     }
 
-    return acc;
+    logger.debug(`Fetching ${url.searchParams.toString()} from database`)
+    let accdata = await fetch(url.toString());
+    if(accdata.status == 200) {
+        accdata = await accdata.json();
+        return accdata;
+    } else {
+        return await getFromHypixel(str, interaction);
+    }
 };

@@ -47,21 +47,7 @@ module.exports = class BotEvents {
         BotUtils.logHook = logHook;
         logger.info("Creating message copy hook");
         BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
-        logger.info("Initializing file cache");
-        BotUtils.fileCache.acclist = await utils.readJSON("accounts.json");
-        BotUtils.fileCache.disclist = await utils.readJSON("disclist.json");
-        BotUtils.fileCache.status = await utils.readJSON("status.json");
-        BotUtils.fileCache.updatetime = await fs.readFile("timeupdate");
-        BotUtils.fileCache.dayacclist = await utils.readJSON("accounts.day.json");
-        BotUtils.fileCache.weeklyacclist = await utils.readJSON("accounts.weekly.json");
-        BotUtils.fileCache.monthlyacclist = await utils.readJSON("accounts.monthly.json");
-        let hackers = await fs.readFile("data/hackerlist");
-        hackers = hackers.toString().split("\n");
 
-        BotUtils.fileCache.hackers = hackers;
-        let ezmsgs = await fs.readFile("data/ez");
-        ezmsgs = ezmsgs.toString().split("\n");
-        BotUtils.fileCache.ezmsgs = ezmsgs;
         logger.info("Selecting mode");
         if (mode == "role") {
             await roleHandler(BotUtils.client);
@@ -99,49 +85,6 @@ module.exports = class BotEvents {
         runtime[BotUtils.botMode + "HeartBeat"] = Date.now();
         await runtime.save();
         logger.info("Heart beat - I'm alive!");
-    }
-
-    static async dataRefresh() {
-        logger.debug("Refreshing file cache...");
-        let run = Runtime.fromJSON();
-        let error = false;
-        let dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs;
-        try {
-            dayacclist = await utils.readJSON("accounts.day.json");
-            weeklyacclist = await utils.readJSON("accounts.weekly.json");
-            monthlyacclist = await utils.readJSON("accounts.monthly.json");
-            acclist = await utils.readJSON("accounts.json");
-            disclist = await utils.readJSON("disclist.json");
-            status = await utils.readJSON("status.json");
-            updatetime = await fs.readFile("timeupdate");
-            hackers = await fs.readFile("data/hackerlist");
-            hackers = hackers.toString().split("\n");
-            ezmsgs = await fs.readFile("data/ez");
-            ezmsgs = ezmsgs.toString().split("\n");
-        } catch (e) {
-            error = true;
-            run.dbERROR = true;
-            await run.save();
-            logger.err("Database broken please fix me");
-            await BotUtils.errHook.send("Database broken please fix me");
-        }
-
-        BotUtils.fileCache.dayacclist = dayacclist;
-        BotUtils.fileCache.weeklyacclist = weeklyacclist;
-        BotUtils.fileCache.monthlyacclist = monthlyacclist;
-        BotUtils.fileCache.acclist = acclist;
-        BotUtils.fileCache.disclist = disclist;
-        BotUtils.fileCache.status = status;
-        BotUtils.fileCache.updatetime = updatetime;
-        BotUtils.fileCache.hackers = hackers;
-        BotUtils.fileCache.ezmsgs = ezmsgs;
-
-        if (!error && run.dbERROR) {
-            run.dbERROR = false;
-            await run.save();
-            logger.log("Database restored");
-            await BotUtils.logHook.send("Database restored");
-        }
     }
 
     static async warn(info) {

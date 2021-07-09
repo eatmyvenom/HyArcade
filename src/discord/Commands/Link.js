@@ -47,7 +47,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
 
     uuid = acc.uuid;
 
-    let disclist = BotUtils.fileCache.disclist;
+    let disclist = await BotUtils.getFromDB(disclist);
     if (disclist[discord]) {
         let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;
         return { res: "", embed: embed };
@@ -58,6 +58,7 @@ module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) 
 
     disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
+    disclist = null;
     let embed = Embeds.INFO_LINK_SUCCESS;
     return { res: "", embed: embed };
 });

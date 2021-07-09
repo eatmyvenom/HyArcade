@@ -4,8 +4,9 @@ const webhook = require("../events/webhook");
 const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
+const fetch = require("node-fetch");
+const Logger = require("../utils/Logger");
 module.exports = class BotUtils {
-    static fileCache = {};
     static isBotInstance = false;
     static logHook;
     static errHook;
@@ -18,9 +19,20 @@ module.exports = class BotUtils {
             string,
             rawMessage,
             canbeSelf,
-            BotUtils.fileCache.acclist,
-            BotUtils.fileCache.disclist
+            await this.getFromDB("accounts"),
+            await this.getFromDB("disclist")
         );
+    }
+
+    static async getFromDB(file) {
+        let fileData;
+        let url = new URL("db", "http://localhost:6000");
+        let path = `${file}`;
+        url.searchParams.set("path", path);
+        Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
+    
+        fileData = await (await fetch(url)).json();
+        return fileData;
     }
 
     static getWebhookObj(embed) {
@@ -48,7 +60,6 @@ module.exports = class BotUtils {
         let embed = await AdvancedEmbeds.getStats(
             acc,
             game,
-            await BotUtils.fileCache.updatetime,
             BotUtils.client.user.avatarURL(),
             BotUtils.botMode
         );

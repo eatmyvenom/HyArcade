@@ -49,7 +49,7 @@ async function statsHandler(accUUID, game) {
 }
 
 async function ezHandler() {
-    let msgs = await BotUtils.fileCache.ezmsgs;
+    let msgs = await BotUtils.getFromDB("ezmsgs");
     let msg = msgs[Math.floor(Math.random() * msgs.length)];
     let buttons = await ButtonGenerator.getEZ();
     return new ButtonResponse(msg, undefined, buttons);

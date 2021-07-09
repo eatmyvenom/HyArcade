@@ -58,8 +58,9 @@ function rcb(n, o) {
     return n;
 }
 
-function hackerTransformer(list) {
-    list = list.filter((a) => !BotUtils.fileCache.hackers.includes(a.uuid));
+async function hackerTransformer(list) {
+    let hackers = await BotUtils.getFromDB("hackerlist");
+    list = list.filter((a) => !hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
     list = list.filter((a) => a.miniWalls != undefined);
     return list;
@@ -71,8 +72,8 @@ function top150Transformer(list) {
     return list;
 }
 
-function ratioTransformer(list) {
-    list = hackerTransformer(list);
+async function ratioTransformer(list) {
+    list = await hackerTransformer(list);
     list = top150Transformer(list);
     return list;
 }
@@ -492,13 +493,8 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
         }
     }
 
-    let updatetime = BotUtils.fileCache.updatetime;
-    let date = new Date(updatetime.toString());
-
     let finalRes = res
         .setAuthor(gameName + " Leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg")
-        .setFooter("Data generated at")
-        .setTimestamp(date);
 
     logger.out("MW Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 

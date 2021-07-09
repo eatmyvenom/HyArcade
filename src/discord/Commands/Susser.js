@@ -7,7 +7,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     let hax = 0;
     let reasons = [];
     let plr = args[0];
-    let haxlist = BotUtils.fileCache.hackers;
+    let haxlist = await BotUtils.getFromDB("hackerlist");
     let acc;
     if (interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);

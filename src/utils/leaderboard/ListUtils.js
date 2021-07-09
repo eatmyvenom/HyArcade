@@ -2,6 +2,7 @@ const BotUtils = require("../../discord/BotUtils");
 const utils = require("../../utils");
 const logger = require("../Logger");
 const config = require("../../Config").fromJSON();
+const fetch = require('node-fetch');
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
@@ -13,19 +14,12 @@ function formatNum(number) {
 
 exports.getList = async function getList(type = "") {
     let list;
-    if (process.argv[2] != "bot") {
-        if (type == "") {
-            list = await utils.readJSON("accounts.json");
-        } else {
-            list = await utils.readJSON(`accounts.${type}.json`);
-        }
-    } else {
-        logger.debug("Getting account data from file cache instead of reading.");
+    let url = new URL("db", "http://localhost:6000");
+    let path = `${type}accounts`;
+    url.searchParams.set("path", path);
+    logger.debug(`Fetching ${url.searchParams.toString()} from database`)
 
-        // Use json to make a full depth copy of the list in its current state
-        let copylist = JSON.parse(JSON.stringify(BotUtils.fileCache[type + "acclist"]));
-        list = copylist;
-    }
+    list = await (await fetch(url)).json();
     return list;
 };
 

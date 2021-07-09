@@ -1,12 +1,16 @@
 const http = require("http");
 const logger = require("../utils").logger;
 const URL = require("url").URL;
+const FileCache = require("../utils/files/FileCache");
 const urlModules = {
     account: require("./Res/account"),
     acc: require("./Res/account"),
     leaderboard: require("./Res/leaderboard"),
     lb: require("./Res/leaderboard"),
+    db: require("./Res/Database")
 };
+
+let fileCache;
 
 let server = http.createServer(async (request, response) => {
     let url = new URL(request.url, `https://${request.headers.host}`);
@@ -19,7 +23,7 @@ let server = http.createServer(async (request, response) => {
     } else {
         try {
             logger.out("Getting data for " + url);
-            await mod(request, response);
+            await mod(request, response, fileCache);
         } catch (e) {
             logger.err(e);
             response.statusCode = 404;
@@ -27,5 +31,9 @@ let server = http.createServer(async (request, response) => {
         }
     }
 });
+
+server.on("listening", ()=> {
+    fileCache = new FileCache("data/")
+})
 
 module.exports = server;

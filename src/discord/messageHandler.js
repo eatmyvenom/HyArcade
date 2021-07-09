@@ -81,13 +81,14 @@ async function miniWallsVerify(msg) {
     let acc = new Account(ign, 0, uuid);
     await acc.updateData();
     let dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
-    if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || BotUtils.fileCache.hackers.includes(uuid)) {
+    let hackers = await BotUtils.getFromDB("hackerlist");
+    let disclist = await BotUtils.getFromDB("disclist");
+    if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
         logger.warn("Hacker tried to verify!");
         return;
     }
     if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
         await addAccounts("others", [uuid]);
-        let disclist = BotUtils.fileCache.disclist;
         disclist[id] = uuid;
         await utils.writeJSON("./disclist.json", disclist);
         logger.out(`${tag} was autoverified in miniwalls as ${ign}`);

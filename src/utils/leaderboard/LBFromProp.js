@@ -5,14 +5,19 @@ function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
-module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category) {
+module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
     let newlist, oldlist;
-    if (name == "accounts") {
-        newlist = await getList();
-        oldlist = await getList(timetype);
+    if(fileCache != undefined) {
+        newlist = fileCache[`${name}`];
+        oldlist = fileCache[`${timetype}${name}`];
     } else {
-        newlist = await utils.readJSON(`${name}.json`);
-        oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+        if (name == "accounts") {
+            newlist = await getList();
+            oldlist = await getList(timetype);
+        } else {
+            newlist = await utils.readJSON(`${name}.json`);
+            oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+        }
     }
 
     // sort the list before hand

@@ -23,8 +23,8 @@ module.exports = class RoleUpdater {
     }
 
     async updateAll() {
-        let disclist = await BotUtils.fileCache.disclist;
-        let acclist = await BotUtils.fileCache.acclist;
+        let disclist = await BotUtils.getFromDB("disclist");
+        let acclist = await BotUtils.getFromDB("accounts");
         let mbrList = await this.guild.members.fetch();
         for (let discid in disclist) {
             if (mbrList.has(discid)) {

@@ -486,13 +486,8 @@ async function hander(args, rawMsg, interaction) {
         }
     }
 
-    let updatetime = BotUtils.fileCache.updatetime;
-    let date = new Date(updatetime.toString());
-
     let finalRes = res
         .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL())
-        .setFooter("Data generated at", BotUtils.client.user.avatarURL())
-        .setTimestamp(date);
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 

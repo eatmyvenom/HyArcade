@@ -20,7 +20,7 @@ module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) 
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
     }
-    let stslist = BotUtils.fileCache.status;
+    let stslist = await BotUtils.getFromDB("status");
     let sts = stslist[acc.uuid];
     let embed;
     if (sts != undefined && sts.online) {
