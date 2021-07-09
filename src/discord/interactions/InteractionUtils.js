@@ -14,8 +14,11 @@ module.exports = class InteractionUtils {
      * @return {Account}
      */
     static async accFromUUID(uuid) {
-        let acclist = await BotUtils.getFromDB("accounts");
-        let acc = acclist.find((a) => a?.uuid == uuid);
+        let acc;
+        if(BotUtils.botMode != "mini") {
+            let acclist = await BotUtils.getFromDB("accounts");
+            acc = acclist.find((a) => a?.uuid == uuid);
+        }
 
         if (acc == undefined) {
             acc = new Account("", 0, "" + uuid);
