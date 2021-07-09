@@ -70,7 +70,7 @@ module.exports = class ImageGenerator {
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
         x = x - width/2;
-        this.context.rect(x - 2, y - 8 , width + 4, size + 5);
+        this.context.rect(x - 2, y - (size /2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         this.context.fillStyle = color;
@@ -86,7 +86,7 @@ module.exports = class ImageGenerator {
         let width = lWidth + mWidth + wWidth;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
-        this.context.rect((x - width / 2) - 2, y - 8 , width + 4, size + 5);
+        this.context.rect((x - width / 2) - 2, y - (size/2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         x = x - width / 3.3;
@@ -119,7 +119,7 @@ module.exports = class ImageGenerator {
         let width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
         x = x - width / 2;
         this.context.textBaseline = "middle";
-        this.context.rect(x - 2, y - 8 , width + 4, size + 5);
+        this.context.rect(x - 3, y - (size /2) , width + 4, size + 5);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false);

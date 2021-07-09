@@ -2,9 +2,6 @@ const config = require("../Config").fromJSON();
 const embeds = require("./Embeds");
 
 let linkCmd = require("./Commands/Link");
-let statsCommand = require("./Commands/Stats");
-let newAccCmd = require("./Commands/NewAcc");
-let lbCmd = require("./Commands/Leaderboard");
 let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
 let timeUpdateCmd = require("./Commands/LastUpdate");

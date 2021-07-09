@@ -9,7 +9,7 @@ function numberify(n) {
     return r;
 }
 
-function hackerTransformer(list) {
+async function hackerTransformer(list) {
     let hackers = await BotUtils.getFromDB("hackerlist")
     list = list.filter((a) => !hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
@@ -29,37 +29,42 @@ function mwComparitor(b, a) {
 }
 
 function cb(n, o) {
-    n.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
+    n.miniWallsWins = intt(n.miniWallsWins) - intt(o.miniWallsWins);
     if (n.miniWalls != undefined && o.miniWalls != undefined) {
-        n.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
-        n.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
-        n.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
-        n.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
-        n.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
+        n.miniWalls.kills = intt(n.miniWalls.kills) - intt(o.miniWalls.kills);
+        n.miniWalls.deaths = intt(n.miniWalls.deaths) - intt(o.miniWalls.deaths);
+        n.miniWalls.witherDamage = intt(n.miniWalls.witherDamage) - intt(o.miniWalls.witherDamage);
+        n.miniWalls.witherKills = intt(n.miniWalls.witherKills) - intt(o.miniWalls.witherKills);
+        n.miniWalls.finalKills = intt(n.miniWalls.finalKills) - intt(o.miniWalls.finalKills);
     }
 
     return n;
 }
 
-function int(n) {
+function intt(n) {
     return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
 export let FakeLb = new Command("fakelb", ["*"], async () => {
-    let img = new ImageGenerator(640, 400, "'myFont'");
-    await img.addBackground("resources/leaderboard1.png", -240, -290, 1280, 1000, "#00000000");
+    let img = new ImageGenerator(1900, 1035, "'myFont'");
+    await img.addBackground("resources/lb3.png", 0 , 0, 1900, 1035, "#00000000");
     
-    await img.drawNameTag("Monthly Wins", 350, 56, "#55FFFF", 12);
-    await img.drawNameTag("Mini walls", 350, 78, "#AAAAAA", 12);
+    let y = 104;
+    let dy = 44;
+    let x = 915;
+    let fontSize = 26;
+    await img.drawNameTag("Monthly Wins", x, y+=dy, "#55FFFF", fontSize);
+    await img.drawNameTag("Mini walls", x, y+=dy, "#AAAAAA", fontSize);
+    y+=10
     
-    let y = 82;
     let topTen = await LBDiffAdv(mwComparitor, 10, "monthly", cb, hackerTransformer)
     for(let i = 0; i < topTen.length; i++) {
-        img.drawLBPos(`${i + 1}`, topTen[i].rank , "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, numberify(topTen[i].miniWallsWins), 350 , y+=24, 12);
+        img.drawLBPos(`${i + 1}`, topTen[i].rank , "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, numberify(topTen[i].miniWallsWins), x , y+=dy, fontSize);
     }
 
-    await img.drawNameTag("Click to toggle!", 350, 352, "#FFAA00", 12);
-    await img.drawTimeType("m", 350, 352+24, 12);
+    y+=10;
+    await img.drawNameTag("Click to toggle!", x, y+=dy, "#FFAA00", fontSize);
+    await img.drawTimeType("m", x, y+=dy, fontSize);
 
     let attachment = img.toDiscord();
     return { res: "", img: attachment };
