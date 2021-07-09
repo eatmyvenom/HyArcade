@@ -33,7 +33,7 @@ let server = http.createServer(async (request, response) => {
 });
 
 server.on("listening", ()=> {
-    fileCache = new FileCache("data/")
+    fileCache = new FileCache("data/");
 })
 
 module.exports = server;
