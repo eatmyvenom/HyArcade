@@ -57,7 +57,7 @@ module.exports = async function addAccounts(category, names) {
             logger.warn("Refusing to add account with under 50 pg wins to gamers!");
         } else {
             newAccs.push(acc);
-            logger.out(`${name} with ${wins} pg wins added.`);
+            logger.out(`${name} with ${acc.arcadeWins} wins added.`);
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
@@ -68,6 +68,11 @@ module.exports = async function addAccounts(category, names) {
         let lilAcc = { name: acc.name, wins: acc.wins, uuid: acc.uuid };
         acclist[category].push(lilAcc);
     }
+
+    acclist.others.filter(a => { a.uuid != undefined });
+    fullNewAccounts.filter(a => { a.uuid != undefined });
+    newAccs.filter(a => { a.uuid != undefined });
+
     await utils.writeJSON("acclist.json", acclist);
     await utils.writeJSON("accounts.json", fullNewAccounts);
     await utils.writeJSON("accounts.json.part", newAccs);
