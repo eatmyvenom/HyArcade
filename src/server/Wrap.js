@@ -34,6 +34,7 @@ let server = http.createServer(async (request, response) => {
 
 server.on("listening", ()=> {
     fileCache = new FileCache("data/");
+    setInterval(fileCache.refresh, 25000);
 })
 
 module.exports = server;

@@ -21,7 +21,6 @@ module.exports = class FileCache {
     constructor(path) {
         this.path = path;
         this.refresh();
-        this._interval = setInterval(this.refresh, 25000);
     }
 
     destroy() {
@@ -59,7 +58,7 @@ module.exports = class FileCache {
         this.hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
         this.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
 
-        Logger.debug("Files updated");
+        Logger.debug("File cache updated");
     }
 
     get dayaccounts () {
