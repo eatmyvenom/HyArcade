@@ -6,16 +6,16 @@ const Runtime = require("../../Runtime");
 module.exports = class FileCache {
 
     _interval;
-    _accounts = {}
-    _dailyAccounts = {};
-    _weeklyAccounts = {};
-    _monthlyAccounts = {};
-    _acclist = {};
-    _disclist = {};
-    _status = {};
-    _updatetime = 0;
-    _hackerlist = [];
-    _ezmsgs = [];
+    accounts = {}
+    dailyAccounts = {};
+    weeklyAccounts = {};
+    monthlyAccounts = {};
+    acclist = {};
+    disclist = {};
+    status = {};
+    updatetime = 0;
+    hackerlist = [];
+    ezmsgs = [];
     path = "data/";
 
     constructor(path) {
@@ -71,16 +71,16 @@ module.exports = class FileCache {
             await BotUtils.errHook.send("Database broken please fix me");
         }
 
-        this._accounts = accs;
-        this._dailyAccounts = dayacclist;
-        this._weeklyAccounts = weeklyacclist;
-        this._monthlyAccounts = monthlyacclist;
-        this._acclist = acclist;
-        this._disclist = disclist;
-        this._status = status;
-        this._updatetime = updatetime;
-        this._hackerlist = hackers;
-        this._ezmsgs = ezmsgs;
+        this.accounts = accs;
+        this.dailyAccounts = dayacclist;
+        this.weeklyAccounts = weeklyacclist;
+        this.monthlyAccounts = monthlyacclist;
+        this.acclist = acclist;
+        this.disclist = disclist;
+        this.status = status;
+        this.updatetime = updatetime;
+        this.hackerlist = hackers;
+        this.ezmsgs = ezmsgs;
 
         Logger.debug("Files updated");
 
@@ -91,63 +91,16 @@ module.exports = class FileCache {
         }
     }
 
-    _fullCopy(object) {
-        return JSON.parse(JSON.stringify(object));
-    }
-
-    get accounts() {
-        return this._fullCopy(this._accounts);
-    }
-
-    get dailyAccounts() {
-        return this._fullCopy(this._dailyAccounts);
-    }
-
     get dayaccounts () {
         return this.dailyAccounts;
-    }
-
-    get weeklyAccounts() {
-        return this._fullCopy(this._weeklyAccounts);
     }
 
     get weeklyaccounts() {
         return this.weeklyAccounts;
     }
 
-    get monthlyAccounts() {
-        return this._fullCopy(this._monthlyAccounts);
-    }
-
     get monthlyaccounts() {
         return this.monthlyAccounts;
     }
 
-    get acclist() {
-        return this._fullCopy(this._acclist);
-    }
-
-    get disclist() {
-        return this._fullCopy(this._disclist);
-    }
-
-    get status() {
-        return this._fullCopy(this._status);
-    }
-
-    get updatetime() {
-        return this._fullCopy(this._updatetime);
-    }
-
-    get hackerlist() {
-        return this._fullCopy(this._hackerlist);
-    }
-
-    get ezmsgs() {
-        return this._fullCopy(this._ezmsgs);
-    }
-
-    set accounts(o) {
-        this._accounts = o;
-    }
 }
