@@ -155,14 +155,14 @@ module.exports = class ButtonGenerator {
 
         let row = new MessageActionRow();
         let left = new MessageButton()
-            .setCustomID(`s:${uuid}:${leftID}`)
+            .setCustomId(`s:${uuid}:${leftID}`)
             .setLabel("<< " + leftTxt)
             .setStyle("PRIMARY");
 
-        let m = new MessageButton().setCustomID(`s:${uuid}:${currentGame}`).setLabel("↻").setStyle("SECONDARY");
+        let m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`).setLabel("↻").setStyle("SECONDARY");
 
         let right = new MessageButton()
-            .setCustomID(`s:${uuid}:${rightID}`)
+            .setCustomId(`s:${uuid}:${rightID}`)
             .setLabel(rightTxt + " >>")
             .setStyle("PRIMARY");
 
@@ -172,17 +172,17 @@ module.exports = class ButtonGenerator {
 
     static async getLBButtons(currentIndex, lb, time) {
         let left = new MessageButton()
-            .setCustomID(`lb:${lb}:${time}:${currentIndex - 10}`)
+            .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
             .setLabel("<< 10")
             .setStyle("PRIMARY");
 
         let mid = new MessageButton()
-            .setCustomID(`lb:${lb}:${time}:${currentIndex}`)
+            .setCustomId(`lb:${lb}:${time}:${currentIndex}`)
             .setLabel("↻ Refresh")
             .setStyle("SECONDARY");
 
         let right = new MessageButton()
-            .setCustomID(`lb:${lb}:${time}:${currentIndex + 10}`)
+            .setCustomId(`lb:${lb}:${time}:${currentIndex + 10}`)
             .setLabel("10 >>")
             .setStyle("PRIMARY");
 
@@ -196,7 +196,7 @@ module.exports = class ButtonGenerator {
     }
 
     static async getEZ() {
-        let ez = new MessageButton().setCustomID(`ez:null`).setLabel("EZ").setStyle("SECONDARY");
+        let ez = new MessageButton().setCustomId(`ez:null`).setLabel("EZ").setStyle("SECONDARY");
 
         let row = new MessageActionRow().addComponents(ez);
 
