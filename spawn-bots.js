@@ -29,13 +29,13 @@ function sleep(time) {
 }
 
 async function main() {
-    interactions = child_process.fork("index.js", ["bot", "slash"], { silent : false});
     arcade = child_process.fork("index.js", ["bot"], { silent : false});
+    interactions = child_process.fork("index.js", ["bot", "slash"], { silent : false});
     mini = child_process.fork("index.js", ["bot", "mini"], { silent : false});
     mw = child_process.fork("index.js", ["bot", "mw"], { silent : false});
 
-    interactions.on("exit", restartInteraction);
     arcade.on("exit", restartArcade);
+    interactions.on("exit", restartInteraction);
     mini.on("exit", restartMini);
     mw.on("exit", restartMW);
 }

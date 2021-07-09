@@ -52,7 +52,7 @@ module.exports = function doBot() {
 
     if (mode == undefined || mode == "mw") {
         logger.debug("Registering message event");
-        client.on("message", messageHandler);
+        client.on("messageCreate", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 30000);
     }
