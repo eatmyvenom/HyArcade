@@ -47,48 +47,19 @@ module.exports = class FileCache {
 
     async refresh() {
         Logger.debug("Refreshing file cache...");
-        let run = Runtime.fromJSON();
-        let error = false;
-        let accs, dayacclist, weeklyacclist, monthlyacclist, acclist, disclist, status, updatetime, hackers, ezmsgs;
-        try {
-            dayacclist = await utils.readJSON("accounts.day.json");
-            weeklyacclist = await utils.readJSON("accounts.weekly.json");
-            monthlyacclist = await utils.readJSON("accounts.monthly.json");
-            accs = await utils.readJSON("accounts.json");
-            acclist = await utils.readJSON("acclist.json");
-            disclist = await utils.readJSON("disclist.json");
-            status = await utils.readJSON("status.json");
-            updatetime = await fs.readFile("timeupdate");
-            hackers = await fs.readFile("data/hackerlist");
-            hackers = hackers.toString().split("\n");
-            ezmsgs = await fs.readFile("data/ez");
-            ezmsgs = ezmsgs.toString().split("\n");
-        } catch (e) {
-            error = true;
-            run.dbERROR = true;
-            await run.save();
-            Logger.err("Database broken please fix me");
-            await BotUtils.errHook.send("Database broken please fix me");
-        }
 
-        this.accounts = accs;
-        this.dailyAccounts = dayacclist;
-        this.weeklyAccounts = weeklyacclist;
-        this.monthlyAccounts = monthlyacclist;
-        this.acclist = acclist;
-        this.disclist = disclist;
-        this.status = status;
-        this.updatetime = updatetime;
-        this.hackerlist = hackers;
-        this.ezmsgs = ezmsgs;
+        this.accounts = await utils.readJSON("accounts.json");
+        this.dailyAccounts = await utils.readJSON("accounts.day.json");
+        this.weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        this.monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        this.acclist = await utils.readJSON("acclist.json");
+        this.disclist = await utils.readJSON("disclist.json");
+        this.status = await utils.readJSON("status.json");
+        this.updatetime = await fs.readFile("timeupdate");
+        this.hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
+        this.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
 
         Logger.debug("Files updated");
-
-        if (!error && run.dbERROR) {
-            run.dbERROR = false;
-            await run.save();
-            Logger.log("Database restored");
-        }
     }
 
     get dayaccounts () {
