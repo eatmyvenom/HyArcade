@@ -269,7 +269,11 @@ async function main() {
         }
     }
 
-    await writePID();
+    if (args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {
+    } else {
+        await writePID();
+    }
+
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     logger.debug(`Args are [${args}] - executing`);
