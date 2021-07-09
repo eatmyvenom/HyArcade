@@ -69,6 +69,11 @@ async function checkCommands(rawMsg, command, args, author) {
             break;
         }
 
+        case "flb": {
+            const { FakeLb } = await import("./Commands/FakeLb.mjs")
+            return await FakeLb.execute(args, author, rawMsg);
+        }
+
         case "info":
         case "botinfo": {
             return await InfoCmd.execute(args, author);

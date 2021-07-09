@@ -11,7 +11,8 @@ const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
 const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_UNKNOWN } = require("./Embeds");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
-const { Message } = require("discord.js");
+const Discord = require("discord.js");
+const Message = Discord.Message;
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
@@ -47,6 +48,7 @@ async function sendAsHook(hook, cmdResponse) {
         if (cmdResponse.img != undefined) {
             obj.files = [cmdResponse.img];
         }
+        logger.debug("Sending response via webhook")
         await hook.send(obj);
         return true;
     } catch (e) {
@@ -118,6 +120,7 @@ async function attemptSend(msg, cmdResponse, opts) {
             if (cmdResponse.img != undefined) {
                 opts.files = [cmdResponse.img];
             }
+            logger.debug("Sending message via discord bot")
             await msg.channel.send(opts);
         }
     }
@@ -231,6 +234,7 @@ module.exports = async function messageHandler(msg) {
     }
 
     let cmdResponse = await getCmdRes(msg);
+
     let isValidResponse =
         cmdResponse != undefined &&
         cmdResponse.res != undefined &&
