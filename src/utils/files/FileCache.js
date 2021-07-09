@@ -20,7 +20,8 @@ module.exports = class FileCache {
 
     constructor(path) {
         this.path = path;
-        this.refresh();
+        FileCache.refresh(this);
+        this._interval = setInterval(FileCache.refresh, 25000, this);
     }
 
     destroy() {
@@ -44,19 +45,19 @@ module.exports = class FileCache {
         Logger.debug("Files saved...");
     }
 
-    async refresh() {
+    static async refresh(fileCache) {
         Logger.debug("Refreshing file cache...");
 
-        this.accounts = await utils.readJSON("accounts.json");
-        this.dailyAccounts = await utils.readJSON("accounts.day.json");
-        this.weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-        this.monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        this.acclist = await utils.readJSON("acclist.json");
-        this.disclist = await utils.readJSON("disclist.json");
-        this.status = await utils.readJSON("status.json");
-        this.updatetime = await fs.readFile("timeupdate");
-        this.hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
-        this.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
+        fileCache.accounts = await utils.readJSON("accounts.json");
+        fileCache.dailyAccounts = await utils.readJSON("accounts.day.json");
+        fileCache.weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        fileCache.monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        fileCache.acclist = await utils.readJSON("acclist.json");
+        fileCache.disclist = await utils.readJSON("disclist.json");
+        fileCache.status = await utils.readJSON("status.json");
+        fileCache.updatetime = await fs.readFile("timeupdate");
+        fileCache.hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
+        fileCache.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
 
         Logger.debug("File cache updated");
     }
