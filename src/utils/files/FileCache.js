@@ -17,6 +17,7 @@ module.exports = class FileCache {
     _hackerlist = [];
     _ezmsgs = [];
     path = "data/";
+
     constructor(path) {
         this.path = path;
         this.refresh();
@@ -80,6 +81,8 @@ module.exports = class FileCache {
         this._updatetime = updatetime;
         this._hackerlist = hackers;
         this._ezmsgs = ezmsgs;
+
+        Logger.debug("Files updated");
 
         if (!error && run.dbERROR) {
             run.dbERROR = false;
