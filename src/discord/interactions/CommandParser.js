@@ -18,6 +18,7 @@ const LastUpdate = require("../Commands/LastUpdate");
 const Leaderboard = require("../Commands/Leaderboard");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
+const Ping = require("../Commands/Ping");
 
 let Commands = null;
 function getArg(i, a) {
@@ -201,6 +202,10 @@ module.exports = async (interaction) => {
 
             if (interaction.options.get("lastupdate") != undefined) {
                 return await LastUpdate.execute([], authorID, null, interaction);
+            }
+
+            if(interaction.options.get("ping") != undefined) {
+                return await Ping.execute([], authorID, null, interaction);
             }
         }
     }

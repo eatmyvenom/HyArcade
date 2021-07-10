@@ -8,6 +8,7 @@ const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
+const Ping = require("./Commands/Ping");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(".")) {
@@ -77,6 +78,10 @@ async function checkCommands(rawMsg, command, args, author) {
         case "info":
         case "botinfo": {
             return await InfoCmd.execute(args, author);
+        }
+
+        case "ping": {
+            return await Ping.execute(args, author);
         }
 
         default: {

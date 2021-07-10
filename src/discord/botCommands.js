@@ -13,6 +13,7 @@ let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
 const EZ = require("./Commands/EZ");
+const Ping = require("./Commands/Ping");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -126,6 +127,10 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "mkhook": {
             return await MKhookCmd.execute(args, author);
+        }
+
+        case "ping": {
+            return await Ping.execute(args, author);
         }
 
         case "ez": {

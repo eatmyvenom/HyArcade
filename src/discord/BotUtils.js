@@ -1,4 +1,4 @@
-const { MessageEmbed, WebhookClient } = require("discord.js");
+const { MessageEmbed, WebhookClient, Client } = require("discord.js");
 const cfg = require("../Config").fromJSON();
 const webhook = require("../events/webhook");
 const Embed = require("./Embeds");
@@ -10,6 +10,10 @@ module.exports = class BotUtils {
     static isBotInstance = false;
     static logHook;
     static errHook;
+
+    /**
+     * @type {Client}
+     */
     static client;
     static msgCopyHook;
     static botMode;

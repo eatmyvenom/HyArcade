@@ -27,5 +27,11 @@ module.exports = {
             description: "ez",
             options: [],
         },
+        {
+            type: 1,
+            name: "ping",
+            description: "Get the bots ping and status",
+            options: [], 
+        }
     ],
 };
