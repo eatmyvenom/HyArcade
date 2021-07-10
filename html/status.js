@@ -4,6 +4,7 @@ async function load() {
     let main = document.querySelector("main");
     let mw = status.mw ? "Online" : "Inactive";
     let arc = status.arc ? "Online" : "Inactive";
+    let marc = status.marc ? "Online" : "Inactive";
     let interact = status.slash ? "Online" : "Inactive";
     let db = status.database ? "Operational" : "Corrupted";
     main.innerHTML = `Hypixel status : ${status.Hypixel}\n`;
@@ -12,6 +13,7 @@ async function load() {
     main.innerHTML += `Mojang auth servers: ${status.MAuth}\n`;
     main.innerHTML += `Mini walls bot : ${mw}\n`;
     main.innerHTML += `Arcade bot : ${arc}\n`;
+    main.innerHTML += `Arcade bot - Micro : ${marc}\n`;
     main.innerHTML += `Interactions : ${interact}\n`;
     main.innerHTML += `Database : ${db}`;
 }
