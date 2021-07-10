@@ -25,7 +25,7 @@ module.exports = async (req, res, fileCache) => {
         }
 
         if (acc == undefined && ign != undefined) {
-            acc = acclist.find((a) => {
+            acc = accounts.find((a) => {
                 if (a.nameHist && a.nameHist.length > 0) {
                     for (let name of a.nameHist) {
                         if (name.toLowerCase().startsWith(ign)) {
@@ -35,6 +35,12 @@ module.exports = async (req, res, fileCache) => {
                 }
                 return false;
             });
+        }
+
+        if(acc == undefined) {
+            res.statusCode = 404;
+            res.end(JSON.stringify({ "error": "ACC_UNDEFINED" }));
+            return;
         }
 
         res.write(JSON.stringify(acc));
