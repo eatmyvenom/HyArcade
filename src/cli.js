@@ -201,6 +201,7 @@ async function getServerStatus() {
     let runtime = Runtime.fromJSON();
     let mwBot = runtime.mwHeartBeat;
     let arcadeBot = runtime.undefinedHeartBeat;
+    let marcadeBot = runtime.miniHeartBeat;
     let interactions = runtime.slashHeartBeat;
     let database = runtime.dbERROR;
 
@@ -211,6 +212,7 @@ async function getServerStatus() {
         MAuth: mojangStatus[3]["authserver.mojang.com"],
         mw: Date.now() - mwBot < 900000,
         arc: Date.now() - arcadeBot < 900000,
+        marc: Date.now() - marcadeBot < 900000,
         slash: Date.now() - interactions < 900000,
         database: !database,
     };
