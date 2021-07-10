@@ -2,6 +2,7 @@ const utils = require("../../utils");
 const Logger = require("../Logger");
 const fs = require('fs-extra');
 const Runtime = require("../../Runtime");
+const BSONreader = require("./BSONreader");
 
 module.exports = class FileCache {
 
@@ -48,11 +49,11 @@ module.exports = class FileCache {
     static async refresh(fileCache) {
         Logger.debug("Refreshing file cache...");
 
-        fileCache.accounts = await utils.readJSON("accounts.json");
-        fileCache.dailyAccounts = await utils.readJSON("accounts.day.json");
+        fileCache.accounts = await BSONreader("accounts.json");
+        fileCache.dailyAccounts = await BSONreader("accounts.day.json");
         fileCache.weeklyAccounts = await utils.readJSON("accounts.weekly.json");
         fileCache.monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        fileCache.acclist = await utils.readJSON("acclist.json");
+        fileCache.acclist = await BSONreader("acclist.json");
         fileCache.disclist = await utils.readJSON("disclist.json");
         fileCache.status = await utils.readJSON("status.json");
         fileCache.updatetime = await fs.readFile("timeupdate");
