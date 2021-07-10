@@ -49,6 +49,9 @@ module.exports = function doBot() {
     client.on("guildCreate", BotEvents.guildCreate);
     client.on("error", BotEvents.error);
     client.on("webhookUpdate", BotEvents.webhookUpdate);
+    client.on("guildUnavailable", BotEvents.guildUnavailable);
+    client.on("invalidRequestWarning", BotEvents.invalidRequestWarning);
+    client.on("debug", BotEvents.debug);
 
     if (mode == undefined || mode == "mw") {
         logger.debug("Registering message event");

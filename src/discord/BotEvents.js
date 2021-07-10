@@ -87,12 +87,12 @@ module.exports = class BotEvents {
         logger.info("Heart beat - I'm alive!");
     }
 
-    static async warn(info) {
+    static warn(info) {
         logger.warn(`Discord sent a warning:`);
         logger.warn(info);
     }
 
-    static async invalidated() {
+    static invalidated() {
         logger.error("Discord session invalidated!");
     }
 
@@ -100,7 +100,7 @@ module.exports = class BotEvents {
      * 
      * @param {Guild} guild 
      */
-    static async guildCreate(guild) {
+    static guildCreate(guild) {
         logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
         logger.debug(`Guild owner: ${guild.ownerID}`);
         logger.debug(`Guild ID: ${guild.id}`);
@@ -110,7 +110,7 @@ module.exports = class BotEvents {
      * 
      * @param {Error} error 
      */
-    static async error(error) {
+    static error(error) {
         logger.err("Discord encountered an error");
         logger.err(`${error.name} : ${error.message}`);
         logger.err(`Current stack:\n${error.stack}`);
@@ -120,7 +120,27 @@ module.exports = class BotEvents {
      * 
      * @param {TextChannel} channel 
      */
-    static async webhookUpdate(channel) {
+    static webhookUpdate(channel) {
         logger.debug(`${channel.guild.name}#${channel.name} had a webhook change`);
+    }
+
+    /**
+     * 
+     * @param {Guild} guild 
+     */
+    static guildUnavailable(guild) {
+        logger.warn(`Guild ${guild.name} has become unavailable!`)
+    }
+
+    /**
+     * 
+     * @param {import("discord.js").InvalidRequestWarningData} warning 
+     */
+    static invalidRequestWarning(warning) {
+        logger.warn(`An invalid request was made, this is number ${warning.count}!`)
+    }
+
+    static debug(info) {
+        logger.debug(info);
     }
 };
