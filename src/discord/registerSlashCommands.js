@@ -68,7 +68,7 @@ async function logCmd(interaction) {
                 interaction.user?.tag,
                 interaction.commandName,
                 interaction.guild?.name,
-                interaction.channelID,
+                interaction.channel?.id,
                 interaction.options
             ),
         ],
