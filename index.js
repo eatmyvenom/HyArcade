@@ -269,7 +269,7 @@ async function main() {
         }
     }
 
-    if (args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {
+    if (args[2] == "bot" || args[2] == "serveDB") {
     } else {
         await writePID();
     }
@@ -474,8 +474,10 @@ async function main() {
         }
     }
 
-    // await database.close();
-    await rmPID();
+    if (args[2] == "bot" || args[2] == "serveDB") {
+    } else {
+        await rmPID();
+    }
 }
 
 main();
