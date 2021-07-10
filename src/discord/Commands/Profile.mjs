@@ -61,7 +61,11 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
     await img.addBackground("resources/arc.png");
     await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 96, "04");
 
-    img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
+    if(acc.name?.toLowerCase() == "v3xm") {
+        await img.addImage("https://i.eatmyvenom.me/v3xm.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
+    } else {
+        img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
+    }
 
     let y = 112;
 

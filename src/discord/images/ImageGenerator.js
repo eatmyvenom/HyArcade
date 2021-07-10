@@ -40,7 +40,7 @@ module.exports = class ImageGenerator {
         this.context.fill();
     }
 
-    async addImage(path, x, y, bgIterations = 48, bgStrenth = "11") {
+    async addImage(path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
         let img = await Canvas.loadImage(path);
         for (let i = bgIterations; i >= 4; i--) {
             this.context.beginPath();
@@ -48,7 +48,9 @@ module.exports = class ImageGenerator {
             this.context.fillStyle = `#222222${bgStrenth}`;
             this.context.fill();
         }
-        this.context.drawImage(img, x, y);
+        width = width == undefined ? img.width : width;
+        height = height == undefined ? img.height : height;
+        this.context.drawImage(img, x, y, width, height);
     }
 
     writeText(txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
