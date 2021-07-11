@@ -1056,6 +1056,7 @@ function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
     for (let i = 0; i < oldAccounts.length; i++) {
         let oldAcc = oldAccounts[i];
         let acc = accounts.find((a) => oldAcc.uuid == a.uuid);
+        if(acc == undefined) continue;
         timedAccounts.push(subtracter(acc, oldAcc));
     }
 
