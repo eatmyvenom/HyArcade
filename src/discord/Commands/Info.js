@@ -10,7 +10,7 @@ module.exports = new Command("info", ["*"], async (args) => {
         .addField("Website", "[Link](https://hyarcade.xyz)", false)
         .addField("Github", "[Link](https://github.com/eatmyvenom/party-games-site)", true)
         .addField("Bot invite link", "[Link](https://hyarcade.xyz/botinvite.html)", true)
-        .addField("Support server", "[Invite](https://discord.gg/W4fkQJsxMd)", true)
+        .addField("Support server", "[Invite](https://discord.gg/6kFBVDcRd5)", true)
         .addField("Developer", "<@156952208045375488>", false)
         .setColor(0x2f3136);
     return { res: "", embed: embed };
