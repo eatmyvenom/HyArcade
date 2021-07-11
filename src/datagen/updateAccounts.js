@@ -3,6 +3,7 @@ const utils = require("../utils");
 const cfg = require("../Config").fromJSON();
 let force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
+const fs = require("fs-extra");
 
 /**
  * Update the player data for all players in the list
