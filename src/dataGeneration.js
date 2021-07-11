@@ -175,7 +175,7 @@ function statusSort(a, b) {
 async function updateAllAccounts() {
     let acclist = await lists.accounts();
     let accounts = acclist.accounts;
-    await updateAccounts(accounts);
+    return await updateAccounts(accounts);
 }
 
 async function addLeaderboards() {

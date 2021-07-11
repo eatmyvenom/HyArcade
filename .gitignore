@@ -13,3 +13,4 @@ pid
 data/*
 timeupdate
 *.log
+starttime
