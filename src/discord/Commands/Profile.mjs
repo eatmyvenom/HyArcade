@@ -54,6 +54,7 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
     if (interaction == undefined) {
         acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
     } else {
+        interaction.defer();
         acc = await InteractionUtils.resolveAccount(interaction);
     }
     let lvl = Math.round(acc.level * 100) / 100;
