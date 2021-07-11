@@ -3,14 +3,20 @@
 // Leaderboard example - lb:20:mw
 // Stats example - s:92a5199614ac4bd181d1f3c951fb719f:pg
 
+const { ButtonInteraction } = require("discord.js");
 const BotUtils = require("../../BotUtils");
 const Leaderboard = require("../../Commands/Leaderboard");
 const InteractionUtils = require("../InteractionUtils");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
+/**
+ * 
+ * @param {ButtonInteraction} interaction 
+ * @returns 
+ */
 module.exports = async function ButtonParser(interaction) {
-    let data = interaction.customID.split(":");
+    let data = interaction.customId.split(":");
     let commandType = data[0];
     switch (commandType) {
         case "lb": {
