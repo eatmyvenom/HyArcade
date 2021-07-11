@@ -22,7 +22,9 @@ async function commandHandler(interaction) {
     try {
         responseObj = await CommandParser(interaction);
     } catch (e) {
+        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
         logger.err(e);
+        await BotUtils.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
         await BotUtils.errHook.send({ content: e.toString() });
         return;
     }
@@ -32,20 +34,28 @@ async function commandHandler(interaction) {
     let c = responseObj.b ? [responseObj.b] : undefined;
     let content = responseObj.res != "" ? responseObj.res : undefined;
 
-    if (!interaction.deferred && !interaction.replied) {
-        await interaction.reply({
-            content: content,
-            embeds: e,
-            components: c,
-            files: f,
-        });
-    } else {
-        await interaction.followUp({
-            content: content,
-            embeds: e,
-            components: c,
-            files: f,
-        });
+    try {
+        if (!interaction.deferred && !interaction.replied) {
+            await interaction.reply({
+                content: content,
+                embeds: e,
+                components: c,
+                files: f,
+            });
+        } else {
+            await interaction.followUp({
+                content: content,
+                embeds: e,
+                components: c,
+                files: f,
+            });
+        }
+    } catch (e) {
+        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
+        logger.err(e);
+        await BotUtils.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
+        await BotUtils.errHook.send({ content: e.toString() });
+        return;
     }
 
     let logString = `${interaction.member.user.tag} invoked command interaction \`${
