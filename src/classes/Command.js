@@ -1,3 +1,5 @@
+const { logger } = require("../utils");
+
 module.exports = class Command {
     name = "";
     allowed = [];
@@ -12,8 +14,10 @@ module.exports = class Command {
     }
 
     async execute(args, author, rawMsg, interaction) {
-        if (!this.allowed.includes(author) && !this.allowed.includes("*"))
+        if (!this.allowed.includes(author) && !this.allowed.includes("*")) {
+            logger.info(`${author} tried to run the ${this.name} command without permissions`)
             return { res: "" };
+        }
         return await this.callback(args, rawMsg, interaction);
     }
 };
