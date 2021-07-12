@@ -11,7 +11,7 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         let embed = Embeds.ERROR_INPUT_IGN;
         return { res: "", embed: embed };
     }
-    let acclist = await utils.readJSON("./accounts.json");
+    let acclist = await BotUtils.getFromDB("accounts");
     let acc = acclist.find(
         (a) =>
             ("" + a.uuid).toLowerCase() == player.toLowerCase() || ("" + a.name).toLowerCase() == player.toLowerCase()
@@ -47,7 +47,7 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         } else {
             discord = interaction.member.id;
         }
-        let disclist = await utils.readJSON("./disclist.json");
+        let disclist = await BotUtils.getFromDB("disclist");
         // make sure player isnt linked
         if (disclist[discord]) {
             let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;

@@ -1,7 +1,6 @@
 const cfg = require("../Config").fromJSON();
 const { WebhookClient, TextChannel, Guild } = require("discord.js");
 const Runtime = require("../Runtime");
-const utils = require("../utils");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
@@ -52,8 +51,8 @@ module.exports = class BotEvents {
 
         logger.info("Reading trusted users");
         let trustedFile = await fs.readFile('data/trustedUsers');
-        let tus = trustedFile.toString().split("\n");
-        BotUtils.trustedUsers = tus;
+        let tus = trustedFile.toString().trim().split("\n");
+        BotUtils.tus = tus;
 
         logger.info("Selecting mode");
         if (mode == "role") {

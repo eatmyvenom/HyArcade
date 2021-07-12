@@ -6,7 +6,10 @@ const Embeds = require("../Embeds");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
-module.exports = new Command("link", BotUtils.trustedUsers, async (args, rawMsg) => {
+module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
+    if (args.length < 1) {
+        return { res: "", embed: Embeds.ERROR_ARGS_LENGTH(1) };
+    }
     let player = args[0];
     let discord = args[1];
 
@@ -23,7 +26,7 @@ module.exports = new Command("link", BotUtils.trustedUsers, async (args, rawMsg)
 
     let uuid,
         acc,
-        acclist = await utils.readJSON("./accounts.json");
+        acclist = await BotUtils.getFromDB("accounts");
     if (player.length < 17) {
         acc = acclist.find((a) => ("" + a.name).toLowerCase() == player.toLowerCase());
     } else {

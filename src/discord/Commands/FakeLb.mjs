@@ -45,7 +45,7 @@ function intt(n) {
     return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
-export let FakeLb = new Command("fakelb", BotUtils.trustedUsers, async () => {
+export let FakeLb = new Command("fakelb", ["%trusted%"], async () => {
     let img = new ImageGenerator(1900, 1035, "'myFont'");
     await img.addBackground("resources/lb3.png", 0 , 0, 1900, 1035, "#00000000");
     

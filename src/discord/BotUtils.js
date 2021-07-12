@@ -6,6 +6,7 @@ const AdvancedEmbeds = require("./AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
 const Logger = require("../utils/Logger");
+const { logger } = require("../utils");
 module.exports = class BotUtils {
     static isBotInstance = false;
     static logHook;
@@ -17,7 +18,11 @@ module.exports = class BotUtils {
     static client;
     static msgCopyHook;
     static botMode;
-    static trustedUsers = [];
+    static tus = [];
+
+    static get trustedUsers() {
+        return BotUtils.tus;
+    }
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
         return await AccountResolver(
@@ -36,7 +41,13 @@ module.exports = class BotUtils {
         url.searchParams.set("path", path);
         Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
     
-        fileData = await (await fetch(url)).json();
+        try {
+            fileData = await (await fetch(url)).json();
+        } catch(e) {
+            logger.err("Can't connect to database");
+            logger.err(e);
+            return {};
+        }
         return fileData;
     }
 

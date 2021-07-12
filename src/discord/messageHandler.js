@@ -122,7 +122,11 @@ async function attemptSend(msg, cmdResponse, opts) {
                 opts.files = [cmdResponse.img];
             }
             logger.debug("Sending message via discord bot")
-            await msg.channel.send(opts);
+            try {
+                await msg.channel.send(opts);
+            } catch(e) {
+                logError(msg, e);
+            }
         }
     }
 }
