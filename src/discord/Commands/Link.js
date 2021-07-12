@@ -47,7 +47,7 @@ module.exports = new Command("link", BotUtils.trustedUsers, async (args, rawMsg)
 
     uuid = acc.uuid;
 
-    let disclist = await BotUtils.getFromDB("disclist.json");
+    let disclist = await BotUtils.getFromDB("disclist");
     if (disclist[discord]) {
         let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;
         return { res: "", embed: embed };
