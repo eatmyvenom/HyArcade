@@ -6,7 +6,7 @@ const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
 const roleHandler = require("./roleHandler");
-const fs = require("fs/promises");
+const fs = require("fs-extra");
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
@@ -50,9 +50,9 @@ module.exports = class BotEvents {
         logger.info("Creating message copy hook");
         BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
 
-        logger.info("Fetching trusted users");
-        let supportServer = await BotUtils.client.guilds.fetch("863563983936290846");
-        let tus = (await supportServer.members.fetch()).filter(a=> a.roles.highest.id == '863564853971779602' || a.roles.highest.id == '863565056704380948').map(a=>a.id)
+        logger.info("Reading trusted users");
+        let trustedFile = await fs.readFile('data/trustedUsers');
+        let tus = trustedFile.toString().split("\n");
         BotUtils.trustedUsers = tus;
 
         logger.info("Selecting mode");
