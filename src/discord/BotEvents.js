@@ -52,9 +52,9 @@ module.exports = class BotEvents {
 
         logger.info("Fetching trusted users");
         let supportServer = await BotUtils.client.guilds.fetch("863563983936290846");
-        let tuRole = await supportServer.roles.fetch('863564853971779602');
-        let tus = tuRole.members.map(a=>a.id);
+        let tus = (await supportServer.members.fetch()).filter(a=> a.roles.highest.id == '863564853971779602' || a.roles.highest.id == '863565056704380948').map(a=>a.id)
         BotUtils.trustedUsers = tus;
+        logger.log(tus);
 
         logger.info("Selecting mode");
         if (mode == "role") {
