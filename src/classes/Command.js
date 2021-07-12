@@ -13,7 +13,7 @@ module.exports = class Command {
 
     async execute(args, author, rawMsg, interaction) {
         if (!this.allowed.includes(author) && !this.allowed.includes("*"))
-            return { res: "You are not allowed to run this command." };
+            return { res: "" };
         return await this.callback(args, rawMsg, interaction);
     }
 };

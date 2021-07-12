@@ -62,16 +62,6 @@ async function checkCommands(rawMsg, command, args, author) {
             break;
         }
 
-        case "pgd":
-        case "partyday":
-        case "pgday":
-        case "partygamesdaily":
-        case "partygamesday":
-        case "partygd": {
-            return await pgdCmd.execute(args, author);
-            break;
-        }
-
         case "sts":
         case "status": {
             return await statusCmd.execute(args, author, rawMsg);
