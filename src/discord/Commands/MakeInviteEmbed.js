@@ -10,7 +10,7 @@ function makeField(name, link) {
     };
 }
 
-module.exports = new Command("mkdisclist", ["156952208045375488"], async (args) => {
+module.exports = new Command("mkdisclist", BotUtils.trustedUsers, async (args) => {
     let channelID = args[0];
     let msgID = args[1];
     let channel = await BotUtils.client.channels.fetch(channelID);

@@ -35,9 +35,11 @@ module.exports = class BotEvents {
     static async ready(mode) {
         BotUtils.isBotInstance = true;
         BotUtils.botMode = mode;
+    
         logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
+        
         logger.info("Fetching logging hooks");
         let errhooks = await errchannel.fetchWebhooks();
         let loghooks = await logchannel.fetchWebhooks();
@@ -47,6 +49,12 @@ module.exports = class BotEvents {
         BotUtils.logHook = logHook;
         logger.info("Creating message copy hook");
         BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+
+        logger.info("Fetching trusted users");
+        let supportServer = await BotUtils.client.guilds.fetch("863563983936290846");
+        let tuRole = await supportServer.roles.fetch('863564853971779602');
+        let tus = tuRole.members.map(a=>a.id);
+        BotUtils.trustedUsers = tus;
 
         logger.info("Selecting mode");
         if (mode == "role") {

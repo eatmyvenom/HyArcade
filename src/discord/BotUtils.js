@@ -17,6 +17,7 @@ module.exports = class BotUtils {
     static client;
     static msgCopyHook;
     static botMode;
+    static trustedUsers = [];
 
     static async resolveAccount(string, rawMessage, canbeSelf = true) {
         return await AccountResolver(

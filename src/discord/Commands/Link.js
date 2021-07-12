@@ -6,7 +6,7 @@ const Embeds = require("../Embeds");
 const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
-module.exports = new Command("link", utils.defaultAllowed, async (args, rawMsg) => {
+module.exports = new Command("link", BotUtils.trustedUsers, async (args, rawMsg) => {
     let player = args[0];
     let discord = args[1];
 
