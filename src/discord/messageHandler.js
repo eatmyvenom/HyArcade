@@ -14,6 +14,7 @@ const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const Discord = require("discord.js");
 const Message = Discord.Message;
 const AdvancedEmbeds = require("./AdvancedEmbeds");
+const fs = require("fs-extra")
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -183,7 +184,8 @@ async function getMWCmdRes(msg) {
 }
 
 async function isBlacklisted(id) {
-    let blacklist = await utils.readJSON("blacklist.json");
+    let blacklist = await fs.readFile("data/blacklist");
+    blacklist = blacklist.toString().split("\n");
     return blacklist.includes(id);
 }
 
@@ -195,8 +197,6 @@ async function mwMode(msg) {
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
-            let dmchannel = await msg.author.createDM();
-            await dmchannel.send(BotUtils.getBlacklistRes());
             return;
         }
         let opts = {};
@@ -253,8 +253,6 @@ module.exports = async function messageHandler(msg) {
 
     if (isValidResponse) {
         if (await isBlacklisted(msg.author.id)) {
-            let dmchannel = await msg.author.createDM();
-            await dmchannel.send(BotUtils.getBlacklistRes());
             return;
         }
         let opts = {};

@@ -8,7 +8,8 @@ const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 
 async function isBlacklisted(id) {
-    let blacklist = await utils.readJSON("blacklist.json");
+    let blacklist = await fs.readFile("data/blacklist");
+    blacklist = blacklist.toString().split("\n");
     return blacklist.includes(id);
 }
 
