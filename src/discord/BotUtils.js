@@ -9,14 +9,11 @@ const Logger = require("../utils/Logger");
 const { logger } = require("../utils");
 module.exports = class BotUtils {
     static isBotInstance = false;
-    static logHook;
-    static errHook;
 
     /**
      * @type {Client}
      */
     static client;
-    static msgCopyHook;
     static botMode;
     static tus = [];
 
@@ -65,10 +62,6 @@ module.exports = class BotUtils {
         };
     }
 
-    static async getPGDailyEmbed() {
-        return await webhook.genPGEmbed();
-    }
-
     static async getStats(acc, game) {
         /**
          * @type {MessageEmbed}
@@ -80,36 +73,5 @@ module.exports = class BotUtils {
             BotUtils.botMode
         );
         return embed;
-    }
-
-    static async logIgns(msg) {
-        let ignClient = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
-        let logs = [];
-        for (let c of cfg.discord.listenChannels) {
-            logs.push({ id: c, hook: ignClient });
-        }
-        let channelID = msg.channel.id;
-
-        for (let logger of logs) {
-            if (channelID == logger.id) {
-                await BotUtils.logcopy(msg, logger.hook);
-            }
-        }
-        ignClient.destroy();
-    }
-
-    static async logcopy(msg, hook) {
-        let pfp = msg.author.avatarURL();
-        let name = "unknown";
-        if (msg.member) {
-            name = msg.member.displayName;
-        }
-
-        await hook.send({ content: msg.content, username: name, avatarURL: pfp });
-        await hook.send({ content: msg.url, username: name, avatarURL: pfp });
-    }
-
-    static async logCommand(command, args, message) {
-        await BotUtils.msgCopyHook.send({ embeds: [Embed.LOG_COMMAND_EXECUTION(command, args, message)] });
     }
 };

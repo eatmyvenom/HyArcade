@@ -14,7 +14,9 @@ const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const Discord = require("discord.js");
 const Message = Discord.Message;
 const AdvancedEmbeds = require("./AdvancedEmbeds");
-const fs = require("fs-extra")
+const fs = require("fs-extra");
+const Webhooks = require("./Utils/Webhooks");
+const LogUtils = require("./Utils/LogUtils");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -27,8 +29,8 @@ async function logError(msg, e) {
     logger.err("Error from - " + msg.content);
     logger.err(e.toString());
     logger.err(e.stack);
-    await BotUtils.errHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
-    await BotUtils.errHook.send(e.toString());
+    await Webhooks.logHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
+    await Webhooks.errHook.send(e.toString());
 }
 
 /**
@@ -36,7 +38,7 @@ async function logError(msg, e) {
  * @param {Message} msg 
  */
 async function logCmd(msg) {
-    await BotUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
+    await LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
     logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
@@ -54,7 +56,7 @@ async function sendAsHook(hook, cmdResponse) {
         return true;
     } catch (e) {
         logger.err(e.toString());
-        await BotUtils.errHook.send(e.toString());
+        await Webhooks.errHook.send(e.toString());
         return false;
     }
 }
@@ -139,7 +141,7 @@ async function addIGNs(msg) {
             let acclist = await utils.readJSON("acclist.json");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
-            BotUtils.logHook.send('Attempting to add "`' + firstWord + '`" to database.');
+            Webhooks.logHook.send('Attempting to add "`' + firstWord + '`" to database.');
             await addAccounts(category, [firstWord]);
         }
     }
@@ -151,7 +153,7 @@ async function sanitizeCmdOpt(cmdResponse) {
         if (cmdResponse.res.slice(0, 3) == "```") {
             cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
         }
-        await BotUtils.errHook.send(longMsgStr);
+        await Webhooks.errHook.send(longMsgStr);
         await msg.channel.send(longMsgStr);
         logger.err(longMsgStr);
     }
@@ -271,5 +273,5 @@ module.exports = async function messageHandler(msg) {
         await logCmd(msg);
     }
 
-    await BotUtils.logIgns(msg);
+    await LogUtils.logIgns(msg);
 };

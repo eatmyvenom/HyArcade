@@ -6,13 +6,14 @@ const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
 const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
+const Webhooks = require("./Utils/Webhooks");
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
         let timeout = rlInfo.timeout;
         let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
         logger.err(str);
-        await BotUtils.errHook.send(str);
+        await Webhooks.errHook.send(str);
     }
 
     static async messageDelete(msg) {
@@ -20,13 +21,13 @@ module.exports = class BotEvents {
             if (msg.content.charAt(0) == ".") {
                 let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
                 logger.warn(str);
-                await BotUtils.logHook.send(str);
+                await Webhooks.logHook.send(str);
             }
         } else {
             if(msg.content.charAt(0) == cfg.commandCharacter) {
                 let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
                 logger.warn(str);
-                await BotUtils.logHook.send(str);
+                await Webhooks.logHook.send(str);
             }
         }
     }
@@ -38,16 +39,16 @@ module.exports = class BotEvents {
         logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
-        
+
         logger.info("Fetching logging hooks");
         let errhooks = await errchannel.fetchWebhooks();
         let loghooks = await logchannel.fetchWebhooks();
         let errHook = await errhooks.first();
         let logHook = await loghooks.first();
-        BotUtils.errHook = errHook;
-        BotUtils.logHook = logHook;
+        Webhooks.errHook = errHook;
+        Webhooks.logHook = logHook;
         logger.info("Creating message copy hook");
-        BotUtils.msgCopyHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+        Webhooks.commandHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
 
         logger.info("Reading trusted users");
         let trustedFile = await fs.readFile('data/trustedUsers');
@@ -80,7 +81,7 @@ module.exports = class BotEvents {
         let runtime = Runtime.fromJSON();
         if (runtime.needRoleupdate && BotUtils.botMode == undefined) {
             await roleHandler(BotUtils.client);
-            await BotUtils.logHook.send("Roles Updated");
+            await Webhooks.logHook.send("Roles Updated");
             runtime.needRoleupdate = false;
             await runtime.save();
         }

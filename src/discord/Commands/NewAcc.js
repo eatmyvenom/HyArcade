@@ -3,11 +3,12 @@ const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const Embeds = require("../Embeds");
 const { logger } = require("../../utils");
+const Webhooks = require("../Utils/Webhooks");
 
 module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     logger.out("Out of database transaction occuring!");
     let category = "others";
-    await BotUtils.logHook.send(`Adding accounts ${args}`);
+    await Webhooks.logHook.send(`Adding accounts ${args}`);
     let embed = Embeds.WARN_WAITING;
     if (args[0] == "") {
         return { res: "", embed: Embeds.ERROR_IGN_UNDEFINED };

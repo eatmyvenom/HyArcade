@@ -16,6 +16,7 @@ module.exports = class FileCache {
     status = {};
     updatetime = 0;
     hackerlist = [];
+    blacklist = [];
     ezmsgs = [];
     path = "data/";
 
@@ -34,15 +35,16 @@ module.exports = class FileCache {
 
     async save() {
         Logger.debug("Saving file changes...")
-        await utils.writeJSON("accounts.json", this._accounts);
-        await utils.writeJSON("accounts.weekly.json", this._weeklyAccounts);
-        await utils.writeJSON("accounts.day.json", this._dailyAccounts);
-        await utils.writeJSON("accounts.monthly.json", this._monthlyAccounts);
-        await utils.writeJSON("acclist.json", this._acclist);
-        await utils.writeJSON("disclist.json", this._disclist);
-        await utils.writeJSON("status.json", this._status);
-        await fs.writeFile("data/hackerlist", this._hackerlist.join("\n"));
-        await fs.writeFile("data/ez", this._ezmsgs.join("\n"));
+        await utils.writeJSON("accounts.json", this.accounts);
+        await utils.writeJSON("accounts.weekly.json", this.weeklyAccounts);
+        await utils.writeJSON("accounts.day.json", this.dailyAccounts);
+        await utils.writeJSON("accounts.monthly.json", this.monthlyAccounts);
+        await utils.writeJSON("acclist.json", this.acclist);
+        await utils.writeJSON("disclist.json", this.disclist);
+        await utils.writeJSON("status.json", this.status);
+        await fs.writeFile("data/blacklist", this.blacklist.join("\n"));
+        await fs.writeFile("data/hackerlist", this.hackerlist.join("\n"));
+        await fs.writeFile("data/ez", this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
     }
 
@@ -57,6 +59,7 @@ module.exports = class FileCache {
         fileCache.disclist = await utils.readJSON("disclist.json");
         fileCache.status = await utils.readJSON("status.json");
         fileCache.updatetime = await fs.readFile("timeupdate");
+        fileCache.blacklist = (await fs.readFile("data/blacklist")).toString().split("\n");
         fileCache.hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
         fileCache.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
 

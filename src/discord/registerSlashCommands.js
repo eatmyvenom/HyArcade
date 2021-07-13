@@ -6,7 +6,8 @@ const Embed = require("./Embeds");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
-const fs = require('fs-extra')
+const fs = require('fs-extra');
+const Webhooks = require("./Utils/Webhooks");
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -26,8 +27,8 @@ async function commandHandler(interaction) {
     } catch (e) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
         logger.err(e);
-        await BotUtils.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
-        await BotUtils.errHook.send({ content: e.toString() });
+        await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
+        await Webhooks.errHook.send({ content: e.toString() });
         return;
     }
 
@@ -55,8 +56,8 @@ async function commandHandler(interaction) {
     } catch (e) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
         logger.err(e);
-        await BotUtils.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
-        await BotUtils.errHook.send({ content: e.toString() });
+        await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
+        await Webhooks.errHook.send({ content: e.toString() });
         return;
     }
 
@@ -64,7 +65,7 @@ async function commandHandler(interaction) {
         interaction.commandName
     }\` with options \`${JSON.stringify(interaction.options)}\``;
     logger.out(logString.replace(/`/g, "'"));
-    await BotUtils.logHook.send(logString);
+    await Webhooks.logHook.send(logString);
     await logCmd(interaction);
 }
 
@@ -73,7 +74,7 @@ async function commandHandler(interaction) {
  * @param {Interaction} interaction
  */
 async function logCmd(interaction) {
-    await BotUtils.msgCopyHook.send({
+    await Webhooks.commandHook.send({
         embeds: [
             Embed.LOG_SLASH_COMMAND_USAGE(
                 interaction.user?.id,
