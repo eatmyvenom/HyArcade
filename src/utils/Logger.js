@@ -48,10 +48,10 @@ module.exports = class Logger {
     /**
      * Log content to stdout or a file
      *
-     * @param {String} content
+     * @param {String[]} content
      */
-    static log(content) {
-        print("LOG", content);
+    static log(...content) {
+        print("LOG", content.join(" "));
     }
 
     static out = this.log;
@@ -61,8 +61,8 @@ module.exports = class Logger {
      *
      * @param {String} content
      */
-    static info(content) {
-        print("INFO", content, "\x1b[32m");
+    static info(...content) {
+        print("INFO", content.join(" "), "\x1b[32m");
     }
 
     /**
@@ -70,8 +70,8 @@ module.exports = class Logger {
      *
      * @param {String} content
      */
-    static warn(content) {
-        print("WARN", content, "\x1b[33m");
+    static warn(...content) {
+        print("WARN", content.join(" "), "\x1b[33m");
     }
 
     /**
@@ -79,8 +79,8 @@ module.exports = class Logger {
      *
      * @param {String} content
      */
-    static debug(content) {
-        print("DEBUG", content, "\x1b[95m");
+    static debug(...content) {
+        print("DEBUG", content.join(" "), "\x1b[95m");
     }
 
     static dbg = this.debug;
@@ -90,8 +90,8 @@ module.exports = class Logger {
      *
      * @param {String} content
      */
-    static error(content) {
-        error(content);
+    static error(...content) {
+        error(content.join(" "));
     }
 
     static err = this.error;
