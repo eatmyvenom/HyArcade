@@ -1,4 +1,4 @@
-const { Webhook } = require("discord.js");
+const { Webhook, WebhookClient } = require("discord.js");
 const config = require("../../Config");
 const cfg = config.fromJSON();
 
