@@ -37,9 +37,24 @@ async function main() {
     logger.info("Mini walls bot starting...");
     mw = child_process.fork("index.js", ["bot", "mw"], { silent : false});
 
+    arcade.on("spawn",  ()=> {
+        logger.info("Arcade bot spawned");
+    });
     arcade.on("exit", restartArcade);
+
+    interactions.on("spawn",  ()=> {
+        logger.info("Interactions spawned");
+    });
     interactions.on("exit", restartInteraction);
+
+    mini.on("spawn",  ()=> {
+        logger.info("Micro bot spawned");
+    });
     mini.on("exit", restartMini);
+
+    mw.on("spawn", ()=> {
+        logger.info("Mini walls bot spawned");
+    });
     mw.on("exit", restartMW);
 }
 
