@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const logger = require("../../../utils/Logger");
 const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
+const cfg = require("../../../Config").fromJSON();
 
 async function getFromHypixel(string, interaction) {
     await interaction.defer();
@@ -34,7 +35,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
     if(BotUtils.botMode == "mini") {
         return await getFromHypixel(str, interaction);
     }
-    let url = new URL("account", "http://localhost:6000")
+    let url = new URL("account", cfg.dbUrl)
     let urlArgs = url.searchParams
     if(str?.length == 32) {
         urlArgs.set("uuid", str.toLowerCase());

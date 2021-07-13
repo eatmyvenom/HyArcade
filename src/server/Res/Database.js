@@ -1,4 +1,6 @@
-const FileCache = require("../../utils/files/FileCache")
+const FileCache = require("../../utils/files/FileCache");
+const Logger = require("../../utils/Logger");
+const cfg = require("../../Config").fromJSON()
 
 /**
  * 
@@ -21,6 +23,22 @@ module.exports = async (req, res, fileCache) => {
 
         res.write(JSON.stringify(data));
         res.end();
+    } else if(req.method == "POST") {
+        let data = "";
+        let json = {};
+        if(req.headers.authorization == cfg.dbPass) {
+            req.on("data", d => data+=d);
+            req.on("end", async () => {
+                json = JSON.parse(data)
+                fileCache[url.searchParams.get("path")] = json;
+                await fileCache.save();
+                res.end();
+            });
+        } else {
+            Logger.warn("Someone tried to post without correct AUTH")
+            res.statusCode = 403;
+            res.end();
+        }
     } else {
         res.statusCode = 404;
         res.end();

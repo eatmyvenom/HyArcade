@@ -1,12 +1,11 @@
-const { MessageEmbed, WebhookClient, Client } = require("discord.js");
+const { MessageEmbed, Client } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const webhook = require("../events/webhook");
-const Embed = require("./Embeds");
 const AdvancedEmbeds = require("./AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
 const Logger = require("../utils/Logger");
 const { logger } = require("../utils");
+
 module.exports = class BotUtils {
     static isBotInstance = false;
 
@@ -33,7 +32,7 @@ module.exports = class BotUtils {
 
     static async getFromDB(file) {
         let fileData;
-        let url = new URL("db", "http://localhost:6000");
+        let url = new URL("db", cfg.dbUrl);
         let path = `${file}`;
         url.searchParams.set("path", path);
         Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
@@ -46,6 +45,28 @@ module.exports = class BotUtils {
             return {};
         }
         return fileData;
+    }
+
+    static async writeToDB(path, json) {
+        let data = JSON.stringify(json);
+        let url = new URL("db", cfg.dbUrl);
+        url.searchParams.set("path", path);
+        Logger.debug(`Writing to ${path} in database`);
+
+        try {
+            await fetch(url.toString(), {
+                method: 'post',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': cfg.dbPass
+                }
+            });
+        } catch(e) {
+            logger.err("Can't connect to database");
+            logger.err(e);
+            return {};
+        }
     }
 
     static getWebhookObj(embed) {

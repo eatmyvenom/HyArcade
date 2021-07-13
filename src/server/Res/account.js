@@ -50,8 +50,12 @@ module.exports = async (req, res, fileCache) => {
         let json = {};
         if(req.headers.authorization == cfg.dbPass) {
             req.on("data", d => data+=d);
-            req.on("end", () => {json = JSON.parse(data)});
-            fileCache.accounts = fileCache.accounts.push(json);
+            req.on("end", () => {
+                json = JSON.parse(data)
+                fileCache.accounts = fileCache.accounts.push(json);
+                await fileCache.save();
+                res.end();
+            });
         } else {
             Logger.warn("Someone tried to post without correct AUTH")
             res.statusCode = 403;

@@ -1,7 +1,5 @@
-const BotUtils = require("../../discord/BotUtils");
-const utils = require("../../utils");
 const logger = require("../Logger");
-const config = require("../../Config").fromJSON();
+const cfg = require("../../Config").fromJSON();
 const fetch = require('node-fetch');
 
 function numberify(str) {
@@ -14,7 +12,7 @@ function formatNum(number) {
 
 exports.getList = async function getList(type = "") {
     let list;
-    let url = new URL("db", "http://localhost:6000");
+    let url = new URL("db", cfg.dbUrl);
     let path = `${type}accounts`;
     url.searchParams.set("path", path);
     logger.debug(`Fetching ${url.searchParams.toString()} from database`)
@@ -31,7 +29,7 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
     for (let i = startingIndex; i < list.length; i++) {
         // don't print if player has 0 wins
         let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
-        if (numberify(propVal) < 1 && !config.printAllWins) continue;
+        if (numberify(propVal) < 1 && !cfg.printAllWins) continue;
 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;

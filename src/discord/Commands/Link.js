@@ -3,7 +3,6 @@ const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../request/mojangRequest");
 const Embeds = require("../Embeds");
-const utils = require("../../utils");
 const BotUtils = require("../BotUtils");
 
 module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
@@ -12,6 +11,7 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
     }
     let player = args[0];
     let discord = args[1];
+    let disclist = await BotUtils.getFromDB("disclist");
 
     if (("" + player).startsWith("https://")) {
         let channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
@@ -50,7 +50,14 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
 
     uuid = acc.uuid;
 
-    let disclist = await BotUtils.getFromDB("disclist");
+    if(args.includes("-f")) {
+        disclist[discord] = uuid;
+        await BotUtils.writeToDB("disclist", disclist);
+        disclist = null;
+        let embed = Embeds.INFO_LINK_SUCCESS;
+        return { res: "", embed: embed };
+    }
+
     if (disclist[discord]) {
         let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;
         return { res: "", embed: embed };
@@ -60,7 +67,7 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
     }
 
     disclist[discord] = uuid;
-    await utils.writeJSON("./disclist.json", disclist);
+    await BotUtils.writeToDB("disclist", disclist);
     disclist = null;
     let embed = Embeds.INFO_LINK_SUCCESS;
     return { res: "", embed: embed };

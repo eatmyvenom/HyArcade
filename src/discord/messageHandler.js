@@ -95,7 +95,7 @@ async function miniWallsVerify(msg) {
     if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
         await addAccounts("others", [uuid]);
         disclist[id] = uuid;
-        await utils.writeJSON("./disclist.json", disclist);
+        await BotUtils.writeToDB("disclist", disclist);
         logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
         await msg.member.roles.remove("850033543425949736");
         await msg.member.roles.add("789721304722178069");
@@ -138,7 +138,7 @@ async function addIGNs(msg) {
         logger.info("IGN channel message detected, automatically adding to database.");
         let firstWord = msg.content.split(" ")[0];
         if (!msg.author.bot && isValidIGN(firstWord)) {
-            let acclist = await utils.readJSON("acclist.json");
+            let acclist = await BotUtils.getFromDB("acclist");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
             Webhooks.logHook.send('Attempting to add "`' + firstWord + '`" to database.');

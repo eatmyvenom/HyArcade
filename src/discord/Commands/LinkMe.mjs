@@ -2,8 +2,8 @@ import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
 import Embeds from "../Embeds.js";
 import mojangRequest from "../../request/mojangRequest.js";
-import utils from "../../utils.js";
 import { addAccounts } from "../../listUtils.js";
+import BotUtils from "../BotUtils.js";
 
 export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
     let player = args[0];
@@ -59,7 +59,7 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         }
 
         disclist[discord] = uuid;
-        await utils.writeJSON("./disclist.json", disclist);
+        await BotUtils.writeToDB("disclist", disclist);
         let embed = Embeds.INFO_LINK_SUCCESS;
         return { res: "", embed: embed };
     } else {
