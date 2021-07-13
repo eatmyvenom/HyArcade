@@ -243,8 +243,7 @@ module.exports = async function messageHandler(msg) {
 
     let isValidResponse =
         cmdResponse != undefined &&
-        cmdResponse.res != undefined &&
-        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
 
     if(!isValidResponse) {
 
@@ -252,8 +251,7 @@ module.exports = async function messageHandler(msg) {
 
         isValidResponse =
             cmdResponse != undefined &&
-            cmdResponse.res != undefined &&
-            (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
+            (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
     }
 
 
@@ -268,7 +266,9 @@ module.exports = async function messageHandler(msg) {
 
         await sanitizeCmdOpt(cmdResponse);
 
-        await attemptSend(msg, cmdResponse, opts);
+        if(!cmdResponse.silent) {
+            await attemptSend(msg, cmdResponse, opts);
+        }
         await addIGNs(msg);
         await logCmd(msg);
     }

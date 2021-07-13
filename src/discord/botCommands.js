@@ -14,6 +14,7 @@ const { logger } = require("../utils");
 const Runtime = require("../Runtime");
 const EZ = require("./Commands/EZ");
 const Ping = require("./Commands/Ping");
+const Echo = require("./Commands/Echo");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -146,6 +147,11 @@ async function checkCommands(rawMsg, command, args, author) {
         case "info":
         case "botinfo": {
             return await InfoCmd.execute(args, author);
+        }
+
+        case "say":
+        case "echo": {
+            return await Echo.execute(args, author, rawMsg);
         }
 
         default: {
