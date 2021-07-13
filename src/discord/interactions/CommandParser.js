@@ -11,7 +11,6 @@ const Info = require("../Commands/Info");
 const Link = require("../Commands/Link");
 const Status = require("../Commands/Status");
 const Susser = require("../Commands/Susser");
-const Boosters = require("../Commands/Boosters");
 const MiniWalls = require("../Commands/MiniWalls");
 const GameCounts = require("../Commands/GameCounts");
 const LastUpdate = require("../Commands/LastUpdate");
@@ -160,10 +159,6 @@ module.exports = async (interaction) => {
 
         case "info": {
             return await Info.execute([], authorID, null, interaction);
-        }
-
-        case Boosters.name: {
-            return await Boosters.execute([], authorID, null, interaction);
         }
 
         case "arcadehelp": {
