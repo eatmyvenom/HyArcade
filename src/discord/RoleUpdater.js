@@ -1,6 +1,7 @@
 const BotUtils = require("../discord/BotUtils");
 const { logger } = require("../utils");
 const utils = require("../utils");
+const Webhooks = require("./Utils/Webhooks");
 
 module.exports = class RoleUpdater {
     roles = [];
