@@ -50,7 +50,7 @@ module.exports = async (req, res, fileCache) => {
         let json = {};
         if(req.headers.authorization == cfg.dbPass) {
             req.on("data", d => data+=d);
-            req.on("end", () => {
+            req.on("end", async () => {
                 json = JSON.parse(data)
                 fileCache.accounts = fileCache.accounts.push(json);
                 await fileCache.save();
