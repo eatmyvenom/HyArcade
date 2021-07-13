@@ -3,6 +3,7 @@ const Config = require("../Config");
 const cfg = Config.fromJSON();
 let name = argv[2];
 name = name == "bot" ? argv[argv.length - 1] : name;
+name = name == undefined ? "hyarcade" : name
 
 function daytime() {
     if(cfg.showDaytime) {

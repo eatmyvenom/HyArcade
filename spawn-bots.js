@@ -1,6 +1,8 @@
 #!/bin/env node
 const child_process = require("child_process");
+const { logger } = require("./src/utils");
 const Logger = require("./src/utils/Logger");
+const fs = require("fs-extra");
 
 /**
  * @type {child_process.ChildProcess}
@@ -22,16 +24,17 @@ let mini;
  */
 let mw;
 
-function sleep(time) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, time);
-    });
-}
-
 async function main() {
+    logger.info("Bots starting...");
+    let ascii = (await fs.readFile('resources/hyarcade.ascii')).toString();
+    logger.info(ascii);
+    logger.info("Starting arcade bot...");
     arcade = child_process.fork("index.js", ["bot"], { silent : false});
+    logger.info("Interactions starting...");
     interactions = child_process.fork("index.js", ["bot", "slash"], { silent : false});
+    logger.info("Micro bot starting...");
     mini = child_process.fork("index.js", ["bot", "mini"], { silent : false});
+    logger.info("Mini walls bot starting...");
     mw = child_process.fork("index.js", ["bot", "mw"], { silent : false});
 
     arcade.on("exit", restartArcade);
