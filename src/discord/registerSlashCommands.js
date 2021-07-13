@@ -6,6 +6,7 @@ const Embed = require("./Embeds");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
+const fs = require('fs-extra')
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
