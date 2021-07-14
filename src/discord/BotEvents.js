@@ -13,7 +13,11 @@ module.exports = class BotEvents {
         let timeout = rlInfo.timeout;
         let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
         logger.err(str);
-        await Webhooks.errHook.send(str);
+        try {
+            await Webhooks.errHook.send(str);
+        } catch (e) {
+            logger.err("Can't log to error hook");
+        }
     }
 
     static async messageDelete(msg) {
