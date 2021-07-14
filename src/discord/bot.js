@@ -53,7 +53,7 @@ module.exports = function doBot() {
     client.on("invalidRequestWarning", BotEvents.invalidRequestWarning);
     client.on("debug", BotEvents.debug);
 
-    if (mode == undefined || mode == "mw") {
+    if (mode == undefined || mode == "mw" || mode == "test") {
         logger.debug("Registering message event");
         client.on("messageCreate", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
@@ -64,9 +64,12 @@ module.exports = function doBot() {
         if(mode == "mini") {
             logger.info("Logging in to micro arcade module");
             client.login(config.discord.miniToken);
-        } else if(mode == "mw") {
+        } else if (mode == "mw") {
             logger.info("Logging in to mini walls module");
             client.login(config.discord.mwToken);
+        } else if (mode == "test") {
+            logger.info("Logging in to testing bot");
+            client.login(config.discord.testToken);
         } else {
             logger.info("Logging in to arcade bot");
             client.login(config.discord.token);

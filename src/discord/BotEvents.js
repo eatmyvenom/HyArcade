@@ -70,6 +70,11 @@ module.exports = class BotEvents {
         } else if (BotUtils.botMode == "mw") {
             logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
+        } else if(BotUtils.botMode == "test") {
+            await registerSlashCommands(BotUtils.client);
+            logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
+            logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
+            BotUtils.client.user.setPresence(cfg.discord.presence);
         } else {
             logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);

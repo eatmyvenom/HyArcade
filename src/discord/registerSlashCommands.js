@@ -129,10 +129,21 @@ async function registerAll(client) {
     let guilds = client.guilds;
     guilds.cache.array();
     for (let g of guilds.cache.array()) {
-        g.commands.set([]);
+        try {
+            if(BotUtils.botMode != "test") {
+                await g.commands.set([]);
+            } else {
+                await g.commands.set(cmdarr);
+            }
+        } catch (e) {
+            logger.error("Couldn't change guild slash commands!");
+            logger.error(e);
+        }
     }
 
-    await client.application.commands.set(cmdarr);
+    if(BotUtils.botMode != "test") {
+        await client.application.commands.set(cmdarr);
+    }
 }
 
 /**
