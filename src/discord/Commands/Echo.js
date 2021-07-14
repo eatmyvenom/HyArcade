@@ -9,8 +9,8 @@ module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
      * @type {TextChannel}
      */
     let discChannel;
-    if(channel.length != 18 && channel.toLowerCase() == channel.toUpperCase()) {
-        discChannel = BotUtils.client.channels.fetch(discChannel);
+    if(channel.length == 18 && channel.toLowerCase() == channel.toUpperCase()) {
+        discChannel = await BotUtils.client.channels.fetch(args[0]);
         text = args.slice(1).join(" ");
     } else {
         discChannel = rawMsg.channel;
