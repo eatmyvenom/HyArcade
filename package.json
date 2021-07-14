@@ -1,6 +1,6 @@
 {
     "name": "hyarcade",
-    "version": "1.5.2",
+    "version": "1.5.3",
     "description": "A full system for gathering and displaying peoples arcade games stats",
     "main": "index.js",
     "scripts": {
