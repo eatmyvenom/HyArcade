@@ -7,6 +7,7 @@ const registerSlashCommands = require("./registerSlashCommands");
 const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
+const SetupBot = require("./Utils/SetupBot");
 
 module.exports = class BotEvents {
     static async rateLimit(rlInfo) {
@@ -78,12 +79,11 @@ module.exports = class BotEvents {
             await registerSlashCommands(BotUtils.client);
             logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
-            BotUtils.client.user.setPresence(cfg.discord.presence);
         } else {
             logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
-            BotUtils.client.user.setPresence(cfg.discord.presence);
         }
+        await SetupBot(BotUtils.client, mode);
     }
 
     static async tick() {
