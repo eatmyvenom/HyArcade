@@ -7,6 +7,7 @@ const BotUtils = require("../../BotUtils");
 const cfg = require("../../../Config").fromJSON();
 
 async function getFromHypixel(string, interaction) {
+    await interaction.defer();
     logger.info("Unable to resolve, getting by ign from hypixel.");
 
     let plr = string;

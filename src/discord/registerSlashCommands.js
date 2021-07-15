@@ -56,6 +56,7 @@ async function commandHandler(interaction) {
     } catch (e) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
         logger.err(e);
+        logger.err(e.stack);
         await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
         await Webhooks.errHook.send({ content: e.toString() });
         return;
