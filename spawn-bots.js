@@ -43,13 +43,13 @@ async function main() {
         } else {
             logger.info("Starting arcade bot...");
             arcade = child_process.fork("./src/discord/ShardManager.js", ["bot"], { silent : false});
-            await sleep(5000);
+            await sleep(5500);
             logger.info("Interactions starting...");
             interactions = child_process.fork("./src/discord/ShardManager.js", ["bot", "slash"], { silent : false});
-            await sleep(5000);
+            await sleep(5500);
             logger.info("Micro bot starting...");
             mini = child_process.fork("./src/discord/ShardManager.js", ["bot", "mini"], { silent : false});
-            await sleep(5000);
+            await sleep(5500);
             logger.info("Mini walls bot starting...");
             mw = child_process.fork("./src/discord/ShardManager.js", ["bot", "mw"], { silent : false});
 

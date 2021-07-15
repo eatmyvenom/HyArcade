@@ -6,7 +6,7 @@ const Logger = require('../utils/Logger')
 async function BotSpawner() {
     Logger.out("Sharding " + args)
     try {
-        const manager = new ShardingManager('./index.js', { token: cfg.discord.token, shardArgs : args, respawn: true });
+        const manager = new ShardingManager('./index.js', { token: cfg.discord.token, shardArgs : args, respawn: false });
         manager.on('shardCreate', shard => Logger.info(`Launched shard ${shard.id}`));
         await manager.spawn();
     } catch (e) {
