@@ -5,6 +5,13 @@ const Logger = require("./src/utils/Logger");
 const fs = require("fs-extra");
 const args = process.argv;
 
+function sleep(time) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time);
+    });
+}
+
+
 /**
  * @type {child_process.ChildProcess}
  */
@@ -26,42 +33,49 @@ let mini;
 let mw;
 
 async function main() {
-    logger.info("Bots starting...");
-    let ascii = (await fs.readFile('resources/hyarcade.ascii')).toString();
-    logger.info(ascii);
-    if(args[2] == "test") {
-        logger.info("Starting test arcade bot...");
-        arcade = child_process.fork("./src/discord/ShardManager.js", ["bot", "test"], {silent : false});
-    } else {
-        logger.info("Starting arcade bot...");
-        arcade = child_process.fork("./src/discord/ShardManager.js", ["bot"], { silent : false});
-        logger.info("Interactions starting...");
-        interactions = child_process.fork("./src/discord/ShardManager.js", ["bot", "slash"], { silent : false});
-        logger.info("Micro bot starting...");
-        mini = child_process.fork("./src/discord/ShardManager.js", ["bot", "mini"], { silent : false});
-        logger.info("Mini walls bot starting...");
-        mw = child_process.fork("./src/discord/ShardManager.js", ["bot", "mw"], { silent : false});
+    try {
+        logger.info("Bots starting...");
+        let ascii = (await fs.readFile('resources/hyarcade.ascii')).toString();
+        logger.info(ascii);
+        if(args[2] == "test") {
+            logger.info("Starting test arcade bot...");
+            arcade = child_process.fork("./src/discord/ShardManager.js", ["bot", "test"], {silent : false});
+        } else {
+            logger.info("Starting arcade bot...");
+            arcade = child_process.fork("./src/discord/ShardManager.js", ["bot"], { silent : false});
+            await sleep(5000);
+            logger.info("Interactions starting...");
+            interactions = child_process.fork("./src/discord/ShardManager.js", ["bot", "slash"], { silent : false});
+            await sleep(5000);
+            logger.info("Micro bot starting...");
+            mini = child_process.fork("./src/discord/ShardManager.js", ["bot", "mini"], { silent : false});
+            await sleep(5000);
+            logger.info("Mini walls bot starting...");
+            mw = child_process.fork("./src/discord/ShardManager.js", ["bot", "mw"], { silent : false});
 
-        interactions.on("spawn",  ()=> {
-            logger.info("Interactions spawned");
+            interactions.on("spawn",  ()=> {
+                logger.info("Interactions spawned");
+            });
+            interactions.on("exit", restartInteraction);
+        
+            mini.on("spawn",  ()=> {
+                logger.info("Micro bot spawned");
+            });
+            mini.on("exit", restartMini);
+        
+            mw.on("spawn", ()=> {
+                logger.info("Mini walls bot spawned");
+            });
+            mw.on("exit", restartMW);
+        }
+
+        arcade.on("spawn",  ()=> {
+            logger.info("Arcade bot spawned");
         });
-        interactions.on("exit", restartInteraction);
-    
-        mini.on("spawn",  ()=> {
-            logger.info("Micro bot spawned");
-        });
-        mini.on("exit", restartMini);
-    
-        mw.on("spawn", ()=> {
-            logger.info("Mini walls bot spawned");
-        });
-        mw.on("exit", restartMW);
+        arcade.on("exit", restartArcade);
+    } catch (e) {
+        logger.err(e);
     }
-
-    arcade.on("spawn",  ()=> {
-        logger.info("Arcade bot spawned");
-    });
-    arcade.on("exit", restartArcade);
 }
 
 function restartMW() {
