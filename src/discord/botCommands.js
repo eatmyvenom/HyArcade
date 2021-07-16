@@ -18,6 +18,9 @@ const Echo = require("./Commands/Echo");
 const Blacklist = require("./Commands/Blacklist");
 const CyclePresence = require("./Commands/CyclePresence");
 const Eval = require("./Commands/Eval");
+const SetAvatar = require("./Commands/SetAvatar");
+const SetPresence = require("./Commands/SetPresence");
+const SetUsername = require("./Commands/SetUsername");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -167,6 +170,18 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case Eval.name.toLowerCase(): {
             return await Eval.execute(args, author, rawMsg);
+        }
+
+        case SetAvatar.name.toLowerCase(): {
+            return await SetAvatar.execute(args, author, rawMsg);
+        }
+
+        case SetPresence.name.toLowerCase(): {
+            return await SetPresence.execute(args, author, rawMsg);
+        }
+
+        case SetUsername.name.toLowerCase(): {
+            return await SetUsername.execute(args, author, rawMsg);
         }
         default: {
             logger.warn('Nonexistent command "' + command.toLowerCase() + '" was attempted.');
