@@ -1,4 +1,6 @@
 const BotUtils = require("../discord/BotUtils");
+const { ERROR_UNKNOWN } = require("../discord/Embeds");
+const Webhooks = require("../discord/Utils/Webhooks");
 const { logger } = require("../utils");
 
 module.exports = class Command {
@@ -20,6 +22,13 @@ module.exports = class Command {
             logger.info(`${author} tried to run the ${this.name} command without permissions... only ${this.allowed.toString()} are allowed`)
             return { res: "" };
         }
-        return await this.callback(args, rawMsg, interaction);
+        try {
+            return await this.callback(args, rawMsg, interaction);
+        } catch (e) {
+            logger.err(e);
+            logger.err(e.stack);
+            await Webhooks.errHook.send(e.toString());
+            return { res : "", embed : ERROR_UNKNOWN };
+        }
     }
 };

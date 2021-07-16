@@ -128,6 +128,7 @@ async function attemptSend(msg, cmdResponse, opts) {
                 await msg.channel.send(opts);
             } catch(e) {
                 logError(msg, e);
+                await msg.channel.send({ embeds : [ERROR_UNKNOWN]})
             }
         }
     }
@@ -154,7 +155,6 @@ async function sanitizeCmdOpt(cmdResponse) {
             cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
         }
         await Webhooks.errHook.send(longMsgStr);
-        await msg.channel.send(longMsgStr);
         logger.err(longMsgStr);
     }
     return cmdResponse;
