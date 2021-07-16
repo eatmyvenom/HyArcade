@@ -14,11 +14,10 @@ function getRandomPresence(type) {
  * @param {Client} client 
  * @param {String} type 
  */
-module.exports = async function SetupBot(client, type) {
+module.exports = async function SetPresence(client, type) {
     if(type == undefined || type == "slash") {
         type = "bot";
     }
 
-    client.user.setUsername(cfg.discord.setup[type].username);
     client.user.setPresence(getRandomPresence(type))
 }

@@ -79,5 +79,6 @@ module.exports = function doBot() {
         client.login(config.discord.backupToken);
     }
 
+    setInterval(BotEvents.cyclePresence, 7200000)
     setInterval(BotEvents.heartBeat, 900000);
 };
