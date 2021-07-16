@@ -15,6 +15,7 @@ const Runtime = require("../Runtime");
 const EZ = require("./Commands/EZ");
 const Ping = require("./Commands/Ping");
 const Echo = require("./Commands/Echo");
+const Blacklist = require("./Commands/Blacklist");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -152,6 +153,10 @@ async function checkCommands(rawMsg, command, args, author) {
         case "say":
         case "echo": {
             return await Echo.execute(args, author, rawMsg);
+        }
+
+        case Blacklist.name.toLowerCase(): {
+            return await Blacklist.execute(args, author, rawMsg);
         }
 
         default: {
