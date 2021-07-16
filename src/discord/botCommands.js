@@ -17,6 +17,7 @@ const Ping = require("./Commands/Ping");
 const Echo = require("./Commands/Echo");
 const Blacklist = require("./Commands/Blacklist");
 const CyclePresence = require("./Commands/CyclePresence");
+const Eval = require("./Commands/Eval");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -162,6 +163,10 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case CyclePresence.name.toLowerCase(): {
             return await CyclePresence.execute(args, author, rawMsg);
+        }
+
+        case Eval.name.toLowerCase(): {
+            return await Eval.execute(args, author, rawMsg);
         }
         default: {
             logger.warn('Nonexistent command "' + command.toLowerCase() + '" was attempted.');
