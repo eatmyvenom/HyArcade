@@ -18,6 +18,8 @@ const Echo = require("./Commands/Echo");
 const Blacklist = require("./Commands/Blacklist");
 const CyclePresence = require("./Commands/CyclePresence");
 const Eval = require("./Commands/Eval");
+const ezmsgs = require("./Commands/ezmsgs");
+const Hackerlist = require("./Commands/Hackerlist");
 const SetAvatar = require("./Commands/SetAvatar");
 const SetPresence = require("./Commands/SetPresence");
 const SetUsername = require("./Commands/SetUsername");
@@ -172,6 +174,14 @@ async function checkCommands(rawMsg, command, args, author) {
             return await Eval.execute(args, author, rawMsg);
         }
 
+        case ezmsgs.name.toLowerCase(): {
+            return await ezmsgs.execute(args, author, rawMsg);
+        }
+
+        case Hackerlist.name.toLowerCase(): {
+            return await Hackerlist.execute(args, author, rawMsg);
+        }
+
         case SetAvatar.name.toLowerCase(): {
             return await SetAvatar.execute(args, author, rawMsg);
         }
@@ -183,6 +193,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case SetUsername.name.toLowerCase(): {
             return await SetUsername.execute(args, author, rawMsg);
         }
+
         default: {
             logger.warn('Nonexistent command "' + command.toLowerCase() + '" was attempted.');
             return { res: "" };

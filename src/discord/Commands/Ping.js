@@ -15,14 +15,14 @@ let statusName = [
     "RESUMING"
 ]
 
-module.exports = new Command("info", ["*"], async (args) => {
+module.exports = new Command("ping", ["*"], async (args) => {
     let embed = new MessageEmbed()
         .setAuthor(BotUtils.client.user.username + " status", BotUtils.client.user.avatarURL(), "https://hyarcade.xyz/")
         .addField(
             "Status",
             `📡 Ping - ${BotUtils.client.ws.ping}ms\n` +
-                `📟 Status - ${statusName[BotUtils.client.ws.status]}\n` +
-                `⏲️ Start time - ${TimeFormatter(Date.now() - BotUtils.client.uptime)}\n`,
+            `📟 Status - ${statusName[BotUtils.client.ws.status]}\n` +
+            `⏲️ Start time - ${TimeFormatter(Date.now() - BotUtils.client.uptime)}\n`,
             true
         )
         .addField(
