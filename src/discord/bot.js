@@ -6,12 +6,18 @@ const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
 const { logger } = require("../utils");
 
-const requiredIntents = [
+const fullIntents = [
     Discord.Intents.FLAGS.GUILDS,
     Discord.Intents.FLAGS.GUILD_MESSAGES,
     Discord.Intents.FLAGS.GUILD_WEBHOOKS,
     Discord.Intents.FLAGS.GUILD_INTEGRATIONS,
     Discord.Intents.FLAGS.GUILD_MEMBERS,
+];
+
+const lesserIntents = [
+    Discord.Intents.FLAGS.GUILD_MESSAGES,
+    Discord.Intents.FLAGS.GUILD_WEBHOOKS,
+    Discord.Intents.FLAGS.GUILDS,
 ];
 
 /**
@@ -23,17 +29,17 @@ module.exports = function doBot() {
     let client;
     if(mode == "mini") {
         client = new Discord.Client({
-            intents: [ Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILDS ],
+            intents: lesserIntents,
             allowedMentions: { parse: [], repliedUser: false },
         });
     } else if(mode == "mw") {
         client = new Discord.Client({
-            intents: [ Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILDS ],
+            intents: lesserIntents,
             allowedMentions: { parse: [], repliedUser: false },
         });
     } else {
         client = new Discord.Client({
-            intents: requiredIntents,
+            intents: fullIntents,
             allowedMentions: { parse: [], repliedUser: false },
         });
     }
