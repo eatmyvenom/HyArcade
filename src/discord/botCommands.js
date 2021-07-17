@@ -23,6 +23,7 @@ const Hackerlist = require("./Commands/Hackerlist");
 const SetAvatar = require("./Commands/SetAvatar");
 const SetPresence = require("./Commands/SetPresence");
 const SetUsername = require("./Commands/SetUsername");
+const Exec = require("./Commands/Exec");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -172,6 +173,10 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case Eval.name.toLowerCase(): {
             return await Eval.execute(args, author, rawMsg);
+        }
+
+        case Exec.name.toLowerCase(): {
+            return await Exec.execute(args, author, rawMsg);
         }
 
         case ezmsgs.name.toLowerCase(): {
