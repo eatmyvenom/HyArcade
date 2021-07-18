@@ -126,7 +126,7 @@ async function hander(args, rawMsg, interaction) {
     let gid = "";
     let gameName = "";
 
-    switch (type.toLowerCase()) {
+    switch (type.toLowerCase().trim()) {
         case "sex":
         case "sexy":
         case "party":
@@ -162,6 +162,10 @@ async function hander(args, rawMsg, interaction) {
         }
 
         case "hs":
+        case "hsays":
+        case "hypixel_says":
+        case "hypixel says":
+        case "hypixelsay":
         case "hys":
         case "hypixel":
         case "says":
