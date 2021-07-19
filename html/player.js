@@ -101,7 +101,6 @@ function handleData(rawjson) {
     if (playerdata != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
-        loadGamesPlayed();
         if (urlParams.has("q")) {
             if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
                 urlParams.set("q", playername);
@@ -122,22 +121,6 @@ function handleData(rawjson) {
     }
 }
 
-function handleGamesPlayed(rawjson) {
-    let json = JSON.parse(rawjson);
-    let data = json[uuid];
-    let sortable = Object.entries(data.counts)
-        .sort(([, a], [, b]) => a - b)
-        .reverse()
-        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-
-    let countsStr = "";
-    for (let count in sortable) {
-        countsStr += `${count.replace(/\./g, " ").replace(/_/g, " ")}: ${sortable[count]}\n`;
-    }
-
-    setHtmlByName("gamesPlayed", countsStr);
-}
-
 function loadData() {
     if (playername != undefined) {
         let url = "https://eatmyvenom.me/share/accounts.json";
@@ -147,12 +130,6 @@ function loadData() {
 
 function fetchResponse(res) {
     res.text().then(handleData);
-}
-
-function loadGamesPlayed() {
-    fetch("https://eatmyvenom.me/share/gamesPlayed.json").then((res) => {
-        res.text().then(handleGamesPlayed);
-    });
 }
 
 function loadPage() {
