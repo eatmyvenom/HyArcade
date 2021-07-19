@@ -19,6 +19,7 @@ let PlusColors = {
     light_purple: "#FF55FF",
     yellow: "#FFFF55",
     white: "#FFFFFF",
+    undefined: "#FFAA00"
 };
 
 module.exports = class ImageGenerator {
@@ -186,7 +187,7 @@ module.exports = class ImageGenerator {
                 this.writeText(rank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
                 startX += rankWidth;
                 if (plus != "") {
-                    this.writeText(plus, startX, y, "left", PlusColors[plusColor.toLowerCase()], fontSize, 36);
+                    this.writeText(plus, startX, y, "left", PlusColors[("" + plusColor).toLowerCase()], fontSize, 36);
                     startX += plusWidth;
                 }
                 this.writeText(rankEnd, startX, y, "left", rankColor, fontSize, 36);
