@@ -1,5 +1,8 @@
 const config = require("../Config").fromJSON();
 const embeds = require("./Embeds");
+const { logger } = require("../utils");
+const Runtime = require("../Runtime");
+const owner = "156952208045375488";
 
 let linkCmd = require("./Commands/Link");
 let statusCmd = require("./Commands/Status");
@@ -9,8 +12,6 @@ let MKinvCmd = require("./Commands/MakeInviteEmbed");
 let MKhookCmd = require("./Commands/MakeHook");
 let UpdRolesCmd = require("./Commands/UpdateRoles");
 let InfoCmd = require("./Commands/Info");
-const { logger } = require("../utils");
-const Runtime = require("../Runtime");
 let EZ = require("./Commands/EZ");
 let Ping = require("./Commands/Ping");
 let Echo = require("./Commands/Echo");
@@ -26,6 +27,7 @@ let Exec = require("./Commands/Exec");
 let FetchUser = require("./Commands/FetchUser");
 let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
+let TopGames = require("./Commands/TopGames");
 
 function requireNew(str) {
     delete require.cache[str];
@@ -218,6 +220,12 @@ async function checkCommands(rawMsg, command, args, author) {
             return await FetchChannel.execute(args, author, rawMsg);
         }
 
+        case TopGames.name.toLowerCase(): {
+            if(author == owner) {
+                return await TopGames.execute(args, author, rawMsg);
+            }
+        }
+
         case "clearcache" : {
             linkCmd = requireNew("./Commands/Link");
             statusCmd = requireNew("./Commands/Status");
@@ -242,6 +250,7 @@ async function checkCommands(rawMsg, command, args, author) {
             FetchUser = requireNew("./Commands/FetchUser");
             FetchGuild = requireNew("./Commands/FetchGuild");
             FetchChannel = requireNew("./Commands/FetchChannel");
+            TopGames = requireNew("./Commands/TopGames");
 
             return {res : "Commands uncached!"}
         }

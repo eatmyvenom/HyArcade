@@ -18,6 +18,10 @@ let profile = require("./Commands/Profile");
 profile.options[0].required = true;
 exports.profile = profile;
 
+let topgames = require("./Commands/TopGames");
+topgames.options[0].required = true;
+exports.topgames = topgames;
+
 let arcade = require("./Commands/Arcade");
 arcade.options = [ arcade.options[2], arcade.options[3] ];
 exports.arcade = arcade;

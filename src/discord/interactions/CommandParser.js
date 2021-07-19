@@ -18,6 +18,7 @@ const Leaderboard = require("../Commands/Leaderboard");
 const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
 const Ping = require("../Commands/Ping");
+const TopGames = require("../Commands/TopGames");
 
 let Commands = null;
 function getArg(i, a) {
@@ -184,6 +185,10 @@ module.exports = async (interaction) => {
 
         case Commands.Profile.name: {
             return await Commands.Profile.execute([getArg(interaction, "player")], authorID, null, interaction);
+        }
+
+        case "top-games": {
+            return await TopGames.execute([getArg(interaction, "player")], authorID, null, interaction);
         }
 
         case "arcade": {
