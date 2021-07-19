@@ -478,6 +478,19 @@ async function hander(args, rawMsg, interaction) {
             break;
         }
 
+        case "ap":
+        case "achieve":
+        case "achievements":
+        case "ach":
+        case "advancements":
+        case "advance":
+        case "achiev": {
+            gameName = "Achievement points";
+            res = await getLB("achievementPoints", timetype, limit, undefined, startingIndex);
+            gid = "ap";
+            break;
+        }
+
         default: {
             let embed = new MessageEmbed()
                 .setTitle("ERROR")
