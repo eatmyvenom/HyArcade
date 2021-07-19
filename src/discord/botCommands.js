@@ -28,6 +28,7 @@ let FetchUser = require("./Commands/FetchUser");
 let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
+const CommandResponse = require("./Utils/CommandResponse");
 
 function requireNew(str) {
     delete require.cache[str];
@@ -43,9 +44,14 @@ async function execute(msg, senderID) {
             return { res: "", embed: embeds.ERROR_API_DOWN };
         }
         let cmdArr = msg.content.slice(1).split(" ");
-        return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
+        let res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
+        if(res instanceof CommandResponse) {
+            return res;
+        } else {
+            return new CommandResponse(res);
+        }
     }
-    return { res: "" };
+    return new CommandResponse({ res: "" });
 }
 
 async function checkCommands(rawMsg, command, args, author) {

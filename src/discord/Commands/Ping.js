@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
+const CommandResponse = require("../Utils/CommandResponse");
 const TimeFormatter = require("../Utils/TimeFormatter");
 
 let statusName = [
@@ -33,5 +34,5 @@ module.exports = new Command("ping", ["*"], async (args) => {
             true
         )
         .setColor(0x8c54fe);
-    return { res: "", embed: embed };
+    return new CommandResponse({ res: "", embed: embed });
 });

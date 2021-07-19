@@ -8,6 +8,7 @@ const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 const fs = require('fs-extra');
 const Webhooks = require("./Utils/Webhooks");
+const CommandResponse = require("./Utils/CommandResponse");
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -32,26 +33,18 @@ async function commandHandler(interaction) {
         return;
     }
 
-    let e = responseObj.embed ? [responseObj.embed] : undefined;
-    let f = responseObj.img ? [responseObj.img] : undefined;
-    let c = responseObj.b ? [responseObj.b] : undefined;
-    let content = responseObj.res != "" ? responseObj.res : undefined;
+    let res;
+    if(responseObj instanceof CommandResponse) {
+        res = responseObj;
+    } else {
+        responseObj = new CommandResponse(res);
+    }
 
     try {
         if (!interaction.deferred && !interaction.replied) {
-            await interaction.reply({
-                content: content,
-                embeds: e,
-                components: c,
-                files: f,
-            });
+            await interaction.reply(res.toDiscord());
         } else {
-            await interaction.followUp({
-                content: content,
-                embeds: e,
-                components: c,
-                files: f,
-            });
+            await interaction.followUp(res.toDiscord());
         }
     } catch (e) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)

@@ -17,6 +17,7 @@ const AdvancedEmbeds = require("./AdvancedEmbeds");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const LogUtils = require("./Utils/LogUtils");
+const CommandResponse = require("./Utils/CommandResponse");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -195,6 +196,49 @@ async function isBlacklisted(id) {
     return blacklist.includes(id);
 }
 
+/**
+ * 
+ * @param {Discord.Message} msg 
+ * @param {CommandResponse} cmdResponse 
+ */
+async function sendText(msg, cmdResponse) {
+    let runtime = Runtime.fromJSON();
+    if (runtime.bot != "backup") {
+        logger.info("No webhook availiable. Sending normally");
+        try {
+            let msgObj = cmdResponse.toDiscord({ messageReference: msg.id })
+            await msg.channel.send(msgObj);
+        } catch(e) {
+            logError(msg, e);
+            await msg.channel.send({ embeds : [ERROR_UNKNOWN]});
+        }
+    }
+}
+
+/**
+ * 
+ * @param {Discord.Message} msg 
+ * @param {CommandResponse} cmdResponse 
+ */
+async function sendNormal(msg, cmdResponse) {
+    /**
+     * @type {Discord.Collection<Discord.Snowflake, Discord.Webhook>}
+     */
+    let hooks = await msg.channel.fetchWebhooks();
+    logger.info("Attempting to send response as webhook");
+
+    if(hooks.size > 0) {
+        let hook = hooks.first();
+        try {
+            await hook.send(cmdResponse.toDiscord());
+        } catch (e) {
+            await sendText(msg, cmdResponse);
+        }
+    } else {
+        await sendText(msg, cmdResponse);
+    }
+}
+
 async function mwMode(msg) {
     let cmdResponse = await getMWCmdRes(msg);
     let isValidResponse =
@@ -217,9 +261,51 @@ async function mwMode(msg) {
     }
 }
 
+function checkResponse(cmdResponse) {
+    return cmdResponse != undefined &&
+    (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
+}
+
 /**
  * 
- * @param {Message} msg 
+ * @param {Discord.Message} msg 
+ * @param {Object | CommandResponse} cmdResponse 
+ */
+async function handleCommand(msg, cmdResponse, isDiscordResponse) {
+    if (await isBlacklisted(msg.author.id)) {
+        return;
+    }
+
+    if(isDiscordResponse) {
+        if(!cmdResponse.silent) {
+            await sendNormal(msg, cmdResponse);
+        }
+    } else {
+        let opts = {};
+        if (cmdResponse.embed) {
+            opts.embed = cmdResponse.embed;
+        }
+        await sanitizeCmdOpt(cmdResponse);
+        if(!cmdResponse.silent) {
+            await attemptSend(msg, cmdResponse, opts);
+        }
+    }
+    await logCmd(msg);
+}
+
+async function checkMW(msg) {
+    if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
+    if (msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
+        await mwMode(msg);
+        return;
+    } else {
+        return;
+    }
+}
+
+/**
+ * 
+ * @param {Discord.Message} msg 
  * @returns 
  */
 module.exports = async function messageHandler(msg) {
@@ -229,49 +315,30 @@ module.exports = async function messageHandler(msg) {
         logger.warn("Ignored guild message detected!");
         return;
     }
+
     if (BotUtils.botMode == "mw") {
-        if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
-        if (msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
-            await mwMode(msg);
-            return;
-        } else {
-            return;
-        }
+        return await checkMW();
     }
 
     let cmdResponse = await getCmdRes(msg);
+    let isValidResponse = false;
+    let isDiscordResponse = false;
 
-    let isValidResponse =
-        cmdResponse != undefined &&
-        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
-
-    if(!isValidResponse) {
-
-        cmdResponse = SlashHelpTxt(msg);
-
-        isValidResponse =
-            cmdResponse != undefined &&
-            (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
+    if(cmdResponse instanceof CommandResponse && cmdResponse.isValid()) {
+        isValidResponse = true;
+        isDiscordResponse = true;
+    } else {
+        isValidResponse = checkResponse(cmdResponse);
+        if(!isValidResponse) {
+            cmdResponse = SlashHelpTxt(msg);
+            isValidResponse = checkResponse(cmdResponse);
+        }
     }
-
 
     if (isValidResponse) {
-        if (await isBlacklisted(msg.author.id)) {
-            return;
-        }
-        let opts = {};
-        if (cmdResponse.embed) {
-            opts.embed = cmdResponse.embed;
-        }
-
-        await sanitizeCmdOpt(cmdResponse);
-
-        if(!cmdResponse.silent) {
-            await attemptSend(msg, cmdResponse, opts);
-        }
-        await addIGNs(msg);
-        await logCmd(msg);
+        await handleCommand(msg, cmdResponse, isDiscordResponse);
     }
 
+    await addIGNs(msg);
     await LogUtils.logIgns(msg);
 };

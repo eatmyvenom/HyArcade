@@ -1,6 +1,7 @@
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const { ERROR_ARGS_LENGTH } = require("../Embeds");
+const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
     /**
@@ -23,7 +24,7 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
         case "add":
         case "plus": {
             msgs.push(arg);
-            res = { res : "Message added!"};
+            res = new CommandResponse("Message added!");
             hasChange = true;
             break;
         }
@@ -32,7 +33,7 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
         case "rm":
         case "remove": {
             msgs = msgs.filter(h => h != arg);
-            res = { res : "Message removed!" };
+            res = new CommandResponse("Message removed!");
             hasChange = true;
             break;
         }
@@ -41,13 +42,13 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
         case "ls":
         case "list":
         case "show": {
-            res = { res :"```\n" + msgs.join("\n") + "```"}
+            res = new CommandResponse("```\n" + msgs.join("\n") + "```");
             break;
         }
     }
 
     if(hasChange) {
-        await BotUtils.writeToDB("blaclist", msgs);
+        await BotUtils.writeToDB("ezmsgs", msgs);
     }
 
     return res;

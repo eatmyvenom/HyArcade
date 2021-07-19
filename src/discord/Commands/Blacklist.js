@@ -1,6 +1,7 @@
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const { ERROR_ARGS_LENGTH } = require("../Embeds");
+const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     /**
@@ -22,7 +23,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
         case "add":
         case "plus": {
             blacklist.push(args[1]);
-            res = { res : "Discord ID added!"};
+            res = new CommandResponse("Discord ID added!");
             hasChange = true;
             break;
         }
@@ -31,7 +32,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
         case "rm":
         case "remove": {
             blacklist = blacklist.filter(h => h != args[1]);
-            res = { res : "Discord ID removed!" };
+            res = new CommandResponse("Discord ID removed!");
             hasChange = true;
             break;
         }
@@ -40,13 +41,13 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
         case "ls":
         case "list":
         case "show": {
-            res = { res :"```\n" + blacklist.join("\n") + "```"}
+            res = new CommandResponse("```\n" + blacklist.join("\n") + "```");
             break;
         }
     }
 
     if(hasChange) {
-        await BotUtils.writeToDB("blaclist", blacklist);
+        await BotUtils.writeToDB("blacklist", blacklist);
     }
 
     return res;

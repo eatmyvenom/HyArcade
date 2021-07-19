@@ -1,5 +1,6 @@
 const cp = require("child_process")
 const Command = require("../../classes/Command");
+const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("Exec", ["156952208045375488"], async (args) => {
     let shellCommand = args.join(" ");
@@ -10,5 +11,7 @@ module.exports = new Command("Exec", ["156952208045375488"], async (args) => {
         stdout = e
     }
 
-    return { res : "```Response:\n" + stdout.toString() + "\n```" };
+    let res = "```Response:\n" + stdout.toString() + "\n```"
+
+    return new CommandResponse(res);
 });

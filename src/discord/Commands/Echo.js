@@ -1,6 +1,7 @@
 const { TextChannel } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
+const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
     let channel = args[0];
@@ -18,5 +19,5 @@ module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
     }
 
     await discChannel.send(text)
-    return { res: "", silent : true };
+    return new CommandResponse("Message sent!", undefined, undefined, undefined, true);
 });
