@@ -2,7 +2,6 @@ const config = require("../Config").fromJSON();
 const embeds = require("./Embeds");
 
 let linkCmd = require("./Commands/Link");
-let pgdCmd = require("./Commands/PGDaily");
 let statusCmd = require("./Commands/Status");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
@@ -12,18 +11,26 @@ let UpdRolesCmd = require("./Commands/UpdateRoles");
 let InfoCmd = require("./Commands/Info");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
-const EZ = require("./Commands/EZ");
-const Ping = require("./Commands/Ping");
-const Echo = require("./Commands/Echo");
-const Blacklist = require("./Commands/Blacklist");
-const CyclePresence = require("./Commands/CyclePresence");
-const Eval = require("./Commands/Eval");
-const ezmsgs = require("./Commands/ezmsgs");
-const Hackerlist = require("./Commands/Hackerlist");
-const SetAvatar = require("./Commands/SetAvatar");
-const SetPresence = require("./Commands/SetPresence");
-const SetUsername = require("./Commands/SetUsername");
-const Exec = require("./Commands/Exec");
+let EZ = require("./Commands/EZ");
+let Ping = require("./Commands/Ping");
+let Echo = require("./Commands/Echo");
+let Blacklist = require("./Commands/Blacklist");
+let CyclePresence = require("./Commands/CyclePresence");
+let Eval = require("./Commands/Eval");
+let ezmsgs = require("./Commands/ezmsgs");
+let Hackerlist = require("./Commands/Hackerlist");
+let SetAvatar = require("./Commands/SetAvatar");
+let SetPresence = require("./Commands/SetPresence");
+let SetUsername = require("./Commands/SetUsername");
+let Exec = require("./Commands/Exec");
+let FetchUser = require("./Commands/FetchUser");
+let FetchGuild = require("./Commands/FetchGuild");
+let FetchChannel = require("./Commands/FetchChannel");
+
+function requireNew(str) {
+    delete require.cache[str];
+    return require(str);
+}
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
@@ -197,6 +204,46 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case SetUsername.name.toLowerCase(): {
             return await SetUsername.execute(args, author, rawMsg);
+        }
+
+        case FetchUser.name.toLowerCase(): {
+            return await FetchUser.execute(args, author, rawMsg);
+        }
+
+        case FetchGuild.name.toLowerCase(): {
+            return await FetchGuild.execute(args, author, rawMsg);
+        }
+
+        case FetchChannel.name.toLowerCase(): {
+            return await FetchChannel.execute(args, author, rawMsg);
+        }
+
+        case "clearcache" : {
+            linkCmd = requireNew("./Commands/Link");
+            statusCmd = requireNew("./Commands/Status");
+            timeUpdateCmd = requireNew("./Commands/LastUpdate");
+            KillBotCmd = requireNew("./Commands/KillBot");
+            MKinvCmd = requireNew("./Commands/MakeInviteEmbed");
+            MKhookCmd = requireNew("./Commands/MakeHook");
+            UpdRolesCmd = requireNew("./Commands/UpdateRoles");
+            InfoCmd = requireNew("./Commands/Info");
+            EZ = requireNew("./Commands/EZ");
+            Ping = requireNew("./Commands/Ping");
+            Echo = requireNew("./Commands/Echo");
+            Blacklist = requireNew("./Commands/Blacklist");
+            CyclePresence = requireNew("./Commands/CyclePresence");
+            Eval = requireNew("./Commands/Eval");
+            ezmsgs = requireNew("./Commands/ezmsgs");
+            Hackerlist = requireNew("./Commands/Hackerlist");
+            SetAvatar = requireNew("./Commands/SetAvatar");
+            SetPresence = requireNew("./Commands/SetPresence");
+            SetUsername = requireNew("./Commands/SetUsername");
+            Exec = requireNew("./Commands/Exec");
+            FetchUser = requireNew("./Commands/FetchUser");
+            FetchGuild = requireNew("./Commands/FetchGuild");
+            FetchChannel = requireNew("./Commands/FetchChannel");
+
+            return {res : "Commands uncached!"}
         }
 
         default: {
