@@ -37,7 +37,7 @@ async function commandHandler(interaction) {
     if(responseObj instanceof CommandResponse) {
         res = responseObj;
     } else {
-        responseObj = new CommandResponse(res);
+        res = new CommandResponse(responseObj);
     }
 
     try {

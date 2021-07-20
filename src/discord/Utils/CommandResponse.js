@@ -16,14 +16,14 @@ module.exports = class CommandResponse {
      * @param {Boolean} silent 
      */
     constructor(text, embed = undefined, file = undefined, components = undefined, silent = false) {
-        if(typeof text == "object") {
+        if(typeof text == "object" && typeof text != "string") {
             this.text = text.res;
             this.file = text.img;
             this.embed = text.embed;
             this.silent = text.silent;
             this.components = text.b;
         } else {
-            this.text = "" + text;
+            this.text = text;
             this.embed = embed;
             this.file = file;
             this.components = components;
@@ -45,8 +45,8 @@ module.exports = class CommandResponse {
             return;
         }
 
-        if(this.text.length > 2000) {
-            this.file = [ new MessageAttachment(Buffer.from(this.text.replace(/`/g, "").trim()), "message.txt") ];
+        if(("" + this.text).length > 2000) {
+            this.file = [ new MessageAttachment(Buffer.from(("" + this.text).replace(/`/g, "").trim()), "message.txt") ];
             this.text = undefined;
         }
 
