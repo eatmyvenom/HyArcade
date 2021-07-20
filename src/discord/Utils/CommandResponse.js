@@ -63,6 +63,10 @@ module.exports = class CommandResponse {
             this.file = [ this.file ];
         }
 
+        if(this.components != undefined && !Array.isArray(this.components)) {
+            this.components = [ this.components ];
+        }
+
         let obj = {
             tts: false,
             nonce: undefined,
