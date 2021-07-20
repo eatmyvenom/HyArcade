@@ -268,7 +268,7 @@ async function mwMode(msg) {
 
 function checkResponse(cmdResponse) {
     return cmdResponse != undefined &&
-    (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
+        (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
 }
 
 /**

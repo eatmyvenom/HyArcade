@@ -51,7 +51,7 @@ async function execute(msg, senderID) {
             return new CommandResponse(res);
         }
     }
-    return new CommandResponse({ res: "" });
+    return;
 }
 
 async function checkCommands(rawMsg, command, args, author) {
