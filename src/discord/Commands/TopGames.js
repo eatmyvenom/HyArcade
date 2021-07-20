@@ -17,6 +17,7 @@ function getGames(acc) {
         { name : "Blocking dead", wins : acc.blockingDeadWins},
         { name : "Hide and seek", wins : acc.hideAndSeekWins},
         { name : "Zombies", wins : acc.zombiesWins},
+        { name : "Galaxy wars", wins : acc.galaxyWarsWins},
         { name : "Pixel painters", wins : acc.pixelPaintersWins},
         { name : "Seasonal", wins : acc.simTotal},
     ];

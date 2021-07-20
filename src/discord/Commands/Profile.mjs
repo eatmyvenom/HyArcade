@@ -20,6 +20,7 @@ function getMain(acc) {
         Football: acc.footballWins,
         Ender_spleef: acc.enderSpleefWins,
         Dragon_wars: acc.dragonWarsWins,
+        Galaxy_wars: acc.galaxyWarsWins,
         Bounty_hunters: acc.bountyHuntersWins,
         Blocking_dead: acc.blockingDeadWins,
         Hide_and_seek: acc.hideAndSeekWins,
