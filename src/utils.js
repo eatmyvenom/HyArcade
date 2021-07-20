@@ -1,8 +1,10 @@
 const Config = require("./Config");
 const cfg = Config.fromJSON();
-const fs = require("fs/promises");
+const fs = require("fs-extra");
 const webRequest = require("./request/webRequest");
 const BSONwriter = require("./utils/files/BSONwriter");
+const { default: fetch } = require("node-fetch");
+const logger = require("./utils/Logger")
 
 /**
  * Halt execution for a specified amount of time
@@ -76,6 +78,45 @@ async function writeJSON(path, json) {
     }
 }
 
+async function writeDB(path, json) {
+    let data = JSON.stringify(json);
+    let url = new URL("db", cfg.dbUrl);
+    url.searchParams.set("path", path);
+    logger.debug(`Writing to ${path} in database`);
+
+    try {
+        await fetch(url.toString(), {
+            method: 'post',
+            body: data,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': cfg.dbPass
+            }
+        });
+    } catch(e) {
+        logger.err("Can't connect to database");
+        logger.err(e);
+        return {};
+    }
+}
+
+async function readDB(file) {
+    let fileData;
+    let url = new URL("db", cfg.dbUrl);
+    let path = `${file}`;
+    url.searchParams.set("path", path);
+    logger.debug(`Fetching ${url.searchParams.toString()} from database`);
+
+    try {
+        fileData = await (await fetch(url)).json();
+    } catch(e) {
+        logger.err("Can't connect to database");
+        logger.err(e);
+        return {};
+    }
+    return fileData;
+}
+
 async function readJSON(path) {
     return JSON.parse(await fs.readFile("data/" + path));
 }
@@ -100,6 +141,15 @@ function fileExists(path) {
 async function archiveJson(oldfile, path, timetype) {
     old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
+
+    if(fs.existsSync("data/" + oldfile + ".bson")) {
+        await fs.copy("data/" + oldfile + ".bson", `${path}${oldfile}.${timetype}.bson`);
+    }
+
+    if(fs.existsSync("data/" + oldfile + ".bson.1")) {
+        await fs.copy("data/" + oldfile + ".bson.1", `${path}${oldfile}.${timetype}.bson.1`);
+        await fs.copy("data/" + oldfile + ".bson.2", `${path}${oldfile}.${timetype}.bson.2`);
+    }
 }
 
 async function downloadFile(name, servername) {
@@ -120,11 +170,13 @@ module.exports = {
     winsSorter: winsSorter,
     writeJSON: writeJSON,
     readJSON: readJSON,
+    writeDB: writeDB,
+    readDB: readDB,
     fileExists: fileExists,
     downloadFile: downloadFile,
     daytime: daytime,
     defaultAllowed: defaultAllowed,
     getKeyByValue: getKeyByValue,
     cacheMiss: [],
-    logger: require("./utils/Logger"),
+    logger: logger,
 };

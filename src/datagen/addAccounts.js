@@ -13,7 +13,7 @@ const { getUUID } = require("../request/mojangRequest");
  */
 module.exports = async function addAccounts(category, names) {
     let res = "";
-    let acclist = await utils.readJSON("./acclist.json");
+    let acclist = await utils.readDB("acclist");
     let newAccs = [];
     if (acclist[category] == undefined) {
         logger.err("Please input a valid category!");
@@ -61,9 +61,9 @@ module.exports = async function addAccounts(category, names) {
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
-    let oldAccounts = await utils.readJSON("accounts.json");
+    let oldAccounts = await utils.readDB("accounts");
     let fullNewAccounts = oldAccounts.concat(newAccs);
-    acclist = await utils.readJSON("./acclist.json");
+    acclist = await utils.readDB("acclist");
     for (let acc of newAccs) {
         let lilAcc = { name: acc.name, wins: acc.wins, uuid: acc.uuid };
         acclist[category].push(lilAcc);
@@ -73,8 +73,7 @@ module.exports = async function addAccounts(category, names) {
     fullNewAccounts.filter(a => { return a.uuid != undefined });
     newAccs.filter(a => { return a.uuid != undefined });
 
-    await utils.writeJSON("acclist.json", acclist);
-    await utils.writeJSON("accounts.json", fullNewAccounts);
-    await utils.writeJSON("accounts.json.part", newAccs);
+    await utils.writeDB("acclist", acclist);
+    await utils.writeDB("accounts", fullNewAccounts);
     return res;
 };

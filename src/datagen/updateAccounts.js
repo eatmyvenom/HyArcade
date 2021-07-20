@@ -14,7 +14,7 @@ module.exports = async function updateAccounts(accounts) {
     accounts.sort(utils.winsSorter);
     await fs.writeFile("starttime", Buffer.from("" + Date.now()))
 
-    let oldAccs = await utils.readJSON("accounts.json");
+    let oldAccs = await utils.readDB("accounts");
 
     let i,
         j,

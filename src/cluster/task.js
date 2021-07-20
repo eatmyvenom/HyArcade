@@ -18,7 +18,7 @@ const { winsSorter } = require("../utils");
 async function accs() {
     let acclist = await lists.accounts();
     accounts = await dataGen.updateAllAccounts(acclist);
-    let old = await utils.readJSON("accounts.json");
+    let old = await utils.readDB("accounts");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
     if (!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
@@ -28,7 +28,7 @@ async function accs() {
         await ED.sendEvents();
         await ED.saveEvents();
     }
-    await utils.writeJSON("accounts.json", accounts);
+    await utils.writeDB("accounts", accounts);
     return ["accounts.json"];
 }
 
