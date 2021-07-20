@@ -235,7 +235,7 @@ async function sendNormal(msg, cmdResponse) {
     if(hooks.size > 0) {
         let hook = hooks.first();
         try {
-            await hook.send(cmdResponse.toDiscord());
+            await hook.send(cmdResponse.toDiscord(undefined, true));
         } catch (e) {
             await sendText(msg, cmdResponse);
         }

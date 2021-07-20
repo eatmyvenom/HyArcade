@@ -1,4 +1,5 @@
 const { MessageEmbed, FileOptions, BufferResolvable, MessageAttachment, MessageActionRow, MessageActionRowOptions, ReplyMessageOptions, MessageOptions} = require("discord.js");
+const BotUtils = require("../BotUtils");
 
 module.exports = class CommandResponse {
     text = "";
@@ -40,7 +41,7 @@ module.exports = class CommandResponse {
      * @param {ReplyMessageOptions} reply 
      * @returns {MessageOptions | undefined}
      */
-    toDiscord(reply) {
+    toDiscord(reply, webhook = false) {
         if(this.silent) {
             return;
         }
@@ -62,7 +63,7 @@ module.exports = class CommandResponse {
             this.file = [ this.file ];
         }
 
-        return {
+        let obj = {
             tts: false,
             nonce: undefined,
             content: this.text,
@@ -71,6 +72,14 @@ module.exports = class CommandResponse {
             files: this.file,
             components: this.components,
             reply: reply
+        }
+
+        if(webhook) {
+            obj.username = BotUtils.client.user.username;
+            obj.avatarURL = BotUtils.client.user.avatarURL();
+            return obj;
+        } else {
+            return obj;
         }
     }
 }
