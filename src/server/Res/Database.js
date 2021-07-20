@@ -29,8 +29,27 @@ module.exports = async (req, res, fileCache) => {
         if(req.headers.authorization == cfg.dbPass) {
             req.on("data", d => data+=d);
             req.on("end", async () => {
-                json = JSON.parse(data)
-                fileCache[url.searchParams.get("path")] = json;
+                json = JSON.parse(data);
+
+                if(url.searchParams.get("path") == "accounts") {
+                    let old = fileCache[url.searchParams.get("path")];
+                    let newAccs = [];
+
+                    for(let acc of old) {
+                        let newAcc = json.find((a) => a.uuid == acc.uuid);
+                        if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
+                            newAccs.push(newAcc);
+                        } else {
+                            newAccs.push(acc);
+                        }
+                    }
+
+                    fileCache.accounts = newAccs;
+
+                } else {
+                    fileCache[url.searchParams.get("path")] = json;
+                }
+
                 await fileCache.save();
                 res.end();
             });
