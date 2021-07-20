@@ -322,7 +322,7 @@ module.exports = async function messageHandler(msg) {
     }
 
     if (BotUtils.botMode == "mw") {
-        return await checkMW();
+        return await checkMW(msg);
     }
 
     let cmdResponse = await getCmdRes(msg);
