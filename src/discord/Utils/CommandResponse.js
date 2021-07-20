@@ -32,7 +32,7 @@ module.exports = class CommandResponse {
     }
 
     isValid() {
-        return this.text != undefined || this.text != "" || this.embed != undefined || this.file != undefined
+        return (this.text != undefined && this.text != "") || this.embed != undefined || this.file != undefined
     }
 
     /**

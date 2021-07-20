@@ -224,7 +224,12 @@ async function sendNormal(msg, cmdResponse) {
     /**
      * @type {Discord.Collection<Discord.Snowflake, Discord.Webhook>}
      */
-    let hooks = await msg.channel.fetchWebhooks();
+    let hooks;
+    try {
+        hooks = await msg.channel.fetchWebhooks();
+    } catch (e) {
+        await sendText(msg, cmdResponse);
+    }
     logger.info("Attempting to send response as webhook");
 
     if(hooks.size > 0) {
