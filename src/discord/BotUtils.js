@@ -1,6 +1,6 @@
 const { MessageEmbed, Client } = require("discord.js");
 const cfg = require("../Config").fromJSON();
-const AdvancedEmbeds = require("./AdvancedEmbeds");
+const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
 const Logger = require("../utils/Logger");

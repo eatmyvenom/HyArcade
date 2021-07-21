@@ -1,4 +1,3 @@
-const embeds = require("./Embeds");
 
 let linkCmd = require("./Commands/Link");
 let timeUpdateCmd = require("./Commands/LastUpdate");
@@ -9,16 +8,18 @@ const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 const Ping = require("./Commands/Ping");
+const { ERROR_DATABASE_ERROR } = require("./Utils/Embeds/DynamicEmbeds");
+const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
 
 async function execute(msg, senderID) {
     if (msg.content.startsWith(".")) {
         if (Runtime.fromJSON().dbERROR) {
             logger.warn("Someone tried to run a command while the database is corrupted!");
-            return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
+            return { res: "", embed: ERROR_DATABASE_ERROR };
         }
         if (Runtime.fromJSON().apiDown) {
             logger.warn("Someone tried to run a command while the API is down!");
-            return { res: "", embed: embeds.ERROR_API_DOWN };
+            return { res: "", embed: ERROR_API_DOWN };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);

@@ -1,8 +1,8 @@
 import Command from "../../classes/Command.js";
-import AdvancedEmbeds from "../AdvancedEmbeds.js";
+import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import BotUtils from "../BotUtils.js";
-import { ERROR_ARGS_LENGTH } from "../Embeds.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export let Compare = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
     if (args.length < 3) {

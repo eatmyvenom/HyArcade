@@ -1,7 +1,7 @@
 const { Message, Webhook } = require("discord.js");
-const { LOG_COMMAND_EXECUTION } = require("../Embeds");
 const Webhooks = require("./Webhooks");
 const config = require("../../Config");
+const { LOG_COMMAND_EXECUTION } = require("./Embeds/DynamicEmbeds");
 const cfg = config.fromJSON();
 
 module.exports = class LogUtils {

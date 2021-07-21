@@ -1,8 +1,8 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { ERROR_ARGS_LENGTH } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;

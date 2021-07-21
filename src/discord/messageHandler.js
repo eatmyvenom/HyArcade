@@ -9,11 +9,11 @@ const BotUtils = require("./BotUtils");
 const Account = require("../classes/account");
 const mojangRequest = require("../request/mojangRequest");
 const MiniWallsCommands = require("./MiniWallsCommands");
-const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_UNKNOWN } = require("./Embeds");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const Discord = require("discord.js");
 const Message = Discord.Message;
-const AdvancedEmbeds = require("./AdvancedEmbeds");
+const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
+const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_UNKNOWN, ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const LogUtils = require("./Utils/LogUtils");
@@ -81,7 +81,7 @@ async function miniWallsVerify(msg) {
 
     if (Runtime.fromJSON().apiDown) {
         logger.warn("Someone tried to verify while API is down!");
-        return { res: "", embed: embeds.ERROR_API_DOWN };
+        return { res: "", embed: ERROR_API_DOWN };
     }
 
     let acc = new Account(ign, 0, uuid);

@@ -1,7 +1,7 @@
 import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
-import { INFO_WHOIS as embedGen } from "../Embeds.js";
+import { INFO_WHOIS } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export let WhoIS = new Command("whois", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
@@ -11,6 +11,6 @@ export let WhoIS = new Command("whois", ["*"], async (args, rawMsg, interaction)
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
     }
-    let embed = embedGen(acc);
+    let embed = INFO_WHOIS(acc);
     return { res: "", embed: embed };
 });

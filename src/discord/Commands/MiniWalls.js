@@ -1,8 +1,8 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { ERROR_NEED_PLAYER: errNoPlayer } = require("../Embeds");
 const InteractionUtils = require("../interactions/InteractionUtils");
+const { ERROR_NEED_PLAYER } = require("../Utils/Embeds/StaticEmbeds");
 
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
@@ -31,7 +31,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
     }
 
     if(acc.uuid == undefined) {
-        return { res : "", embed : errNoPlayer };
+        return { res : "", embed : ERROR_NEED_PLAYER };
     }
 
     let stats =

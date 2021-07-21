@@ -1,4 +1,3 @@
-const embeds = require("../Embeds");
 const BotUtils = require("../BotUtils");
 const Runtime = require("../../Runtime");
 const { logger } = require("../../utils");
@@ -19,6 +18,8 @@ const MiniWallsLB = require("../Commands/MiniWallsLB");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
 const Ping = require("../Commands/Ping");
 const TopGames = require("../Commands/TopGames");
+const { ERROR_DATABASE_ERROR } = require("../Utils/Embeds/DynamicEmbeds");
+const { ERROR_API_DOWN } = require("../Utils/Embeds/StaticEmbeds");
 
 let Commands = null;
 
@@ -63,12 +64,12 @@ module.exports = async (interaction) => {
 
     if (Runtime.fromJSON().dbERROR) {
         logger.warn("Refusing to run command because database is corrupted!");
-        return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
+        return { res: "", embed: ERROR_DATABASE_ERROR };
     }
 
     if (Runtime.fromJSON().apiDown) {
         logger.warn("Refusing to run command because API is down!");
-        return { res: "", embed: embeds.ERROR_API_DOWN };
+        return { res: "", embed: ERROR_API_DOWN };
     }
 
     switch (interaction.commandName) {

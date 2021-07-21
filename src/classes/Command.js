@@ -1,5 +1,5 @@
 const BotUtils = require("../discord/BotUtils");
-const { ERROR_UNKNOWN } = require("../discord/Embeds");
+const { ERROR_UNKNOWN } = require("../discord/Utils/Embeds/StaticEmbeds");
 const Webhooks = require("../discord/Utils/Webhooks");
 const { logger } = require("../utils");
 

@@ -1,7 +1,7 @@
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { ERROR_ARGS_LENGTH } = require("../Embeds");
 const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     /**

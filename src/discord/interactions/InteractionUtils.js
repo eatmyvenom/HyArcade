@@ -3,7 +3,7 @@ const helpText = require("../HelpText");
 const BotUtils = require("../BotUtils");
 const Account = require("../../classes/account");
 const AccountResolver = require("./Utils/AccountResolver");
-const { FULL_HELP: help } = require("../Embeds");
+const { FULL_HELP } = require("../Utils/Embeds/StaticEmbeds");
 
 module.exports = class InteractionUtils {
     /**
@@ -33,7 +33,7 @@ module.exports = class InteractionUtils {
     }
 
     static helpEmbed() {
-        return help;
+        return FULL_HELP;
     }
 
     static helpTopic(topicName) {

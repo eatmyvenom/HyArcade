@@ -2,12 +2,13 @@ const Account = require("../../classes/account");
 const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../request/mojangRequest");
-const Embeds = require("../Embeds");
 const BotUtils = require("../BotUtils");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+const { ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_PLAYER_PREVIOUSLY_LINKED, ERROR_ACCOUNT_PREVIOUSLY_LINKED } = require("../Utils/Embeds/StaticEmbeds");
 
 module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
     if (args.length < 1) {
-        return { res: "", embed: Embeds.ERROR_ARGS_LENGTH(1) };
+        return { res: "", embed: ERROR_ARGS_LENGTH(1) };
     }
     let player = args[0];
     let discord = args[1];
@@ -34,12 +35,10 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
     }
 
     if (acc == undefined) {
-        let embed = Embeds.WARN_WAITING;
-
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
             await tmpMsg.delete();
-            let noexistEmbed = Embeds.ERROR_IGN_UNDEFINED;
+            let noexistEmbed = ERROR_IGN_UNDEFINED;
 
             return { res: "", embed: noexistEmbed };
         }
@@ -54,21 +53,21 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
         disclist[discord] = uuid;
         await BotUtils.writeToDB("disclist", disclist);
         disclist = null;
-        let embed = Embeds.INFO_LINK_SUCCESS;
+        let embed = INFO_LINK_SUCCESS;
         return { res: "", embed: embed };
     }
 
     if (disclist[discord]) {
-        let embed = Embeds.ERROR_PLAYER_PREVIOUSLY_LINKED;
+        let embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
         return { res: "", embed: embed };
     } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
-        let embed = Embeds.ERROR_ACCOUNT_PREVIOUSLY_LINKED;
+        let embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
         return { res: "", embed: embed };
     }
 
     disclist[discord] = uuid;
     await BotUtils.writeToDB("disclist", disclist);
     disclist = null;
-    let embed = Embeds.INFO_LINK_SUCCESS;
+    let embed = INFO_LINK_SUCCESS;
     return { res: "", embed: embed };
 });

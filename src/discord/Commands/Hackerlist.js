@@ -1,6 +1,6 @@
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
-const { ERROR_ARGS_LENGTH } = require("../Embeds");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
     /**

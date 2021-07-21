@@ -2,13 +2,13 @@ const { Client, Interaction, CommandInteraction } = require("discord.js");
 const utils = require("../utils");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
-const Embed = require("./Embeds");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
 const fs = require('fs-extra');
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
+const { LOG_SLASH_COMMAND_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -70,7 +70,7 @@ async function commandHandler(interaction) {
 async function logCmd(interaction) {
     await Webhooks.commandHook.send({
         embeds: [
-            Embed.LOG_SLASH_COMMAND_USAGE(
+            LOG_SLASH_COMMAND_USAGE(
                 interaction.user?.id,
                 interaction.user?.tag,
                 interaction.commandName,

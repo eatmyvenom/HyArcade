@@ -1,5 +1,4 @@
 const config = require("../Config").fromJSON();
-const embeds = require("./Embeds");
 const { logger } = require("../utils");
 const Runtime = require("../Runtime");
 const owner = "156952208045375488";
@@ -29,6 +28,8 @@ let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
 const CommandResponse = require("./Utils/CommandResponse");
+const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
+const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
 
 function requireNew(str) {
     delete require.cache[str];
@@ -38,10 +39,10 @@ function requireNew(str) {
 async function execute(msg, senderID) {
     if (msg.content.startsWith(config.commandCharacter)) {
         if (Runtime.fromJSON().dbERROR) {
-            return { res: "", embed: embeds.ERROR_DATABASE_ERROR };
+            return { res: "", embed: ERROR_DATABASE_ERROR };
         }
         if (Runtime.fromJSON().apiDown) {
-            return { res: "", embed: embeds.ERROR_API_DOWN };
+            return { res: "", embed: ERROR_API_DOWN };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         let res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
@@ -71,19 +72,19 @@ async function checkCommands(rawMsg, command, args, author) {
 
         case "stats":
         case "s":
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("s", "stats") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("s", "stats") };
             break;
 
         case "newacc":
         case "addacc":
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("addacc", "addaccount") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("addacc", "addaccount") };
             break;
 
         case "lb":
         case "lead":
         case "leaderboard":
         case "leadb": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("lb", "leaderboard") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("lb", "leaderboard") };
             break;
         }
 
@@ -106,7 +107,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "getdata":
         case "rawdata":
         case "dataraw": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw") };
             break;
         }
 
@@ -116,7 +117,7 @@ async function checkCommands(rawMsg, command, args, author) {
         case "counts":
         case "amounts":
         case "gamecounts": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts") };
             break;
         }
 
@@ -131,7 +132,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("help", "arcadehelp") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("help", "arcadehelp") };
             break;
         }
 
@@ -159,13 +160,13 @@ async function checkCommands(rawMsg, command, args, author) {
         case "names":
         case "namehist":
         case "namehistory": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("namehistory", "namehistory") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("namehistory", "namehistory") };
         }
 
         case "whois":
         case "whoam":
         case "whos": {
-            return { res: "", embed: embeds.ERROR_USE_SLASH_COMMAND("whois", "whois") };
+            return { res: "", embed: ERROR_USE_SLASH_COMMAND("whois", "whois") };
         }
 
         case "info":
