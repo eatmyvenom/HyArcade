@@ -24,6 +24,7 @@
         "canvas": "^2.8.0",
         "discord.js": "github:discordjs/discord.js",
         "fs-extra": "^10.0.0",
+        "hyarcade-config": "github:eatmyvenom/hyarcade-config",
         "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
         "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
         "javascript-time-ago": "^2.3.6",
