@@ -32,7 +32,7 @@ let Commands = null;
 function getArg(i, a) {
     let v = i.options.get(a)
     if (v != undefined && v != null) {
-        return v.value.trim();
+        return ("" + v.value).trim();
     }
     return undefined;
 }
