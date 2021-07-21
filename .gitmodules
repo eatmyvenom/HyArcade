@@ -4,3 +4,6 @@
 [submodule "src/Config"]
 	path = src/Config
 	url = git@github.com:eatmyvenom/hyarcade-config.git
+[submodule "src/utils/Logger"]
+	path = src/utils/Logger
+	url = git@github.com:eatmyvenom/hyarcade-logger.git
