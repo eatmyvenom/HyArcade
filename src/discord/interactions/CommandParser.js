@@ -4,7 +4,7 @@ const Runtime = require("../../Runtime");
 const { logger } = require("../../utils");
 const { addAccounts } = require("../../listUtils");
 const InteractionUtils = require("./InteractionUtils");
-const { MessageEmbed, Interaction } = require("discord.js");
+const { MessageEmbed, Interaction, CommandInteraction } = require("discord.js");
 
 const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
@@ -21,9 +21,16 @@ const Ping = require("../Commands/Ping");
 const TopGames = require("../Commands/TopGames");
 
 let Commands = null;
+
+/**
+ * 
+ * @param {CommandInteraction} i 
+ * @param {String} a 
+ * @returns 
+ */
 function getArg(i, a) {
-    let v = i.options.get(a);
-    if (v != undefined) {
+    let v = i.options.get(a)
+    if (v != undefined && v != null) {
         return v.value;
     }
     return undefined;
@@ -192,7 +199,7 @@ module.exports = async (interaction) => {
         }
 
         case "arcade": {
-            if (interaction.options.get("ez") != undefined) {
+            if (interaction.options.getSubCommand() == "ez") {
                 logger.debug("Adding ez button to message");
                 let buttons = await ButtonGenerator.getEZ();
                 let res = await EZ.execute([], authorID, null, interaction);
@@ -200,11 +207,11 @@ module.exports = async (interaction) => {
                 return res;
             }
 
-            if (interaction.options.get("lastupdate") != undefined) {
+            if (interaction.options.getSubCommand() == "lastupdate") {
                 return await LastUpdate.execute([], authorID, null, interaction);
             }
 
-            if(interaction.options.get("ping") != undefined) {
+            if(interaction.options.getSubCommand() == "ping") {
                 return await Ping.execute([], authorID, null, interaction);
             }
         }
