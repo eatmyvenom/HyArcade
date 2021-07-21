@@ -1,5 +1,5 @@
 const config = require("../Config").fromJSON();
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const Runtime = require("../Runtime");
 const owner = "156952208045375488";
 

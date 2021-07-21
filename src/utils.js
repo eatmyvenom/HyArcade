@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 const webRequest = require("./request/webRequest");
 const BSONwriter = require("./utils/files/BSONwriter");
 const { default: fetch } = require("node-fetch");
-const logger = require("./utils/Logger")
+const logger = require("hyarcade-logger")
 
 /**
  * Halt execution for a specified amount of time

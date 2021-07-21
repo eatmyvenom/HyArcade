@@ -1,7 +1,7 @@
 const cfg = require("../Config").fromJSON();
 const { WebhookClient, TextChannel, Guild } = require("discord.js");
 const Runtime = require("../Runtime");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
 const registerSlashCommands = require("./registerSlashCommands");
 const roleHandler = require("./roleHandler");

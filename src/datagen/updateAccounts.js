@@ -1,4 +1,4 @@
-const logger = require("../utils/Logger");
+const logger = require("hyarcade-logger");
 const utils = require("../utils");
 const cfg = require("../Config").fromJSON();
 let force = utils.fileExists("force") || cfg.alwaysForce;

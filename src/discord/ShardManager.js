@@ -1,7 +1,7 @@
 const { ShardingManager } = require('discord.js');
 const cfg = require("../Config").fromJSON();
 const args = process.argv.slice(2);
-const Logger = require('../utils/Logger')
+const Logger = require('hyarcade-logger')
 
 async function BotSpawner() {
     Logger.out("Sharding " + args)

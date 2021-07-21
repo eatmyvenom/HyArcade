@@ -1,4 +1,4 @@
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const webRequest = require("./webRequest");
 
 /**

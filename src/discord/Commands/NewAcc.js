@@ -1,6 +1,6 @@
 const { addAccounts } = require("../../listUtils");
 const Command = require("../../classes/Command");
-const { logger } = require("../../utils");
+const logger = require("hyarcade-logger");
 const Webhooks = require("../Utils/Webhooks");
 const { WARN_WAITING, ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const { INFO_ACCOUNTS_ADDED } = require("../Utils/Embeds/DynamicEmbeds");

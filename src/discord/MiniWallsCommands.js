@@ -2,7 +2,7 @@
 let linkCmd = require("./Commands/Link");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let InfoCmd = require("./Commands/Info");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");

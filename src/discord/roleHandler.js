@@ -1,7 +1,6 @@
-const utils = require("../utils");
 const Role = require("../classes/Role");
 const RoleUpdater = require("./RoleUpdater");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 
 module.exports = async function roleHandler(client) {
     let pgGuild = await client.guilds.fetch("741719121456267319");

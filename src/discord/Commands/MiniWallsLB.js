@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
-const { logger } = require("../../utils");
+const logger = require("hyarcade-logger");
 
 function wComp(b, a) {
     if (a.miniWallsWins == undefined || a.miniWallsWins == NaN) {

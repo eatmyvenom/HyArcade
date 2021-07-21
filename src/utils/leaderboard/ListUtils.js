@@ -1,4 +1,4 @@
-const logger = require("../Logger");
+const logger = require("hyarcade-logger");
 const cfg = require("../../Config").fromJSON();
 const fetch = require('node-fetch');
 

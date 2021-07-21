@@ -3,8 +3,7 @@ const cfg = require("../Config").fromJSON();
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
-const Logger = require("../utils/Logger");
-const { logger } = require("../utils");
+const Logger = require("hyarcade-logger");
 
 module.exports = class BotUtils {
     static isBotInstance = false;
@@ -40,8 +39,8 @@ module.exports = class BotUtils {
         try {
             fileData = await (await fetch(url)).json();
         } catch(e) {
-            logger.err("Can't connect to database");
-            logger.err(e);
+            Logger.err("Can't connect to database");
+            Logger.err(e);
             return {};
         }
         return fileData;
@@ -63,8 +62,8 @@ module.exports = class BotUtils {
                 }
             });
         } catch(e) {
-            logger.err("Can't connect to database");
-            logger.err(e);
+            Logger.err("Can't connect to database");
+            Logger.err(e);
             return {};
         }
     }

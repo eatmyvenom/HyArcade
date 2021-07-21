@@ -4,7 +4,7 @@ const config = require("../Config").fromJSON();
 const Runtime = require("../Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 
 const fullIntents = [
     Discord.Intents.FLAGS.GUILDS,

@@ -2,7 +2,7 @@ const { MessageEmbed, Message, Interaction, CommandInteraction } = require("disc
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
-const { logger } = require("../../utils");
+const logger = require("hyarcade-logger");
 
 async function getLB(prop, timetype, limit, category, start) {
     let res = "";

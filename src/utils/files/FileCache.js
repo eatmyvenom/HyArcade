@@ -1,5 +1,5 @@
 const utils = require("../../utils");
-const Logger = require("../Logger");
+const Logger = require("hyarcade-logger");
 const fs = require('fs-extra');
 const Runtime = require("../../Runtime");
 const BSONreader = require("./BSONreader");

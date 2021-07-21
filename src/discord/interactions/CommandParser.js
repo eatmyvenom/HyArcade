@@ -1,6 +1,6 @@
 const BotUtils = require("../BotUtils");
 const Runtime = require("../../Runtime");
-const { logger } = require("../../utils");
+const logger = require("hyarcade-logger");
 const { addAccounts } = require("../../listUtils");
 const InteractionUtils = require("./InteractionUtils");
 const { MessageEmbed, Interaction, CommandInteraction } = require("discord.js");

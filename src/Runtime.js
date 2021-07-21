@@ -1,6 +1,6 @@
 const utils = require("./utils");
 const ffs = require("fs");
-const { logger } = require("./utils");
+const logger = require("hyarcade-logger");
 
 module.exports = class Runtime {
     async save() {

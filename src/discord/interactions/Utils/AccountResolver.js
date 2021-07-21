@@ -1,7 +1,7 @@
 const { CommandInteraction } = require("discord.js");
 const Account = require("../../../classes/account");
 const fetch = require('node-fetch');
-const logger = require("../../../utils/Logger");
+const logger = require("hyarcade-logger");
 const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
 const cfg = require("../../../Config").fromJSON();

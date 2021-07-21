@@ -1,6 +1,6 @@
 const URL = require("url").URL;
 const cfg = require("../../Config").fromJSON();
-const Logger = require("../../utils/Logger");
+const Logger = require("hyarcade-logger");
 
 /**
  * 

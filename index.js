@@ -28,7 +28,7 @@ const Server = require("./src/server/Wrap");
 const Connection = require("./src/mongo/Connection");
 const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
-const { logger } = require("./src/utils");
+const logger = require("hyarcade-logger");
 const BSONreader = require("./src/utils/files/BSONreader");
 const Runtime = require("./src/Runtime").fromJSON();
 

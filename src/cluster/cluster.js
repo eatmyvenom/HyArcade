@@ -1,6 +1,6 @@
 const cfg = require("../Config").fromJSON();
 const task = require("./task");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const { exec } = require("child_process");
 
 /**

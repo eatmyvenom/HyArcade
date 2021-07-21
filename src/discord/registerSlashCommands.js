@@ -1,6 +1,5 @@
 const { Client, Interaction, CommandInteraction, ButtonInteraction } = require("discord.js");
-const utils = require("../utils");
-const { logger } = require("../utils");
+const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
