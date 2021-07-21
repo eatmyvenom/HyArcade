@@ -1,5 +1,5 @@
 const { MessageEmbed, Message } = require("discord.js");
-const { COLOR_PRIMARY, COLOR_RED, COLOR_PURPLE, COLOR_SUCCESS } = require("./Colors");
+const { COLOR_PRIMARY, COLOR_RED, COLOR_PURPLE, COLOR_SUCCESS, COLOR_PINK } = require("./Colors");
 
 exports.INFO_ACCOUNTS_ADDED = function (res) {
     return new MessageEmbed()
@@ -23,7 +23,7 @@ exports.LOG_COMMAND_EXECUTION = function (name, args, message) {
     if (args == "") args = "none";
     return new MessageEmbed()
         .setTitle("Command execution")
-        .setColor(COLOR_PURPLE)
+        .setColor(COLOR_PINK)
         .addField("Name", name, true)
         .addField("Args", `\`${args}\``, true)
         .addField("User", `${message.author.tag} - <@${message.author.id}>`, true)
@@ -58,6 +58,16 @@ exports.LOG_SLASH_COMMAND_USAGE = function (userid, usertag, command, server, ch
         .addField("Server", "" + server, true)
         .addField("Channel", `<#${channel}>`, true)
         .addField("Options", JSON.stringify(options), false);
+};
+
+exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, server, channel) {
+    return new MessageEmbed()
+        .setTitle(`Component used by ${usertag}`)
+        .setColor(COLOR_PURPLE)
+        .addField("ID", "`" + componentID + "`", false)
+        .addField("User", `<@${userid}>`, true)
+        .addField("Server", "" + server, true)
+        .addField("Channel", `<#${channel}>`, true)
 };
 
 exports.INFO_WHOIS = function (acc) {

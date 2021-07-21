@@ -1,4 +1,4 @@
-const { Client, Interaction, CommandInteraction } = require("discord.js");
+const { Client, Interaction, CommandInteraction, ButtonInteraction } = require("discord.js");
 const utils = require("../utils");
 const { logger } = require("../utils");
 const BotUtils = require("./BotUtils");
@@ -8,7 +8,7 @@ const CommandParser = require("./interactions/CommandParser");
 const fs = require('fs-extra');
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
-const { LOG_SLASH_COMMAND_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
+const { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -84,12 +84,31 @@ async function logCmd(interaction) {
 
 /**
  *
+ * @param {ButtonInteraction} interaction
+ */
+ async function logBtn(interaction) {
+    await Webhooks.commandHook.send({
+        embeds: [
+            LOG_MESSAGE_COMPONENT_USAGE(
+                interaction.user?.id,
+                interaction.user?.tag,
+                interaction.customId,
+                interaction.guild?.name,
+                interaction.channel?.id
+            ),
+        ],
+    });
+}
+
+/**
+ *
  * @param {Interaction} interaction
  */
 async function buttonHandler(interaction) {
     if (await ForceOGuser(interaction)) {
         let updatedData = await ButtonParser(interaction);
         await interaction.update(updatedData.toDiscord());
+        await logBtn(interaction);
     }
 }
 
