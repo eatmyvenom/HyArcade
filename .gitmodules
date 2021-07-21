@@ -1,0 +1,3 @@
+[submodule "src/request"]
+	path = src/request
+	url = git@github.com:eatmyvenom/hyarcade-requests.git
