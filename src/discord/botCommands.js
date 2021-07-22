@@ -1,6 +1,6 @@
 const config = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const Runtime = require("../Runtime");
+const Runtime = require("hyarcade-config/Runtime");
 const owner = "156952208045375488";
 
 let linkCmd = require("./Commands/Link");

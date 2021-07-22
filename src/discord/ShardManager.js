@@ -1,5 +1,5 @@
 const { ShardingManager } = require('discord.js');
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const args = process.argv.slice(2);
 const Logger = require('hyarcade-logger')
 

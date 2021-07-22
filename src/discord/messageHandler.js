@@ -1,5 +1,5 @@
 const cfg = require("hyarcade-config").fromJSON();
-const Runtime = require("../Runtime");
+const Runtime = require("hyarcade-config/Runtime");
 const { addAccounts } = require("../listUtils");
 const logger = require("hyarcade-logger");
 const isValidIGN = require("../datagen/utils/ignValidator");

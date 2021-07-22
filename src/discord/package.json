@@ -9,6 +9,8 @@
   "author": "",
   "license": "MPL-2.0",
   "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "fs-extra": "^10.0.0",
     "hyarcade-logger": "github:eatmyvenom/hyarcade-logger"
   }
 }
