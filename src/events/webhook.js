@@ -246,11 +246,11 @@ async function genHSMEmbed() {
 }
 
 function wComp(b, a) {
-    if (a.miniWallsWins == undefined || a.miniWallsWins == NaN) {
+    if (a.miniWallsWins == undefined || a.miniWallsWins == NaN || a.miniWalls == undefined) {
         return 1;
     }
 
-    if (b.miniWallsWins == undefined || b.miniWallsWins == NaN) {
+    if (b.miniWallsWins == undefined || b.miniWallsWins == NaN || b.miniWalls == undefined) {
         return -1;
     }
     return a.miniWallsWins - b.miniWallsWins;
