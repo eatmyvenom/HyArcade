@@ -56,7 +56,7 @@ module.exports = new Command("topgames", ["*"], async (args, rawMsg, interaction
         acc = await InteractionUtils.resolveAccount(interaction)
     }
     let embed = new MessageEmbed()
-        .setTitle(acc.name + " top games played")
+        .setTitle(acc.name + " top games won")
         .setDescription(getGames(acc))
         .setColor(0x44a3e7);
     return { res: "", embed: embed };
