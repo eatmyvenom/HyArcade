@@ -49,7 +49,9 @@ module.exports = async (req, res, fileCache) => {
                         if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
                             newAccs.push(newAcc);
                         } else {
-                            newAccs.push(acc);
+                            if(acc != {}) {
+                                newAccs.push(acc);
+                            }
                         }
                     }
 
