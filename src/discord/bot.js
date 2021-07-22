@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const BotUtils = require("./BotUtils");
-const config = require("../Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 const Runtime = require("../Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
 const messageHandler = require("./messageHandler");

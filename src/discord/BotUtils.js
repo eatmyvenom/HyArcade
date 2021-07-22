@@ -1,5 +1,5 @@
 const { MessageEmbed, Client } = require("discord.js");
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");

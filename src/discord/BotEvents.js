@@ -1,4 +1,4 @@
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const { WebhookClient, TextChannel, Guild } = require("discord.js");
 const Runtime = require("../Runtime");
 const logger = require("hyarcade-logger");
