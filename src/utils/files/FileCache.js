@@ -3,15 +3,14 @@ const Logger = require("hyarcade-logger");
 const fs = require('fs-extra');
 const Runtime = require("../../Runtime");
 const BSONreader = require("./BSONreader");
-
 module.exports = class FileCache {
 
     _interval;
-    accounts = {}
-    dailyAccounts = {};
-    weeklyAccounts = {};
-    monthlyAccounts = {};
-    acclist = {};
+    accounts = [];
+    dailyAccounts = [];
+    weeklyAccounts = [];
+    monthlyAccounts = [];
+    acclist = [];
     disclist = {};
     status = {};
     updatetime = 0;

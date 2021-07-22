@@ -52,7 +52,7 @@ module.exports = async (req, res, fileCache) => {
             req.on("data", d => data+=d);
             req.on("end", async () => {
                 json = JSON.parse(data)
-                fileCache.accounts = fileCache.accounts.push(json);
+                fileCache.accounts.push(json);
                 await fileCache.save();
                 res.end();
             });
