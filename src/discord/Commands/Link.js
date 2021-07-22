@@ -3,6 +3,7 @@ const Command = require("../../classes/Command");
 const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../request/mojangRequest");
 const BotUtils = require("../BotUtils");
+const { addAccount } = require("../Utils/Database");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_PLAYER_PREVIOUSLY_LINKED, ERROR_ACCOUNT_PREVIOUSLY_LINKED } = require("../Utils/Embeds/StaticEmbeds");
 
@@ -43,8 +44,8 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
             return { res: "", embed: noexistEmbed };
         }
         acc = new Account(player, 0, uuid);
-        await addAccounts("others", [uuid]);
         await acc.updateHypixel();
+        await addAccount([acc]);
     }
 
     uuid = acc.uuid;
