@@ -31,7 +31,9 @@ module.exports = async (req, res, fileCache) => {
             req.on("end", async () => {
                 json = JSON.parse(data);
 
+
                 if(url.searchParams.get("path") == "accounts") {
+                    Logger.log("Saving new accounts");
                     let old = fileCache[url.searchParams.get("path")];
                     let newAccs = [];
 
@@ -44,6 +46,7 @@ module.exports = async (req, res, fileCache) => {
                         }
                     }
 
+                    Logger.log(`New accounts length is ${newAccs.length}`);
                     fileCache.accounts = newAccs;
 
                 } else {
