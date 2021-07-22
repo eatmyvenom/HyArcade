@@ -29,7 +29,14 @@ module.exports = async (req, res, fileCache) => {
         if(req.headers.authorization == cfg.dbPass) {
             req.on("data", d => data+=d);
             req.on("end", async () => {
-                json = JSON.parse(data);
+                try {
+                    json = JSON.parse(data);
+                } catch (e) {
+                    logger.err("JSON parsing of new database data failed");
+                    logger.err(e.stack);
+                    logger.debug(data);
+                    res.end();
+                }
 
 
                 if(url.searchParams.get("path") == "accounts") {
