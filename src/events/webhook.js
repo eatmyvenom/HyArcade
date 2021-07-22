@@ -257,22 +257,22 @@ function wComp(b, a) {
 }
 
 function kComp(b, a) {
-    if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+    if (a.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) {
         return -1;
     }
 
-    if (b.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
+    if (b.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) {
         return 1;
     }
     return a.miniWalls.kills - b.miniWalls.kills;
 }
 
 function dComp(b, a) {
-    if (a.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
+    if (a.miniWalls?.deaths == undefined || a.miniWalls.deaths == NaN) {
         return -1;
     }
 
-    if (b.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
+    if (b.miniWalls?.deaths == undefined || a.miniWalls?.deaths == NaN) {
         return 1;
     }
     return a.miniWalls.deaths - b.miniWalls.deaths;
@@ -284,11 +284,11 @@ function int(n) {
 
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
-    o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
-    o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
-    o.miniWalls.witherKills = int(n.miniWalls.witherKills) - int(o.miniWalls.witherKills);
-    o.miniWalls.finalKills = int(n.miniWalls.finalKills) - int(o.miniWalls.finalKills);
+    o.miniWalls.kills = int(n.miniWalls?.kills) - int(o.miniWalls?.kills);
+    o.miniWalls.deaths = int(n.miniWalls?.deaths) - int(o.miniWalls?.deaths);
+    o.miniWalls.witherDamage = int(n.miniWalls?.witherDamage) - int(o.miniWalls?.witherDamage);
+    o.miniWalls.witherKills = int(n.miniWalls?.witherKills) - int(o.miniWalls?.witherKills);
+    o.miniWalls.finalKills = int(n.miniWalls?.finalKills) - int(o.miniWalls?.finalKills);
     return o;
 }
 
