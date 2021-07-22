@@ -147,8 +147,8 @@ async function archiveJson(oldfile, path, timetype) {
     }
 
     if(fs.existsSync("data/" + oldfile + ".bson.1")) {
-        await fs.copy("data/" + oldfile + ".bson.1", `${path}${oldfile}.${timetype}.bson.1`);
-        await fs.copy("data/" + oldfile + ".bson.2", `${path}${oldfile}.${timetype}.bson.2`);
+        await fs.copy("data/" + oldfile + ".bson.1", `data/${path}${oldfile}.${timetype}.bson.1`);
+        await fs.copy("data/" + oldfile + ".bson.2", `data/${path}${oldfile}.${timetype}.bson.2`);
     }
 }
 
