@@ -11,6 +11,7 @@ export let Verify = new Command("linkme", ["*"], async (args, rawMsg, interactio
         let embed = ERROR_INPUT_IGN;
         return { res: "", embed: embed };
     }
+    await interaction.defer();
     let acclist = await BotUtils.getFromDB("accounts");
     let acc = acclist.find(
         (a) =>
