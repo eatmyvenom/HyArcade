@@ -297,7 +297,7 @@ function rcb(n, o) {
 }
 
 async function hackerTransformer(list) {
-    let hackerlist = (await fs.readFile("data/hackerlist")).toString();
+    let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
     list = list.filter((a) => !hackerlist.includes(a.uuid));
     list = list.filter((a) => a != {});
     list = list.filter((a) => a.name != undefined);
@@ -623,7 +623,7 @@ async function sendMW() {
     });
 
     run.mwMsg = newMsg.id;
-    run.save();
+    await run.save();
 }
 
 module.exports = {
