@@ -26,7 +26,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
     }
 
     let hackers = await BotUtils.getFromDB("hackerlist");
-    if (hackers.includes(acc.uuid)) {
+    if (hackers.includes(acc.uuid.toLowerCase())) {
         return {};
     }
 
