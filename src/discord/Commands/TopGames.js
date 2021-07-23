@@ -15,6 +15,7 @@ function getGames(acc) {
         { name : "Dragon wars", wins : acc.dragonWarsWins},
         { name : "Bounty hunters", wins : acc.bountyHuntersWins},
         { name : "Blocking dead", wins : acc.blockingDeadWins},
+        { name : "Throw out", wins : acc.throwOutWins},
         { name : "Hide and seek", wins : acc.hideAndSeekWins},
         { name : "Zombies", wins : acc.zombiesWins},
         { name : "Galaxy wars", wins : acc.galaxyWarsWins},

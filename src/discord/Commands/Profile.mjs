@@ -23,6 +23,7 @@ function getMain(acc) {
         Galaxy_wars: acc.galaxyWarsWins,
         Bounty_hunters: acc.bountyHuntersWins,
         Blocking_dead: acc.blockingDeadWins,
+        Throw_out: acc.throwOutWins,
         Hide_and_seek: acc.hideAndSeekWins,
         Zombies: acc.zombiesWins,
         Pixel_painters: acc.pixelPaintersWins,
