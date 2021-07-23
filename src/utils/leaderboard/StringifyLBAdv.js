@@ -14,8 +14,6 @@ module.exports = async function stringLBAdv(comparitor, parser, maxamnt, listTra
     for (let i = 0; i < list.length; i++) {
         let propVal = parser(list[i]);
 
-        if(propVal == NaN || list[i].name == undefined) return;
-
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
