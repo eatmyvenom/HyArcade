@@ -60,6 +60,8 @@ async function getLB(prop, timetype, limit, category, start) {
             break;
         }
 
+        case "l":
+        case "lifetime":
         default: {
             time = "Lifetime";
             res = await listUtils.stringLB(prop, limit, category, start);
