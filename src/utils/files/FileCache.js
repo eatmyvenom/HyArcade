@@ -39,7 +39,9 @@ module.exports = class FileCache {
         await utils.writeJSON("disclist.json", this.disclist);
         await utils.writeJSON("status.json", this.status);
         await fs.writeFile("data/blacklist", this.blacklist.join("\n"));
-        await fs.writeFile("data/hackerlist", this.hackerlist.join("\n"));
+        if(this.hackerlist != [] && this.hackerlist != {} && this.hackerlist != undefined) {
+            await fs.writeFile("data/hackerlist", this.hackerlist.join("\n"));
+        }
         await fs.writeFile("data/ez", this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
     }
