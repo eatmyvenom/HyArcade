@@ -7,7 +7,6 @@ const { MessageEmbed, Interaction, CommandInteraction } = require("discord.js");
 
 const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
-const Link = require("../Commands/Link");
 const Status = require("../Commands/Status");
 const Susser = require("../Commands/Susser");
 const MiniWalls = require("../Commands/MiniWalls");
@@ -22,6 +21,7 @@ const { ERROR_DATABASE_ERROR } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_API_DOWN, ERROR_NEED_PLAYER, ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
 const MenuGenerator = require("./SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
+const GetDataRaw = require("../Commands/GetDataRaw");
 
 let Commands = null;
 
