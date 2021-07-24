@@ -12,7 +12,7 @@ module.exports = async function stringLB(lbprop, maxamnt, category, startingInde
         });
     } else {
         list = await [].concat(list).sort((b, a) => {
-            return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
+            return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
         });
     }
 
