@@ -3,6 +3,8 @@ import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/TimeFormatter.js";
 
 function numberify(n) {
@@ -58,6 +60,7 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
         acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
+        return new CommandResponse("", ERROR_UNLINKED);
     }
     let lvl = Math.round(acc.level * 100) / 100;
     let img = new ImageGenerator(640, 400);

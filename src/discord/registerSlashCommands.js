@@ -8,6 +8,7 @@ const fs = require('fs-extra');
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
 const { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
+const MenuParser = require("./interactions/SelectionMenus/MenuParser");
 
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -92,6 +93,7 @@ async function logCmd(interaction) {
                 interaction.user?.id,
                 interaction.user?.tag,
                 interaction.customId,
+                interaction.values,
                 interaction.guild?.name,
                 interaction.channel?.id
             ),
@@ -115,11 +117,25 @@ async function buttonHandler(interaction) {
  *
  * @param {Interaction} interaction
  */
+ async function menuHandler(interaction) {
+    if (await ForceOGuser(interaction)) {
+        let updatedData = await MenuParser(interaction);
+        await interaction.update(updatedData.toDiscord());
+        await logBtn(interaction);
+    }
+}
+
+/**
+ *
+ * @param {Interaction} interaction
+ */
 async function interactionHandler(interaction) {
     if (interaction.isCommand()) {
         await commandHandler(interaction);
     } else if (interaction.isButton()) {
         await buttonHandler(interaction);
+    } else if (interaction.isSelectMenu()) {
+        await menuHandler(interaction);
     }
 }
 

@@ -13,6 +13,12 @@ exports.ERROR_NEED_PLAYER = new MessageEmbed()
     .setColor(COLOR_RED)
     .setDescription("The player you specified does not seem to exist!");
 
+exports.ERROR_UNLINKED = new MessageEmbed()
+    .setTitle("ERROR")
+    .setColor(COLOR_RED)
+    .setDescription("You need to input an IGN or verify yourself.")
+
+
 exports.FULL_HELP = new MessageEmbed()
     .setTitle("Arcade bot help")
     .setColor(COLOR_PRIMARY)

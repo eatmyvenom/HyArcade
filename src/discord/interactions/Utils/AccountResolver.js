@@ -35,8 +35,9 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
     if(BotUtils.botMode == "mini") {
         return await getFromHypixel(str, interaction);
     }
+
     let url = new URL("account", cfg.dbUrl)
-    let urlArgs = url.searchParams
+    let urlArgs = url.searchParams;
     if(str?.length == 32) {
         urlArgs.set("uuid", str.toLowerCase());
     } else if(str?.length == 36) {
@@ -51,6 +52,9 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
     let accdata = await fetch(url.toString());
     if(accdata.status == 200) {
         accdata = await accdata.json();
+        if(str == undefined && accdata.name_lower == "undefined") {
+            return undefined;
+        }
         return accdata;
     } else {
         return await getFromHypixel(str, interaction);

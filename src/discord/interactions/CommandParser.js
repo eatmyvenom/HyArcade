@@ -19,7 +19,9 @@ const ButtonGenerator = require("./Buttons/ButtonGenerator");
 const Ping = require("../Commands/Ping");
 const TopGames = require("../Commands/TopGames");
 const { ERROR_DATABASE_ERROR } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_API_DOWN } = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_API_DOWN, ERROR_NEED_PLAYER, ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
+const MenuGenerator = require("./SelectionMenus/MenuGenerator");
+const CommandResponse = require("../Utils/CommandResponse");
 
 let Commands = null;
 
@@ -76,11 +78,14 @@ module.exports = async (interaction) => {
         case "stats": {
             let game = getArg(interaction, "game");
             let acc = await InteractionUtils.resolveAccount(interaction, "player");
+            if(acc == undefined) {
+                return new CommandResponse("", ERROR_UNLINKED);
+            }
             let res = await BotUtils.getStats(acc, "" + game);
             let e = res.embed;
             logger.debug("Adding stats buttons to message");
-            let buttons = await ButtonGenerator.getStatsButtons(res.game, acc.uuid);
-            return { res: "", embed: e, b: buttons };
+            let menu = await MenuGenerator.statsMenu(acc.uuid);
+            return { res: "", embed: e, b: menu };
         }
 
         case "leaderboard": {
@@ -133,6 +138,9 @@ module.exports = async (interaction) => {
 
         case "namehistory": {
             let acc = await InteractionUtils.resolveAccount(interaction);
+            if(acc == undefined) {
+                return new CommandResponse("", ERROR_UNLINKED);
+            }
             let embed = new MessageEmbed()
                 .setTitle(`${acc.name} IGN history`)
                 .setDescription(([].concat(acc.nameHist)).join("\n"))
@@ -146,6 +154,9 @@ module.exports = async (interaction) => {
 
         case "getdataraw": {
             let acc = await InteractionUtils.resolveAccount(interaction);
+            if(acc == undefined) {
+                return new CommandResponse("", ERROR_UNLINKED);
+            }
             let path = opts.get("path").value;
             let embed = new MessageEmbed()
                 .setTitle(acc.name + "." + path)

@@ -57,10 +57,10 @@ exports.LOG_SLASH_COMMAND_USAGE = function (userid, usertag, command, server, ch
         .addField("User", `<@${userid}>`, true)
         .addField("Server", "" + server, true)
         .addField("Channel", `<#${channel}>`, true)
-        .addField("Options", JSON.stringify(options), false);
+        .addField("Options", "`" + JSON.stringify(options) + "`", false);
 };
 
-exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, server, channel) {
+exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, values, server, channel) {
     return new MessageEmbed()
         .setTitle(`Component used by ${usertag}`)
         .setColor(COLOR_PURPLE)
@@ -68,6 +68,7 @@ exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, se
         .addField("User", `<@${userid}>`, true)
         .addField("Server", "" + server, true)
         .addField("Channel", `<#${channel}>`, true)
+        .addField("Values", `\`${values?.join(", ")}\``, false);
 };
 
 exports.INFO_WHOIS = function (acc) {

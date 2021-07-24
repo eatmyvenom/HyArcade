@@ -2,7 +2,9 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
+const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
@@ -69,37 +71,44 @@ module.exports = new Command("compare", ["*"], async (args, rawMsg, interaction)
 
     let embed = new MessageEmbed();
 
-    let stats =
-        lineN(acc1.miniWallsWins, acc2.miniWallsWins, "Wins") +
-        lineN(acc1.miniWalls.kills, acc2.miniWalls.kills, "Kills") +
-        lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals") +
-        lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage") +
-        lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills") +
-        lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths");
+    try {
+        let stats =
+            lineN(acc1.miniWallsWins, acc2.miniWallsWins, "Wins") +
+            lineN(acc1.miniWalls.kills, acc2.miniWalls.kills, "Kills") +
+            lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals") +
+            lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage") +
+            lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills") +
+            lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths");
 
-    let deaths1 = acc1.miniWalls.deaths;
-    let deaths2 = acc2.miniWalls.deaths;
-    let ratios =
-        lineR(
-            (acc1.miniWalls.kills + acc1.miniWalls.finalKills) / deaths1,
-            (acc2.miniWalls.kills + acc2.miniWalls.finalKills) / deaths2,
-            "K/D"
-        ) +
-        lineR(acc1.miniWalls.kills / deaths1, acc2.miniWalls.kills / deaths2, "K/D (no finals)") +
-        lineR(acc1.miniWalls.finalKills / deaths1, acc2.miniWalls.finalKills / deaths2, "F/D") +
-        lineR(acc1.miniWalls.witherDamage / deaths1, acc2.miniWalls.witherDamage / deaths2, "WD/D") +
-        lineR(acc1.miniWalls.witherKills / deaths1, acc2.miniWalls.witherKills / deaths2, "WK/D") +
-        lineR(
-            (acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100,
-            (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100,
-            "Arrow Accuracy"
-        );
+        let deaths1 = acc1.miniWalls.deaths;
+        let deaths2 = acc2.miniWalls.deaths;
+        let ratios =
+            lineR(
+                (acc1.miniWalls.kills + acc1.miniWalls.finalKills) / deaths1,
+                (acc2.miniWalls.kills + acc2.miniWalls.finalKills) / deaths2,
+                "K/D"
+            ) +
+            lineR(acc1.miniWalls.kills / deaths1, acc2.miniWalls.kills / deaths2, "K/D (no finals)") +
+            lineR(acc1.miniWalls.finalKills / deaths1, acc2.miniWalls.finalKills / deaths2, "F/D") +
+            lineR(acc1.miniWalls.witherDamage / deaths1, acc2.miniWalls.witherDamage / deaths2, "WD/D") +
+            lineR(acc1.miniWalls.witherKills / deaths1, acc2.miniWalls.witherKills / deaths2, "WK/D") +
+            lineR(
+                (acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100,
+                (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100,
+                "Arrow Accuracy"
+            );
 
-    embed
-        .setTitle(`${acc1.name} VS ${acc2.name}`)
-        .setColor(0x7873f5)
-        .addField("━━━━━━ Stats: ━━━━━", stats, true)
-        .addField("━━━━━ Ratios: ━━━━━", ratios, true);
+
+        embed
+            .setTitle(`${acc1.name} VS ${acc2.name}`)
+            .setColor(0x7873f5)
+            .addField("━━━━━━ Stats: ━━━━━", stats, true)
+            .addField("━━━━━ Ratios: ━━━━━", ratios, true);
+
+    } catch(e) {
+        return { res: "", embed: ERROR_IGN_UNDEFINED };
+    }
+
 
     return { res: "", embed: embed };
 });

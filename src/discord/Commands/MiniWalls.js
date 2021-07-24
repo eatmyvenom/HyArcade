@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const { ERROR_NEED_PLAYER } = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_NEED_PLAYER, ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
@@ -32,6 +32,10 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
 
     if(acc.uuid == undefined) {
         return { res : "", embed : ERROR_NEED_PLAYER };
+    }
+
+    if(acc.miniWalls == undefined) {
+        return { res : "", embed : ERROR_IGN_UNDEFINED };
     }
 
     let stats =
