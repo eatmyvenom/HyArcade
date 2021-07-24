@@ -1,5 +1,5 @@
 module.exports = {
-    name: "addaccount",
+    name: "add-account",
     description: "Add any account(s) to the database",
     options: [
         {

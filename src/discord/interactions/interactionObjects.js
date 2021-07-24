@@ -1,4 +1,3 @@
-exports.help = require("./Commands/Help");
 exports.statsCommand = require("./Commands/Stats");
 exports.compare = require("./Commands/Compare");
 exports.whois = require("./Commands/Whois");

@@ -108,7 +108,7 @@ module.exports = async (interaction) => {
             return { res: "", embed: e };
         }
 
-        case "addaccount": {
+        case "add-account": {
             await interaction.defer();
 
             let names = opts.get("accounts").value.split(" ");
@@ -136,7 +136,7 @@ module.exports = async (interaction) => {
             return { res: undefined, embed: embed };
         }
 
-        case "namehistory": {
+        case "name-history": {
             let acc = await InteractionUtils.resolveAccount(interaction);
             if(acc == undefined) {
                 return new CommandResponse("", ERROR_UNLINKED);
@@ -152,7 +152,7 @@ module.exports = async (interaction) => {
             return await Commands.WhoIS.execute([getArg(interaction, "player")], authorID, null, interaction);
         }
 
-        case "getdataraw": {
+        case "get-data-raw": {
             let acc = await InteractionUtils.resolveAccount(interaction);
             if(acc == undefined) {
                 return new CommandResponse("", ERROR_UNLINKED);
@@ -169,7 +169,7 @@ module.exports = async (interaction) => {
             return await Commands.Verify.execute([getArg(interaction, "player")], authorID, null, interaction);
         }
 
-        case "gamecounts": {
+        case "game-counts": {
             return await GameCounts.execute([getArg(interaction, "game")], authorID, null, interaction);
         }
 
@@ -179,14 +179,6 @@ module.exports = async (interaction) => {
 
         case "info": {
             return await Info.execute([], authorID, null, interaction);
-        }
-
-        case "arcadehelp": {
-            if (opts.get("topic") == undefined) {
-                return { res: "", embed: InteractionUtils.helpEmbed() };
-            } else {
-                return { res: "", embed: InteractionUtils.helpTopic(opts.get("topic").value) };
-            }
         }
 
         case Susser.name: {
@@ -225,6 +217,14 @@ module.exports = async (interaction) => {
 
             if(interaction.options.getSubCommand() == "ping") {
                 return await Ping.execute([], authorID, null, interaction);
+            }
+
+            if(interaction.options.getSubCommand() == "help") {
+                if (opts.get("topic") == undefined) {
+                    return { res: "", embed: InteractionUtils.helpEmbed() };
+                } else {
+                    return { res: "", embed: InteractionUtils.helpTopic(opts.get("topic").value) };
+                }
             }
         }
     }
