@@ -32,7 +32,7 @@ module.exports = async (req, res, fileCache) => {
                 });
             } else {
                 accounts = await [].concat(accounts).sort((b, a) => {
-                    return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
+                    return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
                 });
             }
         } else {
