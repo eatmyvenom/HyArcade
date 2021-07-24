@@ -53,7 +53,6 @@ module.exports = async function updateAccounts(accounts) {
     }
 
     await accounts.sort(utils.winsSorter);
-    await accounts.filter((a) => a.name != "" && a.uuidPosix != undefined);
     return accounts;
 }
 
@@ -66,11 +65,11 @@ async function updateAccountsInArr(accounts, oldAccs) {
                 let fbAboveCringeLimit = oldAcc.footballWins >= 15000;
                 let fbBelowCringeLimit = oldAcc.footballWins <= 150;
                 let fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
-                let mwAboveCringeLimit = oldAcc.miniWallsWins >= 150;
-                let mwBelowCringeLimit = oldAcc.miniWallsWins <= 12000;
+                let mwAboveCringeLimit = oldAcc.miniWallsWins >= 12000;
+                let mwBelowCringeLimit = oldAcc.miniWallsWins <= 150;
                 let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
                 let isLinked = oldAcc.discord ? true : false;
-                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 604800000;
+                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
 
                 let hasImportantStats = aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit
 

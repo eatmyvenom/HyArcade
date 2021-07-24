@@ -52,7 +52,18 @@ module.exports = async (req, res, fileCache) => {
             req.on("data", d => data+=d);
             req.on("end", async () => {
                 json = JSON.parse(data)
-                fileCache.accounts.push(json);
+                let newAccs = [];
+                if(fileCache.accounts.find(a=>a.uuid==json.uuid)) {
+                    for(let a of fileCache.accounts) {
+                        if(a.uuid != json.uuid) {
+                            newAccs.push(a);
+                        } else {
+                            newAccs.push(json);
+                        }
+                    }
+                } else {
+                    fileCache.accounts.push(json);
+                }
                 await fileCache.save();
                 res.end();
             });

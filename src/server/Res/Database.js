@@ -47,8 +47,6 @@ module.exports = async (req, res, fileCache) => {
 
                     for(let acc of old) {
                         let newAcc = json.find((a) => a.uuid == acc.uuid);
-                        logger.debug(acc?.name)
-                        logger.debug(newAcc?.name)
                         if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
                             newAccs.push(newAcc);
                         } else {
