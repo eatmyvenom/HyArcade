@@ -82,6 +82,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
                     account.setData(oldAcc);
                 }
             } else {
+                logger.out(`Updating ${account.name}'s data`);
                 await account.updateData();
             }
         })
