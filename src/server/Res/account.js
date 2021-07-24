@@ -16,15 +16,17 @@ module.exports = async (req, res, fileCache) => {
         res.setHeader("Content-Type", "application/json");
         let accounts = fileCache.accounts;
         let acc;
-        if (ign != undefined) {
+
+        console.log(ign)
+        if (ign != null) {
             acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
-        } else if (uuid != undefined) {
+        } else if (uuid != null) {
             acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
-        } else if (discid != undefined) {
+        } else if (discid != null) {
             acc = accounts.find((a) => a.discord == discid);
         }
 
-        if (acc == undefined && ign != undefined) {
+        if (acc == undefined && ign != null) {
             acc = accounts.find((a) => {
                 if (a.nameHist && a.nameHist.length > 0) {
                     for (let name of a.nameHist) {
