@@ -1,5 +1,5 @@
 module.exports = {
-    name: "namehistory",
+    name: "name-history",
     description: "Get the name history of a player",
     options: [
         {
