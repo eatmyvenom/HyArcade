@@ -302,13 +302,16 @@ async function hander(args, rawMsg, interaction) {
         case "dw":
         case "dragon":
         case "dragonwar":
+        case "dragon war":
         case "fuckyousnoop":
+        case "fuck you snoop":
         case "draggin":
         case "wagon":
         case "dwar":
         case "dawar":
         case "dragwar":
-        case "dragonwars": {
+        case "dragonwars":
+        case "dragon wars": {
             gameName = "Dragon wars";
             res = await getLB("dragonWarsWins", timetype, limit, undefined, startingIndex);
             gid = "dw";
