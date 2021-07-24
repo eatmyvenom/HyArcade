@@ -153,16 +153,7 @@ module.exports = async (interaction) => {
         }
 
         case "get-data-raw": {
-            let acc = await InteractionUtils.resolveAccount(interaction);
-            if(acc == undefined) {
-                return new CommandResponse("", ERROR_UNLINKED);
-            }
-            let path = opts.get("path").value;
-            let embed = new MessageEmbed()
-                .setTitle(acc.name + "." + path)
-                .setDescription("" + acc[path])
-                .setColor(0x44a3e7);
-            return { res: "", embed: embed };
+            return await GetDataRaw.execute([getArg(interaction, "player"), getArg(interaction, "path")], authorID, null, interaction);
         }
 
         case "verify": {
