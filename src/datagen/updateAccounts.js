@@ -61,17 +61,29 @@ async function updateAccountsInArr(accounts, oldAccs) {
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if (oldAcc != undefined && !force) {
-                let aboveArcadeLimit = oldAcc.arcadeWins >= 900;
-                let fbAboveCringeLimit = oldAcc.footballWins >= 15000;
-                let fbBelowCringeLimit = oldAcc.footballWins <= 150;
-                let fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
-                let mwAboveCringeLimit = oldAcc.miniWallsWins >= 12000;
-                let mwBelowCringeLimit = oldAcc.miniWallsWins <= 150;
-                let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
+
+                // Make sure they have a relavent amount of arcade games wins
+                let isArcadePlayer = oldAcc.arcadeWins >= 1500;
+
+                // Make sure their arcade wins are not inflated due to football
+                let fbAboveInflationLimit = oldAcc.footballWins >= 15000;
+                let fbBelowInflationLimit = oldAcc.footballWins <= 250;
+
+                let notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
+
+                // Make sure their arcade wins are not inflated due to mini walls
+                let mwAboveInflationLimit = oldAcc.miniWallsWins >= 12000;
+                let mwBelowInflationLimit = oldAcc.miniWallsWins <= 250;
+
+                let notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
+
+                // Linked players should update more often since they will check their own stats
                 let isLinked = oldAcc.discord ? true : false;
+
+                // Ignore people who have not played within the last 3.5 days
                 let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
 
-                let hasImportantStats = aboveArcadeLimit && fbOutsideCringeLimit && mwOutsideCringeLimit
+                let hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated
 
                 if ((isLinked || hasImportantStats) && hasPlayedRecently) {
                     logger.out(`Updating ${oldAcc.name}'s data`);
