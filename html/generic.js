@@ -99,6 +99,30 @@ async function load() {
             roundsD.id = "hitwRounds";
             main.appendChild(roundsD);
 
+            let qPBL = document.createElement("div");
+            qPBL.setAttribute("class", "life");
+            qPBL.title = "Top qualifier PB";
+            qPBL.id = "hitwQual";
+            main.appendChild(qPBL);
+
+            let qPBD = document.createElement("div");
+            qPBD.setAttribute("class", "day");
+            qPBD.title = "Daily Q increase";
+            qPBD.id = "hitwQual";
+            main.appendChild(qPBD);
+
+            let fPBL = document.createElement("div");
+            fPBL.setAttribute("class", "life");
+            fPBL.title = "Top finals PB";
+            fPBL.id = "hitwFinal";
+            main.appendChild(fPBL);
+
+            let fPBD = document.createElement("div");
+            fPBD.setAttribute("class", "day");
+            fPBD.title = "Daily F increase";
+            fPBD.id = "hitwFinal";
+            main.appendChild(fPBD);
+
             break;
         }
 
@@ -449,6 +473,18 @@ async function load() {
             daily.title = "Daily wins";
             daily.id = "arcadeWins";
 
+            let combinedWinsL = document.createElement("div");
+            combinedWinsL.setAttribute("class", "life");
+            combinedWinsL.title = "Lifetime combined wins";
+            combinedWinsL.id = "combinedArcadeWins";
+            main.appendChild(combinedWinsL);
+
+            let combinedWinsD = document.createElement("div");
+            combinedWinsD.setAttribute("class", "day");
+            combinedWinsD.title = "Daily combined wins";
+            combinedWinsD.id = "combinedArcadeWins";
+            main.appendChild(combinedWinsD);
+
             let killsL = document.createElement("div");
             killsL.setAttribute("class", "life");
             killsL.title = "Lifetime coins";
@@ -462,6 +498,19 @@ async function load() {
             killsD.id = "arcadeCoins";
 
             killsL.id = "arcadeCoins";
+
+            let apL = document.createElement("div");
+            apL.setAttribute("class", "life");
+            apL.title = "Lifetime AP";
+            apL.id = "achievementPoints";
+            main.appendChild(apL);
+
+            let apD = document.createElement("div");
+            apD.setAttribute("class", "day");
+            apD.title = "Daily AP";
+            apD.id = "achievementPoints";
+            main.appendChild(apD);
+
             break;
         }
 
@@ -473,6 +522,48 @@ async function load() {
             daily.title = "Daily wins";
             daily.id = "zombiesWins";
 
+            let deWinsL = document.createElement("div");
+            deWinsL.setAttribute("class", "life");
+            deWinsL.title = "Lifetime Dead End wins";
+            deWinsL.id = "wins_zombies_deadend";
+            deWinsL.setAttribute("zombies", deWinsL.id);
+            main.appendChild(deWinsL);
+
+            let deWinsD = document.createElement("div");
+            deWinsD.setAttribute("class", "day");
+            deWinsD.title = "Daily Dead End wins";
+            deWinsD.id = "wins_zombies_deadend";
+            deWinsD.setAttribute("zombies", deWinsD.id);
+            main.appendChild(deWinsD);
+
+            let bbWinsL = document.createElement("div");
+            bbWinsL.setAttribute("class", "life");
+            bbWinsL.title = "Lifetime Bad Blood wins";
+            bbWinsL.id = "wins_zombies_badblood";
+            bbWinsL.setAttribute("zombies", bbWinsL.id);
+            main.appendChild(bbWinsL);
+
+            let bbWinsD = document.createElement("div");
+            bbWinsD.setAttribute("class", "day");
+            bbWinsD.title = "Daily Bad Blood wins";
+            bbWinsD.id = "wins_zombies_badblood";
+            bbWinsD.setAttribute("zombies", bbWinsD.id);
+            main.appendChild(bbWinsD);
+
+            let aaWinsL = document.createElement("div");
+            aaWinsL.setAttribute("class", "life");
+            aaWinsL.title = "Lifetime Alien wins";
+            aaWinsL.id = "wins_zombies_alienarcadium";
+            aaWinsL.setAttribute("zombies", aaWinsL.id);
+            main.appendChild(aaWinsL);
+
+            let aaWinsD = document.createElement("div");
+            aaWinsD.setAttribute("class", "day");
+            aaWinsD.title = "Daily Alien wins";
+            aaWinsD.id = "wins_zombies_alienarcadium";
+            aaWinsD.setAttribute("zombies", aaWinsD.id);
+            main.appendChild(aaWinsD);
+            
             let z1L = document.createElement("div");
             z1L.setAttribute("class", "life");
             z1L.title = "Lifetime rounds";
@@ -673,6 +764,30 @@ async function load() {
 
             break;
         }
+
+        case "ctw": {
+            mainTitle.innerHTML = "Capture the wool";
+            address.innerHTML = '<a href="https://discord.gg/3B55bUcVKH">Discord Invite</a>';
+            lifetime.title = "Lifetime Wool";
+            lifetime.id = "ctwWoolCaptured";
+            daily.title = "Daily wool";
+            daily.id = "ctwWoolCaptured";
+
+            let killsL = document.createElement("div");
+            killsL.setAttribute("class", "life");
+            killsL.title = "Lifetime Kills";
+            main.appendChild(killsL);
+
+            let killsD = document.createElement("div");
+            killsD.setAttribute("class", "day");
+            killsD.title = "Daily kills";
+            main.appendChild(killsD);
+
+            killsD.id = "ctwKills";
+
+            killsL.id = "ctwKills";
+            break;
+        }
     }
 
     let lifetimes = document.querySelectorAll(".life");
@@ -696,346 +811,123 @@ async function refresh() {
     servertime = await servertime.text();
     let formatted = new Date(servertime);
     time.innerHTML = "Last database update : " + formatted.toLocaleTimeString();
-    let accdata = await fetch("https://hyarcade.xyz/resources/accounts.json", { cache: "no-store" });
-    accdata = await accdata.text();
-    await handleLifetimes(accdata);
-    await handleTimed("day", accdata);
+    await handleLifetimes();
+    await handleTimed("day");
 }
 
-async function handleLifetimes(accdata) {
-    accdata = JSON.parse(accdata);
+async function handleLifetimes() {
     let elements = document.querySelectorAll(".life");
     for (let e of elements) {
-        if (e.hasAttribute("extras")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatData(
-                    accdata,
-                    (a, b) => {
-                        if (a.extras == undefined || a.extras[e.getAttribute("extras")] == undefined) {
-                            return -1;
-                        } else if (b.extras == undefined || b.extras[e.getAttribute("extras")] == undefined) {
-                            return 1;
-                        }
-                        return a.extras[e.getAttribute("extras")] - b.extras[e.getAttribute("extras")];
-                    },
-                    (pos, acc) => {
-                        if (acc.extras == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.extras[e.getAttribute("extras")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("seasonalWins")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatData(
-                    accdata,
-                    (a, b) => {
-                        if (
-                            a.seasonalWins == undefined ||
-                            a.seasonalWins[e.getAttribute("seasonalWins")] == undefined
-                        ) {
-                            return -1;
-                        } else if (
-                            b.seasonalWins == undefined ||
-                            b.seasonalWins[e.getAttribute("seasonalWins")] == undefined
-                        ) {
-                            return 1;
-                        }
-                        return (
-                            a.seasonalWins[e.getAttribute("seasonalWins")] -
-                            b.seasonalWins[e.getAttribute("seasonalWins")]
-                        );
-                    },
-                    (pos, acc) => {
-                        if (acc.seasonalWins == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.seasonalWins[e.getAttribute("seasonalWins")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("zombies")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatData(
-                    accdata,
-                    (a, b) => {
-                        if (a.zombies == undefined || a.zombies[e.getAttribute("zombies")] == undefined) {
-                            return -1;
-                        } else if (b.zombies == undefined || b.zombies[e.getAttribute("zombies")] == undefined) {
-                            return 1;
-                        }
-                        return a.zombies[e.getAttribute("zombies")] - b.zombies[e.getAttribute("zombies")];
-                    },
-                    (pos, acc) => {
-                        if (acc.zombies == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.zombies[e.getAttribute("zombies")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("miniWalls")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatData(
-                    accdata,
-                    (a, b) => {
-                        if (a.miniWalls == undefined || a.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            return -1;
-                        } else if (b.miniWalls == undefined || b.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            return 1;
-                        }
-                        return a.miniWalls[e.getAttribute("miniWalls")] - b.miniWalls[e.getAttribute("miniWalls")];
-                    },
-                    (pos, acc) => {
-                        if (acc.miniWalls == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.miniWalls[e.getAttribute("miniWalls")], acc.uuid);
-                    }
-                );
-        } else {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatData(
-                    accdata,
-                    (a, b) => {
-                        if (a[e.id] == undefined) {
-                            return -1;
-                        } else if (b[e.id] == undefined) {
-                            return 1;
-                        }
-                        return a[e.id] - b[e.id];
-                    },
-                    (pos, acc) => {
-                        return formatLine(pos, acc.name, acc[e.id], acc.uuid);
-                    }
-                );
-        }
+        await getLeaderboards(e);
     }
 }
 
-async function handleTimed(timetype, accdata) {
-    let accold = await fetch(`https://hyarcade.xyz/resources/accounts.${timetype}.json`, { cache: "no-store" });
-    accdata = JSON.parse(accdata);
-    accold = await accold.text();
-    accold = JSON.parse(accold);
+/**
+ * 
+ * @param {Element} element 
+ */
+async function getLeaderboards(element) {
+    let lb = []
+    if (element.hasAttribute("extras")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("seasonalWins")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("zombies")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("miniWalls")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`);
+        lb = await raw.json();
+    } else {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`);
+        lb = await raw.json();
+    }
 
-    let elements = document.querySelectorAll(`.${timetype}`);
-    for (let e of elements) {
-        if (e.hasAttribute("extras")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatTimed(
-                    accdata,
-                    accold,
-                    (acc, oldAcc) => {
-                        if (acc.extras == undefined) {
-                            acc.extras = {};
-                        }
-                        if (oldAcc.extras == undefined) {
-                            acc.extras = {};
-                        }
-
-                        if (acc.extras[e.getAttribute("extras")] == undefined) {
-                            acc.extras[e.getAttribute("extras")] = 0;
-                        }
-                        if (oldAcc.extras[e.getAttribute("extras")] == undefined) {
-                            oldAcc.extras[e.getAttribute("extras")] = 0;
-                        }
-                        acc.extras[e.getAttribute("extras")] -= oldAcc.extras[e.getAttribute("extras")];
-                        return acc;
-                    },
-                    (a, b) => {
-                        if (a.extras == undefined || a.extras[e.getAttribute("extras")] == undefined) {
-                            return 1;
-                        } else if (b.extras == undefined || b.extras[e.getAttribute("extras")] == undefined) {
-                            return -1;
-                        }
-                        return a.extras[e.getAttribute("extras")] - b.extras[e.getAttribute("extras")];
-                    },
-                    (pos, acc) => {
-                        if (acc.extras == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.extras[e.getAttribute("extras")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("seasonalWins")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatTimed(
-                    accdata,
-                    accold,
-                    (acc, oldAcc) => {
-                        if (acc.seasonalWins == undefined) {
-                            acc.seasonalWins = {};
-                        }
-                        if (oldAcc.seasonalWins == undefined) {
-                            acc.seasonalWins = {};
-                        }
-
-                        if (acc.seasonalWins[e.getAttribute("seasonalWins")] == undefined) {
-                            acc.seasonalWins[e.getAttribute("seasonalWins")] = 0;
-                        }
-                        if (oldAcc.seasonalWins[e.getAttribute("seasonalWins")] == undefined) {
-                            oldAcc.seasonalWins[e.getAttribute("seasonalWins")] = 0;
-                        }
-                        acc.seasonalWins[e.getAttribute("seasonalWins")] -=
-                            oldAcc.seasonalWins[e.getAttribute("seasonalWins")];
-                        return acc;
-                    },
-                    (a, b) => {
-                        if (
-                            a.seasonalWins == undefined ||
-                            a.seasonalWins[e.getAttribute("seasonalWins")] == undefined
-                        ) {
-                            return 1;
-                        } else if (
-                            b.seasonalWins == undefined ||
-                            b.seasonalWins[e.getAttribute("seasonalWins")] == undefined
-                        ) {
-                            return -1;
-                        }
-                        return (
-                            a.seasonalWins[e.getAttribute("seasonalWins")] -
-                            b.seasonalWins[e.getAttribute("seasonalWins")]
-                        );
-                    },
-                    (pos, acc) => {
-                        if (acc.seasonalWins == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.seasonalWins[e.getAttribute("seasonalWins")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("zombies")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatTimed(
-                    accdata,
-                    accold,
-                    (acc, oldAcc) => {
-                        if (acc.zombies == undefined) {
-                            acc.zombies = {};
-                        }
-                        if (oldAcc.zombies == undefined) {
-                            acc.zombies = {};
-                        }
-
-                        if (acc.zombies[e.getAttribute("zombies")] == undefined) {
-                            acc.zombies[e.getAttribute("zombies")] = 0;
-                        }
-                        if (oldAcc.zombies[e.getAttribute("zombies")] == undefined) {
-                            oldAcc.zombies[e.getAttribute("zombies")] = 0;
-                        }
-                        acc.zombies[e.getAttribute("zombies")] -= oldAcc.zombies[e.getAttribute("zombies")];
-                        return acc;
-                    },
-                    (a, b) => {
-                        if (a.zombies == undefined || a.zombies[e.getAttribute("zombies")] == undefined) {
-                            return 1;
-                        } else if (b.zombies == undefined || b.zombies[e.getAttribute("zombies")] == undefined) {
-                            return -1;
-                        }
-                        return a.zombies[e.getAttribute("zombies")] - b.zombies[e.getAttribute("zombies")];
-                    },
-                    (pos, acc) => {
-                        if (acc.zombies == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.zombies[e.getAttribute("zombies")], acc.uuid);
-                    }
-                );
-        } else if (e.hasAttribute("miniWalls")) {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatTimed(
-                    accdata,
-                    accold,
-                    (acc, oldAcc) => {
-                        if (acc.miniWalls == undefined) {
-                            acc.miniWalls = {};
-                        }
-                        if (oldAcc.miniWalls == undefined) {
-                            acc.miniWalls = {};
-                        }
-
-                        if (acc.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            acc.miniWalls[e.getAttribute("miniWalls")] = 0;
-                        }
-                        if (oldAcc.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            oldAcc.miniWalls[e.getAttribute("miniWalls")] = 0;
-                        }
-                        acc.miniWalls[e.getAttribute("miniWalls")] -= oldAcc.miniWalls[e.getAttribute("miniWalls")];
-                        return acc;
-                    },
-                    (a, b) => {
-                        if (a.miniWalls == undefined || a.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            return 1;
-                        } else if (b.miniWalls == undefined || b.miniWalls[e.getAttribute("miniWalls")] == undefined) {
-                            return -1;
-                        }
-                        return a.miniWalls[e.getAttribute("miniWalls")] - b.miniWalls[e.getAttribute("miniWalls")];
-                    },
-                    (pos, acc) => {
-                        if (acc.miniWalls == undefined) {
-                            return "";
-                        }
-                        return formatLine(pos, acc.name, acc.miniWalls[e.getAttribute("miniWalls")], acc.uuid);
-                    }
-                );
+    let text = "";
+    for(let i = 0; i < Math.min(maxLength, lb.length); i++) {
+        if(element.hasAttribute("extras")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
+        } else if(element.hasAttribute("seasonalWins")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].seasonalWins[element.getAttribute("seasonalWins")], lb[i].uuid);
+        } else if(element.hasAttribute("zombies")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].zombies[element.getAttribute("zombies")], lb[i].uuid);
+        } else if(element.hasAttribute("miniWalls")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].miniWalls[element.getAttribute("miniWalls")], lb[i].uuid);
         } else {
-            e.innerHTML =
-                "<h2>" +
-                e.getAttribute("title") +
-                "</h2>" +
-                formatTimed(
-                    accdata,
-                    accold,
-                    (acc, oldAcc) => {
-                        if (oldAcc[e.id] == undefined) {
-                            oldAcc[e.id] = 0;
-                        }
-                        if (acc[e.id] == undefined) {
-                            acc[e.id] = 0;
-                        }
-                        acc[e.id] -= oldAcc[e.id];
-                        return acc;
-                    },
-                    (a, b) => {
-                        if (a[e.id] == undefined) {
-                            return -1;
-                        } else if (b[e.id] == undefined) {
-                            return 1;
-                        }
-                        return a[e.id] - b[e.id];
-                    },
-                    (pos, acc) => {
-                        return formatLine(pos, acc.name, acc[e.id], acc.uuid);
-                    }
-                );
+            text += formatLine(i + 1, lb[i].name, lb[i][element.getAttribute("id")], lb[i].uuid);
         }
     }
+
+    element.innerHTML =
+        "<h2>" +
+        element.getAttribute("title") +
+        "</h2>" + 
+        text
+
+}
+
+async function handleTimed(timetype) {
+    let elements = document.querySelectorAll(`.${timetype}`);
+    for (let e of elements) {
+        await getDaily(e, timetype);
+    }
+}
+
+/**
+ * 
+ * @param {Element} element 
+ */
+async function getDaily(element, timetype) {
+    let lb = []
+    if (element.hasAttribute("extras")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("seasonalWins")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("zombies")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies&time=${timetype}`);
+        lb = await raw.json();
+    } else if (element.hasAttribute("miniWalls")) {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`);
+        lb = await raw.json();
+    } else {
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`)
+        let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`);
+        lb = await raw.json();
+    }
+
+    let text = "";
+    for(let i = 0; i < Math.min(maxLength, lb.length); i++) {
+        if(element.hasAttribute("extras")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
+        } else if(element.hasAttribute("seasonalWins")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].seasonalWins[element.getAttribute("seasonalWins")], lb[i].uuid);
+        } else if(element.hasAttribute("zombies")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].zombies[element.getAttribute("zombies")], lb[i].uuid);
+        } else if(element.hasAttribute("miniWalls")) {
+            text += formatLine(i + 1, lb[i].name, lb[i].miniWalls[element.getAttribute("miniWalls")], lb[i].uuid);
+        } else {
+            text += formatLine(i + 1, lb[i].name, lb[i][element.getAttribute("id")], lb[i].uuid);
+        }
+    }
+
+    element.innerHTML =
+        "<h2>" +
+        element.getAttribute("title") +
+        "</h2>" + 
+        text
 }
 
 function formatData(accounts, sorter, printer) {
@@ -1082,6 +974,7 @@ function formatLine(pos, name, value, uuid) {
 
 function maxValChange(val) {
     maxLength = val;
+    refresh();
 }
 
 function formatNum(number) {
@@ -1093,18 +986,4 @@ function formatNum(number) {
     }
 }
 
-function gainFocus() {
-    console.log("Focus gained");
-    clearInterval(interval);
-    interval = setInterval(refresh, 25000);
-}
-
-function loseFocus() {
-    console.log("Focus lost");
-    clearInterval(interval);
-    interval = setInterval(refresh, 120000);
-}
-
-window.addEventListener("focus", gainFocus);
-window.addEventListener("blur", loseFocus);
 window.addEventListener("load", load);
