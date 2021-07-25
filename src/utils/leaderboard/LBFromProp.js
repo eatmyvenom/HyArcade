@@ -39,7 +39,7 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         } else {
             // make sure acc isnt null/undefined
             if (acc) {
-                oldlist[i][category][prop] = numberify(acc[category][prop]) - numberify(oldlist[i][category][prop]);
+                oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
             }
         }
     }
