@@ -1,13 +1,8 @@
-const listUtils = require("../../listUtils");
 const FileCache = require("../../utils/files/FileCache")
-const utils = require("../../utils");
 
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
-}
-
-function formatNum(number) {
-    return Intl.NumberFormat("en").format(number);
+    str = str ?? 0;
+    return Number(str);
 }
 
 /**
@@ -36,7 +31,37 @@ module.exports = async (req, res, fileCache) => {
                 });
             }
         } else {
-            accounts = await listUtils.listDiffByProp("accounts", lbprop, "day", 300, category, fileCache);
+            let newAcclist = [];
+            let oldCopy = JSON.parse(JSON.stringify(fileCache[timePeriod + "accounts"]))
+            for(let a of oldCopy) {
+                let n = fileCache.accounts.find(u=>u.uuid==a.uuid);
+                if(category == null) {
+                    a[lbprop] = numberify(n[lbprop] - a[lbprop]);
+                    a.name = n.name;
+                    newAcclist.push(a);
+                } else {
+                    if(a[category] != undefined) {
+                        a[category][lbprop] = numberify(n[category]?.[lbprop]) - numberify(a[category]?.[lbprop]);
+                        a.name = n.name;
+                        newAcclist.push(a);
+                    } else {
+                        a[category] = {};
+                        a[category][lbprop] = numberify(n[category]?.[lbprop]) - numberify(a[category]?.[lbprop]);
+                        a.name = n.name;
+                        newAcclist.push(a);
+                    }
+                }
+            }
+            accounts = newAcclist;
+            if (category == null) {
+                accounts = await [].concat(accounts).sort((b, a) => {
+                    return numberify(a[lbprop]) - numberify(b[lbprop]);
+                });
+            } else {
+                accounts = await [].concat(accounts).sort((b, a) => {
+                    return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
+                });
+            }
         }
 
         accounts = accounts.slice(0, Math.min(accounts.length, 300));
