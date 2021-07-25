@@ -2,7 +2,7 @@ const utils = require("../../utils");
 const { getList } = require("./ListUtils");
 
 function numberify(str) {
-    let str = str ?? 0;
+    str = str ?? 0;
     return Number(str);
 }
 
