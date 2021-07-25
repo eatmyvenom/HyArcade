@@ -25,3 +25,5 @@ exports.topgames = topgames;
 let arcade = require("./Commands/Arcade");
 arcade.options = [ arcade.options[2], arcade.options[3] ];
 exports.arcade = arcade;
+
+exports.quake = require("./Commands/Quake");
