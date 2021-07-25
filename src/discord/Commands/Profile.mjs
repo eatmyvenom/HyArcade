@@ -1,3 +1,4 @@
+import Logger from "hyarcade-logger";
 import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
@@ -60,8 +61,22 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
     }
     let lvl = Math.round(acc.level * 100) / 100;
     let img = new ImageGenerator(640, 400);
-    await img.addBackground("resources/arc.png");
-    await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 96, "04");
+    try {
+        await img.addBackground("resources/arc.png");
+    } catch (e) {
+        Logger.err(e);
+        Logger.err("Error setting background");
+        throw new Error("Error setting background");
+    }
+
+    try {
+        await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 96, "04");
+    } catch (e) {
+        Logger.err(e);
+        Logger.err("Error setting skin");
+        await img.addImage("resources/wtf.png", 12, 116, 96, "04");
+        // throw new Error("Error setting skin");
+    }
 
     if(acc.name?.toLowerCase() == "v3xm") {
         await img.addImage("https://i.eatmyvenom.me/v3xm.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
