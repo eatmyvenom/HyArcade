@@ -22,6 +22,7 @@ const { ERROR_API_DOWN, ERROR_NEED_PLAYER, ERROR_UNLINKED } = require("../Utils/
 const MenuGenerator = require("./SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
 const GetDataRaw = require("../Commands/GetDataRaw");
+const Quake = require("../Commands/Quake");
 
 let Commands = null;
 
@@ -191,6 +192,10 @@ module.exports = async (interaction) => {
 
         case "top-games": {
             return await TopGames.execute([getArg(interaction, "player")], authorID, null, interaction);
+        }
+
+        case "quake": {
+            return await Quake.execute([getArg(interaction, "player")], authorID, null, interaction)
         }
 
         case "arcade": {
