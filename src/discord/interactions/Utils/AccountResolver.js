@@ -31,7 +31,7 @@ async function getFromHypixel(string, interaction) {
  * @returns {Account}
  */
 module.exports = async function resolveAccount(interaction, namearg = "player") {
-    let str = interaction.options?.get(namearg)?.value;
+    let str = interaction.options.getString(namearg, false);
     if(BotUtils.botMode == "mini") {
         return await getFromHypixel(str, interaction);
     }
@@ -41,7 +41,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
         urlArgs.set("uuid", str.toLowerCase());
     } else if(str?.length == 36) {
         urlArgs.set("uuid", str.toLowerCase().replace(/-/g,""));
-    } else if(str != undefined) {
+    } else if(str != null) {
         urlArgs.set("ign", str.toLowerCase());
     } else {
         urlArgs.set("discid", interaction.user.id);
