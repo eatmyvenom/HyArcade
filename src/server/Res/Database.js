@@ -45,10 +45,10 @@ module.exports = async (req, res, fileCache) => {
                     let old = fileCache[url.searchParams.get("path")];
                     let newAccs = [];
 
-                    for(let acc of old) {
-                        let newAcc = json.find((a) => a.uuid == acc.uuid);
-                        if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
-                            newAccs.push(newAcc);
+                    for(let acc of json) {
+                        let oldAcc = old.find((a) => a.uuid == acc.uuid);
+                        if(oldAcc != undefined && oldAcc.updateTime > acc.updateTime) {
+                            newAccs.push(oldAcc);
                         } else {
                             if(acc != {}) {
                                 newAccs.push(acc);
