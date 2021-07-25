@@ -2,7 +2,8 @@ const utils = require("../../utils");
 const { getList } = require("./ListUtils");
 
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+    let str = str ?? 0;
+    return Number(str);
 }
 
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
@@ -39,7 +40,12 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         } else {
             // make sure acc isnt null/undefined
             if (acc) {
-                oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
+                if(oldlist[i][category] != undefined) {
+                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
+                } else {
+                    oldlist[i][category] = {};
+                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
+                }
             }
         }
     }
