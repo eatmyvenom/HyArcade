@@ -11,3 +11,4 @@ exports.profile = require("./Commands/Profile");
 exports.leaderboard = require("./Commands/Leaderboard");
 exports.arcade = require("./Commands/Arcade");
 exports.topgames = require("./Commands/TopGames");
+exports.zombies = require("./Commands/Zombies");

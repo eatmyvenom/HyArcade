@@ -27,3 +27,7 @@ arcade.options = [ arcade.options[2], arcade.options[3] ];
 exports.arcade = arcade;
 
 exports.quake = require("./Commands/Quake");
+
+let zombies = require("./Commands/Zombies");
+zombies.options[0].required = true;
+exports.zombies = zombies;

@@ -23,6 +23,7 @@ const MenuGenerator = require("./SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
 const GetDataRaw = require("../Commands/GetDataRaw");
 const Quake = require("../Commands/Quake");
+const Zombies = require("../Commands/Zombies");
 
 let Commands = null;
 
@@ -196,6 +197,10 @@ module.exports = async (interaction) => {
 
         case "quake": {
             return await Quake.execute([getArg(interaction, "player")], authorID, null, interaction)
+        }
+
+        case "zombies" : {
+            return await Zombies.execute([getArg(interaction, "player")], authorID, null, interaction)
         }
 
         case "arcade": {
