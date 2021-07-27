@@ -15,6 +15,18 @@ module.exports = function EmojiGetter(nitro, emoji) {
             return ":poop:";
         }
 
+        case "win": {
+            return ":crown:";
+        }
+
+        case "skill": {
+            return ":star:";
+        }
+
+        case "skill2": {
+            return ":star2:";
+        }
+
         case "game": {
             return ":video_game:";
         }
