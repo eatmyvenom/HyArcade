@@ -16,7 +16,7 @@ function formatN(str) {
     return r;
 }
 
-module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
     let acc;
     if (interaction == undefined) {

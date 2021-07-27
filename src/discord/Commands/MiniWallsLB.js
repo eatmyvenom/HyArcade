@@ -278,7 +278,7 @@ async function getLB(prop, timetype, limit, category) {
     return embed;
 }
 
-module.exports = new Command("mwlb", ["*"], async (args) => {
+module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     let startTime = Date.now();
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
