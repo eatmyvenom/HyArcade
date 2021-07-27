@@ -5,36 +5,15 @@ const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
 
 function wComp(b, a) {
-    if (a.miniWallsWins == undefined || a.miniWallsWins == NaN) {
-        return 1;
-    }
-
-    if (b.miniWallsWins == undefined || b.miniWallsWins == NaN) {
-        return -1;
-    }
-    return a.miniWallsWins - b.miniWallsWins;
+    return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
 }
 
 function kComp(b, a) {
-    if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
-        return -1;
-    }
-
-    if (b.miniWalls.kills == undefined || a.miniWalls.kills == NaN) {
-        return 1;
-    }
-    return a.miniWalls.kills - b.miniWalls.kills;
+    return (a.miniWalls?.kills ?? 0) - (b.miniWalls?.kills ?? 0);
 }
 
 function dComp(b, a) {
-    if (a.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
-        return -1;
-    }
-
-    if (b.miniWalls.deaths == undefined || a.miniWalls.deaths == NaN) {
-        return 1;
-    }
-    return a.miniWalls.deaths - b.miniWalls.deaths;
+    return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0) ;
 }
 
 function int(n) {
@@ -98,7 +77,7 @@ async function getLB(prop, timetype, limit, category) {
         case "kills": {
             comparitor = kComp;
             parser = (a) => {
-                return a.miniWalls.kills;
+                return a.miniWalls?.kills ?? 0;
             };
             break;
         }
@@ -106,72 +85,35 @@ async function getLB(prop, timetype, limit, category) {
         case "deaths": {
             comparitor = dComp;
             parser = (a) => {
-                return a.miniWalls.deaths;
+                return a.miniWalls?.deaths ?? 0;
             };
             break;
         }
 
         case "witherDamage": {
             comparitor = (b, a) => {
-                if (
-                    a.miniWalls == undefined ||
-                    a.miniWalls.witherDamage == undefined ||
-                    a.miniWalls.witherDamage == NaN
-                ) {
-                    return -1;
-                }
-
-                if (
-                    b.miniWalls == undefined ||
-                    b.miniWalls.witherDamage == undefined ||
-                    a.miniWalls.witherDamage == NaN
-                ) {
-                    return 1;
-                }
-                return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
+                return (a.miniWalls?.witherDamage ?? 0) - (b.miniWalls?.witherDamage ?? 0);
             };
             parser = (a) => {
-                return a.miniWalls.witherDamage;
+                return a.miniWalls?.witherDamage ?? 0;
             };
             break;
         }
         case "witherKills": {
             comparitor = (b, a) => {
-                if (
-                    a.miniWalls == undefined ||
-                    a.miniWalls.witherKills == undefined ||
-                    a.miniWalls.witherKills == NaN
-                ) {
-                    return -1;
-                }
-
-                if (
-                    b.miniWalls == undefined ||
-                    b.miniWalls.witherKills == undefined ||
-                    a.miniWalls.witherKills == NaN
-                ) {
-                    return 1;
-                }
-                return a.miniWalls.witherKills - b.miniWalls.witherKills;
+                return (a.miniWalls?.witherKills ?? 0) - (b.miniWalls?.witherKills ?? 0);
             };
             parser = (a) => {
-                return a.miniWalls.witherKills;
+                return a.miniWalls?.witherKills ?? 0;
             };
             break;
         }
         case "finalKills": {
             comparitor = (b, a) => {
-                if (a.miniWalls == undefined || a.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
-                    return -1;
-                }
-
-                if (b.miniWalls == undefined || b.miniWalls.finalKills == undefined || a.miniWalls.finalKills == NaN) {
-                    return 1;
-                }
-                return a.miniWalls.finalKills - b.miniWalls.finalKills;
+                return (a.miniWalls?.finalKills ?? 0) - (b.miniWalls?.finalKills ?? 0);
             };
             parser = (a) => {
-                return a.miniWalls.finalKills;
+                return a.miniWalls?.finalKills ?? 0;
             };
             break;
         }
@@ -180,15 +122,13 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls == undefined || a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
-                if (b.miniWalls == undefined || b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
                 return (
-                    (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths -
-                    (b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths
+                    ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0) -
+                    ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
                 );
             };
             parser = (a) => {
-                return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3);
+                return ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0).toFixed(3);
             };
             break;
         }
@@ -197,12 +137,10 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
-                if (b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
-                return a.miniWalls.kills / a.miniWalls.deaths - b.miniWalls.kills / b.miniWalls.deaths;
+                return (a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.kills ?? 0) / (b.miniWalls?.deaths ?? 0);
             };
             parser = (a) => {
-                return (a.miniWalls.kills / a.miniWalls.deaths).toFixed(3);
+                return ((a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
             };
             break;
         }
@@ -211,12 +149,10 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
-                if (b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
-                return a.miniWalls.finalKills / a.miniWalls.deaths - b.miniWalls.finalKills / b.miniWalls.deaths;
+                return (a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.finalKills ?? 0) / (b.miniWalls?.deaths ?? 0);
             };
             parser = (a) => {
-                return (a.miniWalls.finalKills / a.miniWalls.deaths).toFixed(3);
+                return ((a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
             };
             break;
         }
@@ -225,12 +161,10 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.witherDamage == undefined || a.miniWalls.witherDamage == NaN) return -1;
-                if (b.miniWalls.witherDamage == undefined || b.miniWalls.witherDamage == NaN) return 1;
-                return a.miniWalls.witherDamage / a.miniWalls.deaths - b.miniWalls.witherDamage / b.miniWalls.deaths;
+                return (a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherDamage ?? 0) / (b.miniWalls?.deaths ?? 0);
             };
             parser = (a) => {
-                return (a.miniWalls.witherDamage / a.miniWalls.deaths).toFixed(3);
+                return ((a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
             };
             break;
         }
@@ -239,12 +173,10 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) return -1;
-                if (b.miniWalls.witherKills == undefined || b.miniWalls.witherKills == NaN) return 1;
-                return a.miniWalls.witherKills / a.miniWalls.deaths - b.miniWalls.witherKills / b.miniWalls.deaths;
+                return (a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherKills ?? 0) / (b.miniWalls?.deaths ?? 0);
             };
             parser = (a) => {
-                return (a.miniWalls.witherKills / a.miniWalls.deaths).toFixed(3);
+                return ((a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
             };
             break;
         }
@@ -253,12 +185,10 @@ async function getLB(prop, timetype, limit, category) {
             callback = rcb;
             transformer = ratioTransformer;
             comparitor = (b, a) => {
-                if (a.miniWalls.arrowsShot == undefined || a.miniWalls.arrowsShot == NaN) return -1;
-                if (b.miniWalls.arrowsShot == undefined || b.miniWalls.arrowsShot == NaN) return 1;
-                return a.miniWalls.arrowsHit / a.miniWalls.arrowsShot - b.miniWalls.arrowsHit / b.miniWalls.arrowsShot;
+                return (a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0) - (b.miniWalls?.arrowsHit ?? 0) / (b.miniWalls?.arrowsShot ?? 0);
             };
             parser = (a) => {
-                return ((a.miniWalls.arrowsHit / a.miniWalls.arrowsShot) * 100).toFixed(3);
+                return (((a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
             };
             break;
         }
@@ -421,6 +351,11 @@ module.exports = new Command("mwlb", ["*"], async (args) => {
             break;
         }
 
+        case "tkd":
+        case "tkdr":
+        case "totalkd":
+        case "ttlkd":
+        case "totalkdr":
         case "f+kd":
         case "f+kdr":
         case "k+fdr":
