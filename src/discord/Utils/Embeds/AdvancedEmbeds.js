@@ -1,6 +1,6 @@
 const { MessageEmbed, User, Message } = require("discord.js");
 const Account = require("../../../classes/account");
-const EmojiGetter = require("../EmojiGetter");
+const EmojiGetter = require("../Formatting/EmojiGetter");
 
 function formatR(n) {
     let r = Math.round(n * 100) / 100;
