@@ -234,16 +234,6 @@ async function sendDiscordEvent() {
     await event.toDiscord();
 }
 
-async function autoconfig() {
-    let conf = Cfg.fromEnv();
-    await conf.writeConfig();
-    await utils.downloadFile("status.json", "pgstatus.json");
-    await utils.downloadFile("acclist.json", "acclist.json");
-    await utils.downloadFile("accounts.json", "accounts.json");
-    await utils.downloadFile("guild.json", "guild.json");
-    await utils.downloadFile("players.json", "players.json");
-}
-
 async function miniconfig() {
     let conf = Cfg.fromJSON();
     await fs.writeFile("./config.min.json", JSON.stringify(conf));
@@ -436,10 +426,6 @@ async function main() {
         case "discordEvent":
         case "discEvt":
             await sendDiscordEvent();
-            break;
-
-        case "autoconfig":
-            await autoconfig();
             break;
 
         case "minify":
