@@ -192,7 +192,7 @@ module.exports = async (interaction) => {
         }
 
         case "top-games": {
-            return await TopGames.execute([getArg(interaction, "player")], authorID, null, interaction);
+            return await TopGames.execute([getArg(interaction, "player"), getArg(interaction, "time")] , authorID, null, interaction);
         }
 
         case "quake": {
