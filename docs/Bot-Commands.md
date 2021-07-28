@@ -1,6 +1,6 @@
 # Arcade bot commands (/)
-* `/stats [player] [game]` - Get somebodys stats in an arcade game, if you don't choose a player and you are linked it will give your stats.
-* `/leaderboard <game> [timetype] [amount] [start]` - Get some arcade related leaderboard. The game options are documented [here](https://docs.hyarcade.xyz/).
+* `stats [player] [game]` - Get somebodys stats in an arcade game, if you don't choose a player and you are linked it will give your stats.
+* `leaderboard <game> [timetype] [amount] [start]` - Get some arcade related leaderboard. The game options are documented [here](https://docs.hyarcade.xyz/).
 * `add-account <accounts>` - Add an account to the database. The database is the way that the leaderboards work and therefore I have this command open so people can add relavent players to the database. 
 * `name-history [player]` - Gets the hypixel name history of a player. This name history is based only on the names they have logged on to hypixel with.
 * `whois [player]` - Gets discord link for a specific account.
@@ -12,7 +12,7 @@
 * `profile [player]` - Generates an image with cool info about a specific player.
 * `top-games [player] [time]` - Gets the top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `zombies [player]` - Zombies specific stats since there are so many.
-* `Arcade` - A command group for lesser used commands.
+* `arcade` - A command group for lesser used commands.
   * `ez` - ez!
   * `help` - Links you to this site.
   * `ping` - Gets bots status and some info about the health of the bot.
