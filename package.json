@@ -31,7 +31,6 @@
         "node-fetch": "^2.6.1"
     },
     "devDependencies": {
-        "jsdoc": "^3.6.6",
         "prettier": "^2.2.1"
     }
 }
