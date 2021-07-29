@@ -39,7 +39,7 @@ body > a {
 
 body > a:hover,
 div:hover {
-    box-shadow: -2px -2px 5px 1px #bb00dd, 2px 2px 5px 1px #0066cc;
+    box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
 }
 
 body > a,
