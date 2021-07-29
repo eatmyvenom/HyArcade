@@ -123,16 +123,6 @@ async function hander(args, rawMsg, interaction) {
         logger.debug("Deferring interaction");
         await interaction.defer();
     }
-    if (args.length < 1) {
-        let embed = new MessageEmbed()
-            .setTitle("ERROR")
-            .setColor(0x00cc66)
-            .setDescription("This command a game argument. Use the help command for more info.");
-        return {
-            res: "",
-            embed: embed,
-        };
-    }
 
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
@@ -146,6 +136,8 @@ async function hander(args, rawMsg, interaction) {
         case "sex":
         case "sexy":
         case "party":
+        case "partgam":
+        case "party game":
         case "partygames":
         case "party games":
         case "pg": {
@@ -160,6 +152,7 @@ async function hander(args, rawMsg, interaction) {
         case "farm":
         case "fmhnt":
         case "farmhunt":
+        case "farm hunt":
         case "frmhnt": {
             gameName = "Farm hunt";
             res = await getLB("farmhuntWins", timetype, limit, undefined, startingIndex);
@@ -170,6 +163,10 @@ async function hander(args, rawMsg, interaction) {
         case "fhp":
         case "fhpoop":
         case "poop":
+        case "poopcollect":
+        case "farmhuntpoop":
+        case "farmhuntshit":
+        case "shitcollected":
         case "poopcollected":
         case "fmhntpoop": {
             gameName = "Farm hunt poop";
@@ -201,6 +198,8 @@ async function hander(args, rawMsg, interaction) {
         case "holewall":
         case "wallhole":
         case "wally":
+        case "speedbuilders":
+        case "h.i.t.w.":
         case "pain": {
             game = "Hole in the wall";
             res = await getLB("hitwWins", timetype, limit, undefined, startingIndex);
@@ -617,7 +616,7 @@ async function hander(args, rawMsg, interaction) {
                     let embed = new MessageEmbed()
                         .setTitle("ERROR")
                         .setDescription(
-                            `Sorry that category does not exist, use the command \`/arcadehelp games\` to see what is available.`
+                            `Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available.`
                         )
                         .setColor(0xff0000);
                     return { res: "", embed: embed };
@@ -628,7 +627,7 @@ async function hander(args, rawMsg, interaction) {
                 let embed = new MessageEmbed()
                     .setTitle("ERROR")
                     .setDescription(
-                        `Sorry that category does not exist, use the command \`/arcadehelp games\` to see what is available.`
+                        `Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available.`
                     )
                     .setColor(0xff0000);
                 return { res: "", embed: embed };

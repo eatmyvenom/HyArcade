@@ -1,8 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { COLOR_RED, COLOR_PRIMARY, COLOR_SUCCESS, COLOR_YELLOW } = require("./Colors");
 
-const cfg = require("../../../Config").fromJSON();
-
 exports.ERROR_UNKNOWN = new MessageEmbed()
         .setTitle("ERROR")
         .setColor(COLOR_RED)
@@ -29,7 +27,7 @@ exports.ERROR_API_DOWN = new MessageEmbed()
 exports.ERROR_LINK_HYPIXEL_MISMATCH = new MessageEmbed()
     .setTitle("ERROR")
     .setDescription(
-        "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Try `/arcadehelp Verify` if you are still confused"
+        "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Read [this](https://docs.hyarcade.xyz/bots/Verify) to see a more detailed explanation."
     )
     .setColor(COLOR_RED);
 
@@ -44,7 +42,7 @@ exports.INFO_LINK_SUCCESS = new MessageEmbed()
 exports.ERROR_INPUT_IGN = new MessageEmbed()
     .setTitle("ERROR")
     .setDescription(
-        `Input a name or uuid to link your discord to! Use ${cfg.commandCharacter}help for more info on how to use the verify command.`
+        `Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/Verify) to see a more detailed explanation.`
     )
     .setColor(COLOR_RED);
 

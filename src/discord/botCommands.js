@@ -27,6 +27,7 @@ let FetchUser = require("./Commands/FetchUser");
 let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
+let Help = require("./Commands/Help");
 const CommandResponse = require("./Utils/CommandResponse");
 const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
 const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
@@ -132,7 +133,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return { res: "", embed: ERROR_USE_SLASH_COMMAND("help", "arcadehelp") };
+            return await Help.execute([], authorID);
             break;
         }
 
@@ -234,6 +235,9 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "clearcache" : {
+            if(author != owner) {
+                return;
+            }
             linkCmd = requireNew("./Commands/Link");
             statusCmd = requireNew("./Commands/Status");
             timeUpdateCmd = requireNew("./Commands/LastUpdate");

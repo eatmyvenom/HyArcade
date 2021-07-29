@@ -1,5 +1,5 @@
 const { Client } = require('discord.js');
-const cfg = require('../../Config').fromJSON();
+const cfg = require('hyarcade-config').fromJSON();
 
 function getRandomPresence(type) {
     let presenceArr = cfg.discord.presences;
