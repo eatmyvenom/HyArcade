@@ -6,7 +6,7 @@ const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 function numberify(n) {
-    let r = Intl.NumberFormat("en").format(Number(n));
+    let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     r = r == NaN ? (r = "N/A") : r;
     return r;
 }
@@ -15,7 +15,7 @@ function wordify(s) {
     return ("" + s).replace(/_/g, " ");
 }
 
-module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
     let uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
     if(uuid == undefined) {
@@ -33,7 +33,7 @@ module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) =
     let losses = (arena?.losses_1v1 ?? 0) + (arena?.losses_2v2 ?? 0) + (arena?.losses_4v4 ?? 0);
 
     let embed = new MessageEmbed()
-        .setTitle(data.displayname + " arena stats")
+        .setTitle(data.displayname + " Arena stats")
         .addField("-----Overall stats-----", 
         `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +
         `**Losses** - ${numberify(losses)}\n` +

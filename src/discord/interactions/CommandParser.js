@@ -27,6 +27,7 @@ const Zombies = require("../Commands/Zombies");
 const Help = require("../Commands/Help");
 const Stats = require("../Commands/Stats");
 const Arena = require("../Commands/Arena");
+const PBall = require("../Commands/PBall");
 
 let Commands = null;
 
@@ -199,6 +200,10 @@ module.exports = async (interaction) => {
 
         case "arena" : {
             return await Arena.execute([getArg(interaction, "player")], authorID, null, interaction)
+        }
+
+        case "paintball" : {
+            return await PBall.execute([getArg(interaction, "player")], authorID, null, interaction)
         }
 
         case "arcade": {
