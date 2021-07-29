@@ -31,7 +31,7 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
         .addField("Info", 
             `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\n` +
             `**Best round** - ${numberify(acc.zombies?.best_round_zombies ?? 0)}\n` +
-            `**Kills **- ${numberify(acc.zombies?.players_revived_zombies ?? 0)}\n`,
+            `**Revives** - ${numberify(acc.zombies?.players_revived_zombies ?? 0)}\n`,
         true)
         .addField("Ratios", 
             `**Wins/Losses** - ${numberify((acc.zombies?.wins_zombies ?? 0) / (acc.zombies?.deaths_zombies ?? 0))}\n` +
