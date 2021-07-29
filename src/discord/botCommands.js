@@ -133,7 +133,7 @@ async function checkCommands(rawMsg, command, args, author) {
         }
 
         case "help": {
-            return await Help.execute([], authorID);
+            return await Help.execute(args, author);
             break;
         }
 
