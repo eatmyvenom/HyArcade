@@ -14,6 +14,7 @@ profile.options[0].required = true;
 exports.profile = profile;
 
 let topgames = require("./Commands/TopGames");
+topgames.options = [ topgames.options[0] ];
 topgames.options[0].required = true;
 exports.topgames = topgames;
 
