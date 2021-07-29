@@ -1,6 +1,6 @@
 # Arcade bot commands (/)
 * `stats [player] [game]` - Get somebodys stats in an arcade game, if you don't choose a player and you are linked it will give your stats.
-* `leaderboard <game> [timetype] [amount] [start]` - Get some arcade related leaderboard. The game options are documented [here](https://docs.hyarcade.xyz/).
+* `leaderboard <game> [timetype] [amount] [start]` - Get some arcade related leaderboard. The game options are documented [here](./bots/Leaderboards).
 * `add-account <accounts>` - Add an account to the database. The database is the way that the leaderboards work and therefore I have this command open so people can add relavent players to the database. 
 * `name-history [player]` - Gets the hypixel name history of a player. This name history is based only on the names they have logged on to hypixel with.
 * `whois [player]` - Gets discord link for a specific account.

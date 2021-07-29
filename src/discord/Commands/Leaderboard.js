@@ -147,6 +147,7 @@ async function hander(args, rawMsg, interaction) {
         case "sexy":
         case "party":
         case "partygames":
+        case "party games":
         case "pg": {
             gameName = "Party games";
             res = await getLB("wins", timetype, limit, undefined, startingIndex);
@@ -182,6 +183,7 @@ async function hander(args, rawMsg, interaction) {
         case "hypixel_says":
         case "hypixel says":
         case "hypixelsay":
+        case "hypixelsays":
         case "hys":
         case "hypixel":
         case "says":
@@ -308,6 +310,8 @@ async function hander(args, rawMsg, interaction) {
         case "gw":
         case "sw":
         case "galaxy":
+        case "galaxywar":
+        case "galawar":
         case "galaxywars": {
             gameName = "Galaxy wars";
             res = await getLB("galaxyWarsWins", timetype, limit, undefined, startingIndex);
@@ -430,6 +434,8 @@ async function hander(args, rawMsg, interaction) {
         case "draw":
         case "pixpaint":
         case "pixelpaint":
+        case "pixelpainters":
+        case "pixelpainter":
         case "drawmything":
         case "drawtheirthing":
         case "drawing": {
