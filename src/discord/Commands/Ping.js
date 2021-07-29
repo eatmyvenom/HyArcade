@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
-const TimeFormatter = require("../Utils/TimeFormatter");
+const TimeFormatter = require("../Utils/Formatting/TimeFormatter");
 
 let statusName = [
     "READY",

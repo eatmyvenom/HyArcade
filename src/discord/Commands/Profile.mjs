@@ -5,7 +5,7 @@ import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import TimeFormatter from "../Utils/TimeFormatter.js";
+import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(("" + n).replace(/undefined/g, 0).replace(/null/g, 0)));
