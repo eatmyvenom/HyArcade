@@ -25,8 +25,7 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
             `**Rounds** - ${numberify(acc.zombies?.total_rounds_survived_zombies ?? 0)}\n` +
             `**Kills** - ${numberify(acc.zombies?.zombie_kills_zombies ?? 0)}\n` +
             `**Knocks** - ${numberify(acc.zombies?.times_knocked_down_zombies ?? 0)}\n` +
-            `**Deaths** - ${numberify(acc.zombies?.deaths_zombies ?? 0)}\n` + 
-            `**Revives** - ${numberify(acc.zombies?.players_revived_zombies ?? 0)}\n`,
+            `**Deaths** - ${numberify(acc.zombies?.deaths_zombies ?? 0)}\n`,
         true)
         .addField("Info", 
             `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\n` +
