@@ -60,10 +60,12 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
         acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
-        return new CommandResponse("", ERROR_UNLINKED);
+        if(acc == undefined) {
+            return new CommandResponse("", ERROR_UNLINKED);
+        }
     }
     let lvl = Math.round(acc.level * 100) / 100;
-    let img = new ImageGenerator(640, 400);
+    let img = new ImageGenerator(640, 400, "'myFont'");
     try {
         await img.addBackground("resources/arc.png");
     } catch (e) {
