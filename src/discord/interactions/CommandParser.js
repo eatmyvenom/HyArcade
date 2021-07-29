@@ -24,6 +24,7 @@ const CommandResponse = require("../Utils/CommandResponse");
 const GetDataRaw = require("../Commands/GetDataRaw");
 const Quake = require("../Commands/Quake");
 const Zombies = require("../Commands/Zombies");
+const Help = require("../Commands/Help");
 
 let Commands = null;
 
@@ -221,43 +222,7 @@ module.exports = async (interaction) => {
             }
 
             if(interaction.options.getSubCommand() == "help") {
-                if (opts.get("topic") == undefined) {
-                    return { res: "", embed: InteractionUtils.helpEmbed() };
-                } else {
-                    return { res: "", embed: InteractionUtils.helpTopic(opts.get("topic").value) };
-                }
-            }
-        }
-    }
-
-    if (interaction.commandName == "miniwalls") {
-        switch (interaction.options[0].options[0].name) {
-            case "stats": {
-                let newI = interaction.options[0].options[0];
-                newI.defer = interaction.defer;
-                newI.member = interaction.member;
-                return await MiniWalls.execute(
-                    [interaction.options[0].options[0].options[0].value],
-                    authorID,
-                    undefined,
-                    newI
-                );
-            }
-
-            case "leaderboard": {
-                let newI = interaction.options[0].options[0];
-                newI.defer = interaction.defer;
-                newI.member = interaction.member;
-                return await MiniWallsLB.execute(
-                    [
-                        interaction.options[0].options[0].options[0].value,
-                        interaction.options[0].options[0].options[1].value,
-                        interaction.options[0].options[0].options[2].value,
-                    ],
-                    authorID,
-                    undefined,
-                    newI
-                );
+                return await Help.execute([], authorID, null, interaction);
             }
         }
     }

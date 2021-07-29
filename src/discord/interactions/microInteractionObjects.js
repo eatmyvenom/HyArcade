@@ -1,8 +1,3 @@
-let help = require("./Commands/Help");
-let cs = help.options[0].choices;
-help.options[0].choices = [ cs[0], cs[3], cs[7] ];
-exports.help = help;
-
 let statsCommand = require("./Commands/Stats");
 statsCommand.options[0].required = true;
 exports.statsCommand = statsCommand;
@@ -23,7 +18,7 @@ topgames.options[0].required = true;
 exports.topgames = topgames;
 
 let arcade = require("./Commands/Arcade");
-arcade.options = [ arcade.options[2], arcade.options[3] ];
+arcade.options = [ arcade.options[0], arcade.options[1], arcade.options[2] ];
 exports.arcade = arcade;
 
 exports.quake = require("./Commands/Quake");
