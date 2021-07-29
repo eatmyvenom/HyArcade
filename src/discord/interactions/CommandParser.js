@@ -25,6 +25,7 @@ const GetDataRaw = require("../Commands/GetDataRaw");
 const Quake = require("../Commands/Quake");
 const Zombies = require("../Commands/Zombies");
 const Help = require("../Commands/Help");
+const Stats = require("../Commands/Stats");
 
 let Commands = null;
 
@@ -79,16 +80,7 @@ module.exports = async (interaction) => {
 
     switch (interaction.commandName) {
         case "stats": {
-            let game = getArg(interaction, "game");
-            let acc = await InteractionUtils.resolveAccount(interaction, "player");
-            if(acc == undefined) {
-                return new CommandResponse("", ERROR_UNLINKED);
-            }
-            let res = await BotUtils.getStats(acc, "" + game);
-            let e = res.embed;
-            logger.debug("Adding stats buttons to message");
-            let menu = await MenuGenerator.statsMenu(acc.uuid);
-            return { res: "", embed: e, b: menu };
+            return Stats.execute([getArg(interaction, "player"), getArg(interaction, "game")], authorID, null, interaction)
         }
 
         case "leaderboard": {
