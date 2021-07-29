@@ -18,23 +18,6 @@ exports.ERROR_UNLINKED = new MessageEmbed()
     .setColor(COLOR_RED)
     .setDescription("You need to input an IGN or verify yourself.")
 
-
-exports.FULL_HELP = new MessageEmbed()
-    .setTitle("Arcade bot help")
-    .setColor(COLOR_PRIMARY)
-    .addField("/getdataraw", "Get some raw data from a player")
-    .addField("/info", "Get info about the bot")
-    .addField("/leaderboard", "Get an arcade leaderboard (Not availiable on micro)")
-    .addField("/namehistory", "Get the list of previous names from a player")
-    .addField("/stats", "Get the stats of a specified player")
-    .addField("/verify", "Verify yourself with the arcade bot (Not availiable on micro)")
-    .addField("/whois", "Get the linked discord account of a player (Not availiable on micro)")
-    .addField("/help", "Get a list of commands of help on a specific topic")
-    .addField(
-        "Other help topics",
-        "games - the names of all the available games\nsearching - how the bot searches for an account\nrole handling - an explantion on how role handling happens"
-    );
-
 exports.ERROR_API_DOWN = new MessageEmbed()
     .setTitle("ERROR")
     .setColor(COLOR_RED)
