@@ -5,7 +5,7 @@
 * `name-history [player]` - Gets the hypixel name history of a player. This name history is based only on the names they have logged on to hypixel with.
 * `whois [player]` - Gets discord link for a specific account.
 * `get-data-raw <path> [player]` - Gets some specific field from an account. This is based on my database format which can be previewed [here](https://github.com/eatmyvenom/hyarcade-requests/blob/main/types/Account.js).
-* `verify <player>` - Link yourself to the arcade bot using your hypixel IGN. Your discord tag needs to be set in hypixel for this to work.
+* `verify <player>` - Link yourself to the arcade bot using your hypixel IGN. Your discord tag needs to be set in hypixel for this to work. If you find yourself unable to do this look [here](./bots/Verify) for a more detailed explanation.
 * `game-counts [game]` - Gets the amounts of players in various arcade games.
 * `info` - Gives you some relavent links to all of the different areas of HyArcade.
 * `compare <player1> [player2] [game]` - Compare two players in an arcade game.
