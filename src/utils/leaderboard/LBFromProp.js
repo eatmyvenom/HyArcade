@@ -21,9 +21,6 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         }
     }
 
-    // sort the list before hand
-    oldlist = oldlist.sort(utils.winsSorter);
-
     for (let i = 0; i < oldlist.length; i++) {
         let acc;
         if (oldlist[i].uuid) {
@@ -50,8 +47,5 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         }
     }
 
-    // use old list to ensure that players added today
-    // don't show up with a crazy amount of daily wins
-    oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
 };

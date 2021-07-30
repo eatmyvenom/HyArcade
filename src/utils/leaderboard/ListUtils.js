@@ -28,7 +28,7 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
     list = list.slice(0, size);
     for (let i = startingIndex; i < list.length; i++) {
         // don't print if player has 0 wins
-        let propVal = category == undefined ? list[i][lbprop] : list[i][category][lbprop];
+        let propVal = category == undefined ? list[i]?.[lbprop] : list[i]?.[category]?.[lbprop];
         if (numberify(propVal) < 1 && !cfg.printAllWins) continue;
 
         let name = list[i].name;
