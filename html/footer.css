@@ -26,6 +26,10 @@ footer div a {
     color: #44a3e7;
 }
 
+footer div a img {
+    all: initial;
+}
+
 footer div .botinvite {
     grid-row-start: 2;
     grid-column-start: 2;
