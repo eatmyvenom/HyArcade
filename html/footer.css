@@ -18,6 +18,10 @@ footer div:hover {
     box-shadow: none;
 }
 
+footer div a:hover {
+    box-shadow: none;
+}
+
 footer div a {
     all: initial;
     display: inline-block;
