@@ -1,11 +1,6 @@
 const utils = require("../../utils");
 const { getList } = require("./ListUtils");
 
-function numberify(str) {
-    str = str ?? 0;
-    return Number(str);
-}
-
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
     let newlist, oldlist;
     if(fileCache != undefined) {
@@ -21,21 +16,22 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         }
     }
 
+    let acc;
     for (let i = 0; i < oldlist.length; i++) {
-        let acc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldlist[i].uuid).toLowerCase());
+        acc = newlist.find((g) => g?.uuid == oldlist[i]?.uuid);
         // make sure acc isnt null/undefined
         if(acc == undefined || acc == null) {
             continue;
         }
 
         if (category == undefined) {
-            oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
+            oldlist[i][prop] = (acc[prop] ?? 0) - (oldlist[i][prop] ?? 0);
         } else {
             if(oldlist[i][category] != undefined) {
-                oldlist[i][category][prop] = numberify(acc?.[category]?.[prop]) - numberify(oldlist[i]?.[category]?.[prop]);
+                oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
             } else {
                 oldlist[i][category] = {};
-                oldlist[i][category][prop] = numberify(acc?.[category]?.[prop]) - numberify(oldlist[i]?.[category]?.[prop]);
+                oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
             }
         }
     }

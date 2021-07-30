@@ -23,13 +23,16 @@ exports.getList = async function getList(type = "") {
 
 exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
-    let size = maxamnt + Number(startingIndex);
+    let size = maxamnt + (startingIndex | 0);
     size = size > list.length ? list.length : size;
     list = list.slice(0, size);
+
+    let propVal;
     for (let i = startingIndex; i < list.length; i++) {
+
+        propVal = category == undefined ? list[i]?.[lbprop] : list[i]?.[category]?.[lbprop];
         // don't print if player has 0 wins
-        let propVal = category == undefined ? list[i]?.[lbprop] : list[i]?.[category]?.[lbprop];
-        if (numberify(propVal) < 1 && !cfg.printAllWins) continue;
+        if ((propVal | 0) < 1 && !cfg.printAllWins) continue;
 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
