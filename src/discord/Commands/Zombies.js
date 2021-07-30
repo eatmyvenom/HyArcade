@@ -2,6 +2,8 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
+const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
 
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(n));
@@ -16,6 +18,9 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
+        if(acc == undefined) {
+            return new CommandResponse("", ERROR_UNLINKED);
+        }
     }
 
     let embed = new MessageEmbed()
