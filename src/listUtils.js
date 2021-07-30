@@ -97,7 +97,7 @@ async function stringDaily(name, maxamnt) {
 }
 
 function numberify(str) {
-    return Number(("" + str);
+    return Number("" + str);
 }
 
 function formatNum(number) {
