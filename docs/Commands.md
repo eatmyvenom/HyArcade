@@ -7,6 +7,8 @@
 * `profile <player>` - Generates an image with cool info about a specific player.
 * `top-games <player>` - Gets the arcade top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `zombies <player>` - Zombies specific stats since there are so many.
+* `arena <player>` - Overall arena stats because why not.
+* `paintball <player>` - Overall paintball stats because why not.
 * `quake <player>` - Overall quake stats because why not.
 * `arcade` - A command group for lesser used commands.
   * `ez` - ez!
