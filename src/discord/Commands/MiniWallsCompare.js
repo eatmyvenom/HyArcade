@@ -76,12 +76,12 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
 
     try {
         let stats =
-            lineN(acc1.miniWallsWins, acc2.miniWallsWins, "Wins", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineN(acc1.miniWalls.kills, acc2.miniWalls.kills, "Kills", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS"));
+            lineN(acc1.miniWallsWins, acc2.miniWallsWins, "Wins", true) +
+            lineN(acc1.miniWalls.kills, acc2.miniWalls.kills, "Kills", true) +
+            lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals", true) +
+            lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage", true) +
+            lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills", true) +
+            lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths", true);
 
         let deaths1 = acc1.miniWalls.deaths;
         let deaths2 = acc2.miniWalls.deaths;
@@ -89,16 +89,16 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             lineR(
                 (acc1.miniWalls.kills + acc1.miniWalls.finalKills) / deaths1,
                 (acc2.miniWalls.kills + acc2.miniWalls.finalKills) / deaths2,
-                "K/D", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")
+                "K/D", true
             ) +
-            lineR(acc1.miniWalls.kills / deaths1, acc2.miniWalls.kills / deaths2, "K/D (no finals)", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineR(acc1.miniWalls.finalKills / deaths1, acc2.miniWalls.finalKills / deaths2, "F/D", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineR(acc1.miniWalls.witherDamage / deaths1, acc2.miniWalls.witherDamage / deaths2, "WD/D", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
-            lineR(acc1.miniWalls.witherKills / deaths1, acc2.miniWalls.witherKills / deaths2, "WK/D", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) +
+            lineR(acc1.miniWalls.kills / deaths1, acc2.miniWalls.kills / deaths2, "K/D (no finals)", true) +
+            lineR(acc1.miniWalls.finalKills / deaths1, acc2.miniWalls.finalKills / deaths2, "F/D", true) +
+            lineR(acc1.miniWalls.witherDamage / deaths1, acc2.miniWalls.witherDamage / deaths2, "WD/D", true) +
+            lineR(acc1.miniWalls.witherKills / deaths1, acc2.miniWalls.witherKills / deaths2, "WK/D", true) +
             lineR(
                 (acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100,
                 (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100,
-                "Arrow Accuracy", channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")
+                "Arrow Accuracy", true
             );
 
 
