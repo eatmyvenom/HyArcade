@@ -22,27 +22,20 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
     }
 
     for (let i = 0; i < oldlist.length; i++) {
-        let acc;
-        if (oldlist[i].uuid) {
-            acc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldlist[i].uuid).toLowerCase());
-        } else {
-            acc = newlist.find((g) => ("" + g.name).toLowerCase() == ("" + oldlist[i].name).toLowerCase());
+        let acc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldlist[i].uuid).toLowerCase());
+        // make sure acc isnt null/undefined
+        if(acc == undefined || acc == null) {
+            continue;
         }
 
         if (category == undefined) {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
-            }
+            oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
         } else {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                if(oldlist[i][category] != undefined) {
-                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
-                } else {
-                    oldlist[i][category] = {};
-                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
-                }
+            if(oldlist[i][category] != undefined) {
+                oldlist[i][category][prop] = numberify(acc?.[category]?.[prop]) - numberify(oldlist[i]?.[category]?.[prop]);
+            } else {
+                oldlist[i][category] = {};
+                oldlist[i][category][prop] = numberify(acc?.[category]?.[prop]) - numberify(oldlist[i]?.[category]?.[prop]);
             }
         }
     }
