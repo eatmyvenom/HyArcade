@@ -42,11 +42,11 @@ module.exports = class FileCache {
         await utils.writeJSON("acclist.json", this.acclist);
         await utils.writeJSON("disclist.json", this.disclist);
         await utils.writeJSON("status.json", this.status);
-        if(this.blacklist != [] && this.blacklist != {} && this.blacklist != undefined) {
-            await fs.writeFile(this.path + "blacklist", this.blacklist.join("\n"));
+        if(this.blacklist.join("\n").trim() != "") {
+            await fs.writeFile(this.path + "blacklist", this.blacklist.join("\n").trim());
         }
-        if(this.hackerlist != [] && this.hackerlist != {} && this.hackerlist != undefined) {
-            await fs.writeFile(this.path + "hackerlist", this.hackerlist.join("\n"));
+        if(this.hackerlist.join("\n").trim() != "") {
+            await fs.writeFile(this.path + "hackerlist", this.hackerlist.join("\n").trim());
         }
         await fs.writeFile(this.path + "ez", this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
@@ -69,11 +69,11 @@ module.exports = class FileCache {
         let hackerlist = (await fs.readFile(this.path + "hackerlist")).toString().split("\n");
         fileCache.ezmsgs = (await fs.readFile(this.path + "ez")).toString().split("\n");
 
-        if(blacklist != "") {
-            fileCache.blacklist = blacklist.toString().split("\n");
+        if(blacklist.toString().trim() != "") {
+            fileCache.blacklist = blacklist.toString().trim().split("\n");
         }
-        if(hackerlist != "") {
-            fileCache.hackerlist = hackerlist.toString().split("\n");
+        if(hackerlist.toString().trim() != "") {
+            fileCache.hackerlist = hackerlist.toString().trim().split("\n");
         }
 
         Logger.debug("File cache updated");
