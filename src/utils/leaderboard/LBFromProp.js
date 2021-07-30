@@ -1,11 +1,6 @@
 const utils = require("../../utils");
 const { getList } = require("./ListUtils");
 
-function numberify(str) {
-    str = str ?? 0;
-    return Number(str);
-}
-
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
     let newlist, oldlist;
     if(fileCache != undefined) {
@@ -21,37 +16,25 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         }
     }
 
-    // sort the list before hand
-    oldlist = oldlist.sort(utils.winsSorter);
-
+    let acc;
     for (let i = 0; i < oldlist.length; i++) {
-        let acc;
-        if (oldlist[i].uuid) {
-            acc = newlist.find((g) => ("" + g.uuid).toLowerCase() == ("" + oldlist[i].uuid).toLowerCase());
-        } else {
-            acc = newlist.find((g) => ("" + g.name).toLowerCase() == ("" + oldlist[i].name).toLowerCase());
+        acc = newlist.find((g) => g?.uuid == oldlist[i]?.uuid);
+        // make sure acc isnt null/undefined
+        if(acc == undefined || acc == null) {
+            continue;
         }
 
         if (category == undefined) {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                oldlist[i][prop] = numberify(acc[prop]) - numberify(oldlist[i][prop]);
-            }
+            oldlist[i][prop] = (acc[prop] ?? 0) - (oldlist[i][prop] ?? 0);
         } else {
-            // make sure acc isnt null/undefined
-            if (acc) {
-                if(oldlist[i][category] != undefined) {
-                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
-                } else {
-                    oldlist[i][category] = {};
-                    oldlist[i][category][prop] = numberify(acc[category]?.[prop]) - numberify(oldlist[i][category]?.[prop]);
-                }
+            if(oldlist[i][category] != undefined) {
+                oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
+            } else {
+                oldlist[i][category] = {};
+                oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
             }
         }
     }
 
-    // use old list to ensure that players added today
-    // don't show up with a crazy amount of daily wins
-    oldlist = oldlist.sort(utils.winsSorter);
     return oldlist.slice(0, maxamnt);
 };

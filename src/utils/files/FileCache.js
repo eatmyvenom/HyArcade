@@ -3,6 +3,7 @@ const Logger = require("hyarcade-logger");
 const fs = require('fs-extra');
 const Runtime = require("../../Runtime");
 const BSONreader = require("./BSONreader");
+
 module.exports = class FileCache {
 
     _interval;
@@ -10,7 +11,10 @@ module.exports = class FileCache {
     dailyAccounts = [];
     weeklyAccounts = [];
     monthlyAccounts = [];
-    acclist = [];
+    acclist = {};
+    players = [];
+    guilds = [];
+    guildsDay = [];
     disclist = {};
     status = {};
     updatetime = 0;
@@ -38,13 +42,13 @@ module.exports = class FileCache {
         await utils.writeJSON("acclist.json", this.acclist);
         await utils.writeJSON("disclist.json", this.disclist);
         await utils.writeJSON("status.json", this.status);
-        if(this.blacklist != [] && this.blacklist != {} && this.blacklist != undefined) {
-            await fs.writeFile("data/blacklist", this.blacklist.join("\n"));
+        if(this.blacklist.join("\n").trim() != "") {
+            await fs.writeFile(this.path + "blacklist", this.blacklist.join("\n").trim());
         }
-        if(this.hackerlist != [] && this.hackerlist != {} && this.hackerlist != undefined) {
-            await fs.writeFile("data/hackerlist", this.hackerlist.join("\n"));
+        if(this.hackerlist.join("\n").trim() != "") {
+            await fs.writeFile(this.path + "hackerlist", this.hackerlist.join("\n").trim());
         }
-        await fs.writeFile("data/ez", this.ezmsgs.join("\n"));
+        await fs.writeFile(this.path + "ez", this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
     }
 
@@ -59,15 +63,17 @@ module.exports = class FileCache {
         fileCache.disclist = await utils.readJSON("disclist.json");
         fileCache.status = await utils.readJSON("status.json");
         fileCache.updatetime = await fs.readFile("timeupdate");
-        let blacklist = await fs.readFile("data/blacklist");
-        let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
-        fileCache.ezmsgs = (await fs.readFile("data/ez")).toString().split("\n");
+        fileCache.players = await utils.readJSON("players");
+        fileCache.guilds = await utils.readJSON("guild");
+        let blacklist = await fs.readFile(this.path + "blacklist");
+        let hackerlist = (await fs.readFile(this.path + "hackerlist")).toString().split("\n");
+        fileCache.ezmsgs = (await fs.readFile(this.path + "ez")).toString().split("\n");
 
-        if(blacklist != "") {
-            fileCache.blacklist = blacklist.toString().split("\n");
+        if(blacklist.toString().trim() != "") {
+            fileCache.blacklist = blacklist.toString().trim().split("\n");
         }
-        if(hackerlist != "") {
-            fileCache.hackerlist = hackerlist.toString().split("\n");
+        if(hackerlist.toString().trim() != "") {
+            fileCache.hackerlist = hackerlist.toString().trim().split("\n");
         }
 
         Logger.debug("File cache updated");

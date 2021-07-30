@@ -1,5 +1,5 @@
 module.exports = {
-    name: "getdataraw",
+    name: "get-data-raw",
     description: "Get some raw data from an account based on the database",
     options: [
         {

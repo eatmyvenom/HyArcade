@@ -96,23 +96,15 @@ async function stringDaily(name, maxamnt) {
     return await stringDiff(name, "day", maxamnt);
 }
 
-function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
-}
-
-function formatNum(number) {
-    return Intl.NumberFormat("en").format(number);
-}
-
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[lbprop]) - numberify(b[lbprop]);
+        list = list.sort((b, a) => {
+            return (a[lbprop] ?? 0) - (b[lbprop] ?? 0);
         });
     } else {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[category][lbprop]) - numberify(b[category][lbprop]);
+        list = list.sort((b, a) => {
+            return (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0);
         });
     }
 

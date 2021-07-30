@@ -7,7 +7,6 @@ const { MessageEmbed, Interaction, CommandInteraction } = require("discord.js");
 
 const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
-const Link = require("../Commands/Link");
 const Status = require("../Commands/Status");
 const Susser = require("../Commands/Susser");
 const MiniWalls = require("../Commands/MiniWalls");
@@ -19,7 +18,16 @@ const ButtonGenerator = require("./Buttons/ButtonGenerator");
 const Ping = require("../Commands/Ping");
 const TopGames = require("../Commands/TopGames");
 const { ERROR_DATABASE_ERROR } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_API_DOWN } = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_API_DOWN, ERROR_NEED_PLAYER, ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
+const MenuGenerator = require("./SelectionMenus/MenuGenerator");
+const CommandResponse = require("../Utils/CommandResponse");
+const GetDataRaw = require("../Commands/GetDataRaw");
+const Quake = require("../Commands/Quake");
+const Zombies = require("../Commands/Zombies");
+const Help = require("../Commands/Help");
+const Stats = require("../Commands/Stats");
+const Arena = require("../Commands/Arena");
+const PBall = require("../Commands/PBall");
 
 let Commands = null;
 
@@ -74,13 +82,7 @@ module.exports = async (interaction) => {
 
     switch (interaction.commandName) {
         case "stats": {
-            let game = getArg(interaction, "game");
-            let acc = await InteractionUtils.resolveAccount(interaction, "player");
-            let res = await BotUtils.getStats(acc, "" + game);
-            let e = res.embed;
-            logger.debug("Adding stats buttons to message");
-            let buttons = await ButtonGenerator.getStatsButtons(res.game, acc.uuid);
-            return { res: "", embed: e, b: buttons };
+            return Stats.execute([getArg(interaction, "player"), getArg(interaction, "game")], authorID, null, interaction)
         }
 
         case "leaderboard": {
@@ -103,7 +105,7 @@ module.exports = async (interaction) => {
             return { res: "", embed: e };
         }
 
-        case "addaccount": {
+        case "add-account": {
             await interaction.defer();
 
             let names = opts.get("accounts").value.split(" ");
@@ -131,8 +133,11 @@ module.exports = async (interaction) => {
             return { res: undefined, embed: embed };
         }
 
-        case "namehistory": {
+        case "name-history": {
             let acc = await InteractionUtils.resolveAccount(interaction);
+            if(acc == undefined) {
+                return new CommandResponse("", ERROR_UNLINKED);
+            }
             let embed = new MessageEmbed()
                 .setTitle(`${acc.name} IGN history`)
                 .setDescription(([].concat(acc.nameHist)).join("\n"))
@@ -144,21 +149,15 @@ module.exports = async (interaction) => {
             return await Commands.WhoIS.execute([getArg(interaction, "player")], authorID, null, interaction);
         }
 
-        case "getdataraw": {
-            let acc = await InteractionUtils.resolveAccount(interaction);
-            let path = opts.get("path").value;
-            let embed = new MessageEmbed()
-                .setTitle(acc.name + "." + path)
-                .setDescription("" + acc[path])
-                .setColor(0x44a3e7);
-            return { res: "", embed: embed };
+        case "get-data-raw": {
+            return await GetDataRaw.execute([getArg(interaction, "player"), getArg(interaction, "path")], authorID, null, interaction);
         }
 
         case "verify": {
             return await Commands.Verify.execute([getArg(interaction, "player")], authorID, null, interaction);
         }
 
-        case "gamecounts": {
+        case "game-counts": {
             return await GameCounts.execute([getArg(interaction, "game")], authorID, null, interaction);
         }
 
@@ -168,14 +167,6 @@ module.exports = async (interaction) => {
 
         case "info": {
             return await Info.execute([], authorID, null, interaction);
-        }
-
-        case "arcadehelp": {
-            if (opts.get("topic") == undefined) {
-                return { res: "", embed: InteractionUtils.helpEmbed() };
-            } else {
-                return { res: "", embed: InteractionUtils.helpTopic(opts.get("topic").value) };
-            }
         }
 
         case Susser.name: {
@@ -196,7 +187,23 @@ module.exports = async (interaction) => {
         }
 
         case "top-games": {
-            return await TopGames.execute([getArg(interaction, "player")], authorID, null, interaction);
+            return await TopGames.execute([getArg(interaction, "player"), getArg(interaction, "time")] , authorID, null, interaction);
+        }
+
+        case "quake": {
+            return await Quake.execute([getArg(interaction, "player")], authorID, null, interaction)
+        }
+
+        case "zombies" : {
+            return await Zombies.execute([getArg(interaction, "player")], authorID, null, interaction)
+        }
+
+        case "arena" : {
+            return await Arena.execute([getArg(interaction, "player")], authorID, null, interaction)
+        }
+
+        case "paintball" : {
+            return await PBall.execute([getArg(interaction, "player")], authorID, null, interaction)
         }
 
         case "arcade": {
@@ -215,37 +222,9 @@ module.exports = async (interaction) => {
             if(interaction.options.getSubCommand() == "ping") {
                 return await Ping.execute([], authorID, null, interaction);
             }
-        }
-    }
 
-    if (interaction.commandName == "miniwalls") {
-        switch (interaction.options[0].options[0].name) {
-            case "stats": {
-                let newI = interaction.options[0].options[0];
-                newI.defer = interaction.defer;
-                newI.member = interaction.member;
-                return await MiniWalls.execute(
-                    [interaction.options[0].options[0].options[0].value],
-                    authorID,
-                    undefined,
-                    newI
-                );
-            }
-
-            case "leaderboard": {
-                let newI = interaction.options[0].options[0];
-                newI.defer = interaction.defer;
-                newI.member = interaction.member;
-                return await MiniWallsLB.execute(
-                    [
-                        interaction.options[0].options[0].options[0].value,
-                        interaction.options[0].options[0].options[1].value,
-                        interaction.options[0].options[0].options[2].value,
-                    ],
-                    authorID,
-                    undefined,
-                    newI
-                );
+            if(interaction.options.getSubCommand() == "help") {
+                return await Help.execute([], authorID, null, interaction);
             }
         }
     }

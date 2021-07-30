@@ -19,9 +19,6 @@ module.exports = async function mklistAdv(name, timetype, maxamnt, callback) {
         oldlist = await utils.readJSON(`${name}.${timetype}.json`);
     }
 
-    // sort the list before hand
-    oldlist = oldlist.sort(utils.winsSorter);
-
     for (let i = 0; i < oldlist.length; i++) {
         let oldacc = oldlist[i];
         let newacc;

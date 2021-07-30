@@ -3,7 +3,9 @@ import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
-import TimeFormatter from "../Utils/TimeFormatter.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(("" + n).replace(/undefined/g, 0).replace(/null/g, 0)));
@@ -58,9 +60,12 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
         acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
+        if(acc == undefined) {
+            return new CommandResponse("", ERROR_UNLINKED);
+        }
     }
     let lvl = Math.round(acc.level * 100) / 100;
-    let img = new ImageGenerator(640, 400);
+    let img = new ImageGenerator(640, 400, "'myFont'");
     try {
         await img.addBackground("resources/arc.png");
     } catch (e) {
@@ -70,7 +75,7 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
     }
 
     try {
-        await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 96, "04");
+        await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 32, "08");
     } catch (e) {
         Logger.err(e);
         Logger.err("Error setting skin");
@@ -86,18 +91,18 @@ export let Profile = new Command("profile", ["*"], async (args, rawMsg, interact
 
     let y = 112;
 
-    img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 42);
-    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#dd66ff", 42);
-    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#00cc66", 42);
-    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#d69323", 42);
+    img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 32);
+    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#dd66ff", 32);
+    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#00cc66", 32);
+    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#d69323", 32);
     img.writeTextRight(
         `Arcade wins - ${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`,
         (y += 42),
         "#00ddff",
-        42
+        32
     );
-    img.writeTextRight(getMain(acc), (y += 42), "#ee0061", 42);
-    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#a6ee31", 42);
+    img.writeTextRight(getMain(acc), (y += 42), "#ee0061", 32);
+    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#a6ee31", 32);
 
     let attachment = img.toDiscord();
 

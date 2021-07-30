@@ -4,22 +4,8 @@ module.exports = {
     options: [
         {
             type: 1,
-            name: "link",
-            description: "Link a users discord to their minecraft account",
-            options: [
-                {
-                    type: 3,
-                    name: "input",
-                    description: "command input",
-                    required: true,
-                },
-            ],
-        },
-        {
-            type: 1,
-            name: "lastupdate",
-            description: "The last time the database updated",
-            options: [],
+            name: "help",
+            description: "Get help on using the arcade bot",
         },
         {
             type: 1,
@@ -32,6 +18,12 @@ module.exports = {
             name: "ping",
             description: "Get the bots ping and status",
             options: [], 
-        }
+        },
+        {
+            type: 1,
+            name: "last-update",
+            description: "The last time the database updated",
+            options: [],
+        },
     ],
 };

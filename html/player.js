@@ -12,7 +12,8 @@ function setHtmlByName(name, html) {
 }
 
 function refresh() {
-    loadData();
+    handleData()
+        .then(()=>console.log("Data updated!"));
 }
 
 function home() {
@@ -93,12 +94,15 @@ function displayData(data) {
     setIcon(data.uuid);
 }
 
-function handleData(rawjson) {
-    let json = JSON.parse(rawjson);
-    let playerdata = json.find(
-        (acc) => acc.name.toLowerCase() == playername.toLowerCase() || acc.uuid == playername.toLowerCase()
-    );
-    if (playerdata != undefined) {
+async function handleData() {
+    let rawjson;
+    if(playername.length > 16) {
+        rawjson = await fetch("https://cdn.hyarcade.xyz/account?uuid=" + playername);
+    } else {
+        rawjson = await fetch("https://cdn.hyarcade.xyz/account?ign=" + playername);
+    }
+    let playerdata = await rawjson.json();
+    if (playerdata != undefined && playerdata.name != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
         if (urlParams.has("q")) {
@@ -119,17 +123,6 @@ function handleData(rawjson) {
             );
         }
     }
-}
-
-function loadData() {
-    if (playername != undefined) {
-        let url = "https://eatmyvenom.me/share/accounts.json";
-        fetch(url).then(fetchResponse);
-    }
-}
-
-function fetchResponse(res) {
-    res.text().then(handleData);
 }
 
 function loadPage() {

@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const { ERROR_NEED_PLAYER } = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_NEED_PLAYER, ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
@@ -11,12 +11,12 @@ function formatR(n) {
 }
 
 function formatN(str) {
-    let r = Intl.NumberFormat("en").format(Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0)));
+    let r = Intl.NumberFormat("en").format(Number(str));
     r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
-module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
     let acc;
     if (interaction == undefined) {
@@ -26,7 +26,7 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
     }
 
     let hackers = await BotUtils.getFromDB("hackerlist");
-    if (hackers.includes(acc.uuid.toLowerCase())) {
+    if (hackers.includes(acc?.uuid?.toLowerCase())) {
         return {};
     }
 
@@ -34,25 +34,29 @@ module.exports = new Command("miniwalls", ["*"], async (args, rawMsg, interactio
         return { res : "", embed : ERROR_NEED_PLAYER };
     }
 
-    let stats =
-        `Wins: **${formatN(acc.miniWallsWins)}**\n` +
-        `Kills: **${formatN(acc.miniWalls.kills)}**\n` +
-        `Finals: **${formatN(acc.miniWalls.finalKills)}**\n` +
-        `Wither Damage: **${formatN(acc.miniWalls.witherDamage)}**\n` +
-        `Wither Kills: **${formatN(acc.miniWalls.witherKills)}**\n` +
-        `Deaths: **${formatN(acc.miniWalls.deaths)}**\n`;
+    if(acc.miniWalls == undefined) {
+        return { res : "", embed : ERROR_IGN_UNDEFINED };
+    }
 
-    let deaths = acc.miniWalls.deaths;
+    let stats =
+        `Wins: **${formatN(acc?.miniWallsWins ?? 0)}**\n` +
+        `Kills: **${formatN(acc?.miniWalls?.kills ?? 0)}**\n` +
+        `Finals: **${formatN(acc?.miniWalls?.finalKills ?? 0)}**\n` +
+        `Wither Damage: **${formatN(acc?.miniWalls?.witherDamage ?? 0)}**\n` +
+        `Wither Kills: **${formatN(acc?.miniWalls?.witherKills ?? 0)}**\n` +
+        `Deaths: **${formatN(acc?.miniWalls?.deaths ?? 0)}**\n`;
+
+    let deaths = acc?.miniWalls?.deaths ?? 0;
     let ratios =
-        `K/D: **${formatR((acc.miniWalls.kills + acc.miniWalls.finalKills) / deaths)}**\n` +
-        `K/D (no finals): **${formatR(acc.miniWalls.kills / deaths)}**\n` +
-        `F/D: **${formatR(acc.miniWalls.finalKills / deaths)}**\n` +
-        `WD/D: **${formatR(acc.miniWalls.witherDamage / deaths)}**\n` +
-        `WK/D: **${formatR(acc.miniWalls.witherKills / deaths)}**\n` +
-        `Arrow Accuracy: **${formatR((acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot) * 100)}**\n`;
+        `K/D: **${formatR(((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / deaths)}**\n` +
+        `K/D (no finals): **${formatR((acc?.miniWalls?.kills ?? 0) / deaths)}**\n` +
+        `F/D: **${formatR((acc?.miniWalls?.finalKills ?? 0) / deaths)}**\n` +
+        `WD/D: **${formatR((acc?.miniWalls?.witherDamage ?? 0) / deaths)}**\n` +
+        `WK/D: **${formatR((acc?.miniWalls?.witherKills ?? 0) / deaths)}**\n` +
+        `Arrow Accuracy: **${formatR(((acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0)) * 100)}**\n`;
 
     let embed = new MessageEmbed()
-        .setTitle("Player: " + acc.name)
+        .setTitle("Player: " + acc?.name)
         .setColor(0x7873f5)
         .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);

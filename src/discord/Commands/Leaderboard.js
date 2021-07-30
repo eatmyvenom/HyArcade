@@ -3,6 +3,7 @@ const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
+const { stringLBAdv, stringDiffAdv } = require("../../listUtils");
 
 async function getLB(prop, timetype, limit, category, start) {
     let res = "";
@@ -92,6 +93,21 @@ async function getLB(prop, timetype, limit, category, start) {
     return embed;
 }
 
+function getProp(o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+        var k = a[i];
+        if (k in o) {
+            o = o[k];
+        } else {
+            return;
+        }
+    }
+    return o;
+}
+
 module.exports = new Command("leaderboard", ["*"], hander);
 
 /**
@@ -107,16 +123,6 @@ async function hander(args, rawMsg, interaction) {
         logger.debug("Deferring interaction");
         await interaction.defer();
     }
-    if (args.length < 1) {
-        let embed = new MessageEmbed()
-            .setTitle("ERROR")
-            .setColor(0x00cc66)
-            .setDescription("This command a game argument. Use the help command for more info.");
-        return {
-            res: "",
-            embed: embed,
-        };
-    }
 
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
@@ -130,7 +136,10 @@ async function hander(args, rawMsg, interaction) {
         case "sex":
         case "sexy":
         case "party":
+        case "partgam":
+        case "party game":
         case "partygames":
+        case "party games":
         case "pg": {
             gameName = "Party games";
             res = await getLB("wins", timetype, limit, undefined, startingIndex);
@@ -143,6 +152,7 @@ async function hander(args, rawMsg, interaction) {
         case "farm":
         case "fmhnt":
         case "farmhunt":
+        case "farm hunt":
         case "frmhnt": {
             gameName = "Farm hunt";
             res = await getLB("farmhuntWins", timetype, limit, undefined, startingIndex);
@@ -153,6 +163,10 @@ async function hander(args, rawMsg, interaction) {
         case "fhp":
         case "fhpoop":
         case "poop":
+        case "poopcollect":
+        case "farmhuntpoop":
+        case "farmhuntshit":
+        case "shitcollected":
         case "poopcollected":
         case "fmhntpoop": {
             gameName = "Farm hunt poop";
@@ -166,6 +180,7 @@ async function hander(args, rawMsg, interaction) {
         case "hypixel_says":
         case "hypixel says":
         case "hypixelsay":
+        case "hypixelsays":
         case "hys":
         case "hypixel":
         case "says":
@@ -183,6 +198,8 @@ async function hander(args, rawMsg, interaction) {
         case "holewall":
         case "wallhole":
         case "wally":
+        case "speedbuilders":
+        case "h.i.t.w.":
         case "pain": {
             game = "Hole in the wall";
             res = await getLB("hitwWins", timetype, limit, undefined, startingIndex);
@@ -292,6 +309,8 @@ async function hander(args, rawMsg, interaction) {
         case "gw":
         case "sw":
         case "galaxy":
+        case "galaxywar":
+        case "galawar":
         case "galaxywars": {
             gameName = "Galaxy wars";
             res = await getLB("galaxyWarsWins", timetype, limit, undefined, startingIndex);
@@ -414,6 +433,8 @@ async function hander(args, rawMsg, interaction) {
         case "draw":
         case "pixpaint":
         case "pixelpaint":
+        case "pixelpainters":
+        case "pixelpainter":
         case "drawmything":
         case "drawtheirthing":
         case "drawing": {
@@ -425,6 +446,7 @@ async function hander(args, rawMsg, interaction) {
 
         case "c":
         case "coins":
+        case "acoins":
         case "arccoins":
         case "arcadecoins":
         case "arcade_coins": {
@@ -435,6 +457,7 @@ async function hander(args, rawMsg, interaction) {
         }
 
         case "esim":
+        case "eastsim":
         case "easter":
         case "eastersim":
         case "eastersimulator":
@@ -457,6 +480,7 @@ async function hander(args, rawMsg, interaction) {
         }
 
         case "hsim":
+        case "hallow":
         case "halloween":
         case "halloweensim":
         case "halloweensimulator":
@@ -478,6 +502,7 @@ async function hander(args, rawMsg, interaction) {
             break;
         }
 
+        case "sim":
         case "tsim":
         case "totalsim":
         case "totalsimulator":
@@ -490,7 +515,7 @@ async function hander(args, rawMsg, interaction) {
 
         case "ap":
         case "achieve":
-        case "achievements":
+        case "achievemnts":
         case "ach":
         case "advancements":
         case "advance":
@@ -501,15 +526,113 @@ async function hander(args, rawMsg, interaction) {
             break;
         }
 
-        default: {
-            let embed = new MessageEmbed()
-                .setTitle("ERROR")
-                .setDescription(
-                    `Sorry that category does not exist, use the command \`/arcadehelp games\` to see what is available.`
-                )
-                .setColor(0xff0000);
-            return { res: "", embed: embed };
+        case "bhk":
+        case "bhkills":
+        case "bountyhunterkills":
+        case "bountykill":
+        case "oitckills":
+        case "bountyhuntkills": {
+            gameName = "Bounty hunter kills";
+            res = await getLB("bountyHuntersKills", timetype, limit, "extras", startingIndex);
+            gid = "bhk";
             break;
+        }
+
+        case "dwk":
+        case "dwkills":
+        case "dragonkills":
+        case "dragwarkills":
+        case "wagonkills":
+        case "dragwarkil":
+        case "dragonwarskills": {
+            gameName = "Dragon wars kills";
+            res = await getLB("dragonWarsKills", timetype, limit, "extras", startingIndex);
+            gid = "dwk";
+            break;
+        }
+
+        case "fbg":
+        case "fbgoals":
+        case "goal":
+        case "goals":
+        case "fbgoal":
+        case "footballg":
+        case "soccergoals":
+        case "footballgoals": {
+            gameName = "Football goals";
+            res = await getLB("footballGoals", timetype, limit, "extras", startingIndex);
+            gid = "fbg";
+            break;
+        }
+
+        case "gwk":
+        case "gwkills":
+        case "galaxykills":
+        case "galawarkills":
+        case "galakills":
+        case "galaxywarkil":
+        case "galaxywarskills": {
+            gameName = "Galaxy wars kills";
+            res = await getLB("galaxyWarsKills", timetype, limit, "extras", startingIndex);
+            gid = "gwk";
+            break;
+        }
+
+        case "hiderwins":
+        case "hwins":
+        case "hnshwins":
+        case "hnshiderwins": {
+            gameName = "HNS hider wins";
+            res = await getLB("HNSHiderWins", timetype, limit, "extras", startingIndex);
+            gid = "hwins";
+            break;
+        }
+
+        case "seekerwins":
+        case "swins":
+        case "hnsswins":
+        case "hnsseekerwins": {
+            gameName = "HNS seeker wins";
+            res = await getLB("HNSSeekerWins", timetype, limit, "extras", startingIndex);
+            gid = "swins";
+            break;
+        }
+
+        default: {
+            if(type.trim().startsWith(".")) {
+                let lb;
+                gameName = type.trim().slice(1);
+                if(timetype == "lifetime" || timetype == "l") {
+                    timetype = "Lifetime";
+                    lb = await stringLBAdv((a,b)=>{
+                        return (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0);
+                    }, (a) => {
+                        return getProp(a, type.trim());
+                    }, limit,
+                    (l) => {
+                        return l;
+                    }, startingIndex);
+                } else {
+                    let embed = new MessageEmbed()
+                        .setTitle("ERROR")
+                        .setDescription(
+                            `Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available.`
+                        )
+                        .setColor(0xff0000);
+                    return { res: "", embed: embed };
+                }
+                gid = undefined;
+                res = new MessageEmbed().setTitle(timetype).setColor(0x00cc66).setDescription(lb);
+            } else {
+                let embed = new MessageEmbed()
+                    .setTitle("ERROR")
+                    .setDescription(
+                        `Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available.`
+                    )
+                    .setColor(0xff0000);
+                return { res: "", embed: embed };
+                break;
+            }
         }
     }
 

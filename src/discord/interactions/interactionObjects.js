@@ -1,4 +1,3 @@
-exports.help = require("./Commands/Help");
 exports.statsCommand = require("./Commands/Stats");
 exports.compare = require("./Commands/Compare");
 exports.whois = require("./Commands/Whois");
@@ -12,3 +11,4 @@ exports.profile = require("./Commands/Profile");
 exports.leaderboard = require("./Commands/Leaderboard");
 exports.arcade = require("./Commands/Arcade");
 exports.topgames = require("./Commands/TopGames");
+exports.zombies = require("./Commands/Zombies");

@@ -56,12 +56,12 @@
                 vertical-align: middle;
             }
 
-            div {
+            body > main > div, body > main > aside > div {
                 border: 2px solid transparent;
                 border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
                 border-image-slice: 1;
                 max-width: 500px;
-                margin-left: 1vw !important;
+                margin-left: 1vw;
                 padding: 5px;
                 transition-duration: 0.3s;
             }
@@ -72,7 +72,7 @@
             }
 
             div:hover {
-                box-shadow: -2px -2px 5px 1px #bb00dd, 2px 2px 5px 1px #0066cc;
+                box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
             }
 
             .pre {
@@ -96,6 +96,7 @@
         </style>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <script src="player.js"></script>
+        <link href="footer.css" rel="stylesheet" />
     </head>
     <body>
         <button onclick="home()">
@@ -150,5 +151,15 @@
                 </div>
             </aside>
         </main>
+        <footer>
+            <div>
+                <a class="devlink" href="https://eatmyvenom.me"><img src="assets/v.png" width="24px" height="24px"></a>
+                <a class="gitlink" href="https://github.com/eatmyvenom/hyarcade"><img src="assets/GitHub-Mark-32px.png" width="24px" height="24px"></a>
+                <a class="patlink" href="https://www.patreon.com/bePatron?u=57169466"><img src="assets/Digital-Patreon-Logo_White.png" width="24px" height="24px"></a>
+                <a class="dislink" href="https://discord.gg/6kFBVDcRd5"><img src="assets/Discord-Logo-White.png" width="24px" height="24px"></a>
+                <a class="botinvite" href="https://hyarcade.xyz/botinvite.html">Bot invite</a>
+                <a class="home" href="https://hyarcade.xyz/">Home</a>
+            </div>
+        </footer>
     </body>
 </html>

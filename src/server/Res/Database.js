@@ -1,6 +1,5 @@
 const FileCache = require("../../utils/files/FileCache");
 const Logger = require("hyarcade-logger");
-const { logger } = require("../../utils");
 const cfg = require("../../Config").fromJSON()
 
 /**
@@ -33,9 +32,9 @@ module.exports = async (req, res, fileCache) => {
                 try {
                     json = JSON.parse(data);
                 } catch (e) {
-                    logger.err("JSON parsing of new database data failed");
-                    logger.err(e.stack);
-                    logger.debug(data);
+                    Logger.err("JSON parsing of new database data failed");
+                    Logger.err(e.stack);
+                    Logger.debug(data);
                     res.end();
                 }
 

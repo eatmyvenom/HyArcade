@@ -5,6 +5,6 @@ module.exports = async function ForceOGuser(interaction) {
         return true;
     }
 
-    await interaction.reply({ content: `Only <@${og}> can use these buttons.`, ephemeral: true });
+    await interaction.reply({ content: `Only <@${og}> can use this!`, ephemeral: true });
     return false;
 };
