@@ -46,7 +46,7 @@ module.exports = class ImageGenerator {
         for (let i = bgIterations; i >= 4; i--) {
             this.context.beginPath();
             this.context.rect(x - i / 2, y - i / 2, img.width + i, img.height + i);
-            this.context.fillStyle = `#222222${bgStrenth}`;
+            this.context.fillStyle = `#333333${bgStrenth}`;
             this.context.fill();
         }
         width = width == undefined ? img.width : width;
@@ -146,7 +146,7 @@ module.exports = class ImageGenerator {
         this.writeText(txt, this.canvas.width / 2, 96, "center", "#ffffff", "32px", spacing);
     }
 
-    writeAccTitle(rank, plusColor, name, x = undefined, y = 32, fontSize = "42px", rankEnabled = true, fake = false) {
+    writeAccTitle(rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
         rank = rank == undefined ? "" : `[${rank}`;
 
         let plus = "";
@@ -214,7 +214,7 @@ module.exports = class ImageGenerator {
     }
 
     writeTextRight(txt, height = 112, color = "#FFFFFF", spacing = 36) {
-        this.writeText(txt, this.canvas.width - 4, height, "right", color, "28px", spacing);
+        this.writeText(txt, this.canvas.width - 4, height, "right", color, "24px", spacing);
     }
 
     writeTextLeft(txt) {
