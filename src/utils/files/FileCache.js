@@ -66,7 +66,7 @@ module.exports = class FileCache {
         fileCache.players = await utils.readJSON("players.json");
         fileCache.guilds = await utils.readJSON("guild.json");
         let blacklist = await fs.readFile(fileCache.path + "blacklist");
-        let hackerlist = (await fs.readFile(fileCache.path + "hackerlist")).toString().split("\n");
+        let hackerlist = await fs.readFile(fileCache.path + "hackerlist");
         fileCache.ezmsgs = (await fs.readFile(fileCache.path + "ez")).toString().split("\n");
 
         if(blacklist.toString().trim() != "") {
