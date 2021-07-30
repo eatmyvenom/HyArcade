@@ -23,7 +23,7 @@ module.exports = class FileCache {
     ezmsgs = [];
     path = "data/";
 
-    constructor(path) {
+    constructor(path = "data") {
         this.path = path;
         FileCache.refresh(this);
         this._interval = setInterval(FileCache.refresh, 25000, this);
