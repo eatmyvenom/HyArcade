@@ -10,8 +10,7 @@ module.exports = function SlashHelpTxt(msg) {
         switch(firstWord) {
             case "leaderboard":
             case "arcadehelp":
-            case "arcade help":
-            case "arcade ez":
+            case "arcade":
             case "help":
             case "verify":
             case "ez":
