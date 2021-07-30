@@ -320,7 +320,7 @@ module.exports = async function messageHandler(msg) {
         return;
     }
 
-    if (BotUtils.botMode == "mw") {
+    if (BotUtils.botMode == "mw" || BotUtils.botMode == "test") {
         return await checkMW(msg);
     }
 
