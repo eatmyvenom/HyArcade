@@ -3,7 +3,7 @@
 * `name-history <player>` - Gets the hypixel name history of a player. This name history is based only on the names they have logged on to hypixel with.
 * `game-counts [game]` - Gets the amounts of players in various arcade games.
 * `info` - Gives you some relavent links to all of the different areas of HyArcade.
-* `compare <player1> [player2] [game]` - Compare two players in an arcade game.
+* `compare <player1> <player2> [game]` - Compare two players in an arcade game.
 * `profile <player>` - Generates an image with cool info about a specific player.
 * `top-games <player>` - Gets the arcade top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `zombies <player>` - Zombies specific stats since there are so many.
