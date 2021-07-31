@@ -1,4 +1,5 @@
 const FileCache = require("../../utils/files/FileCache")
+const TimSort = require("timsort");
 
 function numberify(str) {
     str = str ?? 0;
@@ -22,12 +23,12 @@ module.exports = async (req, res, fileCache) => {
 
         if (timePeriod == undefined) {
             if (category == null) {
-                accounts = await [].concat(accounts).sort((b, a) => {
-                    return numberify(a[lbprop]) - numberify(b[lbprop]);
+                TimSort.sort(accounts, (b, a) => {
+                    return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
                 });
             } else {
-                accounts = await [].concat(accounts).sort((b, a) => {
-                    return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
+                TimSort.sort(accounts, (b, a) => {
+                    return numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0);
                 });
             }
         } else {
@@ -54,12 +55,12 @@ module.exports = async (req, res, fileCache) => {
             }
             accounts = newAcclist;
             if (category == null) {
-                accounts = await [].concat(accounts).sort((b, a) => {
-                    return numberify(a[lbprop]) - numberify(b[lbprop]);
+                TimSort.sort(accounts, (b, a) => {
+                    return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
                 });
             } else {
-                accounts = await [].concat(accounts).sort((b, a) => {
-                    return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
+                TimSort.sort(accounts, (b, a) => {
+                    return numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0);
                 });
             }
         }

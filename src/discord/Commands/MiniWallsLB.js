@@ -3,6 +3,7 @@ const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
+const TimSort = require("timsort");
 
 function wComp(b, a) {
     return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
@@ -46,7 +47,7 @@ async function hackerTransformer(list) {
 }
 
 function top150Transformer(list) {
-    list = list.sort(wComp);
+    TimSort.sort(list, wComp);
     list = list.slice(0, Math.min(list.length, 150));
     return list;
 }
