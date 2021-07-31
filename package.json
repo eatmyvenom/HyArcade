@@ -30,7 +30,8 @@
         "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
         "javascript-time-ago": "^2.3.6",
         "mongo": "^0.1.0",
-        "node-fetch": "^2.6.1"
+        "node-fetch": "^2.6.1",
+        "timsort": "^0.3.0"
     },
     "devDependencies": {
         "prettier": "^2.2.1"

@@ -43,6 +43,7 @@ module.exports = class BotUtils {
             Logger.err(e);
             return {};
         }
+        Logger.debug("Data fetched!");
         return fileData;
     }
 
