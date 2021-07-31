@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
+const logger = require("hyarcade-logger");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
@@ -19,11 +20,11 @@ function formatN(str) {
     return r;
 }
 
-function clr(stat1, stat2) {
+function clr(stat1, stat2, hasPerms) {
     if (stat1 > stat2) {
-        return EmojiGetter("better");
+        return EmojiGetter(hasPerms, "better");
     } else {
-        return EmojiGetter("worse");
+        return EmojiGetter(hasPerms, "worse");
     }
 }
 
@@ -70,34 +71,42 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
         acc2 = { miniWallsWins: 0, miniWalls: {} };
     }
 
-    let channel = rawMsg.channel;
 
     let embed = new MessageEmbed();
 
     try {
-        let stats =
-            lineN(acc1.miniWallsWins, acc2.miniWallsWins, "Wins", true) +
-            lineN(acc1.miniWalls.kills, acc2.miniWalls.kills, "Kills", true) +
-            lineN(acc1.miniWalls.finalKills, acc2.miniWalls.finalKills, "Finals", true) +
-            lineN(acc1.miniWalls.witherDamage, acc2.miniWalls.witherDamage, "Wither Damage", true) +
-            lineN(acc1.miniWalls.witherKills, acc2.miniWalls.witherKills, "Wither Kills", true) +
-            lineNS(acc1.miniWalls.deaths, acc2.miniWalls.deaths, "Deaths", true);
+        let deaths1 = acc1?.miniWalls?.deaths ?? 0;
+        let deaths2 = acc2?.miniWalls?.deaths ?? 0;
+        let kills1 = acc1?.miniWalls?.kills ?? 0;
+        let kills2 = acc2?.miniWalls?.kills ?? 0;
+        let fk1 = acc1?.miniWalls?.finalKills ?? 0;
+        let fk2 = acc2?.miniWalls?.finalKills ?? 0;
+        let wd1 = acc1?.miniWalls?.witherDamage ?? 0;
+        let wd2 = acc2?.miniWalls?.witherDamage ?? 0;
+        let wk1 = acc1?.miniWalls?.witherKills ?? 0;
+        let wk2 = acc2?.miniWalls?.witherKills ?? 0;
 
-        let deaths1 = acc1.miniWalls.deaths;
-        let deaths2 = acc2.miniWalls.deaths;
+        let stats =
+            lineN(acc1?.miniWallsWins ?? 0, acc2?.miniWallsWins ?? 0, "Wins", true) +
+            lineN(kills1, kills2, "Kills", true) +
+            lineN(fk1, fk2, "Finals", true) +
+            lineN(wd1, wd2, "Wither Damage", true) +
+            lineN(wk1, wk2, "Wither Kills", true) +
+            lineNS(deaths1, deaths2, "Deaths", true);
+
         let ratios =
             lineR(
-                (acc1.miniWalls.kills + acc1.miniWalls.finalKills) / deaths1,
-                (acc2.miniWalls.kills + acc2.miniWalls.finalKills) / deaths2,
+                (kills1 + fk1) / deaths1,
+                (kills2 + fk2) / deaths2,
                 "K/D", true
             ) +
-            lineR(acc1.miniWalls.kills / deaths1, acc2.miniWalls.kills / deaths2, "K/D (no finals)", true) +
-            lineR(acc1.miniWalls.finalKills / deaths1, acc2.miniWalls.finalKills / deaths2, "F/D", true) +
-            lineR(acc1.miniWalls.witherDamage / deaths1, acc2.miniWalls.witherDamage / deaths2, "WD/D", true) +
-            lineR(acc1.miniWalls.witherKills / deaths1, acc2.miniWalls.witherKills / deaths2, "WK/D", true) +
+            lineR(kills1 / deaths1, kills2 / deaths2, "K/D (no finals)", true) +
+            lineR(fk1 / deaths1, fk2 / deaths2, "F/D", true) +
+            lineR(wd1 / deaths1, wd2 / deaths2, "WD/D", true) +
+            lineR(wk1 / deaths1, wk2 / deaths2, "WK/D", true) +
             lineR(
-                (acc1.miniWalls.arrowsHit / acc1.miniWalls.arrowsShot) * 100,
-                (acc2.miniWalls.arrowsHit / acc2.miniWalls.arrowsShot) * 100,
+                ((acc1?.miniWalls?.arrowsHit ?? 0) / (acc1?.miniWalls?.arrowsShot ?? 0)) * 100,
+                ((acc2?.miniWalls?.arrowsHit ?? 0) / (acc2?.miniWalls?.arrowsShot ?? 0)) * 100,
                 "Arrow Accuracy", true
             );
 
@@ -109,6 +118,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
     } catch(e) {
+        logger.err(e)
         return { res: "", embed: ERROR_IGN_UNDEFINED };
     }
 
