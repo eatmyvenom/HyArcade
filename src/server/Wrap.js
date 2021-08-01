@@ -1,4 +1,3 @@
-const http = require("http");
 const logger = require("../utils").logger;
 const URL = require("url").URL;
 const FileCache = require("../utils/files/FileCache");
@@ -9,10 +8,14 @@ const urlModules = {
     lb: require("./Res/leaderboard"),
     db: require("./Res/Database")
 };
-
 let fileCache;
+const compression = require('compression');
+const express = require('express');
+const app = express();
+app.use(compression());
 
-let server = http.createServer(async (request, response) => {
+
+async function callback (request, response) {
     let url = new URL(request.url, `https://${request.headers.host}`);
     let endpoint = url.pathname.slice(1);
     let mod = urlModules[endpoint];
@@ -30,10 +33,17 @@ let server = http.createServer(async (request, response) => {
             response.end();
         }
     }
-});
+}
 
-server.on("listening", ()=> {
-    fileCache = new FileCache("data/");
-})
+app.get("/db", callback);
+app.get("/account", callback);
+app.get("/acc", callback);
+app.get("/leaderboard", callback);
+app.get("/lb", callback);
 
-module.exports = server;
+module.exports = function start(port) {
+    app.listen(port, () => {
+        fileCache = new FileCache("data/");
+        logger.log(`Express app listening at http://localhost:${port}`)
+    });    
+};

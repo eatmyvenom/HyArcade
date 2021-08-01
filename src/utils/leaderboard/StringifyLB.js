@@ -1,18 +1,19 @@
 const { stringifyList, getList } = require("./ListUtils");
+const TimSort = require("timsort");
 
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+    return Number(str);
 }
 
 module.exports = async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
     let list = await getList();
     if (category == undefined) {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[lbprop]) - numberify(b[lbprop]);
+        TimSort.sort(list, (b, a) => {
+            return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
         });
     } else {
-        list = await [].concat(list).sort((b, a) => {
-            return numberify(a[category]?.[lbprop]) - numberify(b[category]?.[lbprop]);
+        TimSort.sort(list, (b, a) => {
+            return numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0);
         });
     }
 

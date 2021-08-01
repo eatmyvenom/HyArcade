@@ -114,6 +114,7 @@ async function readDB(file) {
         logger.err(e);
         return {};
     }
+    logger.debug("Data fetched!");
     return fileData;
 }
 

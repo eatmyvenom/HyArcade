@@ -1,5 +1,6 @@
 const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
 const config = require("../../Config").fromJSON();
+const TimSort = require("timsort");
 
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
@@ -12,7 +13,7 @@ function formatNum(number) {
 module.exports = async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
     let list = await MakeLeaderboardAdv("accounts", timetype, 9999, callback);
     list = await listTransformer(list);
-    list = list.sort(comparitor);
+    TimSort.sort(list, comparitor);
 
     let str = "";
     list = list.slice(0, maxamnt);

@@ -5,6 +5,7 @@ const { stringifyList } = require("./utils/leaderboard/ListUtils");
 const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
 const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
 const stringLB = require("./utils/leaderboard/StringifyLB");
+const TimSort = require("timsort");
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -43,7 +44,7 @@ async function txtPlayerList(list, maxamnt) {
  */
 async function listNormal(name, maxamnt) {
     let thelist = await utils.readJSON(`${name}.json`);
-    thelist.sort(utils.winsSorter);
+    TimSort.sort(thelist, utils.winsSorter);
     thelist = thelist.slice(0, maxamnt);
     return thelist;
 }
@@ -99,11 +100,11 @@ async function stringDaily(name, maxamnt) {
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
-        list = list.sort((b, a) => {
+        TimSort.sort(list, (b, a) => {
             return (a[lbprop] ?? 0) - (b[lbprop] ?? 0);
         });
     } else {
-        list = list.sort((b, a) => {
+        TimSort.sort(list, (b, a) => {
             return (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0);
         });
     }

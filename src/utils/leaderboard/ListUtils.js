@@ -1,4 +1,5 @@
 const logger = require("hyarcade-logger");
+const Account = require("hyarcade-requests/types/Account");
 const cfg = require("../../Config").fromJSON();
 const fetch = require('node-fetch');
 
@@ -10,6 +11,11 @@ function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
+/**
+ * 
+ * @param {String} type 
+ * @returns {Promise<Account[]>}
+ */
 exports.getList = async function getList(type = "") {
     let list;
     let url = new URL("db", cfg.dbUrl);
@@ -18,6 +24,7 @@ exports.getList = async function getList(type = "") {
     logger.debug(`Fetching ${url.searchParams.toString()} from database`)
 
     list = await (await fetch(url)).json();
+    logger.debug("Data fetched!");
     return list;
 };
 

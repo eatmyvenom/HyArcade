@@ -1,4 +1,5 @@
 const { getList } = require("./ListUtils");
+const TimSort = require("timsort");
 
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
@@ -7,7 +8,7 @@ function formatNum(number) {
 module.exports = async function stringLBAdv(comparitor, parser, maxamnt, listTransformer, startingIndex = 0) {
     let list = await getList();
     list = await listTransformer(list);
-    list = list.sort(comparitor);
+    TimSort.sort(list, comparitor);
 
     let str = "";
     list = list.slice(startingIndex, maxamnt);
