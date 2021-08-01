@@ -1,6 +1,8 @@
-const { Client } = require('discord.js');
-const cfg = require('hyarcade-config').fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 
+/**
+ * @param type
+ */
 function getRandomPresence(type) {
     let presenceArr = cfg.discord.presences;
     if(cfg.discord.setup[type].presences != undefined) {
@@ -12,12 +14,12 @@ function getRandomPresence(type) {
 /**
  * 
  * @param {Client} client 
- * @param {String} type 
+ * @param {string} type 
  */
 module.exports = async function SetPresence(client, type) {
     if(type == undefined || type == "slash") {
         type = "bot";
     }
 
-    client.user.setPresence(getRandomPresence(type))
-}
+    client.user.setPresence(getRandomPresence(type));
+};

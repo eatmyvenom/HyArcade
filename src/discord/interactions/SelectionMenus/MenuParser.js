@@ -1,4 +1,3 @@
-const { SelectMenuInteraction } = require("discord.js");
 const BotUtils = require("../../BotUtils");
 const ButtonResponse = require("../Buttons/ButtonResponse");
 const InteractionUtils = require("../InteractionUtils");
@@ -13,12 +12,16 @@ module.exports = async function MenuParser(interaction) {
     let data = interaction.customId.split(":");
     let commandType = data[0];
     switch (commandType) {
-        case "s": {
-            return await statsHandler(data[1], interaction.values[0]);
-        }
+    case "s": {
+        return await statsHandler(data[1], interaction.values[0]);
+    }
     }
 };
 
+/**
+ * @param accUUID
+ * @param game
+ */
 async function statsHandler(accUUID, game) {
     let accData = await InteractionUtils.accFromUUID(accUUID);
     let statsRes = await BotUtils.getStats(accData, game);

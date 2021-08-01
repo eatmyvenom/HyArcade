@@ -1,15 +1,17 @@
-const { Client, Interaction, CommandInteraction, ButtonInteraction } = require("discord.js");
 const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
 const CommandParser = require("./interactions/CommandParser");
-const fs = require('fs-extra');
+const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
 const { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
 const MenuParser = require("./interactions/SelectionMenus/MenuParser");
 
+/**
+ * @param id
+ */
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
     blacklist = blacklist.toString().split("\n");
@@ -21,12 +23,12 @@ async function isBlacklisted(id) {
  * @param {CommandInteraction} interaction
  */
 async function commandHandler(interaction) {
-    if(await isBlacklisted(interaction.user.id)) { return };
+    if(await isBlacklisted(interaction.user.id)) { return; }
     let responseObj;
     try {
         responseObj = await CommandParser(interaction);
     } catch (e) {
-        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
+        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
         logger.err(e);
         await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
         await Webhooks.errHook.send({ content: e.toString() });
@@ -47,7 +49,7 @@ async function commandHandler(interaction) {
             await interaction.followUp(res.toDiscord());
         }
     } catch (e) {
-        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`)
+        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
         logger.err(e);
         logger.err(e.stack);
         await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
@@ -86,7 +88,7 @@ async function logCmd(interaction) {
  *
  * @param {ButtonInteraction} interaction
  */
- async function logBtn(interaction) {
+async function logBtn(interaction) {
     await Webhooks.commandHook.send({
         embeds: [
             LOG_MESSAGE_COMPONENT_USAGE(
@@ -117,7 +119,7 @@ async function buttonHandler(interaction) {
  *
  * @param {Interaction} interaction
  */
- async function menuHandler(interaction) {
+async function menuHandler(interaction) {
     if (await ForceOGuser(interaction)) {
         let updatedData = await MenuParser(interaction);
         await interaction.update(updatedData.toDiscord());

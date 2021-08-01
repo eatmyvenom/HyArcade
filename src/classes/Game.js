@@ -4,7 +4,8 @@ class Game {
     end = 0;
     /**
      * Creates an instance of Game.
-     * @param {Object} json
+     *
+     * @param {object} json
      * @memberof Game
      */
     constructor(json) {

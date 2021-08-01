@@ -14,9 +14,10 @@ class Player {
 
     /**
      * Creates an instance of Player.
-     * @param {String} name The displayed name of the player
-     * @param {String} altnames The uuids or names of the players accounts
-     * @param {Number} wins The preset amount of wins
+     *
+     * @param {string} name The displayed name of the player
+     * @param {string} altnames The uuids or names of the players accounts
+     * @param {number} wins The preset amount of wins
      * @memberof Player
      */
     constructor(name, altnames, wins) {
@@ -37,7 +38,7 @@ class Player {
     /**
      * Set the players wins to be combined amount of wins from all of the players accounts
      *
-     * @return {Number}
+     * @returns {number}
      * @memberof Player
      */
     async updateWins() {

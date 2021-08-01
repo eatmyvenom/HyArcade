@@ -1,7 +1,6 @@
 const utils = require("../../utils");
 const Logger = require("hyarcade-logger");
-const fs = require('fs-extra');
-const Runtime = require("../../Runtime");
+const fs = require("fs-extra");
 const BSONreader = require("./BSONreader");
 
 module.exports = class FileCache {
@@ -24,7 +23,7 @@ module.exports = class FileCache {
     path = "data/";
 
     constructor(path = "data") {
-        // this.path = path;
+        this.path = path;
         FileCache.refresh(this);
         this._interval = setInterval(FileCache.refresh, 25000, this);
     }
@@ -37,7 +36,7 @@ module.exports = class FileCache {
     }
 
     async save() {
-        Logger.debug("Saving file changes...")
+        Logger.debug("Saving file changes...");
         await utils.writeJSON("accounts.json", this.accounts);
         await utils.writeJSON("acclist.json", this.acclist);
         await utils.writeJSON("disclist.json", this.disclist);
@@ -91,4 +90,4 @@ module.exports = class FileCache {
         return this.monthlyAccounts;
     }
 
-}
+};

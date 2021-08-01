@@ -4,15 +4,19 @@ const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const { ERROR_NEED_PLAYER, ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * @param n
+ */
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
+/**
+ * @param str
+ */
 function formatN(str) {
     let r = Intl.NumberFormat("en").format(Number(str));
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 

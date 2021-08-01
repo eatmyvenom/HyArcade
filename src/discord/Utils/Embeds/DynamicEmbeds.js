@@ -1,4 +1,4 @@
-const { MessageEmbed, Message } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { COLOR_PRIMARY, COLOR_RED, COLOR_PURPLE, COLOR_SUCCESS, COLOR_PINK } = require("./Colors");
 
 exports.INFO_ACCOUNTS_ADDED = function (res) {
@@ -14,8 +14,8 @@ exports.INFO_ACCOUNTS_ADDED = function (res) {
 
 /**
  * 
- * @param {String} name 
- * @param {String[]} args 
+ * @param {string} name 
+ * @param {string[]} args 
  * @param {Message} message 
  * @returns 
  */

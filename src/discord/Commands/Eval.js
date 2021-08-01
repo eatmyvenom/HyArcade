@@ -2,10 +2,13 @@ const Command = require("../../classes/Command");
 const { getFromDB } = require("../BotUtils");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
-const Util = require("util")
+const Util = require("util");
 
+/**
+ * @param str
+ */
 function safeEval(str) {
-    return Function("c", "r", "bu", "accs", "m", '"use strict";return (' + str + ')');
+    return Function("c", "r", "bu", "accs", "m", "\"use strict\";return (" + str + ")");
 }
 
 module.exports = new Command("eval", ["156952208045375488"], async (args, rawMsg) => {
@@ -15,6 +18,6 @@ module.exports = new Command("eval", ["156952208045375488"], async (args, rawMsg
     if(typeof evaled != "string") {
         evaled = Util.inspect(evaled, true);
     }
-    let res = "```\nResponse:\n" + evaled + "\n```"
+    let res = "```\nResponse:\n" + evaled + "\n```";
     return new CommandResponse(res);
 });

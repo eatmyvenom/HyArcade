@@ -1,5 +1,5 @@
 const cfg = require("hyarcade-config").fromJSON();
-const { WebhookClient, TextChannel, Guild } = require("discord.js");
+const { WebhookClient } = require("discord.js");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
@@ -56,7 +56,7 @@ module.exports = class BotEvents {
         Webhooks.commandHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
 
         logger.info("Reading trusted users");
-        let trustedFile = await fs.readFile('data/trustedUsers');
+        let trustedFile = await fs.readFile("data/trustedUsers");
         let tus = trustedFile.toString().trim().split("\n");
         BotUtils.tus = tus;
 
@@ -104,7 +104,7 @@ module.exports = class BotEvents {
     }
 
     static warn(info) {
-        logger.warn(`Discord sent a warning:`);
+        logger.warn("Discord sent a warning:");
         logger.warn(info);
     }
 
@@ -145,7 +145,7 @@ module.exports = class BotEvents {
      * @param {Guild} guild 
      */
     static guildUnavailable(guild) {
-        logger.warn(`Guild ${guild.name} has become unavailable!`)
+        logger.warn(`Guild ${guild.name} has become unavailable!`);
     }
 
     /**
@@ -153,7 +153,7 @@ module.exports = class BotEvents {
      * @param {import("discord.js").InvalidRequestWarningData} warning 
      */
     static invalidRequestWarning(warning) {
-        logger.warn(`An invalid request was made, this is number ${warning.count}!`)
+        logger.warn(`An invalid request was made, this is number ${warning.count}!`);
     }
 
     static debug(info) {

@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageSelectMenu } = require("discord.js")
+const { MessageActionRow, MessageSelectMenu } = require("discord.js");
 
 module.exports = class MenuGenerator {
     static statsMenu(uuid) {
@@ -32,4 +32,4 @@ module.exports = class MenuGenerator {
         row.addComponents(menu);
         return row;
     }
-}
+};

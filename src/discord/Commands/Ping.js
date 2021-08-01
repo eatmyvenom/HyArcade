@@ -14,9 +14,9 @@ let statusName = [
     "WAITING_FOR_GUILDS",
     "IDENTIFYING",
     "RESUMING"
-]
+];
 
-module.exports = new Command("ping", ["*"], async (args) => {
+module.exports = new Command("ping", ["*"], async () => {
     let embed = new MessageEmbed()
         .setAuthor(BotUtils.client.user.username + " status", BotUtils.client.user.avatarURL(), "https://hyarcade.xyz/")
         .addField(

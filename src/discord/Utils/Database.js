@@ -11,11 +11,11 @@ module.exports = class Database {
 
         try {
             await fetch(url.toString(), {
-                method: 'post',
+                method: "post",
                 body: data,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': cfg.dbPass
+                    "Content-Type": "application/json",
+                    "Authorization": cfg.dbPass
                 }
             });
         } catch(e) {
@@ -25,4 +25,4 @@ module.exports = class Database {
         }
     }
 
-}
+};

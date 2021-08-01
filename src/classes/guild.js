@@ -1,6 +1,9 @@
 const hypixelApi = require("../hypixelApi");
 let accounts = [];
 
+/**
+ * @param str
+ */
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
@@ -43,8 +46,9 @@ class Guild {
 
     /**
      * Creates an instance of Guild.
-     * @param {String} name
-     * @param {String} uuid
+     *
+     * @param {string} name
+     * @param {string} uuid
      * @memberof Guild
      */
     constructor(uuid) {
@@ -79,7 +83,7 @@ class Guild {
     /**
      * Get the JSON guild data returned from hypixel
      *
-     * @return {Object}
+     * @returns {object}
      * @memberof Guild
      */
     async getGuild() {
@@ -89,7 +93,7 @@ class Guild {
     /**
      * Set the combined win count for the guild
      *
-     * @return {Number}
+     * @returns {number}
      * @memberof Guild
      */
     async updateWins() {

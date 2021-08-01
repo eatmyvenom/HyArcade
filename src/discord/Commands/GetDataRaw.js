@@ -2,12 +2,16 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const Util = require("util")
+const Util = require("util");
 
+/**
+ * @param o
+ * @param s
+ */
 function getProp(o, s) {
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
+    s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+    s = s.replace(/^\./, "");           // strip a leading dot
+    var a = s.split(".");
     for (var i = 0, n = a.length; i < n; ++i) {
         var k = a[i];
         if (k in o) {

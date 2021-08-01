@@ -1,11 +1,14 @@
-const { CommandInteraction } = require("discord.js");
 const Account = require("../../../classes/account");
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const logger = require("hyarcade-logger");
 const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
 const cfg = require("../../../Config").fromJSON();
 
+/**
+ * @param string
+ * @param interaction
+ */
 async function getFromHypixel(string, interaction) {
     await interaction.defer();
     logger.info("Unable to resolve, getting by ign from hypixel.");
@@ -26,7 +29,7 @@ async function getFromHypixel(string, interaction) {
 /**
  *
  * @param {CommandInteraction} interaction
- * @param {String} namearg
+ * @param {string} namearg
  * @param {Account[]} acclist
  * @returns {Account}
  */
@@ -36,7 +39,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
         return await getFromHypixel(str, interaction);
     }
 
-    let url = new URL("account", cfg.dbUrl)
+    let url = new URL("account", cfg.dbUrl);
     let urlArgs = url.searchParams;
     if(str?.length == 32) {
         urlArgs.set("uuid", str.toLowerCase());
@@ -48,7 +51,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
         urlArgs.set("discid", interaction.user.id);
     }
 
-    logger.debug(`Fetching ${url.searchParams.toString()} from database`)
+    logger.debug(`Fetching ${url.searchParams.toString()} from database`);
     let accdata = await fetch(url.toString());
     if(accdata.status == 200) {
         accdata = await accdata.json();

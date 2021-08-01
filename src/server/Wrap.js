@@ -9,12 +9,16 @@ const urlModules = {
     db: require("./Res/Database")
 };
 let fileCache;
-const compression = require('compression');
-const express = require('express');
+const compression = require("compression");
+const express = require("express");
 const app = express();
 app.use(compression());
 
 
+/**
+ * @param request
+ * @param response
+ */
 async function callback (request, response) {
     let url = new URL(request.url, `https://${request.headers.host}`);
     let endpoint = url.pathname.slice(1);
@@ -44,6 +48,6 @@ app.get("/lb", callback);
 module.exports = function start(port) {
     app.listen(port, () => {
         fileCache = new FileCache("data/");
-        logger.log(`Express app listening at http://localhost:${port}`)
+        logger.log(`Express app listening at http://localhost:${port}`);
     });    
 };

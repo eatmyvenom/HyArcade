@@ -1,4 +1,3 @@
-const { MessageEmbed, Client } = require("discord.js");
 const cfg = require("hyarcade-config").fromJSON();
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
@@ -55,11 +54,11 @@ module.exports = class BotUtils {
 
         try {
             await fetch(url.toString(), {
-                method: 'post',
+                method: "post",
                 body: data,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': cfg.dbPass
+                    "Content-Type": "application/json",
+                    "Authorization": cfg.dbPass
                 }
             });
         } catch(e) {

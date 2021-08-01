@@ -9,6 +9,7 @@ const webRequest = require("./request/webRequest");
 const Runtime = require("./Runtime");
 const args = process.argv;
 const logger = utils.logger;
+const process = require("process");
 
 /**
  * Add a new account to the acclist
@@ -20,6 +21,9 @@ async function newAcc() {
     await addAccounts(category, nameArr);
 }
 
+/**
+ * @param database
+ */
 async function mNewAcc(database) {
     let player = args[3];
     let uuid = player;
@@ -32,6 +36,9 @@ async function mNewAcc(database) {
     await AccountCreator(database, acc);
 }
 
+/**
+ *
+ */
 async function linkDiscord() {
     let player = args[3];
     let discord = args[4];
@@ -111,7 +118,7 @@ async function newGuild() {
 /**
  * Log a normal list
  *
- * @param {String} name
+ * @param {string} name
  */
 async function logNormal(name) {
     logger.out(await stringNormal(name));
@@ -120,7 +127,7 @@ async function logNormal(name) {
 /**
  * Log a daily list
  *
- * @param {String} name
+ * @param {string} name
  */
 async function logDaily(name) {
     logger.out(await stringDaily(name));
@@ -136,7 +143,7 @@ async function checkNames() {
 
     for (let list in acclist) {
         for (let acc of acclist[list]) {
-            real = realAccs.find((a) => a.uuid == acc.uuid);
+            let real = realAccs.find((a) => a.uuid == acc.uuid);
             if (real != undefined && acc.name != real.name) {
                 logger.out(`${acc.name} -> ${real.name}`);
                 acc.name = real.name;
@@ -151,7 +158,7 @@ async function checkNames() {
 /**
  * Log a normal list from arguments
  *
- * @param {String[]} args
+ * @param {string[]} args
  */
 async function log(args) {
     let logName = args[3];
@@ -175,7 +182,7 @@ async function logD(args) {
 /**
  * Get the uuid for a player
  *
- * @param {String[]} args
+ * @param {string[]} args
  */
 async function getUUIDCli(args) {
     let name = args[3];
@@ -183,16 +190,25 @@ async function getUUIDCli(args) {
     logger.out(`${name}'s uuid is ${uuid}`);
 }
 
+/**
+ * @param args
+ */
 async function addGuildMembers(args) {
     let uuid = args[3];
     await dataGeneration.addGuild(uuid);
 }
 
+/**
+ * @param args
+ */
 async function addGIDMembers(args) {
     let uuid = args[3];
     await dataGeneration.addGuildID(uuid);
 }
 
+/**
+ *
+ */
 async function getServerStatus() {
     let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
     let hyStatus = JSON.parse(hyStatusRaw.data);

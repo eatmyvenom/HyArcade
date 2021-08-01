@@ -68,7 +68,7 @@ module.exports = class ImageGenerator {
 
     drawNameTag(txt, x, y, color, size) {
         this.context.beginPath();
-        this.context.font = `${size}px 'myFont'`
+        this.context.font = `${size}px 'myFont'`;
         let width = this.context.measureText(txt).width;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
@@ -82,7 +82,7 @@ module.exports = class ImageGenerator {
 
     drawTimeType(type, x, y, size) {
         this.context.beginPath();
-        this.context.font = `${size}px 'myFont'`
+        this.context.font = `${size}px 'myFont'`;
         let lWidth = this.context.measureText("Lifetime ").width;
         let mWidth = this.context.measureText("Monthly ").width;
         let wWidth = this.context.measureText("Weekly").width;
@@ -107,7 +107,7 @@ module.exports = class ImageGenerator {
     drawLBPos(pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
         this.context.beginPath();
         this.context.textAlign = "left";
-        this.context.font = `${size}px 'myFont'`
+        this.context.font = `${size}px 'myFont'`;
         let posWidth = this.context.measureText(`${pos}. `).width;
         let title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
         let ignWidth = title.w;
@@ -117,7 +117,7 @@ module.exports = class ImageGenerator {
         } else {
             guildWidth = 0;
         }
-        let dashWidth = this.context.measureText(` - `).width;
+        let dashWidth = this.context.measureText(" - ").width;
         let winsWidth = this.context.measureText(`${count}`).width;
         let width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
         x = x - width / 2;
@@ -136,7 +136,7 @@ module.exports = class ImageGenerator {
         }
         x+=guildWidth;
         this.context.fillStyle = "#AAAAAA";
-        this.context.fillText(` - `, x, y);
+        this.context.fillText(" - ", x, y);
         x+= dashWidth;
         this.context.fillStyle = "#FFFF55";
         this.context.fillText(`${count}`, x, y);

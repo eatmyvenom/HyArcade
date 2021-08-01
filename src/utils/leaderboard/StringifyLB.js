@@ -1,6 +1,9 @@
 const { stringifyList, getList } = require("./ListUtils");
 const TimSort = require("timsort");
 
+/**
+ * @param str
+ */
 function numberify(str) {
     return Number(str);
 }

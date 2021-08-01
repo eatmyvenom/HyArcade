@@ -3,7 +3,6 @@ const utils = require("./utils");
 const fs = require("fs/promises");
 const lists = require("./listParser");
 const hypixelAPI = require("./hypixelApi");
-const GamesPlayed = require("./gamesPlayed");
 const updateAccounts = require("./datagen/updateAccounts");
 const { addAccounts } = require("./listUtils");
 
@@ -37,59 +36,16 @@ async function genStatus() {
 }
 
 /**
- * Adds new games to the total amount of games played for each player
  *
  */
-async function gamesPlayed() {
-    let oldGames = await utils.readJSON("gamesPlayed.json");
-
-    let promiseArr = accounts.map(async (account) => {
-        let oldData = oldGames[account.uuid];
-        let oldCounts = {};
-        let oldTime = 0;
-
-        if (oldData != undefined) {
-            oldCounts = oldData.counts;
-            oldTime = oldData.newestTime;
-        }
-
-        let playerGames = new GamesPlayed(account.uuid, oldCounts, oldTime);
-        await playerGames.updateData();
-        oldGames[account.uuid] = playerGames;
-    });
-
-    await Promise.all(promiseArr);
-    await utils.writeJSON("gamesPlayed.json", oldGames);
-}
-
 async function saveBoosters() {
     let boosters = await hypixelAPI.getBoosters();
     await utils.writeJSON("boosters.json", boosters);
 }
 
 /**
- * Turn the status object into a really long formatted string
  *
  */
-async function statusTxt() {
-    let gamerstr = "";
-    let nongamers = "";
-
-    let accs = require("./listParser").accounts.accounts;
-
-    let crntstatus = await utils.readJSON("status.json");
-    for (const account of accs) {
-        let gamerAcc = await gamers.find((acc) => acc.uuid == account.uuid);
-        if (gamerAcc != undefined) {
-            gamerstr += await status.genStatus(account.name, crntstatus[account.uuid]);
-        } else {
-            nongamers += await status.genStatus(account.name, crntstatus[account.uuid]);
-        }
-    }
-
-    await fs.writeFile("status.txt", `${gamerstr}\nNon gamers:\n\n${nongamers}`);
-}
-
 async function statusTxtSorted() {
     let str = "";
     let acclist = await lists.accounts();
@@ -106,6 +62,10 @@ async function statusTxtSorted() {
     await fs.writeFile("status.txt", `${str}`);
 }
 
+/**
+ * @param a
+ * @param b
+ */
 function statusSort(a, b) {
     let status1 = a[1];
     let status2 = b[1];
@@ -170,7 +130,7 @@ function statusSort(a, b) {
 /**
  * Update the player data for all players in the list
  *
- * @return {Account[]}
+ * @returns {Account[]}
  */
 async function updateAllAccounts() {
     let acclist = await lists.accounts();
@@ -178,6 +138,9 @@ async function updateAllAccounts() {
     return await updateAccounts(accounts);
 }
 
+/**
+ *
+ */
 async function addLeaderboards() {
     let leaders = await hypixelAPI.getLeaderboards();
     let arcade = leaders.leaderboards.ARCADE;
@@ -190,6 +153,9 @@ async function addLeaderboards() {
     await addAccounts("others", weeklyCoins);
 }
 
+/**
+ * @param uuid
+ */
 async function addGuild(uuid) {
     let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
     let members = guild.guild.members;
@@ -201,6 +167,9 @@ async function addGuild(uuid) {
     await addAccounts("others", uuids);
 }
 
+/**
+ * @param id
+ */
 async function addGuildID(id) {
     let guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
     let members = guild.guild.members;
@@ -216,7 +185,6 @@ module.exports = {
     genStatus: genStatus,
     updateAllAccounts: updateAllAccounts,
     statusTxtSorted: statusTxtSorted,
-    gamesPlayed: gamesPlayed,
     addGuild: addGuild,
     addGuildID: addGuildID,
     addLeaderboards: addLeaderboards,

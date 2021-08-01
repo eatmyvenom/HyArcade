@@ -3,23 +3,31 @@ const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 
+/**
+ * @param n
+ */
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
+/**
+ * @param str
+ */
 function formatN(str) {
     let r = Intl.NumberFormat("en").format(Number(str));
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
+/**
+ * @param stat1
+ * @param stat2
+ * @param hasPerms
+ */
 function clr(stat1, stat2, hasPerms) {
     if (stat1 > stat2) {
         return EmojiGetter(hasPerms, "better");
@@ -28,14 +36,32 @@ function clr(stat1, stat2, hasPerms) {
     }
 }
 
+/**
+ * @param stat1
+ * @param stat2
+ * @param name
+ * @param hasPerms
+ */
 function lineN(stat1, stat2, name, hasPerms) {
     return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
+/**
+ * @param stat1
+ * @param stat2
+ * @param name
+ * @param hasPerms
+ */
 function lineNS(stat1, stat2, name, hasPerms) {
     return `${clr(stat2, stat1, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
+/**
+ * @param stat1
+ * @param stat2
+ * @param name
+ * @param hasPerms
+ */
 function lineR(stat1, stat2, name, hasPerms) {
     return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatR(stat1)} | ${formatR(stat2)}\n`;
 }
@@ -118,7 +144,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
     } catch(e) {
-        logger.err(e)
+        logger.err(e);
         return { res: "", embed: ERROR_IGN_UNDEFINED };
     }
 

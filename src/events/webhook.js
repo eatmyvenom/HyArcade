@@ -10,10 +10,10 @@ const utils = require("../utils");
 /**
  * Send text to a discord webhook
  *
- * @param {String} [content=""]
- * @param {String} [webhookID=config.webhook.id]
- * @param {String} [webhookToken=config.webhook.token]
- * @return {null}
+ * @param {string} [content=""]
+ * @param {string} [webhookID=config.webhook.id]
+ * @param {string} [webhookToken=config.webhook.token]
+ * @returns {null}
  */
 async function sendToDiscord(content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
     if (content == "") {
@@ -31,6 +31,10 @@ async function sendToDiscord(content = "", webhookID = config.webhook.id, webhoo
     await hook.destroy();
 }
 
+/**
+ * @param content
+ * @param webhook
+ */
 async function sendBasic(content, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
@@ -41,6 +45,11 @@ async function sendBasic(content, webhook) {
     await hook.destroy();
 }
 
+/**
+ * @param content
+ * @param embed
+ * @param webhook
+ */
 async function sendBasicEmbed(content, embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
@@ -54,10 +63,10 @@ async function sendBasicEmbed(content, embed, webhook) {
 /**
  * Send text and a list to a discord webhook to be embedded
  *
- * @param {String} txt
- * @param {String[]} list
- * @param {String} [webhookID=config.webhook.id]
- * @param {String} [webhookToken=config.webhook.token]
+ * @param {string} txt
+ * @param {string[]} list
+ * @param {string} [webhookID=config.webhook.id]
+ * @param {string} [webhookToken=config.webhook.token]
  */
 async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
     let hook = new Discord.WebhookClient(webhookID, webhookToken);
@@ -71,6 +80,10 @@ async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webh
     hook.destroy();
 }
 
+/**
+ * @param embed
+ * @param webhook
+ */
 async function sendEmbed(embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
@@ -83,22 +96,37 @@ async function sendEmbed(embed, webhook) {
     await hook.destroy();
 }
 
+/**
+ *
+ */
 async function sendPGEmbed() {
     await sendEmbed(await genPGEmbed(), config.webhook);
 }
 
+/**
+ *
+ */
 async function sendHSEmbed() {
     await sendEmbed(await genHSEmbed(), config.otherHooks.HS);
 }
 
+/**
+ *
+ */
 async function sendHSWEmbed() {
     await sendEmbed(await genHSWEmbed(), config.otherHooks.HS);
 }
 
+/**
+ *
+ */
 async function sendHSMEmbed() {
     await sendEmbed(await genHSMEmbed(), config.otherHooks.HS);
 }
 
+/**
+ *
+ */
 async function sendPGWEmbed() {
     let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send({
@@ -111,6 +139,9 @@ async function sendPGWEmbed() {
     hook.destroy();
 }
 
+/**
+ *
+ */
 async function sendPGMEmbed() {
     let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send({
@@ -123,6 +154,9 @@ async function sendPGMEmbed() {
     hook.destroy();
 }
 
+/**
+ *
+ */
 async function sendTOKillEmbed() {
     let hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
     await hook.send({
@@ -138,8 +172,9 @@ async function sendTOKillEmbed() {
 /**
  * Do not look at this... I need a better solution
  * TODO: fix
+ *
  * @param {*} list
- * @return {*}
+ * @returns {*}
  */
 function generateEmbed(list) {
     list = list.filter((item) => item.wins > 0);
@@ -157,6 +192,9 @@ function generateEmbed(list) {
     return embed;
 }
 
+/**
+ *
+ */
 async function genPGEmbed() {
     let alltime = await listUtils.stringLB("wins", 25);
     let day = await listUtils.stringLBDaily("wins", 25);
@@ -171,6 +209,9 @@ async function genPGEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genTOKillEmbed() {
     let alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
 
@@ -183,6 +224,9 @@ async function genTOKillEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genPGWEmbed() {
     let week = await listUtils.stringLBDiff("wins", 25, "weekly");
 
@@ -195,6 +239,9 @@ async function genPGWEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genPGMEmbed() {
     let month = await listUtils.stringLBDiff("wins", 25, "monthly");
 
@@ -207,6 +254,9 @@ async function genPGMEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genHSEmbed() {
     let alltime = await listUtils.stringLB("hypixelSaysWins", 25);
     let day = await listUtils.stringLBDaily("hypixelSaysWins", 25);
@@ -221,6 +271,9 @@ async function genHSEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genHSWEmbed() {
     let week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
 
@@ -233,6 +286,9 @@ async function genHSWEmbed() {
     return embed;
 }
 
+/**
+ *
+ */
 async function genHSMEmbed() {
     let month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
 
@@ -245,57 +301,54 @@ async function genHSMEmbed() {
     return embed;
 }
 
+/**
+ * @param b
+ * @param a
+ */
 function wComp(b, a) {
-    if (a.miniWallsWins == undefined || a.miniWallsWins == NaN || a.miniWalls == undefined) {
-        return 1;
-    }
-
-    if (b.miniWallsWins == undefined || b.miniWallsWins == NaN || b.miniWalls == undefined) {
-        return -1;
-    }
-    return a.miniWallsWins - b.miniWallsWins;
+    return (a?.miniWallsWins ?? 0) - (b?.miniWallsWins ?? 0);
 }
 
+/**
+ * @param b
+ * @param a
+ */
 function kComp(b, a) {
-    if (a.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) {
-        return -1;
-    }
-
-    if (b.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) {
-        return 1;
-    }
-    return a.miniWalls.kills - b.miniWalls.kills;
+    return (a?.miniWalls?.kills ?? 0) - (b?.miniWalls?.kills ?? 0);
 }
 
+/**
+ * @param b
+ * @param a
+ */
 function dComp(b, a) {
-    if (a.miniWalls?.deaths == undefined || a.miniWalls.deaths == NaN) {
-        return -1;
-    }
-
-    if (b.miniWalls?.deaths == undefined || a.miniWalls?.deaths == NaN) {
-        return 1;
-    }
-    return a.miniWalls.deaths - b.miniWalls.deaths;
+    return (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.deaths ?? 0);
 }
 
-function int(n) {
-    return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
-}
-
+/**
+ * @param n
+ * @param o
+ */
 function cb(n, o) {
-    o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    o.miniWalls.kills = int(n.miniWalls?.kills) - int(o.miniWalls?.kills);
-    o.miniWalls.deaths = int(n.miniWalls?.deaths) - int(o.miniWalls?.deaths);
-    o.miniWalls.witherDamage = int(n.miniWalls?.witherDamage) - int(o.miniWalls?.witherDamage);
-    o.miniWalls.witherKills = int(n.miniWalls?.witherKills) - int(o.miniWalls?.witherKills);
-    o.miniWalls.finalKills = int(n.miniWalls?.finalKills) - int(o.miniWalls?.finalKills);
+    o.miniWallsWins = (n?.miniWallsWins ?? 0) - (o?.miniWallsWins ?? 0);
+    o.miniWalls.kills = (n?.miniWalls?.kills ?? 0) - (o?.miniWalls?.kills ?? 0);
+    o.miniWalls.deaths = (n?.miniWalls?.deaths ?? 0) - (o?.miniWalls?.deaths ?? 0);
+    o.miniWalls.witherDamage = (n?.miniWalls?.witherDamage ?? 0) - (o?.miniWalls?.witherDamage ?? 0);
+    o.miniWalls.witherKills = (n?.miniWalls?.witherKills ?? 0) - (o?.miniWalls?.witherKills ?? 0);
+    o.miniWalls.finalKills = (n?.miniWalls?.finalKills ?? 0) - (o.miniWalls?.finalKills ?? 0);
     return o;
 }
 
-function rcb(n, o) {
+/**
+ * @param n
+ */
+function rcb(n) {
     return n;
 }
 
+/**
+ * @param list
+ */
 async function hackerTransformer(list) {
     let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
     list = list.filter((a) => !hackerlist.includes(a.uuid));
@@ -304,19 +357,30 @@ async function hackerTransformer(list) {
     return list;
 }
 
+/**
+ * @param list
+ */
 function top150Transformer(list) {
     list = list.sort(wComp);
     list = list.slice(0, Math.min(list.length, 150));
     return list;
 }
 
+/**
+ * @param list
+ */
 async function ratioTransformer(list) {
     list = await hackerTransformer(list);
     list = top150Transformer(list);
     return list;
 }
 
-async function getLB(prop, timetype, limit, category) {
+/**
+ * @param prop
+ * @param timetype
+ * @param limit
+ */
+async function getLB(prop, timetype, limit) {
     let res = "";
     let time;
 
@@ -325,224 +389,190 @@ async function getLB(prop, timetype, limit, category) {
     let transformer = hackerTransformer;
     let parser = null;
     switch (prop) {
-        case "miniWallsWins": {
-            comparitor = wComp;
-            parser = (a) => {
-                return a.miniWallsWins;
-            };
-            break;
-        }
+    case "miniWallsWins": {
+        comparitor = wComp;
+        parser = (a) => {
+            return a.miniWallsWins;
+        };
+        break;
+    }
 
-        case "kills": {
-            comparitor = kComp;
-            parser = (a) => {
-                return a.miniWalls.kills;
-            };
-            break;
-        }
+    case "kills": {
+        comparitor = kComp;
+        parser = (a) => {
+            return a.miniWalls.kills;
+        };
+        break;
+    }
 
-        case "deaths": {
-            comparitor = dComp;
-            parser = (a) => {
-                return a.miniWalls.deaths;
-            };
-            break;
-        }
+    case "deaths": {
+        comparitor = dComp;
+        parser = (a) => {
+            return a.miniWalls.deaths;
+        };
+        break;
+    }
 
-        case "witherDamage": {
-            comparitor = (b, a) => {
-                if (a.miniWalls?.witherDamage == undefined || a.miniWalls?.witherDamage == NaN) {
-                    return -1;
-                }
+    case "witherDamage": {
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.witherDamage ?? 0) - (b?.miniWalls?.witherDamage ?? 0);
+        };
+        parser = (a) => {
+            return a?.miniWalls?.witherDamage ?? 0;
+        };
+        break;
+    }
+    case "witherKills": {
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.witherKills ?? 0) - (b?.miniWalls?.witherKills ?? 0);
+        };
+        parser = (a) => {
+            return a?.miniWalls?.witherKills ?? 0;
+        };
+        break;
+    }
+    case "finalKills": {
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.finalKills ?? 0) - (b?.miniWalls?.finalKills ?? 0);
+        };
+        parser = (a) => {
+            return a?.miniWalls?.finalKills ?? 0;
+        };
+        break;
+    }
 
-                if (b.miniWalls?.witherDamage == undefined || a.miniWalls?.witherDamage == NaN) {
-                    return 1;
-                }
-                return a.miniWalls.witherDamage - b.miniWalls.witherDamage;
-            };
-            parser = (a) => {
-                return a.miniWalls.witherDamage;
-            };
-            break;
-        }
-        case "witherKills": {
-            comparitor = (b, a) => {
-                if (a.miniWalls?.witherKills == undefined || a.miniWalls?.witherKills == NaN) {
-                    return -1;
-                }
+    case "kd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (
+                ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
+                    ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
+            );
+        };
+        parser = (a) => {
+            return (((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-                if (b.miniWalls?.witherKills == undefined || a.miniWalls?.witherKills == NaN) {
-                    return 1;
-                }
-                return a.miniWalls.witherKills - b.miniWalls.witherKills;
-            };
-            parser = (a) => {
-                return a.miniWalls.witherKills;
-            };
-            break;
-        }
-        case "finalKills": {
-            comparitor = (b, a) => {
-                if (a.miniWalls?.finalKills == undefined || a.miniWalls?.finalKills == NaN) {
-                    return -1;
-                }
+    case "kdnf": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.kills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-                if (b.miniWalls?.finalKills == undefined || a.miniWalls?.finalKills == NaN) {
-                    return 1;
-                }
-                return a.miniWalls.finalKills - b.miniWalls.finalKills;
-            };
-            parser = (a) => {
-                return a.miniWalls.finalKills;
-            };
-            break;
-        }
+    case "fd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.finalKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "kd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) return -1;
-                if (b.miniWalls?.kills == undefined || b.miniWalls?.kills == NaN) return 1;
-                return (
-                    (a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths -
-                    (b.miniWalls.kills + b.miniWalls.finalKills) / b.miniWalls.deaths
-                );
-            };
-            parser = (a) => {
-                return ((a.miniWalls.kills + a.miniWalls.finalKills) / a.miniWalls.deaths).toFixed(3);
-            };
-            break;
-        }
+    case "wdd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherDamage ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "kdnf": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls.kills == undefined || a.miniWalls.kills == NaN) return -1;
-                if (b.miniWalls.kills == undefined || b.miniWalls.kills == NaN) return 1;
-                return a.miniWalls.kills / a.miniWalls.deaths - b.miniWalls.kills / b.miniWalls.deaths;
-            };
-            parser = (a) => {
-                return (a.miniWalls.kills / a.miniWalls.deaths).toFixed(3);
-            };
-            break;
-        }
+    case "wkd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "fd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls?.kills == undefined || a.miniWalls?.kills == NaN) return -1;
-                if (b.miniWalls?.kills == undefined || b.miniWalls?.kills == NaN) return 1;
-                return a.miniWalls.finalKills / a.miniWalls.deaths - b.miniWalls.finalKills / b.miniWalls.deaths;
-            };
-            parser = (a) => {
-                return (a.miniWalls.finalKills / a.miniWalls.deaths).toFixed(3);
-            };
-            break;
-        }
-
-        case "wdd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls?.witherDamage == undefined || a.miniWalls?.witherDamage == NaN) return -1;
-                if (b.miniWalls?.witherDamage == undefined || b.miniWalls?.witherDamage == NaN) return 1;
-                return a.miniWalls.witherDamage / a.miniWalls.deaths - b.miniWalls.witherDamage / b.miniWalls.deaths;
-            };
-            parser = (a) => {
-                return (a.miniWalls.witherDamage / a.miniWalls.deaths).toFixed(3);
-            };
-            break;
-        }
-
-        case "wkd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls.witherKills == undefined || a.miniWalls.witherKills == NaN) return -1;
-                if (b.miniWalls.witherKills == undefined || b.miniWalls.witherKills == NaN) return 1;
-                return a.miniWalls.witherKills / a.miniWalls.deaths - b.miniWalls.witherKills / b.miniWalls.deaths;
-            };
-            parser = (a) => {
-                return (a.miniWalls.witherKills / a.miniWalls.deaths).toFixed(3);
-            };
-            break;
-        }
-
-        case "aa": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                if (a.miniWalls.arrowsShot == undefined || a.miniWalls.arrowsShot == NaN) return -1;
-                if (b.miniWalls.arrowsShot == undefined || b.miniWalls.arrowsShot == NaN) return 1;
-                return a.miniWalls.arrowsHit / a.miniWalls.arrowsShot - b.miniWalls.arrowsHit / b.miniWalls.arrowsShot;
-            };
-            parser = (a) => {
-                return ((a.miniWalls.arrowsHit / a.miniWalls.arrowsShot) * 100).toFixed(3);
-            };
-            break;
-        }
+    case "aa": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0) - (b?.miniWalls?.arrowsHit ?? 0) / (b?.miniWalls?.arrowsShot ?? 0);
+        };
+        parser = (a) => {
+            return (((a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
+        };
+        break;
+    }
     }
 
     switch (timetype) {
-        case "d":
-        case "day":
-        case "daily": {
-            time = "Daily";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
-            break;
-        }
+    case "d":
+    case "day":
+    case "daily": {
+        time = "Daily";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+        break;
+    }
 
-        case "w":
-        case "week":
-        case "weak":
-        case "weekly": {
-            time = "Weekly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
-            break;
-        }
+    case "w":
+    case "week":
+    case "weak":
+    case "weekly": {
+        time = "Weekly";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+        break;
+    }
 
-        case "m":
-        case "mon":
-        case "month":
-        case "monthly": {
-            time = "Monthly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-            break;
-        }
+    case "m":
+    case "mon":
+    case "month":
+    case "monthly": {
+        time = "Monthly";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+        break;
+    }
 
-        case "a":
-        case "all":
-        case "*": {
-            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
-            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
-            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-            let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+    case "a":
+    case "all":
+    case "*": {
+        let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+        let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+        let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+        let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
 
-            day = day == "" ? "Nobody has won" : day;
-            week = week == "" ? "Nobody has won" : week;
-            month = month == "" ? "Nobody has won" : month;
+        day = day == "" ? "Nobody has won" : day;
+        week = week == "" ? "Nobody has won" : week;
+        month = month == "" ? "Nobody has won" : month;
 
-            let embed = new MessageEmbed()
-                .setColor(0x984daf)
-                .addField("Daily", day, true)
-                .addField("Weekly", week, true)
-                .addField("\u200B", "\u200B", true)
-                .addField("Monthly", month, true)
-                .addField("Lifetime", life, true)
-                .addField("\u200B", "\u200B", true);
+        let embed = new MessageEmbed()
+            .setColor(0x984daf)
+            .addField("Daily", day, true)
+            .addField("Weekly", week, true)
+            .addField("\u200B", "\u200B", true)
+            .addField("Monthly", month, true)
+            .addField("Lifetime", life, true)
+            .addField("\u200B", "\u200B", true);
 
-            return embed;
-            break;
-        }
+        return embed;
+    }
 
-        default: {
-            time = "Lifetime";
-            res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
-            break;
-        }
+    default: {
+        time = "Lifetime";
+        res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+        break;
+    }
     }
 
     res = res != "" ? res : "Nobody has won.";
@@ -570,14 +600,24 @@ async function getLB(prop, timetype, limit, category) {
     return embed;
 }
 
+/**
+ * @param prop
+ * @param a
+ */
 async function getMW(prop, a) {
     return await getLB(prop, "l", a);
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }
 
+/**
+ *
+ */
 async function sendMW() {
     let run = Runtime.fromJSON();
     let mwMsg = run.mwMsg;
@@ -591,7 +631,7 @@ async function sendMW() {
     guildlist = guildlist.filter(g=>g.uuid!="5cf6ddfb77ce842c855426b0");
     for(let i = 0;i < Math.min(10, guildlist.length); i++) {
         let g = guildlist[i];
-        str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`
+        str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
     }
 
     let gEmbed = new MessageEmbed()

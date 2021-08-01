@@ -5,7 +5,7 @@ const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     /**
-     * @type {String[]}
+     * @type {string[]}
      */
     let blacklist = await BotUtils.getFromDB("blacklist");
 
@@ -19,31 +19,31 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     let hasChange = false;
 
     switch(operation) {
-        case "+":
-        case "add":
-        case "plus": {
-            blacklist.push(args[1]);
-            res = new CommandResponse("Discord ID added!");
-            hasChange = true;
-            break;
-        }
+    case "+":
+    case "add":
+    case "plus": {
+        blacklist.push(args[1]);
+        res = new CommandResponse("Discord ID added!");
+        hasChange = true;
+        break;
+    }
 
-        case "-":
-        case "rm":
-        case "remove": {
-            blacklist = blacklist.filter(h => h != args[1]);
-            res = new CommandResponse("Discord ID removed!");
-            hasChange = true;
-            break;
-        }
+    case "-":
+    case "rm":
+    case "remove": {
+        blacklist = blacklist.filter(h => h != args[1]);
+        res = new CommandResponse("Discord ID removed!");
+        hasChange = true;
+        break;
+    }
 
-        case "-l":
-        case "ls":
-        case "list":
-        case "show": {
-            res = new CommandResponse("```\n" + blacklist.join("\n") + "```");
-            break;
-        }
+    case "-l":
+    case "ls":
+    case "list":
+    case "show": {
+        res = new CommandResponse("```\n" + blacklist.join("\n") + "```");
+        break;
+    }
     }
 
     if(hasChange) {
