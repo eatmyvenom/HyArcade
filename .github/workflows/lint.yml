@@ -18,7 +18,6 @@ jobs:
       - run: npm i # or yarn install
       - uses: sibiraj-s/action-eslint@v1
         with:
-          extensions: 'js,jsx,ts,tsx'
           annotations: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
