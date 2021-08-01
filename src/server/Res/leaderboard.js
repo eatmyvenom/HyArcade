@@ -1,6 +1,8 @@
-const FileCache = require("../../utils/files/FileCache")
 const TimSort = require("timsort");
 
+/**
+ * @param str
+ */
 function numberify(str) {
     str = str ?? 0;
     return Number(str);
@@ -10,7 +12,7 @@ function numberify(str) {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {FileCache} fileCache 
+ * @param {import("../../utils/files/FileCache")} fileCache 
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
@@ -33,7 +35,7 @@ module.exports = async (req, res, fileCache) => {
             }
         } else {
             let newAcclist = [];
-            let oldCopy = JSON.parse(JSON.stringify(fileCache[timePeriod + "accounts"]))
+            let oldCopy = JSON.parse(JSON.stringify(fileCache[timePeriod + "accounts"]));
             for(let a of oldCopy) {
                 let n = fileCache.accounts.find(u=>u.uuid==a.uuid);
                 if(category == null) {

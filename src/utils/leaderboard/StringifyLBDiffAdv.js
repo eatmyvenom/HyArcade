@@ -2,10 +2,16 @@ const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
 const config = require("../../Config").fromJSON();
 const TimSort = require("timsort");
 
+/**
+ * @param str
+ */
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }

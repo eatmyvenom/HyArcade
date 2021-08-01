@@ -1,10 +1,10 @@
 const { MessageEmbed } = require("discord.js");
-const { COLOR_RED, COLOR_PRIMARY, COLOR_SUCCESS, COLOR_YELLOW } = require("./Colors");
+const { COLOR_RED, COLOR_SUCCESS, COLOR_YELLOW } = require("./Colors");
 
 exports.ERROR_UNKNOWN = new MessageEmbed()
-        .setTitle("ERROR")
-        .setColor(COLOR_RED)
-        .setDescription("The command you tried to run caused an unknown error!")
+    .setTitle("ERROR")
+    .setColor(COLOR_RED)
+    .setDescription("The command you tried to run caused an unknown error!");
 
 exports.ERROR_NEED_PLAYER = new MessageEmbed()
     .setTitle("ERROR")
@@ -14,7 +14,7 @@ exports.ERROR_NEED_PLAYER = new MessageEmbed()
 exports.ERROR_UNLINKED = new MessageEmbed()
     .setTitle("ERROR")
     .setColor(COLOR_RED)
-    .setDescription("You need to input an IGN or verify yourself.")
+    .setDescription("You need to input an IGN or verify yourself.");
 
 exports.ERROR_API_DOWN = new MessageEmbed()
     .setTitle("ERROR")
@@ -36,19 +36,19 @@ exports.ERROR_LINK_HYPIXEL_MISMATCH = new MessageEmbed()
  */
 exports.INFO_LINK_SUCCESS = new MessageEmbed()
     .setTitle("Success")
-    .setDescription(`Account linked successfully!`)
+    .setDescription("Account linked successfully!")
     .setColor(COLOR_SUCCESS);
 
 exports.ERROR_INPUT_IGN = new MessageEmbed()
     .setTitle("ERROR")
     .setDescription(
-        `Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/Verify) to see a more detailed explanation.`
+        "Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/Verify) to see a more detailed explanation."
     )
     .setColor(COLOR_RED);
 
 exports.ERROR_IGN_UNDEFINED = new MessageEmbed()
     .setTitle("ERROR")
-    .setDescription(`The ign you specified does not exist or has been changed.`)
+    .setDescription("The ign you specified does not exist or has been changed.")
     .setColor(COLOR_RED);
 
 exports.ERROR_PLAYER_PREVIOUSLY_LINKED = new MessageEmbed()

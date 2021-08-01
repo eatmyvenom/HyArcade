@@ -14,4 +14,4 @@ module.exports = async function rm(path) {
     } else {
         return false;
     }
-}
+};

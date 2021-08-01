@@ -3,7 +3,6 @@
 // Leaderboard example - lb:20:mw
 // Stats example - s:92a5199614ac4bd181d1f3c951fb719f:pg
 
-const { ButtonInteraction } = require("discord.js");
 const BotUtils = require("../../BotUtils");
 const Leaderboard = require("../../Commands/Leaderboard");
 const InteractionUtils = require("../InteractionUtils");
@@ -19,20 +18,26 @@ module.exports = async function ButtonParser(interaction) {
     let data = interaction.customId.split(":");
     let commandType = data[0];
     switch (commandType) {
-        case "lb": {
-            return await leaderboardHandler(interaction, data[1], data[2], data[3]);
-        }
+    case "lb": {
+        return await leaderboardHandler(interaction, data[1], data[2], data[3]);
+    }
 
-        case "s": {
-            return await statsHandler(data[1], data[2]);
-        }
+    case "s": {
+        return await statsHandler(data[1], data[2]);
+    }
 
-        case "ez": {
-            return await ezHandler();
-        }
+    case "ez": {
+        return await ezHandler();
+    }
     }
 };
 
+/**
+ * @param interaction
+ * @param leaderboard
+ * @param time
+ * @param index
+ */
 async function leaderboardHandler(interaction, leaderboard, time, index) {
     let res = await Leaderboard.execute(
         [leaderboard, time, 10, index],
@@ -45,6 +50,10 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
     return new ButtonResponse("", [e], buttons);
 }
 
+/**
+ * @param accUUID
+ * @param game
+ */
 async function statsHandler(accUUID, game) {
     let accData = await InteractionUtils.accFromUUID(accUUID);
     let statsRes = await BotUtils.getStats(accData, game);
@@ -54,6 +63,9 @@ async function statsHandler(accUUID, game) {
     return new ButtonResponse("", [embed], buttons);
 }
 
+/**
+ *
+ */
 async function ezHandler() {
     let msgs = await BotUtils.getFromDB("ezmsgs");
     let msg = msgs[Math.floor(Math.random() * msgs.length)];

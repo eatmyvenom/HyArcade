@@ -1,28 +1,32 @@
 const { MessageEmbed } = require("discord.js");
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 const Command = require("../../classes/Command");
-const { logger } = require("../../utils");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * @param t
+ */
 function fixTrigger(t = "") {
     return t.replace(/ZERO/g, "0")
-            .replace(/ONE/g, "1")
-            .replace(/TWO/g, "2")
-            .replace(/THREE/g, "3")
-            .replace(/FOUR/g, "4")
-            .replace(/FIVE/g, "5")
-            .replace(/SIX/g, "6")
-            .replace(/SEVEN/g, "7")
-            .replace(/EIGHT/g, "8")
-            .replace(/NINE/g, "9")
-            .replace(/_/g, "")
-            .replace(/POINT/g, ".")
+        .replace(/ONE/g, "1")
+        .replace(/TWO/g, "2")
+        .replace(/THREE/g, "3")
+        .replace(/FOUR/g, "4")
+        .replace(/FIVE/g, "5")
+        .replace(/SIX/g, "6")
+        .replace(/SEVEN/g, "7")
+        .replace(/EIGHT/g, "8")
+        .replace(/NINE/g, "9")
+        .replace(/_/g, "")
+        .replace(/POINT/g, ".");
 }
 
+/**
+ * @param n
+ */
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
@@ -38,7 +42,7 @@ module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) =
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " quake stats")
         .addField("-----Overall stats-----", 
-        `**Wins** - ${numberify(data?.stats?.Quake?.wins ?? 0)}\n` +
+            `**Wins** - ${numberify(data?.stats?.Quake?.wins ?? 0)}\n` +
         `**Kills** - ${numberify(data?.stats?.Quake?.kills ?? 0)}\n` +
         `**Deaths** - ${numberify(data?.stats?.Quake?.deaths ?? 0)}\n` +
         `**Headshots** - ${numberify(data?.stats?.Quake?.headshots ?? 0)}\n` +

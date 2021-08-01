@@ -3,6 +3,10 @@ const cfg = require("./Config").fromJSON();
 const { getKeyByValue } = require("./utils");
 const utils = require("./utils");
 
+/**
+ * @param guildlist
+ * @param uuid
+ */
 function getGuild(guildlist, uuid) {
     for (let guild of guildlist) {
         if (guild.memberUUIDs.includes(("" + uuid).toLowerCase())) {
@@ -15,7 +19,7 @@ function getGuild(guildlist, uuid) {
  * Gets a list of player objects from the player json list
  *
  * @param {Account[]} acclist
- * @return {Player[]}
+ * @returns {Player[]}
  */
 exports.players = async function players(acclist) {
     let Player = require("./classes/player")(acclist);
@@ -31,7 +35,7 @@ exports.players = async function players(acclist) {
 /**
  * Gets a list of account object from the json account list
  *
- * @return {Object}
+ * @returns {object}
  */
 exports.accounts = async function accounts() {
     let acclistjson = await utils.readDB("acclist");
@@ -75,7 +79,7 @@ exports.accounts = async function accounts() {
  * Gets a list of guild objects from the json guild list
  *
  * @param {Account[]} accs
- * @return {Guild[]}
+ * @returns {Guild[]}
  */
 exports.guilds = async function gld(accs) {
     let accounts = accs;

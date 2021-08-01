@@ -6,9 +6,10 @@ module.exports = class InteractionUtils {
     /**
      * Get an account just purely from a uuid without going
      * through the full resolver
+     *
      * @static
-     * @param {String} uuid
-     * @return {Account}
+     * @param {string} uuid
+     * @returns {Account}
      */
     static async accFromUUID(uuid) {
         let acc;

@@ -6,7 +6,7 @@ module.exports = function isValidIGN(txt) {
         !txt.includes("?") &&
         !txt.includes("<") &&
         !txt.includes(";") &&
-        !txt.includes('"') &&
+        !txt.includes("\"") &&
         !txt.includes("(") &&
         !txt.includes(")") &&
         txt != "liar" &&

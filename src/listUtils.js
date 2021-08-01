@@ -10,9 +10,9 @@ const TimSort = require("timsort");
 /**
  * Turn a list of anything with wins into formatted text
  *
- * @param {Object[]} list the list to format
- * @param {Number} maxamnt the maximum index to reach
- * @return {String} Formatted list
+ * @param {object[]} list the list to format
+ * @param {number} maxamnt the maximum index to reach
+ * @returns {string} Formatted list
  */
 async function txtPlayerList(list, maxamnt) {
     let str = "";
@@ -38,9 +38,9 @@ async function txtPlayerList(list, maxamnt) {
 /**
  * Make a list out of a json file
  *
- * @param {String} name
- * @param {Number} maxamnt
- * @return {Object[]}
+ * @param {string} name
+ * @param {number} maxamnt
+ * @returns {object[]}
  */
 async function listNormal(name, maxamnt) {
     let thelist = await utils.readJSON(`${name}.json`);
@@ -52,10 +52,10 @@ async function listNormal(name, maxamnt) {
 /**
  * Make a list out of the difference of two json files
  *
- * @param {String} name
- * @param {String} timetype
- * @param {Number} maxamnt
- * @return {Object[]}
+ * @param {string} name
+ * @param {string} timetype
+ * @param {number} maxamnt
+ * @returns {object[]}
  */
 async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
@@ -64,9 +64,9 @@ async function listDiff(name, timetype, maxamnt) {
 /**
  * Turn a json file into a formatted list
  *
- * @param {String} name
- * @param {Number} maxamnt
- * @return {String}
+ * @param {string} name
+ * @param {number} maxamnt
+ * @returns {string}
  */
 async function stringNormal(name, maxamnt) {
     let list = await listNormal(name, maxamnt);
@@ -76,10 +76,10 @@ async function stringNormal(name, maxamnt) {
 /**
  * Turn the difference of two json files into a formatted list
  *
- * @param {String} name
- * @param {String} timetype
- * @param {Number} maxamnt
- * @return {String}
+ * @param {string} name
+ * @param {string} timetype
+ * @param {number} maxamnt
+ * @returns {string}
  */
 async function stringDiff(name, timetype, maxamnt) {
     let list = await listDiff(name, timetype, maxamnt);
@@ -89,14 +89,21 @@ async function stringDiff(name, timetype, maxamnt) {
 /**
  * Stringify the daily wins
  *
- * @param {String} name
- * @param {Number} maxamnt
- * @return {String}
+ * @param {string} name
+ * @param {number} maxamnt
+ * @returns {string}
  */
 async function stringDaily(name, maxamnt) {
     return await stringDiff(name, "day", maxamnt);
 }
 
+/**
+ * @param lbprop
+ * @param maxamnt
+ * @param timetype
+ * @param category
+ * @param startingIndex
+ */
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if (category == undefined) {
@@ -112,6 +119,10 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex =
     return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
 
+/**
+ * @param lbprop
+ * @param maxamnt
+ */
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");
 }

@@ -3,10 +3,16 @@ const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
+/**
+ * @param str
+ */
 function format(str) {
     return formatCase(str).replace(/_/g, " ");
 }
 
+/**
+ * @param str
+ */
 function formatCase(str) {
     return ("" + str).slice(0, 1).toUpperCase() + ("" + str).slice(1).toLowerCase();
 }

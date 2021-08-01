@@ -9,8 +9,6 @@ const Account = require("hyarcade-requests").types.Account;
 const mojangRequest = require("hyarcade-requests").mojangRequest;
 const MiniWallsCommands = require("./MiniWallsCommands");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
-const Discord = require("discord.js");
-const Message = Discord.Message;
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
 const fs = require("fs-extra");
@@ -42,6 +40,10 @@ async function logCmd(msg) {
     logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
+/**
+ * @param hook
+ * @param cmdResponse
+ */
 async function sendAsHook(hook, cmdResponse) {
     try {
         let obj = BotUtils.getWebhookObj(cmdResponse.embed);
@@ -51,7 +53,7 @@ async function sendAsHook(hook, cmdResponse) {
         if (cmdResponse.img != undefined) {
             obj.files = [cmdResponse.img];
         }
-        logger.debug("Sending response via webhook")
+        logger.debug("Sending response via webhook");
         await hook.send(obj);
         return true;
     } catch (e) {
@@ -106,6 +108,11 @@ async function miniWallsVerify(msg) {
     }
 }
 
+/**
+ * @param msg
+ * @param cmdResponse
+ * @param opts
+ */
 async function attemptSend(msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
@@ -123,17 +130,20 @@ async function attemptSend(msg, cmdResponse, opts) {
             if (cmdResponse.img != undefined) {
                 opts.files = [cmdResponse.img];
             }
-            logger.debug("Sending message via discord bot")
+            logger.debug("Sending message via discord bot");
             try {
                 await msg.channel.send(opts);
             } catch(e) {
                 logError(msg, e);
-                await msg.channel.send({ embeds : [ERROR_UNKNOWN]})
+                await msg.channel.send({ embeds : [ERROR_UNKNOWN]});
             }
         }
     }
 }
 
+/**
+ * @param msg
+ */
 async function addIGNs(msg) {
     if (cfg.discord.listenChannels.includes(msg.channel.id)) {
         logger.info("IGN channel message detected, automatically adding to database.");
@@ -142,12 +152,15 @@ async function addIGNs(msg) {
             let acclist = await BotUtils.getFromDB("acclist");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
-            Webhooks.logHook.send('Attempting to add "`' + firstWord + '`" to database.');
+            Webhooks.logHook.send("Attempting to add \"`" + firstWord + "`\" to database.");
             await addAccounts(category, [firstWord]);
         }
     }
 }
 
+/**
+ * @param cmdResponse
+ */
 async function sanitizeCmdOpt(cmdResponse) {
     if (cmdResponse.res.length > 2000) {
         cmdResponse.res = cmdResponse.res.slice(0, 2000);
@@ -160,6 +173,9 @@ async function sanitizeCmdOpt(cmdResponse) {
     return cmdResponse;
 }
 
+/**
+ * @param msg
+ */
 async function getCmdRes(msg) {
     let cmdResponse;
     try {
@@ -189,6 +205,9 @@ async function getMWCmdRes(msg) {
     return cmdResponse;
 }
 
+/**
+ * @param id
+ */
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
     blacklist = blacklist.toString().split("\n");
@@ -205,7 +224,7 @@ async function sendText(msg, cmdResponse) {
     if (runtime.bot != "backup") {
         logger.info("No webhook availiable. Sending normally");
         try {
-            let msgObj = cmdResponse.toDiscord({ messageReference: msg.id })
+            let msgObj = cmdResponse.toDiscord({ messageReference: msg.id });
             await msg.channel.send(msgObj);
         } catch(e) {
             logError(msg, e);
@@ -243,6 +262,9 @@ async function sendNormal(msg, cmdResponse) {
     }
 }
 
+/**
+ * @param msg
+ */
 async function mwMode(msg) {
     let cmdResponse = await getMWCmdRes(msg);
     let isValidResponse =
@@ -265,6 +287,9 @@ async function mwMode(msg) {
     }
 }
 
+/**
+ * @param cmdResponse
+ */
 function checkResponse(cmdResponse) {
     return cmdResponse != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
@@ -273,7 +298,8 @@ function checkResponse(cmdResponse) {
 /**
  * 
  * @param {Discord.Message} msg 
- * @param {Object | CommandResponse} cmdResponse 
+ * @param {object | CommandResponse} cmdResponse 
+ * @param isDiscordResponse
  */
 async function handleCommand(msg, cmdResponse, isDiscordResponse) {
     if (await isBlacklisted(msg.author.id)) {
@@ -297,6 +323,9 @@ async function handleCommand(msg, cmdResponse, isDiscordResponse) {
     await logCmd(msg);
 }
 
+/**
+ * @param msg
+ */
 async function checkMW(msg) {
     if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
     if (msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {

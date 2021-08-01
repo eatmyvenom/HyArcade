@@ -1,4 +1,3 @@
-const { TextChannel } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
@@ -6,9 +5,6 @@ const CommandResponse = require("../Utils/CommandResponse");
 module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
     let channel = args[0];
     let text;
-    /**
-     * @type {TextChannel}
-     */
     let discChannel;
     if(channel.length == 18 && channel.toLowerCase() == channel.toUpperCase()) {
         discChannel = await BotUtils.client.channels.fetch(args[0]);
@@ -18,6 +14,6 @@ module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
         text = args.join(" ");
     }
 
-    await discChannel.send(text)
+    await discChannel.send(text);
     return new CommandResponse("Message sent!", undefined, undefined, undefined, true);
 });

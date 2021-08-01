@@ -1,6 +1,5 @@
-const FileCache = require("../../utils/files/FileCache");
 const Logger = require("hyarcade-logger");
-const cfg = require("../../Config").fromJSON()
+const cfg = require("../../Config").fromJSON();
 
 /**
  * 
@@ -66,7 +65,7 @@ module.exports = async (req, res, fileCache) => {
                 res.end();
             });
         } else {
-            Logger.warn("Someone tried to post without correct AUTH")
+            Logger.warn("Someone tried to post without correct AUTH");
             res.statusCode = 403;
             res.end();
         }

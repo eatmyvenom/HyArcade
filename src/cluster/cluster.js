@@ -6,8 +6,8 @@ const { exec } = require("child_process");
 /**
  * Run a shell command
  *
- * @param {String} command
- * @return {String}
+ * @param {string} command
+ * @returns {string}
  */
 function run(command) {
     return new Promise((resolve, reject) => {
@@ -52,7 +52,8 @@ class clusterClient {
 
     /**
      * Creates an instance of clusterClient.
-     * @param {String} name
+     *
+     * @param {string} name
      * @memberof clusterClient
      */
     constructor(name) {

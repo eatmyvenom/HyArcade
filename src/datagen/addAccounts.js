@@ -7,9 +7,9 @@ const { getUUID } = require("../request/mojangRequest");
 /**
  * Add a list of accounts to another list
  *
- * @param {String} category
- * @param {String[]} names
- * @return {null}
+ * @param {string} category
+ * @param {string[]} names
+ * @returns {null}
  */
 module.exports = async function addAccounts(category, names) {
     let res = "";
@@ -69,9 +69,9 @@ module.exports = async function addAccounts(category, names) {
         acclist[category].push(lilAcc);
     }
 
-    acclist.others = acclist.others.filter(a => { return a.uuid != undefined });
-    fullNewAccounts.filter(a => { return a.uuid != undefined });
-    newAccs.filter(a => { return a.uuid != undefined });
+    acclist.others = acclist.others.filter(a => { return a.uuid != undefined; });
+    fullNewAccounts.filter(a => { return a.uuid != undefined; });
+    newAccs.filter(a => { return a.uuid != undefined; });
 
     await utils.writeDB("acclist", acclist);
     await utils.writeDB("accounts", fullNewAccounts);

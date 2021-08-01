@@ -3,9 +3,9 @@ const { getList } = require("./ListUtils");
 
 /**
  *
- * @param {String} name
- * @param {String} timetype
- * @param {Number} maxamnt Max amount of players in
+ * @param {string} name
+ * @param {string} timetype
+ * @param {number} maxamnt Max amount of players in
  * @param {Function} callback Callback used to get the stats out of each account
  * @returns
  */

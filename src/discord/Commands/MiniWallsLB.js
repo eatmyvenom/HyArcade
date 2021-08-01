@@ -5,22 +5,41 @@ const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
 const TimSort = require("timsort");
 
+/**
+ * @param b
+ * @param a
+ */
 function wComp(b, a) {
     return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
 }
 
+/**
+ * @param b
+ * @param a
+ */
 function kComp(b, a) {
     return (a.miniWalls?.kills ?? 0) - (b.miniWalls?.kills ?? 0);
 }
 
+/**
+ * @param b
+ * @param a
+ */
 function dComp(b, a) {
     return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0) ;
 }
 
+/**
+ * @param n
+ */
 function int(n) {
     return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
+/**
+ * @param n
+ * @param o
+ */
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
     if (n.miniWalls != undefined && o.miniWalls != undefined) {
@@ -34,10 +53,16 @@ function cb(n, o) {
     return o;
 }
 
-function rcb(n, o) {
+/**
+ * @param n
+ */
+function rcb(n) {
     return n;
 }
 
+/**
+ * @param list
+ */
 async function hackerTransformer(list) {
     let hackers = await BotUtils.getFromDB("hackerlist");
     list = list.filter((a) => !hackers.includes(a.uuid));
@@ -46,19 +71,30 @@ async function hackerTransformer(list) {
     return list;
 }
 
+/**
+ * @param list
+ */
 function top150Transformer(list) {
     TimSort.sort(list, wComp);
     list = list.slice(0, Math.min(list.length, 150));
     return list;
 }
 
+/**
+ * @param list
+ */
 async function ratioTransformer(list) {
     list = await hackerTransformer(list);
     list = top150Transformer(list);
     return list;
 }
 
-async function getLB(prop, timetype, limit, category) {
+/**
+ * @param prop
+ * @param timetype
+ * @param limit
+ */
+async function getLB(prop, timetype, limit) {
     let res = "";
     let time;
 
@@ -67,191 +103,190 @@ async function getLB(prop, timetype, limit, category) {
     let transformer = hackerTransformer;
     let parser = null;
     switch (prop) {
-        case "miniWallsWins": {
-            comparitor = wComp;
-            parser = (a) => {
-                return a.miniWallsWins;
-            };
-            break;
-        }
+    case "miniWallsWins": {
+        comparitor = wComp;
+        parser = (a) => {
+            return a.miniWallsWins;
+        };
+        break;
+    }
 
-        case "kills": {
-            comparitor = kComp;
-            parser = (a) => {
-                return a.miniWalls?.kills ?? 0;
-            };
-            break;
-        }
+    case "kills": {
+        comparitor = kComp;
+        parser = (a) => {
+            return a.miniWalls?.kills ?? 0;
+        };
+        break;
+    }
 
-        case "deaths": {
-            comparitor = dComp;
-            parser = (a) => {
-                return a.miniWalls?.deaths ?? 0;
-            };
-            break;
-        }
+    case "deaths": {
+        comparitor = dComp;
+        parser = (a) => {
+            return a.miniWalls?.deaths ?? 0;
+        };
+        break;
+    }
 
-        case "witherDamage": {
-            comparitor = (b, a) => {
-                return (a.miniWalls?.witherDamage ?? 0) - (b.miniWalls?.witherDamage ?? 0);
-            };
-            parser = (a) => {
-                return a.miniWalls?.witherDamage ?? 0;
-            };
-            break;
-        }
-        case "witherKills": {
-            comparitor = (b, a) => {
-                return (a.miniWalls?.witherKills ?? 0) - (b.miniWalls?.witherKills ?? 0);
-            };
-            parser = (a) => {
-                return a.miniWalls?.witherKills ?? 0;
-            };
-            break;
-        }
-        case "finalKills": {
-            comparitor = (b, a) => {
-                return (a.miniWalls?.finalKills ?? 0) - (b.miniWalls?.finalKills ?? 0);
-            };
-            parser = (a) => {
-                return a.miniWalls?.finalKills ?? 0;
-            };
-            break;
-        }
+    case "witherDamage": {
+        comparitor = (b, a) => {
+            return (a.miniWalls?.witherDamage ?? 0) - (b.miniWalls?.witherDamage ?? 0);
+        };
+        parser = (a) => {
+            return a.miniWalls?.witherDamage ?? 0;
+        };
+        break;
+    }
+    case "witherKills": {
+        comparitor = (b, a) => {
+            return (a.miniWalls?.witherKills ?? 0) - (b.miniWalls?.witherKills ?? 0);
+        };
+        parser = (a) => {
+            return a.miniWalls?.witherKills ?? 0;
+        };
+        break;
+    }
+    case "finalKills": {
+        comparitor = (b, a) => {
+            return (a.miniWalls?.finalKills ?? 0) - (b.miniWalls?.finalKills ?? 0);
+        };
+        parser = (a) => {
+            return a.miniWalls?.finalKills ?? 0;
+        };
+        break;
+    }
 
-        case "kd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (
-                    ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0) -
+    case "kd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (
+                ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0) -
                     ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
-                );
-            };
-            parser = (a) => {
-                return ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0).toFixed(3);
-            };
-            break;
-        }
+            );
+        };
+        parser = (a) => {
+            return ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0).toFixed(3);
+        };
+        break;
+    }
 
-        case "kdnf": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.kills ?? 0) / (b.miniWalls?.deaths ?? 0);
-            };
-            parser = (a) => {
-                return ((a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
-            };
-            break;
-        }
+    case "kdnf": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.kills ?? 0) / (b.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a.miniWalls?.kills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "fd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.finalKills ?? 0) / (b.miniWalls?.deaths ?? 0);
-            };
-            parser = (a) => {
-                return ((a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
-            };
-            break;
-        }
+    case "fd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.finalKills ?? 0) / (b.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a.miniWalls?.finalKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "wdd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherDamage ?? 0) / (b.miniWalls?.deaths ?? 0);
-            };
-            parser = (a) => {
-                return ((a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
-            };
-            break;
-        }
+    case "wdd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherDamage ?? 0) / (b.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a.miniWalls?.witherDamage ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "wkd": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherKills ?? 0) / (b.miniWalls?.deaths ?? 0);
-            };
-            parser = (a) => {
-                return ((a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
-            };
-            break;
-        }
+    case "wkd": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.witherKills ?? 0) / (b.miniWalls?.deaths ?? 0);
+        };
+        parser = (a) => {
+            return ((a.miniWalls?.witherKills ?? 0) / (a.miniWalls?.deaths ?? 0)).toFixed(3);
+        };
+        break;
+    }
 
-        case "aa": {
-            callback = rcb;
-            transformer = ratioTransformer;
-            comparitor = (b, a) => {
-                return (a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0) - (b.miniWalls?.arrowsHit ?? 0) / (b.miniWalls?.arrowsShot ?? 0);
-            };
-            parser = (a) => {
-                return (((a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
-            };
-            break;
-        }
+    case "aa": {
+        callback = rcb;
+        transformer = ratioTransformer;
+        comparitor = (b, a) => {
+            return (a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0) - (b.miniWalls?.arrowsHit ?? 0) / (b.miniWalls?.arrowsShot ?? 0);
+        };
+        parser = (a) => {
+            return (((a.miniWalls?.arrowsHit ?? 0) / (a.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
+        };
+        break;
+    }
     }
 
     switch (timetype) {
-        case "d":
-        case "day":
-        case "daily": {
-            time = "Daily";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
-            break;
-        }
+    case "d":
+    case "day":
+    case "daily": {
+        time = "Daily";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+        break;
+    }
 
-        case "w":
-        case "week":
-        case "weak":
-        case "weekly": {
-            time = "Weekly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
-            break;
-        }
+    case "w":
+    case "week":
+    case "weak":
+    case "weekly": {
+        time = "Weekly";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+        break;
+    }
 
-        case "m":
-        case "mon":
-        case "month":
-        case "monthly": {
-            time = "Monthly";
-            res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-            break;
-        }
+    case "m":
+    case "mon":
+    case "month":
+    case "monthly": {
+        time = "Monthly";
+        res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+        break;
+    }
 
-        case "a":
-        case "all":
-        case "*": {
-            let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
-            let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
-            let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-            let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+    case "a":
+    case "all":
+    case "*": {
+        let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+        let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+        let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+        let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
 
-            day = day == "" ? "Nobody has won" : day;
-            week = week == "" ? "Nobody has won" : week;
-            month = month == "" ? "Nobody has won" : month;
+        day = day == "" ? "Nobody has won" : day;
+        week = week == "" ? "Nobody has won" : week;
+        month = month == "" ? "Nobody has won" : month;
 
-            let embed = new MessageEmbed()
-                .setColor(0xc60532)
-                .addField("Daily", day, true)
-                .addField("Weekly", week, true)
-                .addField("\u200B", "\u200B", true)
-                .addField("Monthly", month, true)
-                .addField("Lifetime", life, true)
-                .addField("\u200B", "\u200B", true);
+        let embed = new MessageEmbed()
+            .setColor(0xc60532)
+            .addField("Daily", day, true)
+            .addField("Weekly", week, true)
+            .addField("\u200B", "\u200B", true)
+            .addField("Monthly", month, true)
+            .addField("Lifetime", life, true)
+            .addField("\u200B", "\u200B", true);
 
-            return embed;
-            break;
-        }
+        return embed;
+    }
 
-        default: {
-            time = "Lifetime";
-            res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
-            break;
-        }
+    default: {
+        time = "Lifetime";
+        res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+        break;
+    }
     }
 
     res = res != "" ? res : "Nobody has won.";
@@ -291,146 +326,146 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     let gameName = "";
 
     switch (("" + type).toLowerCase()) {
-        case "w":
-        case "ws":
-        case "win":
-        case "wins": {
-            gameName = "Wins";
-            res = await getLB("miniWallsWins", timetype, limit);
-            break;
-        }
+    case "w":
+    case "ws":
+    case "win":
+    case "wins": {
+        gameName = "Wins";
+        res = await getLB("miniWallsWins", timetype, limit);
+        break;
+    }
 
-        case "k":
-        case "kill":
-        case "kil":
-        case "kills": {
-            gameName = "Kills";
-            res = await getLB("kills", timetype, limit, "miniWalls");
-            break;
-        }
+    case "k":
+    case "kill":
+    case "kil":
+    case "kills": {
+        gameName = "Kills";
+        res = await getLB("kills", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "d":
-        case "dead":
-        case "ded":
-        case "death":
-        case "deaths": {
-            gameName = "Deaths";
-            res = await getLB("deaths", timetype, limit, "miniWalls");
-            break;
-        }
+    case "d":
+    case "dead":
+    case "ded":
+    case "death":
+    case "deaths": {
+        gameName = "Deaths";
+        res = await getLB("deaths", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "wd":
-        case "witherd":
-        case "witherdamage":
-        case "witherhurted":
-        case "damagewither":
-        case "witherdmg": {
-            gameName = "Wither Damage";
-            res = await getLB("witherDamage", timetype, limit, "miniWalls");
-            break;
-        }
+    case "wd":
+    case "witherd":
+    case "witherdamage":
+    case "witherhurted":
+    case "damagewither":
+    case "witherdmg": {
+        gameName = "Wither Damage";
+        res = await getLB("witherDamage", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "wk":
-        case "witherskilled":
-        case "killwither":
-        case "witherk":
-        case "witherkill":
-        case "witherkills": {
-            gameName = "Wither Kills";
-            res = await getLB("witherKills", timetype, limit, "miniWalls");
-            break;
-        }
+    case "wk":
+    case "witherskilled":
+    case "killwither":
+    case "witherk":
+    case "witherkill":
+    case "witherkills": {
+        gameName = "Wither Kills";
+        res = await getLB("witherKills", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "f":
-        case "fk":
-        case "finalkill":
-        case "fkill":
-        case "final":
-        case "finals": {
-            gameName = "Final Kills";
-            res = await getLB("finalKills", timetype, limit, "miniWalls");
-            break;
-        }
+    case "f":
+    case "fk":
+    case "finalkill":
+    case "fkill":
+    case "final":
+    case "finals": {
+        gameName = "Final Kills";
+        res = await getLB("finalKills", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "tkd":
-        case "tkdr":
-        case "totalkd":
-        case "ttlkd":
-        case "totalkdr":
-        case "f+kd":
-        case "f+kdr":
-        case "k+fdr":
-        case "k+fd":
-        case "kfdr":
-        case "killdeath": {
-            gameName = "Kills+Finals/Deaths";
-            res = await getLB("kd", timetype, limit, "miniWalls");
-            break;
-        }
+    case "tkd":
+    case "tkdr":
+    case "totalkd":
+    case "ttlkd":
+    case "totalkdr":
+    case "f+kd":
+    case "f+kdr":
+    case "k+fdr":
+    case "k+fd":
+    case "kfdr":
+    case "killdeath": {
+        gameName = "Kills+Finals/Deaths";
+        res = await getLB("kd", timetype, limit, "miniWalls");
+        break;
+    }
 
-        case "kd":
-        case "k/d":
-        case "k/dr":
-        case "kdr":
-        case "kdnf":
-        case "nfkd":
-        case "nfkdr":
-        case "kdrnf":
-        case "kdnofinal": {
-            gameName = "Kills/Deaths ratios";
-            res = await getLB("kdnf", timetype, limit);
-            break;
-        }
+    case "kd":
+    case "k/d":
+    case "k/dr":
+    case "kdr":
+    case "kdnf":
+    case "nfkd":
+    case "nfkdr":
+    case "kdrnf":
+    case "kdnofinal": {
+        gameName = "Kills/Deaths ratios";
+        res = await getLB("kdnf", timetype, limit);
+        break;
+    }
 
-        case "fdr":
-        case "f/d":
-        case "fkd":
-        case "fkdr":
-        case "finaldeath":
-        case "fd": {
-            gameName = "Finals/Deaths";
-            res = await getLB("fd", timetype, limit);
-            break;
-        }
+    case "fdr":
+    case "f/d":
+    case "fkd":
+    case "fkdr":
+    case "finaldeath":
+    case "fd": {
+        gameName = "Finals/Deaths";
+        res = await getLB("fd", timetype, limit);
+        break;
+    }
 
-        case "wdd":
-        case "wdr":
-        case "wddr":
-        case "witherdamagedeath": {
-            gameName = "Wither Damage/Deaths";
-            res = await getLB("wdd", timetype, limit);
-            break;
-        }
+    case "wdd":
+    case "wdr":
+    case "wddr":
+    case "witherdamagedeath": {
+        gameName = "Wither Damage/Deaths";
+        res = await getLB("wdd", timetype, limit);
+        break;
+    }
 
-        case "wkd":
-        case "wkdr":
-        case "wk/d":
-        case "witherkilldeath":
-        case "witherkill+d":
-        case "wikdr": {
-            gameName = "Wither Kills/Deaths";
-            res = await getLB("wkd", timetype, limit);
-            break;
-        }
+    case "wkd":
+    case "wkdr":
+    case "wk/d":
+    case "witherkilldeath":
+    case "witherkill+d":
+    case "wikdr": {
+        gameName = "Wither Kills/Deaths";
+        res = await getLB("wkd", timetype, limit);
+        break;
+    }
 
-        case "aa":
-        case "arrowacc":
-        case "ahm":
-        case "arrowhit/miss": {
-            gameName = "Arrow accuracy";
-            res = await getLB("aa", timetype, limit);
-            break;
-        }
+    case "aa":
+    case "arrowacc":
+    case "ahm":
+    case "arrowhit/miss": {
+        gameName = "Arrow accuracy";
+        res = await getLB("aa", timetype, limit);
+        break;
+    }
 
-        default: {
-            gameName = "Wins";
-            res = await getLB("miniWallsWins", timetype, limit);
-            break;
-        }
+    default: {
+        gameName = "Wins";
+        res = await getLB("miniWallsWins", timetype, limit);
+        break;
+    }
     }
 
     let finalRes = res
-        .setAuthor(gameName + " Leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg")
+        .setAuthor(gameName + " Leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg");
 
     logger.out("MW Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 

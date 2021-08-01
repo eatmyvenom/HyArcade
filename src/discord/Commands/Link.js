@@ -1,13 +1,12 @@
 const Account = require("../../classes/account");
 const Command = require("../../classes/Command");
-const { addAccounts } = require("../../listUtils");
 const mojangRequest = require("../../request/mojangRequest");
 const BotUtils = require("../BotUtils");
 const { addAccount } = require("../Utils/Database");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_PLAYER_PREVIOUSLY_LINKED, ERROR_ACCOUNT_PREVIOUSLY_LINKED } = require("../Utils/Embeds/StaticEmbeds");
 
-module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
+module.exports = new Command("link", ["%trusted%"], async (args) => {
     if (args.length < 1) {
         return { res: "", embed: ERROR_ARGS_LENGTH(1) };
     }
@@ -38,7 +37,6 @@ module.exports = new Command("link", ["%trusted%"], async (args, rawMsg) => {
     if (acc == undefined) {
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if (("" + uuid).length != 32) {
-            await tmpMsg.delete();
             let noexistEmbed = ERROR_IGN_UNDEFINED;
 
             return { res: "", embed: noexistEmbed };

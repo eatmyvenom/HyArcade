@@ -1,4 +1,4 @@
-const { Webhook, WebhookClient } = require("discord.js");
+const { WebhookClient } = require("discord.js");
 const config = require("../../Config");
 const cfg = config.fromJSON();
 
@@ -6,6 +6,7 @@ module.exports = class Webhooks {
 
     /**
      * Webhook for duplicating messages
+     *
      * @type {Webhook}
      * @static
      */
@@ -13,6 +14,7 @@ module.exports = class Webhooks {
 
     /**
      * Webhook for logging igns
+     *
      * @type {Webhook}
      * @static
      */
@@ -20,6 +22,7 @@ module.exports = class Webhooks {
 
     /**
      * Webhook for logging standard output
+     *
      * @type {Webhook}
      * @static
      */
@@ -27,8 +30,9 @@ module.exports = class Webhooks {
 
     /**
      * Webhook for logging standard error
+     *
      * @type {Webhook}
      * @static
      */
     static errHook;
-}
+};

@@ -6,6 +6,7 @@ const Logger = require("hyarcade-logger");
  * 
  * @param {import("http").IncomingMessage} req 
  * @param {import("http").ServerResponse} res 
+ * @param fileCache
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
@@ -17,7 +18,7 @@ module.exports = async (req, res, fileCache) => {
         let accounts = fileCache.accounts;
         let acc;
 
-        console.log(ign)
+        console.log(ign);
         if (ign != null) {
             acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
         } else if (uuid != null) {
@@ -53,7 +54,7 @@ module.exports = async (req, res, fileCache) => {
         if(req.headers.authorization == cfg.dbPass) {
             req.on("data", d => data+=d);
             req.on("end", async () => {
-                json = JSON.parse(data)
+                json = JSON.parse(data);
                 let newAccs = [];
                 if(fileCache.accounts.find(a=>a.uuid==json.uuid)) {
                     for(let a of fileCache.accounts) {
@@ -70,7 +71,7 @@ module.exports = async (req, res, fileCache) => {
                 res.end();
             });
         } else {
-            Logger.warn("Someone tried to post without correct AUTH")
+            Logger.warn("Someone tried to post without correct AUTH");
             res.statusCode = 403;
             res.end();
         }

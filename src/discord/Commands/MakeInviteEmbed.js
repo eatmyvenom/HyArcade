@@ -2,6 +2,10 @@ const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
+/**
+ * @param name
+ * @param link
+ */
 function makeField(name, link) {
     return {
         name: name,

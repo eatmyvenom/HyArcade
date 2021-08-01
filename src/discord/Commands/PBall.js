@@ -1,13 +1,14 @@
 const { MessageEmbed } = require("discord.js");
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 const Command = require("../../classes/Command");
-const { logger } = require("../../utils");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * @param n
+ */
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
@@ -23,7 +24,7 @@ module.exports = new Command("paintball", ["*"], async (args, rawMsg, interactio
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " Paintball stats")
         .addField("-----Overall stats-----", 
-        `**Wins** - ${numberify(data?.stats?.Paintball?.wins ?? 0)}\n` +
+            `**Wins** - ${numberify(data?.stats?.Paintball?.wins ?? 0)}\n` +
         `**Kills** - ${numberify(data?.stats?.Paintball?.kills ?? 0)}\n` +
         `**Deaths** - ${numberify(data?.stats?.Paintball?.deaths ?? 0)}\n` +
         `**Shots** - ${numberify(data?.stats?.Paintball?.shots_fired ?? 0)}\n` +

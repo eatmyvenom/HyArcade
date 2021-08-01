@@ -37,7 +37,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
 
     if (acc.name.toLowerCase().includes("tajik")) {
         hax += 30;
-        reasons.push('Has a name associated with cheating guild "Tajik"');
+        reasons.push("Has a name associated with cheating guild \"Tajik\"");
     }
 
     if (haxlist.includes(acc.uuid) || haxlist.includes(acc.name)) {

@@ -4,13 +4,13 @@ const fs = require("fs-extra");
 const webRequest = require("./request/webRequest");
 const BSONwriter = require("./utils/files/BSONwriter");
 const { default: fetch } = require("node-fetch");
-const logger = require("hyarcade-logger")
+const logger = require("hyarcade-logger");
 
 /**
  * Halt execution for a specified amount of time
  *
- * @param {Number} time the time in milliseconds to sleep
- * @return {null}
+ * @param {number} time the time in milliseconds to sleep
+ * @returns {null}
  */
 function sleep(time) {
     return new Promise((resolve) => {
@@ -23,7 +23,7 @@ function sleep(time) {
  *
  * @param {*} element1 the first element to be considered
  * @param {*} element2 the second element to be considered
- * @return {Number} where the first element should move in relation to its current position
+ * @returns {number} where the first element should move in relation to its current position
  */
 function winsSorter(element1, element2) {
     if (cfg.sortDirection == "mostleast") {
@@ -40,20 +40,20 @@ function winsSorter(element1, element2) {
 /**
  * The time in the day that it is currently
  *
- * @return {String}
+ * @returns {string}
  */
 function daytime() {
     return cfg.showDaytime
         ? Date()
-              .replace(/.*20[0-9][0-9] /, "")
-              .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " "
+            .replace(/.*20[0-9][0-9] /, "")
+            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " "
         : "";
 }
 
 /**
  * The current day
  *
- * @return {String}
+ * @returns {string}
  */
 function day() {
     return Date()
@@ -65,8 +65,8 @@ function day() {
 /**
  * Write json data to a file
  *
- * @param {String} path path of the target file
- * @param {Object} json the json data
+ * @param {string} path path of the target file
+ * @param {object} json the json data
  */
 async function writeJSON(path, json) {
     await BSONwriter(path, json);
@@ -78,6 +78,10 @@ async function writeJSON(path, json) {
     }
 }
 
+/**
+ * @param path
+ * @param json
+ */
 async function writeDB(path, json) {
     let data = JSON.stringify(json);
     let url = new URL("db", cfg.dbUrl);
@@ -86,11 +90,11 @@ async function writeDB(path, json) {
 
     try {
         await fetch(url.toString(), {
-            method: 'post',
+            method: "post",
             body: data,
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': cfg.dbPass
+                "Content-Type": "application/json",
+                "Authorization": cfg.dbPass
             }
         });
     } catch(e) {
@@ -100,6 +104,9 @@ async function writeDB(path, json) {
     }
 }
 
+/**
+ * @param file
+ */
 async function readDB(file) {
     let fileData;
     let url = new URL("db", cfg.dbUrl);
@@ -118,6 +125,9 @@ async function readDB(file) {
     return fileData;
 }
 
+/**
+ * @param path
+ */
 async function readJSON(path) {
     return JSON.parse(await fs.readFile("data/" + path));
 }
@@ -125,8 +135,8 @@ async function readJSON(path) {
 /**
  * Check if a file exists
  *
- * @param {String} path path of the target file
- * @return {Boolean}
+ * @param {string} path path of the target file
+ * @returns {boolean}
  */
 function fileExists(path) {
     return require("fs").existsSync(path);
@@ -135,12 +145,12 @@ function fileExists(path) {
 /**
  * Copy a json file to another location with a timestamp or type
  *
- * @param {String} oldfile path of the source file
- * @param {String} path path of the target file
- * @param {String} timetype the way of specifying this file
+ * @param {string} oldfile path of the source file
+ * @param {string} path path of the target file
+ * @param {string} timetype the way of specifying this file
  */
 async function archiveJson(oldfile, path, timetype) {
-    old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
+    let old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 
     if(fs.existsSync("data/" + oldfile + ".bson")) {
@@ -153,11 +163,19 @@ async function archiveJson(oldfile, path, timetype) {
     }
 }
 
+/**
+ * @param name
+ * @param servername
+ */
 async function downloadFile(name, servername) {
     let response = await webRequest("http://eatmyvenom.me/share/" + servername);
     await fs.writeFile("data/" + name, response.data);
 }
 
+/**
+ * @param object
+ * @param value
+ */
 function getKeyByValue(object, value) {
     return Object.keys(object).find((key) => object[key] === value);
 }

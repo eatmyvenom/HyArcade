@@ -1,4 +1,3 @@
-const { Message } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
@@ -15,6 +14,6 @@ module.exports = new Command("DelMsg", ["156952208045375488"], async (args) => {
         await msg.delete();
         return { res : "Message deleted!" };
     } else {
-        return { res : "Message cannot be deleted!" }
+        return { res : "Message cannot be deleted!" };
     }
 });

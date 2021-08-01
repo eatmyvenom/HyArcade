@@ -1,19 +1,21 @@
-const { Message } = require("discord.js");
 const Account = require("../../classes/account");
 const mojangRequest = require("../../request/mojangRequest");
 const logger = require("hyarcade-logger");
 
+/**
+ * @param str
+ */
 function stringify(str) {
     return "" + str;
 }
 
 /**
  *
- * @param {String} string
+ * @param {string} string
  * @param {Message} rawMessage
- * @param {Boolean} canbeSelf
+ * @param {boolean} canbeSelf
  * @param {Account[]} acclist
- * @param {Object} disclist
+ * @param {object} disclist
  * @returns
  */
 module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {

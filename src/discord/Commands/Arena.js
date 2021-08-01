@@ -1,16 +1,20 @@
 const { MessageEmbed } = require("discord.js");
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 const Command = require("../../classes/Command");
-const { logger } = require("../../utils");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * @param n
+ */
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
-    r = r == NaN ? (r = "N/A") : r;
     return r;
 }
 
+/**
+ * @param s
+ */
 function wordify(s) {
     return ("" + s).replace(/_/g, " ");
 }
@@ -35,7 +39,7 @@ module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) =
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " Arena stats")
         .addField("-----Overall stats-----", 
-        `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +
+            `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +
         `**Losses** - ${numberify(losses)}\n` +
         `**Kills** - ${numberify(kills)}\n` +
         `**Deaths** - ${numberify(deaths)}\n` +

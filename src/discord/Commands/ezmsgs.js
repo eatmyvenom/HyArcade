@@ -5,7 +5,7 @@ const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
     /**
-     * @type {String[]}
+     * @type {string[]}
      */
     let msgs = await BotUtils.getFromDB("ezmsgs");
 
@@ -20,31 +20,31 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
     let hasChange = false;
 
     switch(operation) {
-        case "+":
-        case "add":
-        case "plus": {
-            msgs.push(arg);
-            res = new CommandResponse("Message added!");
-            hasChange = true;
-            break;
-        }
+    case "+":
+    case "add":
+    case "plus": {
+        msgs.push(arg);
+        res = new CommandResponse("Message added!");
+        hasChange = true;
+        break;
+    }
 
-        case "-":
-        case "rm":
-        case "remove": {
-            msgs = msgs.filter(h => h != arg);
-            res = new CommandResponse("Message removed!");
-            hasChange = true;
-            break;
-        }
+    case "-":
+    case "rm":
+    case "remove": {
+        msgs = msgs.filter(h => h != arg);
+        res = new CommandResponse("Message removed!");
+        hasChange = true;
+        break;
+    }
 
-        case "-l":
-        case "ls":
-        case "list":
-        case "show": {
-            res = new CommandResponse("```\n" + msgs.join("\n") + "```");
-            break;
-        }
+    case "-l":
+    case "ls":
+    case "list":
+    case "show": {
+        res = new CommandResponse("```\n" + msgs.join("\n") + "```");
+        break;
+    }
     }
 
     if(hasChange) {

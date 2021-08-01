@@ -3,7 +3,7 @@ const fs = require("fs/promises");
 const { MessageEmbed } = require("discord.js");
 const utils = require("../../utils");
 
-module.exports = new Command("LastUpdate", ["*"], async (args) => {
+module.exports = new Command("LastUpdate", ["*"], async () => {
     let time;
     if (utils.fileExists("timeupdate")) {
         time = await (await fs.readFile("timeupdate")).toString();

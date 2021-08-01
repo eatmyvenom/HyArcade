@@ -5,8 +5,8 @@ let rawstatus = {};
 /**
  * Format status for arcade games
  *
- * @param {Object} status status object
- * @return {String}
+ * @param {object} status status object
+ * @returns {string}
  */
 function arcadeFormatter(status) {
     let str = "";
@@ -19,7 +19,7 @@ function arcadeFormatter(status) {
     } else if (status.mode.includes("HIDE_AND_SEEK")) {
         str += `${modeFormatter(status.mode.replace("HIDE_AND_SEEK", "").toLowerCase().replace("_", " ").trim())} `;
     } else if (status.mode.includes("ZOMBIES")) {
-        str += `Zombies - `;
+        str += "Zombies - ";
     }
     str += `${status.map}`;
     return str;
@@ -28,8 +28,8 @@ function arcadeFormatter(status) {
 /**
  * Format text for maps
  *
- * @param {String} txt raw text
- * @return {String} formatted text
+ * @param {string} txt raw text
+ * @returns {string} formatted text
  */
 function mapFormatter(txt) {
     return txt.slice(0, 1).toUpperCase() + txt.slice(1).replace(/ the /gi, "").replace(/_/g, " ");
@@ -38,8 +38,8 @@ function mapFormatter(txt) {
 /**
  * Format text for game mods
  *
- * @param {String} txt raw text
- * @return {String} formatted text
+ * @param {string} txt raw text
+ * @returns {string} formatted text
  */
 function modeFormatter(txt) {
     return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase().replace(/_/g, " ");
@@ -48,9 +48,9 @@ function modeFormatter(txt) {
 /**
  * Convert players status object to a string
  *
- * @param {String} name player name
- * @param {Object} status raw status object
- * @return {String} Formatted result
+ * @param {string} name player name
+ * @param {object} status raw status object
+ * @returns {string} Formatted result
  */
 async function genStatus(name, status) {
     let str = "";
@@ -93,7 +93,7 @@ async function genStatus(name, status) {
             statusstr += `Housing ${status.map}`;
         } else if (status.gameType == "SKYBLOCK" && status.mode == "dynamic") {
             // dynamic isnt helpful
-            statusstr += `Skyblock island`;
+            statusstr += "Skyblock island";
         } else {
             // basic formatter for anything i havent covered here
             statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`;
@@ -113,8 +113,8 @@ async function genStatus(name, status) {
 /**
  * Get a players status and turn it into a string
  *
- * @param {String} uuid
- * @return {String} formatted status
+ * @param {string} uuid
+ * @returns {string} formatted status
  */
 async function txtStatus(uuid) {
     // unfortunately this cant be shortcut

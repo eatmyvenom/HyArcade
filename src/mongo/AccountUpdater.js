@@ -25,6 +25,11 @@ module.exports = async function (database) {
     }
 };
 
+/**
+ * @param accounts
+ * @param oldAccs
+ * @param collection
+ */
 async function updateAccountsInArr(accounts, oldAccs, collection) {
     return await Promise.all(
         accounts.map(async (account) => {

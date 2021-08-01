@@ -6,6 +6,9 @@ const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * @param acc
+ */
 function getGames(acc) {
     let games = [
         { name : "Party games", wins: acc.wins },
@@ -51,6 +54,10 @@ function getGames(acc) {
 
 }
 
+/**
+ * @param acc1
+ * @param acc2
+ */
 function getTimedAccount(acc1, acc2) {
     acc1.wins = (acc1.wins ?? 0) - (acc2?.wins ?? 0);
     acc1.hitwWins = (acc1.hitwWins ?? 0) - (acc2?.hitwWins ?? 0);

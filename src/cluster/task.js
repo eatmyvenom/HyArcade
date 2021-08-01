@@ -13,7 +13,7 @@ const { winsSorter } = require("../utils");
 /**
  * Run the generate the data for all accounts
  *
- * @return {String[]} files changed by this task
+ * @returns {string[]} files changed by this task
  */
 async function accs() {
     let acclist = await lists.accounts();
@@ -35,7 +35,7 @@ async function accs() {
 /**
  * Populate the data for all of the players in the player list
  *
- * @return {String[]} files changed by this task
+ * @returns {string[]} files changed by this task
  */
 async function plrs() {
     let players = await lists.players(accounts);
@@ -53,7 +53,7 @@ async function plrs() {
 /**
  * Populate the data for all of the guilds in the guild list
  *
- * @return {String[]} files changed by this task
+ * @returns {string[]} files changed by this task
  */
 async function glds() {
     let guilds = await lists.guilds(accounts);
@@ -71,7 +71,7 @@ async function glds() {
 /**
  * Do all of the stats population tasks
  *
- * @return {String[]} files changed by this task
+ * @returns {string[]} files changed by this task
  */
 async function stats() {
     return await [].concat(await accs(), await plrs(), await glds());
@@ -80,13 +80,16 @@ async function stats() {
 /**
  * Calculate how many games have been played per player
  *
- * @return {*}
+ * @returns {*}
  */
 async function gamesPlayed() {
     await dataGen.gamesPlayed();
     return ["gamesPlayed.json"];
 }
 
+/**
+ *
+ */
 async function addLeaderboards() {
     await dataGen.addLeaderboards();
     return ["acclist.json"];
@@ -95,13 +98,16 @@ async function addLeaderboards() {
 /**
  * Generate the status for online players
  *
- * @return {String[]} files changed by this task
+ * @returns {string[]} files changed by this task
  */
 async function status() {
     await dataGen.genStatus();
     return await ["status.json", "status.txt"];
 }
 
+/**
+ *
+ */
 async function statusTxtSorted() {
     await dataGen.statusTxtSorted();
     return await ["status.txt"];
@@ -110,9 +116,11 @@ async function statusTxtSorted() {
 /**
  * Send a webhook message to discord
  *
- * @return {String[]} files changed by this task
+ * @param type
+ * @param maxamnt
+ * @returns {string[]} files changed by this task
  */
-async function webhook() {
+async function webhook(type, maxamnt) {
     // send webhook messages, this is only currently
     // in a small server and only does the unofficial
     // leaderboard, this can be easily changed and if

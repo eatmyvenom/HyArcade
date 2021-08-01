@@ -4,15 +4,17 @@ const cfg = require("../Config").fromJSON();
 let force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
+const Buffer = require("buffer");
 
 /**
  * Update the player data for all players in the list
+ *
  * @param {Account[]} accounts
- * @return {Account[]}
+ * @returns {Account[]}
  */
 module.exports = async function updateAccounts(accounts) {
     accounts.sort(utils.winsSorter);
-    await fs.writeFile("starttime", Buffer.from("" + Date.now()))
+    await fs.writeFile("starttime", Buffer.from("" + Date.now()));
 
     let oldAccs = await utils.readDB("accounts");
 
@@ -54,8 +56,12 @@ module.exports = async function updateAccounts(accounts) {
 
     await accounts.sort(utils.winsSorter);
     return accounts;
-}
+};
 
+/**
+ * @param accounts
+ * @param oldAccs
+ */
 async function updateAccountsInArr(accounts, oldAccs) {
     return await Promise.all(
         accounts.map(async (account) => {
@@ -83,7 +89,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
                 // Ignore people who have not played within the last 3.5 days
                 let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
 
-                let hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated
+                let hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated;
 
                 if ((isLinked || hasImportantStats) && hasPlayedRecently) {
                     logger.out(`Updating ${oldAcc.name}'s data`);

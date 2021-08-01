@@ -1,6 +1,9 @@
 const { getList } = require("./ListUtils");
 const TimSort = require("timsort");
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
 }

@@ -1,5 +1,6 @@
-const { MessageEmbed, FileOptions, BufferResolvable, MessageAttachment, MessageActionRow, MessageActionRowOptions, ReplyMessageOptions, MessageOptions} = require("discord.js");
+const { MessageAttachment } = require("discord.js");
 const BotUtils = require("../BotUtils");
+const Buffer = require("buffer");
 
 module.exports = class CommandResponse {
     text = "";
@@ -10,11 +11,11 @@ module.exports = class CommandResponse {
 
     /**
      * 
-     * @param {String | Object} text 
+     * @param {string | object} text 
      * @param {MessageEmbed | MessageEmbed[]} embed 
      * @param {FileOptions | BufferResolvable | MessageAttachment | FileOptions[] | BufferResolvable[] | MessageAttachment[]} file 
      * @param {MessageActionRow | MessageActionRowOptions | MessageActionRow[] | MessageActionRowOptions[]} components 
-     * @param {Boolean} silent 
+     * @param {boolean} silent 
      */
     constructor(text, embed = undefined, file = undefined, components = undefined, silent = false) {
         if(typeof text == "object" && typeof text != "string") {
@@ -33,12 +34,13 @@ module.exports = class CommandResponse {
     }
 
     isValid() {
-        return (this.text != undefined && this.text != "") || this.embed != undefined || this.file != undefined
+        return (this.text != undefined && this.text != "") || this.embed != undefined || this.file != undefined;
     }
 
     /**
      * 
      * @param {ReplyMessageOptions} reply 
+     * @param webhook
      * @returns {MessageOptions | undefined}
      */
     toDiscord(reply, webhook = false) {
@@ -76,7 +78,7 @@ module.exports = class CommandResponse {
             files: this.file,
             components: this.components,
             reply: reply
-        }
+        };
 
         if(webhook) {
             obj.username = BotUtils.client.user.username;
@@ -86,4 +88,4 @@ module.exports = class CommandResponse {
             return obj;
         }
     }
-}
+};

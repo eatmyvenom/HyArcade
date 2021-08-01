@@ -1,3 +1,4 @@
+const process = require("process");
 const hypixelReq = require("./request/hypixelReq");
 const { sleep, logger } = require("./utils");
 const config = require("./Config").fromJSON();
@@ -5,7 +6,7 @@ const config = require("./Config").fromJSON();
 /**
  * Function to get the key to use
  *
- * @return {String}
+ * @returns {string}
  */
 function getKey() {
     let key = config.key;
@@ -26,8 +27,8 @@ module.exports = class hypixelAPI {
      * Get the raw data from a specified url
      *
      * @static
-     * @param {String} url
-     * @return {String}
+     * @param {string} url
+     * @returns {string}
      */
     static async getData(url) {
         let apiPoint = new hypixelReq(url);
@@ -51,9 +52,9 @@ module.exports = class hypixelAPI {
      * Send a web request to hypixel with url a encoded request
      *
      * @static
-     * @param {String} page
-     * @param {Object} [extraArgs=[]]
-     * @return {String}
+     * @param {string} page
+     * @param {object} [extraArgs=[]]
+     * @returns {string}
      */
     static async basicRequest(page, extraArgs = []) {
         let url = `https://api.hypixel.net/${page}?key=${getKey()}`;
@@ -73,8 +74,8 @@ module.exports = class hypixelAPI {
      * Returns the status for the player with a specified uuid
      *
      * @static
-     * @param {String} uuid
-     * @return {String}
+     * @param {string} uuid
+     * @returns {string}
      */
     static async getStatusRAW(uuid) {
         return await hypixelAPI.basicRequest("status", [{ key: "uuid", val: uuid }]);
@@ -84,8 +85,8 @@ module.exports = class hypixelAPI {
      * Returns the stats for a player with a specified uuid
      *
      * @static
-     * @param {String} uuid
-     * @return {String}
+     * @param {string} uuid
+     * @returns {string}
      */
     static async getAccountDataRaw(uuid) {
         return await hypixelAPI.basicRequest("player", [{ key: "uuid", val: uuid }]);
@@ -95,8 +96,8 @@ module.exports = class hypixelAPI {
      * Returns the object status for a player with a specified uuid
      *
      * @static
-     * @param {String} uuid
-     * @return {Object}
+     * @param {string} uuid
+     * @returns {object}
      */
     static async getAccountData(uuid) {
         let data = await hypixelAPI.getAccountDataRaw(uuid);
@@ -138,7 +139,7 @@ module.exports = class hypixelAPI {
      * Returns the amount of players in various games
      *
      * @static
-     * @return {String}
+     * @returns {string}
      */
     static async getGameCountsRAW() {
         // dont put empty array since that is automatically done
@@ -154,8 +155,8 @@ module.exports = class hypixelAPI {
      * Returns the data of a guild with a specific id
      *
      * @static
-     * @param {String} id the interal id that hypixel assigned to this guild
-     * @return {String}
+     * @param {string} id the interal id that hypixel assigned to this guild
+     * @returns {string}
      */
     static async getGuildRaw(id) {
         return await hypixelAPI.basicRequest("guild", [{ key: "id", val: id }]);
@@ -165,8 +166,8 @@ module.exports = class hypixelAPI {
      * Returns the data of a guild that a player is in
      *
      * @static
-     * @param {String} uuid The players uuid
-     * @return {String}
+     * @param {string} uuid The players uuid
+     * @returns {string}
      */
     static async getGuildFromPlayer(uuid) {
         return await hypixelAPI.basicRequest("guild", [{ key: "player", val: uuid }]);
@@ -176,8 +177,8 @@ module.exports = class hypixelAPI {
      * Get the wins for an account with a specified uuid
      *
      * @static
-     * @param {String} uuid
-     * @return {Number}
+     * @param {string} uuid
+     * @returns {number}
      */
     static async getAccountWins(uuid) {
         let json = await hypixelAPI.getAccountData(uuid);
@@ -197,8 +198,8 @@ module.exports = class hypixelAPI {
      * The objectified status of a player with a given uuid
      *
      * @static
-     * @param {String} uuid
-     * @return {Object}
+     * @param {string} uuid
+     * @returns {object}
      */
     static async getUUIDStatus(uuid) {
         let raw = await hypixelAPI.getStatusRAW(uuid);
@@ -214,7 +215,7 @@ module.exports = class hypixelAPI {
      * The objectified counts of players in various games
      *
      * @static
-     * @return {Object}
+     * @returns {object}
      */
     static async getGameCounts() {
         let data = await hypixelAPI.getGameCountsRAW();

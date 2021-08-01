@@ -5,7 +5,7 @@ const Logger = require("hyarcade-logger");
 /**
  * Get a formatted string of game counts
  *
- * @return {String}
+ * @returns {string}
  */
 async function formatCounts() {
     let str = "";
