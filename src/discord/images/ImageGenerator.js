@@ -1,6 +1,8 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
-Canvas.registerFont("resources/minecraftia.ttf", { family : "myFont"});
+Canvas.registerFont("resources/minecraftia.ttf", {
+    family: "myFont"
+});
 
 let PlusColors = {
     black: "#000000",
@@ -43,7 +45,7 @@ module.exports = class ImageGenerator {
 
     async addImage(path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
         let img = await Canvas.loadImage(path);
-        for (let i = bgIterations; i >= 4; i--) {
+        for(let i = bgIterations; i >= 4; i--) {
             this.context.beginPath();
             this.context.rect(x - i / 2, y - i / 2, img.width + i, img.height + i);
             this.context.fillStyle = `#333333${bgStrenth}`;
@@ -60,7 +62,7 @@ module.exports = class ImageGenerator {
         this.context.textAlign = align;
         this.context.textBaseline = "middle";
         txt = txt.split("\n");
-        for (let t of txt) {
+        for(let t of txt) {
             this.context.fillText(t, x, y);
             y += spacing;
         }
@@ -72,8 +74,8 @@ module.exports = class ImageGenerator {
         let width = this.context.measureText(txt).width;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
-        x = x - width/2;
-        this.context.rect(x - 2, y - (size /2), width + 3, size + 4);
+        x = x - width / 2;
+        this.context.rect(x - 2, y - (size / 2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         this.context.fillStyle = color;
@@ -89,7 +91,7 @@ module.exports = class ImageGenerator {
         let width = lWidth + mWidth + wWidth;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
-        this.context.rect((x - width / 2) - 2, y - (size/2), width + 3, size + 4);
+        this.context.rect((x - width / 2) - 2, y - (size / 2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         x = x - width / 3.3;
@@ -122,22 +124,22 @@ module.exports = class ImageGenerator {
         let width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
         x = x - width / 2;
         this.context.textBaseline = "middle";
-        this.context.rect(x - 3, y - (size /2) , width + 4, size + 5);
+        this.context.rect(x - 3, y - (size / 2), width + 4, size + 5);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false);
         this.context.fillStyle = "#FFFF55";
         this.context.fillText(`${pos}. `, x, y);
-        x+= posWidth;
-        x+=ignWidth;
+        x += posWidth;
+        x += ignWidth;
         this.context.fillStyle = PlusColors[guildColor?.toLowerCase()];
         if(guild != undefined) {
-            this.context.fillText(` [${guild}]`, x ,y);
+            this.context.fillText(` [${guild}]`, x, y);
         }
-        x+=guildWidth;
+        x += guildWidth;
         this.context.fillStyle = "#AAAAAA";
         this.context.fillText(" - ", x, y);
-        x+= dashWidth;
+        x += dashWidth;
         this.context.fillStyle = "#FFFF55";
         this.context.fillText(`${count}`, x, y);
     }
@@ -151,13 +153,13 @@ module.exports = class ImageGenerator {
 
         let plus = "";
         let rankEnd = "";
-        if (rank.includes("_PLUS_PLUS")) {
+        if(rank.includes("_PLUS_PLUS")) {
             plus = "++";
-        } else if (rank.includes("_PLUS")) {
+        } else if(rank.includes("_PLUS")) {
             plus = "+";
         }
 
-        if (rank != "") {
+        if(rank != "") {
             rankEnd = "] ";
         }
 
@@ -172,36 +174,42 @@ module.exports = class ImageGenerator {
             startX = x;
         }
         let rankColor;
-        if (rank == "[MVP_PLUS_PLUS") {
+        if(rank == "[MVP_PLUS_PLUS") {
             rankColor = "#FFAA00";
-        } else if (rank == "[MVP_PLUS" || rank == "[MVP") {
+        } else if(rank == "[MVP_PLUS" || rank == "[MVP") {
             rankColor = "#55FFFF";
-        } else if (rank == "[VIP_PLUS" || rank == "[VIP") {
+        } else if(rank == "[VIP_PLUS" || rank == "[VIP") {
             rankColor = "#55FF55";
         } else {
             rankColor = "#AAAAAA";
         }
 
         if(!fake) {
-            if (rank != "" && rankEnabled) {
+            if(rank != "" && rankEnabled) {
                 this.writeText(rank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
                 startX += rankWidth;
-                if (plus != "") {
+                if(plus != "") {
                     this.writeText(plus, startX, y, "left", PlusColors[("" + plusColor).toLowerCase()], fontSize, 36);
                     startX += plusWidth;
                 }
                 this.writeText(rankEnd, startX, y, "left", rankColor, fontSize, 36);
                 startX += rankEndWidth;
             }
-    
+
             this.writeText(name, startX, y, "left", rankColor, fontSize, 36);
         }
 
         startX += nameWidth;
         if(rankEnabled) {
-            return {x : startX, w : rankWidth + rankEndWidth + plusWidth + nameWidth};
+            return {
+                x: startX,
+                w: rankWidth + rankEndWidth + plusWidth + nameWidth
+            };
         } else {
-            return {x : startX, w : nameWidth};
+            return {
+                x: startX,
+                w: nameWidth
+            };
         }
     }
 

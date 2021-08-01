@@ -1,10 +1,16 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_ARGS_LENGTH
+} = require("../Utils/Embeds/DynamicEmbeds");
+const {
+    ERROR_IGN_UNDEFINED
+} = require("../Utils/Embeds/StaticEmbeds");
 const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 
 /**
@@ -29,7 +35,7 @@ function formatN(str) {
  * @param hasPerms
  */
 function clr(stat1, stat2, hasPerms) {
-    if (stat1 > stat2) {
+    if(stat1 > stat2) {
         return EmojiGetter(hasPerms, "better");
     } else {
         return EmojiGetter(hasPerms, "worse");
@@ -67,15 +73,18 @@ function lineR(stat1, stat2, name, hasPerms) {
 }
 
 module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interaction) => {
-    if (args.length < 1) {
-        return { res: "", embed: ERROR_ARGS_LENGTH(1) };
+    if(args.length < 1) {
+        return {
+            res: "",
+            embed: ERROR_ARGS_LENGTH(1)
+        };
     }
 
     let plr1 = args[0];
     let plr2 = args[1];
     let acc1, acc2;
-    if (interaction == undefined) {
-        if (plr2 == undefined) {
+    if(interaction == undefined) {
+        if(plr2 == undefined) {
             acc1 = await BotUtils.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);
             acc2 = await BotUtils.resolveAccount(plr1, rawMsg, false);
         } else {
@@ -89,12 +98,18 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
 
     let hackers = await BotUtils.getFromDB("hackerlist");
 
-    if (hackers.includes(acc1.uuid)) {
-        acc1 = { miniWallsWins: 0, miniWalls: {} };
+    if(hackers.includes(acc1.uuid)) {
+        acc1 = {
+            miniWallsWins: 0,
+            miniWalls: {}
+        };
     }
 
-    if (hackers.includes(acc2.uuid)) {
-        acc2 = { miniWallsWins: 0, miniWalls: {} };
+    if(hackers.includes(acc2.uuid)) {
+        acc2 = {
+            miniWallsWins: 0,
+            miniWalls: {}
+        };
     }
 
 
@@ -143,11 +158,17 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             .addField("━━━━━━ Stats: ━━━━━", stats, true)
             .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
-    } catch(e) {
+    } catch (e) {
         logger.err(e);
-        return { res: "", embed: ERROR_IGN_UNDEFINED };
+        return {
+            res: "",
+            embed: ERROR_IGN_UNDEFINED
+        };
     }
 
 
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

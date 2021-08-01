@@ -18,7 +18,7 @@ module.exports = class InteractionUtils {
             acc = acclist.find((a) => a?.uuid == uuid);
         }
 
-        if (acc == undefined) {
+        if(acc == undefined) {
             acc = new Account("", 0, "" + uuid);
             await acc.updateData();
         }

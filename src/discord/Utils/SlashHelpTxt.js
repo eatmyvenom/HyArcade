@@ -1,4 +1,3 @@
-
 /**
  * 
  * @param {Message} msg 
@@ -18,7 +17,9 @@ module.exports = function SlashHelpTxt(msg) {
         case "topgames":
         case "get-data-raw":
         case "whois": {
-            return { res : "https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ" };
+            return {
+                res: "https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ"
+            };
         }
         }
     }

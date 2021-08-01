@@ -1,9 +1,13 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
-const { stringLBAdv } = require("../../listUtils");
+const {
+    stringLBAdv
+} = require("../../listUtils");
 
 /**
  * @param prop
@@ -16,7 +20,7 @@ async function getLB(prop, timetype, limit, category, start) {
     let res = "";
     let time;
 
-    switch (timetype) {
+    switch(timetype) {
     case "d":
     case "day":
     case "daily": {
@@ -77,7 +81,7 @@ async function getLB(prop, timetype, limit, category, start) {
     res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed().setTitle(time).setColor(0x00cc66).setDescription(res);
 
-    if (res.length > 6000) {
+    if(res.length > 6000) {
         return new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
@@ -86,10 +90,10 @@ async function getLB(prop, timetype, limit, category, start) {
             );
     }
 
-    if (res.length > 2000) {
+    if(res.length > 2000) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
-        while (resArr.length > 0) {
+        while(resArr.length > 0) {
             let end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
@@ -105,11 +109,11 @@ async function getLB(prop, timetype, limit, category, start) {
  */
 function getProp(o, s) {
     s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-    s = s.replace(/^\./, "");           // strip a leading dot
+    s = s.replace(/^\./, ""); // strip a leading dot
     var a = s.split(".");
-    for (var i = 0, n = a.length; i < n; ++i) {
+    for(var i = 0, n = a.length; i < n; ++i) {
         var k = a[i];
-        if (k in o) {
+        if(k in o) {
             o = o[k];
         } else {
             return;
@@ -142,7 +146,7 @@ async function hander(args, rawMsg, interaction) {
     let gid = "";
     let gameName = "";
 
-    switch (type.toLowerCase().trim()) {
+    switch(type.toLowerCase().trim()) {
     case "sex":
     case "sexy":
     case "party":
@@ -614,7 +618,7 @@ async function hander(args, rawMsg, interaction) {
             gameName = type.trim().slice(1);
             if(timetype == "lifetime" || timetype == "l") {
                 timetype = "Lifetime";
-                lb = await stringLBAdv((a,b)=>{
+                lb = await stringLBAdv((a, b) => {
                     return (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0);
                 }, (a) => {
                     return getProp(a, type.trim());
@@ -629,7 +633,10 @@ async function hander(args, rawMsg, interaction) {
                         "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
                     )
                     .setColor(0xff0000);
-                return { res: "", embed: embed };
+                return {
+                    res: "",
+                    embed: embed
+                };
             }
             gid = undefined;
             res = new MessageEmbed().setTitle(timetype).setColor(0x00cc66).setDescription(lb);
@@ -640,7 +647,10 @@ async function hander(args, rawMsg, interaction) {
                     "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
                 )
                 .setColor(0xff0000);
-            return { res: "", embed: embed };
+            return {
+                res: "",
+                embed: embed
+            };
         }
     }
     }
@@ -650,8 +660,13 @@ async function hander(args, rawMsg, interaction) {
 
     logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
-    let response = { res: "", embed: finalRes, game: gid, start: startingIndex };
-    if (interaction == undefined) {
+    let response = {
+        res: "",
+        embed: finalRes,
+        game: gid,
+        start: startingIndex
+    };
+    if(interaction == undefined) {
         response.res =
             "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
     }

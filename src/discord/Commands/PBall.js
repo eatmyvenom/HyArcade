@@ -1,8 +1,15 @@
-const { MessageEmbed } = require("discord.js");
-const { HypixelApi, mojangRequest } = require("hyarcade-requests");
+const {
+    MessageEmbed
+} = require("discord.js");
+const {
+    HypixelApi,
+    mojangRequest
+} = require("hyarcade-requests");
 const Command = require("../../classes/Command");
 const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_IGN_UNDEFINED
+} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * @param n
@@ -23,16 +30,16 @@ module.exports = new Command("paintball", ["*"], async (args, rawMsg, interactio
     let data = acc.player;
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " Paintball stats")
-        .addField("-----Overall stats-----", 
+        .addField("-----Overall stats-----",
             `**Wins** - ${numberify(data?.stats?.Paintball?.wins ?? 0)}\n` +
-        `**Kills** - ${numberify(data?.stats?.Paintball?.kills ?? 0)}\n` +
-        `**Deaths** - ${numberify(data?.stats?.Paintball?.deaths ?? 0)}\n` +
-        `**Shots** - ${numberify(data?.stats?.Paintball?.shots_fired ?? 0)}\n` +
-        `**Forcefield** - ${numberify(data?.stats?.Paintball?.forcefieldTime ?? 0)}s\n` +
-        `**Streaks** - ${numberify(data?.stats?.Paintball?.killstreaks ?? 0)}`,
+            `**Kills** - ${numberify(data?.stats?.Paintball?.kills ?? 0)}\n` +
+            `**Deaths** - ${numberify(data?.stats?.Paintball?.deaths ?? 0)}\n` +
+            `**Shots** - ${numberify(data?.stats?.Paintball?.shots_fired ?? 0)}\n` +
+            `**Forcefield** - ${numberify(data?.stats?.Paintball?.forcefieldTime ?? 0)}s\n` +
+            `**Streaks** - ${numberify(data?.stats?.Paintball?.killstreaks ?? 0)}`,
             true
         )
-        .addField("---------Info----------", 
+        .addField("---------Info----------",
             `**Godfather** - ${numberify(data?.stats?.Paintball?.godfather ?? 0)}\n` +
             `**Endurance** - ${numberify(data?.stats?.Paintball?.endurance ?? 0)}\n` +
             `**Superluck** - ${numberify(data?.stats?.Paintball?.superluck ?? 0)}\n` +
@@ -42,7 +49,7 @@ module.exports = new Command("paintball", ["*"], async (args, rawMsg, interactio
             `**Coins** - ${numberify(data?.stats?.Paintball?.coins ?? 0)}`,
             true
         )
-        .addField("---------Ratios--------", 
+        .addField("---------Ratios--------",
             `**Kills/Deaths** - ${numberify((data?.stats?.Paintball?.kills ?? 0) / (data?.stats?.Paintball?.deaths ?? 0))}\n` +
             `**Kills/Wins** - ${numberify((data?.stats?.Paintball?.kills ?? 0) / (data?.stats?.Paintball?.wins ?? 0))}\n` +
             `**Deaths/Wins** - ${numberify((data?.stats?.Paintball?.deaths ?? 0) / (data?.stats?.Paintball?.wins ?? 0))}\n` +

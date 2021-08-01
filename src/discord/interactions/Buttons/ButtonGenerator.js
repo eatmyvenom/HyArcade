@@ -1,4 +1,7 @@
-const { MessageButton, MessageActionRow } = require("discord.js");
+const {
+    MessageButton,
+    MessageActionRow
+} = require("discord.js");
 
 module.exports = class ButtonGenerator {
     static async getStatsButtons(currentGame, uuid) {
@@ -7,7 +10,7 @@ module.exports = class ButtonGenerator {
         let leftID = "";
         let rightID = "";
 
-        switch (currentGame) {
+        switch(currentGame) {
         case "arc": {
             leftTxt = "Seasonal games";
             leftID = "sim";
@@ -186,7 +189,7 @@ module.exports = class ButtonGenerator {
             .setLabel("10 >>")
             .setStyle("PRIMARY");
 
-        if (currentIndex - 10 < 0) {
+        if(currentIndex - 10 < 0) {
             left.setDisabled(true);
         }
 

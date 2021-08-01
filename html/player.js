@@ -13,7 +13,7 @@ function setHtmlByName(name, html) {
 
 function refresh() {
     handleData()
-        .then(()=>console.log("Data updated!"));
+        .then(() => console.log("Data updated!"));
 }
 
 function home() {
@@ -26,7 +26,7 @@ function formatTime(time) {
 
 function formatNum(number) {
     let str = new Number(number);
-    if (number == undefined) {
+    if(number == undefined) {
         return new Number(0).toLocaleString();
     } else {
         return str.toLocaleString();
@@ -35,7 +35,7 @@ function formatNum(number) {
 
 function setIcon(uuid) {
     var link = document.querySelector("link[rel~='icon']");
-    if (!link) {
+    if(!link) {
         link = document.createElement("link");
         link.rel = "icon";
         document.getElementsByTagName("head")[0].appendChild(link);
@@ -72,7 +72,7 @@ function displayData(data) {
     setHtmlByName("karma", "Karma: " + formatNum(data.karma));
     setHtmlByName("name", "Name: " + data.name);
     setHtmlByName("uuid", "UUID: " + data.uuid);
-    if (data.rank) {
+    if(data.rank) {
         setHtmlByName("rank", "Rank: " + data.rank.replace(/_/g, "").replace(/PLUS/g, "+"));
     } else {
         setHtmlByName("rank", "Rank: Non");
@@ -102,11 +102,11 @@ async function handleData() {
         rawjson = await fetch("https://cdn.hyarcade.xyz/account?ign=" + playername);
     }
     let playerdata = await rawjson.json();
-    if (playerdata != undefined && playerdata.name != undefined) {
+    if(playerdata != undefined && playerdata.name != undefined) {
         displayData(playerdata);
         uuid = playerdata.uuid;
-        if (urlParams.has("q")) {
-            if (urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
+        if(urlParams.has("q")) {
+            if(urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
                 urlParams.set("q", playername);
                 window.history.replaceState(
                     window.history.state,

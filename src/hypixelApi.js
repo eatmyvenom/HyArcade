@@ -1,6 +1,9 @@
 const process = require("process");
 const hypixelReq = require("./request/hypixelReq");
-const { sleep, logger } = require("./utils");
+const {
+    sleep,
+    logger
+} = require("./utils");
 const config = require("./Config").fromJSON();
 
 /**
@@ -10,13 +13,13 @@ const config = require("./Config").fromJSON();
  */
 function getKey() {
     let key = config.key;
-    if (config.cluster) {
+    if(config.cluster) {
         key = config.clusters[config.cluster].key;
     }
-    if (process.argv[2] == "bot") {
+    if(process.argv[2] == "bot") {
         key = config.clusters["serverbot"].key;
     }
-    if (config.mode == "test") {
+    if(config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
     }
     return key;
@@ -38,8 +41,8 @@ module.exports = class hypixelAPI {
         // upon rate limit within the response headers. If this
         // exists, wait that amount of time in seconds then
         // make a new request.
-        while (apiPoint.headers["retry-after"]) {
-            if (config.logRateLimit) {
+        while(apiPoint.headers["retry-after"]) {
+            if(config.logRateLimit) {
                 logger.warn(`Rate limit hit, retrying after ${apiPoint.headers["retry-after"]} seconds`);
             }
             await sleep(apiPoint.headers["retry-after"] * 1000);
@@ -60,8 +63,8 @@ module.exports = class hypixelAPI {
         let url = `https://api.hypixel.net/${page}?key=${getKey()}`;
         // this is my handling of adding other args that work
         // in urls, its not perfect but it works well here
-        if (extraArgs != []) {
-            for (let i = 0; i < extraArgs.length; i++) {
+        if(extraArgs != []) {
+            for(let i = 0; i < extraArgs.length; i++) {
                 url += `&${extraArgs[i].key}=${extraArgs[i].val}`;
             }
         }
@@ -78,7 +81,10 @@ module.exports = class hypixelAPI {
      * @returns {string}
      */
     static async getStatusRAW(uuid) {
-        return await hypixelAPI.basicRequest("status", [{ key: "uuid", val: uuid }]);
+        return await hypixelAPI.basicRequest("status", [{
+            key: "uuid",
+            val: uuid
+        }]);
     }
 
     /**
@@ -89,7 +95,10 @@ module.exports = class hypixelAPI {
      * @returns {string}
      */
     static async getAccountDataRaw(uuid) {
-        return await hypixelAPI.basicRequest("player", [{ key: "uuid", val: uuid }]);
+        return await hypixelAPI.basicRequest("player", [{
+            key: "uuid",
+            val: uuid
+        }]);
     }
 
     /**
@@ -159,7 +168,10 @@ module.exports = class hypixelAPI {
      * @returns {string}
      */
     static async getGuildRaw(id) {
-        return await hypixelAPI.basicRequest("guild", [{ key: "id", val: id }]);
+        return await hypixelAPI.basicRequest("guild", [{
+            key: "id",
+            val: id
+        }]);
     }
 
     /**
@@ -170,7 +182,10 @@ module.exports = class hypixelAPI {
      * @returns {string}
      */
     static async getGuildFromPlayer(uuid) {
-        return await hypixelAPI.basicRequest("guild", [{ key: "player", val: uuid }]);
+        return await hypixelAPI.basicRequest("guild", [{
+            key: "player",
+            val: uuid
+        }]);
     }
 
     /**
@@ -183,14 +198,14 @@ module.exports = class hypixelAPI {
     static async getAccountWins(uuid) {
         let json = await hypixelAPI.getAccountData(uuid);
         // make sure player has stats to be checked
-        if (!json.player || !json.player.stats || !json.player.stats.Arcade) {
+        if(!json.player || !json.player.stats || !json.player.stats.Arcade) {
             return 0;
         }
         let arcade = json.player.stats.Arcade;
         let wins = 0;
-        if (arcade.wins_party) wins += arcade.wins_party;
-        if (arcade.wins_party_2) wins += arcade.wins_party_2;
-        if (arcade.wins_party_3) wins += arcade.wins_party_3;
+        if(arcade.wins_party) wins += arcade.wins_party;
+        if(arcade.wins_party_2) wins += arcade.wins_party_2;
+        if(arcade.wins_party_3) wins += arcade.wins_party_3;
         return wins;
     }
 
@@ -208,7 +223,10 @@ module.exports = class hypixelAPI {
     }
 
     static async getGamesPlayedRAW(uuid) {
-        return await hypixelAPI.basicRequest("recentGames", [{ key: "uuid", val: uuid }]);
+        return await hypixelAPI.basicRequest("recentGames", [{
+            key: "uuid",
+            val: uuid
+        }]);
     }
 
     /**

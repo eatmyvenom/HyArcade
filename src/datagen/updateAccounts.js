@@ -22,24 +22,24 @@ module.exports = async function updateAccounts(accounts) {
         j,
         temparray,
         chunk = 120;
-    for (i = 0, j = accounts.length; i < j; i += chunk) {
+    for(i = 0, j = accounts.length; i < j; i += chunk) {
         temparray = accounts.slice(i, i + chunk);
         await updateAccountsInArr(temparray, oldAccs);
     }
 
-    if (utils.fileExists("data/accounts.json.part")) {
+    if(utils.fileExists("data/accounts.json.part")) {
         let addedAccounts = await utils.readJSON("accounts.json.part");
         await fs.rm("data/accounts.json.part");
         accounts = accounts.concat(addedAccounts);
     }
 
-    if (utils.fileExists("data/accounts.json.full")) {
+    if(utils.fileExists("data/accounts.json.full")) {
         let fullList = await utils.readJSON("accounts.json.full");
         await fs.rm("data/accounts.json.full");
-        for (let i = 0; i < accounts.length; i++) {
+        for(let i = 0; i < accounts.length; i++) {
             let acc = accounts[i];
             let newAcc = fullList.find((a) => a.uuid == acc.uuid);
-            if (newAcc != undefined && newAcc.updateTime > acc.updateTime) {
+            if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
                 logger.info(`Setting ${newAcc.name}'s data from outside source!`);
                 acc.setData(newAcc);
             }
@@ -50,7 +50,7 @@ module.exports = async function updateAccounts(accounts) {
     runtime.needRoleupdate = true;
     await runtime.save();
 
-    if (force && utils.fileExists("force")) {
+    if(force && utils.fileExists("force")) {
         await fs.rm("force");
     }
 
@@ -66,7 +66,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
     return await Promise.all(
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
-            if (oldAcc != undefined && !force) {
+            if(oldAcc != undefined && !force) {
 
                 // Make sure they have a relavent amount of arcade games wins
                 let isArcadePlayer = oldAcc.arcadeWins >= 1500;
@@ -91,7 +91,7 @@ async function updateAccountsInArr(accounts, oldAccs) {
 
                 let hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated;
 
-                if ((isLinked || hasImportantStats) && hasPlayedRecently) {
+                if((isLinked || hasImportantStats) && hasPlayedRecently) {
                     logger.out(`Updating ${oldAcc.name}'s data`);
                     await account.updateData();
                 } else {

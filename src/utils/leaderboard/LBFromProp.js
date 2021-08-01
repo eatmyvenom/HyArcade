@@ -1,5 +1,7 @@
 const utils = require("../../utils");
-const { getList } = require("./ListUtils");
+const {
+    getList
+} = require("./ListUtils");
 
 module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
     let newlist, oldlist;
@@ -7,7 +9,7 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
         newlist = JSON.parse(JSON.stringify(fileCache[`${name}`]));
         oldlist = JSON.parse(JSON.stringify(fileCache[`${timetype}${name}`]));
     } else {
-        if (name == "accounts") {
+        if(name == "accounts") {
             newlist = await getList();
             oldlist = await getList(timetype);
         } else {
@@ -17,14 +19,14 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
     }
 
     let acc;
-    for (let i = 0; i < oldlist.length; i++) {
+    for(let i = 0; i < oldlist.length; i++) {
         acc = newlist.find((g) => g?.uuid == oldlist[i]?.uuid);
         // make sure acc isnt null/undefined
         if(acc == undefined || acc == null) {
             continue;
         }
 
-        if (category == undefined) {
+        if(category == undefined) {
             oldlist[i][prop] = (acc[prop] ?? 0) - (oldlist[i][prop] ?? 0);
         } else {
             if(oldlist[i][category] != undefined) {

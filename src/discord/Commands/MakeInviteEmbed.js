@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
@@ -46,11 +48,15 @@ module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
             makeField("Arcade AP Hunters", "https://discord.gg/wXAd4UbVfy"),
         ]);
 
-    if (msgID == undefined) {
-        await channel.send("", { embed: embed });
+    if(msgID == undefined) {
+        await channel.send("", {
+            embed: embed
+        });
     } else {
         let message = await channel.messages.fetch(msgID);
         await message.edit(embed);
     }
-    return { res: "list created" };
+    return {
+        res: "list created"
+    };
 });

@@ -33,11 +33,11 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
     list = list.slice(0, size);
 
     let propVal;
-    for (let i = startingIndex; i < list.length; i++) {
+    for(let i = startingIndex; i < list.length; i++) {
 
         propVal = category == undefined ? list[i]?.[lbprop] : list[i]?.[category]?.[lbprop];
         // don't print if player has 0 wins
-        if ((propVal | 0) < 1 && !cfg.printAllWins) continue;
+        if((propVal | 0) < 1 && !cfg.printAllWins) continue;
 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;

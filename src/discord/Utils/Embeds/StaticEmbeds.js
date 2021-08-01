@@ -1,5 +1,11 @@
-const { MessageEmbed } = require("discord.js");
-const { COLOR_RED, COLOR_SUCCESS, COLOR_YELLOW } = require("./Colors");
+const {
+    MessageEmbed
+} = require("discord.js");
+const {
+    COLOR_RED,
+    COLOR_SUCCESS,
+    COLOR_YELLOW
+} = require("./Colors");
 
 exports.ERROR_UNKNOWN = new MessageEmbed()
     .setTitle("ERROR")

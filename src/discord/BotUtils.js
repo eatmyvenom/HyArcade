@@ -34,10 +34,10 @@ module.exports = class BotUtils {
         let path = `${file}`;
         url.searchParams.set("path", path);
         Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
-    
+
         try {
             fileData = await (await fetch(url)).json();
-        } catch(e) {
+        } catch (e) {
             Logger.err("Can't connect to database");
             Logger.err(e);
             return {};
@@ -61,7 +61,7 @@ module.exports = class BotUtils {
                     "Authorization": cfg.dbPass
                 }
             });
-        } catch(e) {
+        } catch (e) {
             Logger.err("Can't connect to database");
             Logger.err(e);
             return {};
@@ -70,7 +70,7 @@ module.exports = class BotUtils {
 
     static getWebhookObj(embed) {
         let embeds;
-        if (embed == undefined) {
+        if(embed == undefined) {
             embeds = [];
         } else {
             embeds = [embed];

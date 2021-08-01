@@ -1,5 +1,7 @@
 const cfg = require("hyarcade-config").fromJSON();
-const { WebhookClient } = require("discord.js");
+const {
+    WebhookClient
+} = require("discord.js");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
@@ -23,7 +25,7 @@ module.exports = class BotEvents {
 
     static async messageDelete(msg) {
         if(BotUtils.botMode == "mw") {
-            if (msg.content.charAt(0) == ".") {
+            if(msg.content.charAt(0) == ".") {
                 let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
                 logger.warn(str);
                 await Webhooks.logHook.send(str);
@@ -40,7 +42,7 @@ module.exports = class BotEvents {
     static async ready(mode) {
         BotUtils.isBotInstance = true;
         BotUtils.botMode = mode;
-    
+
         logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
@@ -61,18 +63,18 @@ module.exports = class BotEvents {
         BotUtils.tus = tus;
 
         logger.info("Selecting mode");
-        if (mode == "role") {
+        if(mode == "role") {
             await roleHandler(BotUtils.client);
             await BotUtils.client.destroy();
-        } else if (mode == "slash") {
+        } else if(mode == "slash") {
             await registerSlashCommands(BotUtils.client);
             logger.out(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
-        } else if (mode == "mini") {
+        } else if(mode == "mini") {
             await registerSlashCommands(BotUtils.client);
             logger.out(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
-        } else if (BotUtils.botMode == "mw") {
+        } else if(BotUtils.botMode == "mw") {
             logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
             logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
         } else if(BotUtils.botMode == "test") {
@@ -88,7 +90,7 @@ module.exports = class BotEvents {
 
     static async tick() {
         let runtime = Runtime.fromJSON();
-        if (runtime.needRoleupdate && BotUtils.botMode == undefined) {
+        if(runtime.needRoleupdate && BotUtils.botMode == undefined) {
             await roleHandler(BotUtils.client);
             await Webhooks.logHook.send("Roles Updated");
             runtime.needRoleupdate = false;

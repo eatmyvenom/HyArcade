@@ -69,11 +69,11 @@ class Guild {
         this.tag = data.guild.tag;
 
         let gmembers = data.guild.members;
-        for (let i = 0; i < gmembers.length; i++) {
+        for(let i = 0; i < gmembers.length; i++) {
             // find a corrosponding account in my account list
             let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
             // dont add empty accounts
-            if (gamer != undefined) {
+            if(gamer != undefined) {
                 this.memberUUIDs.push(gamer.uuid);
                 this.members.push(gamer);
             }
@@ -98,7 +98,7 @@ class Guild {
      */
     async updateWins() {
         await this.updateMemberData();
-        for (let i = 0; i < this.members.length; i++) {
+        for(let i = 0; i < this.members.length; i++) {
             let member = this.members[i];
             this.wins += member.wins;
             this.arcadeCoins += member.arcadeCoins;

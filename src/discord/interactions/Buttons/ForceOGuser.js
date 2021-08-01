@@ -1,10 +1,13 @@
 module.exports = async function ForceOGuser(interaction) {
     let og = interaction.message.interaction.user.id;
     let current = interaction.user.id;
-    if (current == og) {
+    if(current == og) {
         return true;
     }
 
-    await interaction.reply({ content: `Only <@${og}> can use this!`, ephemeral: true });
+    await interaction.reply({
+        content: `Only <@${og}> can use this!`,
+        ephemeral: true
+    });
     return false;
 };

@@ -19,12 +19,12 @@ module.exports = async (req, res, fileCache) => {
     let lbprop = url.searchParams.get("path");
     let category = url.searchParams.get("category");
     let timePeriod = url.searchParams.get("time");
-    if (req.method == "GET") {
+    if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
         let accounts = fileCache.accounts;
 
-        if (timePeriod == undefined) {
-            if (category == null) {
+        if(timePeriod == undefined) {
+            if(category == null) {
                 TimSort.sort(accounts, (b, a) => {
                     return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
                 });
@@ -37,7 +37,7 @@ module.exports = async (req, res, fileCache) => {
             let newAcclist = [];
             let oldCopy = JSON.parse(JSON.stringify(fileCache[timePeriod + "accounts"]));
             for(let a of oldCopy) {
-                let n = fileCache.accounts.find(u=>u.uuid==a.uuid);
+                let n = fileCache.accounts.find(u => u.uuid == a.uuid);
                 if(category == null) {
                     a[lbprop] = numberify(n[lbprop] - a[lbprop]);
                     a.name = n.name;
@@ -56,7 +56,7 @@ module.exports = async (req, res, fileCache) => {
                 }
             }
             accounts = newAcclist;
-            if (category == null) {
+            if(category == null) {
                 TimSort.sort(accounts, (b, a) => {
                     return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
                 });

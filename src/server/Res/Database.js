@@ -9,7 +9,7 @@ const cfg = require("../../Config").fromJSON();
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
-    if (req.method == "GET") {
+    if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
 
         let file = url.searchParams.get("path");
@@ -26,7 +26,7 @@ module.exports = async (req, res, fileCache) => {
         let data = "";
         let json = {};
         if(req.headers.authorization == cfg.dbPass) {
-            req.on("data", d => data+=d);
+            req.on("data", d => data += d);
             req.on("end", async () => {
                 try {
                     json = JSON.parse(data);

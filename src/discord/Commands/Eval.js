@@ -1,5 +1,7 @@
 const Command = require("../../classes/Command");
-const { getFromDB } = require("../BotUtils");
+const {
+    getFromDB
+} = require("../BotUtils");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
 const Util = require("util");

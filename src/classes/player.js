@@ -25,9 +25,9 @@ class Player {
         this.altnames = altnames;
         this.wins = wins;
 
-        for (let i = 0; i < altnames.length; i++) {
+        for(let i = 0; i < altnames.length; i++) {
             // if uuid then check uuid
-            if (altnames[i].length == 32) {
+            if(altnames[i].length == 32) {
                 this.alts.push(accounts.find((acc) => acc.uuid?.toLowerCase() == altnames[i].toLowerCase()));
             } else {
                 this.alts.push(accounts.find((acc) => acc.name?.toLowerCase() == altnames[i].toLowerCase()));
@@ -43,8 +43,8 @@ class Player {
      */
     async updateWins() {
         let newWins = 0;
-        for (let i = 0; i < this.alts.length; i++) {
-            if (this.alts[i] == undefined) {
+        for(let i = 0; i < this.alts.length; i++) {
+            if(this.alts[i] == undefined) {
                 continue;
             }
             newWins += await this.alts[i].wins;

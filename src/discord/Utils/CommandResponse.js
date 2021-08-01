@@ -1,4 +1,6 @@
-const { MessageAttachment } = require("discord.js");
+const {
+    MessageAttachment
+} = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Buffer = require("buffer");
 
@@ -49,7 +51,7 @@ module.exports = class CommandResponse {
         }
 
         if(("" + this.text).length > 2000) {
-            this.file = [ new MessageAttachment(Buffer.from(("" + this.text).replace(/`/g, "").trim()), "message.txt") ];
+            this.file = [new MessageAttachment(Buffer.from(("" + this.text).replace(/`/g, "").trim()), "message.txt")];
             this.text = undefined;
         }
 
@@ -58,15 +60,15 @@ module.exports = class CommandResponse {
         }
 
         if(this.embed != undefined && !Array.isArray(this.embed)) {
-            this.embed = [ this.embed ];
+            this.embed = [this.embed];
         }
 
         if(this.file != undefined && !Array.isArray(this.file)) {
-            this.file = [ this.file ];
+            this.file = [this.file];
         }
 
         if(this.components != undefined && !Array.isArray(this.components)) {
-            this.components = [ this.components ];
+            this.components = [this.components];
         }
 
         let obj = {
@@ -74,7 +76,10 @@ module.exports = class CommandResponse {
             nonce: undefined,
             content: this.text,
             embeds: this.embed,
-            allowedMentions : { parse: [], repliedUser: false },
+            allowedMentions: {
+                parse: [],
+                repliedUser: false
+            },
             files: this.file,
             components: this.components,
             reply: reply

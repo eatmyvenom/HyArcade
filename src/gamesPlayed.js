@@ -1,6 +1,9 @@
 const Game = require("./classes/Game");
 const hypixelApi = require("./hypixelApi");
-const { writeJSON, readJSON } = require("./utils");
+const {
+    writeJSON,
+    readJSON
+} = require("./utils");
 
 class gamesPlayed {
     uuid = "";
@@ -17,9 +20,9 @@ class gamesPlayed {
         let json = JSON.parse(await hypixelApi.getGamesPlayedRAW(this.uuid));
         let newGames = json.games.reverse();
 
-        for (let g of newGames) {
+        for(let g of newGames) {
             let game = new Game(g);
-            if (game.start > this.newestTime) {
+            if(game.start > this.newestTime) {
                 this.addCount(game.type);
                 this.newestTime = game.start;
             }
@@ -27,7 +30,7 @@ class gamesPlayed {
     }
 
     addCount(type) {
-        if (this.counts[type] != undefined) {
+        if(this.counts[type] != undefined) {
             this.counts[type]++;
         } else {
             this.counts[type] = 1;

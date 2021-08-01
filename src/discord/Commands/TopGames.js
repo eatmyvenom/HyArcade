@@ -1,35 +1,88 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
-const { getFromDB } = require("../BotUtils");
+const {
+    getFromDB
+} = require("../BotUtils");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_UNLINKED
+} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * @param acc
  */
 function getGames(acc) {
-    let games = [
-        { name : "Party games", wins: acc.wins },
-        { name : "HITW", wins : acc.hitwWins},
-        { name : "Farm hunt", wins : acc.farmhuntWins},
-        { name : "Hypixel says", wins : acc.hypixelSaysWins},
-        { name : "Mini walls", wins : acc.miniWallsWins},
-        { name : "Football", wins : acc.footballWins},
-        { name : "Ender spleef", wins : acc.enderSpleefWins},
-        { name : "Dragon wars", wins : acc.dragonWarsWins},
-        { name : "Bounty hunters", wins : acc.bountyHuntersWins},
-        { name : "Blocking dead", wins : acc.blockingDeadWins},
-        { name : "Throw out", wins : acc.throwOutWins},
-        { name : "Hide and seek", wins : acc.hideAndSeekWins},
-        { name : "Zombies", wins : acc.zombiesWins},
-        { name : "Galaxy wars", wins : acc.galaxyWarsWins},
-        { name : "Pixel painters", wins : acc.pixelPaintersWins},
-        { name : "Seasonal", wins : acc.simTotal},
+    let games = [{
+        name: "Party games",
+        wins: acc.wins
+    },
+    {
+        name: "HITW",
+        wins: acc.hitwWins
+    },
+    {
+        name: "Farm hunt",
+        wins: acc.farmhuntWins
+    },
+    {
+        name: "Hypixel says",
+        wins: acc.hypixelSaysWins
+    },
+    {
+        name: "Mini walls",
+        wins: acc.miniWallsWins
+    },
+    {
+        name: "Football",
+        wins: acc.footballWins
+    },
+    {
+        name: "Ender spleef",
+        wins: acc.enderSpleefWins
+    },
+    {
+        name: "Dragon wars",
+        wins: acc.dragonWarsWins
+    },
+    {
+        name: "Bounty hunters",
+        wins: acc.bountyHuntersWins
+    },
+    {
+        name: "Blocking dead",
+        wins: acc.blockingDeadWins
+    },
+    {
+        name: "Throw out",
+        wins: acc.throwOutWins
+    },
+    {
+        name: "Hide and seek",
+        wins: acc.hideAndSeekWins
+    },
+    {
+        name: "Zombies",
+        wins: acc.zombiesWins
+    },
+    {
+        name: "Galaxy wars",
+        wins: acc.galaxyWarsWins
+    },
+    {
+        name: "Pixel painters",
+        wins: acc.pixelPaintersWins
+    },
+    {
+        name: "Seasonal",
+        wins: acc.simTotal
+    },
     ];
 
-    games = games.sort((a, b)=>{
+    games = games.sort((a, b) => {
         if(b.wins == undefined) {
             return -1;
         }
@@ -87,20 +140,20 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
-        if (acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
+        if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
     }
 
     if(timetype == "d") {
         let daily = await getFromDB("dayaccounts");
-        let dayAcc = await daily.find(a=>a?.uuid==acc.uuid);
+        let dayAcc = await daily.find(a => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "w") {
         let weekly = await getFromDB("weeklyaccounts");
-        let dayAcc = await weekly.find(a=>a?.uuid==acc.uuid);
+        let dayAcc = await weekly.find(a => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "m") {
         let monthly = await getFromDB("monthlyaccounts");
-        let dayAcc = await monthly.find(a=>a?.uuid==acc.uuid);
+        let dayAcc = await monthly.find(a => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     }
 
@@ -108,5 +161,8 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
         .setTitle(acc.name + " top games won")
         .setDescription(getGames(acc))
         .setColor(0x44a3e7);
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

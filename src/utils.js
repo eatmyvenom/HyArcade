@@ -3,7 +3,9 @@ const cfg = Config.fromJSON();
 const fs = require("fs-extra");
 const webRequest = require("./request/webRequest");
 const BSONwriter = require("./utils/files/BSONwriter");
-const { default: fetch } = require("node-fetch");
+const {
+    default: fetch
+} = require("node-fetch");
 const logger = require("hyarcade-logger");
 
 /**
@@ -26,13 +28,13 @@ function sleep(time) {
  * @returns {number} where the first element should move in relation to its current position
  */
 function winsSorter(element1, element2) {
-    if (cfg.sortDirection == "mostleast") {
-        if (element1.wins < element2.wins) return 1;
-        if (element1.wins > element2.wins) return -1;
+    if(cfg.sortDirection == "mostleast") {
+        if(element1.wins < element2.wins) return 1;
+        if(element1.wins > element2.wins) return -1;
         return 0;
     } else {
-        if (element1.wins > element2.wins) return 1;
-        if (element1.wins < element2.wins) return -1;
+        if(element1.wins > element2.wins) return 1;
+        if(element1.wins < element2.wins) return -1;
         return 0;
     }
 }
@@ -43,11 +45,11 @@ function winsSorter(element1, element2) {
  * @returns {string}
  */
 function daytime() {
-    return cfg.showDaytime
-        ? Date()
+    return cfg.showDaytime ?
+        Date()
             .replace(/.*20[0-9][0-9] /, "")
-            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " "
-        : "";
+            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
+        "";
 }
 
 /**
@@ -97,7 +99,7 @@ async function writeDB(path, json) {
                 "Authorization": cfg.dbPass
             }
         });
-    } catch(e) {
+    } catch (e) {
         logger.err("Can't connect to database");
         logger.err(e);
         return {};
@@ -116,7 +118,7 @@ async function readDB(file) {
 
     try {
         fileData = await (await fetch(url)).json();
-    } catch(e) {
+    } catch (e) {
         logger.err("Can't connect to database");
         logger.err(e);
         return {};

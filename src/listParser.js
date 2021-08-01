@@ -1,6 +1,8 @@
 const Account = require("./classes/account");
 const cfg = require("./Config").fromJSON();
-const { getKeyByValue } = require("./utils");
+const {
+    getKeyByValue
+} = require("./utils");
 const utils = require("./utils");
 
 /**
@@ -8,8 +10,8 @@ const utils = require("./utils");
  * @param uuid
  */
 function getGuild(guildlist, uuid) {
-    for (let guild of guildlist) {
-        if (guild.memberUUIDs.includes(("" + uuid).toLowerCase())) {
+    for(let guild of guildlist) {
+        if(guild.memberUUIDs.includes(("" + uuid).toLowerCase())) {
             return guild;
         }
     }
@@ -26,7 +28,7 @@ exports.players = async function players(acclist) {
 
     let playerjson = await utils.readJSON("./playerlist.json");
     let playerlist = [];
-    for (let i = 0; i < playerjson.length; i++) {
+    for(let i = 0; i < playerjson.length; i++) {
         playerlist.push(new Player(playerjson[i].name, playerjson[i].accs, 0));
     }
     return playerlist;
@@ -43,14 +45,14 @@ exports.accounts = async function accounts() {
     let guilds = await utils.readJSON("guild.json");
     let acclist = {};
 
-    for (const sublist in acclistjson) {
+    for(const sublist in acclistjson) {
         let currentlist = [];
-        for (const args of acclistjson[sublist]) {
+        for(const args of acclistjson[sublist]) {
             let acc = new Account(args.name, args.wins, args.uuid);
             let disc = getKeyByValue(disclist, args.uuid);
             let guild = getGuild(guilds, args.uuid);
             acc.discord = disc;
-            if (guild) {
+            if(guild) {
                 acc.guildID = guild.uuid;
                 acc.guild = guild.name;
                 acc.guildTag = guild.tag;
@@ -68,7 +70,7 @@ exports.accounts = async function accounts() {
         acclist.pog
     );
 
-    if (cfg.mode == "test") {
+    if(cfg.mode == "test") {
         acclist.accounts = acclist.gamers;
     }
 
@@ -87,7 +89,7 @@ exports.guilds = async function gld(accs) {
     let guildlistjson = await utils.readJSON("guildlist.json");
     let realList = [];
 
-    for (const guild of guildlistjson) {
+    for(const guild of guildlistjson) {
         realList.push(new Guild(guild));
     }
     return realList;

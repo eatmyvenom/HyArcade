@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
@@ -34,5 +36,8 @@ module.exports = new Command("ping", ["*"], async () => {
             true
         )
         .setColor(0x8c54fe);
-    return new CommandResponse({ res: "", embed: embed });
+    return new CommandResponse({
+        res: "",
+        embed: embed
+    });
 });

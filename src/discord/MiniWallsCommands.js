@@ -1,4 +1,3 @@
-
 let linkCmd = require("./Commands/Link");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let InfoCmd = require("./Commands/Info");
@@ -8,27 +7,39 @@ const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
 const Ping = require("./Commands/Ping");
-const { ERROR_DATABASE_ERROR } = require("./Utils/Embeds/DynamicEmbeds");
-const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_DATABASE_ERROR
+} = require("./Utils/Embeds/DynamicEmbeds");
+const {
+    ERROR_API_DOWN
+} = require("./Utils/Embeds/StaticEmbeds");
 
 /**
  * @param msg
  * @param senderID
  */
 async function execute(msg, senderID) {
-    if (msg.content.startsWith(".")) {
-        if (Runtime.fromJSON().dbERROR) {
+    if(msg.content.startsWith(".")) {
+        if(Runtime.fromJSON().dbERROR) {
             logger.warn("Someone tried to run a command while the database is corrupted!");
-            return { res: "", embed: ERROR_DATABASE_ERROR };
+            return {
+                res: "",
+                embed: ERROR_DATABASE_ERROR
+            };
         }
-        if (Runtime.fromJSON().apiDown) {
+        if(Runtime.fromJSON().apiDown) {
             logger.warn("Someone tried to run a command while the API is down!");
-            return { res: "", embed: ERROR_API_DOWN };
+            return {
+                res: "",
+                embed: ERROR_API_DOWN
+            };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     }
-    return { res: "" };
+    return {
+        res: ""
+    };
 }
 
 /**
@@ -38,7 +49,7 @@ async function execute(msg, senderID) {
  * @param author
  */
 async function checkCommands(rawMsg, command, args, author) {
-    switch (command.toLowerCase()) {
+    switch(command.toLowerCase()) {
     case "link":
     case "ln": {
         return await linkCmd.execute(args, author, rawMsg);
@@ -78,7 +89,9 @@ async function checkCommands(rawMsg, command, args, author) {
     }
 
     case "flb": {
-        const { FakeLb } = await import("./Commands/FakeLb.mjs");
+        const {
+            FakeLb
+        } = await import("./Commands/FakeLb.mjs");
         return await FakeLb.execute(args, author, rawMsg);
     }
 
@@ -93,9 +106,13 @@ async function checkCommands(rawMsg, command, args, author) {
 
     default: {
         logger.out("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.");
-        return { res: "" };
+        return {
+            res: ""
+        };
     }
     }
 }
 
-module.exports = { execute: execute };
+module.exports = {
+    execute: execute
+};

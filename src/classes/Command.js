@@ -1,5 +1,7 @@
 const BotUtils = require("../discord/BotUtils");
-const { ERROR_UNKNOWN } = require("../discord/Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_UNKNOWN
+} = require("../discord/Utils/Embeds/StaticEmbeds");
 const Webhooks = require("../discord/Utils/Webhooks");
 const logger = require("hyarcade-logger");
 
@@ -7,7 +9,9 @@ module.exports = class Command {
     name = "";
     allowed = [];
     callback = async function () {
-        return { res: "command broke" };
+        return {
+            res: "command broke"
+        };
     };
 
     constructor(name, allowed, callback) {
@@ -18,9 +22,11 @@ module.exports = class Command {
 
     async execute(args, author, rawMsg, interaction) {
         if(this.allowed.includes("%trusted%")) this.allowed = BotUtils.trustedUsers;
-        if (!this.allowed.includes(author) && !this.allowed.includes("*")) {
+        if(!this.allowed.includes(author) && !this.allowed.includes("*")) {
             logger.info(`${author} tried to run the ${this.name} command without permissions... only ${this.allowed.toString()} are allowed`);
-            return { res: "" };
+            return {
+                res: ""
+            };
         }
         try {
             return await this.callback(args, rawMsg, interaction);
@@ -28,7 +34,10 @@ module.exports = class Command {
             logger.err(e);
             logger.err(e.stack);
             await Webhooks.errHook.send(e.toString());
-            return { res : "", embed : ERROR_UNKNOWN };
+            return {
+                res: "",
+                embed: ERROR_UNKNOWN
+            };
         }
     }
 };

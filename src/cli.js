@@ -1,5 +1,11 @@
-const { getGuildFromPlayer } = require("./hypixelApi");
-const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
+const {
+    getGuildFromPlayer
+} = require("./hypixelApi");
+const {
+    stringNormal,
+    stringDaily,
+    addAccounts
+} = require("./listUtils");
 const utils = require("./utils");
 const mojangRequest = require("./request/mojangRequest");
 const dataGeneration = require("./dataGeneration");
@@ -27,7 +33,7 @@ async function newAcc() {
 async function mNewAcc(database) {
     let player = args[3];
     let uuid = player;
-    if (player.length < 16) {
+    if(player.length < 16) {
         uuid = await mojangRequest.getUUID(player);
     }
 
@@ -43,7 +49,7 @@ async function linkDiscord() {
     let player = args[3];
     let discord = args[4];
     let uuid = player;
-    if (player.length < 16) {
+    if(player.length < 16) {
         uuid = await mojangRequest.getUUID(player);
     }
     let disclist = await utils.readJSON("./disclist.json");
@@ -62,7 +68,7 @@ async function moveAcc() {
     let acclist = await utils.readJSON("../acclist.json");
     let oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
 
-    if (oldVer) {
+    if(oldVer) {
         acclist[newCategory].push(oldVer);
         acclist[oldCategory][oldName] = undefined;
         utils.writeJSON("./acclist.json", acclist);
@@ -80,7 +86,10 @@ async function newPlayer() {
     let alts = args.slice(4);
 
     // construct object
-    let playerObj = { name: name, accs: alts };
+    let playerObj = {
+        name: name,
+        accs: alts
+    };
 
     // add object to list
     let plrlist = await utils.readJSON("../playerlist.json");
@@ -104,7 +113,10 @@ async function newGuild() {
     // create the actual guild object
     let id = gldInfo.guild._id;
     let name = gldInfo.guild.name;
-    let gldObj = { id: id, name: name };
+    let gldObj = {
+        id: id,
+        name: name
+    };
 
     // add object to list
     let gldLst = await utils.readJSON("../guildlist.json");
@@ -141,10 +153,10 @@ async function checkNames() {
     let acclist = await utils.readJSON("./acclist.json");
     let realAccs = await utils.readJSON("./accounts.json");
 
-    for (let list in acclist) {
-        for (let acc of acclist[list]) {
+    for(let list in acclist) {
+        for(let acc of acclist[list]) {
             let real = realAccs.find((a) => a.uuid == acc.uuid);
-            if (real != undefined && acc.name != real.name) {
+            if(real != undefined && acc.name != real.name) {
                 logger.out(`${acc.name} -> ${real.name}`);
                 acc.name = real.name;
             }

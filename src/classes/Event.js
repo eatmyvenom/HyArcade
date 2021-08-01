@@ -1,6 +1,8 @@
 const Webhook = require("../events/webhook");
 const config = require("../Config").fromJSON();
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 
 class AccountEvent {
     name = "";
@@ -22,29 +24,29 @@ class AccountEvent {
     }
 
     toString() {
-        if (this.type == "HITWPB") {
+        if(this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of ${this.newAmnt}! Was ${this.oldAmnt}.`;
-        } else if (this.type == "LBPOS") {
+        } else if(this.type == "LBPOS") {
             return `${this.name} just passed ${this.modifier} and got to rank ${
                 this.newAmnt + 1
             } on the party games leaderboard!`;
-        } else if (this.type == "NAME") {
+        } else if(this.type == "NAME") {
             return `${this.oldAmnt} has renamed themselves to ${this.name}`;
-        } else if (this.type == "LINK") {
+        } else if(this.type == "LINK") {
             return `${this.name} has been linked.`;
-        } else if (this.type == "LOGIN") {
+        } else if(this.type == "LOGIN") {
             return `${this.name} Logged in for the first time in a while!`;
-        } else if (this.type == "RANK") {
+        } else if(this.type == "RANK") {
             return `${this.name}'s rank changed to ${this.newAmnt.replace(/_PLUS/g, "+")} from ${(
                 "" + this.oldAmnt
             ).replace(/_PLUS/g, "+")}`;
-        } else if (this.type == "SIMP") {
+        } else if(this.type == "SIMP") {
             return `${this.name} gifted rank(s)`;
-        } else if (this.type == "OF") {
+        } else if(this.type == "OF") {
             return `${this.name} just purchased an optifine cape!`;
-        } else if (this.type == "LVL") {
+        } else if(this.type == "LVL") {
             return `${this.name} just leveled up to ${this.newAmnt}!`;
-        } else if (this.type == "PLUS") {
+        } else if(this.type == "PLUS") {
             return `${this.name} just set their plus color to ${this.newAmnt}!`;
         } else {
             return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
@@ -52,15 +54,15 @@ class AccountEvent {
     }
 
     async toDiscord() {
-        if (this.type == "PG") {
+        if(this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
-        } else if (this.type == "HITWPB") {
+        } else if(this.type == "HITWPB") {
             let embed = await this.getHitWEmbed();
             await Webhook.sendBasicEmbed("", [embed], config.events.HITW.webhook);
-        } else if (this.type == "HITW") {
+        } else if(this.type == "HITW") {
             await Webhook.sendBasic(this.toString(), config.events.HITW.webhook);
         } else {
-            if (config.events[this.type]) {
+            if(config.events[this.type]) {
                 await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
             }
         }

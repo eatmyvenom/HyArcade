@@ -1,6 +1,8 @@
 const cfg = require("hyarcade-config").fromJSON();
 const Runtime = require("hyarcade-config/Runtime");
-const { addAccounts } = require("../listUtils");
+const {
+    addAccounts
+} = require("../listUtils");
 const logger = require("hyarcade-logger");
 const isValidIGN = require("../datagen/utils/ignValidator");
 const botCommands = require("./botCommands");
@@ -10,7 +12,12 @@ const mojangRequest = require("hyarcade-requests").mojangRequest;
 const MiniWallsCommands = require("./MiniWallsCommands");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
-const { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_LINK_HYPIXEL_MISMATCH,
+    ERROR_IGN_UNDEFINED,
+    ERROR_UNKNOWN,
+    ERROR_API_DOWN
+} = require("./Utils/Embeds/StaticEmbeds");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const LogUtils = require("./Utils/LogUtils");
@@ -47,10 +54,10 @@ async function logCmd(msg) {
 async function sendAsHook(hook, cmdResponse) {
     try {
         let obj = BotUtils.getWebhookObj(cmdResponse.embed);
-        if (cmdResponse.res != "") {
+        if(cmdResponse.res != "") {
             obj.content = cmdResponse.res;
         }
-        if (cmdResponse.img != undefined) {
+        if(cmdResponse.img != undefined) {
             obj.files = [cmdResponse.img];
         }
         logger.debug("Sending response via webhook");
@@ -72,17 +79,22 @@ async function miniWallsVerify(msg) {
     let tag = msg.author.tag;
     let id = msg.author.id;
     let ign = msg.content.trim();
-    if (await isBlacklisted(id)) return;
+    if(await isBlacklisted(id)) return;
     let uuid = await mojangRequest.getUUID(ign);
-    if (uuid == undefined) {
+    if(uuid == undefined) {
         logger.warn("Someone tried to verify as an account that doesn't exist!");
-        await msg.channel.send({ embeds: [ERROR_IGN_UNDEFINED] });
+        await msg.channel.send({
+            embeds: [ERROR_IGN_UNDEFINED]
+        });
         return;
     }
 
-    if (Runtime.fromJSON().apiDown) {
+    if(Runtime.fromJSON().apiDown) {
         logger.warn("Someone tried to verify while API is down!");
-        return { res: "", embed: ERROR_API_DOWN };
+        return {
+            res: "",
+            embed: ERROR_API_DOWN
+        };
     }
 
     let acc = new Account(ign, 0, uuid);
@@ -90,11 +102,11 @@ async function miniWallsVerify(msg) {
     let dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
     let hackers = await BotUtils.getFromDB("hackerlist");
     let disclist = await BotUtils.getFromDB("disclist");
-    if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
+    if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
         logger.warn("Hacker tried to verify!");
         return;
     }
-    if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
+    if(acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
         await addAccounts("others", [uuid]);
         disclist[id] = uuid;
         await BotUtils.writeToDB("disclist", disclist);
@@ -102,9 +114,13 @@ async function miniWallsVerify(msg) {
         await msg.member.roles.remove("850033543425949736");
         await msg.member.roles.add("789721304722178069");
         await msg.member.setNickname(acc.name);
-        await msg.channel.send({ embeds: [AdvancedEmbeds.playerLink(acc.name, msg.author)] });
+        await msg.channel.send({
+            embeds: [AdvancedEmbeds.playerLink(acc.name, msg.author)]
+        });
     } else {
-        await msg.channel.send({ embeds: [ERROR_LINK_HYPIXEL_MISMATCH] });
+        await msg.channel.send({
+            embeds: [ERROR_LINK_HYPIXEL_MISMATCH]
+        });
     }
 }
 
@@ -117,25 +133,29 @@ async function attemptSend(msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
     logger.info("Attempting to send response as webhook");
-    if (!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
+    if(!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
         logger.info("No webhook availiable. Sending normally");
-        if (runtime.bot != "backup") {
-            opts.reply = { messageReference: msg.id };
-            if (cmdResponse.res != "") {
+        if(runtime.bot != "backup") {
+            opts.reply = {
+                messageReference: msg.id
+            };
+            if(cmdResponse.res != "") {
                 opts.content = cmdResponse.res;
             }
-            if (cmdResponse.embed != undefined) {
+            if(cmdResponse.embed != undefined) {
                 opts.embeds = [cmdResponse.embed];
             }
-            if (cmdResponse.img != undefined) {
+            if(cmdResponse.img != undefined) {
                 opts.files = [cmdResponse.img];
             }
             logger.debug("Sending message via discord bot");
             try {
                 await msg.channel.send(opts);
-            } catch(e) {
+            } catch (e) {
                 logError(msg, e);
-                await msg.channel.send({ embeds : [ERROR_UNKNOWN]});
+                await msg.channel.send({
+                    embeds: [ERROR_UNKNOWN]
+                });
             }
         }
     }
@@ -145,10 +165,10 @@ async function attemptSend(msg, cmdResponse, opts) {
  * @param msg
  */
 async function addIGNs(msg) {
-    if (cfg.discord.listenChannels.includes(msg.channel.id)) {
+    if(cfg.discord.listenChannels.includes(msg.channel.id)) {
         logger.info("IGN channel message detected, automatically adding to database.");
         let firstWord = msg.content.split(" ")[0];
-        if (!msg.author.bot && isValidIGN(firstWord)) {
+        if(!msg.author.bot && isValidIGN(firstWord)) {
             let acclist = await BotUtils.getFromDB("acclist");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
@@ -162,9 +182,9 @@ async function addIGNs(msg) {
  * @param cmdResponse
  */
 async function sanitizeCmdOpt(cmdResponse) {
-    if (cmdResponse.res.length > 2000) {
+    if(cmdResponse.res.length > 2000) {
         cmdResponse.res = cmdResponse.res.slice(0, 2000);
-        if (cmdResponse.res.slice(0, 3) == "```") {
+        if(cmdResponse.res.slice(0, 3) == "```") {
             cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
         }
         await Webhooks.errHook.send(longMsgStr);
@@ -182,7 +202,10 @@ async function getCmdRes(msg) {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
     } catch (e) {
         await logError(msg, e);
-        cmdResponse = ({ res : "", embed : [ERROR_UNKNOWN]});
+        cmdResponse = ({
+            res: "",
+            embed: [ERROR_UNKNOWN]
+        });
     }
 
     return cmdResponse;
@@ -199,7 +222,10 @@ async function getMWCmdRes(msg) {
         cmdResponse = await MiniWallsCommands.execute(msg, msg.author.id);
     } catch (e) {
         await logError(msg, e);
-        cmdResponse = ({ res : "", embed : [ERROR_UNKNOWN]});
+        cmdResponse = ({
+            res: "",
+            embed: [ERROR_UNKNOWN]
+        });
     }
 
     return cmdResponse;
@@ -221,14 +247,18 @@ async function isBlacklisted(id) {
  */
 async function sendText(msg, cmdResponse) {
     let runtime = Runtime.fromJSON();
-    if (runtime.bot != "backup") {
+    if(runtime.bot != "backup") {
         logger.info("No webhook availiable. Sending normally");
         try {
-            let msgObj = cmdResponse.toDiscord({ messageReference: msg.id });
+            let msgObj = cmdResponse.toDiscord({
+                messageReference: msg.id
+            });
             await msg.channel.send(msgObj);
-        } catch(e) {
+        } catch (e) {
             logError(msg, e);
-            await msg.channel.send({ embeds : [ERROR_UNKNOWN]});
+            await msg.channel.send({
+                embeds: [ERROR_UNKNOWN]
+            });
         }
     }
 }
@@ -271,12 +301,12 @@ async function mwMode(msg) {
         cmdResponse != undefined &&
         cmdResponse.res != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
-    if (isValidResponse) {
-        if (await isBlacklisted(msg.author.id)) {
+    if(isValidResponse) {
+        if(await isBlacklisted(msg.author.id)) {
             return;
         }
         let opts = {};
-        if (cmdResponse.embed) {
+        if(cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }
 
@@ -302,7 +332,7 @@ function checkResponse(cmdResponse) {
  * @param isDiscordResponse
  */
 async function handleCommand(msg, cmdResponse, isDiscordResponse) {
-    if (await isBlacklisted(msg.author.id)) {
+    if(await isBlacklisted(msg.author.id)) {
         return;
     }
 
@@ -312,7 +342,7 @@ async function handleCommand(msg, cmdResponse, isDiscordResponse) {
         }
     } else {
         let opts = {};
-        if (cmdResponse.embed) {
+        if(cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }
         await sanitizeCmdOpt(cmdResponse);
@@ -327,8 +357,8 @@ async function handleCommand(msg, cmdResponse, isDiscordResponse) {
  * @param msg
  */
 async function checkMW(msg) {
-    if (msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
-    if (msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
+    if(msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
+    if(msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
         await mwMode(msg);
         return;
     } else {
@@ -342,14 +372,14 @@ async function checkMW(msg) {
  * @returns 
  */
 module.exports = async function messageHandler(msg) {
-    if (msg.author.bot) return;
-    if (msg.webhookID) return;
-    if (msg.guild.id == "808077828842455090") {
+    if(msg.author.bot) return;
+    if(msg.webhookID) return;
+    if(msg.guild.id == "808077828842455090") {
         logger.warn("Ignored guild message detected!");
         return;
     }
 
-    if (BotUtils.botMode == "mw" || BotUtils.botMode == "test") {
+    if(BotUtils.botMode == "mw" || BotUtils.botMode == "test") {
         return await checkMW(msg);
     }
 
@@ -368,7 +398,7 @@ module.exports = async function messageHandler(msg) {
         }
     }
 
-    if (isValidResponse) {
+    if(isValidResponse) {
         await handleCommand(msg, cmdResponse, isDiscordResponse);
     }
 

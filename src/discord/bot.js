@@ -31,17 +31,26 @@ module.exports = function doBot() {
     if(mode == "mini") {
         client = new Discord.Client({
             intents: lesserIntents,
-            allowedMentions: { parse: [], repliedUser: false },
+            allowedMentions: {
+                parse: [],
+                repliedUser: false
+            },
         });
     } else if(mode == "mw") {
         client = new Discord.Client({
             intents: lesserIntents,
-            allowedMentions: { parse: [], repliedUser: false },
+            allowedMentions: {
+                parse: [],
+                repliedUser: false
+            },
         });
     } else {
         client = new Discord.Client({
             intents: fullIntents,
-            allowedMentions: { parse: [], repliedUser: false },
+            allowedMentions: {
+                parse: [],
+                repliedUser: false
+            },
         });
     }
 
@@ -60,21 +69,21 @@ module.exports = function doBot() {
     client.on("invalidRequestWarning", BotEvents.invalidRequestWarning);
     client.on("debug", BotEvents.debug);
 
-    if (mode == undefined || mode == "mw" || mode == "test") {
+    if(mode == undefined || mode == "mw" || mode == "test") {
         logger.debug("Registering message event");
         client.on("messageCreate", messageHandler);
         client.on("messageDelete", BotEvents.messageDelete);
         setInterval(BotEvents.tick, 30000);
     }
 
-    if (Runtime.bot != "backup") {
+    if(Runtime.bot != "backup") {
         if(mode == "mini") {
             logger.info("Logging in to micro arcade module");
             client.login(config.discord.miniToken);
-        } else if (mode == "mw") {
+        } else if(mode == "mw") {
             logger.info("Logging in to mini walls module");
             client.login(config.discord.mwToken);
-        } else if (mode == "test") {
+        } else if(mode == "test") {
             logger.info("Logging in to testing bot");
             client.login(config.discord.testToken);
         } else {

@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
@@ -26,7 +28,7 @@ function kComp(b, a) {
  * @param a
  */
 function dComp(b, a) {
-    return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0) ;
+    return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0);
 }
 
 /**
@@ -42,7 +44,7 @@ function int(n) {
  */
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
-    if (n.miniWalls != undefined && o.miniWalls != undefined) {
+    if(n.miniWalls != undefined && o.miniWalls != undefined) {
         o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
         o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
         o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
@@ -102,7 +104,7 @@ async function getLB(prop, timetype, limit) {
     let callback = cb;
     let transformer = hackerTransformer;
     let parser = null;
-    switch (prop) {
+    switch(prop) {
     case "miniWallsWins": {
         comparitor = wComp;
         parser = (a) => {
@@ -161,7 +163,7 @@ async function getLB(prop, timetype, limit) {
         comparitor = (b, a) => {
             return (
                 ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0) -
-                    ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
+                ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
             );
         };
         parser = (a) => {
@@ -231,7 +233,7 @@ async function getLB(prop, timetype, limit) {
     }
     }
 
-    switch (timetype) {
+    switch(timetype) {
     case "d":
     case "day":
     case "daily": {
@@ -292,7 +294,7 @@ async function getLB(prop, timetype, limit) {
     res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed().setTitle(time).setColor(0xc60532).setDescription(res);
 
-    if (res.length > 6000) {
+    if(res.length > 6000) {
         return new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
@@ -301,10 +303,10 @@ async function getLB(prop, timetype, limit) {
             );
     }
 
-    if (res.length > 2000) {
+    if(res.length > 2000) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
-        while (resArr.length > 0) {
+        while(resArr.length > 0) {
             let end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
@@ -319,13 +321,13 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     let type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
-    if (new Number(limit) != limit) {
+    if(new Number(limit) != limit) {
         limit = 10;
     }
     let res = "";
     let gameName = "";
 
-    switch (("" + type).toLowerCase()) {
+    switch(("" + type).toLowerCase()) {
     case "w":
     case "ws":
     case "win":
@@ -469,5 +471,8 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
 
     logger.out("MW Leaderboard command ran in " + (Date.now() - startTime) + "ms");
 
-    return { res: "", embed: finalRes };
+    return {
+        res: "",
+        embed: finalRes
+    };
 });

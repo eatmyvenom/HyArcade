@@ -18,7 +18,7 @@ module.exports = class Database {
                     "Authorization": cfg.dbPass
                 }
             });
-        } catch(e) {
+        } catch (e) {
             Logger.err("Can't connect to database");
             Logger.err(e);
             return {};

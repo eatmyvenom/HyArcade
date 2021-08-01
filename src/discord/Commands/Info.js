@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
@@ -13,5 +15,8 @@ module.exports = new Command("info", ["*"], async () => {
         .addField("HyArcade server", "[Invite](https://discord.gg/6kFBVDcRd5)", true)
         .addField("Developer", "<@156952208045375488>", false)
         .setColor(0x2f3136);
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

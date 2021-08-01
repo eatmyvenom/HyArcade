@@ -1,15 +1,17 @@
 var maxLength = 50;
 
 function addstuff(ext, clazzz) {
-    fetch("https://eatmyvenom.me/share/" + ext, { cache: "no-store" }).then((res) => {
+    fetch("https://eatmyvenom.me/share/" + ext, {
+        cache: "no-store"
+    }).then((res) => {
         res.text().then((txt) => {
             var arr = txt.split("\n");
             var len = Math.min(arr.length, maxLength);
             var newArr = arr.slice(0, len);
             console.log(ext);
-            if (("" + ext).includes("pgA") || ext.includes("status")) {
-                for (var i = 0; i < newArr.length; i++) {
-                    if (newArr[i].trim() != "") {
+            if(("" + ext).includes("pgA") || ext.includes("status")) {
+                for(var i = 0; i < newArr.length; i++) {
+                    if(newArr[i].trim() != "") {
                         let line = newArr[i].split(":");
                         newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0]
                             .replace(/[0-9][0-9][0-9]\)/g, "")
@@ -34,7 +36,7 @@ function main() {
 
 function toggleDisplay(sel) {
     var e = document.querySelector(sel);
-    if (e.style.display === "none") {
+    if(e.style.display === "none") {
         e.style.display = "inline-block";
     } else {
         e.style.display = "none";
@@ -43,7 +45,7 @@ function toggleDisplay(sel) {
 
 function toggleBtn(sel) {
     var e = document.querySelector(sel);
-    if (e.hasAttribute("off")) {
+    if(e.hasAttribute("off")) {
         e.removeAttribute("off");
     } else {
         e.setAttribute("off", "");

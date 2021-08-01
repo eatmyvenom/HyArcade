@@ -1,7 +1,9 @@
 const cfg = require("../Config").fromJSON();
 const task = require("./task");
 const logger = require("hyarcade-logger");
-const { exec } = require("child_process");
+const {
+    exec
+} = require("child_process");
 
 /**
  * Run a shell command
@@ -13,7 +15,7 @@ function run(command) {
     return new Promise((resolve, reject) => {
         exec(command, (err, stdout, stderr) => {
             resolve(stdout);
-            if (err) {
+            if(err) {
                 logger.err(stderr);
                 reject(err);
             }
@@ -68,7 +70,7 @@ class clusterClient {
      * @memberof clusterClient
      */
     async doTasks() {
-        for (let t of this.tasks) {
+        for(let t of this.tasks) {
             logger.out("Executing task " + t);
             this.files.concat(await task[t]());
         }
@@ -80,8 +82,8 @@ class clusterClient {
      * @memberof clusterClient
      */
     async uploadData() {
-        if (this.name != "main") {
-            for (let file of this.files) {
+        if(this.name != "main") {
+            for(let file of this.files) {
                 // this requires rsync to be installed on both the server and client
                 await run(`rsync -a --rsh=ssh ${file} ${cfg.cluserTarget}/${file}`);
             }

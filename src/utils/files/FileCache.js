@@ -78,7 +78,7 @@ module.exports = class FileCache {
         Logger.debug("File cache updated");
     }
 
-    get dayaccounts () {
+    get dayaccounts() {
         return this.dailyAccounts;
     }
 

@@ -1,8 +1,15 @@
-const { MessageEmbed } = require("discord.js");
-const { HypixelApi, mojangRequest } = require("hyarcade-requests");
+const {
+    MessageEmbed
+} = require("discord.js");
+const {
+    HypixelApi,
+    mojangRequest
+} = require("hyarcade-requests");
 const Command = require("../../classes/Command");
 const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_IGN_UNDEFINED
+} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * @param n
@@ -38,16 +45,16 @@ module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) =
 
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " Arena stats")
-        .addField("-----Overall stats-----", 
+        .addField("-----Overall stats-----",
             `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +
-        `**Losses** - ${numberify(losses)}\n` +
-        `**Kills** - ${numberify(kills)}\n` +
-        `**Deaths** - ${numberify(deaths)}\n` +
-        `**Damage** - ${numberify(damage)}\n` +
-        `**Healed** - ${numberify(heal)}\n`,
+            `**Losses** - ${numberify(losses)}\n` +
+            `**Kills** - ${numberify(kills)}\n` +
+            `**Deaths** - ${numberify(deaths)}\n` +
+            `**Damage** - ${numberify(damage)}\n` +
+            `**Healed** - ${numberify(heal)}\n`,
             true
         )
-        .addField("---------Info----------", 
+        .addField("---------Info----------",
             `**Offense** - ${wordify(arena?.offensive)}\n` +
             `**Utility** - ${wordify(arena?.utility)}\n` +
             `**Support** - ${wordify(arena?.support)}\n` +
@@ -55,7 +62,7 @@ module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) =
             `**Coins** - ${numberify(arena?.coins ?? 0)}`,
             true
         )
-        .addField("---------Ratios--------", 
+        .addField("---------Ratios--------",
             `**K/D** - ${numberify(kills / deaths)}\n` +
             `**K/Wins** - ${numberify(kills / (arena?.wins ?? 0))}\n` +
             `**D/Wins** - ${numberify(deaths / (arena?.wins ?? 0))}\n` +

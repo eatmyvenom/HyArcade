@@ -1,4 +1,6 @@
-const { getList } = require("./ListUtils");
+const {
+    getList
+} = require("./ListUtils");
 const TimSort = require("timsort");
 
 /**
@@ -15,7 +17,7 @@ module.exports = async function stringLBAdv(comparitor, parser, maxamnt, listTra
 
     let str = "";
     list = list.slice(startingIndex, maxamnt);
-    for (let i = 0; i < list.length; i++) {
+    for(let i = 0; i < list.length; i++) {
         let propVal = parser(list[i]);
 
         let name = list[i].name;

@@ -1,6 +1,6 @@
 #!/bin/env node
 
-if (!require("fs").existsSync("./config.json")) {
+if(!require("fs").existsSync("./config.json")) {
     require("fs").writeFileSync("./config.json", "{}");
 }
 
@@ -10,16 +10,16 @@ const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/events/webhook");
 const utils = require("./src/utils");
 const cli = require("./src/cli");
-const { listNormal, listDiff, stringNormal, stringDaily } = require("./src/listUtils");
+const {
+    listNormal,
+    listDiff,
+    stringNormal,
+    stringDaily
+} = require("./src/listUtils");
 const args = process.argv;
 const cluster = require("./src/cluster/cluster");
 const task = require("./src/cluster/task");
 
-// So you may be wondering, "why use such a horrible config
-// format venom?" Well you see this is a nodejs project, this
-// means that if I start adding all kinds of modules, this
-// will become an issue really fast. So this is my way of not
-// bloating this project with node modules and shit.
 const Cfg = require("./src/Config");
 const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
@@ -219,7 +219,7 @@ async function addLeaderboards() {
 }
 
 async function writePID() {
-    if (!utils.fileExists(os.tmpdir() + "/pgapi")) {
+    if(!utils.fileExists(os.tmpdir() + "/pgapi")) {
         await fs.mkdir(os.tmpdir() + "/pgapi");
     }
     await fs.writeFile(os.tmpdir() + "/pgapi/" + args[2] + ".pid", "" + process.pid);
@@ -241,7 +241,7 @@ async function miniconfig() {
 
 async function logGames() {
     let games = await BSONreader("gameCounts.bson");
-    console.log(JSON.stringify(games, null , 4))
+    console.log(JSON.stringify(games, null, 4))
 }
 
 /**
@@ -251,217 +251,214 @@ async function logGames() {
 async function main() {
     // let database = await Connection();
     // let db = database.db("hyarcade");
-    if (Runtime.apiDown) {
-        if (args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {
-        } else {
+    if(Runtime.apiDown) {
+        if(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {} else {
             logger.err("Refusing to run while api is down");
             process.exit(1);
         }
     }
 
-    if (args[2] == "bot" || args[2] == "serveDB") {
-    } else {
+    if(args[2] == "bot" || args[2] == "serveDB") {} else {
         await writePID();
     }
 
     // use different functions for different args
     // switch has one x86 instruction vs multiple for if statements
     logger.debug(`Args are [${args}] - executing`);
-    switch (args[2]) {
-        case "logG":
-            await cli.logNormal("guild");
-            break;
-        case "logA":
-            await cli.logNormal("accounts");
-            break;
-        case "logP":
-            await cli.logNormal("players");
-            break;
+    switch(args[2]) {
+    case "logG":
+        await cli.logNormal("guild");
+        break;
+    case "logA":
+        await cli.logNormal("accounts");
+        break;
+    case "logP":
+        await cli.logNormal("players");
+        break;
 
-        case "logGD":
-            await cli.logDaily("guild");
-            break;
-        case "logAD":
-            await cli.logDaily("accounts");
-            break;
-        case "logPD":
-            await cli.logDaily("players");
-            break;
+    case "logGD":
+        await cli.logDaily("guild");
+        break;
+    case "logAD":
+        await cli.logDaily("accounts");
+        break;
+    case "logPD":
+        await cli.logDaily("players");
+        break;
 
-        case "log":
-            await cli.log(args);
-            break;
-        case "logD":
-            await cli.logD(args);
-            break;
+    case "log":
+        await cli.log(args);
+        break;
+    case "logD":
+        await cli.logD(args);
+        break;
 
-        case "write":
-            await writeFile(args);
-            break;
-        case "writeD":
-            await writeFileD(args);
-            break;
+    case "write":
+        await writeFile(args);
+        break;
+    case "writeD":
+        await writeFileD(args);
+        break;
 
-        case "save":
-            await save();
-            break;
-        case "snap":
-            await snap(args[3]);
-            break;
-        case "archive":
-            await archive();
-            break;
+    case "save":
+        await save();
+        break;
+    case "snap":
+        await snap(args[3]);
+        break;
+    case "archive":
+        await archive();
+        break;
 
-        case "status":
-            await genStatus();
-            break;
+    case "status":
+        await genStatus();
+        break;
 
-        case "statusSort":
-            await statusSort();
-            break;
+    case "statusSort":
+        await statusSort();
+        break;
 
-        case "gamesPlayed":
-            await gamesPlayed();
-            break;
+    case "gamesPlayed":
+        await gamesPlayed();
+        break;
 
-        case "logGames":
-            await logGames();
-            break;
+    case "logGames":
+        await logGames();
+        break;
 
-        case "games":
-            await gameAmnt();
-            break;
+    case "games":
+        await gameAmnt();
+        break;
 
-        case "cluster":
-            await clusterHandler();
-            break;
+    case "cluster":
+        await clusterHandler();
+        break;
 
-        case "discord":
-            await webhookLog(args[3], args[4]);
-            break;
-        case "discordE":
-            await webhookEmbed(args[3], args[4]);
-            break;
+    case "discord":
+        await webhookLog(args[3], args[4]);
+        break;
+    case "discordE":
+        await webhookEmbed(args[3], args[4]);
+        break;
 
-        case "discordPG":
-            await sendPGDay();
-            break;
+    case "discordPG":
+        await sendPGDay();
+        break;
 
-        case "discordPGW":
-            await sendPGWeek();
-            break;
+    case "discordPGW":
+        await sendPGWeek();
+        break;
 
-        case "discordPGM":
-            await sendPGMonth();
-            break;
+    case "discordPGM":
+        await sendPGMonth();
+        break;
 
-        case "discordHS":
-            await Webhook.sendHSEmbed();
-            break;
+    case "discordHS":
+        await Webhook.sendHSEmbed();
+        break;
 
-        case "discordHSW":
-            await Webhook.sendHSWEmbed();
-            break;
+    case "discordHSW":
+        await Webhook.sendHSWEmbed();
+        break;
 
-        case "discordHSM":
-            await Webhook.sendHSMEmbed();
-            break;
+    case "discordHSM":
+        await Webhook.sendHSMEmbed();
+        break;
 
-        case "discordTOK":
-            await sendToKill();
-            break;
+    case "discordTOK":
+        await sendToKill();
+        break;
 
-        case "discordMW":
-            await Webhook.sendMW(args[3]);
-            break;
+    case "discordMW":
+        await Webhook.sendMW(args[3]);
+        break;
 
-        case "link":
-        case "ln":
-            await cli.linkDiscord();
-            break;
+    case "link":
+    case "ln":
+        await cli.linkDiscord();
+        break;
 
-        case "lbs":
-        case "addLb":
-        case "addLeaderboards":
-            await addLeaderboards();
-            break;
+    case "lbs":
+    case "addLb":
+    case "addLeaderboards":
+        await addLeaderboards();
+        break;
 
-        case "names":
-            await cli.checkNames();
-            break;
+    case "names":
+        await cli.checkNames();
+        break;
 
-        case "newAcc":
-            await cli.newAcc();
-            break;
-        case "newPlr":
-            await cli.newPlayer();
-            break;
-        case "newGuild":
-            await cli.newGuild();
-            break;
+    case "newAcc":
+        await cli.newAcc();
+        break;
+    case "newPlr":
+        await cli.newPlayer();
+        break;
+    case "newGuild":
+        await cli.newGuild();
+        break;
 
-        case "moveAcc":
-            await cli.moveAcc();
-            break;
+    case "moveAcc":
+        await cli.moveAcc();
+        break;
 
-        case "getUUID":
-            await cli.getUUID(args);
-            break;
+    case "getUUID":
+        await cli.getUUID(args);
+        break;
 
-        case "addGuildMembers":
-        case "gmembers":
-        case "addGM":
-            await cli.addGuildMembers(args);
-            break;
+    case "addGuildMembers":
+    case "gmembers":
+    case "addGM":
+        await cli.addGuildMembers(args);
+        break;
 
-        case "addGID":
-            await cli.addGIDMembers(args);
-            break;
+    case "addGID":
+        await cli.addGIDMembers(args);
+        break;
 
-        case "bot":
-            await discordBot();
-            break;
+    case "bot":
+        await discordBot();
+        break;
 
-        case "sendDiscordEvent":
-        case "discordEvent":
-        case "discEvt":
-            await sendDiscordEvent();
-            break;
+    case "sendDiscordEvent":
+    case "discordEvent":
+    case "discEvt":
+        await sendDiscordEvent();
+        break;
 
-        case "minify":
-            await miniconfig();
-            break;
+    case "minify":
+        await miniconfig();
+        break;
 
-        case "boosters":
-            await dataGeneration.saveBoosters();
-            break;
+    case "boosters":
+        await dataGeneration.saveBoosters();
+        break;
 
-        case "mNewAcc":
-            await cli.mNewAcc(db);
-            break;
+    case "mNewAcc":
+        await cli.mNewAcc(db);
+        break;
 
-        case "updateMongo":
-            await AccountUpdater(db);
-            break;
+    case "updateMongo":
+        await AccountUpdater(db);
+        break;
 
-        case "translateDb":
-            await Translator();
-            break;
+    case "translateDb":
+        await Translator();
+        break;
 
-        case "checkStatus": {
-            console.log(await cli.getServerStatus());
-            break;
-        }
-
-        case "serveDB": {
-            logger.out("Starting server for database and listening on port 6000");
-            Server(6000);
-            break;
-        }
+    case "checkStatus": {
+        console.log(await cli.getServerStatus());
+        break;
     }
 
-    if (args[2] == "bot" || args[2] == "serveDB") {
-    } else {
+    case "serveDB": {
+        logger.out("Starting server for database and listening on port 6000");
+        Server(6000);
+        break;
+    }
+    }
+
+    if(args[2] == "bot" || args[2] == "serveDB") {} else {
         await rmPID();
     }
 }

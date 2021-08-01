@@ -17,7 +17,7 @@ const ButtonResponse = require("./ButtonResponse");
 module.exports = async function ButtonParser(interaction) {
     let data = interaction.customId.split(":");
     let commandType = data[0];
-    switch (commandType) {
+    switch(commandType) {
     case "lb": {
         return await leaderboardHandler(interaction, data[1], data[2], data[3]);
     }

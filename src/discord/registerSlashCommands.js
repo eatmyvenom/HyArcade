@@ -6,7 +6,10 @@ const CommandParser = require("./interactions/CommandParser");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
-const { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } = require("./Utils/Embeds/DynamicEmbeds");
+const {
+    LOG_SLASH_COMMAND_USAGE,
+    LOG_MESSAGE_COMPONENT_USAGE
+} = require("./Utils/Embeds/DynamicEmbeds");
 const MenuParser = require("./interactions/SelectionMenus/MenuParser");
 
 /**
@@ -23,15 +26,21 @@ async function isBlacklisted(id) {
  * @param {CommandInteraction} interaction
  */
 async function commandHandler(interaction) {
-    if(await isBlacklisted(interaction.user.id)) { return; }
+    if(await isBlacklisted(interaction.user.id)) {
+        return;
+    }
     let responseObj;
     try {
         responseObj = await CommandParser(interaction);
     } catch (e) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
         logger.err(e);
-        await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
-        await Webhooks.errHook.send({ content: e.toString() });
+        await Webhooks.errHook.send({
+            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
+        });
+        await Webhooks.errHook.send({
+            content: e.toString()
+        });
         return;
     }
 
@@ -43,7 +52,7 @@ async function commandHandler(interaction) {
     }
 
     try {
-        if (!interaction.deferred && !interaction.replied) {
+        if(!interaction.deferred && !interaction.replied) {
             await interaction.reply(res.toDiscord());
         } else {
             await interaction.followUp(res.toDiscord());
@@ -52,8 +61,12 @@ async function commandHandler(interaction) {
         logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
         logger.err(e);
         logger.err(e.stack);
-        await Webhooks.errHook.send({ content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}` });
-        await Webhooks.errHook.send({ content: e.toString() });
+        await Webhooks.errHook.send({
+            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
+        });
+        await Webhooks.errHook.send({
+            content: e.toString()
+        });
         return;
     }
 
@@ -108,7 +121,7 @@ async function logBtn(interaction) {
  * @param {Interaction} interaction
  */
 async function buttonHandler(interaction) {
-    if (await ForceOGuser(interaction)) {
+    if(await ForceOGuser(interaction)) {
         let updatedData = await ButtonParser(interaction);
         await interaction.update(updatedData.toDiscord());
         await logBtn(interaction);
@@ -120,7 +133,7 @@ async function buttonHandler(interaction) {
  * @param {Interaction} interaction
  */
 async function menuHandler(interaction) {
-    if (await ForceOGuser(interaction)) {
+    if(await ForceOGuser(interaction)) {
         let updatedData = await MenuParser(interaction);
         await interaction.update(updatedData.toDiscord());
         await logBtn(interaction);
@@ -132,11 +145,11 @@ async function menuHandler(interaction) {
  * @param {Interaction} interaction
  */
 async function interactionHandler(interaction) {
-    if (interaction.isCommand()) {
+    if(interaction.isCommand()) {
         await commandHandler(interaction);
-    } else if (interaction.isButton()) {
+    } else if(interaction.isButton()) {
         await buttonHandler(interaction);
-    } else if (interaction.isSelectMenu()) {
+    } else if(interaction.isSelectMenu()) {
         await menuHandler(interaction);
     }
 }
@@ -152,13 +165,13 @@ async function registerAll(client) {
     if(BotUtils.botMode == "mini") {
         interactionObjects = require("./interactions/microInteractionObjects");
     }
-    for (let c in interactionObjects) {
+    for(let c in interactionObjects) {
         cmdarr.push(interactionObjects[c]);
     }
 
     let guilds = client.guilds;
     guilds.cache.array();
-    for (let g of guilds.cache.array()) {
+    for(let g of guilds.cache.array()) {
         try {
             if(BotUtils.botMode != "test") {
                 await g.commands.set([]);

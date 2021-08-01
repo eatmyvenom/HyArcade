@@ -23,9 +23,9 @@ module.exports = async function stringLBDiffAdv(comparitor, parser, maxamnt, tim
 
     let str = "";
     list = list.slice(0, maxamnt);
-    for (let i = 0; i < list.length; i++) {
+    for(let i = 0; i < list.length; i++) {
         let propVal = parser(list[i]);
-        if (numberify(propVal) < 1 && !config.printAllWins) continue;
+        if(numberify(propVal) < 1 && !config.printAllWins) continue;
 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;

@@ -1,8 +1,12 @@
 const Runtime = require("../../Runtime");
 const logger = require("hyarcade-logger");
-const { addAccounts } = require("../../listUtils");
+const {
+    addAccounts
+} = require("../../listUtils");
 const InteractionUtils = require("./InteractionUtils");
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 
 const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
@@ -14,8 +18,13 @@ const Leaderboard = require("../Commands/Leaderboard");
 const ButtonGenerator = require("./Buttons/ButtonGenerator");
 const Ping = require("../Commands/Ping");
 const TopGames = require("../Commands/TopGames");
-const { ERROR_DATABASE_ERROR } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_API_DOWN, ERROR_UNLINKED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_DATABASE_ERROR
+} = require("../Utils/Embeds/DynamicEmbeds");
+const {
+    ERROR_API_DOWN,
+    ERROR_UNLINKED
+} = require("../Utils/Embeds/StaticEmbeds");
 const CommandResponse = require("../Utils/CommandResponse");
 const GetDataRaw = require("../Commands/GetDataRaw");
 const Quake = require("../Commands/Quake");
@@ -35,7 +44,7 @@ let Commands = null;
  */
 function getArg(i, a) {
     let v = i.options.get(a);
-    if (v != undefined && v != null) {
+    if(v != undefined && v != null) {
         return ("" + v.value).trim();
     }
     return undefined;
@@ -47,36 +56,50 @@ function getArg(i, a) {
  * @returns
  */
 module.exports = async (interaction) => {
-    if (Commands == null) {
+    if(Commands == null) {
         logger.debug("ECMA modules are null, they need to be added!");
         logger.info("Initializing ECMA modules");
         Commands = {};
-        let { Profile } = await import("../Commands/Profile.mjs");
-        let { WhoIS } = await import("../Commands/WhoIS.mjs");
-        let { Verify } = await import("../Commands/LinkMe.mjs");
-        let { Compare } = await import("../Commands/Compare.mjs");
+        let {
+            Profile
+        } = await import("../Commands/Profile.mjs");
+        let {
+            WhoIS
+        } = await import("../Commands/WhoIS.mjs");
+        let {
+            Verify
+        } = await import("../Commands/LinkMe.mjs");
+        let {
+            Compare
+        } = await import("../Commands/Compare.mjs");
         Commands.Profile = Profile;
         Commands.WhoIS = WhoIS;
         Commands.Verify = Verify;
         Commands.Compare = Compare;
     }
 
-    if (!interaction.isCommand()) return;
-    if (interaction.guildID == "808077828842455090") return;
+    if(!interaction.isCommand()) return;
+    if(interaction.guildID == "808077828842455090") return;
     let authorID = interaction.member.user.id;
     let opts = interaction.options;
 
-    if (Runtime.fromJSON().dbERROR) {
+    if(Runtime.fromJSON().dbERROR) {
         logger.warn("Refusing to run command because database is corrupted!");
-        return { res: "", embed: ERROR_DATABASE_ERROR };
+        return {
+            res: "",
+            embed: ERROR_DATABASE_ERROR
+        };
     }
 
-    if (Runtime.fromJSON().apiDown) {
+    if(Runtime.fromJSON().apiDown) {
         logger.warn("Refusing to run command because API is down!");
-        return { res: "", embed: ERROR_API_DOWN };
+        return {
+            res: "",
+            embed: ERROR_API_DOWN
+        };
     }
 
-    switch (interaction.commandName) {
+    switch(interaction.commandName) {
     case "stats": {
         return Stats.execute([getArg(interaction, "player"), getArg(interaction, "game")], authorID, null, interaction);
     }
@@ -94,11 +117,18 @@ module.exports = async (interaction) => {
             interaction
         );
         let e = res.embed;
-        if (res.game != undefined) {
+        if(res.game != undefined) {
             let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, getArg(interaction, "type"));
-            return { res: "", embed: e, b: buttons };
+            return {
+                res: "",
+                embed: e,
+                b: buttons
+            };
         }
-        return { res: "", embed: e };
+        return {
+            res: "",
+            embed: e
+        };
     }
 
     case "add-account": {
@@ -115,7 +145,10 @@ module.exports = async (interaction) => {
             )
             .setTimestamp(Date.now())
             .setColor(0x44a3e7);
-        return { res: "", embed: embed };
+        return {
+            res: "",
+            embed: embed
+        };
     }
 
     case "unlinkedstats": {
@@ -126,7 +159,10 @@ module.exports = async (interaction) => {
                 "This command has been merged with /stats! If you are having troubles getting an unlinked player then use their uuid instead."
             );
 
-        return { res: undefined, embed: embed };
+        return {
+            res: undefined,
+            embed: embed
+        };
     }
 
     case "name-history": {
@@ -138,7 +174,10 @@ module.exports = async (interaction) => {
             .setTitle(`${acc.name} IGN history`)
             .setDescription(([].concat(acc.nameHist)).join("\n"))
             .setColor(0x44a3e7);
-        return { res: "", embed: embed };
+        return {
+            res: "",
+            embed: embed
+        };
     }
 
     case "whois": {
@@ -183,27 +222,27 @@ module.exports = async (interaction) => {
     }
 
     case "top-games": {
-        return await TopGames.execute([getArg(interaction, "player"), getArg(interaction, "time")] , authorID, null, interaction);
+        return await TopGames.execute([getArg(interaction, "player"), getArg(interaction, "time")], authorID, null, interaction);
     }
 
     case "quake": {
         return await Quake.execute([getArg(interaction, "player")], authorID, null, interaction);
     }
 
-    case "zombies" : {
+    case "zombies": {
         return await Zombies.execute([getArg(interaction, "player")], authorID, null, interaction);
     }
 
-    case "arena" : {
+    case "arena": {
         return await Arena.execute([getArg(interaction, "player")], authorID, null, interaction);
     }
 
-    case "paintball" : {
+    case "paintball": {
         return await PBall.execute([getArg(interaction, "player")], authorID, null, interaction);
     }
 
     case "arcade": {
-        if (interaction.options.getSubCommand() == "ez") {
+        if(interaction.options.getSubCommand() == "ez") {
             logger.debug("Adding ez button to message");
             let buttons = await ButtonGenerator.getEZ();
             let res = await EZ.execute([], authorID, null, interaction);
@@ -211,7 +250,7 @@ module.exports = async (interaction) => {
             return res;
         }
 
-        if (interaction.options.getSubCommand() == "lastupdate") {
+        if(interaction.options.getSubCommand() == "lastupdate") {
             return await LastUpdate.execute([], authorID, null, interaction);
         }
 

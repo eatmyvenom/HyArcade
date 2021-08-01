@@ -15,7 +15,7 @@ async function getFromHypixel(string, interaction) {
 
     let plr = string;
     let uuid;
-    if (plr?.length > 17) {
+    if(plr?.length > 17) {
         uuid = plr;
     } else {
         uuid = await mojangRequest.getUUID(plr);
@@ -44,7 +44,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
     if(str?.length == 32) {
         urlArgs.set("uuid", str.toLowerCase());
     } else if(str?.length == 36) {
-        urlArgs.set("uuid", str.toLowerCase().replace(/-/g,""));
+        urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
     } else if(str != null) {
         urlArgs.set("ign", str.toLowerCase());
     } else {

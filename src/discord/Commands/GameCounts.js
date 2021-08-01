@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const utils = require("../../utils");
 
@@ -8,7 +10,7 @@ const utils = require("../../utils");
 async function getFields(game) {
     let counts = await utils.readJSON("./gameCounts.json");
     let fields = [];
-    switch (("" + game).toLowerCase()) {
+    switch(("" + game).toLowerCase()) {
     case "party":
     case "partygames":
     case "pg": {
@@ -374,5 +376,8 @@ module.exports = new Command("Game counts", ["*"], async (args) => {
         .setColor(0x44a3e7)
         .addFields(await getFields(game))
         .setTimestamp(Date.now());
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

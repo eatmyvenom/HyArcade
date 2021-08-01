@@ -1,4 +1,6 @@
-const { getGameCounts } = require("./hypixelApi");
+const {
+    getGameCounts
+} = require("./hypixelApi");
 const utils = require("./utils");
 const Logger = require("hyarcade-logger");
 
@@ -36,4 +38,7 @@ async function logCounts() {
     Logger.out(await formatCounts());
 }
 
-module.exports = { formatCounts: formatCounts, logCounts: logCounts };
+module.exports = {
+    formatCounts: formatCounts,
+    logCounts: logCounts
+};

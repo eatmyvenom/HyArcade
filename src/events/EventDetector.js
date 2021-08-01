@@ -17,7 +17,7 @@ class EventDetector {
         let oldAcc = account;
         let newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
 
-        if (oldAcc == undefined || newAcc == undefined) {
+        if(oldAcc == undefined || newAcc == undefined) {
             return;
         }
 
@@ -39,17 +39,17 @@ class EventDetector {
         this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
         this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
-        if (newIndex <= 24 && newIndex == (oldIndex + 1) && oldAcc.wins != newAcc.wins) {
+        if(newIndex <= 24 && newIndex == (oldIndex + 1) && oldAcc.wins != newAcc.wins) {
             this.Events.push(
                 new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid)
             );
         }
 
-        if (oldAcc.name != newAcc.name) {
+        if(oldAcc.name != newAcc.name) {
             this.Events.push(new AccountEvent(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid));
         }
 
-        if (
+        if(
             oldAcc.discord != newAcc.discord &&
             newAcc.discord != undefined &&
             newAcc.discord != "" &&
@@ -58,7 +58,7 @@ class EventDetector {
             this.Events.push(new AccountEvent(newAcc.name, "LINK", oldAcc.discord, newAcc.discord, "", newAcc.uuid));
         }
 
-        if (
+        if(
             Date.now() - oldAcc.lastLogout > 2629743000 &&
             newAcc.lastLogout != oldAcc.lastLogout &&
             newAcc.lastLogout != "" &&
@@ -70,11 +70,11 @@ class EventDetector {
             );
         }
 
-        if (oldAcc.rank != newAcc.rank && newAcc.rank != "" && newAcc.rank != undefined) {
+        if(oldAcc.rank != newAcc.rank && newAcc.rank != "" && newAcc.rank != undefined) {
             this.Events.push(new AccountEvent(newAcc.name, "RANK", oldAcc.rank, newAcc.rank, "", newAcc.uuid));
         }
 
-        if (
+        if(
             oldAcc.ranksGifted != newAcc.ranksGifted &&
             newAcc.ranksGifted != 0 &&
             newAcc.ranksGifted != "" &&
@@ -85,13 +85,13 @@ class EventDetector {
             );
         }
 
-        if (oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
+        if(oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
             this.Events.push(
                 new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid)
             );
         }
 
-        if (
+        if(
             Math.floor(oldAcc.level) < Math.floor(newAcc.level) &&
             newAcc.level != undefined &&
             newAcc.level != 0 &&
@@ -110,7 +110,7 @@ class EventDetector {
             );
         }
 
-        if (oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
+        if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
             this.Events.push(
                 new AccountEvent(newAcc.name, "PLUS", oldAcc.plusColor, newAcc.plusColor, "", newAcc.uuid)
             );
@@ -118,44 +118,44 @@ class EventDetector {
     }
 
     runDetection() {
-        for (let account of this.OldAccounts) {
+        for(let account of this.OldAccounts) {
             this.scanAccount(account);
         }
     }
 
     detectDiff(oldAcc, newAcc, prop, type, modifier) {
-        if (newAcc[prop] > oldAcc[prop]) {
+        if(newAcc[prop] > oldAcc[prop]) {
             this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], modifier, newAcc.uuid));
         }
     }
 
     detectWinsAuto(oldAcc, newAcc, prop, type) {
-        if (newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
+        if(newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
             this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], "", newAcc.uuid));
         }
     }
 
     detectWins(oldWc, newWc, name, type, modifier, uuid) {
-        if (newWc % 500 == 0 && newWc > oldWc) {
+        if(newWc % 500 == 0 && newWc > oldWc) {
             this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 
     detectSpecific(oldWc, newWc, amnt, name, type, modifier, uuid) {
-        if (newWc == amnt && newWc > oldWc) {
+        if(newWc == amnt && newWc > oldWc) {
             this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 
     async sendEvents() {
-        for (let evt of this.Events) {
+        for(let evt of this.Events) {
             await evt.toDiscord();
         }
     }
 
     async saveEvents() {
         let oldEvents = await utils.readJSON("events.json");
-        for (let event of this.Events) {
+        for(let event of this.Events) {
             oldEvents.unshift([event, event.toString()]);
         }
 
@@ -164,7 +164,7 @@ class EventDetector {
     }
 
     logEvents() {
-        for (let evt of this.Events) {
+        for(let evt of this.Events) {
             logger.out(evt.toString());
         }
     }

@@ -1,5 +1,7 @@
 async function load() {
-    let status = await fetch("https://hyarcade.xyz/resources/serverStatus.json", { cache: "no-store" });
+    let status = await fetch("https://hyarcade.xyz/resources/serverStatus.json", {
+        cache: "no-store"
+    });
     status = await status.json();
     let main = document.querySelector("main");
     let mw = status.mw ? "Online" : "Inactive";

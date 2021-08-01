@@ -10,11 +10,9 @@
         "names": "node . names",
         "snap": "node . snap",
         "archive": "node . archive",
-        "clean": "./clean.sh",
-        "prettify": "prettier --write .",
-        "writeDocs": "jsdoc . ./src ./src/discord -d ./doc",
-        "autoconfig": "node . autoconfig",
-        "test": "node . save"
+        "test": "node . save",
+        "lint": "eslint ./src --fix",
+        "beautify": "js-beautify -r ./*"
     },
     "author": "EatMyVenom",
     "license": "MPL-2.0",
@@ -30,6 +28,7 @@
         "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
         "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
         "javascript-time-ago": "^2.3.6",
+        "js-beautify": "^1.14.0",
         "mongo": "^0.1.0",
         "node-fetch": "^2.6.1",
         "timsort": "^0.3.0"

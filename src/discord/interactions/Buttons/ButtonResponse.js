@@ -4,11 +4,11 @@ module.exports = class ButtonResponse {
     newButtons = [];
 
     constructor(content, embeds, newButtons) {
-        if (content != "") {
+        if(content != "") {
             this.content = content;
         } else {
             this.content = undefined;
-        } 
+        }
         this.embeds = embeds;
         this.newButtons = newButtons;
     }

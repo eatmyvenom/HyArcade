@@ -14,12 +14,12 @@ profile.options[0].required = true;
 exports.profile = profile;
 
 let topgames = require("./Commands/TopGames");
-topgames.options = [ topgames.options[0] ];
+topgames.options = [topgames.options[0]];
 topgames.options[0].required = true;
 exports.topgames = topgames;
 
 let arcade = require("./Commands/Arcade");
-arcade.options = [ arcade.options[0], arcade.options[1], arcade.options[2] ];
+arcade.options = [arcade.options[0], arcade.options[1], arcade.options[2]];
 exports.arcade = arcade;
 
 exports.quake = require("./Commands/Quake");

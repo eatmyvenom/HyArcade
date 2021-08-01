@@ -1,7 +1,9 @@
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+const {
+    ERROR_ARGS_LENGTH
+} = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     /**
@@ -12,7 +14,10 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     let operation = args[0];
 
     if(operation == undefined) {
-        return { res: "", embed : ERROR_ARGS_LENGTH(1)};
+        return {
+            res: "",
+            embed: ERROR_ARGS_LENGTH(1)
+        };
     }
 
     let res;

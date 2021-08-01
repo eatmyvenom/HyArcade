@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
@@ -15,5 +17,8 @@ module.exports = new Command("help", ["*"], async () => {
         .setDescription(desc)
         .setThumbnail(BotUtils.client.user.avatarURL())
         .setColor(0x2f3136);
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
@@ -21,7 +23,7 @@ module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) 
     let plr = args[0];
 
     let acc;
-    if (interaction == undefined) {
+    if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
@@ -29,14 +31,14 @@ module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) 
     let stslist = await BotUtils.getFromDB("status");
     let sts = stslist[acc.uuid];
     let embed;
-    if (sts != undefined && sts.online) {
+    if(sts != undefined && sts.online) {
         embed = new MessageEmbed()
             .setTitle(`${formatCase(acc.name)}'s status`)
             .setColor(0x0066cc)
             .addField("Game type", format(sts.gameType), false)
             .addField("Game mode", format(sts.mode), false);
 
-        if (sts.map != undefined) {
+        if(sts.map != undefined) {
             embed.addField("Map", format(sts.map));
         }
     } else {
@@ -46,5 +48,8 @@ module.exports = new Command("status", ["*"], async (args, rawMsg, interaction) 
             .setDescription("Offline");
     }
 
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

@@ -1,4 +1,7 @@
-const { stringifyList, getList } = require("./ListUtils");
+const {
+    stringifyList,
+    getList
+} = require("./ListUtils");
 const TimSort = require("timsort");
 
 /**
@@ -10,7 +13,7 @@ function numberify(str) {
 
 module.exports = async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
     let list = await getList();
-    if (category == undefined) {
+    if(category == undefined) {
         TimSort.sort(list, (b, a) => {
             return numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0);
         });

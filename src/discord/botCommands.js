@@ -29,8 +29,13 @@ let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
 let Help = require("./Commands/Help");
 const CommandResponse = require("./Utils/CommandResponse");
-const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
-const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_DATABASE_ERROR,
+    ERROR_USE_SLASH_COMMAND
+} = require("./Utils/Embeds/DynamicEmbeds");
+const {
+    ERROR_API_DOWN
+} = require("./Utils/Embeds/StaticEmbeds");
 
 /**
  * @param str
@@ -45,12 +50,18 @@ function requireNew(str) {
  * @param senderID
  */
 async function execute(msg, senderID) {
-    if (msg.content.startsWith(config.commandCharacter)) {
-        if (Runtime.fromJSON().dbERROR) {
-            return { res: "", embed: ERROR_DATABASE_ERROR };
+    if(msg.content.startsWith(config.commandCharacter)) {
+        if(Runtime.fromJSON().dbERROR) {
+            return {
+                res: "",
+                embed: ERROR_DATABASE_ERROR
+            };
         }
-        if (Runtime.fromJSON().apiDown) {
-            return { res: "", embed: ERROR_API_DOWN };
+        if(Runtime.fromJSON().apiDown) {
+            return {
+                res: "",
+                embed: ERROR_API_DOWN
+            };
         }
         let cmdArr = msg.content.slice(1).split(" ");
         let res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
@@ -71,7 +82,7 @@ async function execute(msg, senderID) {
  */
 async function checkCommands(rawMsg, command, args, author) {
     logger.debug(`Parsing command ${rawMsg.content}`);
-    switch (command.toLowerCase()) {
+    switch(command.toLowerCase()) {
     case "link":
     case "ln":
         return await linkCmd.execute(args, author, rawMsg);
@@ -79,23 +90,32 @@ async function checkCommands(rawMsg, command, args, author) {
     case "lnm":
     case "verify":
     case "linkme": {
-        const { Verify } = await import("./Commands/LinkMe.mjs");
+        const {
+            Verify
+        } = await import("./Commands/LinkMe.mjs");
         return await Verify.execute(args, author, rawMsg);
     }
 
     case "stats":
     case "s":
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("s", "stats") };
+        return {
+            res: "", embed: ERROR_USE_SLASH_COMMAND("s", "stats")
+        };
 
     case "newacc":
     case "addacc":
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("addacc", "addaccount") };
+        return {
+            res: "", embed: ERROR_USE_SLASH_COMMAND("addacc", "addaccount")
+        };
 
     case "lb":
     case "lead":
     case "leaderboard":
     case "leadb": {
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("lb", "leaderboard") };
+        return {
+            res: "",
+            embed: ERROR_USE_SLASH_COMMAND("lb", "leaderboard")
+        };
     }
 
     case "sts":
@@ -115,7 +135,10 @@ async function checkCommands(rawMsg, command, args, author) {
     case "getdata":
     case "rawdata":
     case "dataraw": {
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw") };
+        return {
+            res: "",
+            embed: ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw")
+        };
     }
 
     case "players":
@@ -124,7 +147,10 @@ async function checkCommands(rawMsg, command, args, author) {
     case "counts":
     case "amounts":
     case "gamecounts": {
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts") };
+        return {
+            res: "",
+            embed: ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts")
+        };
     }
 
     case "lastupdate":
@@ -163,13 +189,19 @@ async function checkCommands(rawMsg, command, args, author) {
     case "names":
     case "namehist":
     case "namehistory": {
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("namehistory", "namehistory") };
+        return {
+            res: "",
+            embed: ERROR_USE_SLASH_COMMAND("namehistory", "namehistory")
+        };
     }
 
     case "whois":
     case "whoam":
     case "whos": {
-        return { res: "", embed: ERROR_USE_SLASH_COMMAND("whois", "whois") };
+        return {
+            res: "",
+            embed: ERROR_USE_SLASH_COMMAND("whois", "whois")
+        };
     }
 
     case "info":
@@ -237,7 +269,7 @@ async function checkCommands(rawMsg, command, args, author) {
         break;
     }
 
-    case "clearcache" : {
+    case "clearcache": {
         if(author != owner) {
             return;
         }
@@ -266,14 +298,20 @@ async function checkCommands(rawMsg, command, args, author) {
         FetchChannel = requireNew("./Commands/FetchChannel");
         TopGames = requireNew("./Commands/TopGames");
 
-        return {res : "Commands uncached!"};
+        return {
+            res: "Commands uncached!"
+        };
     }
 
     default: {
         logger.warn("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.");
-        return { res: "" };
+        return {
+            res: ""
+        };
     }
     }
 }
 
-module.exports = { execute: execute };
+module.exports = {
+    execute: execute
+};

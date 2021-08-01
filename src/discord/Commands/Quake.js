@@ -1,8 +1,15 @@
-const { MessageEmbed } = require("discord.js");
-const { HypixelApi, mojangRequest } = require("hyarcade-requests");
+const {
+    MessageEmbed
+} = require("discord.js");
+const {
+    HypixelApi,
+    mojangRequest
+} = require("hyarcade-requests");
 const Command = require("../../classes/Command");
 const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_IGN_UNDEFINED
+} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * @param t
@@ -41,23 +48,23 @@ module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) =
     let data = acc.player;
     let embed = new MessageEmbed()
         .setTitle(data.displayname + " quake stats")
-        .addField("-----Overall stats-----", 
+        .addField("-----Overall stats-----",
             `**Wins** - ${numberify(data?.stats?.Quake?.wins ?? 0)}\n` +
-        `**Kills** - ${numberify(data?.stats?.Quake?.kills ?? 0)}\n` +
-        `**Deaths** - ${numberify(data?.stats?.Quake?.deaths ?? 0)}\n` +
-        `**Headshots** - ${numberify(data?.stats?.Quake?.headshots ?? 0)}\n` +
-        `**Shots** - ${numberify(data?.stats?.Quake?.shots_fired ?? 0)}\n` +
-        `**Streaks** - ${numberify(data?.stats?.Quake?.killstreaks ?? 0)}`,
+            `**Kills** - ${numberify(data?.stats?.Quake?.kills ?? 0)}\n` +
+            `**Deaths** - ${numberify(data?.stats?.Quake?.deaths ?? 0)}\n` +
+            `**Headshots** - ${numberify(data?.stats?.Quake?.headshots ?? 0)}\n` +
+            `**Shots** - ${numberify(data?.stats?.Quake?.shots_fired ?? 0)}\n` +
+            `**Streaks** - ${numberify(data?.stats?.Quake?.killstreaks ?? 0)}`,
             true
         )
-        .addField("---------Info----------", 
+        .addField("---------Info----------",
             `**Dash** - ${numberify(data?.stats?.Quake?.dash_cooldown ?? 4)}\n` +
             `**Trigger** - ${fixTrigger(data?.stats?.Quake?.trigger ?? "1.5")}s\n` +
             `**Highest streak** - ${numberify(data?.stats?.Quake?.highest_killstreak ?? 0)}\n` +
             `**Coins** - ${numberify(data?.stats?.Quake?.coins ?? 0)}`,
             true
         )
-        .addField("---------Ratios--------", 
+        .addField("---------Ratios--------",
             `**Kills/Deaths** - ${numberify((data?.stats?.Quake?.kills ?? 0) / (data?.stats?.Quake?.deaths ?? 0))}\n` +
             `**Kills/Wins** - ${numberify((data?.stats?.Quake?.kills ?? 0) / (data?.stats?.Quake?.wins ?? 0))}\n` +
             `**Deaths/Wins** - ${numberify((data?.stats?.Quake?.deaths ?? 0) / (data?.stats?.Quake?.wins ?? 0))}\n` +

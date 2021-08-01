@@ -16,7 +16,7 @@ const utils = require("../utils");
  * @returns {null}
  */
 async function sendToDiscord(content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
-    if (content == "") {
+    if(content == "") {
         logger.err("Refusing to send empty message to webhook!");
         return;
     }
@@ -184,7 +184,7 @@ function generateEmbed(list) {
     let str = "";
 
     let len = Math.min(list.length, 24);
-    for (let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         str += i + 1 + ") " + list[i].name + " - " + list[i].wins + "\n";
     }
     embed.setDescription(str);
@@ -388,7 +388,7 @@ async function getLB(prop, timetype, limit) {
     let callback = cb;
     let transformer = hackerTransformer;
     let parser = null;
-    switch (prop) {
+    switch(prop) {
     case "miniWallsWins": {
         comparitor = wComp;
         parser = (a) => {
@@ -447,7 +447,7 @@ async function getLB(prop, timetype, limit) {
         comparitor = (b, a) => {
             return (
                 ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
-                    ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
+                ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
             );
         };
         parser = (a) => {
@@ -517,7 +517,7 @@ async function getLB(prop, timetype, limit) {
     }
     }
 
-    switch (timetype) {
+    switch(timetype) {
     case "d":
     case "day":
     case "daily": {
@@ -578,7 +578,7 @@ async function getLB(prop, timetype, limit) {
     res = res != "" ? res : "Nobody has won.";
     let embed = new MessageEmbed().setTitle(time).setColor(0xc60532).setDescription(res);
 
-    if (res.length > 6000) {
+    if(res.length > 6000) {
         return new MessageEmbed()
             .setTitle("ERROR")
             .setColor(0xff0000)
@@ -587,10 +587,10 @@ async function getLB(prop, timetype, limit) {
             );
     }
 
-    if (res.length > 2000) {
+    if(res.length > 2000) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
-        while (resArr.length > 0) {
+        while(resArr.length > 0) {
             let end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
@@ -623,13 +623,13 @@ async function sendMW() {
     let mwMsg = run.mwMsg;
 
     let guildlist = await utils.readJSON("guild.json");
-    guildlist.sort((a,b)=>{
+    guildlist.sort((a, b) => {
         return b.miniWallsWins - a.miniWallsWins;
     });
 
     let str = "";
-    guildlist = guildlist.filter(g=>g.uuid!="5cf6ddfb77ce842c855426b0");
-    for(let i = 0;i < Math.min(10, guildlist.length); i++) {
+    guildlist = guildlist.filter(g => g.uuid != "5cf6ddfb77ce842c855426b0");
+    for(let i = 0; i < Math.min(10, guildlist.length); i++) {
         let g = guildlist[i];
         str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
     }

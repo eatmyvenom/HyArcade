@@ -11,7 +11,7 @@ const MenuGenerator = require("./MenuGenerator");
 module.exports = async function MenuParser(interaction) {
     let data = interaction.customId.split(":");
     let commandType = data[0];
-    switch (commandType) {
+    switch(commandType) {
     case "s": {
         return await statsHandler(data[1], interaction.values[0]);
     }

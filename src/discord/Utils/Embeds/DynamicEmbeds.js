@@ -1,5 +1,13 @@
-const { MessageEmbed } = require("discord.js");
-const { COLOR_PRIMARY, COLOR_RED, COLOR_PURPLE, COLOR_SUCCESS, COLOR_PINK } = require("./Colors");
+const {
+    MessageEmbed
+} = require("discord.js");
+const {
+    COLOR_PRIMARY,
+    COLOR_RED,
+    COLOR_PURPLE,
+    COLOR_SUCCESS,
+    COLOR_PINK
+} = require("./Colors");
 
 exports.INFO_ACCOUNTS_ADDED = function (res) {
     return new MessageEmbed()
@@ -20,7 +28,7 @@ exports.INFO_ACCOUNTS_ADDED = function (res) {
  * @returns 
  */
 exports.LOG_COMMAND_EXECUTION = function (name, args, message) {
-    if (args == "") args = "none";
+    if(args == "") args = "none";
     return new MessageEmbed()
         .setTitle("Command execution")
         .setColor(COLOR_PINK)

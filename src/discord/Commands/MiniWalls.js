@@ -1,8 +1,13 @@
-const { MessageEmbed } = require("discord.js");
+const {
+    MessageEmbed
+} = require("discord.js");
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
-const { ERROR_NEED_PLAYER, ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const {
+    ERROR_NEED_PLAYER,
+    ERROR_IGN_UNDEFINED
+} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * @param n
@@ -23,23 +28,29 @@ function formatN(str) {
 module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
     let plr = args[0];
     let acc;
-    if (interaction == undefined) {
+    if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction, 0);
     }
 
     let hackers = await BotUtils.getFromDB("hackerlist");
-    if (hackers.includes(acc?.uuid?.toLowerCase())) {
+    if(hackers.includes(acc?.uuid?.toLowerCase())) {
         return {};
     }
 
     if(acc.uuid == undefined) {
-        return { res : "", embed : ERROR_NEED_PLAYER };
+        return {
+            res: "",
+            embed: ERROR_NEED_PLAYER
+        };
     }
 
     if(acc.miniWalls == undefined) {
-        return { res : "", embed : ERROR_IGN_UNDEFINED };
+        return {
+            res: "",
+            embed: ERROR_IGN_UNDEFINED
+        };
     }
 
     let stats =
@@ -65,5 +76,8 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
-    return { res: "", embed: embed };
+    return {
+        res: "",
+        embed: embed
+    };
 });

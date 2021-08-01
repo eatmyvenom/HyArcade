@@ -1,7 +1,9 @@
 const utils = require("./utils");
 const config = require("./Config").fromJSON();
 const listDiffByProp = require("./utils/leaderboard/LBFromProp");
-const { stringifyList } = require("./utils/leaderboard/ListUtils");
+const {
+    stringifyList
+} = require("./utils/leaderboard/ListUtils");
 const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
 const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
 const stringLB = require("./utils/leaderboard/StringifyLB");
@@ -17,9 +19,9 @@ const TimSort = require("timsort");
 async function txtPlayerList(list, maxamnt) {
     let str = "";
     let len = maxamnt != undefined ? maxamnt : list.length;
-    for (let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         // don't print if player has 0 wins
-        if (list[i].wins < 1 && !config.printAllWins) continue;
+        if(list[i].wins < 1 && !config.printAllWins) continue;
 
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or node native for this
@@ -106,7 +108,7 @@ async function stringDaily(name, maxamnt) {
  */
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
-    if (category == undefined) {
+    if(category == undefined) {
         TimSort.sort(list, (b, a) => {
             return (a[lbprop] ?? 0) - (b[lbprop] ?? 0);
         });
