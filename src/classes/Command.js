@@ -18,10 +18,10 @@ module.exports = class Command {
         this.name = name;
         this.allowed = allowed;
         this.callback = callback;
+        if(this.allowed.includes("%trusted%")) this.allowed = this.allowed.concat(BotUtils.trustedUsers);
     }
 
     async execute(args, author, rawMsg, interaction) {
-        if(this.allowed.includes("%trusted%")) this.allowed = BotUtils.trustedUsers;
         if(!this.allowed.includes(author) && !this.allowed.includes("*")) {
             logger.info(`${author} tried to run the ${this.name} command without permissions... only ${this.allowed.toString()} are allowed`);
             return {
