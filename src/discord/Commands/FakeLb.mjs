@@ -1,51 +1,72 @@
+import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import LBDiffAdv from "../../utils/leaderboard/LBDiffAdv.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 
-function numberify(n) {
-    let r = Intl.NumberFormat("en").format(Number(("" + n).replace(/undefined/g, 0).replace(/null/g, 0)));
-    r = r == NaN ? (r = "N/A") : r;
+/**
+ * 
+ * @param {number} n
+ * @returns {string} 
+ */
+function formatNum(n) {
+    let r = Intl.NumberFormat("en").format(Number(n));
     return r;
 }
 
+/**
+ * 
+ * @param {Account[]} list 
+ * @returns {Account[]}
+ */
 async function hackerTransformer(list) {
-    let hackers = await BotUtils.getFromDB("hackerlist")
+    let hackers = await BotUtils.getFromDB("hackerlist");
     list = list.filter((a) => !hackers.includes(a.uuid));
     list = list.filter((a) => a.name != undefined || a.name != "");
     list = list.filter((a) => a.miniWalls != undefined);
     return list;
 }
 
+/**
+ * 
+ * @param {Account} b 
+ * @param {Account} a 
+ * @returns {Account}
+ */
 function mwComparitor(b, a) {
-    if (a.miniWallsWins == undefined || a.miniWallsWins == NaN) {
-        return 1;
-    }
-
-    if (b.miniWallsWins == undefined || b.miniWallsWins == NaN) {
-        return -1;
-    }
-    return a.miniWallsWins - b.miniWallsWins;
+    return (a?.miniWallsWins ?? 0) - (b?.miniWallsWins ?? 0);
 }
 
+/**
+ * 
+ * @param {Account} n 
+ * @param {Account} o 
+ * @returns {Account}
+ */
 function cb(n, o) {
-    n.miniWallsWins = intt(n.miniWallsWins) - intt(o.miniWallsWins);
-    if (n.miniWalls != undefined && o.miniWalls != undefined) {
-        n.miniWalls.kills = intt(n.miniWalls.kills) - intt(o.miniWalls.kills);
-        n.miniWalls.deaths = intt(n.miniWalls.deaths) - intt(o.miniWalls.deaths);
-        n.miniWalls.witherDamage = intt(n.miniWalls.witherDamage) - intt(o.miniWalls.witherDamage);
-        n.miniWalls.witherKills = intt(n.miniWalls.witherKills) - intt(o.miniWalls.witherKills);
-        n.miniWalls.finalKills = intt(n.miniWalls.finalKills) - intt(o.miniWalls.finalKills);
+    n.miniWallsWins = intt(n?.miniWallsWins ?? 0) - intt(o?.miniWallsWins ?? 0);
+    if(n.miniWalls == undefined) {
+        n.miniWalls = {};
     }
+    n.miniWalls.kills = intt(n?.miniWalls?.kills ?? 0) - intt(o?.miniWalls?.kills ?? 0);
+    n.miniWalls.deaths = intt(n?.miniWalls?.deaths ?? 0) - intt(o?.miniWalls?.deaths ?? 0);
+    n.miniWalls.witherDamage = intt(n?.miniWalls?.witherDamage ?? 0) - intt(o?.miniWalls?.witherDamage ?? 0);
+    n.miniWalls.witherKills = intt(n?.miniWalls?.witherKills ?? 0) - intt(o?.miniWalls?.witherKills ?? 0);
+    n.miniWalls.finalKills = intt(n?.miniWalls?.finalKills ?? 0) - intt(o?.miniWalls?.finalKills ?? 0);
 
     return n;
 }
 
+/**
+ * 
+ * @param {number} n 
+ * @returns {number}
+ */
 function intt(n) {
-    return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
+    return new Number(n);
 }
 
-export let FakeLb = new Command("fakelb", ["%trusted%"], async () => {
+export let FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"], async () => {
     let img = new ImageGenerator(1900, 1035, "'myFont'");
     await img.addBackground("resources/lb3.png", 0 , 0, 1900, 1035, "#00000000");
     
@@ -55,11 +76,11 @@ export let FakeLb = new Command("fakelb", ["%trusted%"], async () => {
     let fontSize = 26;
     await img.drawNameTag("Monthly Wins", x, y+=dy, "#55FFFF", fontSize);
     await img.drawNameTag("Mini walls", x, y+=dy, "#AAAAAA", fontSize);
-    y+=10
-    
-    let topTen = await LBDiffAdv(mwComparitor, 10, "monthly", cb, hackerTransformer)
+    y+=10;
+
+    let topTen = await LBDiffAdv(mwComparitor, 10, "monthly", cb, hackerTransformer);
     for(let i = 0; i < topTen.length; i++) {
-        img.drawLBPos(`${i + 1}`, topTen[i].rank , "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, numberify(topTen[i].miniWallsWins), x , y+=dy, fontSize);
+        img.drawLBPos(`${i + 1}`, topTen[i].rank , "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i].miniWallsWins), x , y+=dy, fontSize);
     }
 
     y+=10;
