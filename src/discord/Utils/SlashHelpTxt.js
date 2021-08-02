@@ -1,6 +1,11 @@
+const {
+    Message
+} = require("discord.js");
+
 /**
  * 
- * @param {Message} msg 
+ * @param {Message} msg
+ * @returns {string}
  */
 module.exports = function SlashHelpTxt(msg) {
     if(msg.content.startsWith("/")) {

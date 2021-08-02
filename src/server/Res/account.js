@@ -1,12 +1,13 @@
 const URL = require("url").URL;
 const cfg = require("../../Config").fromJSON();
 const Logger = require("hyarcade-logger");
+const FileCache = require("../../utils/files/FileCache");
 
 /**
  * 
- * @param {import("http").IncomingMessage} req 
- * @param {import("http").ServerResponse} res 
- * @param fileCache
+ * @param {*} req 
+ * @param {*} res 
+ * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);

@@ -3,6 +3,9 @@
 // Leaderboard example - lb:20:mw
 // Stats example - s:92a5199614ac4bd181d1f3c951fb719f:pg
 
+const {
+    ButtonInteraction
+} = require("discord.js");
 const BotUtils = require("../../BotUtils");
 const Leaderboard = require("../../Commands/Leaderboard");
 const InteractionUtils = require("../InteractionUtils");
@@ -12,7 +15,7 @@ const ButtonResponse = require("./ButtonResponse");
 /**
  * 
  * @param {ButtonInteraction} interaction 
- * @returns 
+ * @returns {ButtonResponse}
  */
 module.exports = async function ButtonParser(interaction) {
     let data = interaction.customId.split(":");
@@ -33,10 +36,11 @@ module.exports = async function ButtonParser(interaction) {
 };
 
 /**
- * @param interaction
- * @param leaderboard
- * @param time
- * @param index
+ * @param {ButtonInteraction} interaction
+ * @param {string} leaderboard
+ * @param {string} time
+ * @param {number} index
+ * @returns {ButtonResponse}
  */
 async function leaderboardHandler(interaction, leaderboard, time, index) {
     let res = await Leaderboard.execute(
@@ -51,8 +55,9 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
 }
 
 /**
- * @param accUUID
- * @param game
+ * @param {string} accUUID
+ * @param {string} game
+ * @returns {ButtonResponse}
  */
 async function statsHandler(accUUID, game) {
     let accData = await InteractionUtils.accFromUUID(accUUID);
@@ -64,7 +69,7 @@ async function statsHandler(accUUID, game) {
 }
 
 /**
- *
+ * @returns {ButtonResponse}
  */
 async function ezHandler() {
     let msgs = await BotUtils.getFromDB("ezmsgs");

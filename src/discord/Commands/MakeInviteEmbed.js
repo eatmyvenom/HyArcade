@@ -5,8 +5,9 @@ const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
 /**
- * @param name
- * @param link
+ * @param {string} name
+ * @param {string} link
+ * @returns {object}
  */
 function makeField(name, link) {
     return {
@@ -45,7 +46,7 @@ module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
             makeField("<:Zomb:779067783753105488> Zombies", "https://discord.gg/rdZKx4b"),
             makeField("<:seasonal:784954031604367400> Seasonal Games", "https://discord.gg/X28ucyys8A"),
             makeField("Leaderboard History", "https://discord.gg/KP4hFcj4Du"),
-            makeField("Arcade AP Hunters", "https://discord.gg/wXAd4UbVfy"),
+            makeField("HyArcade", "https://discord.gg/6kFBVDcRd5"),
         ]);
 
     if(msgID == undefined) {

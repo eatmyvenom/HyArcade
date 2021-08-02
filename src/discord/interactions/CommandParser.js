@@ -5,12 +5,13 @@ const {
 } = require("../../listUtils");
 const InteractionUtils = require("./InteractionUtils");
 const {
-    MessageEmbed
+    MessageEmbed,
+    CommandInteraction,
+    Interaction
 } = require("discord.js");
 
 const EZ = require("../Commands/EZ");
 const Info = require("../Commands/Info");
-const Status = require("../Commands/Status");
 const Susser = require("../Commands/Susser");
 const GameCounts = require("../Commands/GameCounts");
 const LastUpdate = require("../Commands/LastUpdate");
@@ -40,7 +41,7 @@ let Commands = null;
  * 
  * @param {CommandInteraction} i 
  * @param {string} a 
- * @returns 
+ * @returns {*}
  */
 function getArg(i, a) {
     let v = i.options.get(a);
@@ -53,7 +54,7 @@ function getArg(i, a) {
 /**
  *
  * @param {Interaction} interaction
- * @returns
+ * @returns {CommandResponse | object}
  */
 module.exports = async (interaction) => {
     if(Commands == null) {
@@ -194,10 +195,6 @@ module.exports = async (interaction) => {
 
     case "game-counts": {
         return await GameCounts.execute([getArg(interaction, "game")], authorID, null, interaction);
-    }
-
-    case "status": {
-        return await Status.execute([getArg(interaction, "player")], authorID, null, interaction);
     }
 
     case "info": {

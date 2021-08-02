@@ -4,7 +4,6 @@ const Runtime = require("hyarcade-config/Runtime");
 const owner = "156952208045375488";
 
 let linkCmd = require("./Commands/Link");
-let statusCmd = require("./Commands/Status");
 let timeUpdateCmd = require("./Commands/LastUpdate");
 let KillBotCmd = require("./Commands/KillBot");
 let MKinvCmd = require("./Commands/MakeInviteEmbed");
@@ -36,9 +35,13 @@ const {
 const {
     ERROR_API_DOWN
 } = require("./Utils/Embeds/StaticEmbeds");
+const {
+    Message
+} = require("discord.js");
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {*}
  */
 function requireNew(str) {
     delete require.cache[str];
@@ -46,8 +49,9 @@ function requireNew(str) {
 }
 
 /**
- * @param msg
- * @param senderID
+ * @param {Message} msg
+ * @param {string} senderID
+ * @returns {CommandResponse | object}
  */
 async function execute(msg, senderID) {
     if(msg.content.startsWith(config.commandCharacter)) {
@@ -75,10 +79,11 @@ async function execute(msg, senderID) {
 }
 
 /**
- * @param rawMsg
- * @param command
- * @param args
- * @param author
+ * @param {Message} rawMsg
+ * @param {string} command
+ * @param {string[]} args
+ * @param {string} author
+ * @returns {CommandResponse | object}
  */
 async function checkCommands(rawMsg, command, args, author) {
     logger.debug(`Parsing command ${rawMsg.content}`);
@@ -116,11 +121,6 @@ async function checkCommands(rawMsg, command, args, author) {
             res: "",
             embed: ERROR_USE_SLASH_COMMAND("lb", "leaderboard")
         };
-    }
-
-    case "sts":
-    case "status": {
-        return await statusCmd.execute(args, author, rawMsg);
     }
 
     case "quit":
@@ -274,7 +274,6 @@ async function checkCommands(rawMsg, command, args, author) {
             return;
         }
         linkCmd = requireNew("./Commands/Link");
-        statusCmd = requireNew("./Commands/Status");
         timeUpdateCmd = requireNew("./Commands/LastUpdate");
         KillBotCmd = requireNew("./Commands/KillBot");
         MKinvCmd = requireNew("./Commands/MakeInviteEmbed");

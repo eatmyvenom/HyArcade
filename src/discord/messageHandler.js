@@ -22,6 +22,11 @@ const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const LogUtils = require("./Utils/LogUtils");
 const CommandResponse = require("./Utils/CommandResponse");
+const {
+    Message,
+    Collection,
+    Webhook
+} = require("discord.js");
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -48,8 +53,9 @@ async function logCmd(msg) {
 }
 
 /**
- * @param hook
- * @param cmdResponse
+ * @param {string} hook
+ * @param {object} cmdResponse
+ * @returns {boolean}
  */
 async function sendAsHook(hook, cmdResponse) {
     try {
@@ -125,9 +131,9 @@ async function miniWallsVerify(msg) {
 }
 
 /**
- * @param msg
- * @param cmdResponse
- * @param opts
+ * @param {Message} msg
+ * @param {object} cmdResponse
+ * @param {object} opts
  */
 async function attemptSend(msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
@@ -162,7 +168,7 @@ async function attemptSend(msg, cmdResponse, opts) {
 }
 
 /**
- * @param msg
+ * @param {Message} msg
  */
 async function addIGNs(msg) {
     if(cfg.discord.listenChannels.includes(msg.channel.id)) {
@@ -179,7 +185,8 @@ async function addIGNs(msg) {
 }
 
 /**
- * @param cmdResponse
+ * @param {object} cmdResponse
+ * @returns {object}
  */
 async function sanitizeCmdOpt(cmdResponse) {
     if(cmdResponse.res.length > 2000) {
@@ -194,7 +201,8 @@ async function sanitizeCmdOpt(cmdResponse) {
 }
 
 /**
- * @param msg
+ * @param {Message} msg
+ * @returns {CommandResponse | object}
  */
 async function getCmdRes(msg) {
     let cmdResponse;
@@ -214,7 +222,7 @@ async function getCmdRes(msg) {
 /**
  * 
  * @param {Message} msg 
- * @returns 
+ * @returns {object}
  */
 async function getMWCmdRes(msg) {
     let cmdResponse;
@@ -232,7 +240,8 @@ async function getMWCmdRes(msg) {
 }
 
 /**
- * @param id
+ * @param {string} id
+ * @returns {boolean}
  */
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -242,7 +251,7 @@ async function isBlacklisted(id) {
 
 /**
  * 
- * @param {Discord.Message} msg 
+ * @param {Message} msg 
  * @param {CommandResponse} cmdResponse 
  */
 async function sendText(msg, cmdResponse) {
@@ -265,12 +274,12 @@ async function sendText(msg, cmdResponse) {
 
 /**
  * 
- * @param {Discord.Message} msg 
+ * @param {Message} msg 
  * @param {CommandResponse} cmdResponse 
  */
 async function sendNormal(msg, cmdResponse) {
     /**
-     * @type {Discord.Collection<Discord.Snowflake, Discord.Webhook>}
+     * @type {Collection<string, Webhook>}
      */
     let hooks;
     try {
@@ -293,7 +302,7 @@ async function sendNormal(msg, cmdResponse) {
 }
 
 /**
- * @param msg
+ * @param {Message} msg
  */
 async function mwMode(msg) {
     let cmdResponse = await getMWCmdRes(msg);
@@ -318,7 +327,8 @@ async function mwMode(msg) {
 }
 
 /**
- * @param cmdResponse
+ * @param {object} cmdResponse
+ * @returns {boolean}
  */
 function checkResponse(cmdResponse) {
     return cmdResponse != undefined &&
@@ -327,9 +337,9 @@ function checkResponse(cmdResponse) {
 
 /**
  * 
- * @param {Discord.Message} msg 
+ * @param {Message} msg 
  * @param {object | CommandResponse} cmdResponse 
- * @param isDiscordResponse
+ * @param {boolean} isDiscordResponse
  */
 async function handleCommand(msg, cmdResponse, isDiscordResponse) {
     if(await isBlacklisted(msg.author.id)) {
@@ -354,7 +364,7 @@ async function handleCommand(msg, cmdResponse, isDiscordResponse) {
 }
 
 /**
- * @param msg
+ * @param {Message} msg
  */
 async function checkMW(msg) {
     if(msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
@@ -368,8 +378,7 @@ async function checkMW(msg) {
 
 /**
  * 
- * @param {Discord.Message} msg 
- * @returns 
+ * @param {Message} msg 
  */
 module.exports = async function messageHandler(msg) {
     if(msg.author.bot) return;
@@ -380,7 +389,7 @@ module.exports = async function messageHandler(msg) {
     }
 
     if(BotUtils.botMode == "mw" || BotUtils.botMode == "test") {
-        return await checkMW(msg);
+        await checkMW(msg);
     }
 
     let cmdResponse = await getCmdRes(msg);

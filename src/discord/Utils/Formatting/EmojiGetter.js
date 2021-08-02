@@ -1,8 +1,8 @@
 /**
  * 
- * @param {TextChannel} channel 
- * @param nitro
- * @param {string} emoji 
+ * @param {boolean} nitro
+ * @param {string} emoji
+ * @returns {string} 
  */
 module.exports = function EmojiGetter(nitro, emoji) {
     switch(emoji.toLowerCase()) {

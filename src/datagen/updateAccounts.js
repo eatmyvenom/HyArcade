@@ -5,6 +5,7 @@ let force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Buffer = require("buffer");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
  * Update the player data for all players in the list
@@ -59,8 +60,9 @@ module.exports = async function updateAccounts(accounts) {
 };
 
 /**
- * @param accounts
- * @param oldAccs
+ * @param {Account[]} accounts
+ * @param {Account[]} oldAccs
+ * @returns {Promise}
  */
 async function updateAccountsInArr(accounts, oldAccs) {
     return await Promise.all(

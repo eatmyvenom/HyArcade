@@ -12,7 +12,8 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 
 /**
- * @param t
+ * @param {string} t
+ * @returns {string}
  */
 function fixTrigger(t = "") {
     return t.replace(/ZERO/g, "0")
@@ -30,7 +31,8 @@ function fixTrigger(t = "") {
 }
 
 /**
- * @param n
+ * @param {number} n
+ * @returns {string}
  */
 function numberify(n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));

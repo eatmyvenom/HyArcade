@@ -1,7 +1,6 @@
 const Config = require("./Config");
 const cfg = Config.fromJSON();
 const fs = require("fs-extra");
-const webRequest = require("./request/webRequest");
 const BSONwriter = require("./utils/files/BSONwriter");
 const {
     default: fetch
@@ -12,7 +11,7 @@ const logger = require("hyarcade-logger");
  * Halt execution for a specified amount of time
  *
  * @param {number} time the time in milliseconds to sleep
- * @returns {null}
+ * @returns {Promise<setTimeout>} the promise object
  */
 function sleep(time) {
     return new Promise((resolve) => {
@@ -42,20 +41,20 @@ function winsSorter(element1, element2) {
 /**
  * The time in the day that it is currently
  *
- * @returns {string}
+ * @returns {string} The formatted time
  */
 function daytime() {
     return cfg.showDaytime ?
         Date()
-            .replace(/.*20[0-9][0-9] /, "")
-            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
+        .replace(/.*20[0-9][0-9] /, "")
+        .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
         "";
 }
 
 /**
  * The current day
  *
- * @returns {string}
+ * @returns {string} The formatted day
  */
 function day() {
     return Date()
@@ -81,8 +80,8 @@ async function writeJSON(path, json) {
 }
 
 /**
- * @param path
- * @param json
+ * @param {string} path
+ * @param {object} json
  */
 async function writeDB(path, json) {
     let data = JSON.stringify(json);
@@ -102,12 +101,12 @@ async function writeDB(path, json) {
     } catch (e) {
         logger.err("Can't connect to database");
         logger.err(e);
-        return {};
     }
 }
 
 /**
- * @param file
+ * @param {string} file
+ * @returns {object} Object of whatever was returned by the database
  */
 async function readDB(file) {
     let fileData;
@@ -128,7 +127,8 @@ async function readDB(file) {
 }
 
 /**
- * @param path
+ * @param {string} path
+ * @returns {object} Parsed json
  */
 async function readJSON(path) {
     return JSON.parse(await fs.readFile("data/" + path));
@@ -138,7 +138,7 @@ async function readJSON(path) {
  * Check if a file exists
  *
  * @param {string} path path of the target file
- * @returns {boolean}
+ * @returns {boolean} If the file exists
  */
 function fileExists(path) {
     return require("fs").existsSync(path);
@@ -165,18 +165,11 @@ async function archiveJson(oldfile, path, timetype) {
     }
 }
 
-/**
- * @param name
- * @param servername
- */
-async function downloadFile(name, servername) {
-    let response = await webRequest("http://eatmyvenom.me/share/" + servername);
-    await fs.writeFile("data/" + name, response.data);
-}
 
 /**
- * @param object
- * @param value
+ * @param {object} object
+ * @param {string} value
+ * @returns {any} The value in the object 
  */
 function getKeyByValue(object, value) {
     return Object.keys(object).find((key) => object[key] === value);
@@ -194,7 +187,6 @@ module.exports = {
     writeDB: writeDB,
     readDB: readDB,
     fileExists: fileExists,
-    downloadFile: downloadFile,
     daytime: daytime,
     defaultAllowed: defaultAllowed,
     getKeyByValue: getKeyByValue,

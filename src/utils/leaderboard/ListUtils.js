@@ -1,9 +1,11 @@
 const logger = require("hyarcade-logger");
+const Account = require("hyarcade-requests/types/Account");
 const cfg = require("../../Config").fromJSON();
 const fetch = require("node-fetch");
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {string} Formatted number
  */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
@@ -12,7 +14,7 @@ function formatNum(number) {
 /**
  * 
  * @param {string} type 
- * @returns {Promise<import("hyarcade-requests/types/Account")[]>}
+ * @returns {Promise<Account>} Account list
  */
 exports.getList = async function getList(type = "") {
     let list;

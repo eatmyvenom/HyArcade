@@ -6,6 +6,7 @@ if(!require("fs").existsSync("./config.json")) {
 
 const os = require("os");
 const fs = require("fs/promises");
+const process = require("process");
 const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/events/webhook");
 const utils = require("./src/utils");
@@ -25,8 +26,6 @@ const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
 const dataGeneration = require("./src/dataGeneration");
 const Server = require("./src/server/Wrap");
-const Connection = require("./src/mongo/Connection");
-const AccountUpdater = require("./src/mongo/AccountUpdater");
 const Translator = require("./src/mongo/Translator");
 const logger = require("hyarcade-logger");
 const BSONreader = require("./src/utils/files/BSONreader");
@@ -58,6 +57,7 @@ async function updateAllGuilds() {
 
 /**
  * Run all three of the stats tasks
+ * 
  * @see save
  * @see updateAllAccounts
  * @see updateAllPlayers
@@ -71,8 +71,8 @@ async function updateAll() {
 
 /**
  * Wrapper around updateAll()
+ * 
  * @see updateAll
- *
  */
 async function save() {
     // this was all abstracted
@@ -80,8 +80,9 @@ async function save() {
 }
 /**
  * Send a list to a discord webhook as formatted text
+ * 
  * @param {string} [type="players"] the type of list to log
- * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
+ * @param {number} [maxamnt=undefined] the maximum index to reach in the list
  */
 async function webhookLog(type = "players", maxamnt) {
     await Webhook.send("```\n" + (await stringNormal(type, maxamnt)) + "\n```");
@@ -92,7 +93,7 @@ async function webhookLog(type = "players", maxamnt) {
  * Send a list to a discord webhook as a set of formatted embeds
  *
  * @param {string} [type="players"] the type of list to use
- * @param {Number} [maxamnt=undefined] the maximum index to reach in the list
+ * @param {number} [maxamnt=undefined] the maximum index to reach in the list
  * @see webhookLog
  */
 async function webhookEmbed(type = "accounts", maxamnt) {
@@ -103,25 +104,38 @@ async function webhookEmbed(type = "accounts", maxamnt) {
     await Webhook.sendEmbed("", day);
 }
 
+/**
+ * Send party games daily embed
+ */
 async function sendPGDay() {
     await Webhook.sendPGEmbed();
 }
 
+/**
+ * Send party games weekly embed
+ */
 async function sendPGWeek() {
     await Webhook.sendPGWEmbed();
 }
 
+/**
+ * Send party games monthly embed
+ */
 async function sendPGMonth() {
     await Webhook.sendPGMEmbed();
 }
 
+/**
+ * Send throw out kills embed
+ */
 async function sendToKill() {
     await Webhook.sendTOKillEmbed();
 }
 
 /**
  * Snapshot the amount of wins into another json file
- * @param {String} timeType the inbetween of the file
+ * 
+ * @param {string} timeType the inbetween of the file
  */
 async function snap(timeType = "day") {
     // move all the current stats files to be the daily files
@@ -170,7 +184,7 @@ async function archive(path = "./archive/", timetype = utils.day()) {
 /**
  * Write a logger output as a file
  *
- * @param {String[]} args the process arguments
+ * @param {string[]} args the process arguments
  */
 async function writeFile(args) {
     let logName = args[3];
@@ -183,7 +197,7 @@ async function writeFile(args) {
 /**
  * Write a daily wins logger output as a file
  *
- * @param {String[]} args
+ * @param {string[]} args the process arguments
  */
 async function writeFileD(args) {
     let logName = args[3];
@@ -210,14 +224,23 @@ async function gamesPlayed() {
     await task.gamesPlayed();
 }
 
+/**
+ * Run status text sorted tast
+ */
 async function statusSort() {
     await task.statusTxtSorted();
 }
 
+/**
+ * Run task to add players from coin leaderboards
+ */
 async function addLeaderboards() {
     await task.addLeaderboards();
 }
 
+/**
+ * Write the current PID to a tmp file
+ */
 async function writePID() {
     if(!utils.fileExists(os.tmpdir() + "/pgapi")) {
         await fs.mkdir(os.tmpdir() + "/pgapi");
@@ -225,23 +248,35 @@ async function writePID() {
     await fs.writeFile(os.tmpdir() + "/pgapi/" + args[2] + ".pid", "" + process.pid);
 }
 
+/**
+ * Remove the tmp PID file
+ */
 async function rmPID() {
     await fs.rm(os.tmpdir() + "/pgapi/" + args[2] + ".pid");
 }
 
+/**
+ * Send a custom discord event based on process args
+ */
 async function sendDiscordEvent() {
     let event = new AccountEvent(args[3], args[4], args[5], args[6], args[7], args[8]);
     await event.toDiscord();
 }
 
+/**
+ * Minify config file
+ */
 async function miniconfig() {
     let conf = Cfg.fromJSON();
     await fs.writeFile("./config.min.json", JSON.stringify(conf));
 }
 
+/**
+ * Log everyones game counts
+ */
 async function logGames() {
     let games = await BSONreader("gameCounts.bson");
-    console.log(JSON.stringify(games, null, 4))
+    console.log(JSON.stringify(games, null, 4));
 }
 
 /**
@@ -252,13 +287,13 @@ async function main() {
     // let database = await Connection();
     // let db = database.db("hyarcade");
     if(Runtime.apiDown) {
-        if(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB") {} else {
+        if(!(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB")) {
             logger.err("Refusing to run while api is down");
             process.exit(1);
         }
     }
 
-    if(args[2] == "bot" || args[2] == "serveDB") {} else {
+    if(!(args[2] == "bot" || args[2] == "serveDB")) {
         await writePID();
     }
 
@@ -434,14 +469,6 @@ async function main() {
         await dataGeneration.saveBoosters();
         break;
 
-    case "mNewAcc":
-        await cli.mNewAcc(db);
-        break;
-
-    case "updateMongo":
-        await AccountUpdater(db);
-        break;
-
     case "translateDb":
         await Translator();
         break;
@@ -458,7 +485,7 @@ async function main() {
     }
     }
 
-    if(args[2] == "bot" || args[2] == "serveDB") {} else {
+    if(!(args[2] == "bot" || args[2] == "serveDB")) {
         await rmPID();
     }
 }

@@ -1,9 +1,13 @@
 const Account = require("../../classes/account");
 const mojangRequest = require("../../request/mojangRequest");
 const logger = require("hyarcade-logger");
+const {
+    Message
+} = require("discord.js");
 
 /**
- * @param str
+ * @param {*} str
+ * @returns {string}
  */
 function stringify(str) {
     return "" + str;
@@ -16,7 +20,7 @@ function stringify(str) {
  * @param {boolean} canbeSelf
  * @param {Account[]} acclist
  * @param {object} disclist
- * @returns
+ * @returns {Account}
  */
 module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {
     logger.info("Attempting to resolve " + string + " from " + rawMessage.content);

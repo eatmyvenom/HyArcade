@@ -1,6 +1,9 @@
 const cfg = require("hyarcade-config").fromJSON();
 const {
-    WebhookClient
+    WebhookClient,
+    Guild,
+    TextChannel,
+    InvalidRequestWarningData
 } = require("discord.js");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
@@ -152,7 +155,7 @@ module.exports = class BotEvents {
 
     /**
      * 
-     * @param {import("discord.js").InvalidRequestWarningData} warning 
+     * @param {InvalidRequestWarningData} warning 
      */
     static invalidRequestWarning(warning) {
         logger.warn(`An invalid request was made, this is number ${warning.count}!`);

@@ -1,5 +1,12 @@
 const {
-    MessageAttachment
+    MessageAttachment,
+    MessageEmbed,
+    FileOptions,
+    BufferResolvable,
+    MessageActionRow,
+    MessageActionRowOptions,
+    ReplyMessageOptions,
+    MessageOptions
 } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Buffer = require("buffer");
@@ -42,7 +49,7 @@ module.exports = class CommandResponse {
     /**
      * 
      * @param {ReplyMessageOptions} reply 
-     * @param webhook
+     * @param {boolean} webhook
      * @returns {MessageOptions | undefined}
      */
     toDiscord(reply, webhook = false) {

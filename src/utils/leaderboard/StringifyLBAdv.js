@@ -4,7 +4,8 @@ const {
 const TimSort = require("timsort");
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {string} formatted number
  */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);

@@ -11,9 +11,17 @@ const {
     LOG_MESSAGE_COMPONENT_USAGE
 } = require("./Utils/Embeds/DynamicEmbeds");
 const MenuParser = require("./interactions/SelectionMenus/MenuParser");
+const {
+    CommandInteraction,
+    ButtonInteraction,
+    SelectMenuInteraction,
+    Interaction,
+    Client
+} = require("discord.js");
 
 /**
- * @param id
+ * @param {string} id
+ * @returns {boolean}
  */
 async function isBlacklisted(id) {
     let blacklist = await fs.readFile("data/blacklist");
@@ -29,6 +37,7 @@ async function commandHandler(interaction) {
     if(await isBlacklisted(interaction.user.id)) {
         return;
     }
+
     let responseObj;
     try {
         responseObj = await CommandParser(interaction);
@@ -80,7 +89,7 @@ async function commandHandler(interaction) {
 
 /**
  *
- * @param {Interaction} interaction
+ * @param {CommandInteraction} interaction
  */
 async function logCmd(interaction) {
     await Webhooks.commandHook.send({
@@ -118,7 +127,7 @@ async function logBtn(interaction) {
 
 /**
  *
- * @param {Interaction} interaction
+ * @param {ButtonInteraction} interaction
  */
 async function buttonHandler(interaction) {
     if(await ForceOGuser(interaction)) {
@@ -130,7 +139,7 @@ async function buttonHandler(interaction) {
 
 /**
  *
- * @param {Interaction} interaction
+ * @param {SelectMenuInteraction} interaction
  */
 async function menuHandler(interaction) {
     if(await ForceOGuser(interaction)) {

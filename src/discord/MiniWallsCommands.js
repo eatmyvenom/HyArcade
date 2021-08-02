@@ -13,10 +13,14 @@ const {
 const {
     ERROR_API_DOWN
 } = require("./Utils/Embeds/StaticEmbeds");
+const {
+    Message
+} = require("discord.js");
 
 /**
- * @param msg
- * @param senderID
+ * @param {Message} msg
+ * @param {string} senderID
+ * @returns {object}
  */
 async function execute(msg, senderID) {
     if(msg.content.startsWith(".")) {
@@ -43,10 +47,11 @@ async function execute(msg, senderID) {
 }
 
 /**
- * @param rawMsg
- * @param command
- * @param args
- * @param author
+ * @param {Message} rawMsg
+ * @param {string} command
+ * @param {string[]} args
+ * @param {string} author
+ * @returns {object}
  */
 async function checkCommands(rawMsg, command, args, author) {
     switch(command.toLowerCase()) {

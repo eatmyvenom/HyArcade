@@ -40,9 +40,9 @@ async function txtPlayerList(list, maxamnt) {
 /**
  * Make a list out of a json file
  *
- * @param {string} name
- * @param {number} maxamnt
- * @returns {object[]}
+ * @param {string} name File name
+ * @param {number} maxamnt Max amount of players
+ * @returns {object[]} Final list
  */
 async function listNormal(name, maxamnt) {
     let thelist = await utils.readJSON(`${name}.json`);
@@ -54,10 +54,10 @@ async function listNormal(name, maxamnt) {
 /**
  * Make a list out of the difference of two json files
  *
- * @param {string} name
- * @param {string} timetype
- * @param {number} maxamnt
- * @returns {object[]}
+ * @param {string} name File name
+ * @param {string} timetype Time type as in "day" or "week"
+ * @param {number} maxamnt Maximum accounts
+ * @returns {object[]} Final list
  */
 async function listDiff(name, timetype, maxamnt) {
     return await listDiffByProp(name, "wins", timetype, maxamnt);
@@ -66,9 +66,9 @@ async function listDiff(name, timetype, maxamnt) {
 /**
  * Turn a json file into a formatted list
  *
- * @param {string} name
- * @param {number} maxamnt
- * @returns {string}
+ * @param {string} name File name
+ * @param {number} maxamnt Maximum accounts
+ * @returns {string} Stringified list
  */
 async function stringNormal(name, maxamnt) {
     let list = await listNormal(name, maxamnt);
@@ -81,7 +81,7 @@ async function stringNormal(name, maxamnt) {
  * @param {string} name
  * @param {string} timetype
  * @param {number} maxamnt
- * @returns {string}
+ * @returns {string} Stringified list
  */
 async function stringDiff(name, timetype, maxamnt) {
     let list = await listDiff(name, timetype, maxamnt);
@@ -93,18 +93,20 @@ async function stringDiff(name, timetype, maxamnt) {
  *
  * @param {string} name
  * @param {number} maxamnt
- * @returns {string}
+ * @returns {string} Stringified list
  */
 async function stringDaily(name, maxamnt) {
     return await stringDiff(name, "day", maxamnt);
 }
 
 /**
- * @param lbprop
- * @param maxamnt
- * @param timetype
- * @param category
- * @param startingIndex
+ * 
+ * @param {string} lbprop
+ * @param {number} maxamnt
+ * @param {string} timetype
+ * @param {string | undefined} category
+ * @param {number} startingIndex
+ * @returns {string} Stringified list
  */
 async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
@@ -122,8 +124,9 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex =
 }
 
 /**
- * @param lbprop
- * @param maxamnt
+ * @param {string} lbprop
+ * @param {number} maxamnt
+ * @returns {string} Stringified list
  */
 async function stringLBDaily(lbprop, maxamnt) {
     return await stringLBDiff(lbprop, maxamnt, "day");

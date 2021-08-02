@@ -1,10 +1,13 @@
 const {
-    MessageEmbed
+    MessageEmbed,
+    User
 } = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
 const EmojiGetter = require("../Formatting/EmojiGetter");
 
 /**
- * @param n
+ * @param {number} n
+ * @returns {number}
  */
 function formatR(n) {
     let r = (Math.round(n * 100) / 100) ?? 0.0;
@@ -12,14 +15,16 @@ function formatR(n) {
 }
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {number}
  */
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {number}
  */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);
@@ -28,12 +33,11 @@ function formatNum(number) {
 module.exports = class AdvancedEmbeds {
     /**
      * 
-     * @param {Account} acc1 
-     * @param {Account} acc2 
-     * @param {string} game 
-     * @param {Message} msg 
-     * @param hasPerms
-     * @returns 
+     * @param {Account} acc1
+     * @param {Account} acc2
+     * @param {string} game
+     * @param {boolean} hasPerms
+     * @returns {MessageEmbed}
      */
     static compareStats(acc1, acc2, game, hasPerms) {
         let embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`).setColor(0xbb00dd);
@@ -1207,6 +1211,7 @@ module.exports = class AdvancedEmbeds {
      * 
      * @param {string} ign 
      * @param {User} user 
+     * @returns {MessageEmbed}
      */
     static playerLink(ign, user) {
         let embed = new MessageEmbed()

@@ -10,7 +10,8 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 
 /**
- * @param n
+ * @param {number} n
+ * @returns {number}
  */
 function formatR(n) {
     let r = Math.round(n * 1000) / 1000;
@@ -18,7 +19,8 @@ function formatR(n) {
 }
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {string}
  */
 function formatN(str) {
     let r = Intl.NumberFormat("en").format(Number(str));

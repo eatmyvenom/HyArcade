@@ -1,7 +1,9 @@
 const TimSort = require("timsort");
+const FileCache = require("../../utils/files/FileCache");
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {number}
  */
 function numberify(str) {
     str = str ?? 0;
@@ -12,7 +14,7 @@ function numberify(str) {
  * 
  * @param {*} req 
  * @param {*} res 
- * @param {import("../../utils/files/FileCache")} fileCache 
+ * @param {FileCache} fileCache 
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);

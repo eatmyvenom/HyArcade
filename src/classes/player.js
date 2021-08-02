@@ -1,3 +1,5 @@
+const Account = require("hyarcade-requests/types/Account");
+
 /** @type {Account[]} */
 let accounts = [];
 

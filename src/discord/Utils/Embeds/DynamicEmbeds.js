@@ -1,5 +1,6 @@
 const {
-    MessageEmbed
+    MessageEmbed,
+    Message
 } = require("discord.js");
 const {
     COLOR_PRIMARY,
@@ -25,7 +26,7 @@ exports.INFO_ACCOUNTS_ADDED = function (res) {
  * @param {string} name 
  * @param {string[]} args 
  * @param {Message} message 
- * @returns 
+ * @returns {MessageEmbed}
  */
 exports.LOG_COMMAND_EXECUTION = function (name, args, message) {
     if(args == "") args = "none";

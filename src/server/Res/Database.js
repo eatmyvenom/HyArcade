@@ -1,4 +1,5 @@
 const Logger = require("hyarcade-logger");
+const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
 
 /**

@@ -2,7 +2,8 @@ const hypixelApi = require("../hypixelApi");
 let accounts = [];
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {number}
  */
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
@@ -47,7 +48,6 @@ class Guild {
     /**
      * Creates an instance of Guild.
      *
-     * @param {string} name
      * @param {string} uuid
      * @memberof Guild
      */

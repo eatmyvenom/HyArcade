@@ -93,7 +93,7 @@ async function gamesPlayed() {
 }
 
 /**
- *
+ * @returns {string[]}
  */
 async function addLeaderboards() {
     await dataGen.addLeaderboards();
@@ -111,7 +111,7 @@ async function status() {
 }
 
 /**
- *
+ * @returns {string[]}
  */
 async function statusTxtSorted() {
     await dataGen.statusTxtSorted();
@@ -121,17 +121,11 @@ async function statusTxtSorted() {
 /**
  * Send a webhook message to discord
  *
- * @param type
- * @param maxamnt
+ * @param {string} type
+ * @param {number} maxamnt
  * @returns {string[]} files changed by this task
  */
 async function webhook(type, maxamnt) {
-    // send webhook messages, this is only currently
-    // in a small server and only does the unofficial
-    // leaderboard, this can be easily changed and if
-    // someone else would like I can add this to
-    // another server
-
     await Webhook.send(await stringNormal(type, maxamnt));
     await Webhook.send(await stringDaily(type, maxamnt));
 

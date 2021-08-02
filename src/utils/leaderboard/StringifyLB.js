@@ -5,7 +5,8 @@ const {
 const TimSort = require("timsort");
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {number} The number primitive
  */
 function numberify(str) {
     return Number(str);

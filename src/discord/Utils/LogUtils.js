@@ -3,6 +3,10 @@ const config = require("../../Config");
 const {
     LOG_COMMAND_EXECUTION
 } = require("./Embeds/DynamicEmbeds");
+const {
+    Message,
+    Webhook
+} = require("discord.js");
 const cfg = config.fromJSON();
 
 module.exports = class LogUtils {

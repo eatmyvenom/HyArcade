@@ -1,13 +1,18 @@
-const Account = require("../../../classes/account");
 const fetch = require("node-fetch");
 const logger = require("hyarcade-logger");
 const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
-const cfg = require("../../../Config").fromJSON();
+const {
+    Interaction,
+    CommandInteraction
+} = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
+const cfg = require("hyarcade-config").fromJSON();
 
 /**
- * @param string
- * @param interaction
+ * @param {string} string
+ * @param {Interaction} interaction
+ * @returns {Account}
  */
 async function getFromHypixel(string, interaction) {
     await interaction.defer();
@@ -30,7 +35,6 @@ async function getFromHypixel(string, interaction) {
  *
  * @param {CommandInteraction} interaction
  * @param {string} namearg
- * @param {Account[]} acclist
  * @returns {Account}
  */
 module.exports = async function resolveAccount(interaction, namearg = "player") {

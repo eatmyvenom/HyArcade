@@ -1,13 +1,17 @@
 const Account = require("./classes/account");
 const cfg = require("./Config").fromJSON();
+const guild = require("./classes/guild");
+const Player = require("./classes/player");
 const {
     getKeyByValue
 } = require("./utils");
 const utils = require("./utils");
 
 /**
- * @param guildlist
- * @param uuid
+ * 
+ * @param {guild[]} guildlist the raw guild list
+ * @param {string} uuid the players uuid
+ * @returns {guild} The guild of the specified player
  */
 function getGuild(guildlist, uuid) {
     for(let guild of guildlist) {
@@ -20,8 +24,8 @@ function getGuild(guildlist, uuid) {
 /**
  * Gets a list of player objects from the player json list
  *
- * @param {Account[]} acclist
- * @returns {Player[]}
+ * @param {Account[]} acclist The preset list of accounts
+ * @returns {Player[]} The array of players and their combined data
  */
 exports.players = async function players(acclist) {
     let Player = require("./classes/player")(acclist);
@@ -37,7 +41,7 @@ exports.players = async function players(acclist) {
 /**
  * Gets a list of account object from the json account list
  *
- * @returns {object}
+ * @returns {object} All of the accounts in the database
  */
 exports.accounts = async function accounts() {
     let acclistjson = await utils.readDB("acclist");
@@ -80,8 +84,8 @@ exports.accounts = async function accounts() {
 /**
  * Gets a list of guild objects from the json guild list
  *
- * @param {Account[]} accs
- * @returns {Guild[]}
+ * @param {Account[]} accs Accounts that can be used in these guilds
+ * @returns {guild[]} Array of guilds with combined player data
  */
 exports.guilds = async function gld(accs) {
     let accounts = accs;

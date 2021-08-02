@@ -3,14 +3,16 @@ const config = require("../../Config").fromJSON();
 const TimSort = require("timsort");
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {number} The number primitive
  */
 function numberify(str) {
     return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {string} Formatted number
  */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);

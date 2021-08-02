@@ -1,5 +1,7 @@
 const {
-    MessageEmbed
+    MessageEmbed,
+    Message,
+    CommandInteraction
 } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
@@ -10,11 +12,12 @@ const {
 } = require("../../listUtils");
 
 /**
- * @param prop
- * @param timetype
- * @param limit
- * @param category
- * @param start
+ * @param {string} prop
+ * @param {string} timetype
+ * @param {number} limit
+ * @param {string} category
+ * @param {number} start
+ * @returns {MessageEmbed}
  */
 async function getLB(prop, timetype, limit, category, start) {
     let res = "";
@@ -104,8 +107,9 @@ async function getLB(prop, timetype, limit, category, start) {
 }
 
 /**
- * @param o
- * @param s
+ * @param {object} o
+ * @param {string} s
+ * @returns {*}
  */
 function getProp(o, s) {
     s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
@@ -129,7 +133,7 @@ module.exports = new Command("leaderboard", ["*"], hander);
  * @param {string[]} args 
  * @param {Message} rawMsg 
  * @param {CommandInteraction} interaction 
- * @returns 
+ * @returns {object}
  */
 async function hander(args, rawMsg, interaction) {
     let startTime = Date.now();
@@ -619,13 +623,13 @@ async function hander(args, rawMsg, interaction) {
             if(timetype == "lifetime" || timetype == "l") {
                 timetype = "Lifetime";
                 lb = await stringLBAdv((a, b) => {
-                    return (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0);
-                }, (a) => {
-                    return getProp(a, type.trim());
-                }, limit,
-                (l) => {
-                    return l;
-                }, startingIndex);
+                        return (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0);
+                    }, (a) => {
+                        return getProp(a, type.trim());
+                    }, limit,
+                    (l) => {
+                        return l;
+                    }, startingIndex);
             } else {
                 let embed = new MessageEmbed()
                     .setTitle("ERROR")

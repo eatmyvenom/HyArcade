@@ -7,6 +7,7 @@ const updateAccounts = require("./datagen/updateAccounts");
 const {
     addAccounts
 } = require("./listUtils");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
  * Generates the status for all of the online players
@@ -65,8 +66,9 @@ async function statusTxtSorted() {
 }
 
 /**
- * @param a
- * @param b
+ * @param {string} a
+ * @param {string} b
+ * @returns {string[]}
  */
 function statusSort(a, b) {
     let status1 = a[1];
@@ -156,7 +158,7 @@ async function addLeaderboards() {
 }
 
 /**
- * @param uuid
+ * @param {string} uuid
  */
 async function addGuild(uuid) {
     let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
@@ -170,7 +172,7 @@ async function addGuild(uuid) {
 }
 
 /**
- * @param id
+ * @param {string} id
  */
 async function addGuildID(id) {
     let guild = JSON.parse(await hypixelAPI.getGuildRaw(id));

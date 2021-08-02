@@ -6,41 +6,47 @@ const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
 const TimSort = require("timsort");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function wComp(b, a) {
     return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
 }
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function kComp(b, a) {
     return (a.miniWalls?.kills ?? 0) - (b.miniWalls?.kills ?? 0);
 }
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function dComp(b, a) {
     return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0);
 }
 
 /**
- * @param n
+ * @param {string} n
+ * @returns {number}
  */
 function int(n) {
     return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
 /**
- * @param n
- * @param o
+ * @param {Account} n
+ * @param {Account} o
+ * @returns {Account}
  */
 function cb(n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
@@ -56,14 +62,16 @@ function cb(n, o) {
 }
 
 /**
- * @param n
+ * @param {Account} n
+ * @returns {Account}
  */
 function rcb(n) {
     return n;
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 async function hackerTransformer(list) {
     let hackers = await BotUtils.getFromDB("hackerlist");
@@ -74,7 +82,8 @@ async function hackerTransformer(list) {
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 function top150Transformer(list) {
     TimSort.sort(list, wComp);
@@ -83,7 +92,8 @@ function top150Transformer(list) {
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 async function ratioTransformer(list) {
     list = await hackerTransformer(list);
@@ -92,9 +102,10 @@ async function ratioTransformer(list) {
 }
 
 /**
- * @param prop
- * @param timetype
- * @param limit
+ * @param {string} prop
+ * @param {string} timetype
+ * @param {number} limit
+ * @returns {MessageEmbed}
  */
 async function getLB(prop, timetype, limit) {
     let res = "";

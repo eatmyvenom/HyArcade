@@ -13,9 +13,9 @@ const Account = require("./classes/account");
 const AccountCreator = require("./mongo/AccountCreator");
 const webRequest = require("./request/webRequest");
 const Runtime = require("./Runtime");
+const process = require("process");
 const args = process.argv;
 const logger = utils.logger;
-const process = require("process");
 
 /**
  * Add a new account to the acclist
@@ -28,7 +28,7 @@ async function newAcc() {
 }
 
 /**
- * @param database
+ * @param {object} database
  */
 async function mNewAcc(database) {
     let player = args[3];
@@ -182,7 +182,7 @@ async function log(args) {
 /**
  * Log a normal list from arguments
  *
- * @param {Stringp[]} args
+ * @param {string[]} args
  */
 async function logD(args) {
     let logName = args[3];
@@ -203,7 +203,7 @@ async function getUUIDCli(args) {
 }
 
 /**
- * @param args
+ * @param {string[]} args
  */
 async function addGuildMembers(args) {
     let uuid = args[3];
@@ -211,7 +211,7 @@ async function addGuildMembers(args) {
 }
 
 /**
- * @param args
+ * @param {string[]} args
  */
 async function addGIDMembers(args) {
     let uuid = args[3];
@@ -219,7 +219,7 @@ async function addGIDMembers(args) {
 }
 
 /**
- *
+ * @returns {object}
  */
 async function getServerStatus() {
     let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");

@@ -16,10 +16,13 @@ app.use(compression());
 
 
 /**
- * @param request
- * @param response
+ * @param {express.Response} res
+ * @param {express.Request} req
  */
-async function callback(request, response) {
+async function callback(res, req) {
+    let request = req.req;
+    let response = res.res;
+
     let url = new URL(request.url, `https://${request.headers.host}`);
     let endpoint = url.pathname.slice(1);
     let mod = urlModules[endpoint];

@@ -6,6 +6,7 @@ const logger = require("hyarcade-logger");
 const fs = require("fs/promises");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
  * Send text to a discord webhook
@@ -32,8 +33,8 @@ async function sendToDiscord(content = "", webhookID = config.webhook.id, webhoo
 }
 
 /**
- * @param content
- * @param webhook
+ * @param {string} content
+ * @param {object} webhook
  */
 async function sendBasic(content, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
@@ -46,9 +47,9 @@ async function sendBasic(content, webhook) {
 }
 
 /**
- * @param content
- * @param embed
- * @param webhook
+ * @param {string} content
+ * @param {Discord.MessageEmbed} embed
+ * @param {object} webhook
  */
 async function sendBasicEmbed(content, embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
@@ -81,8 +82,8 @@ async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webh
 }
 
 /**
- * @param embed
- * @param webhook
+ * @param {MessageEmbed} embed
+ * @param {object} webhook
  */
 async function sendEmbed(embed, webhook) {
     let hook = new Discord.WebhookClient(webhook.id, webhook.token);
@@ -193,7 +194,7 @@ function generateEmbed(list) {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genPGEmbed() {
     let alltime = await listUtils.stringLB("wins", 25);
@@ -210,7 +211,7 @@ async function genPGEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genTOKillEmbed() {
     let alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
@@ -225,7 +226,7 @@ async function genTOKillEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genPGWEmbed() {
     let week = await listUtils.stringLBDiff("wins", 25, "weekly");
@@ -240,7 +241,7 @@ async function genPGWEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genPGMEmbed() {
     let month = await listUtils.stringLBDiff("wins", 25, "monthly");
@@ -255,7 +256,7 @@ async function genPGMEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genHSEmbed() {
     let alltime = await listUtils.stringLB("hypixelSaysWins", 25);
@@ -272,7 +273,7 @@ async function genHSEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genHSWEmbed() {
     let week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
@@ -287,7 +288,7 @@ async function genHSWEmbed() {
 }
 
 /**
- *
+ * @returns {Discord.MessageEmbed}
  */
 async function genHSMEmbed() {
     let month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
@@ -302,32 +303,36 @@ async function genHSMEmbed() {
 }
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function wComp(b, a) {
     return (a?.miniWallsWins ?? 0) - (b?.miniWallsWins ?? 0);
 }
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function kComp(b, a) {
     return (a?.miniWalls?.kills ?? 0) - (b?.miniWalls?.kills ?? 0);
 }
 
 /**
- * @param b
- * @param a
+ * @param {Account} b
+ * @param {Account} a
+ * @returns {number}
  */
 function dComp(b, a) {
     return (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.deaths ?? 0);
 }
 
 /**
- * @param n
- * @param o
+ * @param {Account} n
+ * @param {Account} o
+ * @returns {Account}
  */
 function cb(n, o) {
     o.miniWallsWins = (n?.miniWallsWins ?? 0) - (o?.miniWallsWins ?? 0);
@@ -340,14 +345,16 @@ function cb(n, o) {
 }
 
 /**
- * @param n
+ * @param {Account} n
+ * @returns {Account}
  */
 function rcb(n) {
     return n;
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 async function hackerTransformer(list) {
     let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
@@ -358,7 +365,8 @@ async function hackerTransformer(list) {
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 function top150Transformer(list) {
     list = list.sort(wComp);
@@ -367,7 +375,8 @@ function top150Transformer(list) {
 }
 
 /**
- * @param list
+ * @param {Account[]} list
+ * @returns {Account[]}
  */
 async function ratioTransformer(list) {
     list = await hackerTransformer(list);
@@ -376,9 +385,10 @@ async function ratioTransformer(list) {
 }
 
 /**
- * @param prop
- * @param timetype
- * @param limit
+ * @param {string} prop
+ * @param {string} timetype
+ * @param {number} limit
+ * @returns {Discord.MessageEmbed}
  */
 async function getLB(prop, timetype, limit) {
     let res = "";
@@ -601,15 +611,17 @@ async function getLB(prop, timetype, limit) {
 }
 
 /**
- * @param prop
- * @param a
+ * @param {string} prop
+ * @param {number} a
+ * @returns {Discord.MessageEmbed}
  */
 async function getMW(prop, a) {
     return await getLB(prop, "l", a);
 }
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {string}
  */
 function formatNum(number) {
     return Intl.NumberFormat("en").format(number);

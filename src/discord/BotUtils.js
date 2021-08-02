@@ -3,13 +3,12 @@ const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
 const Logger = require("hyarcade-logger");
+const {
+    MessageEmbed
+} = require("discord.js");
 
 module.exports = class BotUtils {
     static isBotInstance = false;
-
-    /**
-     * @type {Client}
-     */
     static client;
     static botMode;
     static tus = [];

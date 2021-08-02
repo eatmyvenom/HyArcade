@@ -5,7 +5,8 @@ const Command = require("../../classes/Command");
 const utils = require("../../utils");
 
 /**
- * @param game
+ * @param {string} game
+ * @returns {object}
  */
 async function getFields(game) {
     let counts = await utils.readJSON("./gameCounts.json");

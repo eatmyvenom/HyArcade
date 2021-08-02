@@ -7,7 +7,8 @@ const CommandResponse = require("../Utils/CommandResponse");
 const Util = require("util");
 
 /**
- * @param str
+ * @param {string} str
+ * @returns {string}
  */
 function safeEval(str) {
     return Function("c", "r", "bu", "accs", "m", "\"use strict\";return (" + str + ")");

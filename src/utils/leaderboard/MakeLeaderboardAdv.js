@@ -9,7 +9,7 @@ const {
  * @param {string} timetype
  * @param {number} maxamnt Max amount of players in
  * @param {Function} callback Callback used to get the stats out of each account
- * @returns
+ * @returns {object} The sorted list
  */
 module.exports = async function mklistAdv(name, timetype, maxamnt, callback) {
     let newlist, oldlist;

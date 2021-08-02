@@ -12,7 +12,8 @@
         "archive": "node . archive",
         "test": "node . save",
         "lint": "eslint ./src --fix",
-        "beautify": "js-beautify -r ./*"
+        "beautify": "find ./src -type f -name '*.js' -exec js-beautify -r {} +",
+        "beautifyhtml": "find ./html -type f -name '*.js' -exec js-beautify -r {} +"
     },
     "author": "EatMyVenom",
     "license": "MPL-2.0",

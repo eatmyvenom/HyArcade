@@ -1,6 +1,7 @@
 const {
     MessageEmbed
 } = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
 const {
     getFromDB
@@ -13,73 +14,74 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 
 /**
- * @param acc
+ * @param {Account} acc
+ * @returns {string}
  */
 function getGames(acc) {
     let games = [{
-        name: "Party games",
-        wins: acc.wins
-    },
-    {
-        name: "HITW",
-        wins: acc.hitwWins
-    },
-    {
-        name: "Farm hunt",
-        wins: acc.farmhuntWins
-    },
-    {
-        name: "Hypixel says",
-        wins: acc.hypixelSaysWins
-    },
-    {
-        name: "Mini walls",
-        wins: acc.miniWallsWins
-    },
-    {
-        name: "Football",
-        wins: acc.footballWins
-    },
-    {
-        name: "Ender spleef",
-        wins: acc.enderSpleefWins
-    },
-    {
-        name: "Dragon wars",
-        wins: acc.dragonWarsWins
-    },
-    {
-        name: "Bounty hunters",
-        wins: acc.bountyHuntersWins
-    },
-    {
-        name: "Blocking dead",
-        wins: acc.blockingDeadWins
-    },
-    {
-        name: "Throw out",
-        wins: acc.throwOutWins
-    },
-    {
-        name: "Hide and seek",
-        wins: acc.hideAndSeekWins
-    },
-    {
-        name: "Zombies",
-        wins: acc.zombiesWins
-    },
-    {
-        name: "Galaxy wars",
-        wins: acc.galaxyWarsWins
-    },
-    {
-        name: "Pixel painters",
-        wins: acc.pixelPaintersWins
-    },
-    {
-        name: "Seasonal",
-        wins: acc.simTotal
-    },
+            name: "Party games",
+            wins: acc.wins
+        },
+        {
+            name: "HITW",
+            wins: acc.hitwWins
+        },
+        {
+            name: "Farm hunt",
+            wins: acc.farmhuntWins
+        },
+        {
+            name: "Hypixel says",
+            wins: acc.hypixelSaysWins
+        },
+        {
+            name: "Mini walls",
+            wins: acc.miniWallsWins
+        },
+        {
+            name: "Football",
+            wins: acc.footballWins
+        },
+        {
+            name: "Ender spleef",
+            wins: acc.enderSpleefWins
+        },
+        {
+            name: "Dragon wars",
+            wins: acc.dragonWarsWins
+        },
+        {
+            name: "Bounty hunters",
+            wins: acc.bountyHuntersWins
+        },
+        {
+            name: "Blocking dead",
+            wins: acc.blockingDeadWins
+        },
+        {
+            name: "Throw out",
+            wins: acc.throwOutWins
+        },
+        {
+            name: "Hide and seek",
+            wins: acc.hideAndSeekWins
+        },
+        {
+            name: "Zombies",
+            wins: acc.zombiesWins
+        },
+        {
+            name: "Galaxy wars",
+            wins: acc.galaxyWarsWins
+        },
+        {
+            name: "Pixel painters",
+            wins: acc.pixelPaintersWins
+        },
+        {
+            name: "Seasonal",
+            wins: acc.simTotal
+        },
     ];
 
     games = games.sort((a, b) => {
@@ -108,8 +110,9 @@ function getGames(acc) {
 }
 
 /**
- * @param acc1
- * @param acc2
+ * @param {Account} acc1
+ * @param {Account} acc2
+ * @returns {Account}
  */
 function getTimedAccount(acc1, acc2) {
     acc1.wins = (acc1.wins ?? 0) - (acc2?.wins ?? 0);

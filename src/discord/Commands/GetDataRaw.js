@@ -7,8 +7,9 @@ const InteractionUtils = require("../interactions/InteractionUtils");
 const Util = require("util");
 
 /**
- * @param o
- * @param s
+ * @param {object} o
+ * @param {string} s
+ * @returns {*}
  */
 function getProp(o, s) {
     s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
