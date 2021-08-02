@@ -21,7 +21,7 @@ async function load() {
     switch(game) {
     case "pg": {
         mainTitle.innerHTML = "Party games";
-        address.innerHTML = '<a href="https://discord.gg/kVSdPevCwm">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "wins";
         daily.title = "Daily wins";
@@ -31,7 +31,7 @@ async function load() {
 
     case "hs": {
         mainTitle.innerHTML = "Hypixel Says";
-        address.innerHTML = '<a href="https://discord.gg/GzjN5c4zze">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/GzjN5c4zze\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hypixelSaysWins";
         daily.title = "Daily wins";
@@ -128,7 +128,7 @@ async function load() {
 
     case "fb": {
         mainTitle.innerHTML = "Football";
-        address.innerHTML = '<a href="https://discord.gg/P5c5RSG2yF">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/P5c5RSG2yF\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         daily.title = "Daily wins";
 
@@ -829,7 +829,7 @@ async function handleLifetimes() {
  * @param {Element} element 
  */
 async function getLeaderboards(element) {
-    let lb = []
+    let lb = [];
     if(element.hasAttribute("extras")) {
         console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`)
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
@@ -927,41 +927,9 @@ async function getDaily(element, timetype) {
 
     element.innerHTML =
         "<h2>" +
-        element.getAttribute("title") +
+        element.getAttribute("title").toString() +
         "</h2>" +
-        text
-}
-
-function formatData(accounts, sorter, printer) {
-    let str = "";
-    accounts.sort(sorter);
-    accounts.reverse();
-    let len = Math.min(accounts.length, maxLength);
-    for(let i = 0; i < len; i++) {
-        let acc = accounts[i];
-        str += `${printer(i + 1, acc)}`;
-    }
-    return str;
-}
-
-function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
-    let str = "";
-    let timedAccounts = [];
-    for(let i = 0; i < oldAccounts.length; i++) {
-        let oldAcc = oldAccounts[i];
-        let acc = accounts.find((a) => oldAcc.uuid == a.uuid);
-        if(acc == undefined) continue;
-        timedAccounts.push(subtracter(acc, oldAcc));
-    }
-
-    timedAccounts.sort(sorter);
-    timedAccounts.reverse();
-    let len = Math.min(accounts.length, maxLength);
-    for(let i = 0; i < len; i++) {
-        let acc = timedAccounts[i];
-        str += `${printer(i + 1, acc)}`;
-    }
-    return str;
+        text;
 }
 
 function formatLine(pos, name, value, uuid) {
@@ -972,11 +940,6 @@ function formatLine(pos, name, value, uuid) {
     } else {
         return "";
     }
-}
-
-function maxValChange(val) {
-    maxLength = val;
-    refresh();
 }
 
 function formatNum(number) {
