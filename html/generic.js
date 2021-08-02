@@ -1,6 +1,9 @@
 let maxLength = 25;
 let interval;
 
+/**
+ *
+ */
 async function load() {
     let game = window.location.pathname.slice(0, -5);
     game = game.substring(game.lastIndexOf("/") + 1);
@@ -57,7 +60,7 @@ async function load() {
 
     case "fh": {
         mainTitle.innerHTML = "Farm hunt";
-        address.innerHTML = '<a href="https://discord.gg/fVgcvhtaWk">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/fVgcvhtaWk\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "farmhuntWins";
         daily.title = "Daily wins";
@@ -81,7 +84,7 @@ async function load() {
 
     case "hitw": {
         mainTitle.innerHTML = "Hole in the wall";
-        address.innerHTML = '<a href="https://discord.gg/Gh24vw5b54">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/Gh24vw5b54\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hitwWins";
         daily.title = "Daily wins";
@@ -190,7 +193,7 @@ async function load() {
 
     case "es": {
         mainTitle.innerHTML = "Ender spleef";
-        address.innerHTML = '<a href="https://discord.gg/9xRhumdEyq">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "enderSpleefWins";
         daily.title = "Daily wins";
@@ -200,7 +203,7 @@ async function load() {
 
     case "to": {
         mainTitle.innerHTML = "Throw out";
-        address.innerHTML = '<a href="https://discord.gg/2sMpvqtJYh">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/2sMpvqtJYh\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "throwOutWins";
         daily.title = "Daily wins";
@@ -242,7 +245,7 @@ async function load() {
 
     case "gw": {
         mainTitle.innerHTML = "Galaxy Wars";
-        address.innerHTML = '<a href="https://discord.gg/v9ZwqyZfYj">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/v9ZwqyZfYj\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "galaxyWarsWins";
         daily.title = "Daily wins";
@@ -284,7 +287,7 @@ async function load() {
 
     case "dw": {
         mainTitle.innerHTML = "Dragon Wars";
-        address.innerHTML = '<a href="https://discord.gg/7ccREnQVuU">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/7ccREnQVuU\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "dragonWarsWins";
         daily.title = "Daily wins";
@@ -370,7 +373,7 @@ async function load() {
 
     case "bd": {
         mainTitle.innerHTML = "Blocking Dead";
-        address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "blockingDeadWins";
         daily.title = "Daily wins";
@@ -412,7 +415,7 @@ async function load() {
 
     case "hns": {
         mainTitle.innerHTML = "Hide and Seek";
-        address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hideAndSeekWins";
         daily.title = "Daily wins";
@@ -467,7 +470,7 @@ async function load() {
 
     case "arc": {
         mainTitle.innerHTML = "Arcade overall";
-        address.innerHTML = '<a href="https://discord.gg/J6UMkQrjpV">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/J6UMkQrjpV\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "arcadeWins";
         daily.title = "Daily wins";
@@ -516,7 +519,7 @@ async function load() {
 
     case "z": {
         mainTitle.innerHTML = "Zombies";
-        address.innerHTML = '<a href="https://discord.gg/2RDCTPWqVT">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/2RDCTPWqVT\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "zombiesWins";
         daily.title = "Daily wins";
@@ -619,7 +622,7 @@ async function load() {
 
     case "mw": {
         mainTitle.innerHTML = "Mini walls";
-        address.innerHTML = '<a href="https://discord.gg/a3mFVpMPaf">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/a3mFVpMPaf\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "miniWallsWins";
         daily.title = "Daily wins";
@@ -700,7 +703,7 @@ async function load() {
 
     case "seasonal": {
         mainTitle.innerHTML = "Seasonal Arcade games";
-        address.innerHTML = '<a href="https://discord.gg/Nq6ytH7sBk">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "simTotal";
         daily.title = "Daily wins";
@@ -767,7 +770,7 @@ async function load() {
 
     case "ctw": {
         mainTitle.innerHTML = "Capture the wool";
-        address.innerHTML = '<a href="https://discord.gg/3B55bUcVKH">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/3B55bUcVKH\">Discord Invite</a>";
         lifetime.title = "Lifetime Wool";
         lifetime.id = "ctwWoolCaptured";
         daily.title = "Daily wool";
@@ -805,6 +808,9 @@ async function load() {
     interval = setInterval(refresh, 25000);
 }
 
+/**
+ *
+ */
 async function refresh() {
     let time = document.querySelector("time");
     let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
@@ -817,6 +823,9 @@ async function refresh() {
     await handleTimed("day");
 }
 
+/**
+ *
+ */
 async function handleLifetimes() {
     let elements = document.querySelectorAll(".life");
     for(let e of elements) {
@@ -831,23 +840,23 @@ async function handleLifetimes() {
 async function getLeaderboards(element) {
     let lb = [];
     if(element.hasAttribute("extras")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
         lb = await raw.json();
     } else if(element.hasAttribute("seasonalWins")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
         lb = await raw.json();
     } else if(element.hasAttribute("zombies")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies`);
         lb = await raw.json();
     } else if(element.hasAttribute("miniWalls")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`);
         lb = await raw.json();
     } else {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`);
         lb = await raw.json();
     }
@@ -871,10 +880,13 @@ async function getLeaderboards(element) {
         "<h2>" +
         element.getAttribute("title") +
         "</h2>" +
-        text
+        text;
 
 }
 
+/**
+ * @param timetype
+ */
 async function handleTimed(timetype) {
     let elements = document.querySelectorAll(`.${timetype}`);
     for(let e of elements) {
@@ -885,27 +897,28 @@ async function handleTimed(timetype) {
 /**
  * 
  * @param {Element} element 
+ * @param timetype
  */
 async function getDaily(element, timetype) {
-    let lb = []
+    let lb = [];
     if(element.hasAttribute("extras")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`);
         lb = await raw.json();
     } else if(element.hasAttribute("seasonalWins")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
         lb = await raw.json();
     } else if(element.hasAttribute("zombies")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies&time=${timetype}`);
         lb = await raw.json();
     } else if(element.hasAttribute("miniWalls")) {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`);
         lb = await raw.json();
     } else {
-        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`)
+        console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`);
         let raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`);
         lb = await raw.json();
     }
@@ -927,11 +940,17 @@ async function getDaily(element, timetype) {
 
     element.innerHTML =
         "<h2>" +
-        element.getAttribute("title").toString() +
+        element.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
         "</h2>" +
         text;
 }
 
+/**
+ * @param pos
+ * @param name
+ * @param value
+ * @param uuid
+ */
 function formatLine(pos, name, value, uuid) {
     let longName = (pos + ") " + name + "                         ").slice(0, 21);
     longName = `<a href="player.html?q=${uuid}">${longName}</a>`;
@@ -942,6 +961,9 @@ function formatLine(pos, name, value, uuid) {
     }
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     let str = new Number(number);
     if(number == undefined) {

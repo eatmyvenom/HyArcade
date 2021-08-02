@@ -1,5 +1,9 @@
 var maxLength = 50;
 
+/**
+ * @param ext
+ * @param clazzz
+ */
 function addstuff(ext, clazzz) {
     fetch("https://eatmyvenom.me/share/" + ext, {
         cache: "no-store"
@@ -24,6 +28,9 @@ function addstuff(ext, clazzz) {
     });
 }
 
+/**
+ *
+ */
 function main() {
     addstuff("pgd.txt", ".daily");
     addstuff("pg.txt", ".lb");
@@ -34,6 +41,9 @@ function main() {
     addstuff("hynums.txt", ".counts");
 }
 
+/**
+ * @param sel
+ */
 function toggleDisplay(sel) {
     var e = document.querySelector(sel);
     if(e.style.display === "none") {
@@ -43,6 +53,9 @@ function toggleDisplay(sel) {
     }
 }
 
+/**
+ * @param sel
+ */
 function toggleBtn(sel) {
     var e = document.querySelector(sel);
     if(e.hasAttribute("off")) {
@@ -52,6 +65,9 @@ function toggleBtn(sel) {
     }
 }
 
+/**
+ *
+ */
 function toggleCombined() {
     toggleDisplay(".lbh");
     toggleDisplay(".lb");
@@ -60,6 +76,9 @@ function toggleCombined() {
     toggleBtn(".lbb");
 }
 
+/**
+ *
+ */
 function toggleGuilds() {
     toggleDisplay(".gldh");
     toggleDisplay(".guild");
@@ -68,6 +87,9 @@ function toggleGuilds() {
     toggleBtn(".gldb");
 }
 
+/**
+ *
+ */
 function toggleNormal() {
     toggleDisplay(".acch");
     toggleDisplay(".accounts");
@@ -76,6 +98,9 @@ function toggleNormal() {
     toggleBtn(".accb");
 }
 
+/**
+ * @param value
+ */
 function maxValChange(value) {
     maxLength = value;
 }

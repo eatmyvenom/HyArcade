@@ -1,5 +1,8 @@
 let maxLength = 25;
 
+/**
+ *
+ */
 async function load() {
     let game = window.location.pathname.slice(0, -5);
     game = game.substring(game.lastIndexOf("/") + 1);
@@ -18,7 +21,7 @@ async function load() {
     switch(game) {
     case "pg": {
         mainTitle.innerHTML = "Party games";
-        address.innerHTML = '<a href="https://discord.gg/kVSdPevCwm">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "wins";
         daily.title = "Daily wins";
@@ -28,7 +31,7 @@ async function load() {
 
     case "hs": {
         mainTitle.innerHTML = "Hypixel Says";
-        address.innerHTML = '<a href="https://discord.gg/GzjN5c4zze">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/GzjN5c4zze\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hypixelSaysWins";
         daily.title = "Daily wins";
@@ -38,7 +41,7 @@ async function load() {
 
     case "fh": {
         mainTitle.innerHTML = "Farm hunt";
-        address.innerHTML = '<a href="https://discord.gg/fVgcvhtaWk">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/fVgcvhtaWk\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "farmhuntWins";
         daily.title = "Daily wins";
@@ -48,7 +51,7 @@ async function load() {
 
     case "hitw": {
         mainTitle.innerHTML = "Hole in the wall";
-        address.innerHTML = '<a href="https://discord.gg/Gh24vw5b54">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/Gh24vw5b54\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hitwWins";
         daily.title = "Daily wins";
@@ -58,7 +61,7 @@ async function load() {
 
     case "fb": {
         mainTitle.innerHTML = "Football";
-        address.innerHTML = '<a href="https://discord.gg/P5c5RSG2yF">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/P5c5RSG2yF\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         daily.title = "Daily wins";
 
@@ -69,7 +72,7 @@ async function load() {
 
     case "es": {
         mainTitle.innerHTML = "Ender spleef";
-        address.innerHTML = '<a href="https://discord.gg/9xRhumdEyq">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "enderSpleefWins";
         daily.title = "Daily wins";
@@ -79,7 +82,7 @@ async function load() {
 
     case "to": {
         mainTitle.innerHTML = "Throw out";
-        address.innerHTML = '<a href="https://discord.gg/2sMpvqtJYh">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/2sMpvqtJYh\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "throwOutWins";
         daily.title = "Daily wins";
@@ -89,7 +92,7 @@ async function load() {
 
     case "gw": {
         mainTitle.innerHTML = "Galaxy Wars";
-        address.innerHTML = '<a href="https://discord.gg/v9ZwqyZfYj">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/v9ZwqyZfYj\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "galaxyWarsWins";
         daily.title = "Daily wins";
@@ -99,7 +102,7 @@ async function load() {
 
     case "dw": {
         mainTitle.innerHTML = "Dragon Wars";
-        address.innerHTML = '<a href="https://discord.gg/7ccREnQVuU">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/7ccREnQVuU\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "dragonWarsWins";
         daily.title = "Daily wins";
@@ -119,7 +122,7 @@ async function load() {
 
     case "bd": {
         mainTitle.innerHTML = "Blocking Dead";
-        address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "blockingDeadWins";
         daily.title = "Daily wins";
@@ -129,7 +132,7 @@ async function load() {
 
     case "hns": {
         mainTitle.innerHTML = "Hide and Seek";
-        address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "hideAndSeekWins";
         daily.title = "Daily wins";
@@ -139,7 +142,7 @@ async function load() {
 
     case "arc": {
         mainTitle.innerHTML = "Arcade overall";
-        address.innerHTML = '<a href="https://discord.gg/J6UMkQrjpV">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/J6UMkQrjpV\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "arcadeWins";
         daily.title = "Daily wins";
@@ -191,7 +194,7 @@ async function load() {
 
     case "z": {
         mainTitle.innerHTML = "Zombies";
-        address.innerHTML = '<a href="https://discord.gg/2RDCTPWqVT">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/2RDCTPWqVT\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "zombiesWins";
         daily.title = "Daily wins";
@@ -210,7 +213,7 @@ async function load() {
 
     case "mw": {
         mainTitle.innerHTML = "Mini walls";
-        address.innerHTML = '<a href="https://discord.gg/a3mFVpMPaf">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/a3mFVpMPaf\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "miniWallsWins";
         daily.title = "Daily wins";
@@ -220,7 +223,7 @@ async function load() {
 
     case "seasonal": {
         mainTitle.innerHTML = "Seasonal Arcade games";
-        address.innerHTML = '<a href="https://discord.gg/Nq6ytH7sBk">Discord Invite</a>';
+        address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
         lifetime.title = "Lifetime wins";
         lifetime.id = "simWins";
         daily.title = "Daily wins";
@@ -246,6 +249,9 @@ async function load() {
     interval = setInterval(refresh, 25000);
 }
 
+/**
+ *
+ */
 async function refresh() {
     let time = document.querySelector("time");
     let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
@@ -262,6 +268,9 @@ async function refresh() {
     await handleTimed("day", accdata);
 }
 
+/**
+ * @param accdata
+ */
 async function handleLifetimes(accdata) {
     accdata = JSON.parse(accdata);
     let elements = document.querySelectorAll(".life");
@@ -386,6 +395,10 @@ async function handleLifetimes(accdata) {
     }
 }
 
+/**
+ * @param timetype
+ * @param accdata
+ */
 async function handleTimed(timetype, accdata) {
     let accold = await fetch(`https://hyarcade.xyz/resources/guild.${timetype}.json`, {
         cache: "no-store"
@@ -604,6 +617,11 @@ async function handleTimed(timetype, accdata) {
     }
 }
 
+/**
+ * @param accounts
+ * @param sorter
+ * @param printer
+ */
 function formatData(accounts, sorter, printer) {
     let str = "";
     accounts.sort(sorter);
@@ -616,6 +634,13 @@ function formatData(accounts, sorter, printer) {
     return str;
 }
 
+/**
+ * @param accounts
+ * @param oldAccounts
+ * @param subtracter
+ * @param sorter
+ * @param printer
+ */
 function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
     let str = "";
     let timedAccounts = [];
@@ -635,6 +660,11 @@ function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
     return str;
 }
 
+/**
+ * @param pos
+ * @param name
+ * @param value
+ */
 function formatLine(pos, name, value) {
     let longName = (pos + ") " + name + "                         ").slice(0, 21);
     if(value > 0) {
@@ -644,10 +674,16 @@ function formatLine(pos, name, value) {
     }
 }
 
+/**
+ * @param val
+ */
 function maxValChange(val) {
     maxLength = val;
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     let str = new Number(number);
     if(number == undefined) {
@@ -657,12 +693,18 @@ function formatNum(number) {
     }
 }
 
+/**
+ *
+ */
 function gainFocus() {
     console.log("Focus gained");
     clearInterval(interval);
     interval = setInterval(refresh, 25000);
 }
 
+/**
+ *
+ */
 function loseFocus() {
     console.log("Focus lost");
     clearInterval(interval);

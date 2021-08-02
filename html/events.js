@@ -1,12 +1,18 @@
 let maxLength = 25;
 let interval;
 
+/**
+ *
+ */
 async function load() {
     await refresh();
     clearInterval(interval);
     interval = setInterval(refresh, 25000);
 }
 
+/**
+ *
+ */
 async function refresh() {
     let time = document.querySelector("time");
     let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
@@ -22,6 +28,9 @@ async function refresh() {
     await formatPage(events);
 }
 
+/**
+ * @param events
+ */
 async function formatPage(events) {
     events = JSON.parse(events);
     console.log(events);
@@ -33,6 +42,9 @@ async function formatPage(events) {
     content.innerHTML = newContent;
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     let str = new Number(number);
     if(number == undefined) {

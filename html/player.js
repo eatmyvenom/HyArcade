@@ -2,28 +2,47 @@ var playername = undefined;
 let urlParams = undefined;
 let uuid = undefined;
 
+/**
+ * @param name
+ */
 function setName(name) {
     playername = name;
     refresh();
 }
 
+/**
+ * @param name
+ * @param html
+ */
 function setHtmlByName(name, html) {
     document.getElementById(name).innerHTML = html.replace(/undefined/g, "0");
 }
 
+/**
+ *
+ */
 function refresh() {
     handleData()
         .then(() => console.log("Data updated!"));
 }
 
+/**
+ *
+ */
 function home() {
     window.location.href = ".";
 }
 
+/**
+ * @param time
+ */
 function formatTime(time) {
     return new Date(time).toLocaleString();
 }
 
+/**
+ * @param number
+ */
 function formatNum(number) {
     let str = new Number(number);
     if(number == undefined) {
@@ -33,6 +52,9 @@ function formatNum(number) {
     }
 }
 
+/**
+ * @param uuid
+ */
 function setIcon(uuid) {
     var link = document.querySelector("link[rel~='icon']");
     if(!link) {
@@ -43,6 +65,9 @@ function setIcon(uuid) {
     link.href = "https://crafatar.com/avatars/" + uuid + "?overlay";
 }
 
+/**
+ * @param data
+ */
 function displayData(data) {
     console.log(data);
     let ver = data.version ? data.version : "1.8.9";
@@ -94,6 +119,9 @@ function displayData(data) {
     setIcon(data.uuid);
 }
 
+/**
+ *
+ */
 async function handleData() {
     let rawjson;
     if(playername.length > 16) {
@@ -125,6 +153,9 @@ async function handleData() {
     }
 }
 
+/**
+ *
+ */
 function loadPage() {
     let queryString = window.location.search;
     urlParams = new URLSearchParams(queryString);
