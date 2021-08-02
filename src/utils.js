@@ -46,8 +46,8 @@ function winsSorter(element1, element2) {
 function daytime() {
     return cfg.showDaytime ?
         Date()
-        .replace(/.*20[0-9][0-9] /, "")
-        .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
+            .replace(/.*20[0-9][0-9] /, "")
+            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
         "";
 }
 
