@@ -245,8 +245,7 @@ async function load() {
     }
 
     await refresh();
-    clearInterval(interval);
-    interval = setInterval(refresh, 25000);
+    setInterval(refresh, 25000);
 }
 
 /**
@@ -278,7 +277,7 @@ async function handleLifetimes(accdata) {
         if(e.hasAttribute("extras")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatData(
                     accdata,
@@ -300,7 +299,7 @@ async function handleLifetimes(accdata) {
         } else if(e.hasAttribute("seasonalWins")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatData(
                     accdata,
@@ -331,7 +330,7 @@ async function handleLifetimes(accdata) {
         } else if(e.hasAttribute("zombies")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatData(
                     accdata,
@@ -353,7 +352,7 @@ async function handleLifetimes(accdata) {
         } else if(e.hasAttribute("miniWalls")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatData(
                     accdata,
@@ -375,7 +374,7 @@ async function handleLifetimes(accdata) {
         } else {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatData(
                     accdata,
@@ -412,7 +411,7 @@ async function handleTimed(timetype, accdata) {
         if(e.hasAttribute("extras")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatTimed(
                     accdata,
@@ -452,7 +451,7 @@ async function handleTimed(timetype, accdata) {
         } else if(e.hasAttribute("seasonalWins")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatTimed(
                     accdata,
@@ -502,7 +501,7 @@ async function handleTimed(timetype, accdata) {
         } else if(e.hasAttribute("zombies")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatTimed(
                     accdata,
@@ -542,7 +541,7 @@ async function handleTimed(timetype, accdata) {
         } else if(e.hasAttribute("miniWalls")) {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatTimed(
                     accdata,
@@ -582,7 +581,7 @@ async function handleTimed(timetype, accdata) {
         } else {
             e.innerHTML =
                 "<h2>" +
-                e.getAttribute("title") +
+                e.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
                 "</h2>" +
                 formatTimed(
                     accdata,
@@ -675,13 +674,6 @@ function formatLine(pos, name, value) {
 }
 
 /**
- * @param val
- */
-function maxValChange(val) {
-    maxLength = val;
-}
-
-/**
  * @param number
  */
 function formatNum(number) {
@@ -693,24 +685,4 @@ function formatNum(number) {
     }
 }
 
-/**
- *
- */
-function gainFocus() {
-    console.log("Focus gained");
-    clearInterval(interval);
-    interval = setInterval(refresh, 25000);
-}
-
-/**
- *
- */
-function loseFocus() {
-    console.log("Focus lost");
-    clearInterval(interval);
-    interval = setInterval(refresh, 120000);
-}
-
-window.addEventListener("focus", gainFocus);
-window.addEventListener("blur", loseFocus);
 window.addEventListener("load", load);

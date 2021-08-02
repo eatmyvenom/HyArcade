@@ -878,7 +878,7 @@ async function getLeaderboards(element) {
 
     element.innerHTML =
         "<h2>" +
-        element.getAttribute("title") +
+        element.getAttribute("title").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;") +
         "</h2>" +
         text;
 
