@@ -4,7 +4,6 @@ const cfg = require("../Config").fromJSON();
 let force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
-const Buffer = require("buffer");
 const Account = require("hyarcade-requests/types/Account");
 
 /**
@@ -15,7 +14,7 @@ const Account = require("hyarcade-requests/types/Account");
  */
 module.exports = async function updateAccounts(accounts) {
     accounts.sort(utils.winsSorter);
-    await fs.writeFile("starttime", Buffer.from("" + Date.now()));
+    await fs.writeFile("starttime", ("" + Date.now()));
 
     let oldAccs = await utils.readDB("accounts");
 
