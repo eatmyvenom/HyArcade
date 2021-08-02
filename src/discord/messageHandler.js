@@ -189,7 +189,7 @@ async function addIGNs(msg) {
  * @returns {object}
  */
 async function sanitizeCmdOpt(cmdResponse) {
-    if(cmdResponse.res.length > 2000) {
+    if(cmdResponse.res?.length > 2000) {
         cmdResponse.res = cmdResponse.res.slice(0, 2000);
         if(cmdResponse.res.slice(0, 3) == "```") {
             cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
