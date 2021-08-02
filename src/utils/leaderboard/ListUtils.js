@@ -44,5 +44,5 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
         let name = list[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
-    return str.replace(/_/g, "\\_");
+    return str.replace(/\\?_/g, "\\_");
 };

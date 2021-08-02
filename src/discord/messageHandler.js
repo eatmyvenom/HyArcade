@@ -39,7 +39,7 @@ async function logError(msg, e) {
     logger.err("Error from - " + msg.content);
     logger.err(e.toString());
     logger.err(e.stack);
-    await Webhooks.logHook.send("Error from - " + msg.content.replace(/`/g, "\\`"));
+    await Webhooks.logHook.send("Error from - " + msg.content.replace(/\\?`/g, "\\`"));
     await Webhooks.errHook.send(e.toString());
 }
 
