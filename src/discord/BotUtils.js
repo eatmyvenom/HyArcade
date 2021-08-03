@@ -88,8 +88,7 @@ module.exports = class BotUtils {
         let embed = await AdvancedEmbeds.getStats(
             acc,
             game,
-            BotUtils.client.user.avatarURL(),
-            BotUtils.botMode
+            false
         );
         return embed;
     }

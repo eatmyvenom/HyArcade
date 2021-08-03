@@ -653,7 +653,7 @@ module.exports = class AdvancedEmbeds {
         return embed;
     }
 
-    static async getStats(acc, game, avatar, mode, hasPerms = false) {
+    static async getStats(acc, game, hasPerms = false) {
         let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
 
         let lvl = Math.round(acc.level * 100) / 100;

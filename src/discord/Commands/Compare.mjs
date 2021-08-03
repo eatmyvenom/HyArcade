@@ -22,6 +22,11 @@ export let Compare = new Command("compare", ["*"], async (args, rawMsg, interact
         acc2 = await InteractionUtils.resolveAccount(interaction, "player2");
         channel = interaction.channel;
     }
-    let embed = AdvancedEmbeds.compareStats(acc1, acc2, game, channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS"));
+
+    let hasEmojiPerms = false;
+
+    if(!interaction && channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
+
+    let embed = AdvancedEmbeds.compareStats(acc1, acc2, game, hasEmojiPerms);
     return { res: "", embed: embed };
 });
