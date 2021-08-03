@@ -7,7 +7,6 @@ const InteractionUtils = require("./InteractionUtils");
 const {
     MessageEmbed,
     CommandInteraction,
-    Interaction
 } = require("discord.js");
 
 const EZ = require("../Commands/EZ");
@@ -38,22 +37,8 @@ const PBall = require("../Commands/PBall");
 let Commands = null;
 
 /**
- * 
- * @param {CommandInteraction} i 
- * @param {string} a 
- * @returns {*}
- */
-function getArg(i, a) {
-    let v = i.options.get(a);
-    if(v != undefined && v != null) {
-        return (`${v.value}`).trim();
-    }
-    return undefined;
-}
-
-/**
  *
- * @param {Interaction} interaction
+ * @param {CommandInteraction} interaction
  * @returns {CommandResponse | object}
  */
 module.exports = async (interaction) => {
@@ -79,63 +64,55 @@ module.exports = async (interaction) => {
         Commands.Compare = Compare;
     }
 
-    if(!interaction.isCommand()) return;
     if(interaction.guildID == "808077828842455090") return;
     let authorID = interaction.member.user.id;
     let opts = interaction.options;
 
     if(Runtime.fromJSON().dbERROR) {
         logger.warn("Refusing to run command because database is corrupted!");
-        return {
-            res: "",
-            embed: ERROR_DATABASE_ERROR
-        };
+        let res = new CommandResponse("", ERROR_DATABASE_ERROR);
+        res.priv = true;
+        
+        return res;
     }
 
     if(Runtime.fromJSON().apiDown) {
         logger.warn("Refusing to run command because API is down!");
-        return {
-            res: "",
-            embed: ERROR_API_DOWN
-        };
+        let res = new CommandResponse("", ERROR_API_DOWN);
+        res.priv = true;
+        
+        return res;
     }
 
     switch(interaction.commandName) {
     case "stats": {
-        return Stats.execute([getArg(interaction, "player"), getArg(interaction, "game")], authorID, null, interaction);
+        return Stats.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
     }
 
     case "leaderboard": {
         let res = await Leaderboard.execute(
             [
-                getArg(interaction, "game"),
-                getArg(interaction, "type"),
-                getArg(interaction, "amount"),
-                getArg(interaction, "start"),
+                opts.getString("game"),
+                opts.getString("type"),
+                opts.getInteger("amount"),
+                opts.getInteger("start"),
             ],
             authorID,
-            undefined,
+            null,
             interaction
         );
         let e = res.embed;
         if(res.game != undefined) {
-            let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, getArg(interaction, "type"));
-            return {
-                res: "",
-                embed: e,
-                b: buttons
-            };
+            let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
+            return new CommandResponse("", e, undefined, buttons);
         }
-        return {
-            res: "",
-            embed: e
-        };
+        return new CommandResponse("", e);
     }
 
     case "add-account": {
-        await interaction.defer();
+        await interaction.defer({ephemeral : true});
 
-        let names = opts.get("accounts").value.split(" ");
+        let names = opts.getString("accounts").value.split(" ");
         let res = await addAccounts("others", names);
         res = `\`\`\`\n${res}\n\`\`\``;
         let embed = new MessageEmbed()
@@ -182,19 +159,19 @@ module.exports = async (interaction) => {
     }
 
     case "whois": {
-        return await Commands.WhoIS.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Commands.WhoIS.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "get-data-raw": {
-        return await GetDataRaw.execute([getArg(interaction, "player"), getArg(interaction, "path")], authorID, null, interaction);
+        return await GetDataRaw.execute([opts.getString("player"), opts.getString("path")], authorID, null, interaction);
     }
 
     case "verify": {
-        return await Commands.Verify.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Commands.Verify.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "game-counts": {
-        return await GameCounts.execute([getArg(interaction, "game")], authorID, null, interaction);
+        return await GameCounts.execute([opts.getString("game")], authorID, null, interaction);
     }
 
     case "info": {
@@ -202,40 +179,40 @@ module.exports = async (interaction) => {
     }
 
     case Susser.name: {
-        return await Susser.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Susser.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case Commands.Compare.name: {
         return await Commands.Compare.execute(
-            [getArg(interaction, "player1"), getArg(interaction, "player2"), getArg(interaction, "game")],
+            [opts.getString("player2"), opts.getString("player2"), opts.getString("game")],
             authorID,
-            undefined,
+            null,
             interaction
         );
     }
 
     case Commands.Profile.name: {
-        return await Commands.Profile.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Commands.Profile.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "top-games": {
-        return await TopGames.execute([getArg(interaction, "player"), getArg(interaction, "time")], authorID, null, interaction);
+        return await TopGames.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
     }
 
     case "quake": {
-        return await Quake.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Quake.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "zombies": {
-        return await Zombies.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Zombies.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "arena": {
-        return await Arena.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await Arena.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "paintball": {
-        return await PBall.execute([getArg(interaction, "player")], authorID, null, interaction);
+        return await PBall.execute([opts.getString("player")], authorID, null, interaction);
     }
 
     case "arcade": {
