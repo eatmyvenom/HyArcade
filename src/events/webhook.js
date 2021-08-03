@@ -60,7 +60,7 @@ async function sendBasicEmbed(content, embed, webhook) {
             avatarURL: webhook.pfp,
         });
         await hook.destroy();
-    } catch(e) {
+    } catch (e) {
         logger.err(e.stack);
     }
 }

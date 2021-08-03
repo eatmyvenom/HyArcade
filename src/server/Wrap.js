@@ -42,11 +42,11 @@ async function callback(res, req) {
     }
 }
 
-app.all("/db",          callback);
-app.all("/account",     callback);
-app.all("/acc",         callback);
+app.all("/db", callback);
+app.all("/account", callback);
+app.all("/acc", callback);
 app.all("/leaderboard", callback);
-app.all("/lb",          callback);
+app.all("/lb", callback);
 
 module.exports = function start(port) {
     app.listen(port, () => {
