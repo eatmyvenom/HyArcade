@@ -94,7 +94,7 @@ module.exports = class BotEvents {
     static async tick() {
         let runtime = Runtime.fromJSON();
         if(runtime.needRoleupdate && BotUtils.botMode == undefined) {
-            await roleHandler(BotUtils.client);
+            // await roleHandler(BotUtils.client);
             await Webhooks.logHook.send("Roles Updated");
             runtime.needRoleupdate = false;
             await runtime.save();
