@@ -3,7 +3,6 @@ const logger = require("hyarcade-logger");
 const mojangRequest = require("../../../request/mojangRequest");
 const BotUtils = require("../../BotUtils");
 const {
-    Interaction,
     CommandInteraction
 } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
@@ -11,11 +10,13 @@ const cfg = require("hyarcade-config").fromJSON();
 
 /**
  * @param {string} string
- * @param {Interaction} interaction
- * @returns {Account}
+ * @param {CommandInteraction} interaction
+ * @returns {Promise<Account>}
  */
 async function getFromHypixel(string, interaction) {
-    await interaction.defer();
+    if(!interaction.deferred) {
+        await interaction.defer();
+    }
     logger.info("Unable to resolve, getting by ign from hypixel.");
 
     let plr = string;
@@ -59,7 +60,7 @@ module.exports = async function resolveAccount(interaction, namearg = "player") 
     let accdata = await fetch(url.toString());
     if(accdata.status == 200) {
         accdata = await accdata.json();
-        if(str == undefined && accdata.name_lower == "undefined") {
+        if(str == undefined && accdata.name_lower == "INVALID-NAME") {
             return undefined;
         }
         return accdata;
