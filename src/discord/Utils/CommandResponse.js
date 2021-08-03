@@ -9,7 +9,6 @@ const {
     MessageOptions
 } = require("discord.js");
 const BotUtils = require("../BotUtils");
-const Buffer = require("buffer");
 
 module.exports = class CommandResponse {
     text = "";
