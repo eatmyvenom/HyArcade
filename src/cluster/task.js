@@ -12,7 +12,7 @@ const EventDetector = require("../events/EventDetector");
 const lists = require("../listParser");
 let accounts = [];
 const {
-    winsSorter
+    winsSorter, logger
 } = require("../utils");
 
 /**
@@ -26,12 +26,17 @@ async function accs() {
     let old = await utils.readDB("accounts");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
-    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-        let ED = new EventDetector(old, accounts);
-        await ED.runDetection();
-        await ED.logEvents();
-        await ED.sendEvents();
-        await ED.saveEvents();
+    try {
+
+        if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
+            let ED = new EventDetector(old, accounts);
+            await ED.runDetection();
+            await ED.logEvents();
+            await ED.sendEvents();
+            await ED.saveEvents();
+        }
+    } catch (e) {
+        logger.err(e);
     }
     await utils.writeDB("accounts", accounts);
     return ["accounts.json"];
