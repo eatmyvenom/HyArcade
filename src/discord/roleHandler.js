@@ -136,12 +136,12 @@ module.exports = async function roleHandler(client) {
         "hnsKills"
     );
 
-    await PG.updateAll();
-    await HS.updateAll();
-    await TO.updateAll();
-    await SIM.updateAll();
-    await FH.updateAll();
-    await HNS.updateAll();
-    await HNSK.updateAll();
+    // await PG.updateAll();
+    // await HS.updateAll();
+    // await TO.updateAll();
+    // await SIM.updateAll();
+    // await FH.updateAll();
+    // await HNS.updateAll();
+    // await HNSK.updateAll();
     logger.out("Roles updated");
 };
