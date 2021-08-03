@@ -52,13 +52,17 @@ async function sendBasic(content, webhook) {
  * @param {object} webhook
  */
 async function sendBasicEmbed(content, embed, webhook) {
-    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
-    await hook.send({
-        embeds: embed,
-        username: webhook.username,
-        avatarURL: webhook.pfp,
-    });
-    await hook.destroy();
+    try {
+        let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+        await hook.send({
+            embeds: embed,
+            username: webhook.username,
+            avatarURL: webhook.pfp,
+        });
+        await hook.destroy();
+    } catch(e) {
+        logger.err(e.stack);
+    }
 }
 
 /**
