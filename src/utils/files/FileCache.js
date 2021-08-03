@@ -36,7 +36,7 @@ module.exports = class FileCache {
     }
 
     async save() {
-        Logger.debug("Saving file changes...");
+        Logger.info("Saving file changes...");
         await utils.writeJSON("accounts.json", this.accounts);
         await utils.writeJSON("acclist.json", this.acclist);
         await utils.writeJSON("disclist.json", this.disclist);

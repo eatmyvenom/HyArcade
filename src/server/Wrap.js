@@ -42,11 +42,11 @@ async function callback(res, req) {
     }
 }
 
-app.get("/db", callback);
-app.get("/account", callback);
-app.get("/acc", callback);
-app.get("/leaderboard", callback);
-app.get("/lb", callback);
+app.all("/db",          callback);
+app.all("/account",     callback);
+app.all("/acc",         callback);
+app.all("/leaderboard", callback);
+app.all("/lb",          callback);
 
 module.exports = function start(port) {
     app.listen(port, () => {
