@@ -57,6 +57,7 @@ module.exports = class CommandResponse {
         }
 
         if(("" + this.text).length > 2000) {
+            // eslint-disable-next-line no-undef
             this.file = [new MessageAttachment(Buffer.from(("" + this.text).replace(/`/g, "").trim()), "message.txt")];
             this.text = undefined;
         }
