@@ -17,6 +17,7 @@ module.exports = class CommandResponse {
     file;
     components;
     silent = false;
+    priv = false;
 
     /**
      * 
@@ -25,20 +26,23 @@ module.exports = class CommandResponse {
      * @param {FileOptions | BufferResolvable | MessageAttachment | FileOptions[] | BufferResolvable[] | MessageAttachment[]} file 
      * @param {MessageActionRow | MessageActionRowOptions | MessageActionRow[] | MessageActionRowOptions[]} components 
      * @param {boolean} silent 
+     * @param {boolean} priv
      */
-    constructor(text, embed = undefined, file = undefined, components = undefined, silent = false) {
+    constructor(text, embed = undefined, file = undefined, components = undefined, silent = false, priv = false) {
         if(typeof text == "object" && typeof text != "string") {
             this.text = text.res;
             this.file = text.img;
             this.embed = text.embed;
             this.silent = text.silent;
             this.components = text.b;
+            this.priv = text.private;
         } else {
             this.text = text;
             this.embed = embed;
             this.file = file;
             this.components = components;
             this.silent = silent;
+            this.priv = priv;
         }
     }
 
@@ -81,6 +85,7 @@ module.exports = class CommandResponse {
         let obj = {
             tts: false,
             nonce: undefined,
+            ephemeral: this.priv,
             content: this.text,
             embeds: this.embed,
             allowedMentions: {
