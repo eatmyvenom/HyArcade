@@ -67,11 +67,10 @@ async function commandHandler(interaction) {
             await interaction.followUp(res.toDiscord());
         }
     } catch (e) {
-        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
-        logger.err(e);
+        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
         logger.err(e.stack);
         await Webhooks.errHook.send({
-            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
+            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`
         });
         await Webhooks.errHook.send({
             content: e.toString()
@@ -81,7 +80,7 @@ async function commandHandler(interaction) {
 
     let logString = `${interaction.member.user.tag} invoked command interaction \`${
         interaction.commandName
-    }\` with options \`${JSON.stringify(interaction.options)}\``;
+    }\` with options \`${JSON.stringify(interaction.options.data)}\``;
     logger.out(logString.replace(/`/g, "'"));
     await Webhooks.logHook.send(logString);
     await logCmd(interaction);
@@ -100,7 +99,7 @@ async function logCmd(interaction) {
                 interaction.commandName,
                 interaction.guild?.name,
                 interaction.channel?.id,
-                interaction.options
+                interaction.options.data
             ),
         ],
     });
