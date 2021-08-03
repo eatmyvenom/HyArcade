@@ -12,11 +12,11 @@ const EventDetector = require("../events/EventDetector");
 const lists = require("../listParser");
 let accounts = [];
 const {
-    winsSorter, logger
+    winsSorter
 } = require("../utils");
 
 /**
- * Run the generate the data for all accounts
+ * Generate the data for all accounts
  *
  * @returns {string[]} files changed by this task
  */
@@ -26,18 +26,6 @@ async function accs() {
     let old = await utils.readDB("accounts");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
-    try {
-
-        if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-            let ED = new EventDetector(old, accounts);
-            await ED.runDetection();
-            await ED.logEvents();
-            await ED.sendEvents();
-            await ED.saveEvents();
-        }
-    } catch (e) {
-        logger.err(e);
-    }
     await utils.writeDB("accounts", accounts);
     return ["accounts.json"];
 }
