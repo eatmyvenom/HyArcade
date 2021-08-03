@@ -23,9 +23,6 @@ const {
 async function accs() {
     let acclist = await lists.accounts();
     accounts = await dataGen.updateAllAccounts(acclist);
-    let old = await utils.readDB("accounts");
-    old.sort(winsSorter);
-    accounts.sort(winsSorter);
     await utils.writeDB("accounts", accounts);
     return ["accounts.json"];
 }
