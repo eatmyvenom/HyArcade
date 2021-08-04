@@ -2,8 +2,8 @@ const {
     WebhookClient,
     Webhook
 } = require("discord.js");
-const config = require("../../Config");
-const cfg = config.fromJSON();
+const Config = require("hyarcade-config");
+const cfg = Config.fromJSON();
 
 module.exports = class Webhooks {
 

@@ -6,7 +6,6 @@ const {
 const utils = require("../utils");
 const config = require("../Config").fromJSON();
 const dataGen = require("../dataGeneration");
-const DiscordBot = require("../discord/bot");
 const EventDetector = require("../events/EventDetector");
 
 const lists = require("../listParser");
@@ -143,6 +142,7 @@ async function webhook(type, maxamnt) {
  *
  */
 async function discord() {
+    const DiscordBot = require("../discord/bot");
     await DiscordBot();
 }
 
