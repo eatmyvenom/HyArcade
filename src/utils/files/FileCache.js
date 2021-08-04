@@ -3,7 +3,7 @@ const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
 const BSONreader = require("./BSONreader");
 
-module.exports = class FileCache {
+class FileCache {
 
     _interval;
     accounts = [];
@@ -20,6 +20,7 @@ module.exports = class FileCache {
     hackerlist = [];
     blacklist = [];
     ezmsgs = [];
+    dirty = false;
     path = "data/";
 
     constructor(path = "data") {
@@ -35,7 +36,11 @@ module.exports = class FileCache {
         }
     }
 
-    async save() {
+    save() {
+        this.dirty = true;
+    }
+
+    async runSave() {
         Logger.info("Saving file changes...");
         await utils.writeJSON("accounts.json", this.accounts);
         await utils.writeJSON("acclist.json", this.acclist);
@@ -51,7 +56,15 @@ module.exports = class FileCache {
         Logger.debug("Files saved...");
     }
 
+    /**
+     * 
+     * @param {FileCache} fileCache 
+     */
     static async refresh(fileCache) {
+        if(fileCache.dirty) {
+            await fileCache.runSave();
+        }
+
         Logger.debug("Refreshing file cache...");
 
         fileCache.accounts = await BSONreader("accounts.json");
@@ -90,4 +103,6 @@ module.exports = class FileCache {
         return this.monthlyAccounts;
     }
 
-};
+}
+
+module.exports = FileCache;
