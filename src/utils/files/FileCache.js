@@ -54,6 +54,7 @@ class FileCache {
         }
         await fs.writeFile(this.path + "ez", this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
+        this.dirty = false;
     }
 
     /**
