@@ -805,7 +805,7 @@ async function load() {
 
     await refresh();
     clearInterval(interval);
-    interval = setInterval(refresh, 25000);
+    interval = setInterval(refresh, 300000);
 }
 
 /**
