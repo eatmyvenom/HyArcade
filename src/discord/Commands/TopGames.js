@@ -161,7 +161,7 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
     }
 
     let embed = new MessageEmbed()
-        .setTitle(acc.name + " top games won")
+        .setTitle(`${acc.name} top games won`)
         .setDescription(getGames(acc))
         .setColor(0x44a3e7);
     return {

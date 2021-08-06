@@ -47,7 +47,7 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
     case "ls":
     case "list":
     case "show": {
-        res = new CommandResponse("```\n" + msgs.join("\n") + "```");
+        res = new CommandResponse(`\`\`\`\n${msgs.join("\n")}\`\`\``);
         break;
     }
     }

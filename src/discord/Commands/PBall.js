@@ -30,7 +30,7 @@ module.exports = new Command("paintball", ["*"], async (args, rawMsg, interactio
     let acc = await HypixelApi.player(uuid);
     let data = acc.player;
     let embed = new MessageEmbed()
-        .setTitle(data.displayname + " Paintball stats")
+        .setTitle(`${data.displayname} Paintball stats`)
         .addField("-----Overall stats-----",
             `**Wins** - ${numberify(data?.stats?.Paintball?.wins ?? 0)}\n` +
             `**Kills** - ${numberify(data?.stats?.Paintball?.kills ?? 0)}\n` +
@@ -58,7 +58,7 @@ module.exports = new Command("paintball", ["*"], async (args, rawMsg, interactio
             `**Shots/Kills** - ${numberify((data?.stats?.Paintball?.shots_fired ?? 0) / (data?.stats?.Paintball?.kills ?? 0))}\n`,
             true
         )
-        .setThumbnail("https://crafatar.com/renders/head/" + uuid + "?overlay")
+        .setThumbnail(`https://crafatar.com/renders/head/${uuid}?overlay`)
         .setColor(0x44a3e7);
     return new CommandResponse("", embed);
 });

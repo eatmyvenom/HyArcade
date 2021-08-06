@@ -11,13 +11,13 @@ const utils = require("../../utils");
 async function getFields(game) {
     let counts = await utils.readJSON("./gameCounts.json");
     let fields = [];
-    switch(("" + game).toLowerCase()) {
+    switch((`${game}`).toLowerCase()) {
     case "party":
     case "partygames":
     case "pg": {
         fields.push({
             name: "Party games players",
-            value: "" + counts.modes.PARTY,
+            value: `${counts.modes.PARTY}`,
             inline: true,
         });
         break;
@@ -30,7 +30,7 @@ async function getFields(game) {
     case "frmhnt": {
         fields.push({
             name: "Farm hunt players",
-            value: "" + counts.modes.FARM_HUNT,
+            value: `${counts.modes.FARM_HUNT}`,
             inline: true,
         });
         break;
@@ -43,7 +43,7 @@ async function getFields(game) {
     case "hysays": {
         fields.push({
             name: "Hypixel says players",
-            value: "" + counts.modes.SIMON_SAYS,
+            value: `${counts.modes.SIMON_SAYS}`,
             inline: true,
         });
         break;
@@ -55,7 +55,7 @@ async function getFields(game) {
     case "pain": {
         fields.push({
             name: "Hole in the wall players",
-            value: "" + counts.modes.HOLE_IN_THE_WALL,
+            value: `${counts.modes.HOLE_IN_THE_WALL}`,
             inline: true,
         });
         break;
@@ -70,7 +70,7 @@ async function getFields(game) {
     case "miniwalls": {
         fields.push({
             name: "Mini walls players",
-            value: "" + counts.modes.MINI_WALLS,
+            value: `${counts.modes.MINI_WALLS}`,
             inline: true,
         });
         break;
@@ -85,7 +85,7 @@ async function getFields(game) {
     case "football": {
         fields.push({
             name: "Football players",
-            value: "" + counts.modes.SOCCER,
+            value: `${counts.modes.SOCCER}`,
             inline: true,
         });
         break;
@@ -99,7 +99,7 @@ async function getFields(game) {
     case "enderspleef": {
         fields.push({
             name: "Ender spleef players",
-            value: "" + counts.modes.ENDER,
+            value: `${counts.modes.ENDER}`,
             inline: true,
         });
         break;
@@ -112,7 +112,7 @@ async function getFields(game) {
     case "throwout": {
         fields.push({
             name: "Throw out players",
-            value: "" + counts.modes.THROW_OUT,
+            value: `${counts.modes.THROW_OUT}`,
             inline: true,
         });
         break;
@@ -124,7 +124,7 @@ async function getFields(game) {
     case "galaxywars": {
         fields.push({
             name: "Galaxy wars players",
-            value: "" + counts.modes.STARWARS,
+            value: `${counts.modes.STARWARS}`,
             inline: true,
         });
         break;
@@ -135,7 +135,7 @@ async function getFields(game) {
     case "dragonwars": {
         fields.push({
             name: "Dragon wars players",
-            value: "" + counts.modes.DRAGONWARS2,
+            value: `${counts.modes.DRAGONWARS2}`,
             inline: true,
         });
         break;
@@ -149,7 +149,7 @@ async function getFields(game) {
     case "bountyhunters": {
         fields.push({
             name: "Bounty hunters players",
-            value: "" + counts.modes.ONEINTHEQUIVER,
+            value: `${counts.modes.ONEINTHEQUIVER}`,
             inline: true,
         });
         break;
@@ -162,7 +162,7 @@ async function getFields(game) {
     case "blockingdead": {
         fields.push({
             name: "Blocking dead players",
-            value: "" + counts.modes.DAYONE,
+            value: `${counts.modes.DAYONE}`,
             inline: true,
         });
         break;
@@ -178,12 +178,12 @@ async function getFields(game) {
     case "hideseek": {
         fields.push({
             name: "Party pooper players",
-            value: "" + counts.modes.HIDE_AND_SEEK_PARTY_POOPER,
+            value: `${counts.modes.HIDE_AND_SEEK_PARTY_POOPER}`,
             inline: true,
         });
         fields.push({
             name: "Prop hunt players",
-            value: "" + counts.modes.HIDE_AND_SEEK_PROP_HUNT,
+            value: `${counts.modes.HIDE_AND_SEEK_PROP_HUNT}`,
             inline: true,
         });
         break;
@@ -197,17 +197,17 @@ async function getFields(game) {
     case "zombies": {
         fields.push({
             name: "Zombies bad blood players",
-            value: "" + counts.modes.ZOMBIES_BAD_BLOOD,
+            value: `${counts.modes.ZOMBIES_BAD_BLOOD}`,
             inline: true,
         });
         fields.push({
             name: "Zombies alien arcadium players",
-            value: "" + counts.modes.ZOMBIES_ALIEN_ARCADIUM,
+            value: `${counts.modes.ZOMBIES_ALIEN_ARCADIUM}`,
             inline: true,
         });
         fields.push({
             name: "Zombies dead end players",
-            value: "" + counts.modes.ZOMBIES_DEAD_END,
+            value: `${counts.modes.ZOMBIES_DEAD_END}`,
             inline: true,
         });
         break;
@@ -223,7 +223,7 @@ async function getFields(game) {
     case "ctwkills": {
         fields.push({
             name: "Capture the wool players",
-            value: "" + counts.modes.PVP_CTW,
+            value: `${counts.modes.PVP_CTW}`,
             inline: true,
         });
         break;
@@ -239,7 +239,7 @@ async function getFields(game) {
     case "drawing": {
         fields.push({
             name: "Farm hunt players",
-            value: "" + counts.modes.DRAW_THEIR_THING,
+            value: `${counts.modes.DRAW_THEIR_THING}`,
             inline: true,
         });
         break;
@@ -262,107 +262,107 @@ async function getFields(game) {
     default: {
         fields.push({
             name: "Party games players",
-            value: "" + counts.modes.PARTY,
+            value: `${counts.modes.PARTY}`,
             inline: true,
         });
         fields.push({
             name: "Farm hunt players",
-            value: "" + counts.modes.FARM_HUNT,
+            value: `${counts.modes.FARM_HUNT}`,
             inline: true,
         });
         fields.push({
             name: "Hypixel says players",
-            value: "" + counts.modes.SIMON_SAYS,
+            value: `${counts.modes.SIMON_SAYS}`,
             inline: true,
         });
         fields.push({
             name: "Hole in the wall players",
-            value: "" + counts.modes.HOLE_IN_THE_WALL,
+            value: `${counts.modes.HOLE_IN_THE_WALL}`,
             inline: true,
         });
         fields.push({
             name: "Mini walls players",
-            value: "" + counts.modes.MINI_WALLS,
+            value: `${counts.modes.MINI_WALLS}`,
             inline: true,
         });
         fields.push({
             name: "Football players",
-            value: "" + counts.modes.SOCCER,
+            value: `${counts.modes.SOCCER}`,
             inline: true,
         });
         fields.push({
             name: "Ender spleef players",
-            value: "" + counts.modes.ENDER,
+            value: `${counts.modes.ENDER}`,
             inline: true,
         });
         fields.push({
             name: "Throw out players",
-            value: "" + counts.modes.THROW_OUT,
+            value: `${counts.modes.THROW_OUT}`,
             inline: true,
         });
         fields.push({
             name: "Galaxy wars players",
-            value: "" + counts.modes.STARWARS,
+            value: `${counts.modes.STARWARS}`,
             inline: true,
         });
         fields.push({
             name: "Dragon wars players",
-            value: "" + counts.modes.DRAGONWARS2,
+            value: `${counts.modes.DRAGONWARS2}`,
             inline: true,
         });
         fields.push({
             name: "Bounty hunters players",
-            value: "" + counts.modes.ONEINTHEQUIVER,
+            value: `${counts.modes.ONEINTHEQUIVER}`,
             inline: true,
         });
         fields.push({
             name: "Blocking dead players",
-            value: "" + counts.modes.DAYONE,
+            value: `${counts.modes.DAYONE}`,
             inline: true,
         });
         fields.push({
             name: "Party pooper players",
-            value: "" + counts.modes.HIDE_AND_SEEK_PARTY_POOPER,
+            value: `${counts.modes.HIDE_AND_SEEK_PARTY_POOPER}`,
             inline: true,
         });
         fields.push({
             name: "Prop hunt players",
-            value: "" + counts.modes.HIDE_AND_SEEK_PROP_HUNT,
+            value: `${counts.modes.HIDE_AND_SEEK_PROP_HUNT}`,
             inline: true,
         });
         fields.push({
             name: "Bad blood players",
-            value: "" + counts.modes.ZOMBIES_BAD_BLOOD,
+            value: `${counts.modes.ZOMBIES_BAD_BLOOD}`,
             inline: true,
         });
         fields.push({
             name: "Alien arcadium players",
-            value: "" + counts.modes.ZOMBIES_ALIEN_ARCADIUM,
+            value: `${counts.modes.ZOMBIES_ALIEN_ARCADIUM}`,
             inline: true,
         });
         fields.push({
             name: "Dead end players",
-            value: "" + counts.modes.ZOMBIES_DEAD_END,
+            value: `${counts.modes.ZOMBIES_DEAD_END}`,
             inline: true,
         });
         fields.push({
             name: "Capture the wool players",
-            value: "" + counts.modes.PVP_CTW,
+            value: `${counts.modes.PVP_CTW}`,
             inline: true,
         });
         fields.push({
             name: "Farm hunt players",
-            value: "" + counts.modes.DRAW_THEIR_THING,
+            value: `${counts.modes.DRAW_THEIR_THING}`,
             inline: true,
         });
         fields.push({
             name: "Creeper attack players",
-            value: "" + counts.modes.DEFENDER,
+            value: `${counts.modes.DEFENDER}`,
             inline: true,
         });
         fields.push({
             name: "Arcade players",
-            value: "" + counts.players,
+            value: `${counts.players}`,
             inline: true,
         });
     }

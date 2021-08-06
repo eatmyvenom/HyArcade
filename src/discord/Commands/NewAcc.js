@@ -28,7 +28,7 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
         embed: embed
     });
     let res = await addAccounts(category, args);
-    res = "```\n" + res + "\n```";
+    res = `\`\`\`\n${res}\n\`\`\``;
     let embed2 = INFO_ACCOUNTS_ADDED(res);
     await tmpMsg.delete();
     return {

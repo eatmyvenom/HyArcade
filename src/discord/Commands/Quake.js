@@ -49,7 +49,7 @@ module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) =
     let acc = await HypixelApi.player(uuid);
     let data = acc.player;
     let embed = new MessageEmbed()
-        .setTitle(data.displayname + " quake stats")
+        .setTitle(`${data.displayname} quake stats`)
         .addField("-----Overall stats-----",
             `**Wins** - ${numberify(data?.stats?.Quake?.wins ?? 0)}\n` +
             `**Kills** - ${numberify(data?.stats?.Quake?.kills ?? 0)}\n` +
@@ -74,7 +74,7 @@ module.exports = new Command("quake", ["*"], async (args, rawMsg, interaction) =
             `**Shots/Kills** - ${numberify((data?.stats?.Quake?.shots_fired ?? 0) / (data?.stats?.Quake?.kills ?? 0))}\n`,
             true
         )
-        .setThumbnail("https://crafatar.com/renders/head/" + uuid + "?overlay")
+        .setThumbnail(`https://crafatar.com/renders/head/${uuid}?overlay`)
         .setColor(0x44a3e7);
     return new CommandResponse("", embed);
 });

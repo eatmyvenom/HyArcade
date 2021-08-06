@@ -32,16 +32,16 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
     let str = "";
     let size = maxamnt + (startingIndex | 0);
     size = size > list.length ? list.length : size;
-    list = list.slice(0, size);
+    let sizedList = list.slice(0, size);
 
     let propVal;
-    for(let i = startingIndex; i < list.length; i++) {
+    for(let i = startingIndex; i < sizedList.length; i++) {
 
-        propVal = category == undefined ? list[i]?.[lbprop] : list[i]?.[category]?.[lbprop];
+        propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
         // don't print if player has 0 wins
         if((propVal | 0) < 1 && !cfg.printAllWins) continue;
 
-        let name = list[i].name;
+        let name = sizedList[i].name;
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
     return str.replace(/\\?_/g, "\\_");

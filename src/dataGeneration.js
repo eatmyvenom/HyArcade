@@ -75,10 +75,10 @@ function statusSort(a, b) {
     let status2 = b[1];
 
     // sanitize
-    status1.mode = ("" + status1.mode).toUpperCase();
-    status2.mode = ("" + status2.mode).toUpperCase();
-    status1.gameType = ("" + status1.gameType).toUpperCase();
-    status2.gameType = ("" + status2.gameType).toUpperCase();
+    status1.mode = (`${status1.mode}`).toUpperCase();
+    status2.mode = (`${status2.mode}`).toUpperCase();
+    status1.gameType = (`${status1.gameType}`).toUpperCase();
+    status2.gameType = (`${status2.gameType}`).toUpperCase();
 
     if(status1.mode == "LOBBY" && status2.mode != "LOBBY") {
         return -1;

@@ -13,7 +13,7 @@ module.exports = new Command("help", ["*"], async () => {
     }
 
     let embed = new MessageEmbed()
-        .setTitle(BotUtils.client.user.username + " help")
+        .setTitle(`${BotUtils.client.user.username} help`)
         .setDescription(desc)
         .setThumbnail(BotUtils.client.user.avatarURL())
         .setColor(0x2f3136);

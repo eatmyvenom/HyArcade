@@ -73,7 +73,7 @@ async function moveAcc() {
         acclist[oldCategory][oldName] = undefined;
         utils.writeJSON("./acclist.json", acclist);
     } else {
-        logger.err("Couldn't find old version of " + oldName);
+        logger.err(`Couldn't find old version of ${oldName}`);
     }
 }
 

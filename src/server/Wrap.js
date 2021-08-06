@@ -27,12 +27,12 @@ async function callback(res, req) {
     let endpoint = url.pathname.slice(1);
     let mod = urlModules[endpoint];
     if(mod == undefined) {
-        logger.err("Attempted nonexistent endpoint '" + endpoint + "'");
+        logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
         response.statusCode = 404;
         response.end();
     } else {
         try {
-            logger.out("Getting data for " + url);
+            logger.out(`Getting data for ${url}`);
             await mod(request, response, fileCache);
         } catch (e) {
             logger.err(e);

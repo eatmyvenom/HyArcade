@@ -46,7 +46,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     case "ls":
     case "list":
     case "show": {
-        res = new CommandResponse("```\n" + blacklist.join("\n") + "```");
+        res = new CommandResponse(`\`\`\`\n${blacklist.join("\n")}\`\`\``);
         break;
     }
     }

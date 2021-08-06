@@ -303,7 +303,7 @@ async function checkCommands(rawMsg, command, args, author) {
     }
 
     default: {
-        logger.warn("Nonexistent command \"" + command.toLowerCase() + "\" was attempted.");
+        logger.warn(`Nonexistent command "${command.toLowerCase()}" was attempted.`);
         return {
             res: ""
         };

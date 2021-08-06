@@ -46,7 +46,7 @@ let Commands = null;
 function getArg(i, a) {
     let v = i.options.get(a);
     if(v != undefined && v != null) {
-        return ("" + v.value).trim();
+        return (`${v.value}`).trim();
     }
     return undefined;
 }
@@ -137,7 +137,7 @@ module.exports = async (interaction) => {
 
         let names = opts.get("accounts").value.split(" ");
         let res = await addAccounts("others", names);
-        res = "```\n" + res + "\n```";
+        res = `\`\`\`\n${res}\n\`\`\``;
         let embed = new MessageEmbed()
             .setTitle("Accounts added")
             .setDescription(res)

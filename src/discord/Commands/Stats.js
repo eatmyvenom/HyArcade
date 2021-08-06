@@ -14,7 +14,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
     if(acc == undefined) {
         return new CommandResponse("", ERROR_UNLINKED);
     }
-    let res = await BotUtils.getStats(acc, "" + game);
+    let res = await BotUtils.getStats(acc, `${game}`);
     let e = res.embed;
     Logger.debug("Adding stats buttons to message");
     let menu = await MenuGenerator.statsMenu(acc.uuid);

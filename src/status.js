@@ -64,7 +64,7 @@ async function genStatus(name, status) {
     }
 
     // this hack exists because no proper formatter in js
-    let pname = (name.slice(0, 1).toUpperCase() + name.slice(1) + "                        ").slice(0, 17);
+    let pname = (`${name.slice(0, 1).toUpperCase() + name.slice(1)}                        `).slice(0, 17);
 
     // make sure player is online so we dont log a shit ton
     // of offline players doing nothing
@@ -103,10 +103,10 @@ async function genStatus(name, status) {
             statusstr += `${modeFormatter(status.gameType)} ${modeFormatter(status.mode)}`;
         }
         if(statusstr.length > 24) {
-            statusstr = statusstr.slice(0, 23) + "...";
+            statusstr = `${statusstr.slice(0, 23)}...`;
         }
 
-        str += statusstr + "\n";
+        str += `${statusstr}\n`;
     } else {
         return "";
     }

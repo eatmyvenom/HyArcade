@@ -45,9 +45,9 @@ function winsSorter(element1, element2) {
  */
 function daytime() {
     return cfg.showDaytime ?
-        Date()
+        `${Date()
             .replace(/.*20[0-9][0-9] /, "")
-            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "") + " " :
+            .replace(/ [A-Z]..-[0-9]... \(.*\)/, "")} ` :
         "";
 }
 
@@ -71,7 +71,7 @@ function day() {
  */
 async function writeJSON(path, json) {
     await BSONwriter(path, json);
-    await fs.writeFile("data/" + path, JSON.stringify(json, null, 4));
+    await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
     try {
         await readJSON(path);
     } catch (e) {
@@ -131,7 +131,7 @@ async function readDB(file) {
  * @returns {object} Parsed json
  */
 async function readJSON(path) {
-    return JSON.parse(await fs.readFile("data/" + path));
+    return JSON.parse(await fs.readFile(`data/${path}`));
 }
 
 /**
@@ -152,16 +152,16 @@ function fileExists(path) {
  * @param {string} timetype the way of specifying this file
  */
 async function archiveJson(oldfile, path, timetype) {
-    let old = JSON.parse(await fs.readFile("data/" + oldfile + ".json"));
+    let old = JSON.parse(await fs.readFile(`data/${oldfile}.json`));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 
-    if(fs.existsSync("data/" + oldfile + ".bson")) {
-        await fs.copy("data/" + oldfile + ".bson", `${path}${oldfile}.${timetype}.bson`);
+    if(fs.existsSync(`data/${oldfile}.bson`)) {
+        await fs.copy(`data/${oldfile}.bson`, `${path}${oldfile}.${timetype}.bson`);
     }
 
-    if(fs.existsSync("data/" + oldfile + ".bson.1")) {
-        await fs.copy("data/" + oldfile + ".bson.1", `data/${path}${oldfile}.${timetype}.bson.1`);
-        await fs.copy("data/" + oldfile + ".bson.2", `data/${path}${oldfile}.${timetype}.bson.2`);
+    if(fs.existsSync(`data/${oldfile}.bson.1`)) {
+        await fs.copy(`data/${oldfile}.bson.1`, `data/${path}${oldfile}.${timetype}.bson.1`);
+        await fs.copy(`data/${oldfile}.bson.2`, `data/${path}${oldfile}.${timetype}.bson.2`);
     }
 }
 

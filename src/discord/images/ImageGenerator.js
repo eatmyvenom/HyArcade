@@ -51,9 +51,9 @@ module.exports = class ImageGenerator {
             this.context.fillStyle = `#333333${bgStrenth}`;
             this.context.fill();
         }
-        width = width == undefined ? img.width : width;
-        height = height == undefined ? img.height : height;
-        this.context.drawImage(img, x, y, width, height);
+        let imgWidth = width == undefined ? img.width : width;
+        let imgHeight = height == undefined ? img.height : height;
+        this.context.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
     writeText(txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
@@ -61,10 +61,11 @@ module.exports = class ImageGenerator {
         this.context.fillStyle = color;
         this.context.textAlign = align;
         this.context.textBaseline = "middle";
-        txt = txt.split("\n");
-        for(let t of txt) {
-            this.context.fillText(t, x, y);
-            y += spacing;
+        let txtarr = txt.split("\n");
+        let newY = y;
+        for(let t of txtarr) {
+            this.context.fillText(t, x, newY);
+            newY += spacing;
         }
     }
 
@@ -74,12 +75,12 @@ module.exports = class ImageGenerator {
         let width = this.context.measureText(txt).width;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
-        x = x - width / 2;
-        this.context.rect(x - 2, y - (size / 2), width + 3, size + 4);
+        let realX = x - width / 2;
+        this.context.rect(realX - 2, y - (size / 2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
         this.context.fillStyle = color;
-        this.context.fillText(txt, x + width / 2, y);
+        this.context.fillText(txt, realX + width / 2, y);
     }
 
     drawTimeType(type, x, y, size) {
@@ -94,16 +95,16 @@ module.exports = class ImageGenerator {
         this.context.rect((x - width / 2) - 2, y - (size / 2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
-        x = x - width / 3.3;
+        let currentX = x - width / 3.3;
         this.context.fillStyle = type == "l" ? "#55FF55" : "#AAAAAA";
-        this.context.fillText("Lifetime ", x, y);
-        x += lWidth / 1;
+        this.context.fillText("Lifetime ", currentX, y);
+        currentX += lWidth / 1;
         this.context.fillStyle = type == "m" ? "#55FF55" : "#AAAAAA";
-        this.context.fillText("Monthly ", x, y);
-        x += mWidth / 1.2;
+        this.context.fillText("Monthly ", currentX, y);
+        currentX += mWidth / 1.2;
         this.context.fillStyle = type == "w" ? "#55FF55" : "#AAAAAA";
-        this.context.fillText("Weekly", x, y);
-        x += wWidth;
+        this.context.fillText("Weekly", currentX, y);
+        currentX += wWidth;
     }
 
     drawLBPos(pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
@@ -122,26 +123,26 @@ module.exports = class ImageGenerator {
         let dashWidth = this.context.measureText(" - ").width;
         let winsWidth = this.context.measureText(`${count}`).width;
         let width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
-        x = x - width / 2;
+        let currentX = x - width / 2;
         this.context.textBaseline = "middle";
-        this.context.rect(x - 3, y - (size / 2), width + 4, size + 5);
+        this.context.rect(currentX - 3, y - (size / 2), width + 4, size + 5);
         this.context.fillStyle = "#33333377";
         this.context.fill();
-        this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false);
+        this.writeAccTitle(rank, plusColor, name, currentX + posWidth, y, `${size}px`, false);
         this.context.fillStyle = "#FFFF55";
-        this.context.fillText(`${pos}. `, x, y);
-        x += posWidth;
-        x += ignWidth;
+        this.context.fillText(`${pos}. `, currentX, y);
+        currentX += posWidth;
+        currentX += ignWidth;
         this.context.fillStyle = PlusColors[guildColor?.toLowerCase()];
         if(guild != undefined) {
-            this.context.fillText(` [${guild}]`, x, y);
+            this.context.fillText(` [${guild}]`, currentX, y);
         }
-        x += guildWidth;
+        currentX += guildWidth;
         this.context.fillStyle = "#AAAAAA";
-        this.context.fillText(" - ", x, y);
-        x += dashWidth;
+        this.context.fillText(" - ", currentX, y);
+        currentX += dashWidth;
         this.context.fillStyle = "#FFFF55";
-        this.context.fillText(`${count}`, x, y);
+        this.context.fillText(`${count}`, currentX, y);
     }
 
     writeTextCenter(txt, spacing = 36) {
@@ -149,22 +150,22 @@ module.exports = class ImageGenerator {
     }
 
     writeAccTitle(rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
-        rank = rank == undefined ? "" : `[${rank}`;
+        let txtRank = rank == undefined ? "" : `[${rank}`;
 
         let plus = "";
         let rankEnd = "";
-        if(rank.includes("_PLUS_PLUS")) {
+        if(txtRank.includes("_PLUS_PLUS")) {
             plus = "++";
-        } else if(rank.includes("_PLUS")) {
+        } else if(txtRank.includes("_PLUS")) {
             plus = "+";
         }
 
-        if(rank != "") {
+        if(txtRank != "") {
             rankEnd = "] ";
         }
 
         this.context.font = `${fontSize} ${this.font}`;
-        let rankWidth = this.context.measureText(rank.replace(/_PLUS/g, "")).width;
+        let rankWidth = this.context.measureText(txtRank.replace(/_PLUS/g, "")).width;
         let plusWidth = this.context.measureText(plus).width;
         let rankEndWidth = this.context.measureText(rankEnd).width;
         let nameWidth = this.context.measureText(name).width;
@@ -174,22 +175,22 @@ module.exports = class ImageGenerator {
             startX = x;
         }
         let rankColor;
-        if(rank == "[MVP_PLUS_PLUS") {
+        if(txtRank == "[MVP_PLUS_PLUS") {
             rankColor = "#FFAA00";
-        } else if(rank == "[MVP_PLUS" || rank == "[MVP") {
+        } else if(txtRank == "[MVP_PLUS" || txtRank == "[MVP") {
             rankColor = "#55FFFF";
-        } else if(rank == "[VIP_PLUS" || rank == "[VIP") {
+        } else if(txtRank == "[VIP_PLUS" || txtRank == "[VIP") {
             rankColor = "#55FF55";
         } else {
             rankColor = "#AAAAAA";
         }
 
         if(!fake) {
-            if(rank != "" && rankEnabled) {
-                this.writeText(rank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
+            if(txtRank != "" && rankEnabled) {
+                this.writeText(txtRank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
                 startX += rankWidth;
                 if(plus != "") {
-                    this.writeText(plus, startX, y, "left", PlusColors[("" + plusColor).toLowerCase()], fontSize, 36);
+                    this.writeText(plus, startX, y, "left", PlusColors[(`${plusColor}`).toLowerCase()], fontSize, 36);
                     startX += plusWidth;
                 }
                 this.writeText(rankEnd, startX, y, "left", rankColor, fontSize, 36);

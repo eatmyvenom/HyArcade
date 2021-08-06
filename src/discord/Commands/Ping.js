@@ -20,7 +20,7 @@ let statusName = [
 
 module.exports = new Command("ping", ["*"], async () => {
     let embed = new MessageEmbed()
-        .setAuthor(BotUtils.client.user.username + " status", BotUtils.client.user.avatarURL(), "https://hyarcade.xyz/")
+        .setAuthor(`${BotUtils.client.user.username} status`, BotUtils.client.user.avatarURL(), "https://hyarcade.xyz/")
         .addField(
             "Status",
             `📡 Ping - ${BotUtils.client.ws.ping}ms\n` +

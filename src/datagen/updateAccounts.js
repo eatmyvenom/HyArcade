@@ -13,8 +13,8 @@ const Account = require("hyarcade-requests/types/Account");
  * @returns {Account[]}
  */
 module.exports = async function updateAccounts(accounts) {
-    accounts.sort(utils.winsSorter);
-    await fs.writeFile("starttime", ("" + Date.now()));
+    let accs = accounts.sort(utils.winsSorter);
+    await fs.writeFile("starttime", (`${Date.now()}`));
 
     let oldAccs = await utils.readDB("accounts");
 
@@ -22,22 +22,22 @@ module.exports = async function updateAccounts(accounts) {
         j,
         temparray,
         chunk = 120;
-    for(i = 0, j = accounts.length; i < j; i += chunk) {
-        temparray = accounts.slice(i, i + chunk);
+    for(i = 0, j = accs.length; i < j; i += chunk) {
+        temparray = accs.slice(i, i + chunk);
         await updateAccountsInArr(temparray, oldAccs);
     }
 
     if(utils.fileExists("data/accounts.json.part")) {
         let addedAccounts = await utils.readJSON("accounts.json.part");
         await fs.rm("data/accounts.json.part");
-        accounts = accounts.concat(addedAccounts);
+        accs = accs.concat(addedAccounts);
     }
 
     if(utils.fileExists("data/accounts.json.full")) {
         let fullList = await utils.readJSON("accounts.json.full");
         await fs.rm("data/accounts.json.full");
-        for(let i = 0; i < accounts.length; i++) {
-            let acc = accounts[i];
+        for(let i = 0; i < accs.length; i++) {
+            let acc = accs[i];
             let newAcc = fullList.find((a) => a.uuid == acc.uuid);
             if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
                 logger.info(`Setting ${newAcc.name}'s data from outside source!`);
@@ -54,8 +54,8 @@ module.exports = async function updateAccounts(accounts) {
         await fs.rm("force");
     }
 
-    await accounts.sort(utils.winsSorter);
-    return accounts;
+    await accs.sort(utils.winsSorter);
+    return accs;
 };
 
 /**

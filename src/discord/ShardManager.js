@@ -10,7 +10,7 @@ const Logger = require("hyarcade-logger");
  *
  */
 async function BotSpawner() {
-    Logger.out("Sharding " + args);
+    Logger.out(`Sharding ${args}`);
     try {
         const manager = new ShardingManager("./index.js", {
             token: cfg.discord.token,

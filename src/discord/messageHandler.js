@@ -36,10 +36,10 @@ const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 ch
  * @param {Error} e 
  */
 async function logError(msg, e) {
-    logger.err("Error from - " + msg.content);
+    logger.err(`Error from - ${msg.content}`);
     logger.err(e.toString());
     logger.err(e.stack);
-    await Webhooks.logHook.send("Error from - " + msg.content.replace(/\\?`/g, "\\`"));
+    await Webhooks.logHook.send(`Error from - ${msg.content.replace(/\\?`/g, "\\`")}`);
     await Webhooks.errHook.send(e.toString());
 }
 
@@ -178,7 +178,7 @@ async function addIGNs(msg) {
             let acclist = await BotUtils.getFromDB("acclist");
             let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
-            Webhooks.logHook.send("Attempting to add \"`" + firstWord + "`\" to database.");
+            Webhooks.logHook.send(`Attempting to add "\`${firstWord}\`" to database.`);
             await addAccounts(category, [firstWord]);
         }
     }
@@ -192,7 +192,7 @@ async function sanitizeCmdOpt(cmdResponse) {
     if(cmdResponse.res?.length > 2000) {
         cmdResponse.res = cmdResponse.res.slice(0, 2000);
         if(cmdResponse.res.slice(0, 3) == "```") {
-            cmdResponse.res = cmdResponse.res.slice(0, 1994) + "```";
+            cmdResponse.res = `${cmdResponse.res.slice(0, 1994)}\`\`\``;
         }
         await Webhooks.errHook.send(longMsgStr);
         logger.err(longMsgStr);

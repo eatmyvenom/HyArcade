@@ -12,18 +12,20 @@ const Util = require("util");
  * @returns {*}
  */
 function getProp(o, s) {
-    s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-    s = s.replace(/^\./, ""); // strip a leading dot
-    var a = s.split(".");
+    let obj = o;
+    let str = s;
+    str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+    str = str.replace(/^\./, ""); // strip a leading dot
+    var a = str.split(".");
     for(var i = 0, n = a.length; i < n; ++i) {
         var k = a[i];
-        if(k in o) {
-            o = o[k];
+        if(k in obj) {
+            obj = obj[k];
         } else {
             return;
         }
     }
-    return o;
+    return obj;
 }
 
 module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interaction) => {
@@ -38,7 +40,7 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interacti
     let val = getProp(acc, path);
 
     if(typeof val == "number" || typeof val == "boolean") {
-        val = "" + val;
+        val = `${val}`;
     }
 
     if(typeof val != "string") {
@@ -46,7 +48,7 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interacti
     }
 
     let embed = new MessageEmbed()
-        .setTitle(acc.name + "." + path)
+        .setTitle(`${acc.name}.${path}`)
         .setDescription(val)
         .setColor(0x44a3e7);
     return {

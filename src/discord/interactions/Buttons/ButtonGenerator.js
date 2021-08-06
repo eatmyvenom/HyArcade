@@ -159,14 +159,14 @@ module.exports = class ButtonGenerator {
         let row = new MessageActionRow();
         let left = new MessageButton()
             .setCustomId(`s:${uuid}:${leftID}`)
-            .setLabel("<< " + leftTxt)
+            .setLabel(`<< ${leftTxt}`)
             .setStyle("PRIMARY");
 
         let m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`).setLabel("↻").setStyle("SECONDARY");
 
         let right = new MessageButton()
             .setCustomId(`s:${uuid}:${rightID}`)
-            .setLabel(rightTxt + " >>")
+            .setLabel(`${rightTxt} >>`)
             .setStyle("PRIMARY");
 
         row.addComponents(left, m, right);

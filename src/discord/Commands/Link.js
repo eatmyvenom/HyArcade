@@ -26,7 +26,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     let discord = args[1];
     let disclist = await BotUtils.getFromDB("disclist");
 
-    if(("" + player).startsWith("https://")) {
+    if((`${player}`).startsWith("https://")) {
         let channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
         let msgID = player.slice(player.lastIndexOf("/") + 1);
 
@@ -41,14 +41,14 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
         acc,
         acclist = await BotUtils.getFromDB("accounts");
     if(player.length < 17) {
-        acc = acclist.find((a) => ("" + a.name).toLowerCase() == player.toLowerCase());
+        acc = acclist.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
     } else {
-        acc = acclist.find((a) => ("" + a.uuid).toLowerCase() == player.toLowerCase());
+        acc = acclist.find((a) => (`${a.uuid}`).toLowerCase() == player.toLowerCase());
     }
 
     if(acc == undefined) {
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
-        if(("" + uuid).length != 32) {
+        if((`${uuid}`).length != 32) {
             let noexistEmbed = ERROR_IGN_UNDEFINED;
 
             return {

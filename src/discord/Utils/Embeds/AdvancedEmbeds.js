@@ -19,7 +19,7 @@ function formatR(n) {
  * @returns {number}
  */
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+    return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 /**
@@ -654,10 +654,10 @@ module.exports = class AdvancedEmbeds {
     }
 
     static async getStats(acc, game, hasPerms = false) {
-        let thumbURL = "https://crafatar.com/renders/body/" + acc.uuid + "?overlay";
+        let thumbURL = `https://crafatar.com/renders/body/${acc.uuid}?overlay`;
 
         let lvl = Math.round(acc.level * 100) / 100;
-        lvl = "" + lvl;
+        lvl = `${lvl}`;
         let gamename = "";
         let title = "";
 
@@ -732,12 +732,12 @@ module.exports = class AdvancedEmbeds {
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "skill")} qualifers`,
-                value: "" + acc.hitwQual,
+                value: `${acc.hitwQual}`,
                 inline: true,
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "skill")} Wins`,
-                value: "" + acc.hitwFinal,
+                value: `${acc.hitwFinal}`,
                 inline: true,
             });
             fields.push({
@@ -810,7 +810,7 @@ module.exports = class AdvancedEmbeds {
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-                value: "" + formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths),
+                value: `${formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths)}`,
                 inline: true,
             });
             title = "Mini walls";
@@ -896,7 +896,7 @@ module.exports = class AdvancedEmbeds {
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-                value: "" + Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100,
+                value: `${Math.round((acc.extras.throwOutKills / acc.extras.throwOutDeaths) * 100) / 100}`,
                 inline: true,
             });
             title = "Throw out";
@@ -926,7 +926,7 @@ module.exports = class AdvancedEmbeds {
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-                value: "" + Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100,
+                value: `${Math.round((acc.extras.galaxyWarsKills / acc.extras.galaxyWarsDeaths) * 100) / 100}`,
                 inline: true,
             });
             title = "Galaxy wars";
@@ -977,7 +977,7 @@ module.exports = class AdvancedEmbeds {
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-                value: "" + Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100,
+                value: `${Math.round((acc.extras.bountyHuntersKills / acc.extras.bountyHuntersDeaths) * 100) / 100}`,
                 inline: true,
             });
             title = "Bounty hunters";
@@ -1112,29 +1112,29 @@ module.exports = class AdvancedEmbeds {
         case "sea": {
             fields.push({
                 name: `${EmojiGetter(hasPerms, "win")} Easter wins`,
-                value: "" + acc.seasonalWins.easter,
+                value: `${acc.seasonalWins.easter}`,
                 inline: true,
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "win")} Scuba wins`,
-                value: "" + acc.seasonalWins.scuba,
+                value: `${acc.seasonalWins.scuba}`,
                 inline: true,
             });
 
             fields.push({
                 name: `${EmojiGetter(hasPerms, "win")} Halloween wins`,
-                value: "" + acc.seasonalWins.halloween,
+                value: `${acc.seasonalWins.halloween}`,
                 inline: true,
             });
             fields.push({
                 name: `${EmojiGetter(hasPerms, "win")} Grinch wins`,
-                value: "" + acc.seasonalWins.grinch,
+                value: `${acc.seasonalWins.grinch}`,
                 inline: true,
             });
 
             fields.push({
                 name: `${EmojiGetter(hasPerms, "win")} Total wins`,
-                value: "" + acc.seasonalWins.total,
+                value: `${acc.seasonalWins.total}`,
                 inline: true,
             });
             gamename = "sim";
@@ -1187,15 +1187,15 @@ module.exports = class AdvancedEmbeds {
         }
         }
 
-        let rank = ("" + acc.rank)
+        let rank = (`${acc.rank}`)
             .replace(/_/g, "")
             .replace(/PLUS/g, "+")
             .replace(/undefined/g, "");
-        rank = rank == "" ? "" : "[" + rank + "]";
+        rank = rank == "" ? "" : `[${rank}]`;
 
         let embed = new MessageEmbed()
             .setTitle(`:mag_right: ${title} stats`)
-            .setAuthor(`${rank} ${acc.name}`, null, "https://hyarcade.xyz/player.html?q=" + acc.name)
+            .setAuthor(`${rank} ${acc.name}`, null, `https://hyarcade.xyz/player.html?q=${acc.name}`)
             .setThumbnail(thumbURL)
             .setColor(0x44a3e7)
             .addFields(fields);

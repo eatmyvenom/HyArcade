@@ -25,7 +25,7 @@ function numberify(n) {
  * @returns {string}
  */
 function wordify(s) {
-    return ("" + s).replace(/_/g, " ");
+    return (`${s}`).replace(/_/g, " ");
 }
 
 module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) => {
@@ -46,7 +46,7 @@ module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) =
     let losses = (arena?.losses_1v1 ?? 0) + (arena?.losses_2v2 ?? 0) + (arena?.losses_4v4 ?? 0);
 
     let embed = new MessageEmbed()
-        .setTitle(data.displayname + " Arena stats")
+        .setTitle(`${data.displayname} Arena stats`)
         .addField("-----Overall stats-----",
             `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +
             `**Losses** - ${numberify(losses)}\n` +
@@ -72,7 +72,7 @@ module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) =
             `**Heal/D** - ${numberify(heal / deaths)}\n`,
             true
         )
-        .setThumbnail("https://crafatar.com/renders/head/" + uuid + "?overlay")
+        .setThumbnail(`https://crafatar.com/renders/head/${uuid}?overlay`)
         .setColor(0x44a3e7);
     return new CommandResponse("", embed);
 });

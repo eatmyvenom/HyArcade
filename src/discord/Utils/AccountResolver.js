@@ -10,7 +10,7 @@ const {
  * @returns {string}
  */
 function stringify(str) {
-    return "" + str;
+    return `${str}`;
 }
 
 /**
@@ -23,22 +23,22 @@ function stringify(str) {
  * @returns {Account}
  */
 module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {
-    logger.info("Attempting to resolve " + string + " from " + rawMessage.content);
-    string = stringify(string).toLowerCase();
+    logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
+    let queryString = stringify(queryString).toLowerCase();
     let acc;
-    if(string.length == 18) {
-        acc = acclist.find((a) => a.discord == string);
+    if(queryString.length == 18) {
+        acc = acclist.find((a) => a.discord == queryString);
     }
 
-    if(acc == undefined && string.length != 0 && string.length > 16) {
-        acc = acclist.find((a) => a.uuid?.toLowerCase() == string);
-    } else if(acc == undefined && string.length != 0 && string != "undefined" && string.length <= 16) {
-        acc = acclist.find((a) => a.name?.toLowerCase() == string);
+    if(acc == undefined && queryString.length != 0 && queryString.length > 16) {
+        acc = acclist.find((a) => a.uuid?.toLowerCase() == queryString);
+    } else if(acc == undefined && queryString.length != 0 && queryString != "undefined" && queryString.length <= 16) {
+        acc = acclist.find((a) => a.name?.toLowerCase() == queryString);
     }
 
-    if(string.length > 1 && acc == undefined) {
+    if(queryString.length > 1 && acc == undefined) {
         let discusers = await rawMessage.guild.members.fetch({
-            query: string,
+            query: queryString,
             limit: 1,
         });
         if(discusers.size > 0) {
@@ -53,7 +53,7 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
 
     if(acc == undefined) {
         if(rawMessage.mentions.users.size > 0) {
-            let discid = "" + rawMessage.mentions.users.first();
+            let discid = `${rawMessage.mentions.users.first()}`;
             let uuid = disclist[discid];
             if(uuid != undefined) {
                 acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
@@ -71,11 +71,11 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
     }
 
     if(acc) {
-        logger.info("resolved as " + acc.name);
+        logger.info(`resolved as ${acc.name}`);
     } else {
         logger.out("Unable to resolve account in database, getting by ign from hypixel.");
 
-        let plr = string;
+        let plr = queryString;
         let uuid;
         if(plr.length > 17) {
             uuid = plr;
@@ -83,7 +83,7 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
             uuid = await mojangRequest.getUUID(plr);
         }
 
-        acc = new Account("", 0, "" + uuid);
+        acc = new Account("", 0, `${uuid}`);
         await acc.updateData();
     }
     return acc;

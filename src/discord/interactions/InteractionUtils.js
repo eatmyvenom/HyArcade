@@ -19,7 +19,7 @@ module.exports = class InteractionUtils {
         }
 
         if(acc == undefined) {
-            acc = new Account("", 0, "" + uuid);
+            acc = new Account("", 0, `${uuid}`);
             await acc.updateData();
         }
 

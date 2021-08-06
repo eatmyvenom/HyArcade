@@ -50,7 +50,7 @@ module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
     case "list":
     case "show": {
         res = {
-            res: "```\n" + hackers.join("\n") + "```"
+            res: `\`\`\`\n${hackers.join("\n")}\`\`\``
         };
         break;
     }

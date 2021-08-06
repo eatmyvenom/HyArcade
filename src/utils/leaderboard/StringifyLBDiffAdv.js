@@ -7,7 +7,7 @@ const TimSort = require("timsort");
  * @returns {number} The number primitive
  */
 function numberify(str) {
-    return Number(("" + str).replace(/undefined/g, 0).replace(/null/g, 0));
+    return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
 /**

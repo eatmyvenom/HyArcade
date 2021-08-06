@@ -27,7 +27,7 @@ async function getFromHypixel(string, interaction) {
         uuid = await mojangRequest.getUUID(plr);
     }
 
-    let acc = new Account("", 0, "" + uuid);
+    let acc = new Account("", 0, `${uuid}`);
     await acc.updateData();
     return acc;
 }

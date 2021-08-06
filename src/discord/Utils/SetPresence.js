@@ -23,9 +23,10 @@ function getRandomPresence(type) {
  * @param {string} type 
  */
 module.exports = async function SetPresence(client, type) {
-    if(type == undefined || type == "slash") {
-        type = "bot";
+    let realType = type;
+    if(realType == undefined || realType == "slash") {
+        realType = "bot";
     }
 
-    client.user.setPresence(getRandomPresence(type));
+    client.user.setPresence(getRandomPresence(realType));
 };

@@ -23,7 +23,7 @@ class FileCache {
     dirty = false;
     path = "data/";
 
-    constructor(path = "data") {
+    constructor(path = "data/") {
         this.path = path;
         FileCache.refresh(this);
         this._interval = setInterval(FileCache.refresh, 25000, this);
@@ -47,12 +47,12 @@ class FileCache {
         await utils.writeJSON("disclist.json", this.disclist);
         await utils.writeJSON("status.json", this.status);
         if(this.blacklist.join("\n").trim() != "") {
-            await fs.writeFile(this.path + "blacklist", this.blacklist.join("\n").trim());
+            await fs.writeFile(`${this.path}blacklist`, this.blacklist.join("\n").trim());
         }
         if(this.hackerlist.join("\n").trim() != "") {
-            await fs.writeFile(this.path + "hackerlist", this.hackerlist.join("\n").trim());
+            await fs.writeFile(`${this.path}hackerlist`, this.hackerlist.join("\n").trim());
         }
-        await fs.writeFile(this.path + "ez", this.ezmsgs.join("\n"));
+        await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
         Logger.debug("Files saved...");
         this.dirty = false;
     }
@@ -78,9 +78,9 @@ class FileCache {
         fileCache.updatetime = await fs.readFile("timeupdate");
         fileCache.players = await utils.readJSON("players.json");
         fileCache.guilds = await utils.readJSON("guild.json");
-        let blacklist = await fs.readFile(fileCache.path + "blacklist");
-        let hackerlist = await fs.readFile(fileCache.path + "hackerlist");
-        fileCache.ezmsgs = (await fs.readFile(fileCache.path + "ez")).toString().split("\n");
+        let blacklist = await fs.readFile(`${fileCache.path}blacklist`);
+        let hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
+        fileCache.ezmsgs = (await fs.readFile(`${fileCache.path}ez`)).toString().split("\n");
 
         if(blacklist.toString().trim() != "") {
             fileCache.blacklist = blacklist.toString().trim().split("\n");

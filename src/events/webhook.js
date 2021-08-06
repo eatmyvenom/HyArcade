@@ -182,15 +182,15 @@ async function sendTOKillEmbed() {
  * @returns {*}
  */
 function generateEmbed(list) {
-    list = list.filter((item) => item.wins > 0);
+    let filteredList = list.filter((item) => item.wins > 0);
 
     let embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard").setColor(0x44a3e7).setTimestamp(Date.now());
 
     let str = "";
 
-    let len = Math.min(list.length, 24);
+    let len = Math.min(filteredList.length, 24);
     for(let i = 0; i < len; i++) {
-        str += i + 1 + ") " + list[i].name + " - " + list[i].wins + "\n";
+        str += `${i + 1}) ${filteredList[i].name} - ${filteredList[i].wins}\n`;
     }
     embed.setDescription(str);
 
@@ -362,10 +362,10 @@ function rcb(n) {
  */
 async function hackerTransformer(list) {
     let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
-    list = list.filter((a) => !hackerlist.includes(a.uuid));
-    list = list.filter((a) => a != {});
-    list = list.filter((a) => a.name != undefined);
-    return list;
+    let filteredList = list.filter((a) => !hackerlist.includes(a.uuid));
+    filteredList = filteredList.filter((a) => a != {});
+    filteredList = filteredList.filter((a) => a.name != undefined);
+    return filteredList;
 }
 
 /**
@@ -373,9 +373,9 @@ async function hackerTransformer(list) {
  * @returns {Account[]}
  */
 function top150Transformer(list) {
-    list = list.sort(wComp);
-    list = list.slice(0, Math.min(list.length, 150));
-    return list;
+    let filterdList = list.sort(wComp);
+    filterdList = list.slice(0, Math.min(filterdList.length, 150));
+    return filterdList;
 }
 
 /**
@@ -383,9 +383,9 @@ function top150Transformer(list) {
  * @returns {Account[]}
  */
 async function ratioTransformer(list) {
-    list = await hackerTransformer(list);
-    list = top150Transformer(list);
-    return list;
+    let filteredList = await hackerTransformer(list);
+    filteredList = await top150Transformer(filteredList);
+    return filteredList;
 }
 
 /**

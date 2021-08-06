@@ -73,7 +73,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         `Arrow Accuracy: **${formatR(((acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0)) * 100)}**\n`;
 
     let embed = new MessageEmbed()
-        .setTitle("Player: " + acc?.name)
+        .setTitle(`Player: ${acc?.name}`)
         .setColor(0x7873f5)
         .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);

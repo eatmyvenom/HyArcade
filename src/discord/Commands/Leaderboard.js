@@ -112,18 +112,20 @@ async function getLB(prop, timetype, limit, category, start) {
  * @returns {*}
  */
 function getProp(o, s) {
-    s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-    s = s.replace(/^\./, ""); // strip a leading dot
-    var a = s.split(".");
+    let obj = o;
+    let str = s;
+    str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+    str = str.replace(/^\./, ""); // strip a leading dot
+    var a = str.split(".");
     for(var i = 0, n = a.length; i < n; ++i) {
         var k = a[i];
-        if(k in o) {
-            o = o[k];
+        if(k in obj) {
+            obj = obj[k];
         } else {
             return;
         }
     }
-    return o;
+    return obj;
 }
 
 module.exports = new Command("leaderboard", ["*"], hander);
@@ -660,9 +662,9 @@ async function hander(args, rawMsg, interaction) {
     }
 
     let finalRes = res
-        .setAuthor(gameName + " leaderboard", BotUtils.client.user.avatarURL());
+        .setAuthor(`${gameName} leaderboard`, BotUtils.client.user.avatarURL());
 
-    logger.out("Leaderboard command ran in " + (Date.now() - startTime) + "ms");
+    logger.out(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
     let response = {
         res: "",

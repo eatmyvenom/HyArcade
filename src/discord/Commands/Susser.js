@@ -52,13 +52,13 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     }
 
     let embed = new MessageEmbed()
-        .setTitle("Cheat level of " + acc.name)
+        .setTitle(`Cheat level of ${acc.name}`)
         .setColor(0x8c54fe)
         .setDescription(
             "Cheat levels above 40 should be considered most likely cheating. Levels above 25 should most likely be dodged in queue."
         )
-        .addField("Cheat level", "" + hax, false)
-        .addField("Reasons", "" + reasons.join("\n"), false);
+        .addField("Cheat level", `${hax}`, false)
+        .addField("Reasons", `${reasons.join("\n")}`, false);
 
     return {
         res: "",

@@ -6,8 +6,8 @@ const FileCache = require("../../utils/files/FileCache");
  * @returns {number}
  */
 function numberify(str) {
-    str = str ?? 0;
-    return Number(str);
+    let cleanStr = str ?? 0;
+    return Number(cleanStr);
 }
 
 /**
@@ -37,7 +37,7 @@ module.exports = async (req, res, fileCache) => {
             }
         } else {
             let newAcclist = [];
-            let oldCopy = JSON.parse(JSON.stringify(fileCache[timePeriod + "accounts"]));
+            let oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
             for(let a of oldCopy) {
                 let n = fileCache.accounts.find(u => u.uuid == a.uuid);
                 if(category == null) {

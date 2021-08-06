@@ -31,7 +31,7 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
     }
 
     let embed = new MessageEmbed()
-        .setTitle(acc.name + " zombies stats")
+        .setTitle(`${acc.name} zombies stats`)
         .addField("Stats",
             `**Wins** - ${numberify(acc.zombies?.wins_zombies ?? 0)}\n` +
             `**Rounds** - ${numberify(acc.zombies?.total_rounds_survived_zombies ?? 0)}\n` +
@@ -50,7 +50,7 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
             `**Accuracy** - ${numberify((acc.zombies?.bullets_shot_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\n` +
             `**Headshot ratio** - ${numberify((acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\n`,
             true)
-        .setThumbnail("https://crafatar.com/renders/head/" + acc.uuid + "?overlay")
+        .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
         .setColor(0x44a3e7);
     return {
         res: "",

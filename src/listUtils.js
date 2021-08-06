@@ -25,9 +25,9 @@ async function txtPlayerList(list, maxamnt) {
 
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or node native for this
-        let num = ("000" + (i + 1)).slice(-3);
+        let num = (`000${i + 1}`).slice(-3);
 
-        let name = (list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1) + "                       ").slice(
+        let name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
             0,
             17
         );

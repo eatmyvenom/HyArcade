@@ -40,7 +40,7 @@ function dComp(b, a) {
  * @returns {number}
  */
 function int(n) {
-    return new Number(("" + n).replace(/undefined/g, "0").replace(/null/g, "0"));
+    return new Number((`${n}`).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
 /**
@@ -75,10 +75,9 @@ function rcb(n) {
  */
 async function hackerTransformer(list) {
     let hackers = await BotUtils.getFromDB("hackerlist");
-    list = list.filter((a) => !hackers.includes(a.uuid));
-    list = list.filter((a) => a.name != undefined || a.name != "");
-    list = list.filter((a) => a.miniWalls != undefined);
-    return list;
+    return list.filter((a) => !hackers.includes(a.uuid))
+        .filter((a) => a.name != undefined || a.name != "")
+        .filter((a) => a.miniWalls != undefined);
 }
 
 /**
@@ -87,8 +86,7 @@ async function hackerTransformer(list) {
  */
 function top150Transformer(list) {
     TimSort.sort(list, wComp);
-    list = list.slice(0, Math.min(list.length, 150));
-    return list;
+    return list.slice(0, Math.min(list.length, 150));
 }
 
 /**
@@ -96,9 +94,7 @@ function top150Transformer(list) {
  * @returns {Account[]}
  */
 async function ratioTransformer(list) {
-    list = await hackerTransformer(list);
-    list = top150Transformer(list);
-    return list;
+    return await top150Transformer(await hackerTransformer(list));
 }
 
 /**
@@ -338,7 +334,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     let res = "";
     let gameName = "";
 
-    switch(("" + type).toLowerCase()) {
+    switch((`${type}`).toLowerCase()) {
     case "w":
     case "ws":
     case "win":
@@ -478,9 +474,9 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     }
 
     let finalRes = res
-        .setAuthor(gameName + " Leaderboard", "https://eatmyvenom.me/share/images/miniwalls.jpg");
+        .setAuthor(`${gameName} Leaderboard`, "https://eatmyvenom.me/share/images/miniwalls.jpg");
 
-    logger.out("MW Leaderboard command ran in " + (Date.now() - startTime) + "ms");
+    logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
     return {
         res: "",
