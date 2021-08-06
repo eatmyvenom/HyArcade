@@ -62,13 +62,13 @@ class Guild {
      */
     async updateMemberData() {
         let data = await this.getGuild();
-        this.name = data.guild.name;
-        this.arcadeEXP = data.guild.guildExpByGameType.ARCADE;
-        this.gxp = data.guild.exp;
-        this.color = data.guild.tagColor;
-        this.tag = data.guild.tag;
+        this.name = data?.guild?.name ?? "INVALID-NAME";
+        this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
+        this.gxp = data?.guild?.exp ?? 0;
+        this.color = data?.guild?.tagColor ?? "GREY";
+        this.tag = data?.guild?.tag ?? "NONE";
 
-        let gmembers = data.guild.members;
+        let gmembers = data?.guild?.members ?? [];
         for(let i = 0; i < gmembers.length; i++) {
             // find a corrosponding account in my account list
             let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
