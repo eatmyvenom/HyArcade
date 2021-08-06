@@ -24,7 +24,7 @@ function stringify(str) {
  */
 module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {
     logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
-    let queryString = stringify(queryString).toLowerCase();
+    let queryString = stringify(string).toLowerCase();
     let acc;
     if(queryString.length == 18) {
         acc = acclist.find((a) => a.discord == queryString);
