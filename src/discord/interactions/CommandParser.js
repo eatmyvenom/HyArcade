@@ -72,7 +72,7 @@ module.exports = async (interaction) => {
         logger.warn("Refusing to run command because database is corrupted!");
         let res = new CommandResponse("", ERROR_DATABASE_ERROR);
         res.priv = true;
-        
+
         return res;
     }
 
@@ -80,7 +80,7 @@ module.exports = async (interaction) => {
         logger.warn("Refusing to run command because API is down!");
         let res = new CommandResponse("", ERROR_API_DOWN);
         res.priv = true;
-        
+
         return res;
     }
 
@@ -110,7 +110,9 @@ module.exports = async (interaction) => {
     }
 
     case "add-account": {
-        await interaction.defer({ephemeral : true});
+        await interaction.defer({
+            ephemeral: true
+        });
 
         let names = opts.getString("accounts").value.split(" ");
         let res = await addAccounts("others", names);

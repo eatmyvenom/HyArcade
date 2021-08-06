@@ -11,7 +11,8 @@ const EventDetector = require("../events/EventDetector");
 const lists = require("../listParser");
 let accounts = [];
 const {
-    winsSorter, logger
+    winsSorter,
+    logger
 } = require("../utils");
 
 /**
