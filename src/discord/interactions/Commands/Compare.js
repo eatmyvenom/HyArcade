@@ -19,10 +19,6 @@ module.exports = {
         description: "The game you would like to compare the players in",
         required: true,
         choices: [{
-            name: "Overall",
-            value: "arc",
-        },
-        {
             name: "Party games",
             value: "pg",
         },
