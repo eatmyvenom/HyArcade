@@ -4,9 +4,9 @@ const Account = require("../src/request/types/Account");
  * Test if "bloozing" works correctly
  */
 async function main () {
-    let a = new Account("bloozing", 0, "16ddab826eb74fff81d1e1566a3c6d19");
+    let a = new Account("bigc1109", 0, "f0133668f8da4ab7ad3e62ca1b5574da");
     await a.updateData();
-    console.log(a);
+    console.log(a.arcadeAchievments.miniWalls);
 }
 
 main();
