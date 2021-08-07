@@ -21,7 +21,7 @@ module.exports = class Webhooks {
      * @type {Webhook}
      * @static
      */
-    static ignHook = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
+    static ignHook = new WebhookClient({id : cfg.loggingHooks.ignHook.id, token : cfg.loggingHooks.ignHook.token});
 
     /**
      * Webhook for logging standard output
