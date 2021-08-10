@@ -13,7 +13,7 @@ const cfg = require("hyarcade-config").fromJSON();
  * @param {CommandInteraction} interaction
  * @returns {Promise<Account>}
  */
-async function getFromHypixel(string, interaction) {
+async function getFromHypixel (string, interaction) {
     if(!interaction.deferred) {
         await interaction.defer();
     }
@@ -38,7 +38,7 @@ async function getFromHypixel(string, interaction) {
  * @param {string} namearg
  * @returns {Account}
  */
-module.exports = async function resolveAccount(interaction, namearg = "player") {
+module.exports = async function resolveAccount (interaction, namearg = "player") {
     let str = interaction.options.getString(namearg, false);
     if(BotUtils.botMode == "mini") {
         return await getFromHypixel(str, interaction);

@@ -9,7 +9,7 @@ const {
  * @param {*} str
  * @returns {string}
  */
-function stringify(str) {
+function stringify (str) {
     return `${str}`;
 }
 
@@ -22,7 +22,7 @@ function stringify(str) {
  * @param {object} disclist
  * @returns {Account}
  */
-module.exports = async function resolveAccount(string, rawMessage, canbeSelf, acclist, disclist) {
+module.exports = async function resolveAccount (string, rawMessage, canbeSelf, acclist, disclist) {
     logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
     let queryString = stringify(queryString).toLowerCase();
     let acc;

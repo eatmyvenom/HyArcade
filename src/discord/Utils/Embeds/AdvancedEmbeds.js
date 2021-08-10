@@ -9,7 +9,7 @@ const EmojiGetter = require("../Formatting/EmojiGetter");
  * @param {number} n
  * @returns {number}
  */
-function formatR(n) {
+function formatR (n) {
     let r = (Math.round(n * 100) / 100) ?? 0.0;
     return r;
 }
@@ -18,7 +18,7 @@ function formatR(n) {
  * @param {string} str
  * @returns {number}
  */
-function numberify(str) {
+function numberify (str) {
     return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
@@ -26,7 +26,7 @@ function numberify(str) {
  * @param {number} number
  * @returns {number}
  */
-function formatNum(number) {
+function formatNum (number) {
     return Intl.NumberFormat("en").format(number);
 }
 
@@ -39,7 +39,7 @@ module.exports = class AdvancedEmbeds {
      * @param {boolean} hasPerms
      * @returns {MessageEmbed}
      */
-    static compareStats(acc1, acc2, game, hasPerms) {
+    static compareStats (acc1, acc2, game, hasPerms) {
         let embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`).setColor(0xbb00dd);
 
         let side1 = "";
@@ -653,7 +653,7 @@ module.exports = class AdvancedEmbeds {
         return embed;
     }
 
-    static async getStats(acc, game, hasPerms = false) {
+    static async getStats (acc, game, hasPerms = false) {
         let thumbURL = `https://crafatar.com/renders/body/${acc.uuid}?overlay`;
 
         let lvl = Math.round(acc.level * 100) / 100;
@@ -1213,7 +1213,7 @@ module.exports = class AdvancedEmbeds {
      * @param {User} user 
      * @returns {MessageEmbed}
      */
-    static playerLink(ign, user) {
+    static playerLink (ign, user) {
         let embed = new MessageEmbed()
             .setTitle("Success")
             .setColor(0x00cc66)

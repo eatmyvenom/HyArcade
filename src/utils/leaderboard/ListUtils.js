@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
  * @param {number} number
  * @returns {string} Formatted number
  */
-function formatNum(number) {
+function formatNum (number) {
     return Intl.NumberFormat("en").format(number);
 }
 
@@ -16,7 +16,7 @@ function formatNum(number) {
  * @param {string} type 
  * @returns {Promise<Account>} Account list
  */
-exports.getList = async function getList(type = "") {
+exports.getList = async function getList (type = "") {
     let list;
     let url = new URL("db", cfg.dbUrl);
     let path = `${type}accounts`;
@@ -28,7 +28,7 @@ exports.getList = async function getList(type = "") {
     return list;
 };
 
-exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
+exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
     let str = "";
     let size = maxamnt + (startingIndex | 0);
     size = size > list.length ? list.length : size;

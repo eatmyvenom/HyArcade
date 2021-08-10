@@ -6,7 +6,7 @@ const TimSort = require("timsort");
  * @param {string} str
  * @returns {number} The number primitive
  */
-function numberify(str) {
+function numberify (str) {
     return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
@@ -14,11 +14,11 @@ function numberify(str) {
  * @param {number} number
  * @returns {string} Formatted number
  */
-function formatNum(number) {
+function formatNum (number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-module.exports = async function stringLBDiffAdv(comparitor, parser, maxamnt, timetype, callback, listTransformer) {
+module.exports = async function stringLBDiffAdv (comparitor, parser, maxamnt, timetype, callback, listTransformer) {
     let list = await MakeLeaderboardAdv("accounts", timetype, 9999, callback);
     list = await listTransformer(list);
     TimSort.sort(list, comparitor);

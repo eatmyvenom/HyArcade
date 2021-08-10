@@ -11,7 +11,7 @@ const Util = require("util");
  * @param {string} s
  * @returns {*}
  */
-function getProp(o, s) {
+function getProp (o, s) {
     let obj = o;
     let str = s;
     str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties

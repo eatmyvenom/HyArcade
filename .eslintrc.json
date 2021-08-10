@@ -15,6 +15,8 @@
     "rules": {
         "jsdoc/require-param-description": 0,
         "jsdoc/require-returns-description": 0,
+        "no-loop-func": "error",
+        "space-before-function-paren": "error",
         "no-param-reassign": 2,
         "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],

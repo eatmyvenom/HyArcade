@@ -9,7 +9,7 @@ const Logger = require("hyarcade-logger");
  *
  * @returns {string}
  */
-async function formatCounts() {
+async function formatCounts () {
     let str = "";
     let all = await getGameCounts();
     let counts = all.games;
@@ -34,7 +34,7 @@ async function formatCounts() {
  * Print the game counts to stdout
  *
  */
-async function logCounts() {
+async function logCounts () {
     Logger.out(await formatCounts());
 }
 

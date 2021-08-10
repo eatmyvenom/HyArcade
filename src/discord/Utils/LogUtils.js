@@ -16,7 +16,7 @@ module.exports = class LogUtils {
      *
      * @param {Message} msg 
      */
-    static async logIgns(msg) {
+    static async logIgns (msg) {
         let channelID = msg.channel.id;
         for(let c of cfg.discord.listenChannels) {
             if(channelID == c) {
@@ -30,7 +30,7 @@ module.exports = class LogUtils {
      * @param {Message} msg 
      * @param {Webhook} hook 
      */
-    static async logcopy(msg, hook) {
+    static async logcopy (msg, hook) {
         let pfp = msg.author.avatarURL();
         let name = "unknown";
         if(msg.member) {
@@ -56,7 +56,7 @@ module.exports = class LogUtils {
      * @param {string} args The arguments used with the command
      * @param {Message} message The message object that the command came from
      */
-    static async logCommand(command, args, message) {
+    static async logCommand (command, args, message) {
         await Webhooks.commandHook.send({
             embeds: [LOG_COMMAND_EXECUTION(command, args, message)]
         });

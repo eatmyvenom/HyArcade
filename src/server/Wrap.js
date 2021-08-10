@@ -19,7 +19,7 @@ app.use(compression());
  * @param {express.Response} res
  * @param {express.Request} req
  */
-async function callback(res, req) {
+async function callback (res, req) {
     let request = req.req;
     let response = res.res;
 
@@ -48,7 +48,7 @@ app.all("/acc", callback);
 app.all("/leaderboard", callback);
 app.all("/lb", callback);
 
-module.exports = function start(port) {
+module.exports = function start (port) {
     app.listen(port, () => {
         fileCache = new FileCache("data/");
         logger.log(`Express app listening at http://localhost:${port}`);

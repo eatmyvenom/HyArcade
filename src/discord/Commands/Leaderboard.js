@@ -19,7 +19,7 @@ const {
  * @param {number} start
  * @returns {MessageEmbed}
  */
-async function getLB(prop, timetype, limit, category, start) {
+async function getLB (prop, timetype, limit, category, start) {
     let res = "";
     let time;
 
@@ -111,7 +111,7 @@ async function getLB(prop, timetype, limit, category, start) {
  * @param {string} s
  * @returns {*}
  */
-function getProp(o, s) {
+function getProp (o, s) {
     let obj = o;
     let str = s;
     str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
@@ -137,7 +137,7 @@ module.exports = new Command("leaderboard", ["*"], hander);
  * @param {CommandInteraction} interaction 
  * @returns {object}
  */
-async function hander(args, rawMsg, interaction) {
+async function hander (args, rawMsg, interaction) {
     let startTime = Date.now();
     if(interaction != undefined && !interaction.isButton()) {
         logger.debug("Deferring interaction");

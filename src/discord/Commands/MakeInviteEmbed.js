@@ -9,7 +9,7 @@ const BotUtils = require("../BotUtils");
  * @param {string} link
  * @returns {object}
  */
-function makeField(name, link) {
+function makeField (name, link) {
     return {
         name: name,
         value: `[<:join:841515519823708170> Invite](${link})`,

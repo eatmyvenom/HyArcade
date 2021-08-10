@@ -3,7 +3,7 @@ const Account = require("hyarcade-requests/types/Account");
 /** @type {Account[]} */
 let accounts = [];
 
-module.exports = function Plr(acclist) {
+module.exports = function Plr (acclist) {
     accounts = acclist;
     return Player;
 };
@@ -22,7 +22,7 @@ class Player {
      * @param {number} wins The preset amount of wins
      * @memberof Player
      */
-    constructor(name, altnames, wins) {
+    constructor (name, altnames, wins) {
         this.name = name;
         this.altnames = altnames;
         this.wins = wins;
@@ -43,7 +43,7 @@ class Player {
      * @returns {number}
      * @memberof Player
      */
-    async updateWins() {
+    async updateWins () {
         let newWins = 0;
         for(let i = 0; i < this.alts.length; i++) {
             if(this.alts[i] == undefined) {

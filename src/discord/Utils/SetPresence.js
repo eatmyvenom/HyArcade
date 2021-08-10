@@ -9,7 +9,7 @@ const cfg = require("hyarcade-config").fromJSON();
  * @param {string} type
  * @returns {Presence}
  */
-function getRandomPresence(type) {
+function getRandomPresence (type) {
     let presenceArr = cfg.discord.presences;
     if(cfg.discord.setup[type].presences != undefined) {
         presenceArr = presenceArr.concat(cfg.discord.setup[type].presences);
@@ -22,7 +22,7 @@ function getRandomPresence(type) {
  * @param {Client} client 
  * @param {string} type 
  */
-module.exports = async function SetPresence(client, type) {
+module.exports = async function SetPresence (client, type) {
     let realType = type;
     if(realType == undefined || realType == "slash") {
         realType = "bot";

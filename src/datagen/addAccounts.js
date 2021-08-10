@@ -13,7 +13,7 @@ const {
  * @param {string[]} names
  * @returns {null}
  */
-module.exports = async function addAccounts(category, names) {
+module.exports = async function addAccounts (category, names) {
     let res = "";
     let acclist = await utils.readDB("acclist");
     let newAccs = [];

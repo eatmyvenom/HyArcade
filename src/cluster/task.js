@@ -20,7 +20,7 @@ const {
  *
  * @returns {string[]} files changed by this task
  */
-async function accs() {
+async function accs () {
     let acclist = await lists.accounts();
     accounts = await dataGen.updateAllAccounts(acclist);
     let old = await utils.readDB("accounts");
@@ -48,7 +48,7 @@ async function accs() {
  *
  * @returns {string[]} files changed by this task
  */
-async function plrs() {
+async function plrs () {
     let players = await lists.players(accounts);
     await Promise.all(
         players.map(async (player) => {
@@ -66,7 +66,7 @@ async function plrs() {
  *
  * @returns {string[]} files changed by this task
  */
-async function glds() {
+async function glds () {
     let guilds = await lists.guilds(accounts);
     await Promise.all(
         guilds.map(async (guild) => {
@@ -84,7 +84,7 @@ async function glds() {
  *
  * @returns {string[]} files changed by this task
  */
-async function stats() {
+async function stats () {
     return await [].concat(await accs(), await plrs(), await glds());
 }
 
@@ -93,7 +93,7 @@ async function stats() {
  *
  * @returns {*}
  */
-async function gamesPlayed() {
+async function gamesPlayed () {
     await dataGen.gamesPlayed();
     return ["gamesPlayed.json"];
 }
@@ -101,7 +101,7 @@ async function gamesPlayed() {
 /**
  * @returns {string[]}
  */
-async function addLeaderboards() {
+async function addLeaderboards () {
     await dataGen.addLeaderboards();
     return ["acclist.json"];
 }
@@ -111,7 +111,7 @@ async function addLeaderboards() {
  *
  * @returns {string[]} files changed by this task
  */
-async function status() {
+async function status () {
     await dataGen.genStatus();
     return await ["status.json", "status.txt"];
 }
@@ -119,7 +119,7 @@ async function status() {
 /**
  * @returns {string[]}
  */
-async function statusTxtSorted() {
+async function statusTxtSorted () {
     await dataGen.statusTxtSorted();
     return await ["status.txt"];
 }
@@ -131,7 +131,7 @@ async function statusTxtSorted() {
  * @param {number} maxamnt
  * @returns {string[]} files changed by this task
  */
-async function webhook(type, maxamnt) {
+async function webhook (type, maxamnt) {
     await Webhook.send(await stringNormal(type, maxamnt));
     await Webhook.send(await stringDaily(type, maxamnt));
 
@@ -142,7 +142,7 @@ async function webhook(type, maxamnt) {
  * Run the discord bot
  *
  */
-async function discord() {
+async function discord () {
     const DiscordBot = require("../discord/bot");
     await DiscordBot();
 }

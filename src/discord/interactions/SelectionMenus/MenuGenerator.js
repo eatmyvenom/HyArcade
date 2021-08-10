@@ -4,7 +4,7 @@ const {
 } = require("discord.js");
 
 module.exports = class MenuGenerator {
-    static statsMenu(uuid) {
+    static statsMenu (uuid) {
         let row = new MessageActionRow();
         let menu = new MessageSelectMenu()
             .setMaxValues(1)

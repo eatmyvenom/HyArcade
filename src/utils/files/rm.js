@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 
-module.exports = async function rm(path) {
+module.exports = async function rm (path) {
     if(fs.existsSync(path)) {
         await fs.rm(path);
         return true;

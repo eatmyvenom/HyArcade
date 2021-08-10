@@ -15,7 +15,7 @@ const {
  * @param {number} n
  * @returns {string}
  */
-function numberify(n) {
+function numberify (n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     return r;
 }
@@ -24,7 +24,7 @@ function numberify(n) {
  * @param {string} s
  * @returns {string}
  */
-function wordify(s) {
+function wordify (s) {
     return (`${s}`).replace(/_/g, " ");
 }
 

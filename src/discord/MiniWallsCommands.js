@@ -22,7 +22,7 @@ const {
  * @param {string} senderID
  * @returns {object}
  */
-async function execute(msg, senderID) {
+async function execute (msg, senderID) {
     if(msg.content.startsWith(".")) {
         if(Runtime.fromJSON().dbERROR) {
             logger.warn("Someone tried to run a command while the database is corrupted!");
@@ -53,7 +53,7 @@ async function execute(msg, senderID) {
  * @param {string} author
  * @returns {object}
  */
-async function checkCommands(rawMsg, command, args, author) {
+async function checkCommands (rawMsg, command, args, author) {
     switch(command.toLowerCase()) {
     case "link":
     case "ln": {

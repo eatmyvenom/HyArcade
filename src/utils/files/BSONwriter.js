@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const BSON = require("bson-ext");
 
-module.exports = async function BSONwriter(path, object) {
+module.exports = async function BSONwriter (path, object) {
     if(Array.isArray(object)) {
         let arr1 = object.slice(0, object.length / 2);
         let arr2 = object.slice(object.length / 2);

@@ -23,7 +23,7 @@ const {
  * @param {string} id
  * @returns {boolean}
  */
-async function isBlacklisted(id) {
+async function isBlacklisted (id) {
     let blacklist = await fs.readFile("data/blacklist");
     blacklist = blacklist.toString().split("\n");
     return blacklist.includes(id);
@@ -33,7 +33,7 @@ async function isBlacklisted(id) {
  *
  * @param {CommandInteraction} interaction
  */
-async function commandHandler(interaction) {
+async function commandHandler (interaction) {
     if(await isBlacklisted(interaction.user.id)) {
         return;
     }
@@ -90,7 +90,7 @@ async function commandHandler(interaction) {
  *
  * @param {CommandInteraction} interaction
  */
-async function logCmd(interaction) {
+async function logCmd (interaction) {
     await Webhooks.commandHook.send({
         embeds: [
             LOG_SLASH_COMMAND_USAGE(
@@ -109,7 +109,7 @@ async function logCmd(interaction) {
  *
  * @param {ButtonInteraction} interaction
  */
-async function logBtn(interaction) {
+async function logBtn (interaction) {
     await Webhooks.commandHook.send({
         embeds: [
             LOG_MESSAGE_COMPONENT_USAGE(
@@ -128,7 +128,7 @@ async function logBtn(interaction) {
  *
  * @param {ButtonInteraction} interaction
  */
-async function buttonHandler(interaction) {
+async function buttonHandler (interaction) {
     if(await ForceOGuser(interaction)) {
         let updatedData = await ButtonParser(interaction);
         await interaction.update(updatedData.toDiscord());
@@ -140,7 +140,7 @@ async function buttonHandler(interaction) {
  *
  * @param {SelectMenuInteraction} interaction
  */
-async function menuHandler(interaction) {
+async function menuHandler (interaction) {
     if(await ForceOGuser(interaction)) {
         let updatedData = await MenuParser(interaction);
         await interaction.update(updatedData.toDiscord());
@@ -152,7 +152,7 @@ async function menuHandler(interaction) {
  *
  * @param {Interaction} interaction
  */
-async function interactionHandler(interaction) {
+async function interactionHandler (interaction) {
     if(interaction.isCommand()) {
         await commandHandler(interaction);
     } else if(interaction.isButton()) {
@@ -166,7 +166,7 @@ async function interactionHandler(interaction) {
  *
  * @param {Client} client
  */
-async function registerAll(client) {
+async function registerAll (client) {
     let interactionObjects = require("./interactions/interactionObjects");
     logger.info("Registering global commands with discord");
     let cmdarr = [];

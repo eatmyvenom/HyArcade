@@ -4,7 +4,7 @@ const {
 } = require("discord.js");
 
 module.exports = class ButtonGenerator {
-    static async getStatsButtons(currentGame, uuid) {
+    static async getStatsButtons (currentGame, uuid) {
         let leftTxt = "";
         let rightTxt = "";
         let leftID = "";
@@ -173,7 +173,7 @@ module.exports = class ButtonGenerator {
         return row;
     }
 
-    static async getLBButtons(currentIndex, lb, time) {
+    static async getLBButtons (currentIndex, lb, time) {
         let left = new MessageButton()
             .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
             .setLabel("<< 10")
@@ -198,7 +198,7 @@ module.exports = class ButtonGenerator {
         return row;
     }
 
-    static async getEZ() {
+    static async getEZ () {
         let ez = new MessageButton().setCustomId("ez:null").setLabel("EZ").setStyle("SECONDARY");
 
         let row = new MessageActionRow().addComponents(ez);

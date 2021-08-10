@@ -27,7 +27,7 @@ module.exports = class CommandResponse {
      * @param {boolean} silent 
      * @param {boolean} priv
      */
-    constructor(text, embed = undefined, file = undefined, components = undefined, silent = false, priv = false) {
+    constructor (text, embed = undefined, file = undefined, components = undefined, silent = false, priv = false) {
         if(typeof text == "object" && typeof text != "string") {
             this.text = text.res;
             this.file = text.img;
@@ -45,7 +45,7 @@ module.exports = class CommandResponse {
         }
     }
 
-    isValid() {
+    isValid () {
         return (this.text != undefined && this.text != "") || this.embed != undefined || this.file != undefined;
     }
 
@@ -55,7 +55,7 @@ module.exports = class CommandResponse {
      * @param {boolean} webhook
      * @returns {MessageOptions | undefined}
      */
-    toDiscord(reply, webhook = false) {
+    toDiscord (reply, webhook = false) {
         if(this.silent) {
             return;
         }

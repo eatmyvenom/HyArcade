@@ -3,7 +3,7 @@ module.exports = class ButtonResponse {
     embeds = [];
     newButtons = [];
 
-    constructor(content, embeds, newButtons) {
+    constructor (content, embeds, newButtons) {
         if(content != "") {
             this.content = content;
         } else {
@@ -13,7 +13,7 @@ module.exports = class ButtonResponse {
         this.newButtons = newButtons;
     }
 
-    toDiscord() {
+    toDiscord () {
         return {
             content: this.content,
             embeds: this.embeds,

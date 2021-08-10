@@ -9,7 +9,7 @@ const Logger = require("hyarcade-logger");
 /**
  *
  */
-async function BotSpawner() {
+async function BotSpawner () {
     Logger.out(`Sharding ${args}`);
     try {
         const manager = new ShardingManager("./index.js", {

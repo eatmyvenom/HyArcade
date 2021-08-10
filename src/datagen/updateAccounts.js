@@ -12,7 +12,7 @@ const Account = require("hyarcade-requests/types/Account");
  * @param {Account[]} accounts
  * @returns {Account[]}
  */
-module.exports = async function updateAccounts(accounts) {
+module.exports = async function updateAccounts (accounts) {
     let accs = accounts.sort(utils.winsSorter);
     await fs.writeFile("starttime", (`${Date.now()}`));
 
@@ -63,7 +63,7 @@ module.exports = async function updateAccounts(accounts) {
  * @param {Account[]} oldAccs
  * @returns {Promise}
  */
-async function updateAccountsInArr(accounts, oldAccs) {
+async function updateAccountsInArr (accounts, oldAccs) {
     return await Promise.all(
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);

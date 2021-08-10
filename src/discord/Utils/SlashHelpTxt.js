@@ -7,7 +7,7 @@ const {
  * @param {Message} msg
  * @returns {string}
  */
-module.exports = function SlashHelpTxt(msg) {
+module.exports = function SlashHelpTxt (msg) {
     if(msg.content.startsWith("/")) {
         let firstWord = msg.content.split(" ")[0].slice(1).toLowerCase();
         switch(firstWord) {

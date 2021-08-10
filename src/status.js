@@ -12,7 +12,7 @@ let rawstatus = {};
  * @param {object} status status object
  * @returns {string}
  */
-function arcadeFormatter(status) {
+function arcadeFormatter (status) {
     let str = "";
     if(status.mode == "FARM_HUNT") {
         str += "Farm hunt - ";
@@ -35,7 +35,7 @@ function arcadeFormatter(status) {
  * @param {string} txt raw text
  * @returns {string} formatted text
  */
-function mapFormatter(txt) {
+function mapFormatter (txt) {
     return txt.slice(0, 1).toUpperCase() + txt.slice(1).replace(/ the /gi, "").replace(/_/g, " ");
 }
 
@@ -45,7 +45,7 @@ function mapFormatter(txt) {
  * @param {string} txt raw text
  * @returns {string} formatted text
  */
-function modeFormatter(txt) {
+function modeFormatter (txt) {
     return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase().replace(/_/g, " ");
 }
 
@@ -56,7 +56,7 @@ function modeFormatter(txt) {
  * @param {object} status raw status object
  * @returns {string} Formatted result
  */
-async function genStatus(name, status) {
+async function genStatus (name, status) {
     let str = "";
 
     if(!status) {
@@ -120,7 +120,7 @@ async function genStatus(name, status) {
  * @param {string} uuid
  * @returns {string} formatted status
  */
-async function txtStatus(uuid) {
+async function txtStatus (uuid) {
     // unfortunately this cant be shortcut
     let status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later

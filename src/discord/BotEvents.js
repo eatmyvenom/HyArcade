@@ -15,7 +15,7 @@ const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
 
 module.exports = class BotEvents {
-    static async rateLimit(rlInfo) {
+    static async rateLimit (rlInfo) {
         let timeout = rlInfo.timeout;
         let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
         logger.err(str);
@@ -26,7 +26,7 @@ module.exports = class BotEvents {
         }
     }
 
-    static async messageDelete(msg) {
+    static async messageDelete (msg) {
         if(BotUtils.botMode == "mw") {
             if(msg.content.charAt(0) == ".") {
                 let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
@@ -42,7 +42,7 @@ module.exports = class BotEvents {
         }
     }
 
-    static async ready(mode) {
+    static async ready (mode) {
         BotUtils.isBotInstance = true;
         BotUtils.botMode = mode;
 
@@ -91,7 +91,7 @@ module.exports = class BotEvents {
         await SetPresence(BotUtils.client, mode);
     }
 
-    static async tick() {
+    static async tick () {
         let runtime = Runtime.fromJSON();
         if(runtime.needRoleupdate && BotUtils.botMode == undefined) {
             await roleHandler(BotUtils.client);
@@ -101,19 +101,19 @@ module.exports = class BotEvents {
         }
     }
 
-    static async heartBeat() {
+    static async heartBeat () {
         let runtime = Runtime.fromJSON();
         runtime[`${BotUtils.botMode}HeartBeat`] = Date.now();
         await runtime.save();
         logger.info("Heart beat - I'm alive!");
     }
 
-    static warn(info) {
+    static warn (info) {
         logger.warn("Discord sent a warning:");
         logger.warn(info);
     }
 
-    static invalidated() {
+    static invalidated () {
         logger.error("Discord session invalidated!");
     }
 
@@ -121,7 +121,7 @@ module.exports = class BotEvents {
      * 
      * @param {Guild} guild 
      */
-    static guildCreate(guild) {
+    static guildCreate (guild) {
         logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
         logger.debug(`Guild owner: ${guild.ownerID}`);
         logger.debug(`Guild ID: ${guild.id}`);
@@ -131,7 +131,7 @@ module.exports = class BotEvents {
      * 
      * @param {Error} error 
      */
-    static error(error) {
+    static error (error) {
         logger.err("Discord encountered an error");
         logger.err(`${error.name} : ${error.message}`);
         logger.err(`Current stack:\n${error.stack}`);
@@ -141,7 +141,7 @@ module.exports = class BotEvents {
      * 
      * @param {TextChannel} channel 
      */
-    static webhookUpdate(channel) {
+    static webhookUpdate (channel) {
         logger.debug(`${channel.guild.name}#${channel.name} had a webhook change`);
     }
 
@@ -149,7 +149,7 @@ module.exports = class BotEvents {
      * 
      * @param {Guild} guild 
      */
-    static guildUnavailable(guild) {
+    static guildUnavailable (guild) {
         logger.warn(`Guild ${guild.name} has become unavailable!`);
     }
 
@@ -157,15 +157,15 @@ module.exports = class BotEvents {
      * 
      * @param {InvalidRequestWarningData} warning 
      */
-    static invalidRequestWarning(warning) {
+    static invalidRequestWarning (warning) {
         logger.warn(`An invalid request was made, this is number ${warning.count}!`);
     }
 
-    static debug(info) {
+    static debug (info) {
         logger.debug(info);
     }
 
-    static async cyclePresence() {
+    static async cyclePresence () {
         logger.info("Cycling presence...");
         await SetPresence(BotUtils.client, BotUtils.botMode);
     }

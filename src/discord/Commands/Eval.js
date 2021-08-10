@@ -10,7 +10,7 @@ const Util = require("util");
  * @param {string} str
  * @returns {string}
  */
-function safeEval(str) {
+function safeEval (str) {
     return Function("c", "r", "bu", "accs", "m", `"use strict";return (${str})`);
 }
 

@@ -10,13 +10,13 @@ class gamesPlayed {
     counts = {};
     newestTime = 0;
 
-    constructor(uuid, oldCounts, newestTime) {
+    constructor (uuid, oldCounts, newestTime) {
         this.uuid = uuid;
         this.counts = oldCounts;
         this.newestTime = newestTime;
     }
 
-    async updateData() {
+    async updateData () {
         let json = JSON.parse(await hypixelApi.getGamesPlayedRAW(this.uuid));
         let newGames = json.games.reverse();
 
@@ -29,7 +29,7 @@ class gamesPlayed {
         }
     }
 
-    addCount(type) {
+    addCount (type) {
         if(this.counts[type] != undefined) {
             this.counts[type]++;
         } else {
@@ -37,7 +37,7 @@ class gamesPlayed {
         }
     }
 
-    async writeToFile() {
+    async writeToFile () {
         let full = await readJSON("./gamesPlayed.json");
         full[this.uuid] = this;
         await writeJSON("./gamesPlayed.json", full);

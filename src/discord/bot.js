@@ -25,7 +25,7 @@ const lesserIntents = [
  * Execute the discord bot
  *
  */
-module.exports = function doBot() {
+module.exports = function doBot () {
     let mode = process.argv[3];
     let client;
     if(mode == "mini") {

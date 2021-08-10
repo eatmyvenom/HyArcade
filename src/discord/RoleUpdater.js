@@ -6,13 +6,13 @@ module.exports = class RoleUpdater {
     guild = {};
     prop = "";
 
-    constructor(guild, roles, prop) {
+    constructor (guild, roles, prop) {
         this.guild = guild;
         this.roles = roles;
         this.prop = prop;
     }
 
-    getRole(wins) {
+    getRole (wins) {
         for(let role of this.roles) {
             if(wins >= role.minimumWins) {
                 return role;
@@ -21,7 +21,7 @@ module.exports = class RoleUpdater {
         return undefined;
     }
 
-    async updateAll() {
+    async updateAll () {
         let disclist = await BotUtils.getFromDB("disclist");
         let acclist = await BotUtils.getFromDB("accounts");
         let mbrList = await this.guild.members.fetch();
@@ -35,7 +35,7 @@ module.exports = class RoleUpdater {
         }
     }
 
-    async updatePlayer(acc, discMember) {
+    async updatePlayer (acc, discMember) {
         // logger.out(`Updating ${discMember.user.tag}`);
         let newRole = this.getRole(acc[this.prop]);
         if(newRole == undefined) return;
@@ -58,7 +58,7 @@ module.exports = class RoleUpdater {
         }
     }
 
-    async removeOtherRoles(discMember, ignoreID) {
+    async removeOtherRoles (discMember, ignoreID) {
         for(let role of this.roles) {
             if(role.roleID == ignoreID) continue;
             if(discMember.roles.cache.has(role.roleID)) {

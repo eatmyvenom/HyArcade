@@ -14,13 +14,13 @@ module.exports = class Command {
         };
     };
 
-    constructor(name, allowed, callback) {
+    constructor (name, allowed, callback) {
         this.name = name;
         this.allowed = allowed;
         this.callback = callback;
     }
 
-    async execute(args, author, rawMsg, interaction) {
+    async execute (args, author, rawMsg, interaction) {
         if(this.allowed.includes("%trusted%")) {
             this.allowed = this.allowed.concat(BotUtils.trustedUsers);
             this.allowed = this.allowed.filter(t => t != "%trusted%");

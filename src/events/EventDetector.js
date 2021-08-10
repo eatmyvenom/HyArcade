@@ -8,12 +8,12 @@ class EventDetector {
     NewAccounts = {};
     Events = [];
 
-    constructor(OldAccounts, NewAccounts) {
+    constructor (OldAccounts, NewAccounts) {
         this.OldAccounts = OldAccounts;
         this.NewAccounts = NewAccounts;
     }
 
-    scanAccount(account) {
+    scanAccount (account) {
         let oldAcc = account;
         let newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
 
@@ -117,43 +117,43 @@ class EventDetector {
         }
     }
 
-    runDetection() {
+    runDetection () {
         for(let account of this.OldAccounts) {
             this.scanAccount(account);
         }
     }
 
-    detectDiff(oldAcc, newAcc, prop, type, modifier) {
+    detectDiff (oldAcc, newAcc, prop, type, modifier) {
         if(newAcc[prop] > oldAcc[prop]) {
             this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], modifier, newAcc.uuid));
         }
     }
 
-    detectWinsAuto(oldAcc, newAcc, prop, type) {
+    detectWinsAuto (oldAcc, newAcc, prop, type) {
         if(newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
             this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], "", newAcc.uuid));
         }
     }
 
-    detectWins(oldWc, newWc, name, type, modifier, uuid) {
+    detectWins (oldWc, newWc, name, type, modifier, uuid) {
         if(newWc % 500 == 0 && newWc > oldWc) {
             this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 
-    detectSpecific(oldWc, newWc, amnt, name, type, modifier, uuid) {
+    detectSpecific (oldWc, newWc, amnt, name, type, modifier, uuid) {
         if(newWc == amnt && newWc > oldWc) {
             this.Events.push(new AccountEvent(name, type, oldWc, newWc, modifier, uuid));
         }
     }
 
-    async sendEvents() {
+    async sendEvents () {
         for(let evt of this.Events) {
             await evt.toDiscord();
         }
     }
 
-    async saveEvents() {
+    async saveEvents () {
         let oldEvents = await utils.readJSON("events.json");
         for(let event of this.Events) {
             oldEvents.unshift([event, event.toString()]);
@@ -163,7 +163,7 @@ class EventDetector {
         await utils.writeJSON("events.json", oldEvents);
     }
 
-    logEvents() {
+    logEvents () {
         for(let evt of this.Events) {
             logger.out(evt.toString());
         }

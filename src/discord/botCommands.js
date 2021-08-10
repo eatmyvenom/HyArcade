@@ -43,7 +43,7 @@ const {
  * @param {string} str
  * @returns {*}
  */
-function requireNew(str) {
+function requireNew (str) {
     delete require.cache[str];
     return require(str);
 }
@@ -53,7 +53,7 @@ function requireNew(str) {
  * @param {string} senderID
  * @returns {CommandResponse | object}
  */
-async function execute(msg, senderID) {
+async function execute (msg, senderID) {
     if(msg.content.startsWith(config.commandCharacter)) {
         if(Runtime.fromJSON().dbERROR) {
             return {
@@ -85,7 +85,7 @@ async function execute(msg, senderID) {
  * @param {string} author
  * @returns {CommandResponse | object}
  */
-async function checkCommands(rawMsg, command, args, author) {
+async function checkCommands (rawMsg, command, args, author) {
     logger.debug(`Parsing command ${rawMsg.content}`);
     switch(command.toLowerCase()) {
     case "link":

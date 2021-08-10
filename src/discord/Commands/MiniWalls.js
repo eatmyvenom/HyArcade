@@ -13,7 +13,7 @@ const {
  * @param {number} n
  * @returns {number}
  */
-function formatR(n) {
+function formatR (n) {
     let r = Math.round(n * 1000) / 1000;
     return r;
 }
@@ -22,7 +22,7 @@ function formatR(n) {
  * @param {string} str
  * @returns {string}
  */
-function formatN(str) {
+function formatN (str) {
     let r = Intl.NumberFormat("en").format(Number(str));
     return r;
 }

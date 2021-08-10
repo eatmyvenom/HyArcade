@@ -13,11 +13,11 @@ module.exports = class BotUtils {
     static botMode;
     static tus = [];
 
-    static get trustedUsers() {
+    static get trustedUsers () {
         return BotUtils.tus;
     }
 
-    static async resolveAccount(string, rawMessage, canbeSelf = true) {
+    static async resolveAccount (string, rawMessage, canbeSelf = true) {
         return await AccountResolver(
             string,
             rawMessage,
@@ -27,7 +27,7 @@ module.exports = class BotUtils {
         );
     }
 
-    static async getFromDB(file) {
+    static async getFromDB (file) {
         let fileData;
         let url = new URL("db", cfg.dbUrl);
         let path = `${file}`;
@@ -45,7 +45,7 @@ module.exports = class BotUtils {
         return fileData;
     }
 
-    static async writeToDB(path, json) {
+    static async writeToDB (path, json) {
         let data = JSON.stringify(json);
         let url = new URL("db", cfg.dbUrl);
         url.searchParams.set("path", path);
@@ -67,7 +67,7 @@ module.exports = class BotUtils {
         }
     }
 
-    static getWebhookObj(embed) {
+    static getWebhookObj (embed) {
         let embeds;
         if(embed == undefined) {
             embeds = [];
@@ -81,7 +81,7 @@ module.exports = class BotUtils {
         };
     }
 
-    static async getStats(acc, game) {
+    static async getStats (acc, game) {
         /**
          * @type {MessageEmbed}
          */

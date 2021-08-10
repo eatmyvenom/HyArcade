@@ -17,7 +17,7 @@ const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
  * @param {number} n
  * @returns {number}
  */
-function formatR(n) {
+function formatR (n) {
     let r = Math.round(n * 1000) / 1000;
     return r;
 }
@@ -26,7 +26,7 @@ function formatR(n) {
  * @param {string} str
  * @returns {string}
  */
-function formatN(str) {
+function formatN (str) {
     let r = Intl.NumberFormat("en").format(Number(str));
     return r;
 }
@@ -37,7 +37,7 @@ function formatN(str) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function clr(stat1, stat2, hasPerms) {
+function clr (stat1, stat2, hasPerms) {
     if(stat1 > stat2) {
         return EmojiGetter(hasPerms, "better");
     } else {
@@ -52,7 +52,7 @@ function clr(stat1, stat2, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineN(stat1, stat2, name, hasPerms) {
+function lineN (stat1, stat2, name, hasPerms) {
     return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
@@ -63,7 +63,7 @@ function lineN(stat1, stat2, name, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineNS(stat1, stat2, name, hasPerms) {
+function lineNS (stat1, stat2, name, hasPerms) {
     return `${clr(stat2, stat1, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
@@ -74,7 +74,7 @@ function lineNS(stat1, stat2, name, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineR(stat1, stat2, name, hasPerms) {
+function lineR (stat1, stat2, name, hasPerms) {
     return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatR(stat1)} | ${formatR(stat2)}\n`;
 }
 

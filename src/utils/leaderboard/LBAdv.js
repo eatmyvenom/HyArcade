@@ -3,7 +3,7 @@ const {
 } = require("./ListUtils");
 const TimSort = require("timsort");
 
-module.exports = async function stringLBAdv(comparitor, maxamnt, listTransformer) {
+module.exports = async function stringLBAdv (comparitor, maxamnt, listTransformer) {
     let list = await getList();
     list = await listTransformer(list);
     TimSort.sort(list, comparitor);

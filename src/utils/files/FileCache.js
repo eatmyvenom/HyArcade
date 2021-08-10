@@ -23,24 +23,24 @@ class FileCache {
     dirty = false;
     path = "data/";
 
-    constructor(path = "data/") {
+    constructor (path = "data/") {
         this.path = path;
         FileCache.refresh(this);
         this._interval = setInterval(FileCache.refresh, 25000, this);
     }
 
-    destroy() {
+    destroy () {
         this._interval.unref();
         for(let prop in this) {
             this[prop] = undefined;
         }
     }
 
-    save() {
+    save () {
         this.dirty = true;
     }
 
-    async runSave() {
+    async runSave () {
         Logger.info("Saving file changes...");
         await utils.writeJSON("accounts.json", this.accounts);
         await utils.writeJSON("acclist.json", this.acclist);
@@ -61,7 +61,7 @@ class FileCache {
      * 
      * @param {FileCache} fileCache 
      */
-    static async refresh(fileCache) {
+    static async refresh (fileCache) {
         if(fileCache.dirty) {
             await fileCache.runSave();
         }
@@ -92,15 +92,15 @@ class FileCache {
         Logger.debug("File cache updated");
     }
 
-    get dayaccounts() {
+    get dayaccounts () {
         return this.dailyAccounts;
     }
 
-    get weeklyaccounts() {
+    get weeklyaccounts () {
         return this.weeklyAccounts;
     }
 
-    get monthlyaccounts() {
+    get monthlyaccounts () {
         return this.monthlyAccounts;
     }
 

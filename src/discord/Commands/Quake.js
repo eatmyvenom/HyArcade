@@ -15,7 +15,7 @@ const {
  * @param {string} t
  * @returns {string}
  */
-function fixTrigger(t = "") {
+function fixTrigger (t = "") {
     return t.replace(/ZERO/g, "0")
         .replace(/ONE/g, "1")
         .replace(/TWO/g, "2")
@@ -34,7 +34,7 @@ function fixTrigger(t = "") {
  * @param {number} n
  * @returns {string}
  */
-function numberify(n) {
+function numberify (n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     return r;
 }

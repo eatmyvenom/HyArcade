@@ -13,7 +13,7 @@ const logger = require("hyarcade-logger");
  * @param {number} time the time in milliseconds to sleep
  * @returns {Promise<setTimeout>} the promise object
  */
-function sleep(time) {
+function sleep (time) {
     return new Promise((resolve) => {
         setTimeout(resolve, time);
     });
@@ -26,7 +26,7 @@ function sleep(time) {
  * @param {*} element2 the second element to be considered
  * @returns {number} where the first element should move in relation to its current position
  */
-function winsSorter(element1, element2) {
+function winsSorter (element1, element2) {
     if(cfg.sortDirection == "mostleast") {
         if(element1.wins < element2.wins) return 1;
         if(element1.wins > element2.wins) return -1;
@@ -43,7 +43,7 @@ function winsSorter(element1, element2) {
  *
  * @returns {string} The formatted time
  */
-function daytime() {
+function daytime () {
     return cfg.showDaytime ?
         `${Date()
             .replace(/.*20[0-9][0-9] /, "")
@@ -56,7 +56,7 @@ function daytime() {
  *
  * @returns {string} The formatted day
  */
-function day() {
+function day () {
     return Date()
         .replace(/[0-9].:[0-9].:[0-9].*/, "")
         .trim()
@@ -69,7 +69,7 @@ function day() {
  * @param {string} path path of the target file
  * @param {object} json the json data
  */
-async function writeJSON(path, json) {
+async function writeJSON (path, json) {
     await BSONwriter(path, json);
     await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
     try {
@@ -83,7 +83,7 @@ async function writeJSON(path, json) {
  * @param {string} path
  * @param {object} json
  */
-async function writeDB(path, json) {
+async function writeDB (path, json) {
     let data = JSON.stringify(json);
     let url = new URL("db", cfg.dbUrl);
     url.searchParams.set("path", path);
@@ -108,7 +108,7 @@ async function writeDB(path, json) {
  * @param {string} file
  * @returns {object} Object of whatever was returned by the database
  */
-async function readDB(file) {
+async function readDB (file) {
     let fileData;
     let url = new URL("db", cfg.dbUrl);
     let path = `${file}`;
@@ -130,7 +130,7 @@ async function readDB(file) {
  * @param {string} path
  * @returns {object} Parsed json
  */
-async function readJSON(path) {
+async function readJSON (path) {
     return JSON.parse(await fs.readFile(`data/${path}`));
 }
 
@@ -140,7 +140,7 @@ async function readJSON(path) {
  * @param {string} path path of the target file
  * @returns {boolean} If the file exists
  */
-function fileExists(path) {
+function fileExists (path) {
     return require("fs").existsSync(path);
 }
 
@@ -151,7 +151,7 @@ function fileExists(path) {
  * @param {string} path path of the target file
  * @param {string} timetype the way of specifying this file
  */
-async function archiveJson(oldfile, path, timetype) {
+async function archiveJson (oldfile, path, timetype) {
     let old = JSON.parse(await fs.readFile(`data/${oldfile}.json`));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 
@@ -171,7 +171,7 @@ async function archiveJson(oldfile, path, timetype) {
  * @param {string} value
  * @returns {any} The value in the object 
  */
-function getKeyByValue(object, value) {
+function getKeyByValue (object, value) {
     return Object.keys(object).find((key) => object[key] === value);
 }
 

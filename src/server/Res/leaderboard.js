@@ -5,7 +5,7 @@ const FileCache = require("../../utils/files/FileCache");
  * @param {string} str
  * @returns {number}
  */
-function numberify(str) {
+function numberify (str) {
     let cleanStr = str ?? 0;
     return Number(cleanStr);
 }

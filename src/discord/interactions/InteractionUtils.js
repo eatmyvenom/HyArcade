@@ -11,7 +11,7 @@ module.exports = class InteractionUtils {
      * @param {string} uuid
      * @returns {Account}
      */
-    static async accFromUUID(uuid) {
+    static async accFromUUID (uuid) {
         let acc;
         if(BotUtils.botMode != "mini") {
             let acclist = await BotUtils.getFromDB("accounts");
@@ -26,7 +26,7 @@ module.exports = class InteractionUtils {
         return acc;
     }
 
-    static async resolveAccount(interaction, namearg = "player") {
+    static async resolveAccount (interaction, namearg = "player") {
         return await AccountResolver(interaction, namearg);
     }
 };

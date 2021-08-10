@@ -13,7 +13,7 @@ const utils = require("./utils");
  * @param {string} uuid the players uuid
  * @returns {guild} The guild of the specified player
  */
-function getGuild(guildlist, uuid) {
+function getGuild (guildlist, uuid) {
     for(let guild of guildlist) {
         if(guild.memberUUIDs.includes((`${uuid}`).toLowerCase())) {
             return guild;
@@ -27,7 +27,7 @@ function getGuild(guildlist, uuid) {
  * @param {Account[]} acclist The preset list of accounts
  * @returns {Player[]} The array of players and their combined data
  */
-exports.players = async function players(acclist) {
+exports.players = async function players (acclist) {
     let Player = require("./classes/player")(acclist);
 
     let playerjson = await utils.readJSON("./playerlist.json");
@@ -43,7 +43,7 @@ exports.players = async function players(acclist) {
  *
  * @returns {object} All of the accounts in the database
  */
-exports.accounts = async function accounts() {
+exports.accounts = async function accounts () {
     let acclistjson = await utils.readDB("acclist");
     let disclist = await utils.readDB("disclist");
     let guilds = await utils.readJSON("guild.json");
@@ -87,7 +87,7 @@ exports.accounts = async function accounts() {
  * @param {Account[]} accs Accounts that can be used in these guilds
  * @returns {guild[]} Array of guilds with combined player data
  */
-exports.guilds = async function gld(accs) {
+exports.guilds = async function gld (accs) {
     let accounts = accs;
     let Guild = require("./classes/guild")(accounts);
     let guildlistjson = await utils.readJSON("guildlist.json");

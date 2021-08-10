@@ -1,7 +1,7 @@
 const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
 const TimSort = require("timsort");
 
-module.exports = async function LBDiffAdv(comparitor, maxamnt, timetype, callback, listTransformer) {
+module.exports = async function LBDiffAdv (comparitor, maxamnt, timetype, callback, listTransformer) {
     let list = await MakeLeaderboardAdv("accounts", timetype, 9999, callback);
     list = await listTransformer(list);
     TimSort.sort(list, comparitor);

@@ -13,7 +13,7 @@ class AccountEvent {
     uuid = "";
     time = 0;
 
-    constructor(name, type, old, neww, modifier, uuid) {
+    constructor (name, type, old, neww, modifier, uuid) {
         this.name = name;
         this.type = type;
         this.oldAmnt = old;
@@ -23,7 +23,7 @@ class AccountEvent {
         this.time = Date.now();
     }
 
-    toString() {
+    toString () {
         if(this.type == "HITWPB") {
             return `${this.name} just got a ${this.modifier} personal best of ${this.newAmnt}! Was ${this.oldAmnt}.`;
         } else if(this.type == "LBPOS") {
@@ -53,7 +53,7 @@ class AccountEvent {
         }
     }
 
-    async toDiscord() {
+    async toDiscord () {
         if(this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         } else if(this.type == "HITWPB") {
@@ -68,7 +68,7 @@ class AccountEvent {
         }
     }
 
-    async getHitWEmbed() {
+    async getHitWEmbed () {
         let avatar =
             `https://crafatar.com/renders/body/${this.uuid}.png?size=512&default=MHF_Steve&scale=10&overlay`;
 

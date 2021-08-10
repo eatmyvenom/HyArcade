@@ -4,7 +4,7 @@ const cfg = require("hyarcade-config").fromJSON();
 
 module.exports = class Database {
 
-    static async addAccount(json) {
+    static async addAccount (json) {
         let data = JSON.stringify(json);
         let url = new URL("account", cfg.dbUrl);
         Logger.info(`Adding ${data.name} to accounts in database`);

@@ -8,7 +8,7 @@ const utils = require("../../utils");
  * @param {string} game
  * @returns {object}
  */
-async function getFields(game) {
+async function getFields (game) {
     let counts = await utils.readJSON("./gameCounts.json");
     let fields = [];
     switch((`${game}`).toLowerCase()) {

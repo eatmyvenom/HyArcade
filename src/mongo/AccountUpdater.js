@@ -31,7 +31,7 @@ module.exports = async function (database) {
  * @param {collection} collection
  * @returns {Promise}
  */
-async function updateAccountsInArr(accounts, oldAccs, collection) {
+async function updateAccountsInArr (accounts, oldAccs, collection) {
     return await Promise.all(
         accounts.map(async (account) => {
             let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);

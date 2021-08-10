@@ -5,11 +5,11 @@ let accounts = [];
  * @param {string} str
  * @returns {number}
  */
-function numberify(str) {
+function numberify (str) {
     return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
-module.exports = function Gld(acclist) {
+module.exports = function Gld (acclist) {
     accounts = acclist;
     return Guild;
 };
@@ -51,7 +51,7 @@ class Guild {
      * @param {string} uuid
      * @memberof Guild
      */
-    constructor(uuid) {
+    constructor (uuid) {
         this.uuid = uuid;
     }
 
@@ -60,7 +60,7 @@ class Guild {
      *
      * @memberof Guild
      */
-    async updateMemberData() {
+    async updateMemberData () {
         let data = await this.getGuild();
         this.name = data?.guild?.name ?? "INVALID-NAME";
         this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
@@ -86,7 +86,7 @@ class Guild {
      * @returns {object}
      * @memberof Guild
      */
-    async getGuild() {
+    async getGuild () {
         return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
     }
 
@@ -96,7 +96,7 @@ class Guild {
      * @returns {number}
      * @memberof Guild
      */
-    async updateWins() {
+    async updateWins () {
         await this.updateMemberData();
         for(let i = 0; i < this.members.length; i++) {
             let member = this.members[i];

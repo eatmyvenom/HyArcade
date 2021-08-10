@@ -11,7 +11,7 @@ const MenuGenerator = require("./MenuGenerator");
  * @param {SelectMenuInteraction} interaction 
  * @returns {ButtonResponse}
  */
-module.exports = async function MenuParser(interaction) {
+module.exports = async function MenuParser (interaction) {
     let data = interaction.customId.split(":");
     let commandType = data[0];
     switch(commandType) {
@@ -26,7 +26,7 @@ module.exports = async function MenuParser(interaction) {
  * @param {string} game
  * @returns {ButtonResponse}
  */
-async function statsHandler(accUUID, game) {
+async function statsHandler (accUUID, game) {
     let accData = await InteractionUtils.accFromUUID(accUUID);
     let statsRes = await BotUtils.getStats(accData, game);
     let embed = statsRes.embed;

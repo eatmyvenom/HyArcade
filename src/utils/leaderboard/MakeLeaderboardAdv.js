@@ -11,7 +11,7 @@ const {
  * @param {Function} callback Callback used to get the stats out of each account
  * @returns {object} The sorted list
  */
-module.exports = async function mklistAdv(name, timetype, maxamnt, callback) {
+module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
     let newlist, oldlist;
     if(name == "accounts") {
         newlist = await getList();

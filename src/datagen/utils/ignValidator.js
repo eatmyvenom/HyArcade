@@ -1,4 +1,4 @@
-module.exports = function isValidIGN(txt) {
+module.exports = function isValidIGN (txt) {
     return (
         txt.length < 17 &&
         txt.length > 2 &&

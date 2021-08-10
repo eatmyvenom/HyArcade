@@ -1,7 +1,7 @@
 const BSON = require("bson-ext");
 const fs = require("fs-extra");
 
-module.exports = async function BSONreader(path) {
+module.exports = async function BSONreader (path) {
     if(fs.existsSync(`data/${path.replace(/json/g, "bson")}.1`)) {
         let buffer1 = await fs.readFile((`data/${path}.1`).replace(/json/g, "bson"));
         let arr1 = BSON.deserialize(buffer1);

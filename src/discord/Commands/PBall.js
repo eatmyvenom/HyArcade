@@ -15,7 +15,7 @@ const {
  * @param {number} n
  * @returns {string}
  */
-function numberify(n) {
+function numberify (n) {
     let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     return r;
 }

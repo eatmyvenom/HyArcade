@@ -11,7 +11,7 @@ class sizedWriter {
      * @param {Array} newObjs 
      * @param {number} type 0 - Object, 1 - Array
      */
-    constructor(newObjs, type) {
+    constructor (newObjs, type) {
         this.length = newObjs.length;
         this.type = type;
         newObjs.forEach((sizedObject) => {
@@ -19,7 +19,7 @@ class sizedWriter {
         }, this);
     }
 
-    async toFile(filename) {
+    async toFile (filename) {
         let meta = {
             length: this.length,
             type: this.type,
@@ -38,7 +38,7 @@ class sizedWriter {
  * @param {number} chunkSize 
  * @returns {Array}
  */
-function chunkArray(arr, chunkSize) {
+function chunkArray (arr, chunkSize) {
     return Array.from(Array(Math.ceil(arr.length / chunkSize)), (_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
 }
 
@@ -47,7 +47,7 @@ function chunkArray(arr, chunkSize) {
  * @param {object} object 
  * @param {string} filename 
  */
-async function DynamicBSONwriter(object, filename) {
+async function DynamicBSONwriter (object, filename) {
 
     let files = Math.ceil(BSON.calculateObjectSize(object) / 16000000);
     let dynamicData;

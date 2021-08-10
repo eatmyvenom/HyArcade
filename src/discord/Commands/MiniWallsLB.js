@@ -13,7 +13,7 @@ const Account = require("hyarcade-requests/types/Account");
  * @param {Account} a
  * @returns {number}
  */
-function wComp(b, a) {
+function wComp (b, a) {
     return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
 }
 
@@ -22,7 +22,7 @@ function wComp(b, a) {
  * @param {Account} a
  * @returns {number}
  */
-function kComp(b, a) {
+function kComp (b, a) {
     return (a.miniWalls?.kills ?? 0) - (b.miniWalls?.kills ?? 0);
 }
 
@@ -31,7 +31,7 @@ function kComp(b, a) {
  * @param {Account} a
  * @returns {number}
  */
-function dComp(b, a) {
+function dComp (b, a) {
     return (a.miniWalls?.deaths ?? 0) - (b.miniWalls?.deaths ?? 0);
 }
 
@@ -39,7 +39,7 @@ function dComp(b, a) {
  * @param {string} n
  * @returns {number}
  */
-function int(n) {
+function int (n) {
     return new Number((`${n}`).replace(/undefined/g, "0").replace(/null/g, "0"));
 }
 
@@ -48,7 +48,7 @@ function int(n) {
  * @param {Account} o
  * @returns {Account}
  */
-function cb(n, o) {
+function cb (n, o) {
     o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
     if(n.miniWalls != undefined && o.miniWalls != undefined) {
         o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
@@ -65,7 +65,7 @@ function cb(n, o) {
  * @param {Account} n
  * @returns {Account}
  */
-function rcb(n) {
+function rcb (n) {
     return n;
 }
 
@@ -73,7 +73,7 @@ function rcb(n) {
  * @param {Account[]} list
  * @returns {Account[]}
  */
-async function hackerTransformer(list) {
+async function hackerTransformer (list) {
     let hackers = await BotUtils.getFromDB("hackerlist");
     return list.filter((a) => !hackers.includes(a.uuid))
         .filter((a) => a.name != undefined || a.name != "")
@@ -84,7 +84,7 @@ async function hackerTransformer(list) {
  * @param {Account[]} list
  * @returns {Account[]}
  */
-function top150Transformer(list) {
+function top150Transformer (list) {
     TimSort.sort(list, wComp);
     return list.slice(0, Math.min(list.length, 150));
 }
@@ -93,7 +93,7 @@ function top150Transformer(list) {
  * @param {Account[]} list
  * @returns {Account[]}
  */
-async function ratioTransformer(list) {
+async function ratioTransformer (list) {
     return await top150Transformer(await hackerTransformer(list));
 }
 
@@ -103,7 +103,7 @@ async function ratioTransformer(list) {
  * @param {number} limit
  * @returns {MessageEmbed}
  */
-async function getLB(prop, timetype, limit) {
+async function getLB (prop, timetype, limit) {
     let res = "";
     let time;
 

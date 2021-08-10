@@ -8,11 +8,11 @@ const TimSort = require("timsort");
  * @param {string} str
  * @returns {number} The number primitive
  */
-function numberify(str) {
+function numberify (str) {
     return Number(str);
 }
 
-module.exports = async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
+module.exports = async function stringLB (lbprop, maxamnt, category, startingIndex = 0) {
     let list = await getList();
     if(category == undefined) {
         TimSort.sort(list, (b, a) => {

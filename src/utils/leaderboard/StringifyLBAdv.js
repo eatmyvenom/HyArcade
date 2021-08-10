@@ -7,11 +7,11 @@ const TimSort = require("timsort");
  * @param {number} number
  * @returns {string} formatted number
  */
-function formatNum(number) {
+function formatNum (number) {
     return Intl.NumberFormat("en").format(number);
 }
 
-module.exports = async function stringLBAdv(comparitor, parser, maxamnt, listTransformer, startingIndex = 0) {
+module.exports = async function stringLBAdv (comparitor, parser, maxamnt, listTransformer, startingIndex = 0) {
     let list = await getList();
     list = await listTransformer(list);
     TimSort.sort(list, comparitor);

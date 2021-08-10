@@ -35,7 +35,7 @@ const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 ch
  * @param {Message} msg 
  * @param {Error} e 
  */
-async function logError(msg, e) {
+async function logError (msg, e) {
     logger.err(`Error from - ${msg.content}`);
     logger.err(e.toString());
     logger.err(e.stack);
@@ -47,7 +47,7 @@ async function logError(msg, e) {
  * 
  * @param {Message} msg 
  */
-async function logCmd(msg) {
+async function logCmd (msg) {
     await LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
     logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
@@ -57,7 +57,7 @@ async function logCmd(msg) {
  * @param {object} cmdResponse
  * @returns {boolean}
  */
-async function sendAsHook(hook, cmdResponse) {
+async function sendAsHook (hook, cmdResponse) {
     try {
         let obj = BotUtils.getWebhookObj(cmdResponse.embed);
         if(cmdResponse.res != "") {
@@ -81,7 +81,7 @@ async function sendAsHook(hook, cmdResponse) {
  * @param {Message} msg 
  * @returns {null}
  */
-async function miniWallsVerify(msg) {
+async function miniWallsVerify (msg) {
     let tag = msg.author.tag;
     let id = msg.author.id;
     let ign = msg.content.trim();
@@ -135,7 +135,7 @@ async function miniWallsVerify(msg) {
  * @param {object} cmdResponse
  * @param {object} opts
  */
-async function attemptSend(msg, cmdResponse, opts) {
+async function attemptSend (msg, cmdResponse, opts) {
     let runtime = Runtime.fromJSON();
     let hooks = await msg.channel.fetchWebhooks();
     logger.info("Attempting to send response as webhook");
@@ -170,7 +170,7 @@ async function attemptSend(msg, cmdResponse, opts) {
 /**
  * @param {Message} msg
  */
-async function addIGNs(msg) {
+async function addIGNs (msg) {
     if(cfg.discord.listenChannels.includes(msg.channel.id)) {
         logger.info("IGN channel message detected, automatically adding to database.");
         let firstWord = msg.content.split(" ")[0];
@@ -188,7 +188,7 @@ async function addIGNs(msg) {
  * @param {object} cmdResponse
  * @returns {object}
  */
-async function sanitizeCmdOpt(cmdResponse) {
+async function sanitizeCmdOpt (cmdResponse) {
     if(cmdResponse.res?.length > 2000) {
         cmdResponse.res = cmdResponse.res.slice(0, 2000);
         if(cmdResponse.res.slice(0, 3) == "```") {
@@ -204,7 +204,7 @@ async function sanitizeCmdOpt(cmdResponse) {
  * @param {Message} msg
  * @returns {CommandResponse | object}
  */
-async function getCmdRes(msg) {
+async function getCmdRes (msg) {
     let cmdResponse;
     try {
         cmdResponse = await botCommands.execute(msg, msg.author.id);
@@ -224,7 +224,7 @@ async function getCmdRes(msg) {
  * @param {Message} msg 
  * @returns {object}
  */
-async function getMWCmdRes(msg) {
+async function getMWCmdRes (msg) {
     let cmdResponse;
     try {
         cmdResponse = await MiniWallsCommands.execute(msg, msg.author.id);
@@ -243,7 +243,7 @@ async function getMWCmdRes(msg) {
  * @param {string} id
  * @returns {boolean}
  */
-async function isBlacklisted(id) {
+async function isBlacklisted (id) {
     let blacklist = await fs.readFile("data/blacklist");
     blacklist = blacklist.toString().split("\n");
     return blacklist.includes(id);
@@ -254,7 +254,7 @@ async function isBlacklisted(id) {
  * @param {Message} msg 
  * @param {CommandResponse} cmdResponse 
  */
-async function sendText(msg, cmdResponse) {
+async function sendText (msg, cmdResponse) {
     let runtime = Runtime.fromJSON();
     if(runtime.bot != "backup") {
         logger.info("No webhook availiable. Sending normally");
@@ -277,7 +277,7 @@ async function sendText(msg, cmdResponse) {
  * @param {Message} msg 
  * @param {CommandResponse} cmdResponse 
  */
-async function sendNormal(msg, cmdResponse) {
+async function sendNormal (msg, cmdResponse) {
     /**
      * @type {Collection<string, Webhook>}
      */
@@ -304,7 +304,7 @@ async function sendNormal(msg, cmdResponse) {
 /**
  * @param {Message} msg
  */
-async function mwMode(msg) {
+async function mwMode (msg) {
     let cmdResponse = await getMWCmdRes(msg);
     let isValidResponse =
         cmdResponse != undefined &&
@@ -330,7 +330,7 @@ async function mwMode(msg) {
  * @param {object} cmdResponse
  * @returns {boolean}
  */
-function checkResponse(cmdResponse) {
+function checkResponse (cmdResponse) {
     return cmdResponse != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined || cmdResponse.silent == true);
 }
@@ -341,7 +341,7 @@ function checkResponse(cmdResponse) {
  * @param {object | CommandResponse} cmdResponse 
  * @param {boolean} isDiscordResponse
  */
-async function handleCommand(msg, cmdResponse, isDiscordResponse) {
+async function handleCommand (msg, cmdResponse, isDiscordResponse) {
     if(await isBlacklisted(msg.author.id)) {
         return;
     }
@@ -366,7 +366,7 @@ async function handleCommand(msg, cmdResponse, isDiscordResponse) {
 /**
  * @param {Message} msg
  */
-async function checkMW(msg) {
+async function checkMW (msg) {
     if(msg.channel.id == "791122377333407784") await miniWallsVerify(msg);
     if(msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
         await mwMode(msg);
@@ -380,7 +380,7 @@ async function checkMW(msg) {
  * 
  * @param {Message} msg 
  */
-module.exports = async function messageHandler(msg) {
+module.exports = async function messageHandler (msg) {
     if(msg.author.bot) return;
     if(msg.webhookID) return;
     if(msg.guild.id == "808077828842455090") {

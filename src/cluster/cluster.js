@@ -11,7 +11,7 @@ const {
  * @param {string} command
  * @returns {string}
  */
-function run(command) {
+function run (command) {
     return new Promise((resolve, reject) => {
         exec(command, (err, stdout, stderr) => {
             resolve(stdout);
@@ -58,7 +58,7 @@ class clusterClient {
      * @param {string} name
      * @memberof clusterClient
      */
-    constructor(name) {
+    constructor (name) {
         this.name = name;
         this.key = cfg.clusters[name].key;
         this.tasks = cfg.clusters[name].tasks;
@@ -69,7 +69,7 @@ class clusterClient {
      *
      * @memberof clusterClient
      */
-    async doTasks() {
+    async doTasks () {
         for(let t of this.tasks) {
             logger.out(`Executing task ${t}`);
             this.files.concat(await task[t]());
@@ -81,7 +81,7 @@ class clusterClient {
      *
      * @memberof clusterClient
      */
-    async uploadData() {
+    async uploadData () {
         if(this.name != "main") {
             for(let file of this.files) {
                 // this requires rsync to be installed on both the server and client

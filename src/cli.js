@@ -21,7 +21,7 @@ const logger = utils.logger;
  * Add a new account to the acclist
  *
  */
-async function newAcc() {
+async function newAcc () {
     let category = args[args.length - 1];
     let nameArr = args.slice(3, -1);
     await addAccounts(category, nameArr);
@@ -30,7 +30,7 @@ async function newAcc() {
 /**
  * @param {object} database
  */
-async function mNewAcc(database) {
+async function mNewAcc (database) {
     let player = args[3];
     let uuid = player;
     if(player.length < 16) {
@@ -45,7 +45,7 @@ async function mNewAcc(database) {
 /**
  *
  */
-async function linkDiscord() {
+async function linkDiscord () {
     let player = args[3];
     let discord = args[4];
     let uuid = player;
@@ -61,7 +61,7 @@ async function linkDiscord() {
  * Move an account to a different category in the acclist
  *
  */
-async function moveAcc() {
+async function moveAcc () {
     let oldName = args[3];
     let oldCategory = args[4];
     let newCategory = args[5];
@@ -81,7 +81,7 @@ async function moveAcc() {
  * Create a new player with the specified accounts
  *
  */
-async function newPlayer() {
+async function newPlayer () {
     let name = args[3];
     let alts = args.slice(4);
 
@@ -104,7 +104,7 @@ async function newPlayer() {
  * Create a new guild from the guild a player is in
  *
  */
-async function newGuild() {
+async function newGuild () {
     let playerUUID = args[3];
 
     // get data from hypixel
@@ -132,7 +132,7 @@ async function newGuild() {
  *
  * @param {string} name
  */
-async function logNormal(name) {
+async function logNormal (name) {
     logger.out(await stringNormal(name));
 }
 
@@ -141,7 +141,7 @@ async function logNormal(name) {
  *
  * @param {string} name
  */
-async function logDaily(name) {
+async function logDaily (name) {
     logger.out(await stringDaily(name));
 }
 
@@ -149,7 +149,7 @@ async function logDaily(name) {
  * Check for any name changes
  *
  */
-async function checkNames() {
+async function checkNames () {
     let acclist = await utils.readJSON("./acclist.json");
     let realAccs = await utils.readJSON("./accounts.json");
 
@@ -172,7 +172,7 @@ async function checkNames() {
  *
  * @param {string[]} args
  */
-async function log(args) {
+async function log (args) {
     let logName = args[3];
     let str = await stringNormal(logName);
 
@@ -184,7 +184,7 @@ async function log(args) {
  *
  * @param {string[]} args
  */
-async function logD(args) {
+async function logD (args) {
     let logName = args[3];
     let str = await stringDaily(logName);
 
@@ -196,7 +196,7 @@ async function logD(args) {
  *
  * @param {string[]} args
  */
-async function getUUIDCli(args) {
+async function getUUIDCli (args) {
     let name = args[3];
     let uuid = await mojangRequest.getUUIDRaw(name);
     logger.out(`${name}'s uuid is ${uuid}`);
@@ -205,7 +205,7 @@ async function getUUIDCli(args) {
 /**
  * @param {string[]} args
  */
-async function addGuildMembers(args) {
+async function addGuildMembers (args) {
     let uuid = args[3];
     await dataGeneration.addGuild(uuid);
 }
@@ -213,7 +213,7 @@ async function addGuildMembers(args) {
 /**
  * @param {string[]} args
  */
-async function addGIDMembers(args) {
+async function addGIDMembers (args) {
     let uuid = args[3];
     await dataGeneration.addGuildID(uuid);
 }
@@ -221,7 +221,7 @@ async function addGIDMembers(args) {
 /**
  * @returns {object}
  */
-async function getServerStatus() {
+async function getServerStatus () {
     let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
     let hyStatus = JSON.parse(hyStatusRaw.data);
     let mojangStatusRaw = await webRequest("https://status.mojang.com/check");

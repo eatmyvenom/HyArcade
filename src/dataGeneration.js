@@ -13,7 +13,7 @@ const Account = require("hyarcade-requests/types/Account");
  * Generates the status for all of the online players
  *
  */
-async function genStatus() {
+async function genStatus () {
     let statusObj = {};
     let accdata = await utils.readJSON("accounts.json");
     let acclist = await lists.accounts();
@@ -41,7 +41,7 @@ async function genStatus() {
 /**
  *
  */
-async function saveBoosters() {
+async function saveBoosters () {
     let boosters = await hypixelAPI.getBoosters();
     await utils.writeJSON("boosters.json", boosters);
 }
@@ -49,7 +49,7 @@ async function saveBoosters() {
 /**
  *
  */
-async function statusTxtSorted() {
+async function statusTxtSorted () {
     let str = "";
     let acclist = await lists.accounts();
     let accs = acclist.accounts;
@@ -70,7 +70,7 @@ async function statusTxtSorted() {
  * @param {string} b
  * @returns {string[]}
  */
-function statusSort(a, b) {
+function statusSort (a, b) {
     let status1 = a[1];
     let status2 = b[1];
 
@@ -136,7 +136,7 @@ function statusSort(a, b) {
  *
  * @returns {Account[]}
  */
-async function updateAllAccounts() {
+async function updateAllAccounts () {
     let acclist = await lists.accounts();
     let accounts = acclist.accounts;
     return await updateAccounts(accounts);
@@ -145,7 +145,7 @@ async function updateAllAccounts() {
 /**
  *
  */
-async function addLeaderboards() {
+async function addLeaderboards () {
     let leaders = await hypixelAPI.getLeaderboards();
     let arcade = leaders.leaderboards.ARCADE;
     let lifetimeCoins = arcade[0].leaders;
@@ -160,7 +160,7 @@ async function addLeaderboards() {
 /**
  * @param {string} uuid
  */
-async function addGuild(uuid) {
+async function addGuild (uuid) {
     let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
     let members = guild.guild.members;
     let uuids = [];
@@ -174,7 +174,7 @@ async function addGuild(uuid) {
 /**
  * @param {string} id
  */
-async function addGuildID(id) {
+async function addGuildID (id) {
     let guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
     let members = guild.guild.members;
     let uuids = [];

@@ -28,13 +28,13 @@ module.exports = class ImageGenerator {
     canvas;
     context;
     font;
-    constructor(width, height, font = "Fira Code") {
+    constructor (width, height, font = "Fira Code") {
         this.canvas = Canvas.createCanvas(width, height);
         this.context = this.canvas.getContext("2d");
         this.font = font;
     }
 
-    async addBackground(path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
+    async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
         let bg = await Canvas.loadImage(path);
         this.context.drawImage(bg, x, y, dx, dy);
         this.context.beginPath();
@@ -43,7 +43,7 @@ module.exports = class ImageGenerator {
         this.context.fill();
     }
 
-    async addImage(path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
+    async addImage (path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
         let img = await Canvas.loadImage(path);
         for(let i = bgIterations; i >= 4; i--) {
             this.context.beginPath();
@@ -56,7 +56,7 @@ module.exports = class ImageGenerator {
         this.context.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
-    writeText(txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
+    writeText (txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
         this.context.font = `${size} ${this.font}`;
         this.context.fillStyle = color;
         this.context.textAlign = align;
@@ -69,7 +69,7 @@ module.exports = class ImageGenerator {
         }
     }
 
-    drawNameTag(txt, x, y, color, size) {
+    drawNameTag (txt, x, y, color, size) {
         this.context.beginPath();
         this.context.font = `${size}px 'myFont'`;
         let width = this.context.measureText(txt).width;
@@ -83,7 +83,7 @@ module.exports = class ImageGenerator {
         this.context.fillText(txt, realX + width / 2, y);
     }
 
-    drawTimeType(type, x, y, size) {
+    drawTimeType (type, x, y, size) {
         this.context.beginPath();
         this.context.font = `${size}px 'myFont'`;
         let lWidth = this.context.measureText("Lifetime ").width;
@@ -107,7 +107,7 @@ module.exports = class ImageGenerator {
         currentX += wWidth;
     }
 
-    drawLBPos(pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
+    drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
         this.context.beginPath();
         this.context.textAlign = "left";
         this.context.font = `${size}px 'myFont'`;
@@ -145,11 +145,11 @@ module.exports = class ImageGenerator {
         this.context.fillText(`${count}`, currentX, y);
     }
 
-    writeTextCenter(txt, spacing = 36) {
+    writeTextCenter (txt, spacing = 36) {
         this.writeText(txt, this.canvas.width / 2, 96, "center", "#ffffff", "32px", spacing);
     }
 
-    writeAccTitle(rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
+    writeAccTitle (rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
         let txtRank = rank == undefined ? "" : `[${rank}`;
 
         let plus = "";
@@ -214,23 +214,23 @@ module.exports = class ImageGenerator {
         }
     }
 
-    writeTitle(txt) {
+    writeTitle (txt) {
         this.writeText(txt, this.canvas.width / 2, 32, "center", "#ffffff", "48px");
     }
 
-    writeTextTopCenter(txt) {
+    writeTextTopCenter (txt) {
         this.writeText(txt, this.canvas.width / 2, 20, "center");
     }
 
-    writeTextRight(txt, height = 112, color = "#FFFFFF", spacing = 36) {
+    writeTextRight (txt, height = 112, color = "#FFFFFF", spacing = 36) {
         this.writeText(txt, this.canvas.width - 4, height, "right", color, "24px", spacing);
     }
 
-    writeTextLeft(txt) {
+    writeTextLeft (txt) {
         this.writeText(txt, 4, 80, "left");
     }
 
-    toDiscord(name = "image.png") {
+    toDiscord (name = "image.png") {
         return new Discord.MessageAttachment(this.canvas.toBuffer(), name);
     }
 };

@@ -3,7 +3,7 @@ const cfg = require("../Config").fromJSON();
 let url = cfg.dbURL;
 const MongoUtils = require("./MongoUtils");
 
-module.exports = async function connect() {
+module.exports = async function connect () {
     let cli = await MongoClient.connect(url, {
         useUnifiedTopology: true
     });

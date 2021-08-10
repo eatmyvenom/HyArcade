@@ -4,7 +4,7 @@
  * @param {string} emoji
  * @returns {string} 
  */
-module.exports = function EmojiGetter(nitro, emoji) {
+module.exports = function EmojiGetter (nitro, emoji) {
     switch(emoji.toLowerCase()) {
     case "wins": {
         return ":crown:";
