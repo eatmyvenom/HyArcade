@@ -22,6 +22,7 @@
         "arrow-spacing": "error",
         "arrow-parens": "error",
         "arrow-body-style": "warn",
+        "no-unneeded-ternary": "error",
         "no-param-reassign": 2,
         "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],

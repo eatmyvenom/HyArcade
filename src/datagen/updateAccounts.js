@@ -85,7 +85,7 @@ async function updateAccountsInArr (accounts, oldAccs) {
                 let notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
 
                 // Linked players should update more often since they will check their own stats
-                let isLinked = oldAcc.discord ? true : false;
+                let isLinked = !!oldAcc.discord;
 
                 // Ignore people who have not played within the last 3.5 days
                 let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
