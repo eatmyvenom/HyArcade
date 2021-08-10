@@ -88,7 +88,8 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
 
     const plr1 = args[0];
     const plr2 = args[1];
-    let acc1, acc2;
+    let acc1;
+    let acc2;
     if(interaction == undefined) {
         if(plr2 == undefined) {
             acc1 = await BotUtils.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);

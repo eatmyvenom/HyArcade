@@ -33,6 +33,7 @@
         "prefer-rest-params":"error",
         "class-methods-use-this":"error",
         "no-duplicate-imports":"error",
+        "one-var": ["error", "never"],
         "dot-notation":"warn",
         "object-curly-newline":"warn",
         "prefer-const":"warn",

@@ -37,8 +37,8 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
         player = msg.content;
     }
 
-    let uuid,
-        acc;
+    let uuid;
+    let acc;
 
     const acclist = await BotUtils.getFromDB("accounts");
     if(player.length < 17) {

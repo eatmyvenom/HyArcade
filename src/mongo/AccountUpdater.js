@@ -15,9 +15,9 @@ module.exports = async function (database) {
         acclist.push(newAcc);
     }
 
-    let i,
-        j,
-        temparray;
+    let i;
+    let j;
+    let temparray;
 
     const chunk = 120;
     for(i = 0, j = acclist.length; i < j; i += chunk) {

@@ -12,7 +12,8 @@ const {
  * @returns {object} The sorted list
  */
 module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
-    let newlist, oldlist;
+    let newlist;
+    let oldlist;
     if(name == "accounts") {
         newlist = await getList();
         oldlist = await getList(timetype);

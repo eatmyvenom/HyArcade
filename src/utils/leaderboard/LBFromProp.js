@@ -4,7 +4,8 @@ const {
 } = require("./ListUtils");
 
 module.exports = async function listDiffByProp (name, prop, timetype, maxamnt, category, fileCache) {
-    let newlist, oldlist;
+    let newlist;
+    let oldlist;
     if(fileCache != undefined) {
         newlist = JSON.parse(JSON.stringify(fileCache[`${name}`]));
         oldlist = JSON.parse(JSON.stringify(fileCache[`${timetype}${name}`]));
