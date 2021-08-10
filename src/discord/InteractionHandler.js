@@ -177,7 +177,7 @@ async function registerAll (client) {
         cmdarr.push(interactionObjects[c]);
     }
 
-    let guilds = client.guilds;
+    let {guilds} = client;
     guilds.cache.array();
     for(let g of guilds.cache.array()) {
         try {

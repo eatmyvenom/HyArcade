@@ -15,20 +15,35 @@
     "rules": {
         "jsdoc/require-param-description": 0,
         "jsdoc/require-returns-description": 0,
+        "template-curly-spacing": ["error", "never"],
+        "space-before-blocks": ["error", "always"],
         "no-loop-func": "error",
         "space-before-function-paren": "error",
-        "space-before-blocks": ["error", "always"],
         "prefer-arrow-callback": "error",
         "arrow-spacing": "error",
         "arrow-parens": "error",
         "no-unneeded-ternary": "error",
         "no-param-reassign": "error",
         "no-case-declarations": "error",
-        "newline-per-chained-call":"warn",
+        "no-whitespace-before-property": "error",
+        "newline-per-chained-call": "warn",
         "arrow-body-style": "warn",
-        "no-else-return":"warn",
+        "no-else-return": "warn",
         "prefer-template": "warn",
-        "template-curly-spacing": ["error", "never"],
+        "prefer-destructuring": ["warn", {
+                "VariableDeclarator": {
+                    "array": false,
+                    "object": true
+                },
+                "AssignmentExpression": {
+                    "array": false,
+                    "object": false
+                }
+            },
+            {
+                "enforceForRenamedProperties": false
+            }
+        ],
         "indent": [
             "error",
             4

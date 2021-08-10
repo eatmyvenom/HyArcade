@@ -43,7 +43,7 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
         });
         if(discusers.size > 0) {
             let usr = discusers.first();
-            let id = usr.id;
+            let {id} = usr;
             let uuid = disclist[id];
             if(uuid != undefined) {
                 acc = acclist.find((a) => a.uuid == uuid);

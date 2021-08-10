@@ -21,7 +21,7 @@ module.exports = async function stringLBAdv (comparitor, parser, maxamnt, listTr
     for(let i = 0; i < list.length; i++) {
         let propVal = parser(list[i]);
 
-        let name = list[i].name;
+        let {name} = list[i];
         str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
     }
     return str.replace(/\\?_/g, "\\_");

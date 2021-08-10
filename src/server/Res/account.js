@@ -1,4 +1,4 @@
-const URL = require("url").URL;
+const {URL} = require("url");
 const cfg = require("../../Config").fromJSON();
 const Logger = require("hyarcade-logger");
 const FileCache = require("../../utils/files/FileCache");
@@ -16,7 +16,7 @@ module.exports = async (req, res, fileCache) => {
         let uuid = url.searchParams.get("uuid");
         let discid = url.searchParams.get("discid");
         res.setHeader("Content-Type", "application/json");
-        let accounts = fileCache.accounts;
+        let {accounts} = fileCache;
         let acc;
 
         console.log(ign);

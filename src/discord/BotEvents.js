@@ -16,7 +16,7 @@ const SetPresence = require("./Utils/SetPresence");
 
 module.exports = class BotEvents {
     static async rateLimit (rlInfo) {
-        let timeout = rlInfo.timeout;
+        let {timeout} = rlInfo;
         let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
         logger.err(str);
         try {

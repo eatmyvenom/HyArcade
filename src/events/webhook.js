@@ -1,6 +1,6 @@
 const config = require("../Config").fromJSON();
 const Discord = require("discord.js");
-const MessageEmbed = Discord.MessageEmbed;
+const {MessageEmbed} = Discord;
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
 const fs = require("fs/promises");
@@ -598,7 +598,7 @@ function formatNum (number) {
  */
 async function sendMW () {
     let run = Runtime.fromJSON();
-    let mwMsg = run.mwMsg;
+    let {mwMsg} = run;
 
     let guildlist = await utils.readJSON("guild.json");
     guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);

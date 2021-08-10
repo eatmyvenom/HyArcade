@@ -62,7 +62,7 @@ async function leaderboardHandler (interaction, leaderboard, time, index) {
 async function statsHandler (accUUID, game) {
     let accData = await InteractionUtils.accFromUUID(accUUID);
     let statsRes = await BotUtils.getStats(accData, game);
-    let embed = statsRes.embed;
+    let {embed} = statsRes;
 
     let buttons = await ButtonGenerator.getStatsButtons(game, accData.uuid);
     return new ButtonResponse("", [embed], buttons);
