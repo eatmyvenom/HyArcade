@@ -405,128 +405,86 @@ async function getLB (prop, timetype, limit) {
     switch(prop) {
     case "miniWallsWins": {
         comparitor = wComp;
-        parser = (a) => {
-            return a.miniWallsWins;
-        };
+        parser = (a) => a.miniWallsWins;
         break;
     }
 
     case "kills": {
         comparitor = kComp;
-        parser = (a) => {
-            return a.miniWalls.kills;
-        };
+        parser = (a) => a.miniWalls.kills;
         break;
     }
 
     case "deaths": {
         comparitor = dComp;
-        parser = (a) => {
-            return a.miniWalls.deaths;
-        };
+        parser = (a) => a.miniWalls.deaths;
         break;
     }
 
     case "witherDamage": {
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.witherDamage ?? 0) - (b?.miniWalls?.witherDamage ?? 0);
-        };
-        parser = (a) => {
-            return a?.miniWalls?.witherDamage ?? 0;
-        };
+        comparitor = (b, a) => (a?.miniWalls?.witherDamage ?? 0) - (b?.miniWalls?.witherDamage ?? 0);
+        parser = (a) => a?.miniWalls?.witherDamage ?? 0;
         break;
     }
     case "witherKills": {
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.witherKills ?? 0) - (b?.miniWalls?.witherKills ?? 0);
-        };
-        parser = (a) => {
-            return a?.miniWalls?.witherKills ?? 0;
-        };
+        comparitor = (b, a) => (a?.miniWalls?.witherKills ?? 0) - (b?.miniWalls?.witherKills ?? 0);
+        parser = (a) => a?.miniWalls?.witherKills ?? 0;
         break;
     }
     case "finalKills": {
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.finalKills ?? 0) - (b?.miniWalls?.finalKills ?? 0);
-        };
-        parser = (a) => {
-            return a?.miniWalls?.finalKills ?? 0;
-        };
+        comparitor = (b, a) => (a?.miniWalls?.finalKills ?? 0) - (b?.miniWalls?.finalKills ?? 0);
+        parser = (a) => a?.miniWalls?.finalKills ?? 0;
         break;
     }
 
     case "kd": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (
-                ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
+        comparitor = (b, a) => (
+            ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
                 ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
-            );
-        };
-        parser = (a) => {
-            return (((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-        };
+        );
+        parser = (a) => (((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
         break;
     }
 
     case "kdnf": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.kills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-        };
-        parser = (a) => {
-            return ((a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-        };
+        comparitor = (b, a) => (a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.kills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        parser = (a) => ((a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
         break;
     }
 
     case "fd": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.finalKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-        };
-        parser = (a) => {
-            return ((a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-        };
+        comparitor = (b, a) => (a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.finalKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        parser = (a) => ((a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
         break;
     }
 
     case "wdd": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherDamage ?? 0) / (b?.miniWalls?.deaths ?? 0);
-        };
-        parser = (a) => {
-            return ((a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-        };
+        comparitor = (b, a) => (a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherDamage ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        parser = (a) => ((a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
         break;
     }
 
     case "wkd": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-        };
-        parser = (a) => {
-            return ((a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-        };
+        comparitor = (b, a) => (a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
+        parser = (a) => ((a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
         break;
     }
 
     case "aa": {
         callback = rcb;
         transformer = ratioTransformer;
-        comparitor = (b, a) => {
-            return (a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0) - (b?.miniWalls?.arrowsHit ?? 0) / (b?.miniWalls?.arrowsShot ?? 0);
-        };
-        parser = (a) => {
-            return (((a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
-        };
+        comparitor = (b, a) => (a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0) - (b?.miniWalls?.arrowsHit ?? 0) / (b?.miniWalls?.arrowsShot ?? 0);
+        parser = (a) => (((a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
         break;
     }
     }
@@ -639,9 +597,7 @@ async function sendMW () {
     let mwMsg = run.mwMsg;
 
     let guildlist = await utils.readJSON("guild.json");
-    guildlist.sort((a, b) => {
-        return b.miniWallsWins - a.miniWallsWins;
-    });
+    guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
     let str = "";
     guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");

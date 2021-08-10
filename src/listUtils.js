@@ -111,13 +111,9 @@ async function stringDaily (name, maxamnt) {
 async function stringLBDiff (lbprop, maxamnt, timetype, category, startingIndex = 0) {
     let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if(category == undefined) {
-        TimSort.sort(list, (b, a) => {
-            return (a[lbprop] ?? 0) - (b[lbprop] ?? 0);
-        });
+        TimSort.sort(list, (b, a) => (a[lbprop] ?? 0) - (b[lbprop] ?? 0));
     } else {
-        TimSort.sort(list, (b, a) => {
-            return (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0);
-        });
+        TimSort.sort(list, (b, a) => (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0));
     }
 
     return stringifyList(list, lbprop, category, maxamnt, startingIndex);

@@ -624,14 +624,8 @@ async function hander (args, rawMsg, interaction) {
             gameName = type.trim().slice(1);
             if(timetype == "lifetime" || timetype == "l") {
                 timetype = "Lifetime";
-                lb = await stringLBAdv((a, b) => {
-                    return (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0);
-                }, (a) => {
-                    return getProp(a, type.trim());
-                }, limit,
-                (l) => {
-                    return l;
-                }, startingIndex);
+                lb = await stringLBAdv((a, b) => (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0), (a) => getProp(a, type.trim()), limit,
+                    (l) => l, startingIndex);
             } else {
                 let embed = new MessageEmbed()
                     .setTitle("ERROR")

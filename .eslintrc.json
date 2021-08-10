@@ -21,6 +21,7 @@
         "prefer-arrow-callback": "error",
         "arrow-spacing": "error",
         "arrow-parens": "error",
+        "arrow-body-style": "warn",
         "no-param-reassign": 2,
         "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],

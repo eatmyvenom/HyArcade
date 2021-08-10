@@ -75,15 +75,9 @@ module.exports = async function addAccounts (category, names) {
         acclist[category].push(lilAcc);
     }
 
-    acclist.others = acclist.others.filter((a) => {
-        return a.uuid != undefined;
-    });
-    fullNewAccounts.filter((a) => {
-        return a.uuid != undefined;
-    });
-    newAccs.filter((a) => {
-        return a.uuid != undefined;
-    });
+    acclist.others = acclist.others.filter((a) => a.uuid != undefined);
+    fullNewAccounts.filter((a) => a.uuid != undefined);
+    newAccs.filter((a) => a.uuid != undefined);
 
     await utils.writeDB("acclist", acclist);
     await utils.writeDB("accounts", fullNewAccounts);
