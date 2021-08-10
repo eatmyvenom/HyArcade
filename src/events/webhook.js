@@ -191,7 +191,7 @@ function generateEmbed (list) {
     let str = "";
 
     const len = Math.min(filteredList.length, 24);
-    for(let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i += 1) {
         str += `${i + 1}) ${filteredList[i].name} - ${filteredList[i].wins}\n`;
     }
     embed.setDescription(str);
@@ -605,7 +605,7 @@ async function sendMW () {
 
     let str = "";
     guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
-    for(let i = 0; i < Math.min(10, guildlist.length); i++) {
+    for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
         const g = guildlist[i];
         str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
     }

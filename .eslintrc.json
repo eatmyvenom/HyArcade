@@ -34,6 +34,8 @@
         "class-methods-use-this":"error",
         "no-duplicate-imports":"error",
         "one-var": ["error", "never"],
+        "no-plusplus": "error",
+        "no-multi-assign":"warn",
         "dot-notation":"warn",
         "object-curly-newline":"warn",
         "prefer-const":"warn",

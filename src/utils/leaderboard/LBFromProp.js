@@ -20,7 +20,7 @@ module.exports = async function listDiffByProp (name, prop, timetype, maxamnt, c
     }
 
     let acc;
-    for(let i = 0; i < oldlist.length; i++) {
+    for(let i = 0; i < oldlist.length; i += 1) {
         acc = newlist.find((g) => g?.uuid == oldlist[i]?.uuid);
         // make sure acc isnt null/undefined
         if(acc == undefined || acc == null) {

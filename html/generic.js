@@ -862,7 +862,7 @@ async function getLeaderboards(element) {
     }
 
     let text = "";
-    for(let i = 0; i < Math.min(maxLength, lb.length); i++) {
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
         if(element.hasAttribute("extras")) {
             text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
         } else if(element.hasAttribute("seasonalWins")) {
@@ -924,7 +924,7 @@ async function getDaily(element, timetype) {
     }
 
     let text = "";
-    for(let i = 0; i < Math.min(maxLength, lb.length); i++) {
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
         if(element.hasAttribute("extras")) {
             text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
         } else if(element.hasAttribute("seasonalWins")) {

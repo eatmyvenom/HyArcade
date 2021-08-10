@@ -45,7 +45,7 @@ module.exports = class ImageGenerator {
 
     async addImage (path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
         const img = await Canvas.loadImage(path);
-        for(let i = bgIterations; i >= 4; i--) {
+        for(let i = bgIterations; i >= 4; i -= 1) {
             this.context.beginPath();
             this.context.rect(x - i / 2, y - i / 2, img.width + i, img.height + i);
             this.context.fillStyle = `#333333${bgStrenth}`;
@@ -155,7 +155,7 @@ module.exports = class ImageGenerator {
         let plus = "";
         let rankEnd = "";
         if(txtRank.includes("_PLUS_PLUS")) {
-            plus = "++";
+            plus = " += 1";
         } else if(txtRank.includes("_PLUS")) {
             plus = "+";
         }

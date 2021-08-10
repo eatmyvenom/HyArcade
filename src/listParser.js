@@ -32,7 +32,7 @@ exports.players = async function players (acclist) {
 
     const playerjson = await utils.readJSON("./playerlist.json");
     const playerlist = [];
-    for(let i = 0; i < playerjson.length; i++) {
+    for(let i = 0; i < playerjson.length; i += 1) {
         playerlist.push(new Player(playerjson[i].name, playerjson[i].accs, 0));
     }
     return playerlist;

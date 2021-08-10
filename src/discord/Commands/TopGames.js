@@ -101,7 +101,7 @@ function getGames (acc) {
 
     for(const g of games) {
         if(g.wins != 0 && g.wins != undefined) {
-            str += `${++i}) **${g.name}** (${g.wins})\n`;
+            str += `${i += 1}) **${g.name}** (${g.wins})\n`;
         }
     }
 

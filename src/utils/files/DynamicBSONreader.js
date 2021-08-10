@@ -15,7 +15,7 @@ async function DynamicBSONreader (filename) {
         result = [];
     }
 
-    for(let i = 0; i < metadata.length; i++) {
+    for(let i = 0; i < metadata.length; i += 1) {
         const obj = BSON.deserialize(await fs.readFile(`${filename}.${i}`));
         if(metadata.type == 1) {
             result = result.concat(Object.values(obj));

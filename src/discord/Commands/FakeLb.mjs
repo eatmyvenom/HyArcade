@@ -79,7 +79,7 @@ export let FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"], a
     y+=10;
 
     let topTen = await LBDiffAdv(mwComparitor, 10, "monthly", cb, hackerTransformer);
-    for(let i = 0; i < topTen.length; i++) {
+    for(let i = 0; i < topTen.length; i += 1) {
         img.drawLBPos(`${i + 1}`, topTen[i].rank , "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i].miniWallsWins), x , y+=dy, fontSize);
     }
 

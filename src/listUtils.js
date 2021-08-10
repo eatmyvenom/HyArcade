@@ -19,7 +19,7 @@ const TimSort = require("timsort");
 async function txtPlayerList (list, maxamnt) {
     let str = "";
     const len = maxamnt != undefined ? maxamnt : list.length;
-    for(let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i += 1) {
         // don't print if player has 0 wins
         if(list[i].wins < 1 && !config.printAllWins) continue;
 

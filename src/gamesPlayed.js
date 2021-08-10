@@ -31,7 +31,7 @@ class gamesPlayed {
 
     addCount (type) {
         if(this.counts[type] != undefined) {
-            this.counts[type]++;
+            this.counts[type] += 1;
         } else {
             this.counts[type] = 1;
         }

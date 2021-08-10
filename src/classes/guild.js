@@ -69,7 +69,7 @@ class Guild {
         this.tag = data?.guild?.tag ?? "NONE";
 
         const gmembers = data?.guild?.members ?? [];
-        for(let i = 0; i < gmembers.length; i++) {
+        for(let i = 0; i < gmembers.length; i += 1) {
             // find a corrosponding account in my account list
             const gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
             // dont add empty accounts
@@ -98,7 +98,7 @@ class Guild {
      */
     async updateWins () {
         await this.updateMemberData();
-        for(let i = 0; i < this.members.length; i++) {
+        for(let i = 0; i < this.members.length; i += 1) {
             const member = this.members[i];
             this.wins += member.wins;
             this.arcadeCoins += member.arcadeCoins;

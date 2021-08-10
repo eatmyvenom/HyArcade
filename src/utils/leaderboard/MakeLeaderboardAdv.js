@@ -22,7 +22,7 @@ module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
         oldlist = await utils.readJSON(`${name}.${timetype}.json`);
     }
 
-    for(let i = 0; i < oldlist.length; i++) {
+    for(let i = 0; i < oldlist.length; i += 1) {
         const oldacc = oldlist[i];
         const newacc = newlist.find((g) => (`${g.uuid}`).toLowerCase() == (`${oldacc.uuid}`).toLowerCase());
 

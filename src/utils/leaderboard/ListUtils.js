@@ -34,7 +34,7 @@ exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt,
     const sizedList = list.slice(0, size);
 
     let propVal;
-    for(let i = startingIndex; i < sizedList.length; i++) {
+    for(let i = startingIndex; i < sizedList.length; i += 1) {
 
         propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
         // don't print if player has 0 wins

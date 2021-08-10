@@ -37,7 +37,7 @@ module.exports = async function updateAccounts (accounts) {
     if(utils.fileExists("data/accounts.json.full")) {
         const fullList = await utils.readJSON("accounts.json.full");
         await fs.rm("data/accounts.json.full");
-        for(let i = 0; i < accs.length; i++) {
+        for(let i = 0; i < accs.length; i += 1) {
             const acc = accs[i];
             const newAcc = fullList.find((a) => a.uuid == acc.uuid);
             if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {

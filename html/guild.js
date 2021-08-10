@@ -626,7 +626,7 @@ function formatData(accounts, sorter, printer) {
     accounts.sort(sorter);
     accounts.reverse();
     let len = Math.min(accounts.length, maxLength);
-    for(let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i += 1) {
         let acc = accounts[i];
         str += `${printer(i + 1, acc)}`;
     }
@@ -643,7 +643,7 @@ function formatData(accounts, sorter, printer) {
 function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
     let str = "";
     let timedAccounts = [];
-    for(let i = 0; i < oldAccounts.length; i++) {
+    for(let i = 0; i < oldAccounts.length; i += 1) {
         let oldAcc = oldAccounts[i];
         let acc = accounts.find((a) => oldAcc.uuid == a.uuid);
         timedAccounts.push(subtracter(acc, oldAcc));
@@ -652,7 +652,7 @@ function formatTimed(accounts, oldAccounts, subtracter, sorter, printer) {
     timedAccounts.sort(sorter);
     timedAccounts.reverse();
     let len = Math.min(accounts.length, maxLength);
-    for(let i = 0; i < len; i++) {
+    for(let i = 0; i < len; i += 1) {
         let acc = timedAccounts[i];
         str += `${printer(i + 1, acc)}`;
     }

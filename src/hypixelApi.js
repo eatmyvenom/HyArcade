@@ -64,7 +64,7 @@ module.exports = class hypixelAPI {
         // this is my handling of adding other args that work
         // in urls, its not perfect but it works well here
         if(extraArgs != []) {
-            for(let i = 0; i < extraArgs.length; i++) {
+            for(let i = 0; i < extraArgs.length; i += 1) {
                 url += `&${extraArgs[i].key}=${extraArgs[i].val}`;
             }
         }

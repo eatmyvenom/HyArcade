@@ -14,7 +14,7 @@ function addstuff(ext, clazzz) {
             var newArr = arr.slice(0, len);
             console.log(ext);
             if(("" + ext).includes("pgA") || ext.includes("status")) {
-                for(var i = 0; i < newArr.length; i++) {
+                for(var i = 0; i < newArr.length; i += 1) {
                     if(newArr[i].trim() != "") {
                         let line = newArr[i].split(":");
                         newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0]

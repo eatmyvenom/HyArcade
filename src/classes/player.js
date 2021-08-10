@@ -27,7 +27,7 @@ class Player {
         this.altnames = altnames;
         this.wins = wins;
 
-        for(let i = 0; i < altnames.length; i++) {
+        for(let i = 0; i < altnames.length; i += 1) {
             // if uuid then check uuid
             if(altnames[i].length == 32) {
                 this.alts.push(accounts.find((acc) => acc.uuid?.toLowerCase() == altnames[i].toLowerCase()));
@@ -45,7 +45,7 @@ class Player {
      */
     async updateWins () {
         let newWins = 0;
-        for(let i = 0; i < this.alts.length; i++) {
+        for(let i = 0; i < this.alts.length; i += 1) {
             if(this.alts[i] == undefined) {
                 continue;
             }
