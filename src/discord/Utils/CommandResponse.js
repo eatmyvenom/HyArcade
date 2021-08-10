@@ -101,8 +101,8 @@ module.exports = class CommandResponse {
         obj.username = BotUtils.client.user.username;
         obj.avatarURL = BotUtils.client.user.avatarURL();
         return obj;
-      } 
+      }
       return obj;
-        
+
     }
 };

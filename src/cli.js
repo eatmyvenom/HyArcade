@@ -15,7 +15,9 @@ const webRequest = require("./request/webRequest");
 const Runtime = require("./Runtime");
 const process = require("process");
 const args = process.argv;
-const { logger } = utils;
+const {
+  logger
+} = utils;
 
 /**
  * Add a new account to the acclist
@@ -112,7 +114,9 @@ async function newGuild () {
 
   // create the actual guild object
   const id = gldInfo.guild._id;
-  const { name } = gldInfo.guild;
+  const {
+    name
+  } = gldInfo.guild;
   const gldObj = {
     id,
     name

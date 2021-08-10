@@ -77,17 +77,17 @@ module.exports = function EmojiGetter (nitro, emoji) {
   case "better": {
     if(nitro) {
       return "<:greenincrease:861225215559860224>";
-    } 
+    }
     return ":green_square:";
-        
+
   }
 
   case "worse": {
     if(nitro) {
       return "<:reddecrease:861225334841802814>";
-    } 
+    }
     return ":red_square:";
-        
+
   }
   }
 };

@@ -1,5 +1,9 @@
-const { logger } = require("../utils");
-const { URL } = require("url");
+const {
+  logger
+} = require("../utils");
+const {
+  URL
+} = require("url");
 const FileCache = require("../utils/files/FileCache");
 const urlModules = {
   account: require("./Res/account"),

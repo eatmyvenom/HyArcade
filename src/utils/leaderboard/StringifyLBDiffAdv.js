@@ -29,7 +29,9 @@ module.exports = async function stringLBDiffAdv (comparitor, parser, maxamnt, ti
     const propVal = parser(list[i]);
     if(numberify(propVal) < 1 && !config.printAllWins) continue;
 
-    const { name } = list[i];
+    const {
+      name
+    } = list[i];
     str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
   }
   return str.replace(/\\?_/g, "\\_");

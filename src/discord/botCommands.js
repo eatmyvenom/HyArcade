@@ -71,9 +71,9 @@ async function execute (msg, senderID) {
     const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     if(res instanceof CommandResponse) {
       return res;
-    } 
+    }
     return new CommandResponse(res);
-        
+
   }
   return;
 }

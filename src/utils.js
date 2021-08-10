@@ -31,11 +31,11 @@ function winsSorter (element1, element2) {
     if(element1.wins < element2.wins) return 1;
     if(element1.wins > element2.wins) return -1;
     return 0;
-  } 
+  }
   if(element1.wins > element2.wins) return 1;
   if(element1.wins < element2.wins) return -1;
   return 0;
-    
+
 }
 
 /**

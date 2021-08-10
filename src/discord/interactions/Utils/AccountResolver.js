@@ -64,7 +64,7 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
       return undefined;
     }
     return accdata;
-  } 
+  }
   return await getFromHypixel(str, interaction);
-    
+
 };

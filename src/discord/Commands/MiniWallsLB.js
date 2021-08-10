@@ -151,7 +151,7 @@ async function getLB (prop, timetype, limit) {
     transformer = ratioTransformer;
     comparitor = (b, a) => (
       ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0) -
-                ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
+            ((b.miniWalls?.kills ?? 0) + (b.miniWalls?.finalKills ?? 0)) / (b.miniWalls.deaths ?? 0)
     );
     parser = (a) => ((a.miniWalls?.kills ?? 0) + (a.miniWalls?.finalKills ?? 0)) / (a.miniWalls.deaths ?? 0).toFixed(3);
     break;

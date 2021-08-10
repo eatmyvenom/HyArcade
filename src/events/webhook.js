@@ -1,6 +1,8 @@
 const config = require("../Config").fromJSON();
 const Discord = require("discord.js");
-const { MessageEmbed } = Discord;
+const {
+  MessageEmbed
+} = Discord;
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
 const fs = require("fs/promises");
@@ -444,7 +446,7 @@ async function getLB (prop, timetype, limit) {
     transformer = ratioTransformer;
     comparitor = (b, a) => (
       ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
-                ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
+            ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
     );
     parser = (a) => (((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
     break;
@@ -598,7 +600,9 @@ function formatNum (number) {
  */
 async function sendMW () {
   const run = Runtime.fromJSON();
-  const { mwMsg } = run;
+  const {
+    mwMsg
+  } = run;
 
   let guildlist = await utils.readJSON("guild.json");
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);

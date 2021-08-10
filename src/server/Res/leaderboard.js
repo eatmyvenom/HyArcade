@@ -23,7 +23,9 @@ module.exports = async (req, res, fileCache) => {
   const timePeriod = url.searchParams.get("time");
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
-    let { accounts } = fileCache;
+    let {
+      accounts
+    } = fileCache;
 
     if(timePeriod == undefined) {
       if(category == null) {

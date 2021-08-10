@@ -1,6 +1,8 @@
 const Account = require("../classes/account");
 const utils = require("../utils");
-const { logger } = utils;
+const {
+  logger
+} = utils;
 const cfg = require("../Config").fromJSON();
 const force = utils.fileExists("force") || cfg.alwaysForce;
 
