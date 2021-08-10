@@ -1,6 +1,6 @@
 module.exports = function isValidIGN (txt) {
-    return (
-        txt.length < 17 &&
+  return (
+    txt.length < 17 &&
         txt.length > 2 &&
         !txt.includes("!") &&
         !txt.includes("?") &&
@@ -21,5 +21,5 @@ module.exports = function isValidIGN (txt) {
         txt != "gamer" &&
         txt != "yea" &&
         txt != "okay"
-    );
+  );
 };

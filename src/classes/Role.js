@@ -3,7 +3,7 @@ module.exports = class Role {
     roleID = "";
 
     constructor (minimumWins, roleID) {
-        this.minimumWins = minimumWins;
-        this.roleID = roleID;
+      this.minimumWins = minimumWins;
+      this.roleID = roleID;
     }
 };

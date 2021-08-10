@@ -1,7 +1,7 @@
 const Webhook = require("../events/webhook");
 const {
-    stringNormal,
-    stringDaily
+  stringNormal,
+  stringDaily
 } = require("../listUtils");
 const utils = require("../utils");
 const config = require("../Config").fromJSON();
@@ -11,8 +11,8 @@ const EventDetector = require("../events/EventDetector");
 const lists = require("../listParser");
 let accounts = [];
 const {
-    winsSorter,
-    logger
+  winsSorter,
+  logger
 } = require("../utils");
 
 /**
@@ -21,26 +21,26 @@ const {
  * @returns {string[]} files changed by this task
  */
 async function accs () {
-    const acclist = await lists.accounts();
-    accounts = await dataGen.updateAllAccounts(acclist);
-    const old = await utils.readDB("accounts");
-    old.sort(winsSorter);
-    accounts.sort(winsSorter);
+  const acclist = await lists.accounts();
+  accounts = await dataGen.updateAllAccounts(acclist);
+  const old = await utils.readDB("accounts");
+  old.sort(winsSorter);
+  accounts.sort(winsSorter);
 
-    try {
-        if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-            const ED = new EventDetector(old, accounts);
-            await ED.runDetection();
-            await ED.logEvents();
-            await ED.sendEvents();
-            await ED.saveEvents();
-        }
-    } catch (e) {
-        logger.err(e);
+  try {
+    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
+      const ED = new EventDetector(old, accounts);
+      await ED.runDetection();
+      await ED.logEvents();
+      await ED.sendEvents();
+      await ED.saveEvents();
     }
+  } catch (e) {
+    logger.err(e);
+  }
 
-    await utils.writeDB("accounts", accounts);
-    return ["accounts.json"];
+  await utils.writeDB("accounts", accounts);
+  return ["accounts.json"];
 }
 
 /**
@@ -49,16 +49,16 @@ async function accs () {
  * @returns {string[]} files changed by this task
  */
 async function plrs () {
-    const players = await lists.players(accounts);
-    await Promise.all(
-        players.map(async (player) => {
-            await player.updateWins();
-        })
-    );
+  const players = await lists.players(accounts);
+  await Promise.all(
+    players.map(async (player) => {
+      await player.updateWins();
+    })
+  );
 
-    players.sort(utils.winsSorter);
-    await utils.writeJSON("players.json", players);
-    return ["players.json"];
+  players.sort(utils.winsSorter);
+  await utils.writeJSON("players.json", players);
+  return ["players.json"];
 }
 
 /**
@@ -67,16 +67,16 @@ async function plrs () {
  * @returns {string[]} files changed by this task
  */
 async function glds () {
-    const guilds = await lists.guilds(accounts);
-    await Promise.all(
-        guilds.map(async (guild) => {
-            await guild.updateWins();
-        })
-    );
+  const guilds = await lists.guilds(accounts);
+  await Promise.all(
+    guilds.map(async (guild) => {
+      await guild.updateWins();
+    })
+  );
 
-    guilds.sort(utils.winsSorter);
-    await utils.writeJSON("guild.json", guilds);
-    return ["guild.json"];
+  guilds.sort(utils.winsSorter);
+  await utils.writeJSON("guild.json", guilds);
+  return ["guild.json"];
 }
 
 /**
@@ -85,7 +85,7 @@ async function glds () {
  * @returns {string[]} files changed by this task
  */
 async function stats () {
-    return await [].concat(await accs(), await plrs(), await glds());
+  return await [].concat(await accs(), await plrs(), await glds());
 }
 
 /**
@@ -94,16 +94,16 @@ async function stats () {
  * @returns {*}
  */
 async function gamesPlayed () {
-    await dataGen.gamesPlayed();
-    return ["gamesPlayed.json"];
+  await dataGen.gamesPlayed();
+  return ["gamesPlayed.json"];
 }
 
 /**
  * @returns {string[]}
  */
 async function addLeaderboards () {
-    await dataGen.addLeaderboards();
-    return ["acclist.json"];
+  await dataGen.addLeaderboards();
+  return ["acclist.json"];
 }
 
 /**
@@ -112,16 +112,16 @@ async function addLeaderboards () {
  * @returns {string[]} files changed by this task
  */
 async function status () {
-    await dataGen.genStatus();
-    return await ["status.json", "status.txt"];
+  await dataGen.genStatus();
+  return await ["status.json", "status.txt"];
 }
 
 /**
  * @returns {string[]}
  */
 async function statusTxtSorted () {
-    await dataGen.statusTxtSorted();
-    return await ["status.txt"];
+  await dataGen.statusTxtSorted();
+  return await ["status.txt"];
 }
 
 /**
@@ -132,10 +132,10 @@ async function statusTxtSorted () {
  * @returns {string[]} files changed by this task
  */
 async function webhook (type, maxamnt) {
-    await Webhook.send(await stringNormal(type, maxamnt));
-    await Webhook.send(await stringDaily(type, maxamnt));
+  await Webhook.send(await stringNormal(type, maxamnt));
+  await Webhook.send(await stringDaily(type, maxamnt));
 
-    return [];
+  return [];
 }
 
 /**
@@ -143,19 +143,19 @@ async function webhook (type, maxamnt) {
  *
  */
 async function discord () {
-    const DiscordBot = require("../discord/bot");
-    await DiscordBot();
+  const DiscordBot = require("../discord/bot");
+  await DiscordBot();
 }
 
 module.exports = {
-    accounts: accs,
-    players: plrs,
-    guilds: glds,
-    gamesPlayed,
-    addLeaderboards,
-    stats,
-    statusTxtSorted,
-    status,
-    webhook,
-    discord,
+  accounts: accs,
+  players: plrs,
+  guilds: glds,
+  gamesPlayed,
+  addLeaderboards,
+  stats,
+  statusTxtSorted,
+  status,
+  webhook,
+  discord,
 };

@@ -1,6 +1,6 @@
 const {
-    WebhookClient,
-    Webhook
+  WebhookClient,
+  Webhook
 } = require("discord.js");
 const Config = require("hyarcade-config");
 const cfg = Config.fromJSON();

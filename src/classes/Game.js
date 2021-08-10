@@ -9,9 +9,9 @@ class Game {
      * @memberof Game
      */
     constructor (json) {
-        this.type = `${json.gameType}.${json.mode}`;
-        this.start = json.date;
-        this.end = json.ended;
+      this.type = `${json.gameType}.${json.mode}`;
+      this.start = json.date;
+      this.end = json.ended;
     }
 }
 

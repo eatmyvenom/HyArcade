@@ -7,22 +7,22 @@ const BSON = require("bson-ext");
  * @returns {Promise<Array>}
  */
 async function DynamicBSONreader (filename) {
-    const metadata = BSON.deserialize(await fs.readFile(`${filename}.meta`));
+  const metadata = BSON.deserialize(await fs.readFile(`${filename}.meta`));
 
-    let result;
+  let result;
 
+  if(metadata.type == 1) {
+    result = [];
+  }
+
+  for(let i = 0; i < metadata.length; i += 1) {
+    const obj = BSON.deserialize(await fs.readFile(`${filename}.${i}`));
     if(metadata.type == 1) {
-        result = [];
+      result = result.concat(Object.values(obj));
     }
+  }
 
-    for(let i = 0; i < metadata.length; i += 1) {
-        const obj = BSON.deserialize(await fs.readFile(`${filename}.${i}`));
-        if(metadata.type == 1) {
-            result = result.concat(Object.values(obj));
-        }
-    }
-
-    return result;
+  return result;
 }
 
 module.exports = DynamicBSONreader;

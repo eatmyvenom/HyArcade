@@ -12,23 +12,23 @@ class sizedWriter {
      * @param {number} type 0 - Object, 1 - Array
      */
     constructor (newObjs, type) {
-        this.length = newObjs.length;
-        this.type = type;
-        newObjs.forEach((sizedObject) => {
-            this.documents.push(BSON.serialize(sizedObject));
-        }, this);
+      this.length = newObjs.length;
+      this.type = type;
+      newObjs.forEach((sizedObject) => {
+        this.documents.push(BSON.serialize(sizedObject));
+      }, this);
     }
 
     async toFile (filename) {
-        const meta = {
-            length: this.length,
-            type: this.type,
-        };
-        await fs.writeFile(`${filename}.meta`, BSON.serialize(meta));
+      const meta = {
+        length: this.length,
+        type: this.type,
+      };
+      await fs.writeFile(`${filename}.meta`, BSON.serialize(meta));
 
-        this.documents.forEach((doc, index) => {
-            fs.writeFileSync(`${filename}.${index}`, doc);
-        });
+      this.documents.forEach((doc, index) => {
+        fs.writeFileSync(`${filename}.${index}`, doc);
+      });
     }
 }
 
@@ -39,7 +39,7 @@ class sizedWriter {
  * @returns {Array}
  */
 function chunkArray (arr, chunkSize) {
-    return Array.from(Array(Math.ceil(arr.length / chunkSize)), (_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+  return Array.from(Array(Math.ceil(arr.length / chunkSize)), (_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
 }
 
 /**
@@ -49,16 +49,16 @@ function chunkArray (arr, chunkSize) {
  */
 async function DynamicBSONwriter (object, filename) {
 
-    const files = Math.ceil(BSON.calculateObjectSize(object) / 16000000);
-    let dynamicData;
+  const files = Math.ceil(BSON.calculateObjectSize(object) / 16000000);
+  let dynamicData;
 
-    if(files > 1) {
-        if(Array.isArray(object)) {
-            dynamicData = new sizedWriter(chunkArray(object, object.length / files), 1);
-        }
+  if(files > 1) {
+    if(Array.isArray(object)) {
+      dynamicData = new sizedWriter(chunkArray(object, object.length / files), 1);
     }
+  }
 
-    dynamicData.toFile(filename);
+  dynamicData.toFile(filename);
 }
 
 module.exports = DynamicBSONwriter;

@@ -1,5 +1,5 @@
 const {
-    SelectMenuInteraction
+  SelectMenuInteraction
 } = require("discord.js");
 const BotUtils = require("../../BotUtils");
 const ButtonResponse = require("../Buttons/ButtonResponse");
@@ -12,13 +12,13 @@ const MenuGenerator = require("./MenuGenerator");
  * @returns {ButtonResponse}
  */
 module.exports = async function MenuParser (interaction) {
-    const data = interaction.customId.split(":");
-    const commandType = data[0];
-    switch(commandType) {
-    case "s": {
-        return await statsHandler(data[1], interaction.values[0]);
-    }
-    }
+  const data = interaction.customId.split(":");
+  const commandType = data[0];
+  switch(commandType) {
+  case "s": {
+    return await statsHandler(data[1], interaction.values[0]);
+  }
+  }
 };
 
 /**
@@ -27,10 +27,10 @@ module.exports = async function MenuParser (interaction) {
  * @returns {ButtonResponse}
  */
 async function statsHandler (accUUID, game) {
-    const accData = await InteractionUtils.accFromUUID(accUUID);
-    const statsRes = await BotUtils.getStats(accData, game);
-    const {embed} = statsRes;
+  const accData = await InteractionUtils.accFromUUID(accUUID);
+  const statsRes = await BotUtils.getStats(accData, game);
+  const {embed} = statsRes;
 
-    const mnu = await MenuGenerator.statsMenu(accUUID);
-    return new ButtonResponse("", [embed], mnu);
+  const mnu = await MenuGenerator.statsMenu(accUUID);
+  return new ButtonResponse("", [embed], mnu);
 }

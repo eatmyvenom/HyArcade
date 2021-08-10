@@ -7,16 +7,16 @@ const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
 const {
-    LOG_SLASH_COMMAND_USAGE,
-    LOG_MESSAGE_COMPONENT_USAGE
+  LOG_SLASH_COMMAND_USAGE,
+  LOG_MESSAGE_COMPONENT_USAGE
 } = require("./Utils/Embeds/DynamicEmbeds");
 const MenuParser = require("./interactions/SelectionMenus/MenuParser");
 const {
-    CommandInteraction,
-    ButtonInteraction,
-    SelectMenuInteraction,
-    Interaction,
-    Client
+  CommandInteraction,
+  ButtonInteraction,
+  SelectMenuInteraction,
+  Interaction,
+  Client
 } = require("discord.js");
 
 /**
@@ -24,9 +24,9 @@ const {
  * @returns {boolean}
  */
 async function isBlacklisted (id) {
-    let blacklist = await fs.readFile("data/blacklist");
-    blacklist = blacklist.toString().split("\n");
-    return blacklist.includes(id);
+  let blacklist = await fs.readFile("data/blacklist");
+  blacklist = blacklist.toString().split("\n");
+  return blacklist.includes(id);
 }
 
 /**
@@ -34,56 +34,56 @@ async function isBlacklisted (id) {
  * @param {CommandInteraction} interaction
  */
 async function commandHandler (interaction) {
-    if(await isBlacklisted(interaction.user.id)) {
-        return;
-    }
+  if(await isBlacklisted(interaction.user.id)) {
+    return;
+  }
 
-    let responseObj;
-    try {
-        responseObj = await CommandParser(interaction);
-    } catch (e) {
-        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
-        logger.err(e);
-        await Webhooks.errHook.send({
-            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
-        });
-        await Webhooks.errHook.send({
-            content: e.toString()
-        });
-        return;
-    }
+  let responseObj;
+  try {
+    responseObj = await CommandParser(interaction);
+  } catch (e) {
+    logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
+    logger.err(e);
+    await Webhooks.errHook.send({
+      content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
+    });
+    await Webhooks.errHook.send({
+      content: e.toString()
+    });
+    return;
+  }
 
-    let res;
-    if(responseObj instanceof CommandResponse) {
-        res = responseObj;
+  let res;
+  if(responseObj instanceof CommandResponse) {
+    res = responseObj;
+  } else {
+    res = new CommandResponse(responseObj);
+  }
+
+  try {
+    if(!interaction.deferred && !interaction.replied) {
+      await interaction.reply(res.toDiscord());
     } else {
-        res = new CommandResponse(responseObj);
+      await interaction.followUp(res.toDiscord());
     }
+  } catch (e) {
+    logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
+    logger.err(e.stack);
+    await Webhooks.errHook.send({
+      content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`
+    });
+    await Webhooks.errHook.send({
+      content: e.toString()
+    });
+    return;
+  }
 
-    try {
-        if(!interaction.deferred && !interaction.replied) {
-            await interaction.reply(res.toDiscord());
-        } else {
-            await interaction.followUp(res.toDiscord());
-        }
-    } catch (e) {
-        logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
-        logger.err(e.stack);
-        await Webhooks.errHook.send({
-            content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`
-        });
-        await Webhooks.errHook.send({
-            content: e.toString()
-        });
-        return;
-    }
-
-    const logString = `${interaction.member.user.tag} invoked command interaction \`${
-        interaction.commandName
-    }\` with options \`${JSON.stringify(interaction.options.data)}\``;
-    logger.out(logString.replace(/`/g, "'"));
-    await Webhooks.logHook.send(logString);
-    await logCmd(interaction);
+  const logString = `${interaction.member.user.tag} invoked command interaction \`${
+    interaction.commandName
+  }\` with options \`${JSON.stringify(interaction.options.data)}\``;
+  logger.out(logString.replace(/`/g, "'"));
+  await Webhooks.logHook.send(logString);
+  await logCmd(interaction);
 }
 
 /**
@@ -91,18 +91,18 @@ async function commandHandler (interaction) {
  * @param {CommandInteraction} interaction
  */
 async function logCmd (interaction) {
-    await Webhooks.commandHook.send({
-        embeds: [
-            LOG_SLASH_COMMAND_USAGE(
-                interaction.user?.id,
-                interaction.user?.tag,
-                interaction.commandName,
-                interaction.guild?.name,
-                interaction.channel?.id,
-                interaction.options.data
-            ),
-        ],
-    });
+  await Webhooks.commandHook.send({
+    embeds: [
+      LOG_SLASH_COMMAND_USAGE(
+        interaction.user?.id,
+        interaction.user?.tag,
+        interaction.commandName,
+        interaction.guild?.name,
+        interaction.channel?.id,
+        interaction.options.data
+      ),
+    ],
+  });
 }
 
 /**
@@ -110,18 +110,18 @@ async function logCmd (interaction) {
  * @param {ButtonInteraction} interaction
  */
 async function logBtn (interaction) {
-    await Webhooks.commandHook.send({
-        embeds: [
-            LOG_MESSAGE_COMPONENT_USAGE(
-                interaction.user?.id,
-                interaction.user?.tag,
-                interaction.customId,
-                interaction.values,
-                interaction.guild?.name,
-                interaction.channel?.id
-            ),
-        ],
-    });
+  await Webhooks.commandHook.send({
+    embeds: [
+      LOG_MESSAGE_COMPONENT_USAGE(
+        interaction.user?.id,
+        interaction.user?.tag,
+        interaction.customId,
+        interaction.values,
+        interaction.guild?.name,
+        interaction.channel?.id
+      ),
+    ],
+  });
 }
 
 /**
@@ -129,11 +129,11 @@ async function logBtn (interaction) {
  * @param {ButtonInteraction} interaction
  */
 async function buttonHandler (interaction) {
-    if(await ForceOGuser(interaction)) {
-        const updatedData = await ButtonParser(interaction);
-        await interaction.update(updatedData.toDiscord());
-        await logBtn(interaction);
-    }
+  if(await ForceOGuser(interaction)) {
+    const updatedData = await ButtonParser(interaction);
+    await interaction.update(updatedData.toDiscord());
+    await logBtn(interaction);
+  }
 }
 
 /**
@@ -141,11 +141,11 @@ async function buttonHandler (interaction) {
  * @param {SelectMenuInteraction} interaction
  */
 async function menuHandler (interaction) {
-    if(await ForceOGuser(interaction)) {
-        const updatedData = await MenuParser(interaction);
-        await interaction.update(updatedData.toDiscord());
-        await logBtn(interaction);
-    }
+  if(await ForceOGuser(interaction)) {
+    const updatedData = await MenuParser(interaction);
+    await interaction.update(updatedData.toDiscord());
+    await logBtn(interaction);
+  }
 }
 
 /**
@@ -153,13 +153,13 @@ async function menuHandler (interaction) {
  * @param {Interaction} interaction
  */
 async function interactionHandler (interaction) {
-    if(interaction.isCommand()) {
-        await commandHandler(interaction);
-    } else if(interaction.isButton()) {
-        await buttonHandler(interaction);
-    } else if(interaction.isSelectMenu()) {
-        await menuHandler(interaction);
-    }
+  if(interaction.isCommand()) {
+    await commandHandler(interaction);
+  } else if(interaction.isButton()) {
+    await buttonHandler(interaction);
+  } else if(interaction.isSelectMenu()) {
+    await menuHandler(interaction);
+  }
 }
 
 /**
@@ -167,34 +167,34 @@ async function interactionHandler (interaction) {
  * @param {Client} client
  */
 async function registerAll (client) {
-    let interactionObjects = require("./interactions/interactionObjects");
-    logger.info("Registering global commands with discord");
-    const cmdarr = [];
-    if(BotUtils.botMode == "mini") {
-        interactionObjects = require("./interactions/microInteractionObjects");
-    }
-    for(const c in interactionObjects) {
-        cmdarr.push(interactionObjects[c]);
-    }
+  let interactionObjects = require("./interactions/interactionObjects");
+  logger.info("Registering global commands with discord");
+  const cmdarr = [];
+  if(BotUtils.botMode == "mini") {
+    interactionObjects = require("./interactions/microInteractionObjects");
+  }
+  for(const c in interactionObjects) {
+    cmdarr.push(interactionObjects[c]);
+  }
 
-    const {guilds} = client;
-    guilds.cache.array();
-    for(const g of guilds.cache.array()) {
-        try {
-            if(BotUtils.botMode != "test") {
-                await g.commands.set([]);
-            } else {
-                await g.commands.set(cmdarr);
-            }
-        } catch (e) {
-            logger.error("Couldn't change guild slash commands!");
-            logger.error(e);
-        }
+  const {guilds} = client;
+  guilds.cache.array();
+  for(const g of guilds.cache.array()) {
+    try {
+      if(BotUtils.botMode != "test") {
+        await g.commands.set([]);
+      } else {
+        await g.commands.set(cmdarr);
+      }
+    } catch (e) {
+      logger.error("Couldn't change guild slash commands!");
+      logger.error(e);
     }
+  }
 
-    if(BotUtils.botMode != "test") {
-        await client.application.commands.set(cmdarr);
-    }
+  if(BotUtils.botMode != "test") {
+    await client.application.commands.set(cmdarr);
+  }
 }
 
 /**
@@ -202,6 +202,6 @@ async function registerAll (client) {
  * @param {Client} client
  */
 module.exports = async (client) => {
-    await registerAll(client);
-    client.on("interactionCreate", interactionHandler);
+  await registerAll(client);
+  client.on("interactionCreate", interactionHandler);
 };
