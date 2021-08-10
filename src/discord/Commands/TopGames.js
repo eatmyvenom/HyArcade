@@ -148,15 +148,15 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
 
     if(timetype == "d") {
         let daily = await getFromDB("dayaccounts");
-        let dayAcc = await daily.find(a => a?.uuid == acc.uuid);
+        let dayAcc = await daily.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "w") {
         let weekly = await getFromDB("weeklyaccounts");
-        let dayAcc = await weekly.find(a => a?.uuid == acc.uuid);
+        let dayAcc = await weekly.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "m") {
         let monthly = await getFromDB("monthlyaccounts");
-        let dayAcc = await monthly.find(a => a?.uuid == acc.uuid);
+        let dayAcc = await monthly.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     }
 

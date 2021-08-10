@@ -55,11 +55,11 @@ module.exports = async (req, res, fileCache) => {
         let data = "";
         let json = {};
         if(req.headers.authorization == cfg.dbPass) {
-            req.on("data", d => data += d);
+            req.on("data", (d) => data += d);
             req.on("end", async () => {
                 json = JSON.parse(data);
                 let newAccs = [];
-                if(fileCache.accounts.find(a => a.uuid == json.uuid)) {
+                if(fileCache.accounts.find((a) => a.uuid == json.uuid)) {
                     for(let a of fileCache.accounts) {
                         if(a.uuid != json.uuid) {
                             newAccs.push(a);

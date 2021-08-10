@@ -37,7 +37,7 @@ module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
     case "-":
     case "rm":
     case "remove": {
-        hackers = hackers.filter(h => h != args[1]);
+        hackers = hackers.filter((h) => h != args[1]);
         res = {
             res: "UUID removed!"
         };

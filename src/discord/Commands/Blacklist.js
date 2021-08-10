@@ -36,7 +36,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
     case "-":
     case "rm":
     case "remove": {
-        blacklist = blacklist.filter(h => h != args[1]);
+        blacklist = blacklist.filter((h) => h != args[1]);
         res = new CommandResponse("Discord ID removed!");
         hasChange = true;
         break;

@@ -17,7 +17,7 @@ async function BotSpawner () {
             shardArgs: args,
             respawn: false
         });
-        manager.on("shardCreate", shard => Logger.info(`Launched shard ${shard.id}`));
+        manager.on("shardCreate", (shard) => Logger.info(`Launched shard ${shard.id}`));
         await manager.spawn();
     } catch (e) {
         Logger.err(JSON.stringify(e));

@@ -37,7 +37,7 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
     case "-":
     case "rm":
     case "remove": {
-        msgs = msgs.filter(h => h != arg);
+        msgs = msgs.filter((h) => h != arg);
         res = new CommandResponse("Message removed!");
         hasChange = true;
         break;

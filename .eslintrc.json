@@ -20,6 +20,7 @@
         "space-before-blocks": ["error", "always"],
         "prefer-arrow-callback": "error",
         "arrow-spacing": "error",
+        "arrow-parens": "error",
         "no-param-reassign": 2,
         "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],

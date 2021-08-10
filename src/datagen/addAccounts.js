@@ -75,13 +75,13 @@ module.exports = async function addAccounts (category, names) {
         acclist[category].push(lilAcc);
     }
 
-    acclist.others = acclist.others.filter(a => {
+    acclist.others = acclist.others.filter((a) => {
         return a.uuid != undefined;
     });
-    fullNewAccounts.filter(a => {
+    fullNewAccounts.filter((a) => {
         return a.uuid != undefined;
     });
-    newAccs.filter(a => {
+    newAccs.filter((a) => {
         return a.uuid != undefined;
     });
 
