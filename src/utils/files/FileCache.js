@@ -31,7 +31,7 @@ class FileCache {
 
     destroy () {
         this._interval.unref();
-        for(let prop in this) {
+        for(const prop in this) {
             this[prop] = undefined;
         }
     }
@@ -78,8 +78,8 @@ class FileCache {
         fileCache.updatetime = await fs.readFile("timeupdate");
         fileCache.players = await utils.readJSON("players.json");
         fileCache.guilds = await utils.readJSON("guild.json");
-        let blacklist = await fs.readFile(`${fileCache.path}blacklist`);
-        let hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
+        const blacklist = await fs.readFile(`${fileCache.path}blacklist`);
+        const hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
         fileCache.ezmsgs = (await fs.readFile(`${fileCache.path}ez`)).toString().split("\n");
 
         if(blacklist.toString().trim() != "") {

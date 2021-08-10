@@ -14,9 +14,9 @@ const {
 
 module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     logger.out("Out of database transaction occuring!");
-    let category = "others";
+    const category = "others";
     await Webhooks.logHook.send(`Adding accounts ${args}`);
-    let embed = WARN_WAITING;
+    const embed = WARN_WAITING;
     if(args[0] == "") {
         return {
             res: "",
@@ -24,12 +24,12 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
         };
     }
 
-    let tmpMsg = await rawMsg.channel.send("", {
+    const tmpMsg = await rawMsg.channel.send("", {
         embed: embed
     });
     let res = await addAccounts(category, args);
     res = `\`\`\`\n${res}\n\`\`\``;
-    let embed2 = INFO_ACCOUNTS_ADDED(res);
+    const embed2 = INFO_ACCOUNTS_ADDED(res);
     await tmpMsg.delete();
     return {
         res: "",

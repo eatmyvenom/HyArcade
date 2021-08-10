@@ -14,7 +14,7 @@ module.exports = class InteractionUtils {
     static async accFromUUID (uuid) {
         let acc;
         if(BotUtils.botMode != "mini") {
-            let acclist = await BotUtils.getFromDB("accounts");
+            const acclist = await BotUtils.getFromDB("accounts");
             acc = acclist.find((a) => a?.uuid == uuid);
         }
 

@@ -29,8 +29,8 @@ module.exports = class BotUtils {
 
     static async getFromDB (file) {
         let fileData;
-        let url = new URL("db", cfg.dbUrl);
-        let path = `${file}`;
+        const url = new URL("db", cfg.dbUrl);
+        const path = `${file}`;
         url.searchParams.set("path", path);
         Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
@@ -46,8 +46,8 @@ module.exports = class BotUtils {
     }
 
     static async writeToDB (path, json) {
-        let data = JSON.stringify(json);
-        let url = new URL("db", cfg.dbUrl);
+        const data = JSON.stringify(json);
+        const url = new URL("db", cfg.dbUrl);
         url.searchParams.set("path", path);
         Logger.debug(`Writing to ${path} in database`);
 
@@ -85,7 +85,7 @@ module.exports = class BotUtils {
         /**
          * @type {MessageEmbed}
          */
-        let embed = await AdvancedEmbeds.getStats(
+        const embed = await AdvancedEmbeds.getStats(
             acc,
             game,
             false

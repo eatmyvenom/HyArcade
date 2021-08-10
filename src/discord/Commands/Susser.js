@@ -7,9 +7,9 @@ const InteractionUtils = require("../interactions/InteractionUtils");
 
 module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, interaction) => {
     let hax = 0;
-    let reasons = [];
-    let plr = args[0];
-    let haxlist = await BotUtils.getFromDB("hackerlist");
+    const reasons = [];
+    const plr = args[0];
+    const haxlist = await BotUtils.getFromDB("hackerlist");
     let acc;
     if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg);
@@ -51,7 +51,7 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
         reasons.push("Nothing detected");
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`Cheat level of ${acc.name}`)
         .setColor(0x8c54fe)
         .setDescription(

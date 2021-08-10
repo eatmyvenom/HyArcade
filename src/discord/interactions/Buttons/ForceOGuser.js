@@ -1,6 +1,6 @@
 module.exports = async function ForceOGuser (interaction) {
-    let og = interaction.message.interaction.user.id;
-    let current = interaction.user.id;
+    const og = interaction.message.interaction.user.id;
+    const current = interaction.user.id;
     if(current == og) {
         return true;
     }

@@ -13,7 +13,7 @@ module.exports = class RoleUpdater {
     }
 
     getRole (wins) {
-        for(let role of this.roles) {
+        for(const role of this.roles) {
             if(wins >= role.minimumWins) {
                 return role;
             }
@@ -22,13 +22,13 @@ module.exports = class RoleUpdater {
     }
 
     async updateAll () {
-        let disclist = await BotUtils.getFromDB("disclist");
-        let acclist = await BotUtils.getFromDB("accounts");
-        let mbrList = await this.guild.members.fetch();
-        for(let discid in disclist) {
+        const disclist = await BotUtils.getFromDB("disclist");
+        const acclist = await BotUtils.getFromDB("accounts");
+        const mbrList = await this.guild.members.fetch();
+        for(const discid in disclist) {
             if(mbrList.has(discid)) {
-                let uuid = disclist[discid];
-                let acc = acclist.find((a) => a.uuid == uuid);
+                const uuid = disclist[discid];
+                const acc = acclist.find((a) => a.uuid == uuid);
                 if(acc == undefined) continue;
                 await this.updatePlayer(acc, mbrList.get(discid));
             }
@@ -37,7 +37,7 @@ module.exports = class RoleUpdater {
 
     async updatePlayer (acc, discMember) {
         // logger.out(`Updating ${discMember.user.tag}`);
-        let newRole = this.getRole(acc[this.prop]);
+        const newRole = this.getRole(acc[this.prop]);
         if(newRole == undefined) return;
         if(discMember.roles == undefined) return;
 
@@ -59,7 +59,7 @@ module.exports = class RoleUpdater {
     }
 
     async removeOtherRoles (discMember, ignoreID) {
-        for(let role of this.roles) {
+        for(const role of this.roles) {
             if(role.roleID == ignoreID) continue;
             if(discMember.roles.cache.has(role.roleID)) {
                 await Webhooks.logHook.send(

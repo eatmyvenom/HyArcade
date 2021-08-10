@@ -20,7 +20,7 @@ class sizedWriter {
     }
 
     async toFile (filename) {
-        let meta = {
+        const meta = {
             length: this.length,
             type: this.type,
         };
@@ -49,7 +49,7 @@ function chunkArray (arr, chunkSize) {
  */
 async function DynamicBSONwriter (object, filename) {
 
-    let files = Math.ceil(BSON.calculateObjectSize(object) / 16000000);
+    const files = Math.ceil(BSON.calculateObjectSize(object) / 16000000);
     let dynamicData;
 
     if(files > 1) {

@@ -3,7 +3,7 @@ const Command = require("../../classes/Command");
 const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("Exec", ["156952208045375488"], async (args) => {
-    let shellCommand = args.join(" ");
+    const shellCommand = args.join(" ");
     let stdout;
     try {
         stdout = cp.execSync(shellCommand, {
@@ -13,7 +13,7 @@ module.exports = new Command("Exec", ["156952208045375488"], async (args) => {
         stdout = e;
     }
 
-    let res = `\`\`\`Response:\n${stdout.toString()}\n\`\`\``;
+    const res = `\`\`\`Response:\n${stdout.toString()}\n\`\`\``;
 
     return new CommandResponse(res);
 });

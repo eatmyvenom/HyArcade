@@ -20,12 +20,12 @@ app.use(compression());
  * @param {express.Request} req
  */
 async function callback (res, req) {
-    let request = req.req;
-    let response = res.res;
+    const request = req.req;
+    const response = res.res;
 
-    let url = new URL(request.url, `https://${request.headers.host}`);
-    let endpoint = url.pathname.slice(1);
-    let mod = urlModules[endpoint];
+    const url = new URL(request.url, `https://${request.headers.host}`);
+    const endpoint = url.pathname.slice(1);
+    const mod = urlModules[endpoint];
     if(mod == undefined) {
         logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
         response.statusCode = 404;

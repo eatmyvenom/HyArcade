@@ -26,7 +26,7 @@ let FetchUser = require("./Commands/FetchUser");
 let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
-let Help = require("./Commands/Help");
+const Help = require("./Commands/Help");
 const CommandResponse = require("./Utils/CommandResponse");
 const {
     ERROR_DATABASE_ERROR,
@@ -67,8 +67,8 @@ async function execute (msg, senderID) {
                 embed: ERROR_API_DOWN
             };
         }
-        let cmdArr = msg.content.slice(1).split(" ");
-        let res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
+        const cmdArr = msg.content.slice(1).split(" ");
+        const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
         if(res instanceof CommandResponse) {
             return res;
         } 

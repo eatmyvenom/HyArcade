@@ -56,13 +56,13 @@ async function getLB (prop, timetype, limit, category, start) {
         let day = await listUtils.stringLBDiff(prop, limit, "day", category, start);
         let week = await listUtils.stringLBDiff(prop, limit, "weekly", category, start);
         let month = await listUtils.stringLBDiff(prop, limit, "monthly", category, start);
-        let life = await listUtils.stringLB(prop, limit, category, start);
+        const life = await listUtils.stringLB(prop, limit, category, start);
 
         day = day == "" ? "Nobody has won" : day;
         week = week == "" ? "Nobody has won" : week;
         month = month == "" ? "Nobody has won" : month;
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor(0x00cc66)
             .addField("Daily", day, true)
             .addField("Weekly", week, true)
@@ -82,7 +82,7 @@ async function getLB (prop, timetype, limit, category, start) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time)
+    const embed = new MessageEmbed().setTitle(time)
         .setColor(0x00cc66)
         .setDescription(res);
 
@@ -99,7 +99,7 @@ async function getLB (prop, timetype, limit, category, start) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
         while(resArr.length > 0) {
-            let end = Math.min(25, resArr.length);
+            const end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
         }
@@ -118,9 +118,9 @@ function getProp (o, s) {
     let str = s;
     str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
     str = str.replace(/^\./, ""); // strip a leading dot
-    var a = str.split(".");
-    for(var i = 0, n = a.length; i < n; ++i) {
-        var k = a[i];
+    const a = str.split(".");
+    for(let i = 0, n = a.length; i < n; ++i) {
+        const k = a[i];
         if(k in obj) {
             obj = obj[k];
         } else {
@@ -140,16 +140,16 @@ module.exports = new Command("leaderboard", ["*"], hander);
  * @returns {object}
  */
 async function hander (args, rawMsg, interaction) {
-    let startTime = Date.now();
+    const startTime = Date.now();
     if(interaction != undefined && !interaction.isButton()) {
         logger.debug("Deferring interaction");
         await interaction.defer();
     }
 
-    let type = args[0];
+    const type = args[0];
     let timetype = args[1] != undefined ? args[1] : "lifetime";
-    let limit = args[2] != undefined ? Number(args[2]) : 10;
-    let startingIndex = args[3] != undefined ? Number(args[3]) : 0;
+    const limit = args[2] != undefined ? Number(args[2]) : 10;
+    const startingIndex = args[3] != undefined ? Number(args[3]) : 0;
     let res = "";
     let gid = "";
     let gameName = "";
@@ -629,7 +629,7 @@ async function hander (args, rawMsg, interaction) {
                 lb = await stringLBAdv((a, b) => (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0), (a) => getProp(a, type.trim()), limit,
                     (l) => l, startingIndex);
             } else {
-                let embed = new MessageEmbed()
+                const embed = new MessageEmbed()
                     .setTitle("ERROR")
                     .setDescription(
                         "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
@@ -645,7 +645,7 @@ async function hander (args, rawMsg, interaction) {
                 .setColor(0x00cc66)
                 .setDescription(lb);
         } else {
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle("ERROR")
                 .setDescription(
                     "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
@@ -659,12 +659,12 @@ async function hander (args, rawMsg, interaction) {
     }
     }
 
-    let finalRes = res
+    const finalRes = res
         .setAuthor(`${gameName} leaderboard`, BotUtils.client.user.avatarURL());
 
     logger.out(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
-    let response = {
+    const response = {
         res: "",
         embed: finalRes,
         game: gid,

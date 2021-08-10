@@ -14,12 +14,12 @@ const {
  * @returns {string}
  */
 function numberify (n) {
-    let r = Intl.NumberFormat("en").format(Number(n));
+    const r = Intl.NumberFormat("en").format(Number(n));
     return r;
 }
 
 module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
+    const plr = args[0];
     let acc;
     if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
@@ -30,7 +30,7 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
         }
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${acc.name} zombies stats`)
         .addField("Stats",
             `**Wins** - ${numberify(acc.zombies?.wins_zombies ?? 0)}\n` +

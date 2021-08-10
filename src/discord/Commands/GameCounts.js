@@ -9,8 +9,8 @@ const utils = require("../../utils");
  * @returns {object}
  */
 async function getFields (game) {
-    let counts = await utils.readJSON("./gameCounts.json");
-    let fields = [];
+    const counts = await utils.readJSON("./gameCounts.json");
+    const fields = [];
     switch((`${game}`).toLowerCase()) {
     case "party":
     case "partygames":
@@ -371,8 +371,8 @@ async function getFields (game) {
 }
 
 module.exports = new Command("Game counts", ["*"], async (args) => {
-    let game = args[0];
-    let embed = new MessageEmbed()
+    const game = args[0];
+    const embed = new MessageEmbed()
         .setTitle("Arcade game counts")
         .setColor(0x44a3e7)
         .addFields(await getFields(game))

@@ -29,7 +29,7 @@ exports.INFO_ACCOUNTS_ADDED = function (res) {
  * @returns {MessageEmbed}
  */
 exports.LOG_COMMAND_EXECUTION = function (name, args, message) {
-    let argsTxt = (args == "") ? "`none`" : `\`${args}\``;
+    const argsTxt = (args == "") ? "`none`" : `\`${args}\``;
     return new MessageEmbed()
         .setTitle("Command execution")
         .setColor(COLOR_PINK)

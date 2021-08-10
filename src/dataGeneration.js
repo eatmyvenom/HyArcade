@@ -14,16 +14,16 @@ const Account = require("hyarcade-requests/types/Account");
  *
  */
 async function genStatus () {
-    let statusObj = {};
-    let accdata = await utils.readJSON("accounts.json");
-    let acclist = await lists.accounts();
-    let {accounts} = acclist;
+    const statusObj = {};
+    const accdata = await utils.readJSON("accounts.json");
+    const acclist = await lists.accounts();
+    const {accounts} = acclist;
 
     await Promise.all(
         accounts.map(async (account) => {
-            let thisdata = accdata.find((acc) => acc.uuid == account.uuid);
+            const thisdata = accdata.find((acc) => acc.uuid == account.uuid);
             if(thisdata && thisdata.isLoggedIn) {
-                let response = await hypixelAPI.getStatus(account.uuid);
+                const response = await hypixelAPI.getStatus(account.uuid);
                 statusObj[account.uuid] = response.session;
             }
         })
@@ -42,7 +42,7 @@ async function genStatus () {
  *
  */
 async function saveBoosters () {
-    let boosters = await hypixelAPI.getBoosters();
+    const boosters = await hypixelAPI.getBoosters();
     await utils.writeJSON("boosters.json", boosters);
 }
 
@@ -51,15 +51,15 @@ async function saveBoosters () {
  */
 async function statusTxtSorted () {
     let str = "";
-    let acclist = await lists.accounts();
-    let accs = acclist.accounts;
+    const acclist = await lists.accounts();
+    const accs = acclist.accounts;
 
-    let crntstatus = await utils.readJSON("status.json");
+    const crntstatus = await utils.readJSON("status.json");
     const sortable = Object.entries(crntstatus).sort(statusSort)
         .reverse();
 
     for(const sts of sortable) {
-        let acc = await accs.find((a) => a.uuid == sts[0]);
+        const acc = await accs.find((a) => a.uuid == sts[0]);
         str += await status.genStatus(acc.name, sts[1]);
     }
 
@@ -72,8 +72,8 @@ async function statusTxtSorted () {
  * @returns {string[]}
  */
 function statusSort (a, b) {
-    let status1 = a[1];
-    let status2 = b[1];
+    const status1 = a[1];
+    const status2 = b[1];
 
     // sanitize
     status1.mode = (`${status1.mode}`).toUpperCase();
@@ -138,8 +138,8 @@ function statusSort (a, b) {
  * @returns {Account[]}
  */
 async function updateAllAccounts () {
-    let acclist = await lists.accounts();
-    let {accounts} = acclist;
+    const acclist = await lists.accounts();
+    const {accounts} = acclist;
     return await updateAccounts(accounts);
 }
 
@@ -147,11 +147,11 @@ async function updateAllAccounts () {
  *
  */
 async function addLeaderboards () {
-    let leaders = await hypixelAPI.getLeaderboards();
-    let arcade = leaders.leaderboards.ARCADE;
-    let lifetimeCoins = arcade[0].leaders;
-    let monthlyCoins = arcade[2].leaders;
-    let weeklyCoins = arcade[1].leaders;
+    const leaders = await hypixelAPI.getLeaderboards();
+    const arcade = leaders.leaderboards.ARCADE;
+    const lifetimeCoins = arcade[0].leaders;
+    const monthlyCoins = arcade[2].leaders;
+    const weeklyCoins = arcade[1].leaders;
 
     await addAccounts("others", lifetimeCoins);
     await addAccounts("others", monthlyCoins);
@@ -162,10 +162,10 @@ async function addLeaderboards () {
  * @param {string} uuid
  */
 async function addGuild (uuid) {
-    let guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
-    let {members} = guild.guild;
-    let uuids = [];
-    for(let m of members) {
+    const guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
+    const {members} = guild.guild;
+    const uuids = [];
+    for(const m of members) {
         uuids.push(m.uuid);
     }
 
@@ -176,10 +176,10 @@ async function addGuild (uuid) {
  * @param {string} id
  */
 async function addGuildID (id) {
-    let guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
-    let {members} = guild.guild;
-    let uuids = [];
-    for(let m of members) {
+    const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
+    const {members} = guild.guild;
+    const uuids = [];
+    for(const m of members) {
         uuids.push(m.uuid);
     }
 

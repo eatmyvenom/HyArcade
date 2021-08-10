@@ -21,7 +21,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
         logger.err("Refusing to send empty message to webhook!");
         return;
     }
-    let hook = new Discord.WebhookClient(webhookID, webhookToken);
+    const hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send({
         content: content,
         username: config.webhook.username,
@@ -37,7 +37,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
  * @param {object} webhook
  */
 async function sendBasic (content, webhook) {
-    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+    const hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
         content: content,
         username: webhook.username,
@@ -53,7 +53,7 @@ async function sendBasic (content, webhook) {
  */
 async function sendBasicEmbed (content, embed, webhook) {
     try {
-        let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+        const hook = new Discord.WebhookClient(webhook.id, webhook.token);
         await hook.send({
             embeds: embed,
             username: webhook.username,
@@ -74,7 +74,7 @@ async function sendBasicEmbed (content, embed, webhook) {
  * @param {string} [webhookToken=config.webhook.token]
  */
 async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
-    let hook = new Discord.WebhookClient(webhookID, webhookToken);
+    const hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send({
         embeds: [generateEmbed(list)],
         username: config.webhook.username,
@@ -90,7 +90,7 @@ async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, web
  * @param {object} webhook
  */
 async function sendEmbed (embed, webhook) {
-    let hook = new Discord.WebhookClient(webhook.id, webhook.token);
+    const hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
         embeds: [embed],
         username: webhook.username,
@@ -133,7 +133,7 @@ async function sendHSMEmbed () {
  *
  */
 async function sendPGWEmbed () {
-    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+    const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send({
         embeds: [await genPGWEmbed()],
         username: config.webhook.username,
@@ -148,7 +148,7 @@ async function sendPGWEmbed () {
  *
  */
 async function sendPGMEmbed () {
-    let hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+    const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
     await hook.send({
         embeds: [await genPGMEmbed()],
         username: config.webhook.username,
@@ -163,7 +163,7 @@ async function sendPGMEmbed () {
  *
  */
 async function sendTOKillEmbed () {
-    let hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
+    const hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
     await hook.send({
         embeds: [await genTOKillEmbed()],
         username: config.otherHooks.TO.username,
@@ -182,15 +182,15 @@ async function sendTOKillEmbed () {
  * @returns {*}
  */
 function generateEmbed (list) {
-    let filteredList = list.filter((item) => item.wins > 0);
+    const filteredList = list.filter((item) => item.wins > 0);
 
-    let embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard")
+    const embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now());
 
     let str = "";
 
-    let len = Math.min(filteredList.length, 24);
+    const len = Math.min(filteredList.length, 24);
     for(let i = 0; i < len; i++) {
         str += `${i + 1}) ${filteredList[i].name} - ${filteredList[i].wins}\n`;
     }
@@ -203,10 +203,10 @@ function generateEmbed (list) {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGEmbed () {
-    let alltime = await listUtils.stringLB("wins", 25);
-    let day = await listUtils.stringLBDaily("wins", 25);
+    const alltime = await listUtils.stringLB("wins", 25);
+    const day = await listUtils.stringLBDaily("wins", 25);
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -220,9 +220,9 @@ async function genPGEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genTOKillEmbed () {
-    let alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
+    const alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Throw out leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -235,9 +235,9 @@ async function genTOKillEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGWEmbed () {
-    let week = await listUtils.stringLBDiff("wins", 25, "weekly");
+    const week = await listUtils.stringLBDiff("wins", 25, "weekly");
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -250,9 +250,9 @@ async function genPGWEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGMEmbed () {
-    let month = await listUtils.stringLBDiff("wins", 25, "monthly");
+    const month = await listUtils.stringLBDiff("wins", 25, "monthly");
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Party games leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -265,10 +265,10 @@ async function genPGMEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSEmbed () {
-    let alltime = await listUtils.stringLB("hypixelSaysWins", 25);
-    let day = await listUtils.stringLBDaily("hypixelSaysWins", 25);
+    const alltime = await listUtils.stringLB("hypixelSaysWins", 25);
+    const day = await listUtils.stringLBDaily("hypixelSaysWins", 25);
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Hypixel says leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -282,9 +282,9 @@ async function genHSEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSWEmbed () {
-    let week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
+    const week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Hypixel says leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -297,9 +297,9 @@ async function genHSWEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSMEmbed () {
-    let month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
+    const month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle("Hypixel says leaderboards")
         .setColor(0x44a3e7)
         .setTimestamp(Date.now())
@@ -363,7 +363,7 @@ function rcb (n) {
  * @returns {Account[]}
  */
 async function hackerTransformer (list) {
-    let hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
+    const hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
     let filteredList = list.filter((a) => !hackerlist.includes(a.uuid));
     filteredList = filteredList.filter((a) => a != {});
     filteredList = filteredList.filter((a) => a.name != undefined);
@@ -524,13 +524,13 @@ async function getLB (prop, timetype, limit) {
         let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
         let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
         let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-        let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+        const life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
 
         day = day == "" ? "Nobody has won" : day;
         week = week == "" ? "Nobody has won" : week;
         month = month == "" ? "Nobody has won" : month;
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor(0x984daf)
             .addField("Daily", day, true)
             .addField("Weekly", week, true)
@@ -550,7 +550,7 @@ async function getLB (prop, timetype, limit) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time)
+    const embed = new MessageEmbed().setTitle(time)
         .setColor(0xc60532)
         .setDescription(res);
 
@@ -567,7 +567,7 @@ async function getLB (prop, timetype, limit) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
         while(resArr.length > 0) {
-            let end = Math.min(25, resArr.length);
+            const end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
         }
@@ -597,8 +597,8 @@ function formatNum (number) {
  *
  */
 async function sendMW () {
-    let run = Runtime.fromJSON();
-    let {mwMsg} = run;
+    const run = Runtime.fromJSON();
+    const {mwMsg} = run;
 
     let guildlist = await utils.readJSON("guild.json");
     guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
@@ -606,34 +606,34 @@ async function sendMW () {
     let str = "";
     guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
     for(let i = 0; i < Math.min(10, guildlist.length); i++) {
-        let g = guildlist[i];
+        const g = guildlist[i];
         str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
     }
 
-    let gEmbed = new MessageEmbed()
+    const gEmbed = new MessageEmbed()
         .setTitle("Lifetime Guild Wins")
         .setDescription(str)
         .setColor(0xc60532);
 
-    let wins = await getMW("miniWallsWins", 25);
-    let kills = await getMW("kills", 10);
-    let finals = await getMW("finalKills", 10);
-    let witherdmg = await getMW("witherDamage", 10);
-    let witherkills = await getMW("witherKills", 10);
-    let guilds = gEmbed;
+    const wins = await getMW("miniWallsWins", 25);
+    const kills = await getMW("kills", 10);
+    const finals = await getMW("finalKills", 10);
+    const witherdmg = await getMW("witherDamage", 10);
+    const witherkills = await getMW("witherKills", 10);
+    const guilds = gEmbed;
 
     wins.setTitle("Lifetime Wins");
     kills.setTitle("Lifetime Kills");
     finals.setTitle("Lifetime Finals");
     witherdmg.setTitle("Lifetime Wither Damage");
     witherkills.setTitle("Lifetime Wither Kills");
-    let hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
+    const hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
     try {
         await hook.deleteMessage(mwMsg);
     } catch (e) {
         logger.err(e);
     }
-    let newMsg = await hook.send({
+    const newMsg = await hook.send({
         embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
         username: config.otherHooks.MW.username,
         avatarURL: config.otherHooks.MW.pfp,

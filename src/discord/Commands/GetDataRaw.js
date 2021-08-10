@@ -16,9 +16,9 @@ function getProp (o, s) {
     let str = s;
     str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
     str = str.replace(/^\./, ""); // strip a leading dot
-    var a = str.split(".");
-    for(var i = 0, n = a.length; i < n; ++i) {
-        var k = a[i];
+    const a = str.split(".");
+    for(let i = 0, n = a.length; i < n; ++i) {
+        const k = a[i];
         if(k in obj) {
             obj = obj[k];
         } else {
@@ -29,14 +29,14 @@ function getProp (o, s) {
 }
 
 module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
+    const plr = args[0];
     let acc;
     if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
     } else {
         acc = await InteractionUtils.resolveAccount(interaction);
     }
-    let path = args[args.length - 1];
+    const path = args[args.length - 1];
     let val = getProp(acc, path);
 
     if(typeof val == "number" || typeof val == "boolean") {
@@ -47,7 +47,7 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interacti
         val = Util.inspect(val, true);
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${acc.name}.${path}`)
         .setDescription(val)
         .setColor(0x44a3e7);

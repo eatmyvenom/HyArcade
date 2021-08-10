@@ -84,8 +84,8 @@ async function writeJSON (path, json) {
  * @param {object} json
  */
 async function writeDB (path, json) {
-    let data = JSON.stringify(json);
-    let url = new URL("db", cfg.dbUrl);
+    const data = JSON.stringify(json);
+    const url = new URL("db", cfg.dbUrl);
     url.searchParams.set("path", path);
     logger.debug(`Writing to ${path} in database`);
 
@@ -110,8 +110,8 @@ async function writeDB (path, json) {
  */
 async function readDB (file) {
     let fileData;
-    let url = new URL("db", cfg.dbUrl);
-    let path = `${file}`;
+    const url = new URL("db", cfg.dbUrl);
+    const path = `${file}`;
     url.searchParams.set("path", path);
     logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
@@ -152,7 +152,7 @@ function fileExists (path) {
  * @param {string} timetype the way of specifying this file
  */
 async function archiveJson (oldfile, path, timetype) {
-    let old = JSON.parse(await fs.readFile(`data/${oldfile}.json`));
+    const old = JSON.parse(await fs.readFile(`data/${oldfile}.json`));
     await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
 
     if(fs.existsSync(`data/${oldfile}.bson`)) {
@@ -175,7 +175,7 @@ function getKeyByValue (object, value) {
     return Object.keys(object).find((key) => object[key] === value);
 }
 
-let defaultAllowed = Config.fromJSON().discord.trustedUsers;
+const defaultAllowed = Config.fromJSON().discord.trustedUsers;
 
 module.exports = {
     archiveJson: archiveJson,

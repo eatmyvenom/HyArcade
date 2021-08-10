@@ -10,7 +10,7 @@ const EmojiGetter = require("../Formatting/EmojiGetter");
  * @returns {number}
  */
 function formatR (n) {
-    let r = (Math.round(n * 100) / 100) ?? 0.0;
+    const r = (Math.round(n * 100) / 100) ?? 0.0;
     return r;
 }
 
@@ -40,7 +40,7 @@ module.exports = class AdvancedEmbeds {
      * @returns {MessageEmbed}
      */
     static compareStats (acc1, acc2, game, hasPerms) {
-        let embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`)
+        const embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`)
             .setColor(0xbb00dd);
 
         let side1 = "";
@@ -655,14 +655,14 @@ module.exports = class AdvancedEmbeds {
     }
 
     static async getStats (acc, game, hasPerms = false) {
-        let thumbURL = `https://crafatar.com/renders/body/${acc.uuid}?overlay`;
+        const thumbURL = `https://crafatar.com/renders/body/${acc.uuid}?overlay`;
 
         let lvl = Math.round(acc.level * 100) / 100;
         lvl = `${lvl}`;
         let gamename = "";
         let title = "";
 
-        let fields = [];
+        const fields = [];
 
         switch(game.toLowerCase()) {
         case "12":
@@ -1194,7 +1194,7 @@ module.exports = class AdvancedEmbeds {
             .replace(/undefined/g, "");
         rank = rank == "" ? "" : `[${rank}]`;
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle(`:mag_right: ${title} stats`)
             .setAuthor(`${rank} ${acc.name}`, null, `https://hyarcade.xyz/player.html?q=${acc.name}`)
             .setThumbnail(thumbURL)
@@ -1215,7 +1215,7 @@ module.exports = class AdvancedEmbeds {
      * @returns {MessageEmbed}
      */
     static playerLink (ign, user) {
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle("Success")
             .setColor(0x00cc66)
             .setDescription(`<@${user.id}> was linked as ${ign}`)

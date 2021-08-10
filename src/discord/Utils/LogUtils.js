@@ -17,8 +17,8 @@ module.exports = class LogUtils {
      * @param {Message} msg 
      */
     static async logIgns (msg) {
-        let channelID = msg.channel.id;
-        for(let c of cfg.discord.listenChannels) {
+        const channelID = msg.channel.id;
+        for(const c of cfg.discord.listenChannels) {
             if(channelID == c) {
                 await LogUtils.logcopy(msg, Webhooks.ignHook);
             }
@@ -31,7 +31,7 @@ module.exports = class LogUtils {
      * @param {Webhook} hook 
      */
     static async logcopy (msg, hook) {
-        let pfp = msg.author.avatarURL();
+        const pfp = msg.author.avatarURL();
         let name = "unknown";
         if(msg.member) {
             name = msg.member.displayName;

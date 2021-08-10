@@ -34,7 +34,7 @@ module.exports = class hypixelAPI {
      * @returns {string} raw data from hypixel api
      */
     static async getData (url) {
-        let apiPoint = new hypixelReq(url);
+        const apiPoint = new hypixelReq(url);
         let response = await apiPoint.makeRequest();
 
         // Hypixel api put the amount of time you have to wait
@@ -69,7 +69,7 @@ module.exports = class hypixelAPI {
             }
         }
 
-        let data = await hypixelAPI.getData(url);
+        const data = await hypixelAPI.getData(url);
         return data;
     }
 
@@ -109,9 +109,9 @@ module.exports = class hypixelAPI {
      * @returns {object} the raw account data
      */
     static async getAccountData (uuid) {
-        let data = await hypixelAPI.getAccountDataRaw(uuid);
+        const data = await hypixelAPI.getAccountDataRaw(uuid);
         try {
-            let json = JSON.parse(data);
+            const json = JSON.parse(data);
             return json;
         } catch (e) {
             logger.err("Hypixel sent malformed json");
@@ -121,9 +121,9 @@ module.exports = class hypixelAPI {
     }
 
     static async getStatus (uuid) {
-        let data = await hypixelAPI.getStatusRAW(uuid);
+        const data = await hypixelAPI.getStatusRAW(uuid);
         try {
-            let json = JSON.parse(data);
+            const json = JSON.parse(data);
             return json;
         } catch (e) {
             logger.err("Hypixel sent malformed json");
@@ -133,9 +133,9 @@ module.exports = class hypixelAPI {
     }
 
     static async getBoosters () {
-        let data = await hypixelAPI.basicRequest("boosters");
+        const data = await hypixelAPI.basicRequest("boosters");
         try {
-            let json = JSON.parse(data);
+            const json = JSON.parse(data);
             return json;
         } catch (e) {
             logger.err("Hypixel sent malformed json");
@@ -196,12 +196,12 @@ module.exports = class hypixelAPI {
      * @returns {number} the total party games wins
      */
     static async getAccountWins (uuid) {
-        let json = await hypixelAPI.getAccountData(uuid);
+        const json = await hypixelAPI.getAccountData(uuid);
         // make sure player has stats to be checked
         if(!json.player || !json.player.stats || !json.player.stats.Arcade) {
             return 0;
         }
-        let arcade = json.player.stats.Arcade;
+        const arcade = json.player.stats.Arcade;
         let wins = 0;
         if(arcade.wins_party) wins += arcade.wins_party;
         if(arcade.wins_party_2) wins += arcade.wins_party_2;
@@ -217,8 +217,8 @@ module.exports = class hypixelAPI {
      * @returns {object} the Object status of the player
      */
     static async getUUIDStatus (uuid) {
-        let raw = await hypixelAPI.getStatusRAW(uuid);
-        let json = JSON.parse(raw);
+        const raw = await hypixelAPI.getStatusRAW(uuid);
+        const json = JSON.parse(raw);
         return json.session;
     }
 
@@ -236,12 +236,12 @@ module.exports = class hypixelAPI {
      * @returns {object} Object with counts of players in various hypixel games
      */
     static async getGameCounts () {
-        let data = await hypixelAPI.getGameCountsRAW();
+        const data = await hypixelAPI.getGameCountsRAW();
         return JSON.parse(data);
     }
 
     static async getLeaderboards () {
-        let data = await hypixelAPI.getLeaderboardsRAW();
+        const data = await hypixelAPI.getLeaderboardsRAW();
         return JSON.parse(data);
     }
 };

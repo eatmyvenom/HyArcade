@@ -19,7 +19,7 @@ async function getFromHypixel (string, interaction) {
     }
     logger.info("Unable to resolve, getting by ign from hypixel.");
 
-    let plr = string;
+    const plr = string;
     let uuid;
     if(plr?.length > 17) {
         uuid = plr;
@@ -27,7 +27,7 @@ async function getFromHypixel (string, interaction) {
         uuid = await mojangRequest.getUUID(plr);
     }
 
-    let acc = new Account("", 0, `${uuid}`);
+    const acc = new Account("", 0, `${uuid}`);
     await acc.updateData();
     return acc;
 }
@@ -39,13 +39,13 @@ async function getFromHypixel (string, interaction) {
  * @returns {Account}
  */
 module.exports = async function resolveAccount (interaction, namearg = "player") {
-    let str = interaction.options.getString(namearg, false);
+    const str = interaction.options.getString(namearg, false);
     if(BotUtils.botMode == "mini") {
         return await getFromHypixel(str, interaction);
     }
 
-    let url = new URL("account", cfg.dbUrl);
-    let urlArgs = url.searchParams;
+    const url = new URL("account", cfg.dbUrl);
+    const urlArgs = url.searchParams;
     if(str?.length == 32) {
         urlArgs.set("uuid", str.toLowerCase());
     } else if(str?.length == 36) {

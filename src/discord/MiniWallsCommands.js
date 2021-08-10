@@ -1,6 +1,6 @@
-let linkCmd = require("./Commands/Link");
-let timeUpdateCmd = require("./Commands/LastUpdate");
-let InfoCmd = require("./Commands/Info");
+const linkCmd = require("./Commands/Link");
+const timeUpdateCmd = require("./Commands/LastUpdate");
+const InfoCmd = require("./Commands/Info");
 const logger = require("hyarcade-logger");
 const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
@@ -38,7 +38,7 @@ async function execute (msg, senderID) {
                 embed: ERROR_API_DOWN
             };
         }
-        let cmdArr = msg.content.slice(1).split(" ");
+        const cmdArr = msg.content.slice(1).split(" ");
         return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     }
     return {

@@ -21,15 +21,15 @@ const {
  * @returns {string[]} files changed by this task
  */
 async function accs () {
-    let acclist = await lists.accounts();
+    const acclist = await lists.accounts();
     accounts = await dataGen.updateAllAccounts(acclist);
-    let old = await utils.readDB("accounts");
+    const old = await utils.readDB("accounts");
     old.sort(winsSorter);
     accounts.sort(winsSorter);
 
     try {
         if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-            let ED = new EventDetector(old, accounts);
+            const ED = new EventDetector(old, accounts);
             await ED.runDetection();
             await ED.logEvents();
             await ED.sendEvents();
@@ -49,7 +49,7 @@ async function accs () {
  * @returns {string[]} files changed by this task
  */
 async function plrs () {
-    let players = await lists.players(accounts);
+    const players = await lists.players(accounts);
     await Promise.all(
         players.map(async (player) => {
             await player.updateWins();
@@ -67,7 +67,7 @@ async function plrs () {
  * @returns {string[]} files changed by this task
  */
 async function glds () {
-    let guilds = await lists.guilds(accounts);
+    const guilds = await lists.guilds(accounts);
     await Promise.all(
         guilds.map(async (guild) => {
             await guild.updateWins();

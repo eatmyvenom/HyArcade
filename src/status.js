@@ -1,10 +1,10 @@
 const {
     getUUIDStatus
 } = require("./hypixelApi");
-let {
+const {
     accounts
 } = require("./listParser").accounts;
-let rawstatus = {};
+const rawstatus = {};
 
 /**
  * Format status for arcade games
@@ -68,7 +68,7 @@ async function genStatus (name, status) {
     }
 
     // this hack exists because no proper formatter in js
-    let pname = (`${name.slice(0, 1).toUpperCase() + name.slice(1)}                        `).slice(0, 17);
+    const pname = (`${name.slice(0, 1).toUpperCase() + name.slice(1)}                        `).slice(0, 17);
 
     // make sure player is online so we dont log a shit ton
     // of offline players doing nothing
@@ -126,10 +126,10 @@ async function genStatus (name, status) {
  */
 async function txtStatus (uuid) {
     // unfortunately this cant be shortcut
-    let status = await getUUIDStatus(uuid);
+    const status = await getUUIDStatus(uuid);
     // store this in a json file in case i need it later
     rawstatus[uuid] = status;
-    let oldver = accounts.find((acc) => acc.uuid == uuid);
+    const oldver = accounts.find((acc) => acc.uuid == uuid);
     if(oldver) {
         return await genStatus(oldver.name, status);
     }

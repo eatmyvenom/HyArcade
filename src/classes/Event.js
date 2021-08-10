@@ -57,7 +57,7 @@ class AccountEvent {
         if(this.type == "PG") {
             await Webhook.sendBasic(this.toString(), config.events[this.type].webhook);
         } else if(this.type == "HITWPB") {
-            let embed = await this.getHitWEmbed();
+            const embed = await this.getHitWEmbed();
             await Webhook.sendBasicEmbed("", [embed], config.events.HITW.webhook);
         } else if(this.type == "HITW") {
             await Webhook.sendBasic(this.toString(), config.events.HITW.webhook);
@@ -69,12 +69,12 @@ class AccountEvent {
     }
 
     async getHitWEmbed () {
-        let avatar =
+        const avatar =
             `https://crafatar.com/renders/body/${this.uuid}.png?size=512&default=MHF_Steve&scale=10&overlay`;
 
-        let thumb = `https://crafatar.com/avatars/${this.uuid}.png?size=512?default=MHF_Steve&scale=10&overlay`;
+        const thumb = `https://crafatar.com/avatars/${this.uuid}.png?size=512?default=MHF_Steve&scale=10&overlay`;
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setAuthor(this.name, thumb)
             .setThumbnail(avatar)
             .setFooter(`UUID: ${this.uuid}`)

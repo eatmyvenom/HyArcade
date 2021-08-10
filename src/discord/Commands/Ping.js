@@ -6,7 +6,7 @@ const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
 const TimeFormatter = require("../Utils/Formatting/TimeFormatter");
 
-let statusName = [
+const statusName = [
     "READY",
     "CONNECTING",
     "RECONNECTING",
@@ -19,7 +19,7 @@ let statusName = [
 ];
 
 module.exports = new Command("ping", ["*"], async () => {
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setAuthor(`${BotUtils.client.user.username} status`, BotUtils.client.user.avatarURL(), "https://hyarcade.xyz/")
         .addField(
             "Status",

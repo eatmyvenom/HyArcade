@@ -61,17 +61,17 @@ class Guild {
      * @memberof Guild
      */
     async updateMemberData () {
-        let data = await this.getGuild();
+        const data = await this.getGuild();
         this.name = data?.guild?.name ?? "INVALID-NAME";
         this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
         this.gxp = data?.guild?.exp ?? 0;
         this.color = data?.guild?.tagColor ?? "GREY";
         this.tag = data?.guild?.tag ?? "NONE";
 
-        let gmembers = data?.guild?.members ?? [];
+        const gmembers = data?.guild?.members ?? [];
         for(let i = 0; i < gmembers.length; i++) {
             // find a corrosponding account in my account list
-            let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
+            const gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
             // dont add empty accounts
             if(gamer != undefined) {
                 this.memberUUIDs.push(gamer.uuid);
@@ -99,7 +99,7 @@ class Guild {
     async updateWins () {
         await this.updateMemberData();
         for(let i = 0; i < this.members.length; i++) {
-            let member = this.members[i];
+            const member = this.members[i];
             this.wins += member.wins;
             this.arcadeCoins += member.arcadeCoins;
             this.combinedAP += member.achievementPoints;

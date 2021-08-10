@@ -11,8 +11,8 @@ const Logger = require("hyarcade-logger");
  */
 async function formatCounts () {
     let str = "";
-    let all = await getGameCounts();
-    let counts = all.games;
+    const all = await getGameCounts();
+    const counts = all.games;
 
     str += `Arcade Total        : ${counts.ARCADE.players}\n`;
     str += `Party Games Total   : ${counts.ARCADE.modes.PARTY}\n`;

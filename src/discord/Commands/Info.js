@@ -5,7 +5,7 @@ const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
 module.exports = new Command("info", ["*"], async () => {
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${BotUtils.client.user.username} info`)
         .setDescription("A discord bot to allow you to get the stats and info from arcade games and arcade players!")
         .setThumbnail(BotUtils.client.user.avatarURL())

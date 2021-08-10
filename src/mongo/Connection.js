@@ -1,10 +1,10 @@
 const {MongoClient} = require("mongodb");
 const cfg = require("../Config").fromJSON();
-let url = cfg.dbURL;
+const url = cfg.dbURL;
 const MongoUtils = require("./MongoUtils");
 
 module.exports = async function connect () {
-    let cli = await MongoClient.connect(url, {
+    const cli = await MongoClient.connect(url, {
         useUnifiedTopology: true
     });
     MongoUtils.client = cli;

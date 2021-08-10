@@ -3,7 +3,7 @@ const BotUtils = require("../BotUtils");
 const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
-    let channel = args[0];
+    const channel = args[0];
     let text;
     let discChannel;
     if(channel.length == 18 && channel.toLowerCase() == channel.toUpperCase()) {

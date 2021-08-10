@@ -82,7 +82,7 @@ module.exports = class CommandResponse {
             this.components = [this.components];
         }
 
-        let obj = {
+        const obj = {
             tts: false,
             nonce: undefined,
             ephemeral: this.priv,

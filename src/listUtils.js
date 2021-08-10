@@ -18,16 +18,16 @@ const TimSort = require("timsort");
  */
 async function txtPlayerList (list, maxamnt) {
     let str = "";
-    let len = maxamnt != undefined ? maxamnt : list.length;
+    const len = maxamnt != undefined ? maxamnt : list.length;
     for(let i = 0; i < len; i++) {
         // don't print if player has 0 wins
         if(list[i].wins < 1 && !config.printAllWins) continue;
 
         // this hack is because js has no real string formatting and its
         // not worth it to use wasm or node native for this
-        let num = (`000${i + 1}`).slice(-3);
+        const num = (`000${i + 1}`).slice(-3);
 
-        let name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
+        const name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
             0,
             17
         );
@@ -71,7 +71,7 @@ async function listDiff (name, timetype, maxamnt) {
  * @returns {string} Stringified list
  */
 async function stringNormal (name, maxamnt) {
-    let list = await listNormal(name, maxamnt);
+    const list = await listNormal(name, maxamnt);
     return await txtPlayerList(list);
 }
 
@@ -84,7 +84,7 @@ async function stringNormal (name, maxamnt) {
  * @returns {string} Stringified list
  */
 async function stringDiff (name, timetype, maxamnt) {
-    let list = await listDiff(name, timetype, maxamnt);
+    const list = await listDiff(name, timetype, maxamnt);
     return await txtPlayerList(list, maxamnt);
 }
 
@@ -109,7 +109,7 @@ async function stringDaily (name, maxamnt) {
  * @returns {string} Stringified list
  */
 async function stringLBDiff (lbprop, maxamnt, timetype, category, startingIndex = 0) {
-    let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
+    const list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
     if(category == undefined) {
         TimSort.sort(list, (b, a) => (a[lbprop] ?? 0) - (b[lbprop] ?? 0));
     } else {

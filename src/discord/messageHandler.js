@@ -59,7 +59,7 @@ async function logCmd (msg) {
  */
 async function sendAsHook (hook, cmdResponse) {
     try {
-        let obj = BotUtils.getWebhookObj(cmdResponse.embed);
+        const obj = BotUtils.getWebhookObj(cmdResponse.embed);
         if(cmdResponse.res != "") {
             obj.content = cmdResponse.res;
         }
@@ -82,11 +82,11 @@ async function sendAsHook (hook, cmdResponse) {
  * @returns {null}
  */
 async function miniWallsVerify (msg) {
-    let {tag} = msg.author;
-    let {id} = msg.author;
-    let ign = msg.content.trim();
+    const {tag} = msg.author;
+    const {id} = msg.author;
+    const ign = msg.content.trim();
     if(await isBlacklisted(id)) return;
-    let uuid = await mojangRequest.getUUID(ign);
+    const uuid = await mojangRequest.getUUID(ign);
     if(uuid == undefined) {
         logger.warn("Someone tried to verify as an account that doesn't exist!");
         await msg.channel.send({
@@ -103,11 +103,11 @@ async function miniWallsVerify (msg) {
         };
     }
 
-    let acc = new Account(ign, 0, uuid);
+    const acc = new Account(ign, 0, uuid);
     await acc.updateData();
-    let dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
-    let hackers = await BotUtils.getFromDB("hackerlist");
-    let disclist = await BotUtils.getFromDB("disclist");
+    const dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
+    const hackers = await BotUtils.getFromDB("hackerlist");
+    const disclist = await BotUtils.getFromDB("disclist");
     if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
         logger.warn("Hacker tried to verify!");
         return;
@@ -136,8 +136,8 @@ async function miniWallsVerify (msg) {
  * @param {object} opts
  */
 async function attemptSend (msg, cmdResponse, opts) {
-    let runtime = Runtime.fromJSON();
-    let hooks = await msg.channel.fetchWebhooks();
+    const runtime = Runtime.fromJSON();
+    const hooks = await msg.channel.fetchWebhooks();
     logger.info("Attempting to send response as webhook");
     if(!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
         logger.info("No webhook availiable. Sending normally");
@@ -173,10 +173,10 @@ async function attemptSend (msg, cmdResponse, opts) {
 async function addIGNs (msg) {
     if(cfg.discord.listenChannels.includes(msg.channel.id)) {
         logger.info("IGN channel message detected, automatically adding to database.");
-        let firstWord = msg.content.split(" ")[0];
+        const firstWord = msg.content.split(" ")[0];
         if(!msg.author.bot && isValidIGN(firstWord)) {
-            let acclist = await BotUtils.getFromDB("acclist");
-            let category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
+            const acclist = await BotUtils.getFromDB("acclist");
+            const category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
             logger.out(firstWord);
             Webhooks.logHook.send(`Attempting to add "\`${firstWord}\`" to database.`);
             await addAccounts(category, [firstWord]);
@@ -255,11 +255,11 @@ async function isBlacklisted (id) {
  * @param {CommandResponse} cmdResponse 
  */
 async function sendText (msg, cmdResponse) {
-    let runtime = Runtime.fromJSON();
+    const runtime = Runtime.fromJSON();
     if(runtime.bot != "backup") {
         logger.info("No webhook availiable. Sending normally");
         try {
-            let msgObj = cmdResponse.toDiscord({
+            const msgObj = cmdResponse.toDiscord({
                 messageReference: msg.id
             });
             await msg.channel.send(msgObj);
@@ -290,7 +290,7 @@ async function sendNormal (msg, cmdResponse) {
     logger.info("Attempting to send response as webhook");
 
     if(hooks.size > 0) {
-        let hook = hooks.first();
+        const hook = hooks.first();
         try {
             await hook.send(cmdResponse.toDiscord(undefined, true));
         } catch (e) {
@@ -305,8 +305,8 @@ async function sendNormal (msg, cmdResponse) {
  * @param {Message} msg
  */
 async function mwMode (msg) {
-    let cmdResponse = await getMWCmdRes(msg);
-    let isValidResponse =
+    const cmdResponse = await getMWCmdRes(msg);
+    const isValidResponse =
         cmdResponse != undefined &&
         cmdResponse.res != undefined &&
         (cmdResponse.res != "" || cmdResponse.embed != undefined || cmdResponse.img != undefined);
@@ -314,7 +314,7 @@ async function mwMode (msg) {
         if(await isBlacklisted(msg.author.id)) {
             return;
         }
-        let opts = {};
+        const opts = {};
         if(cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }
@@ -351,7 +351,7 @@ async function handleCommand (msg, cmdResponse, isDiscordResponse) {
             await sendNormal(msg, cmdResponse);
         }
     } else {
-        let opts = {};
+        const opts = {};
         if(cmdResponse.embed) {
             opts.embed = cmdResponse.embed;
         }

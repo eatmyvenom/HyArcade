@@ -22,8 +22,8 @@ const {logger} = utils;
  *
  */
 async function newAcc () {
-    let category = args[args.length - 1];
-    let nameArr = args.slice(3, -1);
+    const category = args[args.length - 1];
+    const nameArr = args.slice(3, -1);
     await addAccounts(category, nameArr);
 }
 
@@ -31,13 +31,13 @@ async function newAcc () {
  * @param {object} database
  */
 async function mNewAcc (database) {
-    let player = args[3];
+    const player = args[3];
     let uuid = player;
     if(player.length < 16) {
         uuid = await mojangRequest.getUUID(player);
     }
 
-    let acc = new Account(player, 0, uuid);
+    const acc = new Account(player, 0, uuid);
     await acc.updateData();
     await AccountCreator(database, acc);
 }
@@ -46,13 +46,13 @@ async function mNewAcc (database) {
  *
  */
 async function linkDiscord () {
-    let player = args[3];
-    let discord = args[4];
+    const player = args[3];
+    const discord = args[4];
     let uuid = player;
     if(player.length < 16) {
         uuid = await mojangRequest.getUUID(player);
     }
-    let disclist = await utils.readJSON("./disclist.json");
+    const disclist = await utils.readJSON("./disclist.json");
     disclist[discord] = uuid;
     await utils.writeJSON("./disclist.json", disclist);
 }
@@ -62,11 +62,11 @@ async function linkDiscord () {
  *
  */
 async function moveAcc () {
-    let oldName = args[3];
-    let oldCategory = args[4];
-    let newCategory = args[5];
-    let acclist = await utils.readJSON("../acclist.json");
-    let oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
+    const oldName = args[3];
+    const oldCategory = args[4];
+    const newCategory = args[5];
+    const acclist = await utils.readJSON("../acclist.json");
+    const oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
 
     if(oldVer) {
         acclist[newCategory].push(oldVer);
@@ -82,17 +82,17 @@ async function moveAcc () {
  *
  */
 async function newPlayer () {
-    let name = args[3];
-    let alts = args.slice(4);
+    const name = args[3];
+    const alts = args.slice(4);
 
     // construct object
-    let playerObj = {
+    const playerObj = {
         name: name,
         accs: alts
     };
 
     // add object to list
-    let plrlist = await utils.readJSON("../playerlist.json");
+    const plrlist = await utils.readJSON("../playerlist.json");
     plrlist.push(playerObj);
 
     // write new list
@@ -105,21 +105,21 @@ async function newPlayer () {
  *
  */
 async function newGuild () {
-    let playerUUID = args[3];
+    const playerUUID = args[3];
 
     // get data from hypixel
-    let gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
+    const gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
 
     // create the actual guild object
-    let id = gldInfo.guild._id;
-    let {name} = gldInfo.guild;
-    let gldObj = {
+    const id = gldInfo.guild._id;
+    const {name} = gldInfo.guild;
+    const gldObj = {
         id: id,
         name: name
     };
 
     // add object to list
-    let gldLst = await utils.readJSON("../guildlist.json");
+    const gldLst = await utils.readJSON("../guildlist.json");
     gldLst.push(gldObj);
 
     // write new list
@@ -150,12 +150,12 @@ async function logDaily (name) {
  *
  */
 async function checkNames () {
-    let acclist = await utils.readJSON("./acclist.json");
-    let realAccs = await utils.readJSON("./accounts.json");
+    const acclist = await utils.readJSON("./acclist.json");
+    const realAccs = await utils.readJSON("./accounts.json");
 
-    for(let list in acclist) {
-        for(let acc of acclist[list]) {
-            let real = realAccs.find((a) => a.uuid == acc.uuid);
+    for(const list in acclist) {
+        for(const acc of acclist[list]) {
+            const real = realAccs.find((a) => a.uuid == acc.uuid);
             if(real != undefined && acc.name != real.name) {
                 logger.out(`${acc.name} -> ${real.name}`);
                 acc.name = real.name;
@@ -173,8 +173,8 @@ async function checkNames () {
  * @param {string[]} args
  */
 async function log (args) {
-    let logName = args[3];
-    let str = await stringNormal(logName);
+    const logName = args[3];
+    const str = await stringNormal(logName);
 
     logger.out(str);
 }
@@ -185,8 +185,8 @@ async function log (args) {
  * @param {string[]} args
  */
 async function logD (args) {
-    let logName = args[3];
-    let str = await stringDaily(logName);
+    const logName = args[3];
+    const str = await stringDaily(logName);
 
     logger.out(str);
 }
@@ -197,8 +197,8 @@ async function logD (args) {
  * @param {string[]} args
  */
 async function getUUIDCli (args) {
-    let name = args[3];
-    let uuid = await mojangRequest.getUUIDRaw(name);
+    const name = args[3];
+    const uuid = await mojangRequest.getUUIDRaw(name);
     logger.out(`${name}'s uuid is ${uuid}`);
 }
 
@@ -206,7 +206,7 @@ async function getUUIDCli (args) {
  * @param {string[]} args
  */
 async function addGuildMembers (args) {
-    let uuid = args[3];
+    const uuid = args[3];
     await dataGeneration.addGuild(uuid);
 }
 
@@ -214,7 +214,7 @@ async function addGuildMembers (args) {
  * @param {string[]} args
  */
 async function addGIDMembers (args) {
-    let uuid = args[3];
+    const uuid = args[3];
     await dataGeneration.addGuildID(uuid);
 }
 
@@ -222,18 +222,18 @@ async function addGIDMembers (args) {
  * @returns {object}
  */
 async function getServerStatus () {
-    let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
-    let hyStatus = JSON.parse(hyStatusRaw.data);
-    let mojangStatusRaw = await webRequest("https://status.mojang.com/check");
-    let mojangStatus = JSON.parse(mojangStatusRaw.data);
-    let runtime = Runtime.fromJSON();
-    let mwBot = runtime.mwHeartBeat;
-    let arcadeBot = runtime.undefinedHeartBeat;
-    let marcadeBot = runtime.miniHeartBeat;
-    let interactions = runtime.slashHeartBeat;
-    let database = runtime.dbERROR;
+    const hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
+    const hyStatus = JSON.parse(hyStatusRaw.data);
+    const mojangStatusRaw = await webRequest("https://status.mojang.com/check");
+    const mojangStatus = JSON.parse(mojangStatusRaw.data);
+    const runtime = Runtime.fromJSON();
+    const mwBot = runtime.mwHeartBeat;
+    const arcadeBot = runtime.undefinedHeartBeat;
+    const marcadeBot = runtime.miniHeartBeat;
+    const interactions = runtime.slashHeartBeat;
+    const database = runtime.dbERROR;
 
-    let obj = {
+    const obj = {
         Hypixel: hyStatus.status.indicator,
         MSession: mojangStatus[1]["session.minecraft.net"],
         MAcc: mojangStatus[2]["account.mojang.com"],

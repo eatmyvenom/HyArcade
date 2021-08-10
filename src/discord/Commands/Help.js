@@ -12,7 +12,7 @@ module.exports = new Command("help", ["*"], async () => {
         desc = "Read about how to use the arcade bot [here](https://docs.hyarcade.xyz/Bot-Commands)";
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${BotUtils.client.user.username} help`)
         .setDescription(desc)
         .setThumbnail(BotUtils.client.user.avatarURL())

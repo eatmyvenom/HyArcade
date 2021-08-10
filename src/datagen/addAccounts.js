@@ -16,12 +16,12 @@ const {
 module.exports = async function addAccounts (category, names) {
     let res = "";
     let acclist = await utils.readDB("acclist");
-    let newAccs = [];
+    const newAccs = [];
     if(acclist[category] == undefined) {
         logger.err("Please input a valid category!");
         return "Please input a valid category!";
     }
-    let nameArr = names;
+    const nameArr = names;
     for(let name of nameArr) {
         let uuid;
         if(name.length == 32 || name.length == 36) {
@@ -50,9 +50,9 @@ module.exports = async function addAccounts (category, names) {
             continue;
         }
 
-        let acc = new Account("", 0, uuid);
+        const acc = new Account("", 0, uuid);
         await acc.updateHypixel();
-        let {wins} = acc;
+        const {wins} = acc;
         name = acc.name;
 
         if(wins < 50 && category == "gamers") {
@@ -63,11 +63,11 @@ module.exports = async function addAccounts (category, names) {
             res += `${name} with ${acc.arcadeWins} wins added.\n`;
         }
     }
-    let oldAccounts = await utils.readDB("accounts");
-    let fullNewAccounts = oldAccounts.concat(newAccs);
+    const oldAccounts = await utils.readDB("accounts");
+    const fullNewAccounts = oldAccounts.concat(newAccs);
     acclist = await utils.readDB("acclist");
-    for(let acc of newAccs) {
-        let lilAcc = {
+    for(const acc of newAccs) {
+        const lilAcc = {
             name: acc.name,
             wins: acc.wins,
             uuid: acc.uuid

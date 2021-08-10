@@ -10,7 +10,7 @@ module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
      */
     let hackers = await BotUtils.getFromDB("hackerlist");
 
-    let operation = args[0];
+    const operation = args[0];
 
     if(operation == undefined) {
         return {

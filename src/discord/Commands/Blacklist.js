@@ -11,7 +11,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
      */
     let blacklist = await BotUtils.getFromDB("blacklist");
 
-    let operation = args[0];
+    const operation = args[0];
 
     if(operation == undefined) {
         return {

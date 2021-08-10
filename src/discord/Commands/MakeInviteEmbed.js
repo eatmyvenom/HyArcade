@@ -18,10 +18,10 @@ function makeField (name, link) {
 }
 
 module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
-    let channelID = args[0];
-    let msgID = args[1];
-    let channel = await BotUtils.client.channels.fetch(channelID);
-    let embed = new MessageEmbed()
+    const channelID = args[0];
+    const msgID = args[1];
+    const channel = await BotUtils.client.channels.fetch(channelID);
+    const embed = new MessageEmbed()
         .setTitle("Arcade servers")
         .setDescription("List of other arcade discord servers")
         .setColor(0x2f3136)
@@ -54,7 +54,7 @@ module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
             embed: embed
         });
     } else {
-        let message = await channel.messages.fetch(msgID);
+        const message = await channel.messages.fetch(msgID);
         await message.edit(embed);
     }
     return {

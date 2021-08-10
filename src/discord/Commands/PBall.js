@@ -16,20 +16,20 @@ const {
  * @returns {string}
  */
 function numberify (n) {
-    let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
+    const r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     return r;
 }
 
 module.exports = new Command("paintball", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
-    let uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
+    const plr = args[0];
+    const uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
     if(uuid == undefined) {
         return new CommandResponse("", ERROR_IGN_UNDEFINED);
     }
     await interaction.defer();
-    let acc = await HypixelApi.player(uuid);
-    let data = acc.player;
-    let embed = new MessageEmbed()
+    const acc = await HypixelApi.player(uuid);
+    const data = acc.player;
+    const embed = new MessageEmbed()
         .setTitle(`${data.displayname} Paintball stats`)
         .addField("-----Overall stats-----",
             `**Wins** - ${numberify(data?.stats?.Paintball?.wins ?? 0)}\n` +

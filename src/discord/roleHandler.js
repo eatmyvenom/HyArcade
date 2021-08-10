@@ -3,8 +3,8 @@ const RoleUpdater = require("./RoleUpdater");
 const logger = require("hyarcade-logger");
 
 module.exports = async function roleHandler (client) {
-    let pgGuild = await client.guilds.fetch("741719121456267319");
-    let PG = new RoleUpdater(
+    const pgGuild = await client.guilds.fetch("741719121456267319");
+    const PG = new RoleUpdater(
         pgGuild,
         [
             new Role(7000, "839367531747344404"),
@@ -26,8 +26,8 @@ module.exports = async function roleHandler (client) {
         "wins"
     );
 
-    let hsGuild = await client.guilds.fetch("846141095448150018");
-    let HS = new RoleUpdater(
+    const hsGuild = await client.guilds.fetch("846141095448150018");
+    const HS = new RoleUpdater(
         hsGuild,
         [
             new Role(20000, "846141095719993373"),
@@ -51,8 +51,8 @@ module.exports = async function roleHandler (client) {
         "hypixelSaysWins"
     );
 
-    let toGuild = await client.guilds.fetch("809959535174352946");
-    let TO = new RoleUpdater(
+    const toGuild = await client.guilds.fetch("809959535174352946");
+    const TO = new RoleUpdater(
         toGuild,
         [
             new Role(1000, "815629891034546216"),
@@ -64,8 +64,8 @@ module.exports = async function roleHandler (client) {
         "throwOutWins"
     );
 
-    let simGuild = await client.guilds.fetch("826906189404176415");
-    let SIM = new RoleUpdater(
+    const simGuild = await client.guilds.fetch("826906189404176415");
+    const SIM = new RoleUpdater(
         simGuild,
         [
             new Role(5000, "826929696443859014"),
@@ -78,8 +78,8 @@ module.exports = async function roleHandler (client) {
         "simTotal"
     );
 
-    let fhGuild = await client.guilds.fetch("810614388612136960");
-    let FH = new RoleUpdater(
+    const fhGuild = await client.guilds.fetch("810614388612136960");
+    const FH = new RoleUpdater(
         fhGuild,
         [
             new Role(12000, "812397910758916096"),
@@ -104,8 +104,8 @@ module.exports = async function roleHandler (client) {
         "farmhuntWins"
     );
 
-    let hnsGuild = await client.guilds.fetch("839842177755775026");
-    let HNS = new RoleUpdater(
+    const hnsGuild = await client.guilds.fetch("839842177755775026");
+    const HNS = new RoleUpdater(
         hnsGuild,
         [
             new Role(10000, "839874994225545256"),
@@ -119,7 +119,7 @@ module.exports = async function roleHandler (client) {
         ],
         "hideAndSeekWins"
     );
-    let HNSK = new RoleUpdater(
+    const HNSK = new RoleUpdater(
         hnsGuild,
         [
             new Role(40000, "847464019497320499"),

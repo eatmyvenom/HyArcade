@@ -5,8 +5,8 @@ const {
 
 module.exports = class MenuGenerator {
     static statsMenu (uuid) {
-        let row = new MessageActionRow();
-        let menu = new MessageSelectMenu()
+        const row = new MessageActionRow();
+        const menu = new MessageSelectMenu()
             .setMaxValues(1)
             .setMinValues(1)
             .setCustomId(`s:${uuid}:menu`)

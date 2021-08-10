@@ -46,16 +46,16 @@ module.exports = async (interaction) => {
         logger.debug("ECMA modules are null, they need to be added!");
         logger.info("Initializing ECMA modules");
         Commands = {};
-        let {
+        const {
             Profile
         } = await import("../Commands/Profile.mjs");
-        let {
+        const {
             WhoIS
         } = await import("../Commands/WhoIS.mjs");
-        let {
+        const {
             Verify
         } = await import("../Commands/LinkMe.mjs");
-        let {
+        const {
             Compare
         } = await import("../Commands/Compare.mjs");
         Commands.Profile = Profile;
@@ -65,12 +65,12 @@ module.exports = async (interaction) => {
     }
 
     if(interaction.guildID == "808077828842455090") return;
-    let authorID = interaction.member.user.id;
-    let opts = interaction.options;
+    const authorID = interaction.member.user.id;
+    const opts = interaction.options;
 
     if(Runtime.fromJSON().dbERROR) {
         logger.warn("Refusing to run command because database is corrupted!");
-        let res = new CommandResponse("", ERROR_DATABASE_ERROR);
+        const res = new CommandResponse("", ERROR_DATABASE_ERROR);
         res.priv = true;
 
         return res;
@@ -78,7 +78,7 @@ module.exports = async (interaction) => {
 
     if(Runtime.fromJSON().apiDown) {
         logger.warn("Refusing to run command because API is down!");
-        let res = new CommandResponse("", ERROR_API_DOWN);
+        const res = new CommandResponse("", ERROR_API_DOWN);
         res.priv = true;
 
         return res;
@@ -90,7 +90,7 @@ module.exports = async (interaction) => {
     }
 
     case "leaderboard": {
-        let res = await Leaderboard.execute(
+        const res = await Leaderboard.execute(
             [
                 opts.getString("game"),
                 opts.getString("type"),
@@ -101,9 +101,9 @@ module.exports = async (interaction) => {
             null,
             interaction
         );
-        let e = res.embed;
+        const e = res.embed;
         if(res.game != undefined) {
-            let buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
+            const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
             return new CommandResponse("", e, undefined, buttons);
         }
         return new CommandResponse("", e);
@@ -114,10 +114,10 @@ module.exports = async (interaction) => {
             ephemeral: true
         });
 
-        let names = opts.getString("accounts").value.split(" ");
+        const names = opts.getString("accounts").value.split(" ");
         let res = await addAccounts("others", names);
         res = `\`\`\`\n${res}\n\`\`\``;
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle("Accounts added")
             .setDescription(res)
             .setFooter(
@@ -132,7 +132,7 @@ module.exports = async (interaction) => {
     }
 
     case "unlinkedstats": {
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle("Use /stats")
             .setColor(0xd69323)
             .setDescription(
@@ -146,11 +146,11 @@ module.exports = async (interaction) => {
     }
 
     case "name-history": {
-        let acc = await InteractionUtils.resolveAccount(interaction);
+        const acc = await InteractionUtils.resolveAccount(interaction);
         if(acc == undefined) {
             return new CommandResponse("", ERROR_UNLINKED);
         }
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle(`${acc.name} IGN history`)
             .setDescription(([].concat(acc.nameHist)).join("\n"))
             .setColor(0x44a3e7);
@@ -220,8 +220,8 @@ module.exports = async (interaction) => {
     case "arcade": {
         if(interaction.options.getSubCommand() == "ez") {
             logger.debug("Adding ez button to message");
-            let buttons = await ButtonGenerator.getEZ();
-            let res = await EZ.execute([], authorID, null, interaction);
+            const buttons = await ButtonGenerator.getEZ();
+            const res = await EZ.execute([], authorID, null, interaction);
             res.b = buttons;
             return res;
         }

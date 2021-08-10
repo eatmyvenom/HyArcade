@@ -14,7 +14,7 @@ const utils = require("./utils");
  * @returns {guild} The guild of the specified player
  */
 function getGuild (guildlist, uuid) {
-    for(let guild of guildlist) {
+    for(const guild of guildlist) {
         if(guild.memberUUIDs.includes((`${uuid}`).toLowerCase())) {
             return guild;
         }
@@ -28,10 +28,10 @@ function getGuild (guildlist, uuid) {
  * @returns {Player[]} The array of players and their combined data
  */
 exports.players = async function players (acclist) {
-    let Player = require("./classes/player")(acclist);
+    const Player = require("./classes/player")(acclist);
 
-    let playerjson = await utils.readJSON("./playerlist.json");
-    let playerlist = [];
+    const playerjson = await utils.readJSON("./playerlist.json");
+    const playerlist = [];
     for(let i = 0; i < playerjson.length; i++) {
         playerlist.push(new Player(playerjson[i].name, playerjson[i].accs, 0));
     }
@@ -44,17 +44,17 @@ exports.players = async function players (acclist) {
  * @returns {object} All of the accounts in the database
  */
 exports.accounts = async function accounts () {
-    let acclistjson = await utils.readDB("acclist");
-    let disclist = await utils.readDB("disclist");
-    let guilds = await utils.readJSON("guild.json");
-    let acclist = {};
+    const acclistjson = await utils.readDB("acclist");
+    const disclist = await utils.readDB("disclist");
+    const guilds = await utils.readJSON("guild.json");
+    const acclist = {};
 
     for(const sublist in acclistjson) {
-        let currentlist = [];
+        const currentlist = [];
         for(const args of acclistjson[sublist]) {
-            let acc = new Account(args.name, args.wins, args.uuid);
-            let disc = getKeyByValue(disclist, args.uuid);
-            let guild = getGuild(guilds, args.uuid);
+            const acc = new Account(args.name, args.wins, args.uuid);
+            const disc = getKeyByValue(disclist, args.uuid);
+            const guild = getGuild(guilds, args.uuid);
             acc.discord = disc;
             if(guild) {
                 acc.guildID = guild.uuid;
@@ -88,10 +88,10 @@ exports.accounts = async function accounts () {
  * @returns {guild[]} Array of guilds with combined player data
  */
 exports.guilds = async function gld (accs) {
-    let accounts = accs;
-    let Guild = require("./classes/guild")(accounts);
-    let guildlistjson = await utils.readJSON("guildlist.json");
-    let realList = [];
+    const accounts = accs;
+    const Guild = require("./classes/guild")(accounts);
+    const guildlistjson = await utils.readJSON("guildlist.json");
+    const realList = [];
 
     for(const guild of guildlistjson) {
         realList.push(new Guild(guild));

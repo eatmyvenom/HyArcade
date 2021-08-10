@@ -11,8 +11,8 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
      */
     let msgs = await BotUtils.getFromDB("ezmsgs");
 
-    let operation = args[0];
-    let arg = args.slice(1).join(" ");
+    const operation = args[0];
+    const arg = args.slice(1).join(" ");
 
     if(operation == undefined) {
         return {

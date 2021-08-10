@@ -16,7 +16,7 @@ const {
  * @returns {string}
  */
 function numberify (n) {
-    let r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
+    const r = Intl.NumberFormat("en").format(Number(n).toFixed(2));
     return r;
 }
 
@@ -29,23 +29,23 @@ function wordify (s) {
 }
 
 module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
-    let uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
+    const plr = args[0];
+    const uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
     if(uuid == undefined) {
         return new CommandResponse("", ERROR_IGN_UNDEFINED);
     }
     await interaction.defer();
-    let acc = await HypixelApi.player(uuid);
-    let data = acc.player;
-    let arena = data?.stats?.Arena;
+    const acc = await HypixelApi.player(uuid);
+    const data = acc.player;
+    const arena = data?.stats?.Arena;
 
-    let damage = (arena?.damage_1v1 ?? 0) + (arena?.damage_2v2 ?? 0) + (arena?.damage_4v4 ?? 0);
-    let deaths = (arena?.deaths_1v1 ?? 0) + (arena?.deaths_2v2 ?? 0) + (arena?.deaths_4v4 ?? 0);
-    let kills = (arena?.kills_1v1 ?? 0) + (arena?.kills_2v2 ?? 0) + (arena?.kills_4v4 ?? 0);
-    let heal = (arena?.healed_1v1 ?? 0) + (arena?.healed_2v2 ?? 0) + (arena?.healed_4v4 ?? 0);
-    let losses = (arena?.losses_1v1 ?? 0) + (arena?.losses_2v2 ?? 0) + (arena?.losses_4v4 ?? 0);
+    const damage = (arena?.damage_1v1 ?? 0) + (arena?.damage_2v2 ?? 0) + (arena?.damage_4v4 ?? 0);
+    const deaths = (arena?.deaths_1v1 ?? 0) + (arena?.deaths_2v2 ?? 0) + (arena?.deaths_4v4 ?? 0);
+    const kills = (arena?.kills_1v1 ?? 0) + (arena?.kills_2v2 ?? 0) + (arena?.kills_4v4 ?? 0);
+    const heal = (arena?.healed_1v1 ?? 0) + (arena?.healed_2v2 ?? 0) + (arena?.healed_4v4 ?? 0);
+    const losses = (arena?.losses_1v1 ?? 0) + (arena?.losses_2v2 ?? 0) + (arena?.losses_4v4 ?? 0);
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${data.displayname} Arena stats`)
         .addField("-----Overall stats-----",
             `**Wins** - ${numberify(arena?.wins ?? 0)}\n` +

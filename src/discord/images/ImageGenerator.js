@@ -4,7 +4,7 @@ Canvas.registerFont("resources/minecraftia.ttf", {
     family: "myFont"
 });
 
-let PlusColors = {
+const PlusColors = {
     black: "#000000",
     dark_blue: "#0000AA",
     dark_green: "#00AA00",
@@ -35,7 +35,7 @@ module.exports = class ImageGenerator {
     }
 
     async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
-        let bg = await Canvas.loadImage(path);
+        const bg = await Canvas.loadImage(path);
         this.context.drawImage(bg, x, y, dx, dy);
         this.context.beginPath();
         this.context.rect(0, 0, this.canvas.width, this.canvas.height);
@@ -44,15 +44,15 @@ module.exports = class ImageGenerator {
     }
 
     async addImage (path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
-        let img = await Canvas.loadImage(path);
+        const img = await Canvas.loadImage(path);
         for(let i = bgIterations; i >= 4; i--) {
             this.context.beginPath();
             this.context.rect(x - i / 2, y - i / 2, img.width + i, img.height + i);
             this.context.fillStyle = `#333333${bgStrenth}`;
             this.context.fill();
         }
-        let imgWidth = width == undefined ? img.width : width;
-        let imgHeight = height == undefined ? img.height : height;
+        const imgWidth = width == undefined ? img.width : width;
+        const imgHeight = height == undefined ? img.height : height;
         this.context.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
@@ -61,9 +61,9 @@ module.exports = class ImageGenerator {
         this.context.fillStyle = color;
         this.context.textAlign = align;
         this.context.textBaseline = "middle";
-        let txtarr = txt.split("\n");
+        const txtarr = txt.split("\n");
         let newY = y;
-        for(let t of txtarr) {
+        for(const t of txtarr) {
             this.context.fillText(t, x, newY);
             newY += spacing;
         }
@@ -72,10 +72,10 @@ module.exports = class ImageGenerator {
     drawNameTag (txt, x, y, color, size) {
         this.context.beginPath();
         this.context.font = `${size}px 'myFont'`;
-        let {width} = this.context.measureText(txt);
+        const {width} = this.context.measureText(txt);
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
-        let realX = x - width / 2;
+        const realX = x - width / 2;
         this.context.rect(realX - 2, y - (size / 2), width + 3, size + 4);
         this.context.fillStyle = "#33333377";
         this.context.fill();
@@ -86,10 +86,10 @@ module.exports = class ImageGenerator {
     drawTimeType (type, x, y, size) {
         this.context.beginPath();
         this.context.font = `${size}px 'myFont'`;
-        let lWidth = this.context.measureText("Lifetime ").width;
-        let mWidth = this.context.measureText("Monthly ").width;
-        let wWidth = this.context.measureText("Weekly").width;
-        let width = lWidth + mWidth + wWidth;
+        const lWidth = this.context.measureText("Lifetime ").width;
+        const mWidth = this.context.measureText("Monthly ").width;
+        const wWidth = this.context.measureText("Weekly").width;
+        const width = lWidth + mWidth + wWidth;
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
         this.context.rect((x - width / 2) - 2, y - (size / 2), width + 3, size + 4);
@@ -111,18 +111,18 @@ module.exports = class ImageGenerator {
         this.context.beginPath();
         this.context.textAlign = "left";
         this.context.font = `${size}px 'myFont'`;
-        let posWidth = this.context.measureText(`${pos}. `).width;
-        let title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
-        let ignWidth = title.w;
+        const posWidth = this.context.measureText(`${pos}. `).width;
+        const title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
+        const ignWidth = title.w;
         let guildWidth;
         if(guild != undefined) {
             guildWidth = this.context.measureText(` [${guild}]`).width;
         } else {
             guildWidth = 0;
         }
-        let dashWidth = this.context.measureText(" - ").width;
-        let winsWidth = this.context.measureText(`${count}`).width;
-        let width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
+        const dashWidth = this.context.measureText(" - ").width;
+        const winsWidth = this.context.measureText(`${count}`).width;
+        const width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
         let currentX = x - width / 2;
         this.context.textBaseline = "middle";
         this.context.rect(currentX - 3, y - (size / 2), width + 4, size + 5);
@@ -150,7 +150,7 @@ module.exports = class ImageGenerator {
     }
 
     writeAccTitle (rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
-        let txtRank = rank == undefined ? "" : `[${rank}`;
+        const txtRank = rank == undefined ? "" : `[${rank}`;
 
         let plus = "";
         let rankEnd = "";
@@ -165,10 +165,10 @@ module.exports = class ImageGenerator {
         }
 
         this.context.font = `${fontSize} ${this.font}`;
-        let rankWidth = this.context.measureText(txtRank.replace(/_PLUS/g, "")).width;
-        let plusWidth = this.context.measureText(plus).width;
-        let rankEndWidth = this.context.measureText(rankEnd).width;
-        let nameWidth = this.context.measureText(name).width;
+        const rankWidth = this.context.measureText(txtRank.replace(/_PLUS/g, "")).width;
+        const plusWidth = this.context.measureText(plus).width;
+        const rankEndWidth = this.context.measureText(rankEnd).width;
+        const nameWidth = this.context.measureText(name).width;
 
         let startX = this.canvas.width / 2 - (rankWidth + rankEndWidth + plusWidth + nameWidth) / 2;
         if(x != undefined) {

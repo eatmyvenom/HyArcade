@@ -2,23 +2,24 @@ const Account = require("../classes/account");
 const utils = require("../utils");
 const {logger} = utils;
 const cfg = require("../Config").fromJSON();
-let force = utils.fileExists("force") || cfg.alwaysForce;
+const force = utils.fileExists("force") || cfg.alwaysForce;
 
 module.exports = async function (database) {
-    let accs = await database.collection("accounts");
-    let allAccs = await accs.find({});
-    let rawAccs = await allAccs.toArray();
-    let acclist = [];
-    for(let acc of rawAccs) {
-        let newAcc = new Account(acc.name, acc.wins, acc.uuid);
+    const accs = await database.collection("accounts");
+    const allAccs = await accs.find({});
+    const rawAccs = await allAccs.toArray();
+    const acclist = [];
+    for(const acc of rawAccs) {
+        const newAcc = new Account(acc.name, acc.wins, acc.uuid);
         newAcc.setData(acc);
         acclist.push(newAcc);
     }
 
     let i,
         j,
-        temparray,
-        chunk = 120;
+        temparray;
+
+    const chunk = 120;
     for(i = 0, j = acclist.length; i < j; i += chunk) {
         temparray = acclist.slice(i, i + chunk);
         await updateAccountsInArr(temparray, acclist, accs);
@@ -34,17 +35,17 @@ module.exports = async function (database) {
 async function updateAccountsInArr (accounts, oldAccs, collection) {
     return await Promise.all(
         accounts.map(async (account) => {
-            let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
+            const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if(oldAcc != undefined && !force) {
-                let aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-                let fbAboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
-                let fbBelowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
-                let fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
-                let mwAboveCringeLimit = oldAcc.miniWallsWins >= cfg.cringeGameUpperBound;
-                let mwBelowCringeLimit = oldAcc.miniWallsWins <= cfg.cringeGameLowerBound;
-                let mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
-                let isLinked = !!oldAcc.discord;
-                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
+                const aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
+                const fbAboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
+                const fbBelowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
+                const fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
+                const mwAboveCringeLimit = oldAcc.miniWallsWins >= cfg.cringeGameUpperBound;
+                const mwBelowCringeLimit = oldAcc.miniWallsWins <= cfg.cringeGameLowerBound;
+                const mwOutsideCringeLimit = mwBelowCringeLimit || mwAboveCringeLimit;
+                const isLinked = !!oldAcc.discord;
+                const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 2629743000;
 
                 if(
                     isLinked ||
@@ -59,7 +60,7 @@ async function updateAccountsInArr (accounts, oldAccs, collection) {
             } else {
                 await account.updateData();
             }
-            let updateObj = {
+            const updateObj = {
                 $set: account
             };
             await collection.updateOne({

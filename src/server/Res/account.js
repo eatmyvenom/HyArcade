@@ -12,11 +12,11 @@ const FileCache = require("../../utils/files/FileCache");
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
     if(req.method == "GET") {
-        let ign = url.searchParams.get("ign");
-        let uuid = url.searchParams.get("uuid");
-        let discid = url.searchParams.get("discid");
+        const ign = url.searchParams.get("ign");
+        const uuid = url.searchParams.get("uuid");
+        const discid = url.searchParams.get("discid");
         res.setHeader("Content-Type", "application/json");
-        let {accounts} = fileCache;
+        const {accounts} = fileCache;
         let acc;
 
         console.log(ign);
@@ -31,7 +31,7 @@ module.exports = async (req, res, fileCache) => {
         if(acc == undefined && ign != null) {
             acc = accounts.find((a) => {
                 if(a.nameHist && a.nameHist.length > 0) {
-                    for(let name of a.nameHist) {
+                    for(const name of a.nameHist) {
                         if(name.toLowerCase().startsWith(ign)) {
                             return true;
                         }
@@ -58,9 +58,9 @@ module.exports = async (req, res, fileCache) => {
             req.on("data", (d) => data += d);
             req.on("end", async () => {
                 json = JSON.parse(data);
-                let newAccs = [];
+                const newAccs = [];
                 if(fileCache.accounts.find((a) => a.uuid == json.uuid)) {
-                    for(let a of fileCache.accounts) {
+                    for(const a of fileCache.accounts) {
                         if(a.uuid != json.uuid) {
                             newAccs.push(a);
                         } else {

@@ -78,7 +78,7 @@ async function commandHandler (interaction) {
         return;
     }
 
-    let logString = `${interaction.member.user.tag} invoked command interaction \`${
+    const logString = `${interaction.member.user.tag} invoked command interaction \`${
         interaction.commandName
     }\` with options \`${JSON.stringify(interaction.options.data)}\``;
     logger.out(logString.replace(/`/g, "'"));
@@ -130,7 +130,7 @@ async function logBtn (interaction) {
  */
 async function buttonHandler (interaction) {
     if(await ForceOGuser(interaction)) {
-        let updatedData = await ButtonParser(interaction);
+        const updatedData = await ButtonParser(interaction);
         await interaction.update(updatedData.toDiscord());
         await logBtn(interaction);
     }
@@ -142,7 +142,7 @@ async function buttonHandler (interaction) {
  */
 async function menuHandler (interaction) {
     if(await ForceOGuser(interaction)) {
-        let updatedData = await MenuParser(interaction);
+        const updatedData = await MenuParser(interaction);
         await interaction.update(updatedData.toDiscord());
         await logBtn(interaction);
     }
@@ -169,17 +169,17 @@ async function interactionHandler (interaction) {
 async function registerAll (client) {
     let interactionObjects = require("./interactions/interactionObjects");
     logger.info("Registering global commands with discord");
-    let cmdarr = [];
+    const cmdarr = [];
     if(BotUtils.botMode == "mini") {
         interactionObjects = require("./interactions/microInteractionObjects");
     }
-    for(let c in interactionObjects) {
+    for(const c in interactionObjects) {
         cmdarr.push(interactionObjects[c]);
     }
 
-    let {guilds} = client;
+    const {guilds} = client;
     guilds.cache.array();
-    for(let g of guilds.cache.array()) {
+    for(const g of guilds.cache.array()) {
         try {
             if(BotUtils.botMode != "test") {
                 await g.commands.set([]);

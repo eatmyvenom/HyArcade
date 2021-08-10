@@ -74,7 +74,7 @@ function rcb (n) {
  * @returns {Account[]}
  */
 async function hackerTransformer (list) {
-    let hackers = await BotUtils.getFromDB("hackerlist");
+    const hackers = await BotUtils.getFromDB("hackerlist");
     return list.filter((a) => !hackers.includes(a.uuid))
         .filter((a) => a.name != undefined || a.name != "")
         .filter((a) => a.miniWalls != undefined);
@@ -231,13 +231,13 @@ async function getLB (prop, timetype, limit) {
         let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
         let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
         let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-        let life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+        const life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
 
         day = day == "" ? "Nobody has won" : day;
         week = week == "" ? "Nobody has won" : week;
         month = month == "" ? "Nobody has won" : month;
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor(0xc60532)
             .addField("Daily", day, true)
             .addField("Weekly", week, true)
@@ -257,7 +257,7 @@ async function getLB (prop, timetype, limit) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time)
+    const embed = new MessageEmbed().setTitle(time)
         .setColor(0xc60532)
         .setDescription(res);
 
@@ -274,7 +274,7 @@ async function getLB (prop, timetype, limit) {
         let resArr = res.trim().split("\n");
         embed.setDescription("");
         while(resArr.length > 0) {
-            let end = Math.min(25, resArr.length);
+            const end = Math.min(25, resArr.length);
             embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
             resArr = resArr.slice(end);
         }
@@ -284,9 +284,9 @@ async function getLB (prop, timetype, limit) {
 }
 
 module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
-    let startTime = Date.now();
-    let type = args[0];
-    let timetype = args[1] != undefined ? args[1] : "lifetime";
+    const startTime = Date.now();
+    const type = args[0];
+    const timetype = args[1] != undefined ? args[1] : "lifetime";
     let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
     if(new Number(limit) != limit) {
         limit = 10;
@@ -433,7 +433,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     }
     }
 
-    let finalRes = res
+    const finalRes = res
         .setAuthor(`${gameName} Leaderboard`, "https://eatmyvenom.me/share/images/miniwalls.jpg");
 
     logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);

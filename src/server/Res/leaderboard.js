@@ -6,7 +6,7 @@ const FileCache = require("../../utils/files/FileCache");
  * @returns {number}
  */
 function numberify (str) {
-    let cleanStr = str ?? 0;
+    const cleanStr = str ?? 0;
     return Number(cleanStr);
 }
 
@@ -18,9 +18,9 @@ function numberify (str) {
  */
 module.exports = async (req, res, fileCache) => {
     const url = new URL(req.url, `https://${req.headers.host}`);
-    let lbprop = url.searchParams.get("path");
-    let category = url.searchParams.get("category");
-    let timePeriod = url.searchParams.get("time");
+    const lbprop = url.searchParams.get("path");
+    const category = url.searchParams.get("category");
+    const timePeriod = url.searchParams.get("time");
     if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
         let {accounts} = fileCache;
@@ -32,10 +32,10 @@ module.exports = async (req, res, fileCache) => {
                 TimSort.sort(accounts, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));
             }
         } else {
-            let newAcclist = [];
-            let oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
-            for(let a of oldCopy) {
-                let n = fileCache.accounts.find((u) => u.uuid == a.uuid);
+            const newAcclist = [];
+            const oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
+            for(const a of oldCopy) {
+                const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
                 if(category == null) {
                     a[lbprop] = numberify(n[lbprop] - a[lbprop]);
                     a.name = n.name;

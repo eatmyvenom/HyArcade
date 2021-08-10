@@ -1,7 +1,7 @@
 const logger = require("hyarcade-logger");
 const utils = require("../utils");
 const cfg = require("../Config").fromJSON();
-let force = utils.fileExists("force") || cfg.alwaysForce;
+const force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
@@ -16,29 +16,30 @@ module.exports = async function updateAccounts (accounts) {
     let accs = accounts.sort(utils.winsSorter);
     await fs.writeFile("starttime", (`${Date.now()}`));
 
-    let oldAccs = await utils.readDB("accounts");
+    const oldAccs = await utils.readDB("accounts");
 
     let i,
         j,
-        temparray,
-        chunk = 120;
+        temparray;
+
+    const chunk = 120;
     for(i = 0, j = accs.length; i < j; i += chunk) {
         temparray = accs.slice(i, i + chunk);
         await updateAccountsInArr(temparray, oldAccs);
     }
 
     if(utils.fileExists("data/accounts.json.part")) {
-        let addedAccounts = await utils.readJSON("accounts.json.part");
+        const addedAccounts = await utils.readJSON("accounts.json.part");
         await fs.rm("data/accounts.json.part");
         accs = accs.concat(addedAccounts);
     }
 
     if(utils.fileExists("data/accounts.json.full")) {
-        let fullList = await utils.readJSON("accounts.json.full");
+        const fullList = await utils.readJSON("accounts.json.full");
         await fs.rm("data/accounts.json.full");
         for(let i = 0; i < accs.length; i++) {
-            let acc = accs[i];
-            let newAcc = fullList.find((a) => a.uuid == acc.uuid);
+            const acc = accs[i];
+            const newAcc = fullList.find((a) => a.uuid == acc.uuid);
             if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
                 logger.info(`Setting ${newAcc.name}'s data from outside source!`);
                 acc.setData(newAcc);
@@ -46,7 +47,7 @@ module.exports = async function updateAccounts (accounts) {
         }
     }
 
-    let runtime = Runtime.fromJSON();
+    const runtime = Runtime.fromJSON();
     runtime.needRoleupdate = true;
     await runtime.save();
 
@@ -66,31 +67,31 @@ module.exports = async function updateAccounts (accounts) {
 async function updateAccountsInArr (accounts, oldAccs) {
     return await Promise.all(
         accounts.map(async (account) => {
-            let oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
+            const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
             if(oldAcc != undefined && !force) {
 
                 // Make sure they have a relavent amount of arcade games wins
-                let isArcadePlayer = oldAcc.arcadeWins >= 1500;
+                const isArcadePlayer = oldAcc.arcadeWins >= 1500;
 
                 // Make sure their arcade wins are not inflated due to football
-                let fbAboveInflationLimit = oldAcc.footballWins >= 15000;
-                let fbBelowInflationLimit = oldAcc.footballWins <= 250;
+                const fbAboveInflationLimit = oldAcc.footballWins >= 15000;
+                const fbBelowInflationLimit = oldAcc.footballWins <= 250;
 
-                let notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
+                const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
 
                 // Make sure their arcade wins are not inflated due to mini walls
-                let mwAboveInflationLimit = oldAcc.miniWallsWins >= 12000;
-                let mwBelowInflationLimit = oldAcc.miniWallsWins <= 250;
+                const mwAboveInflationLimit = oldAcc.miniWallsWins >= 12000;
+                const mwBelowInflationLimit = oldAcc.miniWallsWins <= 250;
 
-                let notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
+                const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
 
                 // Linked players should update more often since they will check their own stats
-                let isLinked = !!oldAcc.discord;
+                const isLinked = !!oldAcc.discord;
 
                 // Ignore people who have not played within the last 3.5 days
-                let hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
+                const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
 
-                let hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated;
+                const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated;
 
                 if((isLinked || hasImportantStats) && hasPlayedRecently) {
                     logger.out(`Updating ${oldAcc.name}'s data`);

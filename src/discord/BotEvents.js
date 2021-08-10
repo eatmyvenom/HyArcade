@@ -16,8 +16,8 @@ const SetPresence = require("./Utils/SetPresence");
 
 module.exports = class BotEvents {
     static async rateLimit (rlInfo) {
-        let {timeout} = rlInfo;
-        let str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
+        const {timeout} = rlInfo;
+        const str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
         logger.err(str);
         try {
             await Webhooks.errHook.send(str);
@@ -29,13 +29,13 @@ module.exports = class BotEvents {
     static async messageDelete (msg) {
         if(BotUtils.botMode == "mw") {
             if(msg.content.charAt(0) == ".") {
-                let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
+                const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
                 logger.warn(str);
                 await Webhooks.logHook.send(str);
             }
         } else {
             if(msg.content.charAt(0) == cfg.commandCharacter) {
-                let str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
+                const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
                 logger.warn(str);
                 await Webhooks.logHook.send(str);
             }
@@ -47,22 +47,22 @@ module.exports = class BotEvents {
         BotUtils.botMode = mode;
 
         logger.info("Fetching logging channels");
-        let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
-        let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
+        const errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
+        const logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
 
         logger.info("Fetching logging hooks");
-        let errhooks = await errchannel.fetchWebhooks();
-        let loghooks = await logchannel.fetchWebhooks();
-        let errHook = await errhooks.first();
-        let logHook = await loghooks.first();
+        const errhooks = await errchannel.fetchWebhooks();
+        const loghooks = await logchannel.fetchWebhooks();
+        const errHook = await errhooks.first();
+        const logHook = await loghooks.first();
         Webhooks.errHook = errHook;
         Webhooks.logHook = logHook;
         logger.info("Creating message copy hook");
         Webhooks.commandHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
 
         logger.info("Reading trusted users");
-        let trustedFile = await fs.readFile("data/trustedUsers");
-        let tus = trustedFile.toString().trim()
+        const trustedFile = await fs.readFile("data/trustedUsers");
+        const tus = trustedFile.toString().trim()
             .split("\n");
         BotUtils.tus = tus;
 
@@ -93,7 +93,7 @@ module.exports = class BotEvents {
     }
 
     static async tick () {
-        let runtime = Runtime.fromJSON();
+        const runtime = Runtime.fromJSON();
         if(runtime.needRoleupdate && BotUtils.botMode == undefined) {
             await roleHandler(BotUtils.client);
             await Webhooks.logHook.send("Roles Updated");
@@ -103,7 +103,7 @@ module.exports = class BotEvents {
     }
 
     static async heartBeat () {
-        let runtime = Runtime.fromJSON();
+        const runtime = Runtime.fromJSON();
         runtime[`${BotUtils.botMode}HeartBeat`] = Date.now();
         await runtime.save();
         logger.info("Heart beat - I'm alive!");

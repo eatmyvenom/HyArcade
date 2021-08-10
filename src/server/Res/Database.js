@@ -13,8 +13,8 @@ module.exports = async (req, res, fileCache) => {
     if(req.method == "GET") {
         res.setHeader("Content-Type", "application/json");
 
-        let file = url.searchParams.get("path");
-        let data = fileCache[file];
+        const file = url.searchParams.get("path");
+        const data = fileCache[file];
 
         if(data == undefined) {
             res.statusCode = 404;
@@ -41,11 +41,11 @@ module.exports = async (req, res, fileCache) => {
 
                 if(url.searchParams.get("path") == "accounts") {
                     Logger.log("Saving new accounts");
-                    let old = fileCache[url.searchParams.get("path")];
-                    let newAccs = [];
+                    const old = fileCache[url.searchParams.get("path")];
+                    const newAccs = [];
 
-                    for(let acc of json) {
-                        let oldAcc = old.find((a) => a.uuid == acc.uuid);
+                    for(const acc of json) {
+                        const oldAcc = old.find((a) => a.uuid == acc.uuid);
                         if(oldAcc != undefined && oldAcc.updateTime > acc.updateTime) {
                             newAccs.push(oldAcc);
                         } else {

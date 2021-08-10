@@ -24,7 +24,7 @@ function stringify (str) {
  */
 module.exports = async function resolveAccount (string, rawMessage, canbeSelf, acclist, disclist) {
     logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
-    let queryString = stringify(queryString).toLowerCase();
+    const queryString = stringify(queryString).toLowerCase();
     let acc;
     if(queryString.length == 18) {
         acc = acclist.find((a) => a.discord == queryString);
@@ -37,14 +37,14 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
     }
 
     if(queryString.length > 1 && acc == undefined) {
-        let discusers = await rawMessage.guild.members.fetch({
+        const discusers = await rawMessage.guild.members.fetch({
             query: queryString,
             limit: 1,
         });
         if(discusers.size > 0) {
-            let usr = discusers.first();
-            let {id} = usr;
-            let uuid = disclist[id];
+            const usr = discusers.first();
+            const {id} = usr;
+            const uuid = disclist[id];
             if(uuid != undefined) {
                 acc = acclist.find((a) => a.uuid == uuid);
             }
@@ -53,8 +53,8 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
 
     if(acc == undefined) {
         if(rawMessage.mentions.users.size > 0) {
-            let discid = `${rawMessage.mentions.users.first()}`;
-            let uuid = disclist[discid];
+            const discid = `${rawMessage.mentions.users.first()}`;
+            const uuid = disclist[discid];
             if(uuid != undefined) {
                 acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
             }
@@ -62,8 +62,8 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
     }
 
     if(acc == undefined && canbeSelf) {
-        let discid = rawMessage.author.id;
-        let uuid = disclist[discid];
+        const discid = rawMessage.author.id;
+        const uuid = disclist[discid];
         logger.debug(`Resolved as ${uuid} from discord account list`);
         if(uuid != undefined) {
             acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
@@ -75,7 +75,7 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
     } else {
         logger.out("Unable to resolve account in database, getting by ign from hypixel.");
 
-        let plr = queryString;
+        const plr = queryString;
         let uuid;
         if(plr.length > 17) {
             uuid = plr;

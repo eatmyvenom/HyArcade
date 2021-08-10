@@ -13,7 +13,7 @@ module.exports = new Command("LastUpdate", ["*"], async () => {
         time = "Saving data!";
     }
 
-    let embed = new MessageEmbed().setTitle("Update time")
+    const embed = new MessageEmbed().setTitle("Update time")
         .setDescription(time)
         .setColor(0x00b37b);
 

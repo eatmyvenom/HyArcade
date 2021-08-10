@@ -18,7 +18,7 @@ const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
  * @returns {number}
  */
 function formatR (n) {
-    let r = Math.round(n * 1000) / 1000;
+    const r = Math.round(n * 1000) / 1000;
     return r;
 }
 
@@ -27,7 +27,7 @@ function formatR (n) {
  * @returns {string}
  */
 function formatN (str) {
-    let r = Intl.NumberFormat("en").format(Number(str));
+    const r = Intl.NumberFormat("en").format(Number(str));
     return r;
 }
 
@@ -86,8 +86,8 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
         };
     }
 
-    let plr1 = args[0];
-    let plr2 = args[1];
+    const plr1 = args[0];
+    const plr2 = args[1];
     let acc1, acc2;
     if(interaction == undefined) {
         if(plr2 == undefined) {
@@ -102,7 +102,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
         acc2 = await InteractionUtils.resolveAccount(interaction, 1);
     }
 
-    let hackers = await BotUtils.getFromDB("hackerlist");
+    const hackers = await BotUtils.getFromDB("hackerlist");
 
     if(hackers.includes(acc1.uuid)) {
         acc1 = {
@@ -119,21 +119,21 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
     }
 
 
-    let embed = new MessageEmbed();
+    const embed = new MessageEmbed();
 
     try {
-        let deaths1 = acc1?.miniWalls?.deaths ?? 0;
-        let deaths2 = acc2?.miniWalls?.deaths ?? 0;
-        let kills1 = acc1?.miniWalls?.kills ?? 0;
-        let kills2 = acc2?.miniWalls?.kills ?? 0;
-        let fk1 = acc1?.miniWalls?.finalKills ?? 0;
-        let fk2 = acc2?.miniWalls?.finalKills ?? 0;
-        let wd1 = acc1?.miniWalls?.witherDamage ?? 0;
-        let wd2 = acc2?.miniWalls?.witherDamage ?? 0;
-        let wk1 = acc1?.miniWalls?.witherKills ?? 0;
-        let wk2 = acc2?.miniWalls?.witherKills ?? 0;
+        const deaths1 = acc1?.miniWalls?.deaths ?? 0;
+        const deaths2 = acc2?.miniWalls?.deaths ?? 0;
+        const kills1 = acc1?.miniWalls?.kills ?? 0;
+        const kills2 = acc2?.miniWalls?.kills ?? 0;
+        const fk1 = acc1?.miniWalls?.finalKills ?? 0;
+        const fk2 = acc2?.miniWalls?.finalKills ?? 0;
+        const wd1 = acc1?.miniWalls?.witherDamage ?? 0;
+        const wd2 = acc2?.miniWalls?.witherDamage ?? 0;
+        const wk1 = acc1?.miniWalls?.witherKills ?? 0;
+        const wk2 = acc2?.miniWalls?.witherKills ?? 0;
 
-        let stats =
+        const stats =
             lineN(acc1?.miniWallsWins ?? 0, acc2?.miniWallsWins ?? 0, "Wins", true) +
             lineN(kills1, kills2, "Kills", true) +
             lineN(fk1, fk2, "Finals", true) +
@@ -141,7 +141,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             lineN(wk1, wk2, "Wither Kills", true) +
             lineNS(deaths1, deaths2, "Deaths", true);
 
-        let ratios =
+        const ratios =
             lineR(
                 (kills1 + fk1) / deaths1,
                 (kills2 + fk2) / deaths2,

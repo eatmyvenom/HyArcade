@@ -14,7 +14,7 @@ const {
  * @returns {number}
  */
 function formatR (n) {
-    let r = Math.round(n * 1000) / 1000;
+    const r = Math.round(n * 1000) / 1000;
     return r;
 }
 
@@ -23,12 +23,12 @@ function formatR (n) {
  * @returns {string}
  */
 function formatN (str) {
-    let r = Intl.NumberFormat("en").format(Number(str));
+    const r = Intl.NumberFormat("en").format(Number(str));
     return r;
 }
 
 module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
+    const plr = args[0];
     let acc;
     if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
@@ -36,7 +36,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         acc = await InteractionUtils.resolveAccount(interaction, 0);
     }
 
-    let hackers = await BotUtils.getFromDB("hackerlist");
+    const hackers = await BotUtils.getFromDB("hackerlist");
     if(hackers.includes(acc?.uuid?.toLowerCase())) {
         return {};
     }
@@ -55,7 +55,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         };
     }
 
-    let stats =
+    const stats =
         `Wins: **${formatN(acc?.miniWallsWins ?? 0)}**\n` +
         `Kills: **${formatN(acc?.miniWalls?.kills ?? 0)}**\n` +
         `Finals: **${formatN(acc?.miniWalls?.finalKills ?? 0)}**\n` +
@@ -63,8 +63,8 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         `Wither Kills: **${formatN(acc?.miniWalls?.witherKills ?? 0)}**\n` +
         `Deaths: **${formatN(acc?.miniWalls?.deaths ?? 0)}**\n`;
 
-    let deaths = acc?.miniWalls?.deaths ?? 0;
-    let ratios =
+    const deaths = acc?.miniWalls?.deaths ?? 0;
+    const ratios =
         `K/D: **${formatR(((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / deaths)}**\n` +
         `K/D (no finals): **${formatR((acc?.miniWalls?.kills ?? 0) / deaths)}**\n` +
         `F/D: **${formatR((acc?.miniWalls?.finalKills ?? 0) / deaths)}**\n` +
@@ -72,7 +72,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
         `WK/D: **${formatR((acc?.miniWalls?.witherKills ?? 0) / deaths)}**\n` +
         `Arrow Accuracy: **${formatR(((acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0)) * 100)}**\n`;
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`Player: ${acc?.name}`)
         .setColor(0x7873f5)
         .addField("━━━━━━ Stats: ━━━━━", stats, true)

@@ -13,7 +13,7 @@ function numberify (str) {
 }
 
 module.exports = async function stringLB (lbprop, maxamnt, category, startingIndex = 0) {
-    let list = await getList();
+    const list = await getList();
     if(category == undefined) {
         TimSort.sort(list, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
     } else {

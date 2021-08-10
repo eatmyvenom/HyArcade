@@ -156,17 +156,17 @@ module.exports = class ButtonGenerator {
         }
         }
 
-        let row = new MessageActionRow();
-        let left = new MessageButton()
+        const row = new MessageActionRow();
+        const left = new MessageButton()
             .setCustomId(`s:${uuid}:${leftID}`)
             .setLabel(`<< ${leftTxt}`)
             .setStyle("PRIMARY");
 
-        let m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`)
+        const m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`)
             .setLabel("↻")
             .setStyle("SECONDARY");
 
-        let right = new MessageButton()
+        const right = new MessageButton()
             .setCustomId(`s:${uuid}:${rightID}`)
             .setLabel(`${rightTxt} >>`)
             .setStyle("PRIMARY");
@@ -176,17 +176,17 @@ module.exports = class ButtonGenerator {
     }
 
     static async getLBButtons (currentIndex, lb, time) {
-        let left = new MessageButton()
+        const left = new MessageButton()
             .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
             .setLabel("<< 10")
             .setStyle("PRIMARY");
 
-        let mid = new MessageButton()
+        const mid = new MessageButton()
             .setCustomId(`lb:${lb}:${time}:${currentIndex}`)
             .setLabel("↻ Refresh")
             .setStyle("SECONDARY");
 
-        let right = new MessageButton()
+        const right = new MessageButton()
             .setCustomId(`lb:${lb}:${time}:${currentIndex + 10}`)
             .setLabel("10 >>")
             .setStyle("PRIMARY");
@@ -195,17 +195,17 @@ module.exports = class ButtonGenerator {
             left.setDisabled(true);
         }
 
-        let row = new MessageActionRow().addComponents(left, mid, right);
+        const row = new MessageActionRow().addComponents(left, mid, right);
 
         return row;
     }
 
     static async getEZ () {
-        let ez = new MessageButton().setCustomId("ez:null")
+        const ez = new MessageButton().setCustomId("ez:null")
             .setLabel("EZ")
             .setStyle("SECONDARY");
 
-        let row = new MessageActionRow().addComponents(ez);
+        const row = new MessageActionRow().addComponents(ez);
 
         return row;
     }

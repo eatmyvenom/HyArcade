@@ -99,7 +99,7 @@ function getGames (acc) {
     let str = "";
     let i = 0;
 
-    for(let g of games) {
+    for(const g of games) {
         if(g.wins != 0 && g.wins != undefined) {
             str += `${++i}) **${g.name}** (${g.wins})\n`;
         }
@@ -136,8 +136,8 @@ function getTimedAccount (acc1, acc2) {
 }
 
 module.exports = new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
-    let plr = args[0];
-    let timetype = args[1];
+    const plr = args[0];
+    const timetype = args[1];
     let acc;
     if(interaction == undefined) {
         acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
@@ -147,20 +147,20 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
     }
 
     if(timetype == "d") {
-        let daily = await getFromDB("dayaccounts");
-        let dayAcc = await daily.find((a) => a?.uuid == acc.uuid);
+        const daily = await getFromDB("dayaccounts");
+        const dayAcc = await daily.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "w") {
-        let weekly = await getFromDB("weeklyaccounts");
-        let dayAcc = await weekly.find((a) => a?.uuid == acc.uuid);
+        const weekly = await getFromDB("weeklyaccounts");
+        const dayAcc = await weekly.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     } else if(timetype == "m") {
-        let monthly = await getFromDB("monthlyaccounts");
-        let dayAcc = await monthly.find((a) => a?.uuid == acc.uuid);
+        const monthly = await getFromDB("monthlyaccounts");
+        const dayAcc = await monthly.find((a) => a?.uuid == acc.uuid);
         acc = getTimedAccount(acc, dayAcc);
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle(`${acc.name} top games won`)
         .setDescription(getGames(acc))
         .setColor(0x44a3e7);

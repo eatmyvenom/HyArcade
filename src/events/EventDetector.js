@@ -14,15 +14,15 @@ class EventDetector {
     }
 
     scanAccount (account) {
-        let oldAcc = account;
-        let newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
+        const oldAcc = account;
+        const newAcc = this.NewAccounts.find((a) => a.uuid == oldAcc.uuid);
 
         if(oldAcc == undefined || newAcc == undefined) {
             return;
         }
 
-        let oldIndex = this.OldAccounts.indexOf(oldAcc);
-        let newIndex = this.NewAccounts.indexOf(newAcc);
+        const oldIndex = this.OldAccounts.indexOf(oldAcc);
+        const newIndex = this.NewAccounts.indexOf(newAcc);
 
         this.detectWinsAuto(oldAcc, newAcc, "wins", "PG");
         this.detectWinsAuto(oldAcc, newAcc, "hypixelSaysWins", "HYSAYS");
@@ -118,7 +118,7 @@ class EventDetector {
     }
 
     runDetection () {
-        for(let account of this.OldAccounts) {
+        for(const account of this.OldAccounts) {
             this.scanAccount(account);
         }
     }
@@ -148,14 +148,14 @@ class EventDetector {
     }
 
     async sendEvents () {
-        for(let evt of this.Events) {
+        for(const evt of this.Events) {
             await evt.toDiscord();
         }
     }
 
     async saveEvents () {
         let oldEvents = await utils.readJSON("events.json");
-        for(let event of this.Events) {
+        for(const event of this.Events) {
             oldEvents.unshift([event, event.toString()]);
         }
 
@@ -164,7 +164,7 @@ class EventDetector {
     }
 
     logEvents () {
-        for(let evt of this.Events) {
+        for(const evt of this.Events) {
             logger.out(evt.toString());
         }
     }

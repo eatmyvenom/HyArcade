@@ -27,19 +27,20 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     let disclist = await BotUtils.getFromDB("disclist");
 
     if((`${player}`).startsWith("https://")) {
-        let channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
-        let msgID = player.slice(player.lastIndexOf("/") + 1);
+        const channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
+        const msgID = player.slice(player.lastIndexOf("/") + 1);
 
-        let channel = await BotUtils.client.channels.fetch(channelID);
-        let msg = await channel.messages.fetch(msgID);
+        const channel = await BotUtils.client.channels.fetch(channelID);
+        const msg = await channel.messages.fetch(msgID);
 
         discord = msg.author.id;
         player = msg.content;
     }
 
     let uuid,
-        acc,
-        acclist = await BotUtils.getFromDB("accounts");
+        acc;
+
+    const acclist = await BotUtils.getFromDB("accounts");
     if(player.length < 17) {
         acc = acclist.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
     } else {
@@ -49,7 +50,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     if(acc == undefined) {
         uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
         if((`${uuid}`).length != 32) {
-            let noexistEmbed = ERROR_IGN_UNDEFINED;
+            const noexistEmbed = ERROR_IGN_UNDEFINED;
 
             return {
                 res: "",
@@ -67,7 +68,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
         disclist[discord] = uuid;
         await BotUtils.writeToDB("disclist", disclist);
         disclist = null;
-        let embed = INFO_LINK_SUCCESS;
+        const embed = INFO_LINK_SUCCESS;
         return {
             res: "",
             embed: embed
@@ -75,13 +76,13 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     }
 
     if(disclist[discord]) {
-        let embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
+        const embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
         return {
             res: "",
             embed: embed
         };
     } else if(Object.values(disclist).find((u) => u == uuid) != undefined) {
-        let embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
+        const embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
         return {
             res: "",
             embed: embed
@@ -91,7 +92,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     disclist[discord] = uuid;
     await BotUtils.writeToDB("disclist", disclist);
     disclist = null;
-    let embed = INFO_LINK_SUCCESS;
+    const embed = INFO_LINK_SUCCESS;
     return {
         res: "",
         embed: embed

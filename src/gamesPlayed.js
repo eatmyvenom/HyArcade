@@ -17,11 +17,11 @@ class gamesPlayed {
     }
 
     async updateData () {
-        let json = JSON.parse(await hypixelApi.getGamesPlayedRAW(this.uuid));
-        let newGames = json.games.reverse();
+        const json = JSON.parse(await hypixelApi.getGamesPlayedRAW(this.uuid));
+        const newGames = json.games.reverse();
 
-        for(let g of newGames) {
-            let game = new Game(g);
+        for(const g of newGames) {
+            const game = new Game(g);
             if(game.start > this.newestTime) {
                 this.addCount(game.type);
                 this.newestTime = game.start;
@@ -38,7 +38,7 @@ class gamesPlayed {
     }
 
     async writeToFile () {
-        let full = await readJSON("./gamesPlayed.json");
+        const full = await readJSON("./gamesPlayed.json");
         full[this.uuid] = this;
         await writeJSON("./gamesPlayed.json", full);
     }
