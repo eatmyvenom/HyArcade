@@ -15,14 +15,14 @@ class sizedWriter {
         this.length = newObjs.length;
         this.type = type;
         newObjs.forEach((sizedObject) => {
-            this.documents.push(BSON.serialize(sizedObject)); 
+            this.documents.push(BSON.serialize(sizedObject));
         }, this);
     }
 
     async toFile(filename) {
         let meta = {
-            length : this.length,
-            type : this.type,
+            length: this.length,
+            type: this.type,
         };
         await fs.writeFile(`${filename}.meta`, BSON.serialize(meta));
 
@@ -39,7 +39,7 @@ class sizedWriter {
  * @returns {Array}
  */
 function chunkArray(arr, chunkSize) {
-    return Array.from(Array(Math.ceil(arr.length / chunkSize)), (_, i)=> arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+    return Array.from(Array(Math.ceil(arr.length / chunkSize)), (_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
 }
 
 /**
