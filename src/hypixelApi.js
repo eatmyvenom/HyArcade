@@ -17,7 +17,7 @@ function getKey () {
         key = config.clusters[config.cluster].key;
     }
     if(process.argv[2] == "bot") {
-        key = config.clusters["serverbot"].key;
+        key = config.clusters.serverbot.key;
     }
     if(config.mode == "test") {
         key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];

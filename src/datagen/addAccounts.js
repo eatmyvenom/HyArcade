@@ -42,8 +42,8 @@ module.exports = async function addAccounts (category, names) {
 
         if(
             acclist[category].find((acc) => acc.uuid == uuid) ||
-            acclist["gamers"].find((acc) => acc.uuid == uuid) ||
-            acclist["afkers"].find((acc) => acc.uuid == uuid)
+            acclist.gamers.find((acc) => acc.uuid == uuid) ||
+            acclist.afkers.find((acc) => acc.uuid == uuid)
         ) {
             logger.warn(`Refusing to add duplicate! (${name})`);
             res += `Refusing to add duplicate! (${name})\n`;
