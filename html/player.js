@@ -56,6 +56,10 @@ function setIcon (uuid) {
   link.href = `https://crafatar.com/avatars/${uuid}?overlay`;
 }
 
+function lilQuestionMark (page) {
+  return `<a href="https://docs.hyarcade.xyz/api/${page}"><span style="font-size:12px" class="tooltip material-icons md-light">help</span></a>`;
+}
+
 /**
  * 
  * @param {object} data 
@@ -66,7 +70,7 @@ function arcade (data) {
 
   html += "<h6>Overall arcade</h6><br />" +
     `- Wins : ${formatNum(data.arcadeWins)}<br />` + 
-    `- Combined wins : ${formatNum(data.combinedArcadeWins)} <a href="https://docs.hyarcade.xyz/arcade-wins"><span style="font-size:12px" class="tooltip material-icons md-light">help</span></a><br />` +
+    `- Combined wins : ${formatNum(data.combinedArcadeWins)} ${lilQuestionMark("arcade-wins")}<br />` +
     `- Coins : ${formatNum(data.arcadeCoins)}`;
 
   ele.innerHTML = html;
@@ -110,7 +114,7 @@ function hitw (data) {
     `- Wins : ${formatNum(data.hitwWins)}<br />` + 
     `- Qualifiers : ${formatNum(data.hitwQual)}<br />` +
     `- Finals : ${formatNum(data.hitwFinal)}<br />` +
-    `- Rounds : ${formatNum(data.hitwRounds)}`;
+    `- Rounds : ${formatNum(data.hitwRounds)} ${lilQuestionMark("rounds")}`;
 
   ele.innerHTML = html;
 }
@@ -125,7 +129,7 @@ function hypixelSays (data) {
 
   html += "<h6>Hypixel says</h6><br />" +
     `- Wins : ${formatNum(data.hypixelSaysWins)}<br />` + 
-    `- Rounds : ${formatNum(data.extras.hypixelSaysRounds)}`;
+    `- Rounds : ${formatNum(data.extras.hypixelSaysRounds)} ${lilQuestionMark("rounds")}`;
 
   ele.innerHTML = html;
 }
