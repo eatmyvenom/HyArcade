@@ -31,7 +31,7 @@ module.exports = new Command("ping", ["*"], async () => {
     .addField(
       "Info",
       `📊 Servers - ${BotUtils.client.guilds.cache.size}\n` +
-            `📈 Users - ${BotUtils.client.guilds.cache.reduce((a,g) => a + g.memberCount,0)}\n` +
+            `📈 Users - ${BotUtils.client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}\n` +
             `🗒️ Channels - ${BotUtils.client.channels.cache.size}`,
       true
     )
