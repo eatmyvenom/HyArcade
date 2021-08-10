@@ -38,6 +38,10 @@
         "indent": ["error", 2],
         "object-curly-spacing": ["warn", "always"],
         "func-call-spacing":"error",
+        "no-restricted-globals":"error",
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
         "comma-spacing":"warn",
         "key-spacing":"warn",
         "space-infix-ops": "warn",
@@ -62,18 +66,6 @@
             {
                 "enforceForRenamedProperties": false
             }
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
         ]
     }
 }
