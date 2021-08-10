@@ -44,7 +44,7 @@ module.exports = async (req, res, fileCache) => {
         if(acc == undefined) {
             res.statusCode = 404;
             res.end(JSON.stringify({
-                "error": "ACC_UNDEFINED"
+                error: "ACC_UNDEFINED"
             }));
             return;
         }

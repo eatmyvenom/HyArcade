@@ -28,6 +28,7 @@
         "no-whitespace-before-property": "error",
         "no-var":"error",
         "object-shorthand": "error",
+        "quote-props": ["error", "as-needed"],
         "prefer-const":"warn",
         "newline-per-chained-call": "warn",
         "arrow-body-style": "warn",

@@ -95,7 +95,7 @@ async function writeDB (path, json) {
             body: data,
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": cfg.dbPass
+                Authorization: cfg.dbPass
             }
         });
     } catch (e) {
