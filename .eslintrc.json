@@ -36,6 +36,7 @@
         "one-var": ["error", "never"],
         "no-plusplus": "error",
         "indent": ["error", 2],
+        "object-curly-spacing": ["warn", "always"],
         "space-infix-ops": "warn",
         "no-multi-assign": "warn",
         "dot-notation":"warn",

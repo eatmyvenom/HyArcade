@@ -17,7 +17,7 @@ async function genStatus () {
   const statusObj = {};
   const accdata = await utils.readJSON("accounts.json");
   const acclist = await lists.accounts();
-  const {accounts} = acclist;
+  const { accounts } = acclist;
 
   await Promise.all(
     accounts.map(async (account) => {
@@ -139,7 +139,7 @@ function statusSort (a, b) {
  */
 async function updateAllAccounts () {
   const acclist = await lists.accounts();
-  const {accounts} = acclist;
+  const { accounts } = acclist;
   return await updateAccounts(accounts);
 }
 
@@ -163,7 +163,7 @@ async function addLeaderboards () {
  */
 async function addGuild (uuid) {
   const guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
-  const {members} = guild.guild;
+  const { members } = guild.guild;
   const uuids = [];
   for(const m of members) {
     uuids.push(m.uuid);
@@ -177,7 +177,7 @@ async function addGuild (uuid) {
  */
 async function addGuildID (id) {
   const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
-  const {members} = guild.guild;
+  const { members } = guild.guild;
   const uuids = [];
   for(const m of members) {
     uuids.push(m.uuid);

@@ -12,7 +12,7 @@ const config = require("./Config").fromJSON();
  * @returns {string} Hypixel api key
  */
 function getKey () {
-  let {key} = config;
+  let { key } = config;
   if(config.cluster) {
     key = config.clusters[config.cluster].key;
   }

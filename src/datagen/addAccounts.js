@@ -1,5 +1,5 @@
 const utils = require("../utils");
-const {logger} = utils;
+const { logger } = utils;
 const isValidIGN = require("./utils/ignValidator");
 const Account = require("../classes/account");
 const {
@@ -52,7 +52,7 @@ module.exports = async function addAccounts (category, names) {
 
     const acc = new Account("", 0, uuid);
     await acc.updateHypixel();
-    const {wins} = acc;
+    const { wins } = acc;
     name = acc.name;
 
     if(wins < 50 && category == "gamers") {

@@ -3,13 +3,13 @@ const MongoUtils = require("./MongoUtils");
 
 module.exports = class DatabaseReader {
   static async getArray () {
-    const {database} = MongoUtils;
+    const { database } = MongoUtils;
     return await database.collection("accounts").find({})
       .toArray();
   }
 
   static async getAccount (uuid) {
-    const {database} = MongoUtils;
+    const { database } = MongoUtils;
     return await database.collection("accounts").find({
       uuid
     });

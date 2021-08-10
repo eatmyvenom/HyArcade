@@ -29,7 +29,7 @@ module.exports = async function MenuParser (interaction) {
 async function statsHandler (accUUID, game) {
   const accData = await InteractionUtils.accFromUUID(accUUID);
   const statsRes = await BotUtils.getStats(accData, game);
-  const {embed} = statsRes;
+  const { embed } = statsRes;
 
   const mnu = await MenuGenerator.statsMenu(accUUID);
   return new ButtonResponse("", [embed], mnu);

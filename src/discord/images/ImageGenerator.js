@@ -72,7 +72,7 @@ module.exports = class ImageGenerator {
     drawNameTag (txt, x, y, color, size) {
       this.context.beginPath();
       this.context.font = `${size}px 'myFont'`;
-      const {width} = this.context.measureText(txt);
+      const { width } = this.context.measureText(txt);
       this.context.textAlign = "center";
       this.context.textBaseline = "middle";
       const realX = x - width / 2;

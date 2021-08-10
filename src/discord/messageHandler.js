@@ -7,8 +7,8 @@ const logger = require("hyarcade-logger");
 const isValidIGN = require("../datagen/utils/ignValidator");
 const botCommands = require("./botCommands");
 const BotUtils = require("./BotUtils");
-const {Account} = require("hyarcade-requests").types;
-const {mojangRequest} = require("hyarcade-requests");
+const { Account } = require("hyarcade-requests").types;
+const { mojangRequest } = require("hyarcade-requests");
 const MiniWallsCommands = require("./MiniWallsCommands");
 const SlashHelpTxt = require("./Utils/SlashHelpTxt");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
@@ -82,8 +82,8 @@ async function sendAsHook (hook, cmdResponse) {
  * @returns {null}
  */
 async function miniWallsVerify (msg) {
-  const {tag} = msg.author;
-  const {id} = msg.author;
+  const { tag } = msg.author;
+  const { id } = msg.author;
   const ign = msg.content.trim();
   if(await isBlacklisted(id)) return;
   const uuid = await mojangRequest.getUUID(ign);

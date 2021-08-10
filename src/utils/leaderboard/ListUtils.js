@@ -40,7 +40,7 @@ exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt,
     // don't print if player has 0 wins
     if((propVal | 0) < 1 && !cfg.printAllWins) continue;
 
-    const {name} = sizedList[i];
+    const { name } = sizedList[i];
     str += `${i + 1}) **${name}** (${formatNum(propVal)})\n`;
   }
   return str.replace(/\\?_/g, "\\_");
