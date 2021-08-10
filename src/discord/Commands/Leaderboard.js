@@ -82,7 +82,9 @@ async function getLB (prop, timetype, limit, category, start) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time).setColor(0x00cc66).setDescription(res);
+    let embed = new MessageEmbed().setTitle(time)
+        .setColor(0x00cc66)
+        .setDescription(res);
 
     if(res.length > 6000) {
         return new MessageEmbed()
@@ -639,7 +641,9 @@ async function hander (args, rawMsg, interaction) {
                 };
             }
             gid = undefined;
-            res = new MessageEmbed().setTitle(timetype).setColor(0x00cc66).setDescription(lb);
+            res = new MessageEmbed().setTitle(timetype)
+                .setColor(0x00cc66)
+                .setDescription(lb);
         } else {
             let embed = new MessageEmbed()
                 .setTitle("ERROR")

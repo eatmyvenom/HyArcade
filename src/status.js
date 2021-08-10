@@ -21,7 +21,9 @@ function arcadeFormatter (status) {
     } else if(status.mode == "MINI_WALLS") {
         str += "Mini walls - ";
     } else if(status.mode.includes("HIDE_AND_SEEK")) {
-        str += `${modeFormatter(status.mode.replace("HIDE_AND_SEEK", "").toLowerCase().replace("_", " ").trim())} `;
+        str += `${modeFormatter(status.mode.replace("HIDE_AND_SEEK", "").toLowerCase()
+            .replace("_", " ")
+            .trim())} `;
     } else if(status.mode.includes("ZOMBIES")) {
         str += "Zombies - ";
     }
@@ -36,7 +38,8 @@ function arcadeFormatter (status) {
  * @returns {string} formatted text
  */
 function mapFormatter (txt) {
-    return txt.slice(0, 1).toUpperCase() + txt.slice(1).replace(/ the /gi, "").replace(/_/g, " ");
+    return txt.slice(0, 1).toUpperCase() + txt.slice(1).replace(/ the /gi, "")
+        .replace(/_/g, " ");
 }
 
 /**
@@ -46,7 +49,8 @@ function mapFormatter (txt) {
  * @returns {string} formatted text
  */
 function modeFormatter (txt) {
-    return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase().replace(/_/g, " ");
+    return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase()
+        .replace(/_/g, " ");
 }
 
 /**

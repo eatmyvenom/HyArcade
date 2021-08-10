@@ -55,7 +55,9 @@ exports.ERROR_USE_SLASH_COMMAND = function (cmd, slashver) {
 };
 
 exports.ERROR_ARGS_LENGTH = function (len) {
-    return new MessageEmbed().setTitle("ERROR").setColor(COLOR_RED).setDescription(`This command requires ${len} arguments`);
+    return new MessageEmbed().setTitle("ERROR")
+        .setColor(COLOR_RED)
+        .setDescription(`This command requires ${len} arguments`);
 };
 
 exports.LOG_SLASH_COMMAND_USAGE = function (userid, usertag, command, server, channel, options) {

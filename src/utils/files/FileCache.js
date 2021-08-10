@@ -83,10 +83,12 @@ class FileCache {
         fileCache.ezmsgs = (await fs.readFile(`${fileCache.path}ez`)).toString().split("\n");
 
         if(blacklist.toString().trim() != "") {
-            fileCache.blacklist = blacklist.toString().trim().split("\n");
+            fileCache.blacklist = blacklist.toString().trim()
+                .split("\n");
         }
         if(hackerlist.toString().trim() != "") {
-            fileCache.hackerlist = hackerlist.toString().trim().split("\n");
+            fileCache.hackerlist = hackerlist.toString().trim()
+                .split("\n");
         }
 
         Logger.debug("File cache updated");

@@ -184,7 +184,9 @@ async function sendTOKillEmbed () {
 function generateEmbed (list) {
     let filteredList = list.filter((item) => item.wins > 0);
 
-    let embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard").setColor(0x44a3e7).setTimestamp(Date.now());
+    let embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard")
+        .setColor(0x44a3e7)
+        .setTimestamp(Date.now());
 
     let str = "";
 
@@ -548,7 +550,9 @@ async function getLB (prop, timetype, limit) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time).setColor(0xc60532).setDescription(res);
+    let embed = new MessageEmbed().setTitle(time)
+        .setColor(0xc60532)
+        .setDescription(res);
 
     if(res.length > 6000) {
         return new MessageEmbed()

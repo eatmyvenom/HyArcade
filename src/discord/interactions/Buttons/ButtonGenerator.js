@@ -162,7 +162,9 @@ module.exports = class ButtonGenerator {
             .setLabel(`<< ${leftTxt}`)
             .setStyle("PRIMARY");
 
-        let m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`).setLabel("↻").setStyle("SECONDARY");
+        let m = new MessageButton().setCustomId(`s:${uuid}:${currentGame}`)
+            .setLabel("↻")
+            .setStyle("SECONDARY");
 
         let right = new MessageButton()
             .setCustomId(`s:${uuid}:${rightID}`)
@@ -199,7 +201,9 @@ module.exports = class ButtonGenerator {
     }
 
     static async getEZ () {
-        let ez = new MessageButton().setCustomId("ez:null").setLabel("EZ").setStyle("SECONDARY");
+        let ez = new MessageButton().setCustomId("ez:null")
+            .setLabel("EZ")
+            .setStyle("SECONDARY");
 
         let row = new MessageActionRow().addComponents(ez);
 

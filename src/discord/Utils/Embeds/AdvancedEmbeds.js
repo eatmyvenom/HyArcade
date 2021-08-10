@@ -40,7 +40,8 @@ module.exports = class AdvancedEmbeds {
      * @returns {MessageEmbed}
      */
     static compareStats (acc1, acc2, game, hasPerms) {
-        let embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`).setColor(0xbb00dd);
+        let embed = new MessageEmbed().setTitle(`${acc1.name} vs ${acc2.name}`)
+            .setColor(0xbb00dd);
 
         let side1 = "";
         let side2 = "";

@@ -62,7 +62,8 @@ module.exports = class BotEvents {
 
         logger.info("Reading trusted users");
         let trustedFile = await fs.readFile("data/trustedUsers");
-        let tus = trustedFile.toString().trim().split("\n");
+        let tus = trustedFile.toString().trim()
+            .split("\n");
         BotUtils.tus = tus;
 
         logger.info("Selecting mode");

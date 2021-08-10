@@ -55,7 +55,8 @@ async function statusTxtSorted () {
     let accs = acclist.accounts;
 
     let crntstatus = await utils.readJSON("status.json");
-    const sortable = Object.entries(crntstatus).sort(statusSort).reverse();
+    const sortable = Object.entries(crntstatus).sort(statusSort)
+        .reverse();
 
     for(const sts of sortable) {
         let acc = await accs.find((a) => a.uuid == sts[0]);

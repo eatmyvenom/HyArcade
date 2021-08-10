@@ -4,7 +4,8 @@ const MongoUtils = require("./MongoUtils");
 module.exports = class DatabaseReader {
     static async getArray () {
         let database = MongoUtils.database;
-        return await database.collection("accounts").find({}).toArray();
+        return await database.collection("accounts").find({})
+            .toArray();
     }
 
     static async getAccount (uuid) {

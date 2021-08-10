@@ -257,7 +257,9 @@ async function getLB (prop, timetype, limit) {
     }
 
     res = res != "" ? res : "Nobody has won.";
-    let embed = new MessageEmbed().setTitle(time).setColor(0xc60532).setDescription(res);
+    let embed = new MessageEmbed().setTitle(time)
+        .setColor(0xc60532)
+        .setDescription(res);
 
     if(res.length > 6000) {
         return new MessageEmbed()
