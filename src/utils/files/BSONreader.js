@@ -8,8 +8,8 @@ module.exports = async function BSONreader (path) {
         let buffer2 = await fs.readFile((`data/${path}.2`).replace(/json/g, "bson"));
         let arr2 = BSON.deserialize(buffer2);
         return [].concat(Object.values(arr1), Object.values(arr2));
-    } else {
-        let buffer = await fs.readFile((`data/${path}`).replace(/json/g, "bson"));
-        return BSON.deserialize(buffer);
-    }
+    } 
+    let buffer = await fs.readFile((`data/${path}`).replace(/json/g, "bson"));
+    return BSON.deserialize(buffer);
+    
 };

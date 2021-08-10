@@ -206,12 +206,12 @@ module.exports = class ImageGenerator {
                 x: startX,
                 w: rankWidth + rankEndWidth + plusWidth + nameWidth
             };
-        } else {
-            return {
-                x: startX,
-                w: nameWidth
-            };
-        }
+        } 
+        return {
+            x: startX,
+            w: nameWidth
+        };
+        
     }
 
     writeTitle (txt) {

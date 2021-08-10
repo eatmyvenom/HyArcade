@@ -48,9 +48,9 @@ class AccountEvent {
             return `${this.name} just leveled up to ${this.newAmnt}!`;
         } else if(this.type == "PLUS") {
             return `${this.name} just set their plus color to ${this.newAmnt}!`;
-        } else {
-            return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
-        }
+        } 
+        return `${this.name} just hit ${this.newAmnt} ${config.events[this.type].name} wins!`;
+        
     }
 
     async toDiscord () {

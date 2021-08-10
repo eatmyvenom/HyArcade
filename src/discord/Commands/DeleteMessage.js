@@ -12,9 +12,9 @@ module.exports = new Command("DelMsg", ["156952208045375488"], async (args) => {
         return {
             res: "Message deleted!"
         };
-    } else {
-        return {
-            res: "Message cannot be deleted!"
-        };
-    }
+    } 
+    return {
+        res: "Message cannot be deleted!"
+    };
+    
 });

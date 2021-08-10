@@ -371,9 +371,9 @@ async function checkMW (msg) {
     if(msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
         await mwMode(msg);
         return;
-    } else {
-        return;
-    }
+    } 
+    return;
+    
 }
 
 /**

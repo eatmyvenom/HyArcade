@@ -23,7 +23,9 @@
         "arrow-parens": "error",
         "arrow-body-style": "warn",
         "no-unneeded-ternary": "error",
-        "no-param-reassign": 2,
+        "no-param-reassign": "error",
+        "no-case-declarations": "error",
+        "no-else-return":"warn",
         "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],
         "indent": [
