@@ -379,6 +379,6 @@ module.exports = new Command("Game counts", ["*"], async (args) => {
         .setTimestamp(Date.now());
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

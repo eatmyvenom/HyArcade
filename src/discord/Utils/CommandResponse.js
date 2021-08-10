@@ -94,7 +94,7 @@ module.exports = class CommandResponse {
             },
             files: this.file,
             components: this.components,
-            reply: reply
+            reply
         };
 
         if(webhook) {

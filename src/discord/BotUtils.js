@@ -77,7 +77,7 @@ module.exports = class BotUtils {
         return {
             username: BotUtils.client.user.username,
             avatarURL: BotUtils.client.user.avatarURL(),
-            embeds: embeds,
+            embeds,
         };
     }
 

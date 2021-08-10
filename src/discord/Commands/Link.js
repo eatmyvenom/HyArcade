@@ -71,7 +71,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
         const embed = INFO_LINK_SUCCESS;
         return {
             res: "",
-            embed: embed
+            embed
         };
     }
 
@@ -79,13 +79,13 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
         const embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
         return {
             res: "",
-            embed: embed
+            embed
         };
     } else if(Object.values(disclist).find((u) => u == uuid) != undefined) {
         const embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
         return {
             res: "",
-            embed: embed
+            embed
         };
     }
 
@@ -95,6 +95,6 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
     const embed = INFO_LINK_SUCCESS;
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

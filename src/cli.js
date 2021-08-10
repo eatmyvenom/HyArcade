@@ -87,7 +87,7 @@ async function newPlayer () {
 
     // construct object
     const playerObj = {
-        name: name,
+        name,
         accs: alts
     };
 
@@ -114,8 +114,8 @@ async function newGuild () {
     const id = gldInfo.guild._id;
     const {name} = gldInfo.guild;
     const gldObj = {
-        id: id,
-        name: name
+        id,
+        name
     };
 
     // add object to list
@@ -249,19 +249,19 @@ async function getServerStatus () {
 }
 
 module.exports = {
-    newAcc: newAcc,
-    newGuild: newGuild,
-    newPlayer: newPlayer,
-    logNormal: logNormal,
-    logDaily: logDaily,
-    log: log,
-    logD: logD,
-    checkNames: checkNames,
-    addGuildMembers: addGuildMembers,
-    addGIDMembers: addGIDMembers,
+    newAcc,
+    newGuild,
+    newPlayer,
+    logNormal,
+    logDaily,
+    log,
+    logD,
+    checkNames,
+    addGuildMembers,
+    addGIDMembers,
     getUUID: getUUIDCli,
-    moveAcc: moveAcc,
-    linkDiscord: linkDiscord,
-    mNewAcc: mNewAcc,
-    getServerStatus: getServerStatus,
+    moveAcc,
+    linkDiscord,
+    mNewAcc,
+    getServerStatus,
 };

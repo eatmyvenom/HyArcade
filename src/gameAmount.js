@@ -39,6 +39,6 @@ async function logCounts () {
 }
 
 module.exports = {
-    formatCounts: formatCounts,
-    logCounts: logCounts
+    formatCounts,
+    logCounts
 };

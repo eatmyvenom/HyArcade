@@ -53,6 +53,6 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interacti
         .setColor(0x44a3e7);
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

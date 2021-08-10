@@ -1203,7 +1203,7 @@ module.exports = class AdvancedEmbeds {
 
         return {
             res: "",
-            embed: embed,
+            embed,
             game: gamename
         };
     }

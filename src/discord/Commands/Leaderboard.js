@@ -637,7 +637,7 @@ async function hander (args, rawMsg, interaction) {
                     .setColor(0xff0000);
                 return {
                     res: "",
-                    embed: embed
+                    embed
                 };
             }
             gid = undefined;
@@ -653,7 +653,7 @@ async function hander (args, rawMsg, interaction) {
                 .setColor(0xff0000);
             return {
                 res: "",
-                embed: embed
+                embed
             };
         }
     }

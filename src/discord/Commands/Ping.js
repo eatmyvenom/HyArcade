@@ -38,6 +38,6 @@ module.exports = new Command("ping", ["*"], async () => {
         .setColor(0x8c54fe);
     return new CommandResponse({
         res: "",
-        embed: embed
+        embed
     });
 });

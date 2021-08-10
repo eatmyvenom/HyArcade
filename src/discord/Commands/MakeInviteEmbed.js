@@ -11,7 +11,7 @@ const BotUtils = require("../BotUtils");
  */
 function makeField (name, link) {
     return {
-        name: name,
+        name,
         value: `[<:join:841515519823708170> Invite](${link})`,
         inline: true,
     };
@@ -51,7 +51,7 @@ module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
 
     if(msgID == undefined) {
         await channel.send("", {
-            embed: embed
+            embed
         });
     } else {
         const message = await channel.messages.fetch(msgID);

@@ -127,7 +127,7 @@ module.exports = async (interaction) => {
             .setColor(0x44a3e7);
         return {
             res: "",
-            embed: embed
+            embed
         };
     }
 
@@ -141,7 +141,7 @@ module.exports = async (interaction) => {
 
         return {
             res: undefined,
-            embed: embed
+            embed
         };
     }
 
@@ -156,7 +156,7 @@ module.exports = async (interaction) => {
             .setColor(0x44a3e7);
         return {
             res: "",
-            embed: embed
+            embed
         };
     }
 

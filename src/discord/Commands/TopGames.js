@@ -166,6 +166,6 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
         .setColor(0x44a3e7);
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

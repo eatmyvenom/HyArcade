@@ -175,6 +175,6 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
 
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

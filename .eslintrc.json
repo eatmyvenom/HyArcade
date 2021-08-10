@@ -27,6 +27,7 @@
         "no-case-declarations": "error",
         "no-whitespace-before-property": "error",
         "no-var":"error",
+        "object-shorthand": "error",
         "prefer-const":"warn",
         "newline-per-chained-call": "warn",
         "arrow-body-style": "warn",

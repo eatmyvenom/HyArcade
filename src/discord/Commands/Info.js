@@ -17,6 +17,6 @@ module.exports = new Command("info", ["*"], async () => {
         .setColor(0x2f3136);
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

@@ -11,7 +11,7 @@ module.exports = class DatabaseReader {
     static async getAccount (uuid) {
         const {database} = MongoUtils;
         return await database.collection("accounts").find({
-            uuid: uuid
+            uuid
         });
     }
 

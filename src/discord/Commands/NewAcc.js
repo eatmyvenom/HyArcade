@@ -25,7 +25,7 @@ module.exports = new Command("newAcc", ["*"], async (args, rawMsg) => {
     }
 
     const tmpMsg = await rawMsg.channel.send("", {
-        embed: embed
+        embed
     });
     let res = await addAccounts(category, args);
     res = `\`\`\`\n${res}\n\`\`\``;

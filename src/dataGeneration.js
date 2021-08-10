@@ -187,11 +187,11 @@ async function addGuildID (id) {
 }
 
 module.exports = {
-    genStatus: genStatus,
-    updateAllAccounts: updateAllAccounts,
-    statusTxtSorted: statusTxtSorted,
-    addGuild: addGuild,
-    addGuildID: addGuildID,
-    addLeaderboards: addLeaderboards,
-    saveBoosters: saveBoosters,
+    genStatus,
+    updateAllAccounts,
+    statusTxtSorted,
+    addGuild,
+    addGuildID,
+    addLeaderboards,
+    saveBoosters,
 };

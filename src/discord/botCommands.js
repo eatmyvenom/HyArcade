@@ -312,5 +312,5 @@ async function checkCommands (rawMsg, command, args, author) {
 }
 
 module.exports = {
-    execute: execute
+    execute
 };

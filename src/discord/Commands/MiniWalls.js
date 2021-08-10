@@ -80,6 +80,6 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
 
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

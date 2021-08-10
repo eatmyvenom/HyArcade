@@ -129,17 +129,17 @@ async function stringLBDaily (lbprop, maxamnt) {
 }
 
 module.exports = {
-    listDiffByProp: listDiffByProp,
-    txtPlayerList: txtPlayerList,
-    listNormal: listNormal,
-    listDiff: listDiff,
-    stringNormal: stringNormal,
-    stringDiff: stringDiff,
-    stringDaily: stringDaily,
+    listDiffByProp,
+    txtPlayerList,
+    listNormal,
+    listDiff,
+    stringNormal,
+    stringDiff,
+    stringDaily,
     addAccounts: require("./datagen/addAccounts"),
-    stringLB: stringLB,
-    stringLBDaily: stringLBDaily,
-    stringLBDiff: stringLBDiff,
-    stringLBAdv: stringLBAdv,
+    stringLB,
+    stringLBDaily,
+    stringLBDiff,
+    stringLBAdv,
     stringDiffAdv: stringLBDiffAdv,
 };

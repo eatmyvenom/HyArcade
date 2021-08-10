@@ -23,7 +23,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
     }
     const hook = new Discord.WebhookClient(webhookID, webhookToken);
     await hook.send({
-        content: content,
+        content,
         username: config.webhook.username,
         avatarURL: config.webhook.pfp,
     });
@@ -39,7 +39,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
 async function sendBasic (content, webhook) {
     const hook = new Discord.WebhookClient(webhook.id, webhook.token);
     await hook.send({
-        content: content,
+        content,
         username: webhook.username,
         avatarURL: webhook.pfp,
     });
@@ -646,16 +646,16 @@ async function sendMW () {
 module.exports = {
     send: sendToDiscord,
     sendEmbed: sendToEmbedDiscord,
-    sendBasic: sendBasic,
-    sendBasicEmbed: sendBasicEmbed,
-    generateEmbed: generateEmbed,
-    genPGEmbed: genPGEmbed,
-    sendPGEmbed: sendPGEmbed,
-    sendPGWEmbed: sendPGWEmbed,
-    sendPGMEmbed: sendPGMEmbed,
-    sendHSEmbed: sendHSEmbed,
-    sendHSWEmbed: sendHSWEmbed,
-    sendHSMEmbed: sendHSMEmbed,
-    sendTOKillEmbed: sendTOKillEmbed,
-    sendMW: sendMW,
+    sendBasic,
+    sendBasicEmbed,
+    generateEmbed,
+    genPGEmbed,
+    sendPGEmbed,
+    sendPGWEmbed,
+    sendPGMEmbed,
+    sendHSEmbed,
+    sendHSWEmbed,
+    sendHSMEmbed,
+    sendTOKillEmbed,
+    sendMW,
 };

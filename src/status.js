@@ -136,7 +136,7 @@ async function txtStatus (uuid) {
 }
 
 module.exports = {
-    txtStatus: txtStatus,
-    genStatus: genStatus,
+    txtStatus,
+    genStatus,
     rawStatus: rawstatus,
 };

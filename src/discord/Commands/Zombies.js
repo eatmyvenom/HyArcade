@@ -54,6 +54,6 @@ module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction)
         .setColor(0x44a3e7);
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

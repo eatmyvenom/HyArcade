@@ -62,6 +62,6 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
 
     return {
         res: "",
-        embed: embed
+        embed
     };
 });

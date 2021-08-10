@@ -19,6 +19,6 @@ module.exports = new Command("LastUpdate", ["*"], async () => {
 
     return {
         res: "",
-        embed: embed
+        embed
     };
 });
