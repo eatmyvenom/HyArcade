@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #181c30;
+    display: grid;
+    grid-template-columns: 25% auto auto auto 25%;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    color: white;
+}
+
+header {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    border: 2px solid white;
+    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
+    border-image-slice: 1;
+    padding: 4px;
+    display: block;
+}
+
+header > .tag, header > p {
+    display: inline-block;
+    width: 49%;
+}
+
+header > p {
+    margin: 0;
+    text-align: right;
+    display: inline-block;
+}
