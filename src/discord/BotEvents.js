@@ -1,6 +1,5 @@
 const cfg = require("hyarcade-config").fromJSON();
 const {
-    WebhookClient,
     Guild,
     TextChannel,
     InvalidRequestWarningData
@@ -49,16 +48,18 @@ module.exports = class BotEvents {
         logger.info("Fetching logging channels");
         let errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
         let logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
+        let cmdChannel = await BotUtils.client.channels.fetch(cfg.discord.cmdChannel);
 
         logger.info("Fetching logging hooks");
         let errhooks = await errchannel.fetchWebhooks();
         let loghooks = await logchannel.fetchWebhooks();
+        let cmdHooks = await cmdChannel.fetchWebhooks();
         let errHook = await errhooks.first();
         let logHook = await loghooks.first();
+        let cmdHook = await cmdHooks.first();
         Webhooks.errHook = errHook;
         Webhooks.logHook = logHook;
-        logger.info("Creating message copy hook");
-        Webhooks.commandHook = new WebhookClient({id : cfg.loggingHooks.copyHook.id, token : cfg.loggingHooks.copyHook.token });
+        Webhooks.commandHook = cmdHook;
 
         logger.info("Reading trusted users");
         let trustedFile = await fs.readFile("data/trustedUsers");
