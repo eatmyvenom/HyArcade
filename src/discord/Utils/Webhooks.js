@@ -13,7 +13,7 @@ module.exports = class Webhooks {
      * @type {Webhook}
      * @static
      */
-    static commandHook;
+    static commandHook = new WebhookClient({ id: cfg.loggingHooks.copyHook.id, token: cfg.loggingHooks.copyHook.token });
 
     /**
      * Webhook for logging igns

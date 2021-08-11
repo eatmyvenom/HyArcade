@@ -60,7 +60,7 @@ module.exports = class BotEvents {
     Webhooks.errHook = errHook;
     Webhooks.logHook = logHook;
     logger.info("Creating message copy hook");
-    Webhooks.commandHook = new WebhookClient(cfg.loggingHooks.copyHook.id, cfg.loggingHooks.copyHook.token);
+    Webhooks.commandHook = new WebhookClient(cfg.loggingHooks.copyHook);
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");
