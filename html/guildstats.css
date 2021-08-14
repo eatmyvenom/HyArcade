@@ -2,23 +2,32 @@
     box-sizing: border-box;
 }
 
+html {
+    font-family: "Fira Code", monospace;
+    font-size: 16px;
+}
+
 body {
     background-color: #181c30;
+
+}
+
+main {
     display: grid;
-    grid-template-columns: 25% auto auto auto 25%;
+    grid-template-columns: 25% auto 25% auto 30%;
     margin-left: 0.5vw;
     margin-right: 0.5vw;
     color: white;
+    column-gap: 0.5vw;
+    row-gap: 0.5vw;
 }
 
 header {
     grid-column-start: 1;
     grid-column-end: 6;
-    border: 2px solid white;
-    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
-    border-image-slice: 1;
     padding: 4px;
     display: block;
+    font-size: 32px;
 }
 
 header > .tag, header > p {
@@ -26,8 +35,89 @@ header > .tag, header > p {
     width: 49%;
 }
 
+header > .tag[green] {
+    color: green;
+}
+
+header > .tag::before {
+    content: "[";
+}
+
+header > .tag::after {
+    content: "]";
+}
+
 header > p {
     margin: 0;
     text-align: right;
     display: inline-block;
+}
+
+.games, .stats, .members, header {
+    border: 2px solid white;
+    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
+    border-image-slice: 1;
+    padding: 4px;
+    height: max-content;
+}
+
+.games {
+    grid-column-start: 1;
+}
+
+.members {
+    grid-column-start: 5;
+}
+
+.stats {
+    grid-column-start: 3;
+}
+
+.members > p > img {
+    width: 42px;
+    height: 42px;
+    vertical-align: middle;
+}
+
+.members > p > b, .members > p > i {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    height: 20px;
+}
+
+.members > p > b {
+    width: 50%;
+}
+
+.members > p > i {
+    width: 30%;
+    text-decoration: none;
+    font-style: normal;
+}
+
+.stats > p > b::after {
+    content: ": "
+}
+
+.stats > p, .games > p {
+    margin : 4px 0px 4px 0px;
+    font-size: 18px;
+}
+
+.stats > p > i, .games > p > i {
+    font-style: normal;
+}
+
+.games > p > b::after {
+    content: ": ";
+}
+
+.stats > h2, .members > h2, .games > h2 {
+    text-align: center;
+    font-size: 28px;
+}
+
+.stats > p, .members > p, .games > p {
+    padding-left: 10px;
 }
