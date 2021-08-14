@@ -3,6 +3,7 @@ const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const AccountResolver = require("./Utils/AccountResolver");
 const fetch = require("node-fetch");
 const Logger = require("hyarcade-logger");
+const { AccountArray } = require("hyarcade-requests").types;
 const {
   MessageEmbed
 } = require("discord.js");
@@ -42,6 +43,10 @@ module.exports = class BotUtils {
         return {};
       }
       Logger.debug("Data fetched!");
+
+      if (file == "accounts" || file == "dayaccounts" || file == "monthlyaccounts" || file == "weeklyaccounts") {
+        return AccountArray(fileData);
+      }
       return fileData;
     }
 
