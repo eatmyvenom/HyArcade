@@ -32,7 +32,7 @@ let mini;
  */
 let mw;
 
-async function main() {
+async function main () {
     try {
         Logger.info("Bots starting...");
         let ascii = (await fs.readFile('resources/hyarcade.ascii')).toString();
@@ -90,7 +90,7 @@ async function main() {
 
 function restartMW() {
     Logger.error("Mini walls bot crashed!");
-    mw = child_process.fork("index.js", ["bot", "mini"], {
+    mw = child_process.fork("index.js", ["bot", "mw"], {
         silent: false
     });
     mw.on("exit", restartMW);
