@@ -22,8 +22,11 @@ class Guild {
     gxp = 0;
     uuid = "";
     memberUUIDs = [];
+    membersStats = [];
     color = "";
     tag = "";
+    games = [];
+    createTime = 0;
     wins = 0;
     arcadeCoins = 0;
     combinedAP = 0;
@@ -67,11 +70,15 @@ class Guild {
       this.gxp = data?.guild?.exp ?? 0;
       this.color = data?.guild?.tagColor ?? "GREY";
       this.tag = data?.guild?.tag ?? "NONE";
+      this.games = data?.guild?.preferredGames ?? [ "ARCADE" ];
+      this.createTime = data?.guild?.created ?? 0;
 
       const gmembers = data?.guild?.members ?? [];
       for(let i = 0; i < gmembers.length; i += 1) {
+
         // find a corrosponding account in my account list
         const gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
+
         // dont add empty accounts
         if(gamer != undefined) {
           this.memberUUIDs.push(gamer.uuid);
@@ -98,6 +105,9 @@ class Guild {
      */
     async updateWins () {
       await this.updateMemberData();
+      this.updateMemberStats();
+
+      // TODO: Use this.members.forEach
       for(let i = 0; i < this.members.length; i += 1) {
         const member = this.members[i];
         this.wins += member.wins;
@@ -120,7 +130,20 @@ class Guild {
         this.pixelPaintersWins += numberify(member.pixelPaintersWins);
         this.simWins += numberify(member.simTotal);
       }
-      this.members = undefined;
+      delete this.members;
       return this.wins;
+    }
+
+    updateMemberStats () {
+      this.members.forEach((member) => {
+        const obj = {};
+        obj.wins = member.combinedArcadeWins;
+        obj.rank = member.rank;
+        obj.name = member.name;
+        obj.uuid = member.uuid;
+        obj.online = member.isLoggedIn;
+        obj.plusColor = member.plusColor;
+        this.membersStats.push(obj);
+      }, this);
     }
 }
