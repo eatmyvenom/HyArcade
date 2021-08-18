@@ -74,14 +74,14 @@ async function updateAccountsInArr (accounts, oldAccs) {
         const isArcadePlayer = oldAcc.arcadeWins >= 1500;
 
         // Make sure their arcade wins are not inflated due to football
-        const fbAboveInflationLimit = oldAcc.football.wins >= 15000;
-        const fbBelowInflationLimit = oldAcc.football.wins <= 250;
+        const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 15000;
+        const fbBelowInflationLimit = (oldAcc?.football?.wins ?? 0) <= 250;
 
         const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
 
         // Make sure their arcade wins are not inflated due to mini walls
-        const mwAboveInflationLimit = oldAcc.miniWalls.wins >= 12000;
-        const mwBelowInflationLimit = oldAcc.miniWalls.wins <= 250;
+        const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 12000;
+        const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 250;
 
         const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
 
