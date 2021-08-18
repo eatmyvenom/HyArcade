@@ -14,7 +14,7 @@ const Account = require("hyarcade-requests/types/Account");
  * @returns {number}
  */
 function wComp (b, a) {
-  return (a.miniWallsWins ?? 0) - (b.miniWallsWins ?? 0);
+  return (a.miniWalls.wins ?? 0) - (b.miniWalls.wins ?? 0);
 }
 
 /**
@@ -49,8 +49,8 @@ function int (n) {
  * @returns {Account}
  */
 function cb (n, o) {
-  o.miniWallsWins = int(n.miniWallsWins) - int(o.miniWallsWins);
   if(n.miniWalls != undefined && o.miniWalls != undefined) {
+    o.miniWalls.wins = int(n.miniWalls.wins) - int(o.miniWalls.wins);
     o.miniWalls.kills = int(n.miniWalls.kills) - int(o.miniWalls.kills);
     o.miniWalls.deaths = int(n.miniWalls.deaths) - int(o.miniWalls.deaths);
     o.miniWalls.witherDamage = int(n.miniWalls.witherDamage) - int(o.miniWalls.witherDamage);
@@ -101,7 +101,7 @@ async function ratioTransformer (list) {
  * @param {string} prop
  * @param {string} timetype
  * @param {number} limit
- * @returns {MessageEmbed}
+ * @returns {Promise<MessageEmbed>}
  */
 async function getLB (prop, timetype, limit) {
   let res = "";
@@ -114,7 +114,7 @@ async function getLB (prop, timetype, limit) {
   switch(prop) {
   case "miniWallsWins": {
     comparitor = wComp;
-    parser = (a) => a.miniWallsWins;
+    parser = (a) => a.miniWalls.wins;
     break;
   }
 

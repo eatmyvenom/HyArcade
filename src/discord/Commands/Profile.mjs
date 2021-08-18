@@ -1,4 +1,5 @@
 import Logger from "hyarcade-logger";
+import Account from "hyarcade-requests/types/Account";
 import Command from "../../classes/Command.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
@@ -7,104 +8,116 @@ import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
-function numberify(n) {
-    let r = Intl.NumberFormat("en").format(Number(("" + n).replace(/undefined/g, 0).replace(/null/g, 0)));
-    r = r == NaN ? (r = "N/A") : r;
-    return r;
+/**
+ * @param {number} n
+ * @returns {string}
+ */
+function numberify (n) {
+  let r = Intl.NumberFormat("en").format(Number((`${n}`).replace(/undefined/g, 0).replace(/null/g, 0)));
+  r = isNaN(n) ? (r = "N/A") : r;
+  return r;
 }
 
-function getMain(acc) {
-    let games = {
-        Party_games: acc.wins,
-        HITW: acc.hitwWins,
-        Farm_hunt: acc.farmhuntWins,
-        Hypixel_says: acc.hypixelSaysWins,
-        Mini_walls: acc.miniWallsWins,
-        Football: acc.footballWins,
-        Ender_spleef: acc.enderSpleefWins,
-        Dragon_wars: acc.dragonWarsWins,
-        Galaxy_wars: acc.galaxyWarsWins,
-        Bounty_hunters: acc.bountyHuntersWins,
-        Blocking_dead: acc.blockingDeadWins,
-        Throw_out: acc.throwOutWins,
-        Hide_and_seek: acc.hideAndSeekWins,
-        Zombies: acc.zombiesWins,
-        Pixel_painters: acc.pixelPaintersWins,
-        Seasonal: acc.simTotal,
-    };
+/**
+ * @param {Account} acc
+ * @returns {string}
+ */
+function getMain (acc) {
+  const games = {
+    Party_games: acc.partyGames.wins,
+    HITW: acc.holeInTheWall.wins,
+    Farm_hunt: acc.farmhunt.wins,
+    Hypixel_says: acc.hypixelSays.wins,
+    Mini_walls: acc.miniWalls.wins,
+    Football: acc.football.wins,
+    Ender_spleef: acc.enderSpleef.wins,
+    Dragon_wars: acc.dragonWars.wins,
+    Galaxy_wars: acc.galaxyWars.wins,
+    Bounty_hunters: acc.bountyHunters.wins,
+    Blocking_dead: acc.blockingDead.wins,
+    Throw_out: acc.throwOut.wins,
+    Hide_and_seek: acc.hideAndSeek.wins,
+    Zombies: acc.zombies.wins_zombies,
+    Pixel_painters: acc.pixelPainters.wins,
+    Seasonal: acc.seasonalWins.total,
+  };
 
-    let max = 0;
-    let game = "";
-    for (let g in games) {
-        if (games[g] > max) {
-            max = games[g];
-            game = g;
-        }
+  let max = 0;
+  let game = "";
+  for (const g in games) {
+    if (games[g] > max) {
+      max = games[g];
+      game = g;
     }
+  }
 
-    return `${game.replace(/_/g, " ")} wins - ${numberify(max)}`;
+  return `${game.replace(/_/g, " ")} wins - ${numberify(max)}`;
 }
 
-function lastSeen(acc) {
-    if (acc.isLoggedIn) {
-        return "right now";
-    } else {
-        return TimeFormatter(acc.lastLogout);
-    }
+/**
+ * @param {Account} acc
+ * @returns {string}
+ */
+function lastSeen (acc) {
+  if (acc.isLoggedIn) {
+    return "right now";
+  } 
+  return TimeFormatter(acc.lastLogout);
+  
 }
 
-export let Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
-    let player = args[0];
-    let acc;
-    if (interaction == undefined) {
-        acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
-    } else {
-        acc = await InteractionUtils.resolveAccount(interaction);
-        if(acc == undefined) {
-            return new CommandResponse("", ERROR_UNLINKED);
-        }
+export const Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
+  const player = args[0];
+  let acc;
+  if (interaction == undefined) {
+    acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
+  } else {
+    acc = await InteractionUtils.resolveAccount(interaction);
+    if(acc == undefined) {
+      return new CommandResponse("", ERROR_UNLINKED);
     }
-    let lvl = Math.round(acc.level * 100) / 100;
-    let img = new ImageGenerator(640, 400, "'myFont'");
-    try {
-        await img.addBackground("resources/arc.png");
-    } catch (e) {
-        Logger.err(e);
-        Logger.err("Error setting background");
-        throw new Error("Error setting background");
-    }
+  }
+  const lvl = Math.round(acc.level * 100) / 100;
+  const img = new ImageGenerator(640, 400, "'myFont'");
+  try {
+    await img.addBackground("resources/arc.png");
+  } catch (e) {
+    Logger.err(e);
+    Logger.err("Error setting background");
+    throw new Error("Error setting background");
+  }
 
-    try {
-        await img.addImage("https://crafatar.com/renders/body/" + acc.uuid + "?overlay", 12, 116, 32, "08");
-    } catch (e) {
-        Logger.err(e);
-        Logger.err("Error setting skin");
-        await img.addImage("resources/wtf.png", 12, 116, 96, "04");
-        // throw new Error("Error setting skin");
-    }
+  try {
+    await img.addImage(`https://crafatar.com/renders/body/${acc.uuid}?overlay`, 12, 116, 32, "08");
+  } catch (e) {
+    Logger.err(e);
+    Logger.err("Error setting skin");
+    await img.addImage("resources/wtf.png", 12, 116, 96, "04");
+    // throw new Error("Error setting skin");
+  }
 
-    if(acc.name?.toLowerCase() == "v3xm") {
-        await img.addImage("https://i.eatmyvenom.me/v3xm.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
-    } else {
-        img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
-    }
+  if(acc.name?.toLowerCase() == "v3xm") {
+    await img.addImage("https://i.eatmyvenom.me/v3xm.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
+  } else {
+    img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
+  }
 
-    let y = 112;
+  let y = 112;
 
-    img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 32);
-    img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#dd66ff", 32);
-    img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#00cc66", 32);
-    img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#d69323", 32);
-    img.writeTextRight(
-        `Arcade wins - ${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`,
-        (y += 42),
-        "#00ddff",
-        32
-    );
-    img.writeTextRight(getMain(acc), (y += 42), "#ee0061", 32);
-    img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#a6ee31", 32);
+  img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 32);
+  img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#dd66ff", 32);
+  img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#00cc66", 32);
+  img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#d69323", 32);
+  img.writeTextRight(
+    `Arcade wins - ${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`,
+    (y += 42),
+    "#00ddff",
+    32
+  );
+  img.writeTextRight(getMain(acc), (y += 42), "#ee0061", 32);
+  img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#a6ee31", 32);
 
-    let attachment = img.toDiscord();
+  const attachment = img.toDiscord();
 
-    return { res: "", img: attachment };
+  return { res: "", img: attachment };
 });

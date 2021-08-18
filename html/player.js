@@ -84,7 +84,7 @@ function partyGames (data) {
   const ele = document.getElementById("pg-wins");
   let html = "";
 
-  html += `<h6>Party games</h6><br />- Wins : ${formatNum(data.wins)}`;
+  html += `<h6>Party games</h6><br />- Wins : ${formatNum(data.partyGames.wins)}`;
 
   ele.innerHTML = html;
 }
@@ -97,7 +97,7 @@ function farmhunt (data) {
   const ele = document.getElementById("fh-wins");
   let html = "";
 
-  html += `<h6>Farmhunt</h6><br />- Wins : ${formatNum(data.farmhuntWins)}<br />- Poop collected : ${formatNum(data.farmhuntShit)}`;
+  html += `<h6>Farmhunt</h6><br />- Wins : ${formatNum(data.farmhunt.wins)}<br />- Poop collected : ${formatNum(data.farmhunt.poop)}`;
 
   ele.innerHTML = html;
 }
@@ -111,10 +111,10 @@ function hitw (data) {
   let html = "";
 
   html += "<h6>Hole in the wall</h6><br />" +
-    `- Wins : ${formatNum(data.hitwWins)}<br />` + 
-    `- Qualifiers : ${formatNum(data.hitwQual)}<br />` +
-    `- Finals : ${formatNum(data.hitwFinal)}<br />` +
-    `- Rounds : ${formatNum(data.hitwRounds)} ${lilQuestionMark("rounds")}`;
+    `- Wins : ${formatNum(data.holeInTheWall.wins)}<br />` + 
+    `- Qualifiers : ${formatNum(data.holeInTheWall.qualifiers)}<br />` +
+    `- Finals : ${formatNum(data.holeInTheWall.finals)}<br />` +
+    `- Rounds : ${formatNum(data.holeInTheWall.rounds)} ${lilQuestionMark("rounds")}`;
 
   ele.innerHTML = html;
 }
@@ -128,8 +128,8 @@ function hypixelSays (data) {
   let html = "";
 
   html += "<h6>Hypixel says</h6><br />" +
-    `- Wins : ${formatNum(data.hypixelSaysWins)}<br />` + 
-    `- Rounds : ${formatNum(data.extras.hypixelSaysRounds)} ${lilQuestionMark("rounds")}`;
+    `- Wins : ${formatNum(data.hypixelSays.wins)}<br />` + 
+    `- Rounds : ${formatNum(data.hypixelSays.rounds)} ${lilQuestionMark("rounds")}`;
 
   ele.innerHTML = html;
 }
@@ -143,9 +143,9 @@ function blockingDead (data) {
   let html = "";
 
   html += "<h6>Blocking dead</h6><br />" +
-    `- Wins : ${formatNum(data.blockingDeadWins)}<br />` + 
-    `- Kills : ${formatNum(data.extras.blockingDeadKills)}<br />` +
-    `- Headshots : ${formatNum(data.extras.blockingDeadHeadshots)}`;
+    `- Wins : ${formatNum(data.blockingDead.wins)}<br />` + 
+    `- Kills : ${formatNum(data.blockingDead.kills)}<br />` +
+    `- Headshots : ${formatNum(data.blockingDead.headshots)}`;
 
   ele.innerHTML = html;
 }
@@ -159,7 +159,7 @@ function miniWalls (data) {
   let html = "";
 
   html += "<h6>Mini walls</h6><br />" +
-    `- Wins : ${formatNum(data.miniWallsWins)}<br />` + 
+    `- Wins : ${formatNum(data.miniWalls.wins)}<br />` + 
     `- Kills : ${formatNum(data.miniWalls.kills)}<br />` +
     `- Deaths : ${formatNum(data.miniWalls.deaths)}<br />` +
     `- Final kills : ${formatNum(data.miniWalls.finalKills)}<br />` +
@@ -178,10 +178,10 @@ function football (data) {
   let html = "";
 
   html += "<h6>Football</h6><br />" +
-    `- Wins : ${formatNum(data.footballWins)}<br />` + 
-    `- Kicks : ${formatNum(data.extras.footballKicks)}<br />` +
-    `- Power kicks : ${formatNum(data.extras.footballPKicks)}<br />` +
-    `- Goals : ${formatNum(data.extras.footballGoals)}`;
+    `- Wins : ${formatNum(data.football.wins)}<br />` + 
+    `- Kicks : ${formatNum(data.football.kicks)}<br />` +
+    `- Power kicks : ${formatNum(data.football.powerkicks)}<br />` +
+    `- Goals : ${formatNum(data.football.goals)}`;
 
   ele.innerHTML = html;
 }
@@ -195,9 +195,9 @@ function throwOut (data) {
   let html = "";
 
   html += "<h6>Throw out</h6><br />" +
-    `- Wins : ${formatNum(data.throwOutWins)}<br />` + 
-    `- Kills : ${formatNum(data.extras.throwOutKills)}<br />` +
-    `- Deaths : ${formatNum(data.extras.throwOutDeaths)}`;
+    `- Wins : ${formatNum(data.throwOut.wins)}<br />` + 
+    `- Kills : ${formatNum(data.throwOut.kills)}<br />` +
+    `- Deaths : ${formatNum(data.throwOut.deaths)}`;
 
   ele.innerHTML = html;
 }
@@ -211,7 +211,7 @@ function enderSpleef (data) {
   let html = "";
 
   html += "<h6>Ender spleef</h6><br />" +
-    `- Wins : ${formatNum(data.enderSpleefWins)}`;
+    `- Wins : ${formatNum(data.enderSpleef.wins)}`;
 
   ele.innerHTML = html;
 }
@@ -225,9 +225,9 @@ function galaxyWars (data) {
   let html = "";
 
   html += "<h6>Galaxy wars</h6><br />" +
-    `- Wins : ${formatNum(data.galaxyWarsWins)}<br />` + 
-    `- Kills : ${formatNum(data.extras.galaxyWarsKills)}<br />` +
-    `- Deaths : ${formatNum(data.extras.galaxyWarsDeaths)}`;
+    `- Wins : ${formatNum(data.galaxyWars.wins)}<br />` + 
+    `- Kills : ${formatNum(data.galaxyWars.kills)}<br />` +
+    `- Deaths : ${formatNum(data.galaxyWars.deaths)}`;
 
   ele.innerHTML = html;
 }
@@ -241,8 +241,8 @@ function dragonWars (data) {
   let html = "";
 
   html += "<h6>Dragon wars</h6><br />" +
-    `- Wins : ${formatNum(data.dragonWarsWins)}<br />` + 
-    `- Kills : ${formatNum(data.extras.dragonWarsKills)}`;
+    `- Wins : ${formatNum(data.dragonWars.wins)}<br />` + 
+    `- Kills : ${formatNum(data.dragonWars.kills)}`;
 
   ele.innerHTML = html;
 }
@@ -256,10 +256,10 @@ function bountyHunters (data) {
   let html = "";
 
   html += "<h6>Bounty hunters</h6><br />" +
-    `- Wins : ${formatNum(data.bountyHuntersWins)}<br />` + 
-    `- Kills : ${formatNum(data.extras.bountyHuntersKills)}<br />` +
-    `- Bounty kills : ${formatNum(data.extras.bountyHuntersBountyKills)}<br />` +
-    `- Deaths : ${formatNum(data.extras.bountyHuntersDeaths)}`;
+    `- Wins : ${formatNum(data.bountyHunters.wins)}<br />` + 
+    `- Kills : ${formatNum(data.bountyHunters.kills)}<br />` +
+    `- Bounty kills : ${formatNum(data.bountyHunters.bountyKills)}<br />` +
+    `- Deaths : ${formatNum(data.bountyHunters.deaths)}`;
 
   ele.innerHTML = html;
 }
@@ -273,10 +273,10 @@ function hideAndSeek (data) {
   let html = "";
 
   html += "<h6>Hide and seek</h6><br />" +
-    `- Wins : ${formatNum(data.hideAndSeekWins)}<br />` + 
-    `- Hider wins : ${formatNum(data.extras.HNSHiderWins)}<br />` +
-    `- Seeker wins : ${formatNum(data.extras.HNSSeekerWins)}<br />` +
-    `- Kills : ${formatNum(data.hnsKills)}`;
+    `- Wins : ${formatNum(data.hideAndSeek.wins)}<br />` + 
+    `- Hider wins : ${formatNum(data.hideAndSeek.hiderWins)}<br />` +
+    `- Seeker wins : ${formatNum(data.hideAndSeek.seekerWins)}<br />` +
+    `- Kills : ${formatNum(data.hideAndSeek.kills)}`;
 
   ele.innerHTML = html;
 }
@@ -290,7 +290,7 @@ function zombies (data) {
   let html = "";
 
   html += "<h6>Zombies</h6><br />" +
-    `- Wins : ${formatNum(data.zombiesWins)}<br />` + 
+    `- Wins : ${formatNum(data.zombies.wins_zombies)}<br />` + 
     `- Bad blood wins : ${formatNum(data.zombies.wins_zombies_badblood)}<br />` +
     `- Dead end wins : ${formatNum(data.zombies.wins_zombies_deadend)}<br />` +
     `- Alien arcadium wins : ${formatNum(data.zombies.wins_zombies_alienarcadium)}`;
@@ -307,7 +307,7 @@ function pixelPainters (data) {
   let html = "";
 
   html += "<h6>Pixel painters</h6><br />" +
-    `- Wins : ${formatNum(data.pixelPaintersWins)}`;
+    `- Wins : ${formatNum(data.pixelPainters.wins)}`;
 
   ele.innerHTML = html;
 }
@@ -321,8 +321,8 @@ function captureTheWool (data) {
   let html = "";
 
   html += "<h6>Capture the wool</h6><br />" +
-    `- Captures : ${formatNum(data.ctwWoolCaptured)}<br />` + 
-    `- Kills : ${formatNum(data.ctwKills)}`;
+    `- Captures : ${formatNum(data.captureTheWool.woolCaptured)}<br />` + 
+    `- Kills : ${formatNum(data.captureTheWool.kills)}`;
 
   ele.innerHTML = html;
 }
@@ -334,42 +334,22 @@ function captureTheWool (data) {
 function displayData (data) {
   console.log(data);
   const ver = data.version ? data.version : "1.8.9";
-  //// setHtmlByName("arcwins", `Arcade wins: ${formatNum(data.arcadeWins)}`);
+
   arcade(data);
-  //// setHtmlByName("pg-wins", `Party games wins: ${formatNum(data.wins)}`);
   partyGames(data);
-  //// setHtmlByName("fh-wins", `Farm hunt wins: ${formatNum(data.farmhuntWins)}`);
   farmhunt(data);
-  //// setHtmlByName("hitw", `HITW wins: ${data.hitwWins}`);
   hitw(data);
-  //// setHtmlByName("hysay", `Hypixel says wins: ${formatNum(data.hypixelSaysWins)}`);
   hypixelSays(data);
-  //// setHtmlByName(
-  ////   "bd",
-  ////   `BD: W:${formatNum(data.blockingDeadWins)} / K:${formatNum(data.extras.blockingDeadKills)} / HS:${formatNum(
-  ////     data.extras.blockingDeadHeadshots
-  ////   )}`
-  //// );
   blockingDead(data);
-  //// setHtmlByName("mw", `Mini walls wins: ${formatNum(data.miniWallsWins)}`);
   miniWalls(data);
-  //// setHtmlByName("fb", `Football wins: ${formatNum(data.footballWins)}`);
   football(data);
-  //// setHtmlByName("es", `Ender spleef wins: ${formatNum(data.enderSpleefWins)}`);
   enderSpleef(data);
-  //// setHtmlByName("to", `Throw out wins: ${formatNum(data.throwOutWins)}`);
   throwOut(data);
-  //// setHtmlByName("gw", `Galaxy wars wins: ${formatNum(data.galaxyWarsWins)}`);
   galaxyWars(data);
-  //// setHtmlByName("dw", `Dragon wars wins: ${formatNum(data.dragonWarsWins)}`);
   dragonWars(data);
-  //// setHtmlByName("bh", `Bounty hunter wins: ${formatNum(data.bountyHuntersWins)}`);
   bountyHunters(data);
-  //// setHtmlByName("hns", `Hide and seek wins: ${formatNum(data.hideAndSeekWins)}`);
   hideAndSeek(data);
-  //// setHtmlByName("z", `Zombie wins: ${formatNum(data.zombiesWins)}`);
   zombies(data);
-  //// setHtmlByName("pp", `Pixel painter wins: ${formatNum(data.pixelPaintersWins)}`);
   pixelPainters(data);
   captureTheWool(data);
 

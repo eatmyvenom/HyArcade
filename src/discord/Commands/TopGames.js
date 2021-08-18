@@ -20,67 +20,67 @@ const {
 function getGames (acc) {
   let games = [{
     name: "Party games",
-    wins: acc.wins
+    wins: acc.partyGames.wins
   },
   {
     name: "HITW",
-    wins: acc.hitwWins
+    wins: acc.holeInTheWall.wins
   },
   {
     name: "Farm hunt",
-    wins: acc.farmhuntWins
+    wins: acc.farmhunt.wins
   },
   {
     name: "Hypixel says",
-    wins: acc.hypixelSaysWins
+    wins: acc.hypixelSays.wins
   },
   {
     name: "Mini walls",
-    wins: acc.miniWallsWins
+    wins: acc.miniWalls.wins
   },
   {
     name: "Football",
-    wins: acc.footballWins
+    wins: acc.football.wins
   },
   {
     name: "Ender spleef",
-    wins: acc.enderSpleefWins
+    wins: acc.enderSpleef.wins
   },
   {
     name: "Dragon wars",
-    wins: acc.dragonWarsWins
+    wins: acc.dragonWars.wins
   },
   {
     name: "Bounty hunters",
-    wins: acc.bountyHuntersWins
+    wins: acc.bountyHunters.wins
   },
   {
     name: "Blocking dead",
-    wins: acc.blockingDeadWins
+    wins: acc.blockingDead.wins
   },
   {
     name: "Throw out",
-    wins: acc.throwOutWins
+    wins: acc.throwOut.wins
   },
   {
     name: "Hide and seek",
-    wins: acc.hideAndSeekWins
+    wins: acc.hideAndSeek.wins
   },
   {
     name: "Zombies",
-    wins: acc.zombiesWins
+    wins: acc.zombies.wins_zombies
   },
   {
     name: "Galaxy wars",
-    wins: acc.galaxyWarsWins
+    wins: acc.galaxyWars.wins
   },
   {
     name: "Pixel painters",
-    wins: acc.pixelPaintersWins
+    wins: acc.pixelPainters.wins
   },
   {
     name: "Seasonal",
-    wins: acc.simTotal
+    wins: acc.seasonalWins.total
   },
   ];
 
@@ -115,22 +115,22 @@ function getGames (acc) {
  * @returns {Account}
  */
 function getTimedAccount (acc1, acc2) {
-  acc1.wins = (acc1.wins ?? 0) - (acc2?.wins ?? 0);
-  acc1.hitwWins = (acc1.hitwWins ?? 0) - (acc2?.hitwWins ?? 0);
-  acc1.farmhuntWins = (acc1.farmhuntWins ?? 0) - (acc2?.farmhuntWins ?? 0);
-  acc1.hypixelSaysWins = (acc1.hypixelSaysWins ?? 0) - (acc2?.hypixelSaysWins ?? 0);
-  acc1.miniWallsWins = (acc1.miniWallsWins ?? 0) - (acc2?.miniWallsWins ?? 0);
-  acc1.footballWins = (acc1.footballWins ?? 0) - (acc2?.footballWins ?? 0);
-  acc1.enderSpleefWins = (acc1.enderSpleefWins ?? 0) - (acc2?.enderSpleefWins ?? 0);
-  acc1.dragonWarsWins = (acc1.dragonWarsWins ?? 0) - (acc2?.dragonWarsWins ?? 0);
-  acc1.bountyHuntersWins = (acc1.bountyHuntersWins ?? 0) - (acc2?.bountyHuntersWins ?? 0);
-  acc1.blockingDeadWins = (acc1.blockingDeadWins ?? 0) - (acc2?.blockingDeadWins ?? 0);
-  acc1.throwOutWins = (acc1.throwOutWins ?? 0) - (acc2?.throwOutWins ?? 0);
-  acc1.hideAndSeekWins = (acc1.hideAndSeekWins ?? 0) - (acc2?.hideAndSeekWins ?? 0);
-  acc1.zombiesWins = (acc1.zombiesWins ?? 0) - (acc2?.zombiesWins ?? 0);
-  acc1.galaxyWarsWins = (acc1.galaxyWarsWins ?? 0) - (acc2?.galaxyWarsWins ?? 0);
-  acc1.pixelPaintersWins = (acc1.pixelPaintersWins ?? 0) - (acc2?.pixelPaintersWins ?? 0);
-  acc1.simTotal = (acc1.simTotal ?? 0) - (acc2?.simTotal ?? 0);
+  acc1.partyGames.wins = (acc1?.partyGames?.wins ?? 0) - (acc2?.partyGames?.wins ?? 0);
+  acc1.holeInTheWall.wins = (acc1?.holeInTheWall?.wins ?? 0) - (acc2?.holeInTheWall?.wins ?? 0);
+  acc1.farmhunt.wins = (acc1?.farmhunt?.wins ?? 0) - (acc2?.farmhunt?.wins ?? 0);
+  acc1.hypixelSays.wins = (acc1?.hypixelSays.wins ?? 0) - (acc2?.hypixelSays.wins ?? 0);
+  acc1.miniWalls.wins = (acc1?.miniWalls?.wins ?? 0) - (acc2?.miniWalls?.wins ?? 0);
+  acc1.football.wins = (acc1?.football?.wins ?? 0) - (acc2?.football?.wins ?? 0);
+  acc1.enderSpleef.wins = (acc1?.enderSpleef?.wins ?? 0) - (acc2?.enderSpleef?.wins ?? 0);
+  acc1.dragonWars.wins = (acc1.dragonWars?.wins ?? 0) - (acc2?.dragonWars?.wins ?? 0);
+  acc1.bountyHunters.wins = (acc1.bountyHunters?.wins ?? 0) - (acc2?.bountyHunters?.wins ?? 0);
+  acc1.blockingDead.wins = (acc1.blockingDead?.wins ?? 0) - (acc2?.blockingDead?.wins ?? 0);
+  acc1.throwOut.wins = (acc1.throwOut?.wins ?? 0) - (acc2?.throwOut?.wins ?? 0);
+  acc1.hideAndSeek.wins = (acc1?.hideAndSeek?.wins ?? 0) - (acc2?.hideAndSeek?.wins ?? 0);
+  acc1.zombies.wins_zombies = (acc1.zombies?.wins_zombies ?? 0) - (acc2?.zombies?.wins_zombies ?? 0);
+  acc1.galaxyWars.wins = (acc1?.galaxyWars?.wins ?? 0) - (acc2?.galaxyWars?.wins ?? 0);
+  acc1.pixelPainters.wins = (acc1?.pixelPainters?.wins ?? 0) - (acc2?.pixelPainters?.wins ?? 0);
+  acc1.seasonalWins.total = (acc1?.seasonalWins?.total ?? 0) - (acc2?.seasonalWins?.total ?? 0);
 
   return acc1;
 }
