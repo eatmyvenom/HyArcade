@@ -1,3 +1,4 @@
+const Account = require("hyarcade-requests/types/Account");
 const hypixelApi = require("../hypixelApi");
 let accounts = [];
 
@@ -15,7 +16,13 @@ module.exports = function Gld (acclist) {
 };
 
 class Guild {
-    members = [];
+
+  /**
+   *
+   * @type {Account[]}
+   * @memberof Guild
+   */
+  members = [];
     name = "";
     wins = 0;
     arcadeEXP = 0;
@@ -116,19 +123,19 @@ class Guild {
         this.arcadeWins += member.combinedArcadeWins;
         this.karma += numberify(member.karma);
         this.ranksGifted += numberify(member.ranksGifted);
-        this.hitwWins += numberify(member.hitwWins);
-        this.farmhuntWins += numberify(member.farmhuntWins);
-        this.miniWallsWins += numberify(member.miniWallsWins);
-        this.footballWins += numberify(member.footballWins);
-        this.enderSpleefWins += numberify(member.enderSpleefWins);
-        this.throwOutWins += numberify(member.throwOutWins);
-        this.galaxyWarsWins += numberify(member.galaxyWarsWins);
-        this.dragonWarsWins += numberify(member.dragonWarsWins);
-        this.blockingDeadWins += numberify(member.blockingDeadWins);
-        this.hideAndSeekWins += numberify(member.hideAndSeekWins);
-        this.zombiesWins += numberify(member.zombiesWins);
-        this.pixelPaintersWins += numberify(member.pixelPaintersWins);
-        this.simWins += numberify(member.simTotal);
+        this.hitwWins += numberify(member.holeInTheWall.wins);
+        this.farmhuntWins += numberify(member.farmhunt.wins);
+        this.miniWallsWins += numberify(member.miniWalls.wins);
+        this.footballWins += numberify(member.football.wins);
+        this.enderSpleefWins += numberify(member.enderSpleef.wins);
+        this.throwOutWins += numberify(member.throwOut.wins);
+        this.galaxyWarsWins += numberify(member.galaxyWars.wins);
+        this.dragonWarsWins += numberify(member.dragonWars.wins);
+        this.blockingDeadWins += numberify(member.blockingDead.wins);
+        this.hideAndSeekWins += numberify(member.hideAndSeek.wins);
+        this.zombiesWins += numberify(member.zombies.wins_zombies);
+        this.pixelPaintersWins += numberify(member.pixelPainters.wins);
+        this.simWins += numberify(member.seasonalWins.total);
       }
       delete this.members;
       return this.wins;

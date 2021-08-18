@@ -1,4 +1,4 @@
-const Account = require("../classes/account");
+const Account = require("hyarcade-requests/types/Account");
 const utils = require("../utils");
 const {
   logger
@@ -29,8 +29,8 @@ module.exports = async function (database) {
 };
 
 /**
- * @param {object} accounts
- * @param {object} oldAccs
+ * @param {Account[]} accounts
+ * @param {Account[]} oldAccs
  * @param {collection} collection
  * @returns {Promise}
  */
@@ -40,7 +40,7 @@ async function updateAccountsInArr (accounts, oldAccs, collection) {
       const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
       if(oldAcc != undefined && !force) {
         const aboveArcadeLimit = oldAcc.arcadeWins >= cfg.arcadeWinLimit;
-        const fbAboveCringeLimit = oldAcc.footballWins >= cfg.cringeGameUpperBound;
+        const fbAboveCringeLimit = oldAcc.football.wins >= cfg.cringeGameUpperBound;
         const fbBelowCringeLimit = oldAcc.footballWins <= cfg.cringeGameLowerBound;
         const fbOutsideCringeLimit = fbBelowCringeLimit || fbAboveCringeLimit;
         const mwAboveCringeLimit = oldAcc.miniWallsWins >= cfg.cringeGameUpperBound;
