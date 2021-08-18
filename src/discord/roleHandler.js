@@ -23,6 +23,7 @@ module.exports = async function roleHandler (client) {
       new Role(10, "746848002731147374"),
       new Role(0, "766422200663408662"),
     ],
+    "partyGames",
     "wins"
   );
 
@@ -48,7 +49,7 @@ module.exports = async function roleHandler (client) {
       new Role(25, "846141095708327970"),
       new Role(1, "846141095708327969"),
     ],
-    "hypixelSaysWins"
+    "hypixelSays", "wins"
   );
 
   const toGuild = await client.guilds.fetch("809959535174352946");
@@ -61,7 +62,7 @@ module.exports = async function roleHandler (client) {
       new Role(100, "815629895303430184"),
       new Role(50, "815629895303430184"),
     ],
-    "throwOutWins"
+    "throwOut", "wins"
   );
 
   const simGuild = await client.guilds.fetch("826906189404176415");
@@ -75,7 +76,7 @@ module.exports = async function roleHandler (client) {
       new Role(250, "826929365648146483"),
       new Role(100, "826929192062681099"),
     ],
-    "simTotal"
+    "seasonalWins", "total"
   );
 
   const fhGuild = await client.guilds.fetch("810614388612136960");
@@ -101,7 +102,7 @@ module.exports = async function roleHandler (client) {
       new Role(50, "836729997171490877"),
       new Role(0, "836730103743905834"),
     ],
-    "farmhuntWins"
+    "farmhunt", "wins"
   );
 
   const hnsGuild = await client.guilds.fetch("839842177755775026");
@@ -117,7 +118,7 @@ module.exports = async function roleHandler (client) {
       new Role(100, "839843397543657502"),
       new Role(0, "839843424575815680"),
     ],
-    "hideAndSeekWins"
+    "hideAndSeek", "wins"
   );
   const HNSK = new RoleUpdater(
     hnsGuild,
@@ -133,7 +134,8 @@ module.exports = async function roleHandler (client) {
       new Role(250, "847463651224322078"),
       new Role(100, "847463463253049435"),
     ],
-    "hnsKills"
+    "hideAndSeek",
+    "kills"
   );
 
   await PG.updateAll();

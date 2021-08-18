@@ -4,11 +4,13 @@ const Webhooks = require("./Utils/Webhooks");
 module.exports = class RoleUpdater {
     roles = [];
     guild = {};
+    game = "";
     prop = "";
 
-    constructor (guild, roles, prop) {
+    constructor (guild, roles, game, prop) {
       this.guild = guild;
       this.roles = roles;
+      this.game = game;
       this.prop = prop;
     }
 
@@ -36,8 +38,7 @@ module.exports = class RoleUpdater {
     }
 
     async updatePlayer (acc, discMember) {
-      // logger.out(`Updating ${discMember.user.tag}`);
-      const newRole = this.getRole(acc[this.prop]);
+      const newRole = this.getRole(acc[this.game][this.prop]);
       if(newRole == undefined) return;
       if(discMember.roles == undefined) return;
 
