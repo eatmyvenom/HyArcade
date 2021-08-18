@@ -26,9 +26,9 @@ async function load () {
     mainTitle.innerHTML = "Party games";
     address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "wins";
+    lifetime.id = "partyGames.wins";
     daily.title = "Daily wins";
-    daily.id = "wins";
+    daily.id = "partyGames.wins";
     break;
   }
 
@@ -36,9 +36,9 @@ async function load () {
     mainTitle.innerHTML = "Hypixel Says";
     address.innerHTML = "<a href=\"https://discord.gg/GzjN5c4zze\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "hypixelSaysWins";
+    lifetime.id = "hypixelSays.wins";
     daily.title = "Daily wins";
-    daily.id = "hypixelSaysWins";
+    daily.id = "hypixelSays.wins";
 
     const roundsL = document.createElement("div");
     roundsL.setAttribute("class", "life");
@@ -50,11 +50,9 @@ async function load () {
     roundsD.title = "Daily rounds";
     main.appendChild(roundsD);
 
-    roundsD.id = "hypixelSaysRounds";
-    roundsD.setAttribute("extras", roundsD.id);
+    roundsD.id = "hypixelSays.rounds";
 
-    roundsL.id = "hypixelSaysRounds";
-    roundsL.setAttribute("extras", roundsL.id);
+    roundsL.id = "hypixelSays.rounds";
     break;
   }
 
@@ -62,9 +60,9 @@ async function load () {
     mainTitle.innerHTML = "Farm hunt";
     address.innerHTML = "<a href=\"https://discord.gg/fVgcvhtaWk\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "farmhuntWins";
+    lifetime.id = "farmhunt.wins";
     daily.title = "Daily wins";
-    daily.id = "farmhuntWins";
+    daily.id = "farmhunt.wins";
 
     const shitL = document.createElement("div");
     shitL.setAttribute("class", "life");
@@ -76,9 +74,9 @@ async function load () {
     shitD.title = "Daily poop";
     main.appendChild(shitD);
 
-    shitD.id = "farmhuntShit";
+    shitD.id = "farmhunt.poop";
 
-    shitL.id = "farmhuntShit";
+    shitL.id = "farmhunt.poop";
     break;
   }
 
@@ -86,44 +84,44 @@ async function load () {
     mainTitle.innerHTML = "Hole in the wall";
     address.innerHTML = "<a href=\"https://discord.gg/Gh24vw5b54\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "hitwWins";
+    lifetime.id = "holeInTheWall.wins";
     daily.title = "Daily wins";
-    daily.id = "hitwWins";
+    daily.id = "holeInTheWall.wins";
 
     const roundsL = document.createElement("div");
     roundsL.setAttribute("class", "life");
     roundsL.title = "Lifetime walls";
-    roundsL.id = "hitwRounds";
+    roundsL.id = "holeInTheWall.rounds";
     main.appendChild(roundsL);
 
     const roundsD = document.createElement("div");
     roundsD.setAttribute("class", "day");
     roundsD.title = "Daily walls";
-    roundsD.id = "hitwRounds";
+    roundsD.id = "holeInTheWall.rounds";
     main.appendChild(roundsD);
 
     const qPBL = document.createElement("div");
     qPBL.setAttribute("class", "life");
     qPBL.title = "Top qualifier PB";
-    qPBL.id = "hitwQual";
+    qPBL.id = "holeInTheWall.qualifiers";
     main.appendChild(qPBL);
 
     const qPBD = document.createElement("div");
     qPBD.setAttribute("class", "day");
     qPBD.title = "Daily Q increase";
-    qPBD.id = "hitwQual";
+    qPBD.id = "holeInTheWall.qualifiers";
     main.appendChild(qPBD);
 
     const fPBL = document.createElement("div");
     fPBL.setAttribute("class", "life");
     fPBL.title = "Top finals PB";
-    fPBL.id = "hitwFinal";
+    fPBL.id = "holeInTheWall.finals";
     main.appendChild(fPBL);
 
     const fPBD = document.createElement("div");
     fPBD.setAttribute("class", "day");
     fPBD.title = "Daily F increase";
-    fPBD.id = "hitwFinal";
+    fPBD.id = "holeInTheWall.finals";
     main.appendChild(fPBD);
 
     break;
@@ -135,8 +133,8 @@ async function load () {
     lifetime.title = "Lifetime wins";
     daily.title = "Daily wins";
 
-    lifetime.id = "footballWins";
-    daily.id = "footballWins";
+    lifetime.id = "football.wins";
+    daily.id = "football.wins";
 
     const goalsL = document.createElement("div");
     goalsL.setAttribute("class", "life");
@@ -148,11 +146,9 @@ async function load () {
     goalsD.title = "Daily goals";
     main.appendChild(goalsD);
 
-    goalsD.id = "footballGoals";
-    goalsD.setAttribute("extras", goalsD.id);
+    goalsD.id = "football.goals";
 
-    goalsL.id = "footballGoals";
-    goalsL.setAttribute("extras", goalsL.id);
+    goalsL.id = "football.goals";
 
     const pkickL = document.createElement("div");
     pkickL.setAttribute("class", "life");
@@ -164,29 +160,23 @@ async function load () {
     pkickD.title = "Daily power kicks";
     main.appendChild(pkickD);
 
-    pkickD.id = "footballPKicks";
-    pkickD.setAttribute("extras", pkickD.id);
+    pkickD.id = "football.powerkicks";
 
-    pkickL.id = "footballPKicks";
-    pkickL.setAttribute("extras", pkickL.id);
+    pkickL.id = "football.powerkicks";
 
     const kickL = document.createElement("div");
     kickL.setAttribute("class", "life");
     kickL.title = "Lifetime kicks";
-    kickL.id = "hitwRounds";
     main.appendChild(kickL);
 
     const kickD = document.createElement("div");
     kickD.setAttribute("class", "day");
     kickD.title = "Daily kicks";
-    kickD.id = "hitwRounds";
     main.appendChild(kickD);
 
-    kickD.id = "footballKicks";
-    kickD.setAttribute("extras", kickD.id);
+    kickD.id = "football.goals";
 
-    kickL.id = "footballKicks";
-    kickL.setAttribute("extras", kickL.id);
+    kickL.id = "football.goals";
 
     break;
   }
@@ -195,9 +185,9 @@ async function load () {
     mainTitle.innerHTML = "Ender spleef";
     address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "enderSpleefWins";
+    lifetime.id = "enderSpleef.wins";
     daily.title = "Daily wins";
-    daily.id = "enderSpleefWins";
+    daily.id = "enderSpleef.wins";
     break;
   }
 
@@ -205,9 +195,9 @@ async function load () {
     mainTitle.innerHTML = "Throw out";
     address.innerHTML = "<a href=\"https://discord.gg/2sMpvqtJYh\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "throwOutWins";
+    lifetime.id = "throwOut.wins";
     daily.title = "Daily wins";
-    daily.id = "throwOutWins";
+    daily.id = "throwOut.wins";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -219,11 +209,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "throwOutKills";
-    killsD.setAttribute("extras", killsD.id);
+    killsD.id = "throwOut.kills";
 
-    killsL.id = "throwOutKills";
-    killsL.setAttribute("extras", killsL.id);
+    killsL.id = "throwOut.kills";
 
     const deathL = document.createElement("div");
     deathL.setAttribute("class", "life");
@@ -235,11 +223,9 @@ async function load () {
     deathD.title = "Daily deaths";
     main.appendChild(deathD);
 
-    deathD.id = "throwOutDeaths";
-    deathD.setAttribute("extras", deathD.id);
+    deathD.id = "throwOut.deaths";
 
-    deathL.id = "throwOutDeaths";
-    deathL.setAttribute("extras", deathL.id);
+    deathL.id = "throwOut.deaths";
     break;
   }
 
@@ -247,9 +233,9 @@ async function load () {
     mainTitle.innerHTML = "Galaxy Wars";
     address.innerHTML = "<a href=\"https://discord.gg/v9ZwqyZfYj\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "galaxyWarsWins";
+    lifetime.id = "galaxyWars.wins";
     daily.title = "Daily wins";
-    daily.id = "galaxyWarsWins";
+    daily.id = "galaxyWars.wins";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -261,11 +247,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "galaxyWarsKills";
-    killsD.setAttribute("extras", killsD.id);
+    killsD.id = "galaxyWars.kills";
 
-    killsL.id = "galaxyWarsKills";
-    killsL.setAttribute("extras", killsL.id);
+    killsL.id = "galaxyWars.kills";
 
     const deathL = document.createElement("div");
     deathL.setAttribute("class", "life");
@@ -277,11 +261,9 @@ async function load () {
     deathD.title = "Daily deaths";
     main.appendChild(deathD);
 
-    deathD.id = "galaxyWarsDeaths";
-    deathD.setAttribute("extras", deathD.id);
+    deathD.id = "galaxyWars.deaths";
 
-    deathL.id = "galaxyWarsDeaths";
-    deathL.setAttribute("extras", deathL.id);
+    deathL.id = "galaxyWars.deaths";
     break;
   }
 
@@ -289,9 +271,9 @@ async function load () {
     mainTitle.innerHTML = "Dragon Wars";
     address.innerHTML = "<a href=\"https://discord.gg/7ccREnQVuU\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "dragonWarsWins";
+    lifetime.id = "dragonWars.wins";
     daily.title = "Daily wins";
-    daily.id = "dragonWarsWins";
+    daily.id = "dragonWars.wins";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -303,11 +285,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "dragonWarsKills";
-    killsD.setAttribute("extras", killsD.id);
+    killsD.id = "dragonWars.kills";
 
-    killsL.id = "dragonWarsKills";
-    killsL.setAttribute("extras", killsL.id);
+    killsL.id = "dragonWars.kills";
     break;
   }
 
@@ -317,8 +297,8 @@ async function load () {
     lifetime.title = "Lifetime wins";
     daily.title = "Daily wins";
 
-    lifetime.id = "bountyHuntersWins";
-    daily.id = "bountyHuntersWins";
+    lifetime.id = "bountyHunters.wins";
+    daily.id = "bountyHunters.wins";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -330,11 +310,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "bountyHuntersKills";
-    killsD.setAttribute("extras", killsD.id);
+    killsD.id = "bountyHunters.kills";
 
-    killsL.id = "bountyHuntersKills";
-    killsL.setAttribute("extras", killsL.id);
+    killsL.id = "bountyHunters.kills";
 
     const hdshtL = document.createElement("div");
     hdshtL.setAttribute("class", "life");
@@ -346,11 +324,9 @@ async function load () {
     hdshtD.title = "Daily bounty kills";
     main.appendChild(hdshtD);
 
-    hdshtD.id = "bountyHuntersBountyKills";
-    hdshtD.setAttribute("extras", hdshtD.id);
+    hdshtD.id = "bountyHunters.bountyKills";
 
-    hdshtL.id = "bountyHuntersBountyKills";
-    hdshtL.setAttribute("extras", hdshtL.id);
+    hdshtL.id = "bountyHunters.bountyKills";
 
     const deathL = document.createElement("div");
     deathL.setAttribute("class", "life");
@@ -362,11 +338,9 @@ async function load () {
     deathD.title = "Daily deaths";
     main.appendChild(deathD);
 
-    deathD.id = "bountyHuntersDeaths";
-    deathD.setAttribute("extras", deathD.id);
+    deathD.id = "bountyHunters.deaths";
 
-    deathL.id = "bountyHuntersDeaths";
-    deathL.setAttribute("extras", deathL.id);
+    deathL.id = "bountyHunters.deaths";
 
     break;
   }
@@ -375,9 +349,9 @@ async function load () {
     mainTitle.innerHTML = "Blocking Dead";
     address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "blockingDeadWins";
+    lifetime.id = "blockingDead.wins";
     daily.title = "Daily wins";
-    daily.id = "blockingDeadWins";
+    daily.id = "blockingDead.wins";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -389,11 +363,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "blockingDeadKills";
-    killsD.setAttribute("extras", killsD.id);
+    killsD.id = "blockingDead.kills";
 
-    killsL.id = "blockingDeadKills";
-    killsL.setAttribute("extras", killsL.id);
+    killsL.id = "blockingDead.kills";
 
     const headshotL = document.createElement("div");
     headshotL.setAttribute("class", "life");
@@ -405,11 +377,9 @@ async function load () {
     headshotD.title = "Daily headshots";
     main.appendChild(headshotD);
 
-    headshotD.id = "blockingDeadHeadshots";
-    headshotD.setAttribute("extras", headshotD.id);
+    headshotD.id = "blockingDead.headshots";
 
-    headshotL.id = "blockingDeadHeadshots";
-    headshotL.setAttribute("extras", headshotL.id);
+    headshotL.id = "blockingDead.headshots";
     break;
   }
 
@@ -417,9 +387,9 @@ async function load () {
     mainTitle.innerHTML = "Hide and Seek";
     address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "hideAndSeekWins";
+    lifetime.id = "hideAndSeek.wins";
     daily.title = "Daily wins";
-    daily.id = "hideAndSeekWins";
+    daily.id = "hideAndSeek.wins";
 
     const seekerL = document.createElement("div");
     seekerL.setAttribute("class", "life");
@@ -431,11 +401,9 @@ async function load () {
     seekerD.title = "Daily seeker wins";
     main.appendChild(seekerD);
 
-    seekerD.id = "HNSSeekerWins";
-    seekerD.setAttribute("extras", seekerD.id);
+    seekerD.id = "hideAndSeek.seekerWins";
 
-    seekerL.id = "HNSSeekerWins";
-    seekerL.setAttribute("extras", seekerL.id);
+    seekerL.id = "hideAndSeek.seekerWins";
 
     const hiderL = document.createElement("div");
     hiderL.setAttribute("class", "life");
@@ -447,11 +415,9 @@ async function load () {
     hiderD.title = "Daily hider wins";
     main.appendChild(hiderD);
 
-    hiderD.id = "HNSHiderWins";
-    hiderD.setAttribute("extras", hiderD.id);
+    hiderD.id = "hideAndSeek.hiderWins";
 
-    hiderL.id = "HNSHiderWins";
-    hiderL.setAttribute("extras", hiderL.id);
+    hiderL.id = "hideAndSeek.hiderWins";
 
     const hiderKL = document.createElement("div");
     hiderKL.setAttribute("class", "life");
@@ -462,8 +428,8 @@ async function load () {
     hiderKD.setAttribute("class", "day");
     hiderKD.title = "Daily kills";
     main.appendChild(hiderKD);
-    hiderKD.id = "hnsKills";
-    hiderKL.id = "hnsKills";
+    hiderKD.id = "hideAndSeek.kills";
+    hiderKL.id = "hideAndSeek.kills";
 
     break;
   }
@@ -521,92 +487,80 @@ async function load () {
     mainTitle.innerHTML = "Zombies";
     address.innerHTML = "<a href=\"https://discord.gg/2RDCTPWqVT\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "zombiesWins";
+    lifetime.id = "zombies.wins_zombies";
     daily.title = "Daily wins";
-    daily.id = "zombiesWins";
+    daily.id = "zombies.wins_zombies";
 
     const deWinsL = document.createElement("div");
     deWinsL.setAttribute("class", "life");
     deWinsL.title = "Lifetime Dead End wins";
-    deWinsL.id = "wins_zombies_deadend";
-    deWinsL.setAttribute("zombies", deWinsL.id);
+    deWinsL.id = "zombies.wins_zombies_deadend";
     main.appendChild(deWinsL);
 
     const deWinsD = document.createElement("div");
     deWinsD.setAttribute("class", "day");
     deWinsD.title = "Daily Dead End wins";
-    deWinsD.id = "wins_zombies_deadend";
-    deWinsD.setAttribute("zombies", deWinsD.id);
+    deWinsD.id = "zombies.wins_zombies_deadend";
     main.appendChild(deWinsD);
 
     const bbWinsL = document.createElement("div");
     bbWinsL.setAttribute("class", "life");
     bbWinsL.title = "Lifetime Bad Blood wins";
-    bbWinsL.id = "wins_zombies_badblood";
-    bbWinsL.setAttribute("zombies", bbWinsL.id);
+    bbWinsL.id = "zombies.wins_zombies_badblood";
     main.appendChild(bbWinsL);
 
     const bbWinsD = document.createElement("div");
     bbWinsD.setAttribute("class", "day");
     bbWinsD.title = "Daily Bad Blood wins";
-    bbWinsD.id = "wins_zombies_badblood";
-    bbWinsD.setAttribute("zombies", bbWinsD.id);
+    bbWinsD.id = "zombies.wins_zombies_badblood";
     main.appendChild(bbWinsD);
 
     const aaWinsL = document.createElement("div");
     aaWinsL.setAttribute("class", "life");
     aaWinsL.title = "Lifetime Alien wins";
-    aaWinsL.id = "wins_zombies_alienarcadium";
-    aaWinsL.setAttribute("zombies", aaWinsL.id);
+    aaWinsL.id = "zombies.wins_zombies_alienarcadium";
     main.appendChild(aaWinsL);
 
     const aaWinsD = document.createElement("div");
     aaWinsD.setAttribute("class", "day");
     aaWinsD.title = "Daily Alien wins";
-    aaWinsD.id = "wins_zombies_alienarcadium";
-    aaWinsD.setAttribute("zombies", aaWinsD.id);
+    aaWinsD.id = "zombies.wins_zombies_alienarcadium";
     main.appendChild(aaWinsD);
 
     const z1L = document.createElement("div");
     z1L.setAttribute("class", "life");
     z1L.title = "Lifetime rounds";
-    z1L.id = "total_rounds_survived_zombies";
-    z1L.setAttribute("zombies", z1L.id);
+    z1L.id = "zombies.total_rounds_survived_zombies";
     main.appendChild(z1L);
 
     const z1D = document.createElement("div");
     z1D.setAttribute("class", "day");
     z1D.title = "Daily rounds";
-    z1D.id = "total_rounds_survived_zombies";
-    z1D.setAttribute("zombies", z1D.id);
+    z1D.id = "zombies.total_rounds_survived_zombies";
     main.appendChild(z1D);
 
     const z2L = document.createElement("div");
     z2L.setAttribute("class", "life");
     z2L.title = "Lifetime deaths";
-    z2L.id = "deaths_zombies";
-    z2L.setAttribute("zombies", z2L.id);
+    z2L.id = "zombies.deaths_zombies";
     main.appendChild(z2L);
 
     const z2D = document.createElement("div");
     z2D.setAttribute("class", "day");
     z2D.title = "Daily deaths";
-    z2D.id = "deaths_zombies";
-    z2D.setAttribute("zombies", z2D.id);
+    z2D.id = "zombies.deaths_zombies";
     main.appendChild(z2D);
 
     const z3L = document.createElement("div");
     z3L.setAttribute("class", "life");
     z3L.title = "Lifetime revives";
-    z3L.id = "players_revived_zombies";
-    z3L.setAttribute("zombies", z3L.id);
+    z3L.id = "zombies.players_revived_zombies";
     main.appendChild(z3L);
 
     const z3D = document.createElement("div");
     z3D.setAttribute("class", "day");
     z3D.title = "Daily revives";
-    z3D.id = "players_revived_zombies";
-    z3D.setAttribute("zombies", z3D.id);
+    z3D.id = "zombies.players_revived_zombies";
     main.appendChild(z3D);
     break;
   }
@@ -614,9 +568,9 @@ async function load () {
   case "pp": {
     mainTitle.innerHTML = "Pixel painters";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "pixelPaintersWins";
+    lifetime.id = "pixelPainters.wins";
     daily.title = "Daily wins";
-    daily.id = "pixelPaintersWins";
+    daily.id = "pixelPainters.wins";
     break;
   }
 
@@ -624,9 +578,9 @@ async function load () {
     mainTitle.innerHTML = "Mini walls";
     address.innerHTML = "<a href=\"https://discord.gg/a3mFVpMPaf\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "miniWallsWins";
+    lifetime.id = "miniWalls.wins";
     daily.title = "Daily wins";
-    daily.id = "miniWallsWins";
+    daily.id = "miniWalls.wins";
 
     const mw1L = document.createElement("div");
     mw1L.setAttribute("class", "life");
@@ -638,64 +592,55 @@ async function load () {
     const mw1D = document.createElement("div");
     mw1D.setAttribute("class", "day");
     mw1D.title = "Daily kills";
-    mw1D.id = "kills";
-    mw1D.setAttribute("miniWalls", mw1D.id);
+    mw1D.id = "miniWalls.kills";
     main.appendChild(mw1D);
 
     const mw2L = document.createElement("div");
     mw2L.setAttribute("class", "life");
     mw2L.title = "Lifetime deaths";
-    mw2L.id = "deaths";
-    mw2L.setAttribute("miniWalls", mw2L.id);
+    mw2L.id = "miniWalls.deaths";
     main.appendChild(mw2L);
 
     const mw2D = document.createElement("div");
     mw2D.setAttribute("class", "day");
     mw2D.title = "Daily deaths";
-    mw2D.id = "deaths";
-    mw2D.setAttribute("miniWalls", mw2D.id);
+    mw2D.id = "miniWalls.deaths";
     main.appendChild(mw2D);
 
     const mw3L = document.createElement("div");
     mw3L.setAttribute("class", "life");
     mw3L.title = "Lifetime final kills";
-    mw3L.id = "finalKills";
-    mw3L.setAttribute("miniWalls", mw3L.id);
+    mw3L.id = "miniWalls.finalKills";
     main.appendChild(mw3L);
 
     const mw3D = document.createElement("div");
     mw3D.setAttribute("class", "day");
     mw3D.title = "Daily final kills";
-    mw3D.id = "finalKills";
-    mw3D.setAttribute("miniWalls", mw3D.id);
+    mw3D.id = "miniWalls.finalKills";
     main.appendChild(mw3D);
 
     const mw4L = document.createElement("div");
     mw4L.setAttribute("class", "life");
     mw4L.title = "Lifetime wither kills";
-    mw4L.id = "witherKills";
-    mw4L.setAttribute("miniWalls", mw4L.id);
+    mw4L.id = "miniWalls.witherKills";
     main.appendChild(mw4L);
 
     const mw4D = document.createElement("div");
     mw4D.setAttribute("class", "day");
     mw4D.title = "Daily wither kills";
-    mw4D.id = "witherKills";
-    mw4D.setAttribute("miniWalls", mw4D.id);
+    mw4D.id = "miniWalls.witherKills";
     main.appendChild(mw4D);
 
     const mw5L = document.createElement("div");
     mw5L.setAttribute("class", "life");
     mw5L.title = "Lifetime wither damage";
-    mw5L.id = "witherDamage";
-    mw5L.setAttribute("miniWalls", mw5L.id);
+    mw5L.id = "miniWalls.witherDamage";
     main.appendChild(mw5L);
 
     const mw5D = document.createElement("div");
     mw5D.setAttribute("class", "day");
     mw5D.title = "Daily wither damage";
-    mw5D.id = "witherDamage";
-    mw5D.setAttribute("miniWalls", mw5D.id);
+    mw5D.id = "miniWalls.witherDamage";
     main.appendChild(mw5D);
 
     break;
@@ -705,64 +650,56 @@ async function load () {
     mainTitle.innerHTML = "Seasonal Arcade games";
     address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
     lifetime.title = "Lifetime wins";
-    lifetime.id = "simTotal";
+    lifetime.id = "seasonalWins.total";
     daily.title = "Daily wins";
-    daily.id = "simTotal";
+    daily.id = "seasonalWins.total";
 
     const mw1L = document.createElement("div");
     mw1L.setAttribute("class", "life");
     mw1L.title = "Lifetime easter wins";
-    mw1L.id = "easter";
-    mw1L.setAttribute("seasonalWins", mw1L.id);
+    mw1L.id = "seasonalWins.easter";
     main.appendChild(mw1L);
 
     const mw1D = document.createElement("div");
     mw1D.setAttribute("class", "day");
     mw1D.title = "Daily easter wins";
-    mw1D.id = "easter";
-    mw1D.setAttribute("seasonalWins", mw1D.id);
+    mw1D.id = "seasonalWins.easter";
     main.appendChild(mw1D);
 
     const mw2L = document.createElement("div");
     mw2L.setAttribute("class", "life");
     mw2L.title = "Lifetime scuba wins";
-    mw2L.id = "scuba";
-    mw2L.setAttribute("seasonalWins", mw2L.id);
+    mw2L.id = "seasonalWins.scuba";
     main.appendChild(mw2L);
 
     const mw2D = document.createElement("div");
     mw2D.setAttribute("class", "day");
     mw2D.title = "Daily scuba wins";
-    mw2D.id = "scuba";
-    mw2D.setAttribute("seasonalWins", mw2D.id);
+    mw2D.id = "seasonalWins.scuba";
     main.appendChild(mw2D);
 
     const mw3L = document.createElement("div");
     mw3L.setAttribute("class", "life");
     mw3L.title = "Lifetime halloween wins";
-    mw3L.id = "halloween";
-    mw3L.setAttribute("seasonalWins", mw3L.id);
+    mw3L.id = "seasonalWins.halloween";
     main.appendChild(mw3L);
 
     const mw3D = document.createElement("div");
     mw3D.setAttribute("class", "day");
     mw3D.title = "Daily halloween wins";
-    mw3D.id = "halloween";
-    mw3D.setAttribute("seasonalWins", mw3D.id);
+    mw3D.id = "seasonalWins.halloween";
     main.appendChild(mw3D);
 
     const mw4L = document.createElement("div");
     mw4L.setAttribute("class", "life");
     mw4L.title = "Lifetime grinch wins";
-    mw4L.id = "grinch";
-    mw4L.setAttribute("seasonalWins", mw4L.id);
+    mw4L.id = "seasonalWins.grinch";
     main.appendChild(mw4L);
 
     const mw4D = document.createElement("div");
     mw4D.setAttribute("class", "day");
     mw4D.title = "Daily grinch wins";
-    mw4D.id = "grinch";
-    mw4D.setAttribute("seasonalWins", mw4D.id);
+    mw4D.id = "seasonalWins.grinch";
     main.appendChild(mw4D);
 
     break;
@@ -772,9 +709,9 @@ async function load () {
     mainTitle.innerHTML = "Capture the wool";
     address.innerHTML = "<a href=\"https://discord.gg/3B55bUcVKH\">Discord Invite</a>";
     lifetime.title = "Lifetime Wool";
-    lifetime.id = "ctwWoolCaptured";
+    lifetime.id = "captureTheWool.woolCaptures";
     daily.title = "Daily wool";
-    daily.id = "ctwWoolCaptured";
+    daily.id = "captureTheWool.woolCaptures";
 
     const killsL = document.createElement("div");
     killsL.setAttribute("class", "life");
@@ -786,9 +723,9 @@ async function load () {
     killsD.title = "Daily kills";
     main.appendChild(killsD);
 
-    killsD.id = "ctwKills";
+    killsD.id = "captureTheWool.kills";
 
-    killsL.id = "ctwKills";
+    killsL.id = "captureTheWool.kills";
     break;
   }
   }
@@ -839,56 +776,53 @@ async function handleLifetimes () {
  */
 async function getLeaderboards (element) {
   let lb = [];
-  if(element.hasAttribute("extras")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("seasonalWins")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("zombies")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("miniWalls")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls`);
+
+  const id = element.getAttribute("id");
+  const idArr = id.split(".");
+
+  if (idArr.length > 1) {
+    const category = idArr[0];
+    const path = idArr[1];
+
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}`;
+    console.info(`fetching ${url}`);
+    const raw = await fetch(url);
     lb = await raw.json();
   } else {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}`);
+    const path = idArr[0];
+
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}`;
+    console.info(`fetching ${url}`);
+    const raw = await fetch(url);
     lb = await raw.json();
   }
 
   let text = "";
-  for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-    if(element.hasAttribute("extras")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
-    } else if(element.hasAttribute("seasonalWins")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].seasonalWins[element.getAttribute("seasonalWins")], lb[i].uuid);
-    } else if(element.hasAttribute("zombies")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].zombies[element.getAttribute("zombies")], lb[i].uuid);
-    } else if(element.hasAttribute("miniWalls")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].miniWalls[element.getAttribute("miniWalls")], lb[i].uuid);
-    } else {
-      text += formatLine(i + 1, lb[i].name, lb[i][element.getAttribute("id")], lb[i].uuid);
+
+  if (idArr.length > 1) {
+    console.log(idArr);
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid);
+    }
+  } else {
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]], lb[i].uuid);
     }
   }
 
   element.innerHTML =
-        `<h2>${ 
-          element.getAttribute("title").replace(/&/g, "&amp;")
-            .replace(/>/g, "&gt;")
-            .replace(/</g, "&lt;")
-            .replace(/"/g, "&quot;") 
-        }</h2>${ 
-          text}`;
+  `<h2>${ 
+    element.getAttribute("title").replace(/&/g, "&amp;")
+      .replace(/>/g, "&gt;")
+      .replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;") 
+  }</h2>${ 
+    text}`;
 
 }
 
 /**
- * @param timetype
+ * @param {string} timetype
  */
 async function handleTimed (timetype) {
   const elements = document.querySelectorAll(`.${timetype}`);
@@ -900,44 +834,40 @@ async function handleTimed (timetype) {
 /**
  * 
  * @param {Element} element 
- * @param timetype
+ * @param {string} timetype
  */
 async function getDaily (element, timetype) {
   let lb = [];
-  if(element.hasAttribute("extras")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("extras")}&category=extras&time=${timetype}`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("seasonalWins")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("zombies")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("seasonalWins")}&category=seasonalWins&time=${timetype}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("zombies")}&category=zombies&time=${timetype}`);
-    lb = await raw.json();
-  } else if(element.hasAttribute("miniWalls")) {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("miniWalls")}&category=miniWalls&time=${timetype}`);
+
+  const id = element.getAttribute("id");
+  const idArr = id.split(".");
+
+  if (idArr.length > 1) {
+    const category = idArr[0];
+    const path = idArr[1];
+
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}`;
+    console.info(`fetching ${url}`);
+    const raw = await fetch(url);
     lb = await raw.json();
   } else {
-    console.info(`fetching https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`);
-    const raw = await fetch(`https://cdn.hyarcade.xyz/leaderboard?path=${element.getAttribute("id")}&time=${timetype}`);
+    const path = idArr[0];
+
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}`;
+    console.info(`fetching ${url}`);
+    const raw = await fetch(url);
     lb = await raw.json();
   }
 
   let text = "";
-  for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-    if(element.hasAttribute("extras")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].extras[element.getAttribute("extras")], lb[i].uuid);
-    } else if(element.hasAttribute("seasonalWins")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].seasonalWins[element.getAttribute("seasonalWins")], lb[i].uuid);
-    } else if(element.hasAttribute("zombies")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].zombies[element.getAttribute("zombies")], lb[i].uuid);
-    } else if(element.hasAttribute("miniWalls")) {
-      text += formatLine(i + 1, lb[i].name, lb[i].miniWalls[element.getAttribute("miniWalls")], lb[i].uuid);
-    } else {
-      text += formatLine(i + 1, lb[i].name, lb[i][element.getAttribute("id")], lb[i].uuid);
+
+  if (idArr.length > 1) {
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+      text += formatLine(i + 1, lb[i].name, lb[i][id[0]][id[1]], lb[i].uuid);
+    }
+  } else {
+    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+      text += formatLine(i + 1, lb[i].name, lb[i][id[0]], lb[i].uuid);
     }
   }
 
@@ -952,10 +882,11 @@ async function getDaily (element, timetype) {
 }
 
 /**
- * @param pos
- * @param name
- * @param value
- * @param uuid
+ * @param {number} pos
+ * @param {string} name
+ * @param {string} value
+ * @param {string} uuid
+ * @returns {string}
  */
 function formatLine (pos, name, value, uuid) {
   let longName = (`${pos}) ${name}                         `).slice(0, 21);
@@ -968,7 +899,8 @@ function formatLine (pos, name, value, uuid) {
 }
 
 /**
- * @param number
+ * @param {number} number
+ * @returns {string}
  */
 function formatNum (number) {
   const str = new Number(number);
