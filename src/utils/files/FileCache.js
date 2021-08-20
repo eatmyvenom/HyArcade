@@ -2,6 +2,7 @@ const utils = require("../../utils");
 const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
 const BSONreader = require("./BSONreader");
+const AccountArray = require("../../request/types/AccountArray");
 
 class FileCache {
 
@@ -68,10 +69,18 @@ class FileCache {
 
       Logger.debug("Refreshing file cache...");
 
-      fileCache.accounts = await BSONreader("accounts.json");
-      fileCache.dailyAccounts = await BSONreader("accounts.day.json");
-      fileCache.weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-      fileCache.monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+      const accounts = await BSONreader("accounts.json");
+      fileCache.accounts = new AccountArray(accounts);
+
+      const dailyAccounts = await BSONreader("accounts.day.json");
+      fileCache.dailyAccounts = new AccountArray(dailyAccounts);
+
+      const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+      fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
+
+      const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+      fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+
       fileCache.acclist = await BSONreader("acclist.json");
       fileCache.disclist = await utils.readJSON("disclist.json");
       fileCache.status = await utils.readJSON("status.json");
