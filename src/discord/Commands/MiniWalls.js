@@ -41,7 +41,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
     return {};
   }
 
-  if(acc.uuid == undefined) {
+  if(acc.uuid == undefined && acc.name != "INVALID-NAME") {
     return {
       res: "",
       embed: ERROR_NEED_PLAYER
@@ -55,22 +55,23 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
     };
   }
 
-  const stats =
-        `Wins: **${formatN(acc?.miniWallsWins ?? 0)}**\n` +
-        `Kills: **${formatN(acc?.miniWalls?.kills ?? 0)}**\n` +
-        `Finals: **${formatN(acc?.miniWalls?.finalKills ?? 0)}**\n` +
-        `Wither Damage: **${formatN(acc?.miniWalls?.witherDamage ?? 0)}**\n` +
-        `Wither Kills: **${formatN(acc?.miniWalls?.witherKills ?? 0)}**\n` +
-        `Deaths: **${formatN(acc?.miniWalls?.deaths ?? 0)}**\n`;
+  const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;
 
-  const deaths = acc?.miniWalls?.deaths ?? 0;
+  const stats =
+        `Wins: **${formatN(wins ?? 0)}**\n` +
+        `Kills: **${formatN(kills ?? 0)}**\n` +
+        `Finals: **${formatN(finalKills ?? 0)}**\n` +
+        `Wither Damage: **${formatN(witherDamage ?? 0)}**\n` +
+        `Wither Kills: **${formatN(witherKills ?? 0)}**\n` +
+        `Deaths: **${formatN(deaths ?? 0)}**\n`;
+
   const ratios =
-        `K/D: **${formatR(((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / deaths)}**\n` +
-        `K/D (no finals): **${formatR((acc?.miniWalls?.kills ?? 0) / deaths)}**\n` +
-        `F/D: **${formatR((acc?.miniWalls?.finalKills ?? 0) / deaths)}**\n` +
-        `WD/D: **${formatR((acc?.miniWalls?.witherDamage ?? 0) / deaths)}**\n` +
-        `WK/D: **${formatR((acc?.miniWalls?.witherKills ?? 0) / deaths)}**\n` +
-        `Arrow Accuracy: **${formatR(((acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0)) * 100)}**\n`;
+        `K/D: **${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}**\n` +
+        `K/D (no finals): **${formatR((kills ?? 0) / deaths)}**\n` +
+        `F/D: **${formatR((finalKills ?? 0) / deaths)}**\n` +
+        `WD/D: **${formatR((witherDamage ?? 0) / deaths)}**\n` +
+        `WK/D: **${formatR((witherKills ?? 0) / deaths)}**\n` +
+        `Arrow Accuracy: **${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}**\n`;
 
   const embed = new MessageEmbed()
     .setTitle(`Player: ${acc?.name}`)

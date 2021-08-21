@@ -135,7 +135,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
     const wk2 = acc2?.miniWalls?.witherKills ?? 0;
 
     const stats =
-            lineN(acc1?.miniWallsWins ?? 0, acc2?.miniWallsWins ?? 0, "Wins", true) +
+            lineN(acc1?.miniWalls?.wins ?? 0, acc2?.miniWalls?.wins ?? 0, "Wins", true) +
             lineN(kills1, kills2, "Kills", true) +
             lineN(fk1, fk2, "Finals", true) +
             lineN(wd1, wd2, "Wither Damage", true) +
