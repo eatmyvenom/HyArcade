@@ -96,8 +96,8 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
     // throw new Error("Error setting skin");
   }
 
-  if(acc.name?.toLowerCase() == "v3xm") {
-    await img.addImage("https://i.eatmyvenom.me/v3xm.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
+  if(acc.name?.toLowerCase() == "vn3m") {
+    await img.addImage("https://i.eatmyvenom.me/vn3m.png", img.canvas.width / 2 - 110, 12, 0, "00", 220, 60);
   } else {
     img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
   }
