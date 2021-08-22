@@ -1,5 +1,4 @@
 const Webhooks = require("./Webhooks");
-const config = require("../../Config");
 const {
   LOG_COMMAND_EXECUTION
 } = require("./Embeds/DynamicEmbeds");
@@ -7,23 +6,8 @@ const {
   Message,
   Webhook
 } = require("discord.js");
-const cfg = config.fromJSON();
 
 module.exports = class LogUtils {
-
-  /**
-   * Log a message when someone types in a specifed ign channel
-   *
-   * @param {Message} msg 
-   */
-  static async logIgns (msg) {
-    const channelID = msg.channel.id;
-    for(const c of cfg.discord.listenChannels) {
-      if(channelID == c) {
-        await LogUtils.logcopy(msg, Webhooks.ignHook);
-      }
-    }
-  }
 
   /**
    * 

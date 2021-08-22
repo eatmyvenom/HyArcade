@@ -423,5 +423,4 @@ module.exports = async function messageHandler (msg) {
   }
 
   await addIGNs(msg);
-  await LogUtils.logIgns(msg);
 };

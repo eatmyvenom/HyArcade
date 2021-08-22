@@ -33,6 +33,7 @@
         "js-beautify": "^1.14.0",
         "mongo": "^0.1.0",
         "node-fetch": "^2.6.1",
+        "nodejs": "^0.0.0",
         "timsort": "^0.3.0"
     },
     "devDependencies": {

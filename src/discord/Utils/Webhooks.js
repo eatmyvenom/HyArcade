@@ -1,9 +1,6 @@
 const {
-  WebhookClient,
   Webhook
 } = require("discord.js");
-const Config = require("hyarcade-config");
-const cfg = Config.fromJSON();
 
 module.exports = class Webhooks {
 
@@ -13,15 +10,7 @@ module.exports = class Webhooks {
      * @type {Webhook}
      * @static
      */
-    static commandHook = new WebhookClient({ id: cfg.loggingHooks.copyHook.id, token: cfg.loggingHooks.copyHook.token });
-
-    /**
-     * Webhook for logging igns
-     *
-     * @type {Webhook}
-     * @static
-     */
-    static ignHook = new WebhookClient(cfg.loggingHooks.ignHook.id, cfg.loggingHooks.ignHook.token);
+    static commandHook;
 
     /**
      * Webhook for logging standard output
