@@ -26,7 +26,9 @@ let FetchUser = require("./Commands/FetchUser");
 let FetchGuild = require("./Commands/FetchGuild");
 let FetchChannel = require("./Commands/FetchChannel");
 let TopGames = require("./Commands/TopGames");
-const Help = require("./Commands/Help");
+let DBInfo = require("./Commands/DBInfo");
+let Help = require("./Commands/Help");
+
 const CommandResponse = require("./Utils/CommandResponse");
 const {
   ERROR_DATABASE_ERROR,
@@ -262,6 +264,10 @@ async function checkCommands (rawMsg, command, args, author) {
     return await FetchChannel.execute(args, author, rawMsg);
   }
 
+  case DBInfo.name.toLowerCase(): {
+    return await DBInfo.execute(args, author, rawMsg);
+  }
+
   case TopGames.name.toLowerCase(): {
     if(author == owner) {
       return await TopGames.execute(args, author, rawMsg);
@@ -296,6 +302,8 @@ async function checkCommands (rawMsg, command, args, author) {
     FetchGuild = requireNew("./Commands/FetchGuild");
     FetchChannel = requireNew("./Commands/FetchChannel");
     TopGames = requireNew("./Commands/TopGames");
+    Help = requireNew("./Commands/Help");
+    DBInfo = requireNew("./Commands/DBInfo");
 
     return {
       res: "Commands uncached!"
