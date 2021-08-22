@@ -9,12 +9,9 @@ module.exports = new Command("DelMsg", ["156952208045375488"], async (args) => {
   const msg = await channel.messages.fetch(msgID);
   if(msg.deletable) {
     await msg.delete();
-    return {
-      res: "Message deleted!"
-    };
+    return { res: "Message deleted!" };
   }
-  return {
-    res: "Message cannot be deleted!"
-  };
+
+  return { res: "Message cannot be deleted!" };
 
 });
