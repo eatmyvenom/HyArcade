@@ -5,6 +5,6 @@ module.exports = {
     type: 3,
     name: "player",
     description: "The player you want to see the profile of",
-    required: false,
+    required: true,
   }, ],
 };

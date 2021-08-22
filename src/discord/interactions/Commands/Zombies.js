@@ -5,6 +5,6 @@ module.exports = {
     type: 3,
     name: "player",
     description: "The player you want to see zombies stats for",
-    required: false,
+    required: true,
   }, ],
 };

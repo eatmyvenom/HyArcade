@@ -11,7 +11,7 @@ module.exports = {
     type: 3,
     name: "type",
     description: "The time type of the leaderboard you want",
-    required: false,
+    required: true,
     choices: [{
       name: "lifetime",
       value: "l",
