@@ -88,3 +88,10 @@ exports.INFO_WHOIS = function (acc) {
     .setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`)
     .setColor(COLOR_PRIMARY);
 };
+
+exports.ERROR_WAS_NOT_IN_DATABASE = function (ign) {
+  return new MessageEmbed()
+    .setTitle("ERROR")
+    .setDescription(`${ign} was not in the database at the time period you requested!`)
+    .setColor(COLOR_RED);
+};

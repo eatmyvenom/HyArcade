@@ -9,6 +9,7 @@ const {
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const {
   ERROR_UNLINKED
 } = require("../Utils/Embeds/StaticEmbeds");
@@ -135,6 +136,15 @@ function getTimedAccount (acc1, acc2) {
   return acc1;
 }
 
+/**
+ * 
+ * @param {string} ign 
+ * @returns {CommandResponse}
+ */
+function nonDatabaseError (ign) {
+  return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
+}
+
 module.exports = new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const timetype = args[1];
@@ -148,24 +158,37 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
 
   if(timetype == "d") {
     const daily = await getFromDB("dayaccounts");
-    const dayAcc = await daily.find((a) => a?.uuid == acc.uuid);
-    acc = getTimedAccount(acc, dayAcc);
+    const timedAcc = await daily.find((a) => a?.uuid == acc.uuid);
+
+    if(timedAcc == undefined) {
+      return nonDatabaseError(acc.name);
+    }
+
+    acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "w") {
     const weekly = await getFromDB("weeklyaccounts");
-    const dayAcc = await weekly.find((a) => a?.uuid == acc.uuid);
-    acc = getTimedAccount(acc, dayAcc);
+    const timedAcc = await weekly.find((a) => a?.uuid == acc.uuid);
+
+    if(timedAcc == undefined) {
+      return nonDatabaseError(acc.name);
+    }
+
+    acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "m") {
     const monthly = await getFromDB("monthlyaccounts");
-    const dayAcc = await monthly.find((a) => a?.uuid == acc.uuid);
-    acc = getTimedAccount(acc, dayAcc);
+    const timedAcc = await monthly.find((a) => a?.uuid == acc.uuid);
+
+    if(timedAcc == undefined) {
+      return nonDatabaseError(acc.name);
+    }
+
+    acc = getTimedAccount(acc, timedAcc);
   }
 
   const embed = new MessageEmbed()
     .setTitle(`${acc.name} top games won`)
     .setDescription(getGames(acc))
     .setColor(0x44a3e7);
-  return {
-    res: "",
-    embed
-  };
+  
+  return new CommandResponse("", embed);
 });
