@@ -1,54 +1,40 @@
-const config = require("hyarcade-config").fromJSON();
-const logger = require("hyarcade-logger");
-const Runtime = require("hyarcade-config/Runtime");
+import { default as config } from "hyarcade-config";
+const cfg = config.fromJSON();
+import { default as Logger } from "hyarcade-logger";
+import { default as Runtime } from "hyarcade-config/Runtime";
 const owner = "156952208045375488";
 
-let linkCmd = require("./Commands/Link");
-let timeUpdateCmd = require("./Commands/LastUpdate");
-let KillBotCmd = require("./Commands/KillBot");
-let MKinvCmd = require("./Commands/MakeInviteEmbed");
-let MKhookCmd = require("./Commands/MakeHook");
-let UpdRolesCmd = require("./Commands/UpdateRoles");
-let InfoCmd = require("./Commands/Info");
-let EZ = require("./Commands/EZ");
-let Ping = require("./Commands/Ping");
-let Echo = require("./Commands/Echo");
-let Blacklist = require("./Commands/Blacklist");
-let CyclePresence = require("./Commands/CyclePresence");
-let Eval = require("./Commands/Eval");
-let ezmsgs = require("./Commands/ezmsgs");
-let Hackerlist = require("./Commands/Hackerlist");
-let SetAvatar = require("./Commands/SetAvatar");
-let SetPresence = require("./Commands/SetPresence");
-let SetUsername = require("./Commands/SetUsername");
-let Exec = require("./Commands/Exec");
-let FetchUser = require("./Commands/FetchUser");
-let FetchGuild = require("./Commands/FetchGuild");
-let FetchChannel = require("./Commands/FetchChannel");
-let TopGames = require("./Commands/TopGames");
-let DBInfo = require("./Commands/DBInfo");
-let Help = require("./Commands/Help");
+import { default as Link } from "./Commands/Link";
+import { default as Verify } from "./Commands/LinkMe.mjs";
+import { default as LastUpdate } from "./Commands/LastUpdate";
+import { default as KillBot } from "./Commands/KillBot";
+import { default as MkInv } from "./Commands/MakeInviteEmbed";
+import { default as MKHook } from "./Commands/MakeHook";
+import { default as UpdateRoles } from "./Commands/UpdateRoles";
+import { default as Info } from "./Commands/Info";
+import { default as EZ } from "./Commands/EZ";
+import { default as Ping } from "./Commands/Ping";
+import { default as Echo } from "./Commands/Echo";
+import { default as Blacklist } from "./Commands/Blacklist";
+import { default as CyclePresence } from "./Commands/CyclePresence";
+import { default as Eval } from "./Commands/Eval";
+import { default as Ezmsgs } from "./Commands/ezmsgs";
+import { default as Hackerlist } from "./Commands/Hackerlist";
+import { default as SetAvatar } from "./Commands/SetAvatar";
+import { default as SetPresence } from "./Commands/SetPresence";
+import { default as SetUsername } from "./Commands/SetUsername";
+import { default as Exec } from "./Commands/Exec";
+import { default as FetchUser } from "./Commands/FetchUser";
+import { default as FetchGuild } from "./Commands/FetchGuild";
+import { default as FetchChannel } from "./Commands/FetchChannel";
+import { default as TopGames } from "./Commands/TopGames";
+import { default as DBInfo } from "./Commands/DBInfo";
+import { default as Help } from "./Commands/Help";
 
-const CommandResponse = require("./Utils/CommandResponse");
-const {
-  ERROR_DATABASE_ERROR,
-  ERROR_USE_SLASH_COMMAND
-} = require("./Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_API_DOWN
-} = require("./Utils/Embeds/StaticEmbeds");
-const {
-  Message
-} = require("discord.js");
-
-/**
- * @param {string} str
- * @returns {*}
- */
-function requireNew (str) {
-  delete require.cache[str];
-  return require(str);
-}
+import CommandResponse from "./Utils/CommandResponse";
+import { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } from "./Utils/Embeds/DynamicEmbeds";
+import { ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
+import { Message } from "discord.js";
 
 /**
  * @param {Message} msg
@@ -56,7 +42,7 @@ function requireNew (str) {
  * @returns {CommandResponse | object}
  */
 async function execute (msg, senderID) {
-  if(msg.content.startsWith(config.commandCharacter)) {
+  if(msg.content.startsWith(cfg.commandCharacter)) {
     if(Runtime.fromJSON().dbERROR) {
       return {
         res: "",
@@ -88,18 +74,15 @@ async function execute (msg, senderID) {
  * @returns {CommandResponse | object}
  */
 async function checkCommands (rawMsg, command, args, author) {
-  logger.debug(`Parsing command ${rawMsg.content}`);
+  Logger.debug(`Parsing command ${rawMsg.content}`);
   switch(command.toLowerCase()) {
   case "link":
   case "ln":
-    return await linkCmd.execute(args, author, rawMsg);
+    return await Link.execute(args, author, rawMsg);
 
   case "lnm":
   case "verify":
   case "linkme": {
-    const {
-      Verify
-    } = await import("./Commands/LinkMe.mjs");
     return await Verify.execute(args, author, rawMsg);
   }
 
@@ -129,7 +112,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "stopbot":
   case "killbot":
   case "botstop": {
-    return await KillBotCmd.execute(args, author);
+    return await KillBot.execute(args, author);
   }
 
   case "getraw":
@@ -161,7 +144,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "locktime":
   case "updatetime":
   case "checkupdate": {
-    return await timeUpdateCmd.execute(args, author);
+    return await LastUpdate.execute(args, author);
   }
 
   case "help": {
@@ -169,11 +152,11 @@ async function checkCommands (rawMsg, command, args, author) {
   }
 
   case "mkinv": {
-    return await MKinvCmd.execute(args, author);
+    return await MkInv.execute(args, author);
   }
 
   case "mkhook": {
-    return await MKhookCmd.execute(args, author);
+    return await MKHook.execute(args, author);
   }
 
   case "ping": {
@@ -185,7 +168,7 @@ async function checkCommands (rawMsg, command, args, author) {
   }
 
   case "updroles": {
-    return await UpdRolesCmd.execute(args, author);
+    return await UpdateRoles.execute(args, author);
   }
 
   case "names":
@@ -208,7 +191,7 @@ async function checkCommands (rawMsg, command, args, author) {
 
   case "info":
   case "botinfo": {
-    return await InfoCmd.execute(args, author);
+    return await Info.execute(args, author);
   }
 
   case "say":
@@ -232,8 +215,8 @@ async function checkCommands (rawMsg, command, args, author) {
     return await Exec.execute(args, author, rawMsg);
   }
 
-  case ezmsgs.name.toLowerCase(): {
-    return await ezmsgs.execute(args, author, rawMsg);
+  case Ezmsgs.name.toLowerCase(): {
+    return await Ezmsgs.execute(args, author, rawMsg);
   }
 
   case Hackerlist.name.toLowerCase(): {
@@ -275,43 +258,8 @@ async function checkCommands (rawMsg, command, args, author) {
     break;
   }
 
-  case "clearcache": {
-    if(author != owner) {
-      return;
-    }
-    linkCmd = requireNew("./Commands/Link");
-    timeUpdateCmd = requireNew("./Commands/LastUpdate");
-    KillBotCmd = requireNew("./Commands/KillBot");
-    MKinvCmd = requireNew("./Commands/MakeInviteEmbed");
-    MKhookCmd = requireNew("./Commands/MakeHook");
-    UpdRolesCmd = requireNew("./Commands/UpdateRoles");
-    InfoCmd = requireNew("./Commands/Info");
-    EZ = requireNew("./Commands/EZ");
-    Ping = requireNew("./Commands/Ping");
-    Echo = requireNew("./Commands/Echo");
-    Blacklist = requireNew("./Commands/Blacklist");
-    CyclePresence = requireNew("./Commands/CyclePresence");
-    Eval = requireNew("./Commands/Eval");
-    ezmsgs = requireNew("./Commands/ezmsgs");
-    Hackerlist = requireNew("./Commands/Hackerlist");
-    SetAvatar = requireNew("./Commands/SetAvatar");
-    SetPresence = requireNew("./Commands/SetPresence");
-    SetUsername = requireNew("./Commands/SetUsername");
-    Exec = requireNew("./Commands/Exec");
-    FetchUser = requireNew("./Commands/FetchUser");
-    FetchGuild = requireNew("./Commands/FetchGuild");
-    FetchChannel = requireNew("./Commands/FetchChannel");
-    TopGames = requireNew("./Commands/TopGames");
-    Help = requireNew("./Commands/Help");
-    DBInfo = requireNew("./Commands/DBInfo");
-
-    return {
-      res: "Commands uncached!"
-    };
-  }
-
   default: {
-    logger.warn(`Nonexistent command "${command.toLowerCase()}" was attempted.`);
+    Logger.warn(`Nonexistent command "${command.toLowerCase()}" was attempted.`);
     return {
       res: ""
     };
@@ -319,6 +267,6 @@ async function checkCommands (rawMsg, command, args, author) {
   }
 }
 
-module.exports = {
+export default {
   execute
 };
