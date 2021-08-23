@@ -8,6 +8,8 @@ const logger = require("hyarcade-logger");
 const TimSort = require("timsort");
 const Account = require("hyarcade-requests/types/Account");
 
+let hackers = null;
+
 /**
  * @param {Account} b
  * @param {Account} a
@@ -71,10 +73,14 @@ function rcb (n) {
 
 /**
  * @param {Account[]} list
- * @returns {Account[]}
+ * @returns {Promise<Account[]>}
  */
 async function hackerTransformer (list) {
-  const hackers = await BotUtils.getFromDB("hackerlist");
+  if(hackers == null) {
+    hackers = await BotUtils.getFromDB("hackerlist");
+    setTimeout(() => {hackers = null;}, 3600000);
+  }
+
   return list.filter((a) => !hackers.includes(a.uuid))
     .filter((a) => a.name != undefined || a.name != "")
     .filter((a) => a.miniWalls != undefined);
@@ -91,7 +97,7 @@ function top150Transformer (list) {
 
 /**
  * @param {Account[]} list
- * @returns {Account[]}
+ * @returns {Promise<Account[]>}
  */
 async function ratioTransformer (list) {
   return await top150Transformer(await hackerTransformer(list));
