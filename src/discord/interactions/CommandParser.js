@@ -33,6 +33,7 @@ const Help = require("../Commands/Help");
 const Stats = require("../Commands/Stats");
 const Arena = require("../Commands/Arena");
 const PBall = require("../Commands/PBall");
+const Walls = require("../Commands/Walls");
 
 let Commands = null;
 
@@ -215,6 +216,10 @@ module.exports = async (interaction) => {
 
   case "paintball": {
     return await PBall.execute([opts.getString("player")], authorID, null, interaction);
+  }
+
+  case "walls": {
+    return await Walls.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arcade": {

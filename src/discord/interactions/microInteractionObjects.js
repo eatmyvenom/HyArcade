@@ -24,7 +24,8 @@ exports.arcade = arcade;
 
 exports.quake = require("./Commands/Quake");
 exports.arena = require("./Commands/Arena");
-exports.zombies = require("./Commands/PBall");
+exports.pball = require("./Commands/PBall");
+exports.walls = require("./Commands/Walls");
 
 const zombies = require("./Commands/Zombies");
 zombies.options[0].required = true;
