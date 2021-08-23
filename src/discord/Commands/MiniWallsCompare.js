@@ -144,20 +144,16 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
             lineNS(deaths1, deaths2, "Deaths", true);
 
     const ratios =
-            lineR(
-              (kills1 + fk1) / deaths1,
-              (kills2 + fk2) / deaths2,
-              "K/D", true
-            ) +
-            lineR(kills1 / deaths1, kills2 / deaths2, "K/D (no finals)", true) +
-            lineR(fk1 / deaths1, fk2 / deaths2, "F/D", true) +
-            lineR(wd1 / deaths1, wd2 / deaths2, "WD/D", true) +
-            lineR(wk1 / deaths1, wk2 / deaths2, "WK/D", true) +
-            lineR(
-              ((acc1?.miniWalls?.arrowsHit ?? 0) / (acc1?.miniWalls?.arrowsShot ?? 0)) * 100,
-              ((acc2?.miniWalls?.arrowsHit ?? 0) / (acc2?.miniWalls?.arrowsShot ?? 0)) * 100,
-              "Arrow Accuracy", true
-            );
+      lineR((kills1 + fk1) / deaths1, (kills2 + fk2) / deaths2, "K/D", true) +
+      lineR(kills1 / deaths1, kills2 / deaths2, "K/D (no finals)", true) +
+      lineR(fk1 / deaths1, fk2 / deaths2, "F/D", true) +
+      lineR(wd1 / deaths1, wd2 / deaths2, "WD/D", true) +
+      lineR(wk1 / deaths1, wk2 / deaths2, "WK/D", true) +
+      lineR(
+        ((acc1?.miniWalls?.arrowsHit ?? 0) / (acc1?.miniWalls?.arrowsShot ?? 0)) * 100,
+        ((acc2?.miniWalls?.arrowsHit ?? 0) / (acc2?.miniWalls?.arrowsShot ?? 0)) * 100,
+        "Arrow Accuracy", true
+      );
 
 
     embed
