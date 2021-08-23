@@ -2,7 +2,6 @@ const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
 const ButtonParser = require("./interactions/Buttons/ButtonParser");
 const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
-const CommandParser = require("./interactions/CommandParser");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const CommandResponse = require("./Utils/CommandResponse");
@@ -19,6 +18,8 @@ const {
   Client
 } = require("discord.js");
 
+let CommandParser = null;
+
 /**
  * @param {string} id
  * @returns {boolean}
@@ -34,6 +35,11 @@ async function isBlacklisted (id) {
  * @param {CommandInteraction} interaction
  */
 async function commandHandler (interaction) {
+
+  if(CommandParser === null) {
+    CommandParser = await import("./interactions/CommandParser.mjs");
+  }
+
   if(await isBlacklisted(interaction.user.id)) {
     return;
   }

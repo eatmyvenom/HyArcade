@@ -1,96 +1,42 @@
-const Runtime = require("../../Runtime");
-const logger = require("hyarcade-logger");
-const {
-  addAccounts
-} = require("../../listUtils");
-const InteractionUtils = require("./InteractionUtils");
-const {
-  MessageEmbed,
-  CommandInteraction,
-} = require("discord.js");
+import logger from "hyarcade-logger";
+import { addAccounts } from "../../listUtils";
+import InteractionUtils from "./InteractionUtils";
+import { MessageEmbed, CommandInteraction } from "discord.js";
 
-const EZ = require("../Commands/EZ");
-const Info = require("../Commands/Info");
-const Susser = require("../Commands/Susser");
-const GameCounts = require("../Commands/GameCounts");
-const LastUpdate = require("../Commands/LastUpdate");
-const Leaderboard = require("../Commands/Leaderboard");
-const ButtonGenerator = require("./Buttons/ButtonGenerator");
-const Ping = require("../Commands/Ping");
-const TopGames = require("../Commands/TopGames");
-const {
-  ERROR_DATABASE_ERROR
-} = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_API_DOWN,
-  ERROR_UNLINKED
-} = require("../Utils/Embeds/StaticEmbeds");
-const CommandResponse = require("../Utils/CommandResponse");
-const GetDataRaw = require("../Commands/GetDataRaw");
-const Help = require("../Commands/Help");
-const Stats = require("../Commands/Stats");
+import EZ from "../Commands/EZ";
+import Info from "../Commands/Info";
+import Susser from"../Commands/Susser";
+import GameCounts from"../Commands/GameCounts";
+import LastUpdate from"../Commands/LastUpdate";
+import Leaderboard from"../Commands/Leaderboard";
+import ButtonGenerator from"./Buttons/ButtonGenerator";
+import Ping from"../Commands/Ping";
+import TopGames from"../Commands/TopGames";
+import CommandResponse from"../Utils/CommandResponse";
+import GetDataRaw from"../Commands/GetDataRaw";
+import Help from"../Commands/Help";
+import Stats from"../Commands/Stats";
+import Quake from "../Commands/Quake.mjs";
+import Arena from "../Commands/Arena.mjs";
+import PBall from "../Commands/PBall.mjs";
+import Zombies from "../Commands/Zombies.mjs";
+import Walls from "../Commands/Walls.mjs";
+import { Profile } from "../Commands/Profile";
+import { WhoIS } from "../Commands/WhoIS.mjs";
+import { Verify } from "../Commands/LinkMe.mjs";
+import { Compare } from "../Commands/Compare.mjs";
 
-let Commands = null;
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
 
 /**
  *
  * @param {CommandInteraction} interaction
  * @returns {CommandResponse | object}
  */
-module.exports = async (interaction) => {
-  if(Commands == null) {
-    logger.debug("ECMA modules are null, they need to be added!");
-    logger.info("Initializing ECMA modules");
-    Commands = {};
-    const {
-      Profile
-    } = await import("../Commands/Profile.mjs");
-    const {
-      WhoIS
-    } = await import("../Commands/WhoIS.mjs");
-    const {
-      Verify
-    } = await import("../Commands/LinkMe.mjs");
-    const {
-      Compare
-    } = await import("../Commands/Compare.mjs");
-
-    const Quake = await import("../Commands/Quake.mjs");
-    const Arena = await import("../Commands/Arena.mjs");
-    const PBall = await import("../Commands/PBall.mjs");
-    const Zombies = await import("../Commands/Zombies.mjs");
-    const Walls = await import("../Commands/Walls.mjs");
-
-    Commands.Walls = Walls;
-    Commands.Zombies = Zombies;
-    Commands.PBall = PBall;
-    Commands.Arena = Arena;
-    Commands.Quake = Quake;
-    Commands.Profile = Profile;
-    Commands.WhoIS = WhoIS;
-    Commands.Verify = Verify;
-    Commands.Compare = Compare;
-  }
-
+export default async (interaction) => {
   if(interaction.guildID == "808077828842455090") return;
   const authorID = interaction.member.user.id;
   const opts = interaction.options;
-
-  if(Runtime.fromJSON().dbERROR) {
-    logger.warn("Refusing to run command because database is corrupted!");
-    const res = new CommandResponse("", ERROR_DATABASE_ERROR);
-    res.priv = true;
-
-    return res;
-  }
-
-  if(Runtime.fromJSON().apiDown) {
-    logger.warn("Refusing to run command because API is down!");
-    const res = new CommandResponse("", ERROR_API_DOWN);
-    res.priv = true;
-
-    return res;
-  }
 
   switch(interaction.commandName) {
   case "stats": {
@@ -169,7 +115,7 @@ module.exports = async (interaction) => {
   }
 
   case "whois": {
-    return await Commands.WhoIS.execute([opts.getString("player")], authorID, null, interaction);
+    return await WhoIS.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "get-data-raw": {
@@ -177,7 +123,7 @@ module.exports = async (interaction) => {
   }
 
   case "verify": {
-    return await Commands.Verify.execute([opts.getString("player")], authorID, null, interaction);
+    return await Verify.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "game-counts": {
@@ -192,8 +138,8 @@ module.exports = async (interaction) => {
     return await Susser.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case Commands.Compare.name: {
-    return await Commands.Compare.execute(
+  case Compare.name: {
+    return await Compare.execute(
       [opts.getString("player2"), opts.getString("player2"), opts.getString("game")],
       authorID,
       null,
@@ -201,8 +147,8 @@ module.exports = async (interaction) => {
     );
   }
 
-  case Commands.Profile.name: {
-    return await Commands.Profile.execute([opts.getString("player")], authorID, null, interaction);
+  case Profile.name: {
+    return await Profile.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "top-games": {
@@ -210,23 +156,23 @@ module.exports = async (interaction) => {
   }
 
   case "quake": {
-    return await Commands.Quake.execute([opts.getString("player")], authorID, null, interaction);
+    return await Quake.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "zombies": {
-    return await Commands.Zombies.execute([opts.getString("player")], authorID, null, interaction);
+    return await Zombies.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arena": {
-    return await Commands.Arena.execute([opts.getString("player")], authorID, null, interaction);
+    return await Arena.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "paintball": {
-    return await Commands.PBall.execute([opts.getString("player")], authorID, null, interaction);
+    return await PBall.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "walls": {
-    return await Commands.Walls.execute([opts.getString("player")], authorID, null, interaction);
+    return await Walls.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arcade": {
