@@ -19,14 +19,17 @@ const {
 } = require("discord.js");
 
 let CommandParser = null;
+let blacklist = null;
 
 /**
  * @param {string} id
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 async function isBlacklisted (id) {
-  let blacklist = await fs.readFile("data/blacklist");
-  blacklist = blacklist.toString().split("\n");
+  if( blacklist == null ) {
+    blacklist = await fs.readFile("data/blacklist");
+    blacklist = blacklist.toString().split("\n");
+  }
   return blacklist.includes(id);
 }
 
