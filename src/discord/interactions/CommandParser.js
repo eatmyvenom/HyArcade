@@ -214,7 +214,7 @@ module.exports = async (interaction) => {
   }
 
   case "zombies": {
-    return await Zombies.execute([opts.getString("player")], authorID, null, interaction);
+    return await Commands.Zombies.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arena": {
