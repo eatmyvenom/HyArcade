@@ -234,7 +234,7 @@ async function getMWCmdRes (msg) {
 
 /**
  * @param {string} id
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 async function isBlacklisted (id) {
   let blacklist = await readFile("data/blacklist");
