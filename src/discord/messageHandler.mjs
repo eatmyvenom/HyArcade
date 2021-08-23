@@ -1,36 +1,21 @@
 const cfg = require("hyarcade-config").fromJSON();
-const Runtime = require("hyarcade-config/Runtime");
-const {
-  addAccounts
-} = require("../listUtils");
-const logger = require("hyarcade-logger");
-const isValidIGN = require("../datagen/utils/ignValidator");
-const botCommands = require("./botCommands");
-const BotUtils = require("./BotUtils");
-const {
-  Account
-} = require("hyarcade-requests").types;
-const {
-  mojangRequest
-} = require("hyarcade-requests");
-const MiniWallsCommands = require("./MiniWallsCommands");
-const SlashHelpTxt = require("./Utils/SlashHelpTxt");
-const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
-const {
-  ERROR_LINK_HYPIXEL_MISMATCH,
-  ERROR_IGN_UNDEFINED,
-  ERROR_UNKNOWN,
-  ERROR_API_DOWN
-} = require("./Utils/Embeds/StaticEmbeds");
-const fs = require("fs-extra");
-const Webhooks = require("./Utils/Webhooks");
-const LogUtils = require("./Utils/LogUtils");
-const CommandResponse = require("./Utils/CommandResponse");
-const {
-  Message,
-  Collection,
-  Webhook
-} = require("discord.js");
+import { fromJSON } from "hyarcade-config/Runtime";
+import { addAccounts } from "../listUtils";
+import { err, out, debug, warn, info } from "hyarcade-logger";
+import isValidIGN from "../datagen/utils/ignValidator";
+import { execute } from "./botCommands";
+import { getWebhookObj, resolveAccount, getFromDB, writeToDB, botMode } from "./BotUtils";
+import { mojangRequest, types } from "hyarcade-requests";
+const { Account } = types;
+import { execute as _execute } from "./MiniWallsCommands";
+import SlashHelpTxt from "./Utils/SlashHelpTxt";
+import { playerLink } from "./Utils/Embeds/AdvancedEmbeds";
+import { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
+import { readFile } from "fs-extra";
+import { logHook, errHook } from "./Utils/Webhooks";
+import { logCommand } from "./Utils/LogUtils";
+import CommandResponse from "./Utils/CommandResponse";
+import { Message, Collection, Webhook } from "discord.js";
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -40,11 +25,11 @@ const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 ch
  * @param {Error} e 
  */
 async function logError (msg, e) {
-  logger.err(`Error from - ${msg.content}`);
-  logger.err(e.toString());
-  logger.err(e.stack);
-  await Webhooks.logHook.send(`Error from - ${msg.content.replace(/\\?`/g, "\\`")}`);
-  await Webhooks.errHook.send(e.toString());
+  err(`Error from - ${msg.content}`);
+  err(e.toString());
+  err(e.stack);
+  await logHook.send(`Error from - ${msg.content.replace(/\\?`/g, "\\`")}`);
+  await errHook.send(e.toString());
 }
 
 /**
@@ -52,8 +37,8 @@ async function logError (msg, e) {
  * @param {Message} msg 
  */
 async function logCmd (msg) {
-  await LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
-  logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
+  await logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
+  out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
 /**
@@ -63,19 +48,19 @@ async function logCmd (msg) {
  */
 async function sendAsHook (hook, cmdResponse) {
   try {
-    const obj = BotUtils.getWebhookObj(cmdResponse.embed);
+    const obj = getWebhookObj(cmdResponse.embed);
     if(cmdResponse.res != "") {
       obj.content = cmdResponse.res;
     }
     if(cmdResponse.img != undefined) {
       obj.files = [cmdResponse.img];
     }
-    logger.debug("Sending response via webhook");
+    debug("Sending response via webhook");
     await hook.send(obj);
     return true;
   } catch (e) {
-    logger.err(e.toString());
-    await Webhooks.errHook.send(e.toString());
+    err(e.toString());
+    await errHook.send(e.toString());
     return false;
   }
 }
@@ -96,15 +81,15 @@ async function miniWallsVerify (msg) {
   if(await isBlacklisted(id)) return;
   const uuid = await mojangRequest.getUUID(ign);
   if(uuid == undefined) {
-    logger.warn("Someone tried to verify as an account that doesn't exist!");
+    warn("Someone tried to verify as an account that doesn't exist!");
     await msg.channel.send({
       embeds: [ERROR_IGN_UNDEFINED]
     });
     return;
   }
 
-  if(Runtime.fromJSON().apiDown) {
-    logger.warn("Someone tried to verify while API is down!");
+  if(fromJSON().apiDown) {
+    warn("Someone tried to verify while API is down!");
     return {
       res: "",
       embed: ERROR_API_DOWN
@@ -113,23 +98,23 @@ async function miniWallsVerify (msg) {
 
   const acc = new Account(ign, 0, uuid);
   await acc.updateData();
-  const dbAcc = await BotUtils.resolveAccount(uuid, msg, false);
-  const hackers = await BotUtils.getFromDB("hackerlist");
-  const disclist = await BotUtils.getFromDB("disclist");
+  const dbAcc = await resolveAccount(uuid, msg, false);
+  const hackers = await getFromDB("hackerlist");
+  const disclist = await getFromDB("disclist");
   if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
-    logger.warn("Hacker tried to verify!");
+    warn("Hacker tried to verify!");
     return;
   }
   if(acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     await addAccounts("others", [uuid]);
     disclist[id] = uuid;
-    await BotUtils.writeToDB("disclist", disclist);
-    logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
+    await writeToDB("disclist", disclist);
+    out(`${tag} was autoverified in miniwalls as ${ign}`);
     await msg.member.roles.remove("850033543425949736");
     await msg.member.roles.add("789721304722178069");
     await msg.member.setNickname(acc.name);
     await msg.channel.send({
-      embeds: [AdvancedEmbeds.playerLink(acc.name, msg.author)]
+      embeds: [playerLink(acc.name, msg.author)]
     });
   } else {
     await msg.channel.send({
@@ -144,11 +129,11 @@ async function miniWallsVerify (msg) {
  * @param {object} opts
  */
 async function attemptSend (msg, cmdResponse, opts) {
-  const runtime = Runtime.fromJSON();
+  const runtime = fromJSON();
   const hooks = await msg.channel.fetchWebhooks();
-  logger.info("Attempting to send response as webhook");
+  info("Attempting to send response as webhook");
   if(!(hooks.size > 0 && sendAsHook(hooks.first(), cmdResponse))) {
-    logger.info("No webhook availiable. Sending normally");
+    info("No webhook availiable. Sending normally");
     if(runtime.bot != "backup") {
       opts.reply = {
         messageReference: msg.id
@@ -162,7 +147,7 @@ async function attemptSend (msg, cmdResponse, opts) {
       if(cmdResponse.img != undefined) {
         opts.files = [cmdResponse.img];
       }
-      logger.debug("Sending message via discord bot");
+      debug("Sending message via discord bot");
       try {
         await msg.channel.send(opts);
       } catch (e) {
@@ -180,13 +165,13 @@ async function attemptSend (msg, cmdResponse, opts) {
  */
 async function addIGNs (msg) {
   if(cfg.discord.listenChannels.includes(msg.channel.id)) {
-    logger.info("IGN channel message detected, automatically adding to database.");
+    info("IGN channel message detected, automatically adding to database.");
     const firstWord = msg.content.split(" ")[0];
     if(!msg.author.bot && isValidIGN(firstWord)) {
-      const acclist = await BotUtils.getFromDB("acclist");
+      const acclist = await getFromDB("acclist");
       const category = acclist[msg.content.split(" ")[1]] != undefined ? msg.content.split(" ")[1] : "others";
-      logger.out(firstWord);
-      Webhooks.logHook.send(`Attempting to add "\`${firstWord}\`" to database.`);
+      out(firstWord);
+      logHook.send(`Attempting to add "\`${firstWord}\`" to database.`);
       await addAccounts(category, [firstWord]);
     }
   }
@@ -202,8 +187,8 @@ async function sanitizeCmdOpt (cmdResponse) {
     if(cmdResponse.res.slice(0, 3) == "```") {
       cmdResponse.res = `${cmdResponse.res.slice(0, 1994)}\`\`\``;
     }
-    await Webhooks.errHook.send(longMsgStr);
-    logger.err(longMsgStr);
+    await errHook.send(longMsgStr);
+    err(longMsgStr);
   }
   return cmdResponse;
 }
@@ -215,7 +200,7 @@ async function sanitizeCmdOpt (cmdResponse) {
 async function getCmdRes (msg) {
   let cmdResponse;
   try {
-    cmdResponse = await botCommands.execute(msg, msg.author.id);
+    cmdResponse = await execute(msg, msg.author.id);
   } catch (e) {
     await logError(msg, e);
     cmdResponse = ({
@@ -235,7 +220,7 @@ async function getCmdRes (msg) {
 async function getMWCmdRes (msg) {
   let cmdResponse;
   try {
-    cmdResponse = await MiniWallsCommands.execute(msg, msg.author.id);
+    cmdResponse = await _execute(msg, msg.author.id);
   } catch (e) {
     await logError(msg, e);
     cmdResponse = ({
@@ -252,7 +237,7 @@ async function getMWCmdRes (msg) {
  * @returns {boolean}
  */
 async function isBlacklisted (id) {
-  let blacklist = await fs.readFile("data/blacklist");
+  let blacklist = await readFile("data/blacklist");
   blacklist = blacklist.toString().split("\n");
   return blacklist.includes(id);
 }
@@ -263,9 +248,9 @@ async function isBlacklisted (id) {
  * @param {CommandResponse} cmdResponse 
  */
 async function sendText (msg, cmdResponse) {
-  const runtime = Runtime.fromJSON();
+  const runtime = fromJSON();
   if(runtime.bot != "backup") {
-    logger.info("No webhook availiable. Sending normally");
+    info("No webhook availiable. Sending normally");
     try {
       const msgObj = cmdResponse.toDiscord({
         messageReference: msg.id
@@ -295,7 +280,7 @@ async function sendNormal (msg, cmdResponse) {
   } catch (e) {
     await sendText(msg, cmdResponse);
   }
-  logger.info("Attempting to send response as webhook");
+  info("Attempting to send response as webhook");
 
   if(hooks.size > 0) {
     const hook = hooks.first();
@@ -388,17 +373,17 @@ async function checkMW (msg) {
  * 
  * @param {Message} msg 
  */
-module.exports = async function messageHandler (msg) {
+export default async function messageHandler (msg) {
   if(msg.author.bot) return;
   if(msg.webhookID) return;
   if(msg.guild.id == "808077828842455090") {
-    logger.warn("Ignored guild message detected!");
+    warn("Ignored guild message detected!");
     return;
   }
 
-  if(BotUtils.botMode == "mw" || BotUtils.botMode == "test") {
+  if(botMode == "mw" || botMode == "test") {
     await checkMW(msg);
-    if(BotUtils.botMode == "mw") {
+    if(botMode == "mw") {
       return;
     }
   }
@@ -423,4 +408,4 @@ module.exports = async function messageHandler (msg) {
   }
 
   await addIGNs(msg);
-};
+}

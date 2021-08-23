@@ -4,7 +4,6 @@ const BotUtils = require("./BotUtils");
 const config = require("hyarcade-config").fromJSON();
 const Runtime = require("hyarcade-config/Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
-const messageHandler = require("./messageHandler");
 const logger = require("hyarcade-logger");
 
 const fullIntents = [
@@ -57,6 +56,17 @@ module.exports = function doBot () {
   client.on("ready", async () => {
     BotUtils.client = client;
     await BotEvents.ready(mode);
+
+    if(mode == undefined || mode == "mw" || mode == "test") {
+      client.on("messageDelete", BotEvents.messageDelete);
+      
+      logger.debug("Registering message event");
+      const messageHandler = await import("./messageHandler.mjs");
+      client.on("messageCreate", messageHandler);
+  
+      setInterval(BotEvents.tick, 45000);
+    }
+
   });
 
   client.on("rateLimit", BotEvents.rateLimit);
@@ -68,13 +78,6 @@ module.exports = function doBot () {
   client.on("guildUnavailable", BotEvents.guildUnavailable);
   client.on("invalidRequestWarning", BotEvents.invalidRequestWarning);
   client.on("debug", BotEvents.debug);
-
-  if(mode == undefined || mode == "mw" || mode == "test") {
-    logger.debug("Registering message event");
-    client.on("messageCreate", messageHandler);
-    client.on("messageDelete", BotEvents.messageDelete);
-    setInterval(BotEvents.tick, 45000);
-  }
 
   if(Runtime.bot != "backup") {
     if(mode == "mini") {
