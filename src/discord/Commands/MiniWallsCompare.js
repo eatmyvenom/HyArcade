@@ -12,6 +12,7 @@ const {
   ERROR_IGN_UNDEFINED
 } = require("../Utils/Embeds/StaticEmbeds");
 const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
+const BotRuntime = require("../BotRuntime");
 
 /**
  * @param {number} n
@@ -103,7 +104,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
     acc2 = await InteractionUtils.resolveAccount(interaction, 1);
   }
 
-  const hackers = await BotUtils.getFromDB("hackerlist");
+  const hackers = await BotRuntime.getHackerlist();
 
   if(hackers.includes(acc1.uuid)) {
     acc1 = {

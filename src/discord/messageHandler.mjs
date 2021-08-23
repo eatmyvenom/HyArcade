@@ -11,11 +11,11 @@ import { execute as _execute } from "./MiniWallsCommands";
 import SlashHelpTxt from "./Utils/SlashHelpTxt";
 import { playerLink } from "./Utils/Embeds/AdvancedEmbeds";
 import { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
-import { readFile } from "fs-extra";
 import { logHook, errHook } from "./Utils/Webhooks";
 import { logCommand } from "./Utils/LogUtils";
 import CommandResponse from "./Utils/CommandResponse";
 import { Message, Collection, Webhook } from "discord.js";
+import BotRuntime from "./BotRuntime";
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -237,8 +237,7 @@ async function getMWCmdRes (msg) {
  * @returns {Promise<boolean>}
  */
 async function isBlacklisted (id) {
-  let blacklist = await readFile("data/blacklist");
-  blacklist = blacklist.toString().split("\n");
+  const blacklist = await BotRuntime.getBlacklist();
   return blacklist.includes(id);
 }
 

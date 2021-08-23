@@ -1,14 +1,12 @@
 const {
   MessageEmbed
 } = require("discord.js");
-const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
 const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
 const TimSort = require("timsort");
 const Account = require("hyarcade-requests/types/Account");
-
-let hackers = null;
+const BotRuntime = require("../BotRuntime");
 
 /**
  * @param {Account} b
@@ -76,10 +74,7 @@ function rcb (n) {
  * @returns {Promise<Account[]>}
  */
 async function hackerTransformer (list) {
-  if(hackers == null) {
-    hackers = await BotUtils.getFromDB("hackerlist");
-    setTimeout(() => {hackers = null;}, 3600000);
-  }
+  const hackers = BotRuntime.getHackerlist();
 
   return list.filter((a) => !hackers.includes(a.uuid))
     .filter((a) => a.name != undefined || a.name != "")

@@ -1,13 +1,25 @@
 const {
   MessageEmbed
 } = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
+const BotRuntime = require("../BotRuntime");
 const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const {
   ERROR_NEED_PLAYER,
   ERROR_IGN_UNDEFINED
 } = require("../Utils/Embeds/StaticEmbeds");
+
+/**
+ * 
+ * @param {Account} acc 
+ * @returns {boolean}
+ */
+async function isHacker (acc) {
+  const hackers = BotRuntime.getHackerlist();
+  return hackers.includes(acc?.uuid?.toLowerCase());
+}
 
 /**
  * @param {number} n
@@ -36,8 +48,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
     acc = await InteractionUtils.resolveAccount(interaction, 0);
   }
 
-  const hackers = await BotUtils.getFromDB("hackerlist");
-  if(hackers.includes(acc?.uuid?.toLowerCase())) {
+  if(await isHacker(acc)) {
     return {};
   }
 
