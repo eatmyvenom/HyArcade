@@ -1,15 +1,8 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const {
-  HypixelApi,
-  mojangRequest
-} = require("hyarcade-requests");
-const Command = require("../../classes/Command");
-const CommandResponse = require("../Utils/CommandResponse");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
+import { MessageEmbed } from "discord.js";
+import { HypixelApi, mojangRequest } from "hyarcade-requests";
+import Command from "../../classes/Command";
+import CommandResponse from "../Utils/CommandResponse";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds";
 
 /**
  * @param {number} n
@@ -28,7 +21,7 @@ function wordify (s) {
   return (`${s}`).replace(/_/g, " ");
 }
 
-module.exports = new Command("arena", ["*"], async (args, rawMsg, interaction) => {
+export default new Command("arena", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
   if(uuid == undefined) {

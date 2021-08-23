@@ -1,13 +1,9 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const InteractionUtils = require("../interactions/InteractionUtils");
-const CommandResponse = require("../Utils/CommandResponse");
-const {
-  ERROR_UNLINKED
-} = require("../Utils/Embeds/StaticEmbeds");
+import { MessageEmbed } from "discord.js";
+import Command from "../../classes/Command";
+import { resolveAccount } from "../BotUtils";
+import { resolveAccount as _resolveAccount } from "../interactions/InteractionUtils";
+import CommandResponse from "../Utils/CommandResponse";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
 
 /**
  * @param {number} n
@@ -18,13 +14,13 @@ function numberify (n) {
   return r;
 }
 
-module.exports = new Command("zombies", ["*"], async (args, rawMsg, interaction) => {
+export default new Command("zombies", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await resolveAccount(plr, rawMsg, args.length != 2);
   } else {
-    acc = await InteractionUtils.resolveAccount(interaction);
+    acc = await _resolveAccount(interaction);
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);
     }

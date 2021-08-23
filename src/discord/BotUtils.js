@@ -28,6 +28,11 @@ module.exports = class BotUtils {
       );
     }
 
+    /**
+     * 
+     * @param {string} file 
+     * @returns {object}
+     */
     static async getFromDB (file) {
       let fileData;
       const url = new URL("db", cfg.dbUrl);

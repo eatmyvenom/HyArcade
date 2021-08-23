@@ -16,7 +16,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
   }
   const res = await BotUtils.getStats(acc, `${game}`);
   const e = res.embed;
-  Logger.debug("Adding stats buttons to message");
+  Logger.debug("Adding stats menu to message");
   const menu = await MenuGenerator.statsMenu(acc.uuid);
   return {
     res: "",

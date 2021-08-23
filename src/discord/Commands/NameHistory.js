@@ -4,7 +4,7 @@ const {
 const Command = require("../../classes/Command");
 const BotUtils = require("../BotUtils");
 
-module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg) => {
+module.exports = new Command("name-history", ["*"], async (args, rawMsg) => {
   const plr = args[0];
   const acc = await BotUtils.resolveAccount(plr, rawMsg);
   const embed = new MessageEmbed()

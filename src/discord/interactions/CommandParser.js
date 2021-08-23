@@ -27,13 +27,8 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 const CommandResponse = require("../Utils/CommandResponse");
 const GetDataRaw = require("../Commands/GetDataRaw");
-const Quake = require("../Commands/Quake");
-const Zombies = require("../Commands/Zombies");
 const Help = require("../Commands/Help");
 const Stats = require("../Commands/Stats");
-const Arena = require("../Commands/Arena");
-const PBall = require("../Commands/PBall");
-const Walls = require("../Commands/Walls");
 
 let Commands = null;
 
@@ -59,6 +54,18 @@ module.exports = async (interaction) => {
     const {
       Compare
     } = await import("../Commands/Compare.mjs");
+
+    const Quake = await import("../Commands/Quake.mjs");
+    const Arena = await import("../Commands/Arena.mjs");
+    const PBall = await import("../Commands/PBall.mjs");
+    const Zombies = await import("../Commands/Zombies.mjs");
+    const Walls = await import("../Commands/Walls.mjs");
+
+    Commands.Walls = Walls;
+    Commands.Zombies = Zombies;
+    Commands.PBall = PBall;
+    Commands.Arena = Arena;
+    Commands.Quake = Quake;
     Commands.Profile = Profile;
     Commands.WhoIS = WhoIS;
     Commands.Verify = Verify;
@@ -203,7 +210,7 @@ module.exports = async (interaction) => {
   }
 
   case "quake": {
-    return await Quake.execute([opts.getString("player")], authorID, null, interaction);
+    return await Commands.Quake.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "zombies": {
@@ -211,15 +218,15 @@ module.exports = async (interaction) => {
   }
 
   case "arena": {
-    return await Arena.execute([opts.getString("player")], authorID, null, interaction);
+    return await Commands.Arena.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "paintball": {
-    return await PBall.execute([opts.getString("player")], authorID, null, interaction);
+    return await Commands.PBall.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "walls": {
-    return await Walls.execute([opts.getString("player")], authorID, null, interaction);
+    return await Commands.Walls.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arcade": {
