@@ -29,6 +29,11 @@ async function getFromHypixel (string, interaction) {
 
   const acc = new Account("", 0, `${uuid}`);
   await acc.updateData();
+
+  if(acc.name == "INVALID-NAME") {
+    return undefined;
+  }
+
   return acc;
 }
 
@@ -50,7 +55,7 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
     urlArgs.set("uuid", str.toLowerCase());
   } else if(str?.length == 36) {
     urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
-  } else if(str != null) {
+  } else if(str != null && str != "!") {
     urlArgs.set("ign", str.toLowerCase());
   } else {
     urlArgs.set("discid", interaction.user.id);
@@ -60,7 +65,7 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
   let accdata = await fetch(url.toString());
   if(accdata.status == 200) {
     accdata = await accdata.json();
-    if(str == undefined && accdata.name_lower == "INVALID-NAME") {
+    if(str == undefined || accdata.name_lower == "INVALID-NAME") {
       return undefined;
     }
     return accdata;
