@@ -1,15 +1,13 @@
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const CommandResponse = require("../Utils/CommandResponse");
-const {
-  ERROR_ARGS_LENGTH
-} = require("../Utils/Embeds/DynamicEmbeds");
+import Command from "../../classes/Command";
+import { getFromDB, writeToDB } from "../BotUtils";
+import CommandResponse from "../Utils/CommandResponse";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
 
-module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
+export default new Command("blacklist", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let blacklist = await BotUtils.getFromDB("blacklist");
+  let blacklist = await getFromDB("blacklist");
 
   const operation = args[0];
 
@@ -52,7 +50,7 @@ module.exports = new Command("blacklist", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await BotUtils.writeToDB("blacklist", blacklist);
+    await writeToDB("blacklist", blacklist);
   }
 
   return res;

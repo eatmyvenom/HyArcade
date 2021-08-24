@@ -7,7 +7,6 @@ const {
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const BotUtils = require("./BotUtils");
-const InteractionHandler = require("./InteractionHandler");
 const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
@@ -72,10 +71,12 @@ module.exports = class BotEvents {
       await roleHandler(BotUtils.client);
       await BotUtils.client.destroy();
     } else if(mode == "slash") {
+      const InteractionHandler = await import("./InteractionHandler");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
     } else if(mode == "mini") {
+      const InteractionHandler = await import("./InteractionHandler");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
@@ -83,6 +84,7 @@ module.exports = class BotEvents {
       logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
     } else if(BotUtils.botMode == "test") {
+      const InteractionHandler = await import("./InteractionHandler");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);

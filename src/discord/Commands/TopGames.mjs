@@ -1,18 +1,11 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
-const Command = require("../../classes/Command");
-const {
-  getFromDB
-} = require("../BotUtils");
-const BotUtils = require("../BotUtils");
-const InteractionUtils = require("../interactions/InteractionUtils");
-const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_UNLINKED
-} = require("../Utils/Embeds/StaticEmbeds");
+import { MessageEmbed } from "discord.js";
+import Account from "hyarcade-requests/types/Account";
+import Command from "../../classes/Command";
+import BotUtils from "../BotUtils";
+import InteractionUtils from "../interactions/InteractionUtils";
+import CommandResponse from "../Utils/CommandResponse";
+import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
 
 /**
  * @param {Account} acc
@@ -145,7 +138,7 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-module.exports = new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
+export default new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const timetype = args[1];
   let acc;
@@ -157,7 +150,7 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
   }
 
   if(timetype == "d") {
-    const daily = await getFromDB("dayaccounts");
+    const daily = await BotUtils.getFromDB("dayaccounts");
     const timedAcc = await daily.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {
@@ -166,7 +159,7 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
 
     acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "w") {
-    const weekly = await getFromDB("weeklyaccounts");
+    const weekly = await BotUtils.getFromDB("weeklyaccounts");
     const timedAcc = await weekly.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {
@@ -175,7 +168,7 @@ module.exports = new Command("top-games", ["*"], async (args, rawMsg, interactio
 
     acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "m") {
-    const monthly = await getFromDB("monthlyaccounts");
+    const monthly = await BotUtils.getFromDB("monthlyaccounts");
     const timedAcc = await monthly.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {

@@ -1,13 +1,13 @@
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const CommandResponse = require("../Utils/CommandResponse");
+import Command from "../../classes/Command";
+import { client } from "../BotUtils";
+import CommandResponse from "../Utils/CommandResponse";
 
-module.exports = new Command("echo", ["%trusted%"], async (args, rawMsg) => {
+export default new Command("echo", ["%trusted%"], async (args, rawMsg) => {
   const channel = args[0];
   let text;
   let discChannel;
   if(channel.length == 18 && channel.toLowerCase() == channel.toUpperCase()) {
-    discChannel = await BotUtils.client.channels.fetch(args[0]);
+    discChannel = await client.channels.fetch(args[0]);
     text = args.slice(1).join(" ");
   } else {
     discChannel = rawMsg.channel;

@@ -1,14 +1,12 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+import { MessageEmbed } from "discord.js";
+import Command from "../../classes/Command";
+import { client } from "../BotUtils";
 
-module.exports = new Command("info", ["*"], async () => {
+export default new Command("info", ["*"], async () => {
   const embed = new MessageEmbed()
-    .setTitle(`${BotUtils.client.user.username} info`)
+    .setTitle(`${client.user.username} info`)
     .setDescription("A discord bot to allow you to get the stats and info from arcade games and arcade players!")
-    .setThumbnail(BotUtils.client.user.avatarURL())
+    .setThumbnail(client.user.avatarURL())
     .addField("Website", "[Link](https://hyarcade.xyz)", false)
     .addField("Github", "[Link](https://github.com/eatmyvenom/party-games-site)", true)
     .addField("Bot invite link", "[Link](https://hyarcade.xyz/botinvite.html)", true)

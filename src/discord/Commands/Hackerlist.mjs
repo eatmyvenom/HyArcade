@@ -1,14 +1,12 @@
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const {
-  ERROR_ARGS_LENGTH
-} = require("../Utils/Embeds/DynamicEmbeds");
+import Command from "../../classes/Command";
+import { getFromDB, writeToDB } from "../BotUtils";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
 
-module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
+export default new Command("hackerlist", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let hackers = await BotUtils.getFromDB("hackerlist");
+  let hackers = await getFromDB("hackerlist");
 
   const operation = args[0];
 
@@ -57,7 +55,7 @@ module.exports = new Command("hackerlist", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await BotUtils.writeToDB("hackerlist", hackers);
+    await writeToDB("hackerlist", hackers);
   }
 
   return res;

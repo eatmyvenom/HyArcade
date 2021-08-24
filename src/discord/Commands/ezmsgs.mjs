@@ -1,15 +1,13 @@
-const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
-const CommandResponse = require("../Utils/CommandResponse");
-const {
-  ERROR_ARGS_LENGTH
-} = require("../Utils/Embeds/DynamicEmbeds");
+import Command from "../../classes/Command";
+import { getFromDB, writeToDB } from "../BotUtils";
+import CommandResponse from "../Utils/CommandResponse";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
 
-module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
+export default new Command("ezmsgs", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let msgs = await BotUtils.getFromDB("ezmsgs");
+  let msgs = await getFromDB("ezmsgs");
 
   const operation = args[0];
   const arg = args.slice(1).join(" ");
@@ -53,7 +51,7 @@ module.exports = new Command("ezmsgs", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await BotUtils.writeToDB("ezmsgs", msgs);
+    await writeToDB("ezmsgs", msgs);
   }
 
   return res;

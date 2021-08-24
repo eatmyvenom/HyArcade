@@ -6,7 +6,7 @@ const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
-const Ping = require("./Commands/Ping");
+const Ping = require("./Commands/Ping").default;
 const {
   ERROR_DATABASE_ERROR
 } = require("./Utils/Embeds/DynamicEmbeds");
@@ -84,15 +84,6 @@ async function checkCommands (rawMsg, command, args, author) {
     return MiniWallsCompare.execute(args, author, rawMsg);
   }
 
-  case "lastupdate":
-  case "timeupdate":
-  case "catlock":
-  case "locktime":
-  case "updatetime":
-  case "checkupdate": {
-    return await timeUpdateCmd.execute(args, author);
-  }
-
   case "flb": {
     const {
       FakeLb
@@ -100,13 +91,11 @@ async function checkCommands (rawMsg, command, args, author) {
     return await FakeLb.execute(args, author, rawMsg);
   }
 
-  case "info":
-  case "botinfo": {
-    return await InfoCmd.execute(args, author);
-  }
-
   case "ping": {
-    return await Ping.execute(args, author);
+    const {
+      Ping
+    } = await import("./Commands/Ping.mjs");
+    return await Ping.execute(args, author, rawMsg);
   }
 
   default: {
