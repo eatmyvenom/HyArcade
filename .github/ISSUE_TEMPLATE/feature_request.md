@@ -7,5 +7,5 @@ assignees: eatmyvenom
 
 ---
 
-**Describe something you would like to see in arcade bot**
+**Describe something you would like to see in hyarcade**
 text...
