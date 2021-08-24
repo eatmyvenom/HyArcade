@@ -45,7 +45,7 @@ module.exports = async function ButtonParser (interaction) {
 async function leaderboardHandler (interaction, leaderboard, time, index) {
   const res = await Leaderboard.execute(
     [leaderboard, time, 10, index],
-    interaction.member.user.id,
+    interaction.user.id,
     undefined,
     interaction
   );

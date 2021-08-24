@@ -146,6 +146,10 @@ async function hander (args, rawMsg, interaction) {
     await interaction.defer();
   }
 
+  if(interaction.isButton()) {
+    await interaction.deferUpdate();
+  }
+
   const type = args[0];
   let timetype = args[1] != undefined ? args[1] : "lifetime";
   const limit = args[2] != undefined ? Number(args[2]) : 10;
