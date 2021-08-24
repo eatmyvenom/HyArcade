@@ -17,12 +17,6 @@ module.exports = {
     name: "ping",
     description: "Get the bots ping and status",
     options: [],
-  },
-  {
-    type: 1,
-    name: "last-update",
-    description: "The last time the database updated",
-    options: [],
-  },
+  }
   ],
 };
