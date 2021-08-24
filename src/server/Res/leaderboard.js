@@ -21,6 +21,7 @@ module.exports = async (req, res, fileCache) => {
   const lbprop = url.searchParams.get("path");
   const category = url.searchParams.get("category");
   const timePeriod = url.searchParams.get("time");
+  const min = url.searchParams.has("min");
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
     let {
@@ -60,6 +61,32 @@ module.exports = async (req, res, fileCache) => {
         TimSort.sort(accounts, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
       } else {
         TimSort.sort(accounts, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));
+      }
+    }
+
+    if(min) {
+      if(category == null) {
+        accounts.forEach((a) => {
+          for(const key in a) {
+            if(key != lbprop && key != "name" && key != "uuid") {
+              delete a[key];
+            }
+          }
+        });
+      } else {
+        accounts.forEach((a) => {
+          for(const key in a) {
+            if(key != category && key != "name" && key != "uuid") {
+              delete a[key];
+            }
+          }
+
+          for(const key in a?.[category]) {
+            if(key != lbprop) {
+              delete a[key];
+            }
+          }
+        });
       }
     }
 
