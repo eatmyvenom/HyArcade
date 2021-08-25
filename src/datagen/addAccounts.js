@@ -73,7 +73,6 @@ module.exports = async function addAccounts (category, names) {
   for(const acc of newAccs) {
     const lilAcc = {
       name: acc.name,
-      wins: acc.wins,
       uuid: acc.uuid
     };
     acclist[category].push(lilAcc);
