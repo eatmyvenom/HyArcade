@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import logger from "hyarcade-logger";
 import BotUtils from "./BotUtils";
 
 /**
@@ -12,8 +13,12 @@ export default async function NameUpdater (client) {
 
   mwMembers.forEach(async (m) => {
     const acc = accs.find((a) => a.discord = m.id);
-    if(acc.name != m.nickname || acc.name != m.user.username) {
-      await m.setNickname(acc.name);
+    if(acc != undefined && (acc.name != m.nickname || acc.name != m.user.username)) {
+      try {
+        await m.setNickname(acc.name);
+      } catch (e) {
+        logger.err(e);
+      }
     }
   });
 }
