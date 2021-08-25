@@ -23,6 +23,11 @@ module.exports = function isValidIGN (txt) {
         txt != "yea" &&
         txt != "okay" &&
         txt != "bruh" &&
-        txt != "so"
+        txt != "so" &&
+        txt != "dream" &&
+        txt != "technoblade" &&
+        txt != "tommyinit" &&
+        txt != "dreamwastaken" &&
+        txt != "hypixel"
   );
 };
