@@ -25,4 +25,30 @@ module.exports = class Database {
     }
   }
 
+  static async getLeaderboard (path, category, time, min) {
+    const url = new URL("lb", cfg.dbURL);
+    url.searchParams.set("path", path);
+    
+    if(category != undefined) {
+      url.searchParams.set("category", category);
+    }
+
+    if(time != undefined) {
+      url.searchParams.set("category", time);
+    }
+
+    if(min) {
+      url.searchParams.set("min", "");
+    }
+
+    try {
+      const lb = await fetch(url.toString())
+      return JSON.parse(lb);
+    } catch (e) {
+      Logger.err("Can't connect to database");
+      Logger.err(e);
+      return {};
+    }
+  }
+
 };

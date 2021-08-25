@@ -98,13 +98,13 @@ module.exports = class ImageGenerator {
       this.context.fillStyle = "#33333377";
       this.context.fill();
       let currentX = x - width / 3.3;
-      this.context.fillStyle = type == "l" ? "#55FF55" : "#AAAAAA";
+      this.context.fillStyle = type == "lifetime" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Lifetime ", currentX, y);
       currentX += lWidth / 1;
-      this.context.fillStyle = type == "m" ? "#55FF55" : "#AAAAAA";
+      this.context.fillStyle = type == "monthly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Monthly ", currentX, y);
       currentX += mWidth / 1.2;
-      this.context.fillStyle = type == "w" ? "#55FF55" : "#AAAAAA";
+      this.context.fillStyle = type == "weekly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Weekly", currentX, y);
       currentX += wWidth;
     }
