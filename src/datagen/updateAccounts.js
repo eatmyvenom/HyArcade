@@ -85,13 +85,19 @@ async function updateAccountsInArr (accounts, oldAccs) {
 
         const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
 
+        // Make sure their arcade wins are not inflated due to hide and seek
+        const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 3000;
+        const hnsBelowInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) <= 200;
+
+        const nothnsInflated = hnsBelowInflationLimit || hnsAboveInflationLimit;
+
         // Linked players should update more often since they will check their own stats
         const isLinked = !!oldAcc.discord;
 
-        // Ignore people who have not played within the last 3.5 days
-        const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 302400000;
+        // Ignore people who have not played within the last 3 days
+        const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 259200000;
 
-        const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated;
+        const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated && nothnsInflated;
 
         if((isLinked || hasImportantStats) && hasPlayedRecently) {
           logger.out(`Updating ${oldAcc.name}'s data`);
