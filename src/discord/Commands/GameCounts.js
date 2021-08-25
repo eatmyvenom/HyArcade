@@ -1,15 +1,15 @@
 const {
   MessageEmbed
 } = require("discord.js");
+const { HypixelApi } = require("hyarcade-requests");
 const Command = require("../../classes/Command");
-const utils = require("../../utils");
 
 /**
  * @param {string} game
  * @returns {object}
  */
 async function getFields (game) {
-  const counts = await utils.readJSON("./gameCounts.json");
+  const counts = await HypixelApi.counts();
   const fields = [];
   switch((`${game}`).toLowerCase()) {
   case "party":
