@@ -1,5 +1,5 @@
 const BotUtils = require("../BotUtils");
-const Account = require("../../classes/account");
+const Account = require("hyarcade-requests/types/Account");
 const AccountResolver = require("./Utils/AccountResolver");
 
 module.exports = class InteractionUtils {
