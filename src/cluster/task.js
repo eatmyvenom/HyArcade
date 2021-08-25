@@ -14,6 +14,7 @@ const {
   winsSorter,
   logger
 } = require("../utils");
+const { HypixelApi } = require("hyarcade-requests");
 
 /**
  * Generate the data for all accounts
@@ -21,6 +22,11 @@ const {
  * @returns {string[]} files changed by this task
  */
 async function accs () {
+
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
   const acclist = await lists.accounts();
   accounts = await dataGen.updateAllAccounts(acclist);
   const old = await utils.readDB("accounts");
@@ -49,6 +55,12 @@ async function accs () {
  * @returns {string[]} files changed by this task
  */
 async function plrs () {
+
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
+
   const players = await lists.players(accounts);
   await Promise.all(
     players.map(async (player) => {
@@ -67,6 +79,12 @@ async function plrs () {
  * @returns {string[]} files changed by this task
  */
 async function glds () {
+
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
+
   const guilds = await lists.guilds(accounts);
   await Promise.all(
     guilds.map(async (guild) => {
