@@ -44,6 +44,7 @@ class Guild {
     farmhuntWins = 0;
     miniWallsWins = 0;
     footballWins = 0;
+    hypixelSaysWins = 0;
     enderSpleefWins = 0;
     throwOutWins = 0;
     galaxyWarsWins = 0;
@@ -131,10 +132,13 @@ class Guild {
         this.throwOutWins += numberify(member.throwOut.wins);
         this.galaxyWarsWins += numberify(member.galaxyWars.wins);
         this.dragonWarsWins += numberify(member.dragonWars.wins);
+        this.bountyHuntersWins += numberify(member.bountyHunters.wins);
         this.blockingDeadWins += numberify(member.blockingDead.wins);
         this.hideAndSeekWins += numberify(member.hideAndSeek.wins);
+        this.hypixelSaysWins += numberify(member.hypixelSays.wins);
         this.zombiesWins += numberify(member.zombies.wins_zombies);
         this.pixelPaintersWins += numberify(member.pixelPainters.wins);
+        this.partyGamesWins += numberify(member.partyGames.wins);
         this.simWins += numberify(member.seasonalWins.total);
       }
       delete this.members;
