@@ -44,15 +44,15 @@ function mwComparitor (b, a) {
  * @returns {Account}
  */
 function cb (n, o) {
-  n.miniWallsWins = intt(n?.miniWallsWins ?? 0) - intt(o?.miniWallsWins ?? 0);
+  n.miniWallsWins = toInt(n?.miniWallsWins ?? 0) - toInt(o?.miniWallsWins ?? 0);
   if(n.miniWalls == undefined) {
     n.miniWalls = {};
   }
-  n.miniWalls.kills = intt(n?.miniWalls?.kills ?? 0) - intt(o?.miniWalls?.kills ?? 0);
-  n.miniWalls.deaths = intt(n?.miniWalls?.deaths ?? 0) - intt(o?.miniWalls?.deaths ?? 0);
-  n.miniWalls.witherDamage = intt(n?.miniWalls?.witherDamage ?? 0) - intt(o?.miniWalls?.witherDamage ?? 0);
-  n.miniWalls.witherKills = intt(n?.miniWalls?.witherKills ?? 0) - intt(o?.miniWalls?.witherKills ?? 0);
-  n.miniWalls.finalKills = intt(n?.miniWalls?.finalKills ?? 0) - intt(o?.miniWalls?.finalKills ?? 0);
+  n.miniWalls.kills = toInt(n?.miniWalls?.kills ?? 0) - toInt(o?.miniWalls?.kills ?? 0);
+  n.miniWalls.deaths = toInt(n?.miniWalls?.deaths ?? 0) - toInt(o?.miniWalls?.deaths ?? 0);
+  n.miniWalls.witherDamage = toInt(n?.miniWalls?.witherDamage ?? 0) - toInt(o?.miniWalls?.witherDamage ?? 0);
+  n.miniWalls.witherKills = toInt(n?.miniWalls?.witherKills ?? 0) - toInt(o?.miniWalls?.witherKills ?? 0);
+  n.miniWalls.finalKills = toInt(n?.miniWalls?.finalKills ?? 0) - toInt(o?.miniWalls?.finalKills ?? 0);
 
   return n;
 }
@@ -62,7 +62,7 @@ function cb (n, o) {
  * @param {number} n 
  * @returns {number}
  */
-function intt (n) {
+function toInt (n) {
   return new Number(n);
 }
 
