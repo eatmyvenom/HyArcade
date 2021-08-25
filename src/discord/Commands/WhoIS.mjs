@@ -64,7 +64,7 @@ function generateWhoisEmbed (acc) {
   }
 
   embed.addField("--- Discord ---", discord, true);
-  embed.addField("---- Names ----", acc.nameHist.map((n) => `**${n}**`).join("\n"), true);
+  embed.addField("---- Names ----", acc.nameHist.map((n, i) => `${i + 1} - **${n}**`).join("\n"), true);
   embed.addField("---- Info -----", `**Guild** - ${acc.guild ?? "Unknown"}\n**Main** - ${getMain(acc)}\n**`, true);
 
   return embed;
