@@ -35,7 +35,7 @@ async function hackerTransformer (list) {
  * @returns {Account}
  */
 function mwComparitor (b, a) {
-  return (a?.miniWallsWins ?? 0) - (b?.miniWallsWins ?? 0);
+  return (a?.miniWalls.wins ?? 0) - (b?.miniWalls.wins ?? 0);
 }
 
 /**
@@ -45,10 +45,10 @@ function mwComparitor (b, a) {
  * @returns {Account}
  */
 function cb (n, o) {
-  n.miniWallsWins = toInt(n?.miniWallsWins ?? 0) - toInt(o?.miniWallsWins ?? 0);
   if(n.miniWalls == undefined) {
     n.miniWalls = {};
   }
+  n.miniWalls.wins = toInt(n?.miniWalls?.wins ?? 0) - toInt(o?.miniWalls?.wins ?? 0);
   n.miniWalls.kills = toInt(n?.miniWalls?.kills ?? 0) - toInt(o?.miniWalls?.kills ?? 0);
   n.miniWalls.deaths = toInt(n?.miniWalls?.deaths ?? 0) - toInt(o?.miniWalls?.deaths ?? 0);
   n.miniWalls.witherDamage = toInt(n?.miniWalls?.witherDamage ?? 0) - toInt(o?.miniWalls?.witherDamage ?? 0);
