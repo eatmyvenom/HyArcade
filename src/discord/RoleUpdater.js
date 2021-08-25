@@ -1,3 +1,4 @@
+const Role = require("../classes/Role");
 const BotUtils = require("./BotUtils");
 const Webhooks = require("./Utils/Webhooks");
 
@@ -14,6 +15,11 @@ module.exports = class RoleUpdater {
       this.prop = prop;
     }
 
+    /**
+     * 
+     * @param {*} wins 
+     * @returns {Role}
+     */
     getRole (wins) {
       for(const role of this.roles) {
         if(wins >= role.minimumWins) {
@@ -38,7 +44,13 @@ module.exports = class RoleUpdater {
     }
 
     async updatePlayer (acc, discMember) {
-      const newRole = this.getRole(acc[this.game][this.prop]);
+      const wins = acc?.[this.game]?.[this.prop] ?? 0;
+      const newRole = this.getRole(wins);
+
+      if(wins == 0) {
+        await Webhooks.logHook.send(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
+        return;
+      }
       if(newRole == undefined) return;
       if(discMember.roles == undefined) return;
 
