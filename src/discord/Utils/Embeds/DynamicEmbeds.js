@@ -95,3 +95,17 @@ exports.ERROR_WAS_NOT_IN_DATABASE = function (ign) {
     .setDescription(`${ign} was not in the database at the time period you requested!`)
     .setColor(COLOR_RED);
 };
+
+/**
+ * 
+ * @param {Error} error 
+ * @param {string} note 
+ * @returns {MessageEmbed}
+ */
+exports.ERROR_LOG = function (error, note) {
+  return new MessageEmbed()
+    .setTitle("ERROR")
+    .setDescription(note)
+    .addField("Error", `\`${error.message}\``)
+    .addField("Stack", `\`${error.stack}\``);
+};

@@ -4,7 +4,7 @@ import ButtonParser from "./interactions/Buttons/ButtonParser";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser";
 import Webhooks from "./Utils/Webhooks";
 import CommandResponse from "./Utils/CommandResponse";
-import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } from "./Utils/Embeds/DynamicEmbeds";
+import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds";
 import MenuParser from "./interactions/SelectionMenus/MenuParser";
 import { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } from "discord.js";
 import { getBlacklist } from "./BotRuntime";
@@ -65,13 +65,10 @@ async function commandHandler (interaction) {
       await interaction.followUp(res.toDiscord());
     }
   } catch (e) {
-    Webhooks.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
-    Webhooks.err(e.stack);
+    Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
+    Logger.err(e.stack);
     await Webhooks.errHook.send({
-      content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`
-    });
-    await Webhooks.errHook.send({
-      content: e.toString()
+      embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
     });
     return;
   }
