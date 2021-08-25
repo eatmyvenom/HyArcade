@@ -1,6 +1,7 @@
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import LBDiffAdv from "../../utils/leaderboard/LBDiffAdv.js";
+import BotRuntime from "../BotRuntime.js";
 import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 
@@ -20,7 +21,7 @@ function formatNum (n) {
  * @returns {Account[]}
  */
 async function hackerTransformer (list) {
-  const hackers = await BotUtils.getFromDB("hackerlist");
+  const hackers = await BotRuntime.getHackerlist();
   let newlist = list.filter((a) => !hackers.includes(a.uuid));
   newlist = newlist.filter((a) => a.name != undefined || a.name != "");
   newlist = newlist.filter((a) => a.miniWalls != undefined);
