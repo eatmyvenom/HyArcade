@@ -5,11 +5,16 @@ const fetch = require("node-fetch");
 const Logger = require("hyarcade-logger");
 const { AccountArray } = require("hyarcade-requests").types;
 const {
-  MessageEmbed
+  MessageEmbed, Client
 } = require("discord.js");
 
 module.exports = class BotUtils {
     static isBotInstance = false;
+    /**
+     *
+     * @type {Client}
+     * @static
+     */
     static client;
     static botMode;
     static tus = [];
