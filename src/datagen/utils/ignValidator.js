@@ -5,6 +5,7 @@ module.exports = function isValidIGN (txt) {
         !txt.includes("!") &&
         !txt.includes("?") &&
         !txt.includes("<") &&
+        !txt.includes(":") &&
         !txt.includes(";") &&
         !txt.includes("\"") &&
         !txt.includes("(") &&
@@ -20,6 +21,8 @@ module.exports = function isValidIGN (txt) {
         txt != "are" &&
         txt != "gamer" &&
         txt != "yea" &&
-        txt != "okay"
+        txt != "okay" &&
+        txt != "bruh" &&
+        txt != "so"
   );
 };
