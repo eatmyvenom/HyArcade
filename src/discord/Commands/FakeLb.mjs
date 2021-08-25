@@ -2,8 +2,8 @@ import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import LBDiffAdv from "../../utils/leaderboard/LBDiffAdv.js";
 import BotRuntime from "../BotRuntime.js";
-import BotUtils from "../BotUtils.js";
 import ImageGenerator from "../images/ImageGenerator.js";
+import CommandResponse from "../Utils/CommandResponse.js";
 
 /**
  * 
@@ -89,5 +89,5 @@ export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"],
   await img.drawTimeType("m", x, y += dy, fontSize);
 
   const attachment = img.toDiscord();
-  return { res: "", img: attachment };
+  return new CommandResponse("", undefined, attachment);
 });
