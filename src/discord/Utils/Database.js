@@ -42,7 +42,7 @@ module.exports = class Database {
     }
 
     try {
-      const lb = await fetch(url.toString())
+      const lb = await fetch(url.toString());
       return JSON.parse(lb);
     } catch (e) {
       Logger.err("Can't connect to database");
