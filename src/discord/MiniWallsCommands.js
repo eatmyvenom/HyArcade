@@ -1,12 +1,9 @@
 const linkCmd = require("./Commands/Link");
-const timeUpdateCmd = require("./Commands/LastUpdate");
-const InfoCmd = require("./Commands/Info");
 const logger = require("hyarcade-logger");
 const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
-const Ping = require("./Commands/Ping").default;
 const {
   ERROR_DATABASE_ERROR
 } = require("./Utils/Embeds/DynamicEmbeds");

@@ -11,6 +11,7 @@ const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
+const { default: NameUpdater } = require("./NameUpdater");
 
 module.exports = class BotEvents {
   static async rateLimit (rlInfo) {
@@ -110,6 +111,10 @@ module.exports = class BotEvents {
     runtime[`${BotUtils.botMode}HeartBeat`] = Date.now();
     await runtime.save();
     logger.info("Heart beat - I'm alive!");
+
+    if(BotUtils.botMode == "mw") {
+      NameUpdater(BotUtils.client);
+    }
   }
 
   static warn (info) {
