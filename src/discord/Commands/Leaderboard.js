@@ -5,11 +5,12 @@ const {
 } = require("discord.js");
 const BotUtils = require("../BotUtils");
 const Command = require("../../classes/Command");
-const listUtils = require("../../listUtils");
+//// const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
 const {
   stringLBAdv
 } = require("../../listUtils");
+const Database = require("../Utils/Database");
 
 /**
  * @param {string} prop
@@ -17,7 +18,7 @@ const {
  * @param {number} limit
  * @param {string} category
  * @param {number} start
- * @returns {MessageEmbed}
+ * @returns {Promise<MessageEmbed>}
  */
 async function getLB (prop, timetype, limit, category, start) {
   let res = "";
@@ -28,7 +29,17 @@ async function getLB (prop, timetype, limit, category, start) {
   case "day":
   case "daily": {
     time = "Daily";
-    res = await listUtils.stringLBDiff(prop, limit, "day", category, start);
+    res = await Database.getLeaderboard(prop, category, "day");
+    if(start != undefined) {
+      res = res.slice(start);
+    }
+
+    if(limit != undefined) {
+      res = res.slice(0, limit);
+    } else {
+      res = res.slice(0, 10);
+    }
+    //// res = await listUtils.stringLBDiff(prop, limit, "day", category, start);
     break;
   }
 
@@ -37,7 +48,16 @@ async function getLB (prop, timetype, limit, category, start) {
   case "weak":
   case "weekly": {
     time = "Weekly";
-    res = await listUtils.stringLBDiff(prop, limit, "weekly", category, start);
+    res = await Database.getLeaderboard(prop, category, "weekly");
+    if(start != undefined) {
+      res = res.slice(start);
+    }
+
+    if(limit != undefined) {
+      res = res.slice(0, limit);
+    } else {
+      res = res.slice(0, 10);
+    }
     break;
   }
 
@@ -46,37 +66,31 @@ async function getLB (prop, timetype, limit, category, start) {
   case "month":
   case "monthly": {
     time = "Monthly";
-    res = await listUtils.stringLBDiff(prop, limit, "monthly", category, start);
+    res = await Database.getLeaderboard(prop, category, "monthly");
+    if(start != undefined) {
+      res = res.slice(start);
+    }
+
+    if(limit != undefined) {
+      res = res.slice(0, limit);
+    } else {
+      res = res.slice(0, 10);
+    }
     break;
-  }
-
-  case "a":
-  case "all":
-  case "*": {
-    let day = await listUtils.stringLBDiff(prop, limit, "day", category, start);
-    let week = await listUtils.stringLBDiff(prop, limit, "weekly", category, start);
-    let month = await listUtils.stringLBDiff(prop, limit, "monthly", category, start);
-    const life = await listUtils.stringLB(prop, limit, category, start);
-
-    day = day == "" ? "Nobody has won" : day;
-    week = week == "" ? "Nobody has won" : week;
-    month = month == "" ? "Nobody has won" : month;
-
-    const embed = new MessageEmbed()
-      .setColor(0x00cc66)
-      .addField("Daily", day, true)
-      .addField("Weekly", week, true)
-      .addField("\u200B", "\u200B", true)
-      .addField("Monthly", month, true)
-      .addField("Lifetime", life, true)
-      .addField("\u200B", "\u200B", true);
-
-    return embed;
   }
 
   default: {
     time = "Lifetime";
-    res = await listUtils.stringLB(prop, limit, category, start);
+    res = await Database.getLeaderboard(prop, category);
+    if(start != undefined) {
+      res = res.slice(start);
+    }
+
+    if(limit != undefined) {
+      res = res.slice(0, limit);
+    } else {
+      res = res.slice(0, 10);
+    }
     break;
   }
   }
