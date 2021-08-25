@@ -72,12 +72,12 @@ module.exports = class BotEvents {
       await roleHandler(BotUtils.client);
       await BotUtils.client.destroy();
     } else if(mode == "slash") {
-      const InteractionHandler = await import("./InteractionHandler");
+      const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
     } else if(mode == "mini") {
-      const InteractionHandler = await import("./InteractionHandler");
+      const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
@@ -85,7 +85,7 @@ module.exports = class BotEvents {
       logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
     } else if(BotUtils.botMode == "test") {
-      const InteractionHandler = await import("./InteractionHandler");
+      const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler(BotUtils.client);
       logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
       logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);

@@ -1,22 +1,15 @@
-const logger = require("hyarcade-logger");
-const BotUtils = require("./BotUtils");
-const ButtonParser = require("./interactions/Buttons/ButtonParser");
-const ForceOGuser = require("./interactions/Buttons/ForceOGuser");
-const Webhooks = require("./Utils/Webhooks");
-const CommandResponse = require("./Utils/CommandResponse");
-const {
-  LOG_SLASH_COMMAND_USAGE,
-  LOG_MESSAGE_COMPONENT_USAGE
-} = require("./Utils/Embeds/DynamicEmbeds");
-const MenuParser = require("./interactions/SelectionMenus/MenuParser");
-const {
-  CommandInteraction,
-  ButtonInteraction,
-  SelectMenuInteraction,
-  Interaction,
-  Client
-} = require("discord.js");
-const BotRuntime = require("./BotRuntime");
+import Logger from "hyarcade-logger";
+import { botMode } from "./BotUtils";
+import ButtonParser from "./interactions/Buttons/ButtonParser";
+import ForceOGuser from "./interactions/Buttons/ForceOGuser";
+import Webhooks from "./Utils/Webhooks";
+import CommandResponse from "./Utils/CommandResponse";
+import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE } from "./Utils/Embeds/DynamicEmbeds";
+import MenuParser from "./interactions/SelectionMenus/MenuParser";
+import { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } from "discord.js";
+import { getBlacklist } from "./BotRuntime";
+import microInteractionObjects from "./interactions/microInteractionObjects";
+import fullInteractionObjects from "./interactions/interactionObjects";
 
 let CommandParser = null;
 
@@ -25,7 +18,7 @@ let CommandParser = null;
  * @returns {Promise<boolean>}
  */
 async function isBlacklisted (id) {
-  const blacklist = await BotRuntime.getBlacklist();
+  const blacklist = await getBlacklist();
   return blacklist.includes(id);
 }
 
@@ -39,7 +32,7 @@ async function commandHandler (interaction) {
     CommandParser = await import("./interactions/CommandParser.mjs");
   }
 
-  if(await isBlacklisted(interaction.user.id)) {
+  if(await isBlacklisted(interaction?.user?.id)) {
     return;
   }
 
@@ -47,8 +40,8 @@ async function commandHandler (interaction) {
   try {
     responseObj = await CommandParser(interaction);
   } catch (e) {
-    logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
-    logger.err(e);
+    Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
+    Logger.err(e);
     await Webhooks.errHook.send({
       content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
     });
@@ -72,8 +65,8 @@ async function commandHandler (interaction) {
       await interaction.followUp(res.toDiscord());
     }
   } catch (e) {
-    logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
-    logger.err(e.stack);
+    Webhooks.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
+    Webhooks.err(e.stack);
     await Webhooks.errHook.send({
       content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`
     });
@@ -83,10 +76,10 @@ async function commandHandler (interaction) {
     return;
   }
 
-  const logString = `${interaction.member.user.tag} invoked command interaction \`${
+  const logString = `${interaction?.member?.user?.tag} invoked command interaction \`${
     interaction.commandName
   }\` with options \`${JSON.stringify(interaction.options.data)}\``;
-  logger.out(logString.replace(/`/g, "'"));
+  Logger.out(logString.replace(/`/g, "'"));
   await Webhooks.logHook.send(logString);
   await logCmd(interaction);
 }
@@ -172,11 +165,11 @@ async function interactionHandler (interaction) {
  * @param {Client} client
  */
 async function registerAll (client) {
-  let interactionObjects = require("./interactions/interactionObjects");
-  logger.info("Registering global commands with discord");
+  let interactionObjects = fullInteractionObjects;
+  Logger.info("Registering global commands with discord");
   const cmdarr = [];
-  if(BotUtils.botMode == "mini") {
-    interactionObjects = require("./interactions/microInteractionObjects");
+  if(botMode == "mini") {
+    interactionObjects = microInteractionObjects;
   }
   for(const c in interactionObjects) {
     cmdarr.push(interactionObjects[c]);
@@ -188,18 +181,18 @@ async function registerAll (client) {
   guilds.cache.array();
   for(const g of guilds.cache.array()) {
     try {
-      if(BotUtils.botMode != "test") {
+      if(botMode != "test") {
         await g.commands.set([]);
       } else {
         await g.commands.set(cmdarr);
       }
     } catch (e) {
-      logger.error("Couldn't change guild slash commands!");
-      logger.error(e);
+      Logger.error("Couldn't change guild slash commands!");
+      Logger.error(e);
     }
   }
 
-  if(BotUtils.botMode != "test") {
+  if(botMode != "test") {
     await client.application.commands.set(cmdarr);
   }
 }
@@ -208,7 +201,7 @@ async function registerAll (client) {
  *
  * @param {Client} client
  */
-module.exports = async (client) => {
+export default async (client) => {
   await registerAll(client);
   client.on("interactionCreate", interactionHandler);
 };
