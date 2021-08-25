@@ -35,9 +35,22 @@ header > .tag, header > p {
     width: 49%;
 }
 
-header > .tag[green] {
-    color: green;
-}
+[black] { color : "#000000" }
+[dark_blue] { color :"#0000AA" }
+[dark_green] { color :"#00AA00" }
+[dark_aqua] { color :"#00AAAA" }
+[dark_red] { color :"#AA0000" }
+[dark_purple] { color :"#AA00AA" }
+[gold] { color :"#FFAA00" }
+[gray] { color :"#AAAAAA" }
+[dark_gray] { color :"#555555" }
+[blue] { color :"#5555FF" }
+[green] { color :"#55FF55" }
+[aqua] { color :"#55FFFF" }
+[red] { color :"#FF5555" }
+[light_purple] { color :"#FF55FF" }
+[yellow] { color :"#FFFF55" }
+[white] { color :"#FFFFFF" }
 
 header > .tag::before {
     content: "[";

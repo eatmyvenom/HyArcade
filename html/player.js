@@ -56,6 +56,11 @@ function setIcon (uuid) {
   link.href = `https://crafatar.com/avatars/${uuid}?overlay`;
 }
 
+/**
+ *
+ * @param {string} page
+ * @returns {string} 
+ */
 function lilQuestionMark (page) {
   return `<a href="https://docs.hyarcade.xyz/api/${page}"><span style="font-size:12px" class="tooltip material-icons md-light">help</span></a>`;
 }
