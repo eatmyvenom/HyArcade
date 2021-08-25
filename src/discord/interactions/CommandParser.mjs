@@ -1,6 +1,5 @@
 import logger from "hyarcade-logger";
 import { addAccounts } from "../../listUtils";
-import InteractionUtils from "./InteractionUtils";
 import { MessageEmbed, CommandInteraction } from "discord.js";
 
 import CommandResponse from "../Utils/CommandResponse";
@@ -27,7 +26,6 @@ import { WhoIS } from "../Commands/WhoIS.mjs";
 import { Verify } from "../Commands/LinkMe.mjs";
 import { Compare } from "../Commands/Compare.mjs";
 
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
 
 /**
  *
@@ -101,16 +99,15 @@ export default async (interaction) => {
   }
 
   case "name-history": {
-    const acc = await InteractionUtils.resolveAccount(interaction);
-    if(acc == undefined) {
-      return new CommandResponse("", ERROR_UNLINKED);
-    }
     const embed = new MessageEmbed()
-      .setTitle(`${acc.name} IGN history`)
-      .setDescription(([].concat(acc.nameHist)).join("\n"))
-      .setColor(0x44a3e7);
+      .setTitle("Use /whois")
+      .setColor(0xd69323)
+      .setDescription(
+        "This command has been merged with /whois! That command will have name history and more."
+      );
+
     return {
-      res: "",
+      res: undefined,
       embed
     };
   }
