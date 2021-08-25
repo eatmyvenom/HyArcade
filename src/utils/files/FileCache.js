@@ -69,38 +69,54 @@ class FileCache {
 
       Logger.debug("Refreshing file cache...");
 
-      const accounts = await BSONreader("accounts.json");
-      fileCache.accounts = new AccountArray(accounts);
+      try {
+        const accounts = await BSONreader("accounts.json");
+        const dailyAccounts = await BSONreader("accounts.day.json");
+        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        const acclist = await BSONreader("acclist.json");
+        const disclist = await utils.readJSON("disclist.json");
+        const status = await utils.readJSON("status.json");
+        const updatetime = await fs.readFile("timeupdate");
+        const players = await utils.readJSON("players.json");
+        const guilds = await utils.readJSON("guild.json");
+        const blacklist = await fs.readFile(`${fileCache.path}blacklist`);
+        const hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
+        const ezmsgs = await fs.readFile(`${fileCache.path}ez`);
+        
+        fileCache.acclist = acclist;
+        fileCache.disclist = disclist;
+        fileCache.status = status;
+        fileCache.updatetime = updatetime;
+        fileCache.players = players;
+        fileCache.guilds = guilds;
+        fileCache.accounts = new AccountArray(accounts);
+        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
+        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
+        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+        if(ezmsgs.toString().trim() != "") {
+          ezmsgs.blacklist = ezmsgs.toString().trim()
+            .split("\n")
+            .filter((v) => v != "");
+        }
+        
+        if(blacklist.toString().trim() != "") {
+          fileCache.blacklist = blacklist.toString().trim()
+            .split("\n")
+            .filter((v) => v != "");
+        }
+        
+        if(hackerlist.toString().trim() != "") {
+          fileCache.hackerlist = hackerlist.toString().trim()
+            .split("\n")
+            .filter((v) => v != "");
+        }
+        Logger.debug("File cache updated");
 
-      const dailyAccounts = await BSONreader("accounts.day.json");
-      fileCache.dailyAccounts = new AccountArray(dailyAccounts);
-
-      const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-      fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
-
-      const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-      fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
-
-      fileCache.acclist = await BSONreader("acclist.json");
-      fileCache.disclist = await utils.readJSON("disclist.json");
-      fileCache.status = await utils.readJSON("status.json");
-      fileCache.updatetime = await fs.readFile("timeupdate");
-      fileCache.players = await utils.readJSON("players.json");
-      fileCache.guilds = await utils.readJSON("guild.json");
-      const blacklist = await fs.readFile(`${fileCache.path}blacklist`);
-      const hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
-      fileCache.ezmsgs = (await fs.readFile(`${fileCache.path}ez`)).toString().split("\n");
-
-      if(blacklist.toString().trim() != "") {
-        fileCache.blacklist = blacklist.toString().trim()
-          .split("\n");
+      } catch (e) {
+        Logger.error("ERROR REFRESHING FILES!");
+        Logger.error(e.stack);
       }
-      if(hackerlist.toString().trim() != "") {
-        fileCache.hackerlist = hackerlist.toString().trim()
-          .split("\n");
-      }
-
-      Logger.debug("File cache updated");
     }
 
     get dayaccounts () {
