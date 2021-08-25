@@ -86,7 +86,7 @@ module.exports = class BotUtils {
       }
       return {
         username: BotUtils.client.user.username,
-        avatarURL: BotUtils.client.user.avatarURL(),
+        avatarURL: BotUtils.client.user.avatarURL({ format: "png" }),
         embeds,
       };
     }
