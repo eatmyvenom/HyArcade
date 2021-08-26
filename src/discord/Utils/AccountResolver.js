@@ -36,23 +36,6 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
     acc = acclist.find((a) => a.name?.toLowerCase() == queryString);
   }
 
-  if(queryString.length > 1 && acc == undefined) {
-    const discusers = await rawMessage.guild.members.fetch({
-      query: queryString,
-      limit: 1,
-    });
-    if(discusers.size > 0) {
-      const usr = discusers.first();
-      const {
-        id
-      } = usr;
-      const uuid = disclist[id];
-      if(uuid != undefined) {
-        acc = acclist.find((a) => a.uuid == uuid);
-      }
-    }
-  }
-
   if(acc == undefined) {
     if(rawMessage.mentions.users.size > 0) {
       const discid = `${rawMessage.mentions.users.first()}`;
