@@ -1,3 +1,10 @@
+const { MessageComponentInteraction } = require("discord.js");
+
+/**
+ * 
+ * @param {MessageComponentInteraction} interaction 
+ * @returns {boolean}
+ */
 module.exports = async function ForceOGuser (interaction) {
   const og = interaction.message.interaction.user.id;
   const current = interaction.user.id;
@@ -6,7 +13,7 @@ module.exports = async function ForceOGuser (interaction) {
   }
 
   await interaction.reply({
-    content: `Only <@${og}> can use this!`,
+    content: `Only <@${og}> can use this! Run /${interaction.message.interaction.commandName} to do this.`,
     ephemeral: true
   });
   return false;
