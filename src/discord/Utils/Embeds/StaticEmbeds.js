@@ -37,6 +37,13 @@ exports.ERROR_LINK_HYPIXEL_MISMATCH = new MessageEmbed()
   )
   .setColor(COLOR_RED);
 
+exports.ERROR_LINK_HYPIXEL_MISMATCH_MW = new MessageEmbed()
+  .setTitle("ERROR")
+  .setDescription(
+    "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Read [this](https://docs.hyarcade.xyz/bots/mw-verify) to see a more detailed explanation."
+  )
+  .setColor(COLOR_RED);
+
 /**
  * Account link was successful
  */
@@ -49,6 +56,13 @@ exports.ERROR_INPUT_IGN = new MessageEmbed()
   .setTitle("ERROR")
   .setDescription(
     "Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/Verify) to see a more detailed explanation."
+  )
+  .setColor(COLOR_RED);
+
+exports.ERROR_INPUT_IGN_MW = new MessageEmbed()
+  .setTitle("ERROR")
+  .setDescription(
+    "Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/mw-verify) to see a more detailed explanation."
   )
   .setColor(COLOR_RED);
 

@@ -10,7 +10,7 @@ const { Account } = types;
 import { execute as MwExecute } from "./MiniWallsCommands";
 import SlashHelpTxt from "./Utils/SlashHelpTxt";
 import { playerLink } from "./Utils/Embeds/AdvancedEmbeds";
-import { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
+import { ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds";
 import { logHook, errHook } from "./Utils/Webhooks";
 import { logCommand } from "./Utils/LogUtils";
 import CommandResponse from "./Utils/CommandResponse";
@@ -117,7 +117,7 @@ async function miniWallsVerify (msg) {
     });
   } else {
     await msg.channel.send({
-      embeds: [ERROR_LINK_HYPIXEL_MISMATCH]
+      embeds: [ERROR_LINK_HYPIXEL_MISMATCH_MW]
     });
   }
 }
