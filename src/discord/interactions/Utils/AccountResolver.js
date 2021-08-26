@@ -65,11 +65,16 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
   let accdata = await fetch(url.toString());
   if(accdata.status == 200) {
     accdata = await accdata.json();
-    if(str == undefined || accdata.name_lower == "INVALID-NAME") {
+    if(str == undefined || accdata.name == "INVALID-NAME" || accdata.name == "null") {
       return undefined;
     }
     return accdata;
   }
-  return await getFromHypixel(str, interaction);
+
+  if(str != null) {
+    return await getFromHypixel(str, interaction);
+  }
+
+  return undefined;
 
 };
