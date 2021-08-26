@@ -1,8 +1,3 @@
-// custom id spec
-// [command type]:[specific data1]:[specific data2]
-// Leaderboard example - lb:20:mw
-// Stats example - s:92a5199614ac4bd181d1f3c951fb719f:pg
-
 const {
   ButtonInteraction
 } = require("discord.js");
