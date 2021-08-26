@@ -3,7 +3,7 @@ const {
   Message,
   CommandInteraction
 } = require("discord.js");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const Command = require("../../classes/Command");
 //// const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
@@ -685,7 +685,7 @@ async function hander (args, rawMsg, interaction) {
   }
 
   const finalRes = res
-    .setAuthor(`${gameName} leaderboard`, BotUtils.client.user.avatarURL());
+    .setAuthor(`${gameName} leaderboard`, BotRuntime.client.user.avatarURL());
 
   logger.out(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 

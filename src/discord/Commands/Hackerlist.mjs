@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { getFromDB, writeToDB } from "../BotUtils";
+import { getFromDB, writeToDB } from "../BotRuntime";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
 
 export default new Command("hackerlist", ["%trusted%"], async (args) => {

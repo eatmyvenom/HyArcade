@@ -1,4 +1,4 @@
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const Account = require("hyarcade-requests/types/Account");
 const AccountResolver = require("./Utils/AccountResolver");
 
@@ -13,8 +13,8 @@ module.exports = class InteractionUtils {
    */
   static async accFromUUID (uuid) {
     let acc;
-    if(BotUtils.botMode != "mini") {
-      const acclist = await BotUtils.getFromDB("accounts");
+    if(BotRuntime.botMode != "mini") {
+      const acclist = await BotRuntime.getFromDB("accounts");
       acc = acclist.find((a) => a?.uuid == uuid);
     }
 

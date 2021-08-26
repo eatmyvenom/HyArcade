@@ -4,10 +4,10 @@ import { addAccounts } from "../listUtils";
 import { err, out, debug, warn, info } from "hyarcade-logger";
 import isValidIGN from "../datagen/utils/ignValidator";
 import { execute } from "./botCommands";
-import { getWebhookObj, resolveAccount, getFromDB, writeToDB, botMode } from "./BotUtils";
+import BotRuntime, { getWebhookObj, resolveAccount, getFromDB, writeToDB, botMode } from "./BotRuntime";
 import { mojangRequest, types } from "hyarcade-requests";
 const { Account } = types;
-import { execute as _execute } from "./MiniWallsCommands";
+import { execute as MwExecute } from "./MiniWallsCommands";
 import SlashHelpTxt from "./Utils/SlashHelpTxt";
 import { playerLink } from "./Utils/Embeds/AdvancedEmbeds";
 import { ERROR_LINK_HYPIXEL_MISMATCH, ERROR_IGN_UNDEFINED, ERROR_UNKNOWN, ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
@@ -15,7 +15,6 @@ import { logHook, errHook } from "./Utils/Webhooks";
 import { logCommand } from "./Utils/LogUtils";
 import CommandResponse from "./Utils/CommandResponse";
 import { Message, Collection, Webhook } from "discord.js";
-import BotRuntime from "./BotRuntime";
 
 const longMsgStr = "**WARNING** Attempted to send a message greater than 2000 characters in length!";
 
@@ -220,7 +219,7 @@ async function getCmdRes (msg) {
 async function getMWCmdRes (msg) {
   let cmdResponse;
   try {
-    cmdResponse = await _execute(msg, msg.author.id);
+    cmdResponse = await MwExecute(msg, msg.author.id);
   } catch (e) {
     await logError(msg, e);
     cmdResponse = ({

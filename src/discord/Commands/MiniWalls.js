@@ -4,7 +4,6 @@ const {
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
-const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const {
   ERROR_NEED_PLAYER,
@@ -43,7 +42,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
   const plr = args[0];
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 1);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 1);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction, 0);
   }

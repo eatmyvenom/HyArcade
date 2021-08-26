@@ -1,4 +1,4 @@
-const BotUtils = require("../discord/BotUtils");
+const BotRuntime = require("../discord/BotRuntime");
 const {
   ERROR_UNKNOWN
 } = require("../discord/Utils/Embeds/StaticEmbeds");
@@ -22,7 +22,7 @@ module.exports = class Command {
 
     async execute (args, author, rawMsg, interaction) {
       if(this.allowed.includes("%trusted%")) {
-        this.allowed = this.allowed.concat(BotUtils.trustedUsers);
+        this.allowed = this.allowed.concat(BotRuntime.trustedUsers);
         this.allowed = this.allowed.filter((t) => t != "%trusted%");
       }
       if(!this.allowed.includes(author) && !this.allowed.includes("*")) {

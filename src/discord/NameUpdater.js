@@ -1,12 +1,12 @@
 import { Client } from "discord.js";
 import logger from "hyarcade-logger";
-import BotUtils from "./BotUtils";
+import BotRuntime from "./BotRuntime";
 
 /**
  * @param {Client} client
  */
 export default async function NameUpdater (client) {
-  const accs = BotUtils.getFromDB("accounts");
+  const accs = BotRuntime.getFromDB("accounts");
 
   const mwServer = await client.guilds.fetch("789718245015289886");
   const mwMembers = await mwServer.members.fetch();

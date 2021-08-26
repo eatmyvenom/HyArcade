@@ -1,7 +1,7 @@
 const Account = require("../../classes/account");
 const Command = require("../../classes/Command");
 const mojangRequest = require("../../request/mojangRequest");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const {
   addAccount
 } = require("../Utils/Database");
@@ -24,13 +24,13 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
   }
   let player = args[0];
   let discord = args[1];
-  let disclist = await BotUtils.getFromDB("disclist");
+  let disclist = await BotRuntime.getFromDB("disclist");
 
   if((`${player}`).startsWith("https://")) {
     const channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
     const msgID = player.slice(player.lastIndexOf("/") + 1);
 
-    const channel = await BotUtils.client.channels.fetch(channelID);
+    const channel = await BotRuntime.client.channels.fetch(channelID);
     const msg = await channel.messages.fetch(msgID);
 
     discord = msg.author.id;
@@ -40,7 +40,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
   let uuid;
   let acc;
 
-  const acclist = await BotUtils.getFromDB("accounts");
+  const acclist = await BotRuntime.getFromDB("accounts");
   if(player.length < 17) {
     acc = acclist.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
   } else {
@@ -66,7 +66,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
 
   if(args.includes("-f")) {
     disclist[discord] = uuid;
-    await BotUtils.writeToDB("disclist", disclist);
+    await BotRuntime.writeToDB("disclist", disclist);
     disclist = null;
     const embed = INFO_LINK_SUCCESS;
     return {
@@ -90,7 +90,7 @@ module.exports = new Command("link", ["%trusted%"], async (args) => {
   }
 
   disclist[discord] = uuid;
-  await BotUtils.writeToDB("disclist", disclist);
+  await BotRuntime.writeToDB("disclist", disclist);
   disclist = null;
   const embed = INFO_LINK_SUCCESS;
   return {

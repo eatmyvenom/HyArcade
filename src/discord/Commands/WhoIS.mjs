@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import Account from "hyarcade-requests/types/Account";
 import Command from "../../classes/Command.js";
-import BotUtils from "../BotUtils.js";
+import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PRIMARY } from "../Utils/Embeds/Colors.js";
@@ -74,7 +74,7 @@ export const WhoIS = new Command("whois", ["*"], async (args, rawMsg, interactio
   const plr = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) {

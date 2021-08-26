@@ -2,7 +2,7 @@ const {
   MessageEmbed
 } = require("discord.js");
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 
 /**
  * @param {string} name
@@ -20,7 +20,7 @@ function makeField (name, link) {
 module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
   const channelID = args[0];
   const msgID = args[1];
-  const channel = await BotUtils.client.channels.fetch(channelID);
+  const channel = await BotRuntime.client.channels.fetch(channelID);
   const embed = new MessageEmbed()
     .setTitle("Arcade servers")
     .setDescription("List of other arcade discord servers")

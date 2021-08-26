@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { client, botMode } from "../BotUtils";
+import { client, botMode } from "../BotRuntime";
 import SetPresence from "../Utils/SetPresence";
 
 export default new Command("CyclePresence", ["*"], async () => {

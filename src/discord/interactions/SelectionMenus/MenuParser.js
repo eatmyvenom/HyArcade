@@ -1,7 +1,7 @@
 const {
   SelectMenuInteraction
 } = require("discord.js");
-const BotUtils = require("../../BotUtils");
+const BotRuntime = require("../../BotRuntime");
 const ButtonResponse = require("../Buttons/ButtonResponse");
 const InteractionUtils = require("../InteractionUtils");
 const MenuGenerator = require("./MenuGenerator");
@@ -28,7 +28,7 @@ module.exports = async function MenuParser (interaction) {
  */
 async function statsHandler (accUUID, game) {
   const accData = await InteractionUtils.accFromUUID(accUUID);
-  const statsRes = await BotUtils.getStats(accData, game);
+  const statsRes = await BotRuntime.getStats(accData, game);
   const {
     embed
   } = statsRes;

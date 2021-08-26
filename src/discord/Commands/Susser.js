@@ -2,17 +2,17 @@ const {
   MessageEmbed
 } = require("discord.js");
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
 module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, interaction) => {
   let hax = 0;
   const reasons = [];
   const plr = args[0];
-  const haxlist = await BotUtils.getFromDB("hackerlist");
+  const haxlist = await BotRuntime.getFromDB("hackerlist");
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction);
   }

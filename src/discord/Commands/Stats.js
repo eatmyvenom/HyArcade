@@ -1,6 +1,6 @@
 const Command = require("../../classes/Command");
 const Logger = require("hyarcade-logger");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
@@ -14,7 +14,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
   if(acc == undefined) {
     return new CommandResponse("", ERROR_UNLINKED);
   }
-  const res = await BotUtils.getStats(acc, `${game}`);
+  const res = await BotRuntime.getStats(acc, `${game}`);
   const e = res.embed;
   Logger.debug("Adding stats menu to message");
   const menu = await MenuGenerator.statsMenu(acc.uuid);

@@ -1,7 +1,7 @@
 import Logger from "hyarcade-logger";
 import Account from "hyarcade-requests/types/Account";
 import Command from "../../classes/Command.js";
-import BotUtils from "../BotUtils.js";
+import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
@@ -70,7 +70,7 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   const player = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await BotUtils.resolveAccount(player, rawMsg, args.length != 1);
+    acc = await BotRuntime.resolveAccount(player, rawMsg, args.length != 1);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) {

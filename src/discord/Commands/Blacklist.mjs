@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { getFromDB, writeToDB } from "../BotUtils";
+import { getFromDB, writeToDB } from "../BotRuntime";
 import CommandResponse from "../Utils/CommandResponse";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
 

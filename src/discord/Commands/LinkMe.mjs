@@ -2,7 +2,7 @@ import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
 import mojangRequest from "../../request/mojangRequest.js";
 import { addAccounts } from "../../listUtils.js";
-import BotUtils from "../BotUtils.js";
+import BotRuntime from "../BotRuntime.js";
 import { ERROR_ACCOUNT_PREVIOUSLY_LINKED, ERROR_IGN_UNDEFINED, ERROR_INPUT_IGN, ERROR_LINK_HYPIXEL_MISMATCH, ERROR_PLAYER_PREVIOUSLY_LINKED, INFO_LINK_SUCCESS } from "../Utils/Embeds/StaticEmbeds.js";
 
 export const Verify = new Command("linkme", ["*"], async (args, rawMsg, interaction) => {
@@ -12,7 +12,7 @@ export const Verify = new Command("linkme", ["*"], async (args, rawMsg, interact
     return { res: "", embed };
   }
   await interaction.defer();
-  const acclist = await BotUtils.getFromDB("accounts");
+  const acclist = await BotRuntime.getFromDB("accounts");
   let acc = acclist.find(
     (a) =>
       (`${a.uuid}`).toLowerCase() == player.toLowerCase() || (`${a.name}`).toLowerCase() == player.toLowerCase()
@@ -48,7 +48,7 @@ export const Verify = new Command("linkme", ["*"], async (args, rawMsg, interact
     } else {
       discord = interaction.member.id;
     }
-    const disclist = await BotUtils.getFromDB("disclist");
+    const disclist = await BotRuntime.getFromDB("disclist");
     // make sure player isnt linked
     if (disclist[discord]) {
       const embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
@@ -60,7 +60,7 @@ export const Verify = new Command("linkme", ["*"], async (args, rawMsg, interact
     }
 
     disclist[discord] = uuid;
-    await BotUtils.writeToDB("disclist", disclist);
+    await BotRuntime.writeToDB("disclist", disclist);
     const embed = INFO_LINK_SUCCESS;
     return { res: "", embed };
   } 

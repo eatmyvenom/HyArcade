@@ -6,7 +6,7 @@ const {
 } = require("discord.js");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
-const BotUtils = require("./BotUtils");
+const BotRuntime = require("./BotRuntime");
 const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
@@ -28,7 +28,7 @@ module.exports = class BotEvents {
   }
 
   static async messageDelete (msg) {
-    if(BotUtils.botMode == "mw") {
+    if(BotRuntime.botMode == "mw") {
       if(msg.content.charAt(0) == ".") {
         const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
         logger.warn(str);
@@ -44,12 +44,12 @@ module.exports = class BotEvents {
   }
 
   static async ready (mode) {
-    BotUtils.isBotInstance = true;
-    BotUtils.botMode = mode;
+    BotRuntime.isBotInstance = true;
+    BotRuntime.botMode = mode;
 
     logger.info("Fetching logging channels");
-    const errchannel = await BotUtils.client.channels.fetch(cfg.discord.errChannel);
-    const logchannel = await BotUtils.client.channels.fetch(cfg.discord.logChannel);
+    const errchannel = await BotRuntime.client.channels.fetch(cfg.discord.errChannel);
+    const logchannel = await BotRuntime.client.channels.fetch(cfg.discord.logChannel);
 
     logger.info("Fetching logging hooks");
     const errhooks = await errchannel.fetchWebhooks();
@@ -59,47 +59,47 @@ module.exports = class BotEvents {
     Webhooks.errHook = errHook;
     Webhooks.logHook = logHook;
     logger.info("Creating message copy hook");
-    Webhooks.commandHook = await (await (await BotUtils.client.channels.fetch(cfg.discord.cmdChannel)).fetchWebhooks()).first();
+    Webhooks.commandHook = await (await (await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel)).fetchWebhooks()).first();
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");
     const tus = trustedFile.toString().trim()
       .split("\n");
-    BotUtils.tus = tus;
+    BotRuntime.tus = tus;
 
     logger.info("Selecting mode");
     if(mode == "role") {
-      await roleHandler(BotUtils.client);
-      await BotUtils.client.destroy();
+      await roleHandler(BotRuntime.client);
+      await BotRuntime.client.destroy();
     } else if(mode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotUtils.client);
-      logger.out(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
-      logHook.send(`Logged in as ${BotUtils.client.user.tag} - Interaction module`);
+      await InteractionHandler(BotRuntime.client);
+      logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
+      logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
     } else if(mode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotUtils.client);
-      logger.out(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
-      logHook.send(`Logged in as ${BotUtils.client.user.tag} - Micro module`);
-    } else if(BotUtils.botMode == "mw") {
-      logger.out(`Logged in as ${BotUtils.client.user.tag} - MW module`);
-      logHook.send(`Logged in as ${BotUtils.client.user.tag} - MW module`);
-    } else if(BotUtils.botMode == "test") {
+      await InteractionHandler(BotRuntime.client);
+      logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
+      logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
+    } else if(BotRuntime.botMode == "mw") {
+      logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
+      logHook.send(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
+    } else if(BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotUtils.client);
-      logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
-      logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
+      await InteractionHandler(BotRuntime.client);
+      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
+      logHook.send(`Logged in as ${BotRuntime.client.user.tag}!`);
     } else {
-      logger.out(`Logged in as ${BotUtils.client.user.tag}!`);
-      logHook.send(`Logged in as ${BotUtils.client.user.tag}!`);
+      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
+      logHook.send(`Logged in as ${BotRuntime.client.user.tag}!`);
     }
-    await SetPresence(BotUtils.client, mode);
+    await SetPresence(BotRuntime.client, mode);
   }
 
   static async tick () {
     const runtime = Runtime.fromJSON();
-    if(runtime.needRoleupdate && BotUtils.botMode == undefined) {
-      await roleHandler(BotUtils.client);
+    if(runtime.needRoleupdate && BotRuntime.botMode == undefined) {
+      await roleHandler(BotRuntime.client);
       logger.out("Roles updated!");
       runtime.needRoleupdate = false;
       await runtime.save();
@@ -108,12 +108,12 @@ module.exports = class BotEvents {
 
   static async heartBeat () {
     const runtime = Runtime.fromJSON();
-    runtime[`${BotUtils.botMode}HeartBeat`] = Date.now();
+    runtime[`${BotRuntime.botMode}HeartBeat`] = Date.now();
     await runtime.save();
     logger.info("Heart beat - I'm alive!");
 
-    if(BotUtils.botMode == "mw") {
-      NameUpdater(BotUtils.client);
+    if(BotRuntime.botMode == "mw") {
+      NameUpdater(BotRuntime.client);
     }
   }
 
@@ -176,6 +176,6 @@ module.exports = class BotEvents {
 
   static async cyclePresence () {
     logger.info("Cycling presence...");
-    await SetPresence(BotUtils.client, BotUtils.botMode);
+    await SetPresence(BotRuntime.client, BotRuntime.botMode);
   }
 };

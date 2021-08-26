@@ -3,7 +3,6 @@ const {
 } = require("discord.js");
 const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
-const BotUtils = require("../BotUtils");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const {
   ERROR_ARGS_LENGTH
@@ -93,11 +92,11 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
   let acc2;
   if(interaction == undefined) {
     if(plr2 == undefined) {
-      acc1 = await BotUtils.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);
-      acc2 = await BotUtils.resolveAccount(plr1, rawMsg, false);
+      acc1 = await BotRuntime.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);
+      acc2 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
     } else {
-      acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
-      acc2 = await BotUtils.resolveAccount(plr2, rawMsg, false);
+      acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
+      acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
     }
   } else {
     acc1 = await InteractionUtils.resolveAccount(interaction, 0);

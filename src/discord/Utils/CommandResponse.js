@@ -8,7 +8,7 @@ const {
   ReplyMessageOptions,
   MessageOptions
 } = require("discord.js");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 
 module.exports = class CommandResponse {
     text = "";
@@ -98,8 +98,8 @@ module.exports = class CommandResponse {
       };
 
       if(webhook) {
-        obj.username = BotUtils.client.user.username;
-        obj.avatarURL = BotUtils.client.user.avatarURL();
+        obj.username = BotRuntime.client.user.username;
+        obj.avatarURL = BotRuntime.client.user.avatarURL();
         return obj;
       }
       return obj;

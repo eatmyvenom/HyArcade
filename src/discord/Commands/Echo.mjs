@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { client } from "../BotUtils";
+import { client } from "../BotRuntime";
 import CommandResponse from "../Utils/CommandResponse";
 
 export default new Command("echo", ["%trusted%"], async (args, rawMsg) => {

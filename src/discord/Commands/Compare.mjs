@@ -1,6 +1,6 @@
 import Command from "../../classes/Command.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
-import BotUtils from "../BotUtils.js";
+import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
@@ -14,8 +14,8 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
   const game = args[2];
   let acc1; let acc2; let channel;
   if (interaction == undefined) {
-    acc1 = await BotUtils.resolveAccount(plr1, rawMsg, false);
-    acc2 = await BotUtils.resolveAccount(plr2, rawMsg, false);
+    acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
+    acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
     channel = rawMsg.channel;
   } else {
     acc1 = await InteractionUtils.resolveAccount(interaction, "player1");
@@ -25,7 +25,7 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
 
   let hasEmojiPerms = false;
 
-  if(!interaction && channel.permissionsFor(BotUtils.client.user).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
+  if(!interaction && channel.permissionsFor(BotRuntime.client.user).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
 
   const embed = AdvancedEmbeds.compareStats(acc1, acc2, game, hasEmojiPerms);
   return { res: "", embed };

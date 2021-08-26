@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const logger = require("hyarcade-logger");
 const mojangRequest = require("../../../request/mojangRequest");
-const BotUtils = require("../../BotUtils");
+const BotRuntime = require("../../BotRuntime");
 const {
   CommandInteraction
 } = require("discord.js");
@@ -45,7 +45,7 @@ async function getFromHypixel (string, interaction) {
  */
 module.exports = async function resolveAccount (interaction, namearg = "player") {
   const str = interaction.options.getString(namearg, false);
-  if(BotUtils.botMode == "mini") {
+  if(BotRuntime.botMode == "mini") {
     return await getFromHypixel(str, interaction);
   }
 

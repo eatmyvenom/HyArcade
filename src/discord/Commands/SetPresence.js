@@ -1,9 +1,9 @@
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("SetPresence", ["%trusted%"], async (args) => {
   const presenceObj = JSON.parse(args.join(" "));
-  await BotUtils.client.user.setPresence(presenceObj);
+  await BotRuntime.client.user.setPresence(presenceObj);
   return {
     res: "Presence updated!"
   };

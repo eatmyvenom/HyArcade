@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { getFromDB } from "../BotUtils";
+import { getFromDB } from "../BotRuntime";
 
 export default new Command("ez", ["*"], async () => {
   const msgs = await getFromDB("ezmsgs");

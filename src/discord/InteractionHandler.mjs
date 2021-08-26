@@ -1,5 +1,5 @@
 import Logger from "hyarcade-logger";
-import { botMode } from "./BotUtils";
+import { botMode, getBlacklist  } from "./BotRuntime";
 import ButtonParser from "./interactions/Buttons/ButtonParser";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser";
 import Webhooks from "./Utils/Webhooks";
@@ -7,7 +7,6 @@ import CommandResponse from "./Utils/CommandResponse";
 import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds";
 import MenuParser from "./interactions/SelectionMenus/MenuParser";
 import { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } from "discord.js";
-import { getBlacklist } from "./BotRuntime";
 import microInteractionObjects from "./interactions/microInteractionObjects";
 import fullInteractionObjects from "./interactions/interactionObjects";
 

@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import Account from "hyarcade-requests/types/Account";
 import Command from "../../classes/Command";
-import BotUtils from "../BotUtils";
+import BotRuntime from "../BotRuntime";
 import InteractionUtils from "../interactions/InteractionUtils";
 import CommandResponse from "../Utils/CommandResponse";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
@@ -139,7 +139,7 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
 
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction, "player");
     if(acc == undefined) {

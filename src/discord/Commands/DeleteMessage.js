@@ -1,10 +1,10 @@
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("DelMsg", ["156952208045375488"], async (args) => {
   const channelId = args[0];
   const msgID = args[1];
-  const channel = await BotUtils.client.channels.fetch(channelId);
+  const channel = await BotRuntime.client.channels.fetch(channelId);
 
   const msg = await channel.messages.fetch(msgID);
   if(msg.deletable) {

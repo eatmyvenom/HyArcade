@@ -2,7 +2,7 @@ const {
   MessageEmbed
 } = require("discord.js");
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const Util = require("util");
 
@@ -32,7 +32,7 @@ module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interacti
   const plr = args[0];
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction);
   }

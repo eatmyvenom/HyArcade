@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import Command from "../../classes/Command";
-import { client } from "../BotUtils";
+import { client } from "../BotRuntime";
 
 export default new Command("info", ["*"], async () => {
   const embed = new MessageEmbed()

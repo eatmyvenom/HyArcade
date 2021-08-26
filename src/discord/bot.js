@@ -1,6 +1,6 @@
 const process = require("process");
 const Discord = require("discord.js");
-const BotUtils = require("./BotUtils");
+const BotRuntime = require("./BotRuntime");
 const config = require("hyarcade-config").fromJSON();
 const Runtime = require("hyarcade-config/Runtime").fromJSON();
 const BotEvents = require("./BotEvents");
@@ -54,7 +54,7 @@ module.exports = function doBot () {
   }
 
   client.on("ready", async () => {
-    BotUtils.client = client;
+    BotRuntime.client = client;
     await BotEvents.ready(mode);
 
     if(mode == undefined || mode == "mw" || mode == "test") {

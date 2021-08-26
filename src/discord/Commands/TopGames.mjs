@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import Account from "hyarcade-requests/types/Account";
 import Command from "../../classes/Command";
-import BotUtils from "../BotUtils";
+import BotRuntime from "../BotRuntime";
 import InteractionUtils from "../interactions/InteractionUtils";
 import CommandResponse from "../Utils/CommandResponse";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds";
@@ -143,14 +143,14 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   const timetype = args[1];
   let acc;
   if(interaction == undefined) {
-    acc = await BotUtils.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
   }
 
   if(timetype == "d") {
-    const daily = await BotUtils.getFromDB("dayaccounts");
+    const daily = await BotRuntime.getFromDB("dayaccounts");
     const timedAcc = await daily.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {
@@ -159,7 +159,7 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
 
     acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "w") {
-    const weekly = await BotUtils.getFromDB("weeklyaccounts");
+    const weekly = await BotRuntime.getFromDB("weeklyaccounts");
     const timedAcc = await weekly.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {
@@ -168,7 +168,7 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
 
     acc = getTimedAccount(acc, timedAcc);
   } else if(timetype == "m") {
-    const monthly = await BotUtils.getFromDB("monthlyaccounts");
+    const monthly = await BotRuntime.getFromDB("monthlyaccounts");
     const timedAcc = await monthly.find((a) => a?.uuid == acc.uuid);
 
     if(timedAcc == undefined) {

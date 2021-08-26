@@ -1,5 +1,5 @@
 const Role = require("../classes/Role");
-const BotUtils = require("./BotUtils");
+const BotRuntime = require("./BotRuntime");
 const Webhooks = require("./Utils/Webhooks");
 
 module.exports = class RoleUpdater {
@@ -30,8 +30,8 @@ module.exports = class RoleUpdater {
     }
 
     async updateAll () {
-      const disclist = await BotUtils.getFromDB("disclist");
-      const acclist = await BotUtils.getFromDB("accounts");
+      const disclist = await BotRuntime.getFromDB("disclist");
+      const acclist = await BotRuntime.getFromDB("accounts");
       const mbrList = await this.guild.members.fetch();
       for(const discid in disclist) {
         if(mbrList.has(discid)) {

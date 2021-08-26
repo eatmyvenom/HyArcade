@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import BotUtils, { client, getFromDB } from "../BotUtils";
+import BotRuntime, { client, getFromDB } from "../BotRuntime";
 import CommandResponse from "../Utils/CommandResponse";
 import { inspect } from "util";
 
@@ -14,7 +14,7 @@ function safeEval (str) {
 export default new Command("eval", ["156952208045375488"], async (args, rawMsg) => {
   const c = client;
   const f = safeEval(args.join(" "));
-  let evaled = f(c, require, BotUtils, await getFromDB("accounts"), rawMsg);
+  let evaled = f(c, require, BotRuntime, await getFromDB("accounts"), rawMsg);
   if(typeof evaled != "string") {
     evaled = inspect(evaled, true);
   }
