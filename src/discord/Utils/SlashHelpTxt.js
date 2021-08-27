@@ -23,7 +23,7 @@ module.exports = function SlashHelpTxt (msg) {
     case "get-data-raw":
     case "whois": {
       return {
-        res: "https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ"
+        res: "Having trouble with slash commands? Read this article for help: https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ"
       };
     }
     }
