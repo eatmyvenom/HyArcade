@@ -43,13 +43,14 @@ import { Message } from "discord.js";
  */
 async function execute (msg, senderID) {
   if(msg.content.startsWith(cfg.commandCharacter)) {
-    if(Runtime.fromJSON().dbERROR) {
+    const rt = Runtime.fromJSON();
+    if(rt.dbERROR) {
       return {
         res: "",
         embed: ERROR_DATABASE_ERROR
       };
     }
-    if(Runtime.fromJSON().apiDown) {
+    if(rt.apiDown) {
       return {
         res: "",
         embed: ERROR_API_DOWN
@@ -176,7 +177,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "namehistory": {
     return {
       res: "",
-      embed: ERROR_USE_SLASH_COMMAND("namehistory", "namehistory")
+      embed: ERROR_USE_SLASH_COMMAND("namehistory", "whois")
     };
   }
 
@@ -255,7 +256,7 @@ async function checkCommands (rawMsg, command, args, author) {
     if(author == owner) {
       return await TopGames.execute(args, author, rawMsg);
     }
-    break;
+    return new CommandResponse("", ERROR_USE_SLASH_COMMAND("topgames", "top-games"));
   }
 
   default: {
