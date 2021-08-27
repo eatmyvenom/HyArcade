@@ -66,7 +66,7 @@ async function commandHandler (interaction) {
   } catch (e) {
     Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
     Logger.err(e.stack);
-    await Webhooks.errHook.send({
+    Webhooks.errHook.send({
       embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
     });
     return;
@@ -93,7 +93,7 @@ async function logCmd (interaction) {
         interaction.commandName,
         interaction.guild?.name,
         interaction.channel?.id,
-        interaction.options.data
+        interaction.options?.data
       ),
     ],
   });

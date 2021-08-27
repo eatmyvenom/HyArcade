@@ -3,7 +3,7 @@ const { MessageComponentInteraction } = require("discord.js");
 /**
  * 
  * @param {MessageComponentInteraction} interaction 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 module.exports = async function ForceOGuser (interaction) {
   const og = interaction.message.interaction.user.id;
