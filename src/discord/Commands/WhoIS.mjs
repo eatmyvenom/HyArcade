@@ -4,7 +4,7 @@ import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
-import { COLOR_PRIMARY } from "../Utils/Embeds/Colors.js";
+import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 
 /**
@@ -53,7 +53,7 @@ function generateWhoisEmbed (acc) {
 
   const embed = new MessageEmbed()
     .setTitle(`Who is ${rank}${acc.name}`)
-    .setColor(COLOR_PRIMARY);
+    .setColor(COLOR_PURPLE);
 
   let discord = "";
 
