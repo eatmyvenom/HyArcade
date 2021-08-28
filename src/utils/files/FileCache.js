@@ -3,13 +3,22 @@ const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
 const BSONreader = require("./BSONreader");
 const AccountArray = require("../../request/types/AccountArray");
+const Account = require("hyarcade-requests/types/Account");
 
 class FileCache {
 
     _interval;
+
+    /** @type {Account[]} */
     accounts = [];
+
+    /** @type {Account[]} */
     dailyAccounts = [];
+
+    /** @type {Account[]} */
     weeklyAccounts = [];
+
+    /** @type {Account[]} */
     monthlyAccounts = [];
     acclist = {};
     players = [];

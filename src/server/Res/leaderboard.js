@@ -24,9 +24,9 @@ module.exports = async (req, res, fileCache) => {
   const min = url.searchParams.has("min");
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
-    let {
-      accounts
-    } = fileCache;
+
+    // Full copy to prevent accounts list from being messed up
+    let accounts = JSON.parse(JSON.stringify(fileCache.accounts));
 
     if(timePeriod == undefined) {
       if(category == null) {

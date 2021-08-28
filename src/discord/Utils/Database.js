@@ -34,11 +34,29 @@ module.exports = class Database {
     }
 
     if(time != undefined) {
-      url.searchParams.set("category", time);
+      url.searchParams.set("time", time);
     }
 
     if(min) {
       url.searchParams.set("min", "");
+    }
+
+    try {
+      const lb = await fetch(url.toString());
+      return JSON.parse(lb);
+    } catch (e) {
+      Logger.err("Can't connect to database");
+      Logger.err(e);
+      return {};
+    }
+  }
+
+  static async getMWLeaderboard (stat, time) {
+    const url = new URL("mwlb", cfg.dbURL);
+    url.searchParams.set("stat", stat);
+
+    if(time != undefined) {
+      url.searchParams.set("time", time);
     }
 
     try {
