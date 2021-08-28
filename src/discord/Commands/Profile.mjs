@@ -104,18 +104,18 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
 
   let y = 112;
 
-  img.writeTextRight(`Level - ${lvl}`, y, "#44a3e7", 32);
-  img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#dd66ff", 32);
-  img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#00cc66", 32);
-  img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#d69323", 32);
+  img.writeTextRight(`Level - ${lvl}`, y, "#55FFFF", 32);
+  img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#FF55FF", 32);
+  img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#55FF55", 32);
+  img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#FFAA00", 32);
   img.writeTextRight(
     `Arcade wins - ${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`,
     (y += 42),
-    "#00ddff",
+    "#5555FF",
     32
   );
-  img.writeTextRight(getMain(acc), (y += 42), "#ee0061", 32);
-  img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#a6ee31", 32);
+  img.writeTextRight(getMain(acc), (y += 42), "#FF5555", 32);
+  img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#FFFF55", 32);
 
   const attachment = img.toDiscord();
 
