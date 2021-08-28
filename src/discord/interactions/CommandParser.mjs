@@ -8,7 +8,6 @@ import EZ from "../Commands/EZ.mjs";
 import Info from "../Commands/Info.mjs";
 import Susser from "../Commands/Susser";
 import GameCounts from "../Commands/GameCounts";
-import LastUpdate from "../Commands/LastUpdate";
 import Leaderboard from "../Commands/Leaderboard";
 import ButtonGenerator from "./Buttons/ButtonGenerator";
 import Ping from "../Commands/Ping.mjs";
@@ -78,24 +77,8 @@ export default async (interaction) => {
       )
       .setTimestamp(Date.now())
       .setColor(0x44a3e7);
-    return {
-      res: "",
-      embed
-    };
-  }
 
-  case "unlinkedstats": {
-    const embed = new MessageEmbed()
-      .setTitle("Use /stats")
-      .setColor(0xd69323)
-      .setDescription(
-        "This command has been merged with /stats! If you are having troubles getting an unlinked player then use their uuid instead."
-      );
-
-    return {
-      res: undefined,
-      embed
-    };
+    return new CommandResponse("", embed);
   }
 
   case "name-history": {
@@ -106,10 +89,7 @@ export default async (interaction) => {
         "This command has been merged with /whois! That command will have name history and more."
       );
 
-    return {
-      res: undefined,
-      embed
-    };
+    return new CommandResponse("", embed);
   }
 
   case "whois": {
@@ -138,7 +118,7 @@ export default async (interaction) => {
 
   case Compare.name: {
     return await Compare.execute(
-      [opts.getString("player2"), opts.getString("player2"), opts.getString("game")],
+      [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
       authorID,
       null,
       interaction
@@ -180,10 +160,6 @@ export default async (interaction) => {
       const res = await EZ.execute([], authorID, null, interaction);
       res.b = buttons;
       return res;
-    }
-
-    if(interaction.options.getSubCommand() == "lastupdate") {
-      return await LastUpdate.execute([], authorID, null, interaction);
     }
 
     if(interaction.options.getSubCommand() == "ping") {
