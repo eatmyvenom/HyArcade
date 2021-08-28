@@ -5,144 +5,10 @@ const {
 } = require("discord.js");
 const BotRuntime = require("../BotRuntime");
 const Command = require("../../classes/Command");
-//// const listUtils = require("../../listUtils");
 const logger = require("hyarcade-logger");
-const {
-  stringLBAdv
-} = require("../../listUtils");
-const Database = require("../Utils/Database");
-
-/**
- * @param {string} prop
- * @param {string} timetype
- * @param {number} limit
- * @param {string} category
- * @param {number} start
- * @returns {Promise<MessageEmbed>}
- */
-async function getLB (prop, timetype, limit, category, start) {
-  let res = "";
-  let time;
-
-  switch(timetype) {
-  case "d":
-  case "day":
-  case "daily": {
-    time = "Daily";
-    res = await Database.getLeaderboard(prop, category, "day");
-    if(start != undefined) {
-      res = res.slice(start);
-    }
-
-    if(limit != undefined) {
-      res = res.slice(0, limit);
-    } else {
-      res = res.slice(0, 10);
-    }
-    //// res = await listUtils.stringLBDiff(prop, limit, "day", category, start);
-    break;
-  }
-
-  case "w":
-  case "week":
-  case "weak":
-  case "weekly": {
-    time = "Weekly";
-    res = await Database.getLeaderboard(prop, category, "weekly");
-    if(start != undefined) {
-      res = res.slice(start);
-    }
-
-    if(limit != undefined) {
-      res = res.slice(0, limit);
-    } else {
-      res = res.slice(0, 10);
-    }
-    break;
-  }
-
-  case "m":
-  case "mon":
-  case "month":
-  case "monthly": {
-    time = "Monthly";
-    res = await Database.getLeaderboard(prop, category, "monthly");
-    if(start != undefined) {
-      res = res.slice(start);
-    }
-
-    if(limit != undefined) {
-      res = res.slice(0, limit);
-    } else {
-      res = res.slice(0, 10);
-    }
-    break;
-  }
-
-  default: {
-    time = "Lifetime";
-    res = await Database.getLeaderboard(prop, category);
-    if(start != undefined) {
-      res = res.slice(start);
-    }
-
-    if(limit != undefined) {
-      res = res.slice(0, limit);
-    } else {
-      res = res.slice(0, 10);
-    }
-    break;
-  }
-  }
-
-  res = res != "" ? res : "Nobody has won.";
-  const embed = new MessageEmbed().setTitle(time)
-    .setColor(0x00cc66)
-    .setDescription(res);
-
-  if(res.length > 6000) {
-    return new MessageEmbed()
-      .setTitle("ERROR")
-      .setColor(0xff0000)
-      .setDescription(
-        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
-      );
-  }
-
-  if(res.length > 2000) {
-    let resArr = res.trim().split("\n");
-    embed.setDescription("");
-    while(resArr.length > 0) {
-      const end = Math.min(25, resArr.length);
-      embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
-      resArr = resArr.slice(end);
-    }
-  }
-
-  return embed;
-}
-
-/**
- * @param {object} o
- * @param {string} s
- * @returns {*}
- */
-function getProp (o, s) {
-  let obj = o;
-  let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-  str = str.replace(/^\./, ""); // strip a leading dot
-  const a = str.split(".");
-  for(let i = 0, n = a.length; i < n; i += 1) {
-    const k = a[i];
-    if(k in obj) {
-      obj = obj[k];
-    } else {
-      return;
-    }
-  }
-  return obj;
-}
+const getLB = require("../Utils/Leaderboards/GetLeaderboard");
+const CustomLeaderboard = require("../Utils/Leaderboards/CustomLeaderboard");
+const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
 
 module.exports = new Command("leaderboard", ["*"], hander);
 
@@ -154,7 +20,9 @@ module.exports = new Command("leaderboard", ["*"], hander);
  * @returns {object}
  */
 async function hander (args, rawMsg, interaction) {
+  // Start time before any packets are sent
   const startTime = Date.now();
+
   if(interaction != undefined && !interaction.isButton()) {
     logger.debug("Deferring interaction");
     await interaction.defer();
@@ -165,9 +33,10 @@ async function hander (args, rawMsg, interaction) {
   }
 
   const type = args[0];
-  let timetype = args[1] != undefined ? args[1] : "lifetime";
   const limit = args[2] != undefined ? Number(args[2]) : 10;
   const startingIndex = args[3] != undefined ? Number(args[3]) : 0;
+  const timetype = args[1] != undefined ? args[1] : "lifetime";
+
   let res = "";
   let gid = "";
   let gameName = "";
@@ -340,6 +209,7 @@ async function hander (args, rawMsg, interaction) {
   }
 
   case "tok":
+  case "sumokill":
   case "throwkills":
   case "tokills": {
     gameName = "Throw out kills";
@@ -395,6 +265,8 @@ async function hander (args, rawMsg, interaction) {
   case "dayone":
   case "walkingdead":
   case "blocking":
+  case "blockdie":
+  case "blockdead":
   case "blockingdead": {
     gameName = "Blocking dead";
     res = await getLB("wins", timetype, limit, "blockingDead", startingIndex);
@@ -404,6 +276,7 @@ async function hander (args, rawMsg, interaction) {
 
   case "arc":
   case "arcade":
+  case "overall":
   case "all": {
     gameName = "Arcade wins";
     res = await getLB("arcadeWins", timetype, limit, undefined, startingIndex);
@@ -647,38 +520,24 @@ async function hander (args, rawMsg, interaction) {
 
   default: {
     if(type.trim().startsWith(".")) {
-      let lb;
       gameName = type.trim().slice(1);
-      if(timetype == "lifetime" || timetype == "l") {
-        timetype = "Lifetime";
-        lb = await stringLBAdv((a, b) => (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0), (a) => getProp(a, type.trim()), limit,
-          (l) => l, startingIndex);
-      } else {
-        const embed = new MessageEmbed()
-          .setTitle("ERROR")
-          .setDescription(
-            "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
-          )
-          .setColor(0xff0000);
-        return {
-          res: "",
-          embed
-        };
+      
+      let lb;
+
+      try {
+        lb = CustomLeaderboard(timetype, type, startingIndex, limit);
+      } catch (e) {
+        return { res: "", embed: ERROR_NO_LEADERBOARD };
       }
+
       gid = undefined;
       res = new MessageEmbed().setTitle(timetype)
         .setColor(0x00cc66)
         .setDescription(lb);
     } else {
-      const embed = new MessageEmbed()
-        .setTitle("ERROR")
-        .setDescription(
-          "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
-        )
-        .setColor(0xff0000);
       return {
         res: "",
-        embed
+        ERROR_NO_LEADERBOARD
       };
     }
   }
@@ -687,17 +546,16 @@ async function hander (args, rawMsg, interaction) {
   const finalRes = res
     .setAuthor(`${gameName} leaderboard`, BotRuntime.client.user.avatarURL());
 
-  logger.out(`Leaderboard command ran in ${Date.now() - startTime}ms`);
+  logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
+
+  // Use custom response since it gets fixed by the parser
   const response = {
     res: "",
     embed: finalRes,
     game: gid,
     start: startingIndex
   };
-  if(interaction == undefined) {
-    response.res =
-            "**WARNING** This command will be disabled 2 weeks after hypixel was brought back up. Please use `/leaderboard` instead!";
-  }
+
   return response;
 }
