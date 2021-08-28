@@ -62,7 +62,7 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
     urlArgs.set("discid", str.slice(3, -1));
   } else if(str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
     urlArgs.set("discid", str);
-  } else if(str != null && str != "!") {
+  } else if(str != null && str != "null" && str != undefined && str != "!") {
     urlArgs.set("ign", str.toLowerCase());
   } else {
     urlArgs.set("discid", interaction.user.id);
