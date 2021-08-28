@@ -41,7 +41,7 @@ async function getFromHypixel (string, interaction) {
  *
  * @param {CommandInteraction} interaction
  * @param {string} namearg
- * @returns {Account}
+ * @returns {Promise<Account>}
  */
 module.exports = async function resolveAccount (interaction, namearg = "player") {
   const str = interaction.options.getString(namearg, false);
