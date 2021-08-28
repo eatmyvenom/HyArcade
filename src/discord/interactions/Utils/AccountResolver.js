@@ -51,12 +51,19 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
 
   const url = new URL("account", cfg.dbUrl);
   const urlArgs = url.searchParams;
+
   if(str?.length == 32) {
     urlArgs.set("uuid", str.toLowerCase());
   } else if(str?.length == 36) {
     urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
   } else if(str != null && str != "!") {
     urlArgs.set("ign", str.toLowerCase());
+  } else if(str?.length == 21 && str.startsWith("<@")) {
+    urlArgs.set("discid", str.slice(2, -1));
+  } else if(str?.length == 22 && str.startsWith("<!@")) {
+    urlArgs.set("discid", str.slice(3, -1));
+  } else if(str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
+    urlArgs.set("discid", str);
   } else {
     urlArgs.set("discid", interaction.user.id);
   }
