@@ -41,7 +41,7 @@ export default async (interaction) => {
     return Stats.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
   }
 
-  case "leaderboard": {
+  case Leaderboard.name: {
     const res = await Leaderboard.execute(
       [
         opts.getString("game"),
@@ -92,23 +92,23 @@ export default async (interaction) => {
     return new CommandResponse("", embed);
   }
 
-  case "whois": {
+  case WhoIS.name: {
     return await WhoIS.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "get-data-raw": {
+  case GetDataRaw.name: {
     return await GetDataRaw.execute([opts.getString("player"), opts.getString("path")], authorID, null, interaction);
   }
 
-  case "verify": {
+  case Verify.name: {
     return await Verify.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "game-counts": {
+  case GameCounts.name: {
     return await GameCounts.execute([opts.getString("game")], authorID, null, interaction);
   }
 
-  case "info": {
+  case Info.name: {
     return await Info.execute([], authorID, null, interaction);
   }
 
@@ -129,45 +129,50 @@ export default async (interaction) => {
     return await Profile.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "top-games": {
+  case TopGames.name: {
     return await TopGames.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
   }
 
-  case "quake": {
+  case Quake.name: {
     return await Quake.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "zombies": {
+  case Zombies.name: {
     return await Zombies.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "arena": {
+  case Arena.name: {
     return await Arena.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "paintball": {
+  case PBall.name: {
     return await PBall.execute([opts.getString("player")], authorID, null, interaction);
   }
 
-  case "walls": {
+  case Walls.name: {
     return await Walls.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case "arcade": {
-    if(interaction.options.getSubCommand() == "ez") {
+    switch(interaction.options.getSubcommand()) {
+    case "ez" : {
       logger.debug("Adding ez button to message");
       const buttons = await ButtonGenerator.getEZ();
+
+      /** @type {CommandResponse} */
       const res = await EZ.execute([], authorID, null, interaction);
-      res.b = buttons;
+      res.components = buttons;
+
       return res;
     }
 
-    if(interaction.options.getSubCommand() == "ping") {
+    case "ping" : {
       return await Ping.execute([], authorID, null, interaction);
     }
 
-    if(interaction.options.getSubCommand() == "help") {
+    case "help" : {
       return await Help.execute([], authorID, null, interaction);
+    }
     }
   }
   }

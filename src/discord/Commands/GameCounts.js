@@ -370,7 +370,7 @@ async function getFields (game) {
   return fields;
 }
 
-module.exports = new Command("Game counts", ["*"], async (args) => {
+module.exports = new Command("game-counts", ["*"], async (args) => {
   const game = args[0];
   const embed = new MessageEmbed()
     .setTitle("Arcade game counts")

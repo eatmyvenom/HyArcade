@@ -28,7 +28,7 @@ function getProp (o, s) {
   return obj;
 }
 
-module.exports = new Command("getDataRaw", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("get-data-raw", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   let acc;
   if(interaction == undefined) {
