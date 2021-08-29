@@ -141,7 +141,7 @@ export default async (interaction) => {
   }
 
   case Zombies.name: {
-    return await Zombies.execute([opts.getString("player")], authorID, null, interaction);
+    return await Zombies.execute([opts.getString("player"), opts.getString("map")], authorID, null, interaction);
   }
 
   case Arena.name: {

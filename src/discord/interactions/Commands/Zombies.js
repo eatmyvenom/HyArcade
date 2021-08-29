@@ -6,24 +6,28 @@ module.exports = {
     name: "player",
     description: "The player you want to see zombies stats for",
     required: true,
-  }, {
+  },
+  {
     type: 3,
     name: "map",
-    description: "",
+    description: "The Zombies map you want to see stats from",
     required: false,
-    choices: [
-      {
-        name: "bad-blood",
-        value: "bb"
-      },
-      {
-        name: "dead-end",
-        value: "de"
-      },
-      {
-        name: "alien-arcadium",
-        value: "aa"
-      }
-    ]
-  } ],
+    choices: [{
+      name: "All",
+      value: "",
+    },
+    {
+      name: "Bad Blood",
+      value: "bb",
+    },
+    {
+      name: "Dead End",
+      value: "de",
+    },
+    {
+      name: "Alien Arcadium",
+      value: "aa",
+    }
+    ],
+  }, ],
 };
