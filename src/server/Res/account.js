@@ -23,7 +23,6 @@ module.exports = async (req, res, fileCache) => {
     } = fileCache;
     let acc;
 
-    console.log(ign);
     if(ign != null) {
       acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
     } else if(uuid != null) {
