@@ -1,13 +1,13 @@
-import Command from "../../classes/Command";
-import { getFromDB, writeToDB } from "../BotRuntime";
-import CommandResponse from "../Utils/CommandResponse";
-import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("blacklist", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let blacklist = await getFromDB("blacklist");
+  let blacklist = await BotRuntime.getFromDB("blacklist");
 
   const operation = args[0];
 
@@ -50,7 +50,7 @@ export default new Command("blacklist", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await writeToDB("blacklist", blacklist);
+    await BotRuntime.writeToDB("blacklist", blacklist);
   }
 
   return res;

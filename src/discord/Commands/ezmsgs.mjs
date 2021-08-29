@@ -1,13 +1,13 @@
-import Command from "../../classes/Command";
-import { getFromDB, writeToDB } from "../BotRuntime";
-import CommandResponse from "../Utils/CommandResponse";
-import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("ezmsgs", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let msgs = await getFromDB("ezmsgs");
+  let msgs = await BotRuntime.getFromDB("ezmsgs");
 
   const operation = args[0];
   const arg = args.slice(1).join(" ");
@@ -51,7 +51,7 @@ export default new Command("ezmsgs", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await writeToDB("ezmsgs", msgs);
+    await BotRuntime.writeToDB("ezmsgs", msgs);
   }
 
   return res;

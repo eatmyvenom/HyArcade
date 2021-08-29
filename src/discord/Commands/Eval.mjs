@@ -1,6 +1,6 @@
-import Command from "../../classes/Command";
-import BotRuntime, { client, getFromDB } from "../BotRuntime";
-import CommandResponse from "../Utils/CommandResponse";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
 import { inspect } from "util";
 
 /**
@@ -12,9 +12,9 @@ function safeEval (str) {
 }
 
 export default new Command("eval", ["156952208045375488"], async (args, rawMsg) => {
-  const c = client;
+  const c = BotRuntime.client;
   const f = safeEval(args.join(" "));
-  let evaled = f(c, require, BotRuntime, await getFromDB("accounts"), rawMsg);
+  let evaled = f(c, require, BotRuntime, await BotRuntime.getFromDB("accounts"), rawMsg);
   if(typeof evaled != "string") {
     evaled = inspect(evaled, true);
   }

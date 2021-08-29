@@ -10,7 +10,8 @@ const urlModules = {
   acc: require("./Res/account"),
   leaderboard: require("./Res/leaderboard"),
   lb: require("./Res/leaderboard"),
-  db: require("./Res/Database")
+  db: require("./Res/Database"),
+  mwlb: require("./Res/MiniWallsLeaderboard")
 };
 let fileCache;
 const compression = require("compression");
@@ -51,6 +52,7 @@ app.all("/account", callback);
 app.all("/acc", callback);
 app.all("/leaderboard", callback);
 app.all("/lb", callback);
+app.all("/mwlb", callback);
 
 module.exports = function start (port) {
   app.listen(port, () => {

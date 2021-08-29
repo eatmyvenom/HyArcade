@@ -1,11 +1,13 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 import Logger from "hyarcade-logger";
-import { mojangRequest } from "hyarcade-requests";
-import Account from "hyarcade-requests/types/Account";
-import addAccounts from "../datagen/addAccounts";
-import Runtime from "../Runtime";
-import BotRuntime from "./BotRuntime";
-import { playerLink } from "./Utils/Embeds/AdvancedEmbeds";
-import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds";
+const { mojangRequest } = require("hyarcade-requests");
+import Account from "hyarcade-requests/types/Account.js";
+import addAccounts from "../datagen/addAccounts.js";
+import Runtime from "../Runtime.js";
+import BotRuntime from "./BotRuntime.js";
+const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
+import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds.js";
 
 /**
  * @param {string} id

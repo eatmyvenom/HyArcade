@@ -1,10 +1,10 @@
-import Command from "../../classes/Command";
+import Command from "../../classes/Command.js";
 import { exit } from "process";
-import { client } from "../BotRuntime";
-import { logHook } from "../Utils/Webhooks";
+import BotRuntime from "../BotRuntime.js";
+import Webhooks from "../Utils/Webhooks.js";
 
 export default new Command("KillBot", ["156952208045375488"], async () => {
-  await logHook.send("**WARNING** Bot shutdown ordered!");
-  await client.destroy();
+  await Webhooks.logHook.send("**WARNING** Bot shutdown ordered!");
+  await BotRuntime.client.destroy();
   exit(0);
 });

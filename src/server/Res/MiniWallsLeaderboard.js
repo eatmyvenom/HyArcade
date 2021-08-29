@@ -1,5 +1,6 @@
 const Account = require("hyarcade-requests/types/Account");
 const TimSort = require("timsort");
+const AccountArray = require("../../request/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 
 /**
@@ -11,18 +12,14 @@ const FileCache = require("../../utils/files/FileCache");
  */
 async function generateLeaderboard (fileCache, stat, time) {
   /** @type {Account[]} */
-  let accounts = [];
+  let accounts = new AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
-  fileCache.accounts.forEach((acc) => {
-    if((acc?.miniWalls?.wins ?? 0) > 0 && !fileCache.hackerlist.includes(acc.uuid)) {
-      accounts.push(acc);
-    }
-  });
+  accounts.filter((acc) => (acc?.miniWalls?.wins ?? 0) > 0);
 
   if(time != undefined) {
 
     /** @type {Account[]} */
-    const timedAccounts = fileCache[`${time}accounts`];
+    const timedAccounts = new AccountArray(JSON.parse(JSON.stringify(fileCache[`${time}accounts`])));
 
     accounts.map((acc) => {
       const timeAcc = timedAccounts.find((a) => a.uuid == acc.uuid);
@@ -40,110 +37,110 @@ async function generateLeaderboard (fileCache, stat, time) {
     });
   }
 
-  switch(stat.toLocaleUpperCase()) {
+  switch(stat) {
   case "wins" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     break;
   }
 
   case "kills" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.kills ?? 0) - (b?.miniWalls?.kills ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.kills ?? 0) - (a?.miniWalls?.kills ?? 0));
     break;
   }
 
   case "deaths" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.deaths ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.deaths ?? 0) - (a?.miniWalls?.deaths ?? 0));
     break;
   }
 
   case "witherDamage" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.witherDamage ?? 0) - (b?.miniWalls?.witherDamage ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherDamage ?? 0) - (a?.miniWalls?.witherDamage ?? 0));
     break;
   }
 
   case "witherKills" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.witherKills ?? 0) - (b?.miniWalls?.witherKills ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherKills ?? 0) - (a?.miniWalls?.witherKills ?? 0));
     break;
   }
 
   case "finalKills" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.finalKills ?? 0) - (b?.miniWalls?.finalKills ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.finalKills ?? 0) - (a?.miniWalls?.finalKills ?? 0));
     break;
   }
 
   case "kd" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWallsWins ?? 0) - (a?.miniWallsWins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = (acc.miniWalls.kills + acc.miniWalls.finalKills) / acc.miniWalls.deaths;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
   }
 
   case "kdnf" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.kills / acc.miniWalls.deaths;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
   }
 
   case "fd" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.finalKills / acc.miniWalls.deaths;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
     break;
   }
 
   case "wdd" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.witherDamage / acc.miniWalls.deaths;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
   }
 
   case "wkd" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.witherKills / acc.miniWalls.deaths;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
   }
 
   case "aa" : {
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.wins ?? 0) - (b?.miniWalls?.wins ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
     accounts = accounts.slice(0, 150);
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot;
       return acc; 
     });
 
-    TimSort.sort(accounts, (a, b) => (a?.miniWalls?.ratio ?? 0) - (b?.miniWalls?.ratio ?? 0));
+    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
   }

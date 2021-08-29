@@ -1,13 +1,13 @@
-import Command from "../../classes/Command";
-import { client } from "../BotRuntime";
-import CommandResponse from "../Utils/CommandResponse";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
 
 export default new Command("echo", ["%trusted%"], async (args, rawMsg) => {
   const channel = args[0];
   let text;
   let discChannel;
   if(channel.length == 18 && channel.toLowerCase() == channel.toUpperCase()) {
-    discChannel = await client.channels.fetch(args[0]);
+    discChannel = await BotRuntime.client.channels.fetch(args[0]);
     text = args.slice(1).join(" ");
   } else {
     discChannel = rawMsg.channel;

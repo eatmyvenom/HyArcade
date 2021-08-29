@@ -11,7 +11,8 @@ const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
-const { default: NameUpdater } = require("./NameUpdater");
+
+let NameUpdater;
 
 module.exports = class BotEvents {
   static async rateLimit (rlInfo) {
@@ -86,7 +87,7 @@ module.exports = class BotEvents {
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
     } else if(BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotRuntime.client);
+      await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag}!`);
     } else {
@@ -113,7 +114,10 @@ module.exports = class BotEvents {
     logger.info("Heart beat - I'm alive!");
 
     if(BotRuntime.botMode == "mw") {
-      NameUpdater(BotRuntime.client);
+      if(NameUpdater == undefined) {
+        NameUpdater = await import("./NameUpdater.mjs"); 
+      }
+      await NameUpdater(BotRuntime.client);
     }
   }
 

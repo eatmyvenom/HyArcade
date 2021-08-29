@@ -1,12 +1,12 @@
-import Command from "../../classes/Command";
-import { getFromDB, writeToDB } from "../BotRuntime";
-import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("hackerlist", ["%trusted%"], async (args) => {
   /**
    * @type {string[]}
    */
-  let hackers = await getFromDB("hackerlist");
+  let hackers = await BotRuntime.getFromDB("hackerlist");
 
   const operation = args[0];
 
@@ -55,7 +55,7 @@ export default new Command("hackerlist", ["%trusted%"], async (args) => {
   }
 
   if(hasChange) {
-    await writeToDB("hackerlist", hackers);
+    await BotRuntime.writeToDB("hackerlist", hackers);
   }
 
   return res;

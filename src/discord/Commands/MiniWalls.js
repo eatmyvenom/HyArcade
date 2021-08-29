@@ -16,7 +16,7 @@ const {
  * @returns {boolean}
  */
 async function isHacker (acc) {
-  const hackers = BotRuntime.getHackerlist();
+  const hackers = await BotRuntime.getHackerlist();
   return hackers.includes(acc?.uuid?.toLowerCase());
 }
 

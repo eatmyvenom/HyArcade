@@ -1,11 +1,13 @@
-import { MessageEmbed } from "discord.js";
-import Account from "hyarcade-requests/types/Account";
-import Command from "../../classes/Command";
-import BotRuntime from "../BotRuntime";
-import InteractionUtils from "../interactions/InteractionUtils";
-import CommandResponse from "../Utils/CommandResponse";
-import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds";
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { MessageEmbed } = require("discord.js");
+import Account from "hyarcade-requests/types/Account.js";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import InteractionUtils from "../interactions/InteractionUtils.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 
 /**
  * @param {Account} acc

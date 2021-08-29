@@ -1,8 +1,10 @@
-import { MessageEmbed } from "discord.js";
-import Command from "../../classes/Command";
-import { client } from "../BotRuntime";
-import CommandResponse from "../Utils/CommandResponse";
-import TimeFormatter from "../Utils/Formatting/TimeFormatter";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
+const { MessageEmbed } = require("discord.js");
 
 const statusName = [
   "READY",
@@ -18,19 +20,19 @@ const statusName = [
 
 export default new Command("ping", ["*"], async () => {
   const embed = new MessageEmbed()
-    .setAuthor(`${client.user.username} status`, client.user.avatarURL(), "https://hyarcade.xyz/")
+    .setAuthor(`${BotRuntime.client.user.username} status`, BotRuntime.client.user.avatarURL(), "https://hyarcade.xyz/")
     .addField(
       "Status",
-      `📡 Ping - ${client.ws.ping}ms\n` +
-        `📟 Status - ${statusName[client.ws.status]}\n` +
-        `⏲️ Start time - ${TimeFormatter(Date.now() - client.uptime)}\n`,
+      `📡 Ping - ${BotRuntime.client.ws.ping}ms\n` +
+        `📟 Status - ${statusName[BotRuntime.client.ws.status]}\n` +
+        `⏲️ Start time - ${TimeFormatter(Date.now() - BotRuntime.client.uptime)}\n`,
       true
     )
     .addField(
       "Info",
-      `📊 Servers - ${client.guilds.cache.size}\n` +
-        `📈 Users - ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}\n` +
-        `🗒️ Channels - ${client.channels.cache.size}`,
+      `📊 Servers - ${BotRuntime.client.guilds.cache.size}\n` +
+        `📈 Users - ${BotRuntime.client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}\n` +
+        `🗒️ Channels - ${BotRuntime.client.channels.cache.size}`,
       true
     )
     .setColor(0x8c54fe);

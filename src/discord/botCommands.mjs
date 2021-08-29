@@ -1,16 +1,18 @@
-import { default as config } from "hyarcade-config";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+import config from "hyarcade-config";
 const cfg = config.fromJSON();
-import { default as Logger } from "hyarcade-logger";
-import { default as Runtime } from "hyarcade-config/Runtime";
+import Logger from "hyarcade-logger";
+import Runtime from "hyarcade-config/Runtime.js";
 const owner = "156952208045375488";
 
-import { default as Link } from "./Commands/Link";
-import Verify from "./Commands/LinkMe.mjs";
-import { default as LastUpdate } from "./Commands/LastUpdate";
+import Link from "./Commands/Link.js";
+import { Verify } from "./Commands/LinkMe.mjs";
+import LastUpdate from "./Commands/LastUpdate.js";
 import KillBot from "./Commands/KillBot.mjs";
-import { default as MkInv } from "./Commands/MakeInviteEmbed";
-import { default as MKHook } from "./Commands/MakeHook";
-import { default as UpdateRoles } from "./Commands/UpdateRoles";
+import MkInv from "./Commands/MakeInviteEmbed.js";
+import MKHook from "./Commands/MakeHook.js";
+import UpdateRoles from "./Commands/UpdateRoles.js";
 import Info from "./Commands/Info.mjs";
 import EZ from "./Commands/EZ.mjs";
 import Ping from "./Commands/Ping.mjs";
@@ -20,21 +22,22 @@ import CyclePresence from "./Commands/CyclePresence.mjs";
 import Eval from "./Commands/Eval.mjs";
 import Ezmsgs from "./Commands/ezmsgs.mjs";
 import Hackerlist from "./Commands/Hackerlist.mjs";
-import { default as SetAvatar } from "./Commands/SetAvatar";
-import { default as SetPresence } from "./Commands/SetPresence";
-import { default as SetUsername } from "./Commands/SetUsername";
-import Exec from "./Commands/Exec";
-import { default as FetchUser } from "./Commands/FetchUser";
-import { default as FetchGuild } from "./Commands/FetchGuild";
-import { default as FetchChannel } from "./Commands/FetchChannel";
+import SetAvatar from "./Commands/SetAvatar.js";
+import SetPresence from "./Commands/SetPresence.js";
+import SetUsername from "./Commands/SetUsername.js";
+import Exec from "./Commands/Exec.js";
+import FetchUser from "./Commands/FetchUser.js";
+import FetchGuild from "./Commands/FetchGuild.js";
+import FetchChannel from "./Commands/FetchChannel.js";
 import TopGames from "./Commands/TopGames.mjs";
-import { default as DBInfo } from "./Commands/DBInfo";
-import { default as Help } from "./Commands/Help";
+import DBInfo from "./Commands/DBInfo.js";
+import Help from "./Commands/Help.js";
 
-import CommandResponse from "./Utils/CommandResponse";
-import { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } from "./Utils/Embeds/DynamicEmbeds";
-import { ERROR_API_DOWN } from "./Utils/Embeds/StaticEmbeds";
-import { Message } from "discord.js";
+import CommandResponse from "./Utils/CommandResponse.js";
+
+const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
+const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
+const { Message } = require("discord.js");
 
 /**
  * @param {Message} msg

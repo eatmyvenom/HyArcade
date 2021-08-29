@@ -1,18 +1,20 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const cfg = require("hyarcade-config").fromJSON();
-import Runtime from "hyarcade-config/Runtime";
-import { addAccounts } from "../listUtils";
+import Runtime from "hyarcade-config/Runtime.js";
+import { addAccounts } from "../listUtils.js";
 import Logger from "hyarcade-logger";
-import isValidIGN from "../datagen/utils/ignValidator";
-import { execute } from "./botCommands";
-import BotRuntime, { botMode } from "./BotRuntime";
-import { execute as MwExecute } from "./MiniWallsCommands";
-import { ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds";
-import Webhooks from "./Utils/Webhooks";
-import { logCommand } from "./Utils/LogUtils";
-import CommandResponse from "./Utils/CommandResponse";
-import { Message, Collection, Webhook } from "discord.js";
-import SlashHelpTxt from "./Utils/SlashHelpTxt";
+import isValidIGN from "../datagen/utils/ignValidator.js";
+import botCommands from "./botCommands.mjs";
+import BotRuntime from "./BotRuntime.js";
+import mwCommands from "./MiniWallsCommands.js";
+import Webhooks from "./Utils/Webhooks.js";
+import LogUtils from "./Utils/LogUtils.js";
+import CommandResponse from "./Utils/CommandResponse.js";
+import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
+const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
+const { Message, Collection, Webhook } = require("discord.js");
 
 /**
  * 
@@ -32,7 +34,7 @@ async function logError (msg, e) {
  * @param {Message} msg 
  */
 async function logCmd (msg) {
-  await logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
+  await LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg);
   Logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
@@ -57,7 +59,7 @@ async function addIGNs (msg) {
 async function getCmdRes (msg) {
   let cmdResponse;
   try {
-    cmdResponse = await execute(msg, msg.author.id);
+    cmdResponse = await botCommands.execute(msg, msg.author.id);
   } catch (e) {
     await logError(msg, e);
     cmdResponse = ({
@@ -77,7 +79,7 @@ async function getCmdRes (msg) {
 async function getMWCmdRes (msg) {
   let cmdResponse;
   try {
-    cmdResponse = await MwExecute(msg, msg.author.id);
+    cmdResponse = await mwCommands.execute(msg, msg.author.id);
   } catch (e) {
     await logError(msg, e);
     cmdResponse = new CommandResponse("", ERROR_UNKNOWN);
@@ -210,9 +212,9 @@ export default async function messageHandler (msg) {
   if(msg.author.bot) return;
   if(msg.webhookID != undefined) return;
 
-  if(botMode == "mw" || botMode == "test") {
+  if(BotRuntime.botMode == "mw" || BotRuntime.botMode == "test") {
     await checkMW(msg);
-    if(botMode == "mw") {
+    if(BotRuntime.botMode == "mw") {
       return;
     }
   }

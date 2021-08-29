@@ -113,11 +113,11 @@ module.exports = class BotRuntime {
 
     static async getHackerlist () {
       if(hackerlist == null) {
-        hackerlist = BotRuntime.getFromDB("hackerlist");
+        hackerlist = await BotRuntime.getFromDB("hackerlist");
         setTimeout(() => hackerlist = null, 3600000);
       }
   
-      return blacklist;
+      return hackerlist;
     }
   
     static async getBlacklist () {
