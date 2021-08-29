@@ -1,8 +1,4 @@
 const BotRuntime = require("../discord/BotRuntime");
-const {
-  ERROR_UNKNOWN
-} = require("../discord/Utils/Embeds/StaticEmbeds");
-const Webhooks = require("../discord/Utils/Webhooks");
 const logger = require("hyarcade-logger");
 
 module.exports = class Command {
@@ -31,16 +27,6 @@ module.exports = class Command {
           res: ""
         };
       }
-      try {
-        return await this.callback(args, rawMsg, interaction);
-      } catch (e) {
-        logger.err(e);
-        logger.err(e.stack);
-        await Webhooks.errHook.send(e.toString());
-        return {
-          res: "",
-          embed: ERROR_UNKNOWN
-        };
-      }
+      return await this.callback(args, rawMsg, interaction);
     }
 };

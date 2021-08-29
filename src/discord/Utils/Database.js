@@ -26,7 +26,7 @@ module.exports = class Database {
   }
 
   static async getLeaderboard (path, category, time, min) {
-    const url = new URL("lb", cfg.dbURL);
+    const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path);
     
     if(category != undefined) {
@@ -41,32 +41,40 @@ module.exports = class Database {
       url.searchParams.set("min", "");
     }
 
+    let lb;
+
     try {
-      const lb = await fetch(url.toString());
-      return JSON.parse(lb);
+      lb = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e);
+      Logger.err(lb);
       return {};
     }
+
+    return lb;
   }
 
   static async getMWLeaderboard (stat, time) {
-    const url = new URL("mwlb", cfg.dbURL);
+    const url = new URL("mwlb", cfg.dbUrl);
     url.searchParams.set("stat", stat);
 
     if(time != undefined) {
       url.searchParams.set("time", time);
     }
 
+    let lb;
+
     try {
-      const lb = await fetch(url.toString());
-      return JSON.parse(lb);
+      lb = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");
       Logger.err(e);
+      Logger.err(lb);
       return {};
     }
+
+    return lb;
   }
 
 };

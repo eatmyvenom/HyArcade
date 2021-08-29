@@ -1,8 +1,12 @@
-import { MessageEmbed } from "discord.js";
-import { HypixelApi, mojangRequest } from "hyarcade-requests";
-import Command from "../../classes/Command";
-import CommandResponse from "../Utils/CommandResponse";
-import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+import Command from "../../classes/Command.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
+
+const { HypixelApi, mojangRequest } = require("hyarcade-requests");
+const { MessageEmbed } = require("discord.js");
 
 /**
  * @param {string} t

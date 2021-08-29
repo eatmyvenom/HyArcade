@@ -1,8 +1,7 @@
 import logger from "hyarcade-logger";
 import { addAccounts } from "../../listUtils.js";
-import { MessageEmbed, CommandInteraction } from "discord.js";
 
-import CommandResponse from "../Utils/CommandResponse";
+import CommandResponse from "../Utils/CommandResponse.js";
 
 import EZ from "../Commands/EZ.mjs";
 import Info from "../Commands/Info.mjs";
@@ -20,10 +19,14 @@ import Arena from "../Commands/Arena.mjs";
 import PBall from "../Commands/PBall.mjs";
 import Zombies from "../Commands/Zombies.mjs";
 import Walls from "../Commands/Walls.mjs";
-import { Profile } from "../Commands/Profile.js";
+import { Profile } from "../Commands/Profile.mjs";
 import { WhoIS } from "../Commands/WhoIS.mjs";
 import { Verify } from "../Commands/LinkMe.mjs";
 import { Compare } from "../Commands/Compare.mjs";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { MessageEmbed, CommandInteraction } = require("discord.js");
 
 
 /**

@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { stringifyList } = require("../../../utils/leaderboard/ListUtils");
 //// const listUtils = require("../../listUtils");
 const Database = require("../Database");
 
@@ -76,6 +77,8 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
     break;
   }
   }
+
+  res = stringifyList(res, prop, category, limit, start);
 
   res = res != "" ? res : "Nobody has won.";
   const embed = new MessageEmbed()

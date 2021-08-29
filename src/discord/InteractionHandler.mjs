@@ -8,12 +8,13 @@ import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from 
 import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import microInteractionObjects from "./interactions/microInteractionObjects.js";
 import fullInteractionObjects from "./interactions/interactionObjects.js";
+import CommandParser from "./interactions/CommandParser.mjs";
 
 import { createRequire } from "module";
+import { ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
 const require = createRequire(import.meta.url);
 const { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } = require("discord.js");
 
-let CommandParser = null;
 
 /**
  * @param {string} id
@@ -30,9 +31,6 @@ async function isBlacklisted (id) {
  */
 async function commandHandler (interaction) {
 
-  if(CommandParser === null) {
-    CommandParser = await import("./interactions/CommandParser.mjs");
-  }
 
   if(await isBlacklisted(interaction?.user?.id)) {
     return;
@@ -42,14 +40,13 @@ async function commandHandler (interaction) {
   try {
     responseObj = await CommandParser(interaction);
   } catch (e) {
-    Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`);
-    Logger.err(e);
-    await Webhooks.errHook.send({
-      content: `Error from /${interaction.commandName} ${JSON.stringify(interaction.options)}`
-    });
-    await Webhooks.errHook.send({
-      content: e.toString()
-    });
+    Logger.err(e.stack);
+    await Webhooks.errHook.send({ embeds: [ERROR_LOG(e, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map((a) => `${a.name} : ${a.value}`))}`)] });
+    if(!interaction.deferred && !interaction.replied) {
+      await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+    } else {
+      await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+    }
     return;
   }
 
@@ -72,6 +69,12 @@ async function commandHandler (interaction) {
     Webhooks.errHook.send({
       embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
     });
+
+    if(!interaction.deferred && !interaction.replied) {
+      await interaction.reply({ embeds: ERROR_UNKNOWN, ephemeral: true });
+    } else {
+      await interaction.followUp({ embeds: ERROR_UNKNOWN, ephemeral: true });
+    }
     return;
   }
 

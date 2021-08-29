@@ -1,5 +1,5 @@
 import Logger from "hyarcade-logger";
-import Account from "hyarcade-requests/types/Account";
+import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
