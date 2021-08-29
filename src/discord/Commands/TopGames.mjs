@@ -16,67 +16,67 @@ import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 function getGames (acc) {
   let games = [{
     name: "Party games",
-    wins: acc.partyGames.wins
+    wins: acc?.partyGames?.wins ?? 0
   },
   {
     name: "HITW",
-    wins: acc.holeInTheWall.wins
+    wins: acc?.holeInTheWall?.wins ?? 0
   },
   {
     name: "Farm hunt",
-    wins: acc.farmhunt.wins
+    wins: acc?.farmhunt?.wins ?? 0
   },
   {
     name: "Hypixel says",
-    wins: acc.hypixelSays.wins
+    wins: acc?.hypixelSays?.wins ?? 0
   },
   {
     name: "Mini walls",
-    wins: acc.miniWalls.wins
+    wins: acc?.miniWalls?.wins ?? 0
   },
   {
     name: "Football",
-    wins: acc.football.wins
+    wins: acc?.football?.wins ?? 0
   },
   {
     name: "Ender spleef",
-    wins: acc.enderSpleef.wins
+    wins: acc?.enderSpleef?.wins ?? 0
   },
   {
     name: "Dragon wars",
-    wins: acc.dragonWars.wins
+    wins: acc?.dragonWars?.wins ?? 0
   },
   {
     name: "Bounty hunters",
-    wins: acc.bountyHunters.wins
+    wins: acc?.bountyHunters?.wins ?? 0
   },
   {
     name: "Blocking dead",
-    wins: acc.blockingDead.wins
+    wins: acc?.blockingDead?.wins ?? 0
   },
   {
     name: "Throw out",
-    wins: acc.throwOut.wins
+    wins: acc?.throwOut?.wins ?? 0
   },
   {
     name: "Hide and seek",
-    wins: acc.hideAndSeek.wins
+    wins: acc?.hideAndSeek?.wins ?? 0
   },
   {
     name: "Zombies",
-    wins: acc.zombies.wins_zombies
+    wins: acc?.zombies?.wins_zombies ?? 0
   },
   {
     name: "Galaxy wars",
-    wins: acc.galaxyWars.wins
+    wins: acc?.galaxyWars?.wins ?? 0
   },
   {
     name: "Pixel painters",
-    wins: acc.pixelPainters.wins
+    wins: acc?.pixelPainters?.wins ?? 0
   },
   {
     name: "Seasonal",
-    wins: acc.seasonalWins.total
+    wins: acc?.seasonalWins?.total ?? 0
   },
   ];
 
