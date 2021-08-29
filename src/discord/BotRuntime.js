@@ -122,7 +122,7 @@ module.exports = class BotRuntime {
   
     static async getBlacklist () {
       if(blacklist == null) {
-        blacklist = BotRuntime.getFromDB("blacklist");
+        blacklist = await BotRuntime.getFromDB("blacklist");
         setTimeout(() => blacklist = null, 3600000);
       }
   
