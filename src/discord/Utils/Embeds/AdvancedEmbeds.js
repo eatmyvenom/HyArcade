@@ -701,7 +701,7 @@ module.exports = class AdvancedEmbeds {
   }
 
   static async getStats (acc, game, hasPerms = false) {
-    const thumbURL = `https://crafatar.com/renders/body/${acc.uuid}?overlay&time=${Date.now()}`;
+    const thumbURL = `https://crafatar.com/renders/head/${acc.uuid}?overlay&time=${Date.now()}`;
 
     let lvl = Math.round(acc.level * 100) / 100;
     lvl = `${lvl}`;
