@@ -71,9 +71,9 @@ async function commandHandler (interaction) {
     });
 
     if(!interaction.deferred && !interaction.replied) {
-      await interaction.reply({ embeds: ERROR_UNKNOWN, ephemeral: true });
+      await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
     } else {
-      await interaction.followUp({ embeds: ERROR_UNKNOWN, ephemeral: true });
+      await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
     }
     return;
   }
