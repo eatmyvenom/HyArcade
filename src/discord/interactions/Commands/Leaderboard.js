@@ -27,10 +27,6 @@ module.exports = {
     {
       name: "monthly",
       value: "m",
-    },
-    {
-      name: "all",
-      value: "a",
     }
     ],
   },
