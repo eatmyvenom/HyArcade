@@ -10,7 +10,7 @@ import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const { MessageEmbed, Util } = require("discord.js");
-const { escapeUnderline } = Util;
+const { escapeItalic, escapeUnderline } = Util;
 
 /**
  * 
@@ -74,13 +74,13 @@ function generateWhoisEmbed (acc) {
 
   let discord = "";
 
-  if(acc.discord != undefined) {
+  if(acc.discord != undefined && acc.discord != "") {
     discord = `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}`;
   } else {
     discord = "Unknown!";
   }
 
-  embed.addField("--------- Names ---------", acc.nameHist.map((n, i) => `${i + 1} - **${escapeUnderline(n)}**`).join("\n"), true);
+  embed.addField("--------- Names ---------", acc.nameHist.map((n, i) => `${i + 1} - **${escapeUnderline(escapeItalic(n))}**`).join("\n"), true);
   embed.addField("-------- Discord --------", discord, true);
   embed.addField("--------- Info ----------", `**Guild** - ${acc.guild ?? "Unknown"}\n**Main** - ${getMain(acc)}`, false);
 
