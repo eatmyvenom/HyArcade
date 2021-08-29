@@ -1,26 +1,26 @@
 import logger from "hyarcade-logger";
-import { addAccounts } from "../../listUtils";
+import { addAccounts } from "../../listUtils.js";
 import { MessageEmbed, CommandInteraction } from "discord.js";
 
 import CommandResponse from "../Utils/CommandResponse";
 
 import EZ from "../Commands/EZ.mjs";
 import Info from "../Commands/Info.mjs";
-import Susser from "../Commands/Susser";
-import GameCounts from "../Commands/GameCounts";
-import Leaderboard from "../Commands/Leaderboard";
-import ButtonGenerator from "./Buttons/ButtonGenerator";
+import Susser from "../Commands/Susser.js";
+import GameCounts from "../Commands/GameCounts.js";
+import Leaderboard from "../Commands/Leaderboard.js";
+import ButtonGenerator from "./Buttons/ButtonGenerator.js";
 import Ping from "../Commands/Ping.mjs";
-import GetDataRaw from "../Commands/GetDataRaw";
+import GetDataRaw from "../Commands/GetDataRaw.js";
 import TopGames from "../Commands/TopGames.mjs";
-import Help from "../Commands/Help";
-import Stats from"../Commands/Stats";
+import Help from "../Commands/Help.js";
+import Stats from"../Commands/Stats.js";
 import Quake from "../Commands/Quake.mjs";
 import Arena from "../Commands/Arena.mjs";
 import PBall from "../Commands/PBall.mjs";
 import Zombies from "../Commands/Zombies.mjs";
 import Walls from "../Commands/Walls.mjs";
-import { Profile } from "../Commands/Profile";
+import { Profile } from "../Commands/Profile.js";
 import { WhoIS } from "../Commands/WhoIS.mjs";
 import { Verify } from "../Commands/LinkMe.mjs";
 import { Compare } from "../Commands/Compare.mjs";
