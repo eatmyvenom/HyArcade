@@ -24,22 +24,22 @@ function numberify (n) {
  */
 function getMain (acc) {
   const games = {
-    Party_games: acc.partyGames.wins,
-    HITW: acc.holeInTheWall.wins,
-    Farm_hunt: acc.farmhunt.wins,
-    Hypixel_says: acc.hypixelSays.wins,
-    Mini_walls: acc.miniWalls.wins,
-    Football: acc.football.wins,
-    Ender_spleef: acc.enderSpleef.wins,
-    Dragon_wars: acc.dragonWars.wins,
-    Galaxy_wars: acc.galaxyWars.wins,
-    Bounty_hunters: acc.bountyHunters.wins,
-    Blocking_dead: acc.blockingDead.wins,
-    Throw_out: acc.throwOut.wins,
-    Hide_and_seek: acc.hideAndSeek.wins,
-    Zombies: acc.zombies.wins_zombies,
-    Pixel_painters: acc.pixelPainters.wins,
-    Seasonal: acc.seasonalWins.total,
+    Party_games: acc?.partyGames?.wins ?? 0,
+    HITW: acc?.holeInTheWall?.wins ?? 0,
+    Farm_hunt: acc?.farmhunt?.wins ?? 0,
+    Hypixel_says: acc?.hypixelSays?.wins ?? 0,
+    Mini_walls: acc?.miniWalls?.wins ?? 0,
+    Football: acc?.football?.wins ?? 0,
+    Ender_spleef: acc?.enderSpleef?.wins ?? 0,
+    Dragon_wars: acc?.dragonWars?.wins ?? 0,
+    Galaxy_wars: acc?.galaxyWars?.wins ?? 0,
+    Bounty_hunters: acc?.bountyHunters?.wins ?? 0,
+    Blocking_dead: acc?.blockingDead?.wins ?? 0,
+    Throw_out: acc?.throwOut?.wins ?? 0,
+    Hide_and_seek: acc?.hideAndSeek?.wins ?? 0,
+    Zombies: acc?.zombies?.wins_zombies ?? 0,
+    Pixel_painters: acc?.pixelPainters?.wins ?? 0,
+    Seasonal: acc?.seasonalWins?.total ?? 0,
   };
 
   let max = 0;
