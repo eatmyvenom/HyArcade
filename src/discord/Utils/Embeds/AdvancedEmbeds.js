@@ -661,6 +661,16 @@ module.exports = class AdvancedEmbeds {
       side1 += `**Arcade wins**\n${formatNum(numberify(acc1.arcadeWins))}`;
       side2 += `**Arcade wins**\n${formatNum(numberify(acc2.arcadeWins))}`;
 
+      if(acc1.combinedArcadeWins > acc2.combinedArcadeWins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Combined arcade wins**\n${formatNum(numberify(acc1.combinedArcadeWins))}`;
+      side2 += `**Combined arcade wins**\n${formatNum(numberify(acc2.combinedArcadeWins))}`;
+
       if(acc1.arcadeCoins > acc2.arcadeCoins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
         side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
@@ -678,8 +688,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Arcade coins**\n${formatNum(numberify(acc1.achievementPoints))}`;
-      side2 += `**Arcade coins**\n${formatNum(numberify(acc2.achievementPoints))}`;
+      side1 += `**Achievement Points**\n${formatNum(numberify(acc1.achievementPoints))}`;
+      side2 += `**Achievement Points**\n${formatNum(numberify(acc2.achievementPoints))}`;
 
       if(acc1.karma > acc2.karma) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -688,9 +698,18 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Arcade coins**\n${formatNum(numberify(acc1.karma))}`;
-      side2 += `**Arcade coins**\n${formatNum(numberify(acc2.karma))}`;
+      side1 += `**Karma**\n${formatNum(numberify(acc1.karma))}`;
+      side2 += `**Karma**\n${formatNum(numberify(acc2.karma))}`;
 
+      if(acc1.ranksGifted > acc2.ranksGifted) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Ranks Gifted**\n${formatNum(numberify(acc1.ranksGifted))}`;
+      side2 += `**Ranks Gifted**\n${formatNum(numberify(acc2.ranksGifted))}`;
     }
     }
 
