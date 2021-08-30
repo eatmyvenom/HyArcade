@@ -51,20 +51,24 @@ class FileCache {
     }
 
     async runSave () {
-      Logger.info("Saving file changes...");
-      await utils.writeJSON("accounts.json", this.accounts);
-      await utils.writeJSON("acclist.json", this.acclist);
-      await utils.writeJSON("disclist.json", this.disclist);
-      await utils.writeJSON("status.json", this.status);
-      if(this.blacklist.join("\n").trim() != "") {
-        await fs.writeFile(`${this.path}blacklist`, this.blacklist.join("\n").trim());
+      try {
+        Logger.info("Saving file changes...");
+        await utils.writeJSON("accounts.json", this.accounts);
+        await utils.writeJSON("acclist.json", this.acclist);
+        await utils.writeJSON("disclist.json", this.disclist);
+        await utils.writeJSON("status.json", this.status);
+        if(this.blacklist.join("\n").trim() != "") {
+          await fs.writeFile(`${this.path}blacklist`, this.blacklist.join("\n").trim());
+        }
+        if(this.hackerlist.join("\n").trim() != "") {
+          await fs.writeFile(`${this.path}hackerlist`, this.hackerlist.join("\n").trim());
+        }
+        await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
+        Logger.debug("Files saved...");
+        this.dirty = false;
+      } catch (e) {
+        Logger.err(e);
       }
-      if(this.hackerlist.join("\n").trim() != "") {
-        await fs.writeFile(`${this.path}hackerlist`, this.hackerlist.join("\n").trim());
-      }
-      await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
-      Logger.debug("Files saved...");
-      this.dirty = false;
     }
 
     /**
