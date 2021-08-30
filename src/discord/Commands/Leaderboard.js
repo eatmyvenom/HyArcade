@@ -1,7 +1,8 @@
 const {
   MessageEmbed,
   Message,
-  CommandInteraction
+  CommandInteraction,
+  ButtonInteraction
 } = require("discord.js");
 const BotRuntime = require("../BotRuntime");
 const Command = require("../../classes/Command");
@@ -16,7 +17,7 @@ module.exports = new Command("leaderboard", ["*"], hander);
  * 
  * @param {string[]} args 
  * @param {Message} rawMsg 
- * @param {CommandInteraction} interaction 
+ * @param {CommandInteraction | ButtonInteraction} interaction 
  * @returns {object}
  */
 async function hander (args, rawMsg, interaction) {
