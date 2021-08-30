@@ -409,7 +409,7 @@ async function getLB (prop, timetype, limit) {
   switch(prop) {
   case "miniWallsWins": {
     comparitor = wComp;
-    parser = (a) => a.miniWallsWins;
+    parser = (a) => a.miniWalls.miniWallsWins;
     break;
   }
 
