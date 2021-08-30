@@ -79,7 +79,7 @@ module.exports = class ImageGenerator {
       this.context.textBaseline = "middle";
       const realX = x - width / 2;
       this.context.rect(realX - 2, y - (size / 2), width + 3, size + 4);
-      this.context.fillStyle = "#33333377";
+      this.context.fillStyle = "#33333372";
       this.context.fill();
       this.context.fillStyle = color;
       this.context.fillText(txt, realX + width / 2, y);
@@ -95,7 +95,7 @@ module.exports = class ImageGenerator {
       this.context.textAlign = "center";
       this.context.textBaseline = "middle";
       this.context.rect((x - width / 2) - 2, y - (size / 2), width + 3, size + 4);
-      this.context.fillStyle = "#33333377";
+      this.context.fillStyle = "#33333372";
       this.context.fill();
       let currentX = x - width / 3.3;
       this.context.fillStyle = type == "lifetime" ? "#55FF55" : "#AAAAAA";
