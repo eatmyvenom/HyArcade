@@ -25,7 +25,6 @@ class FileCache {
     guilds = [];
     guildsDay = [];
     disclist = {};
-    status = {};
     updatetime = 0;
     hackerlist = [];
     blacklist = [];
@@ -56,7 +55,6 @@ class FileCache {
         await utils.writeJSON("accounts.json", this.accounts);
         await utils.writeJSON("acclist.json", this.acclist);
         await utils.writeJSON("disclist.json", this.disclist);
-        await utils.writeJSON("status.json", this.status);
         if(this.blacklist.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}blacklist`, this.blacklist.join("\n").trim());
         }
@@ -89,7 +87,6 @@ class FileCache {
         const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
         const acclist = await utils.readJSON("acclist.json");
         const disclist = await utils.readJSON("disclist.json");
-        const status = await utils.readJSON("status.json");
         const updatetime = await fs.readFile("timeupdate");
         const players = await utils.readJSON("players.json");
         const guilds = await utils.readJSON("guild.json");
@@ -99,7 +96,6 @@ class FileCache {
         
         fileCache.acclist = acclist;
         fileCache.disclist = disclist;
-        fileCache.status = status;
         fileCache.updatetime = updatetime;
         fileCache.players = players;
         fileCache.guilds = guilds;
