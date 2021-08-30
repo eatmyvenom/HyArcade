@@ -13,15 +13,6 @@ function formatNum (n) {
   return r;
 }
 
-/**
- * 
- * @param {number} n 
- * @returns {number}
- */
-function toInt (n) {
-  return new Number(n);
-}
-
 export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"], async (args) => {
   const img = new ImageGenerator(1900, 1035, "'myFont'");
   await img.addBackground("resources/lb3.png", 0, 0, 1900, 1035, "#00000000");
