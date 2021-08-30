@@ -793,28 +793,28 @@ module.exports = class AdvancedEmbeds {
     case "pain": {
       fields.push({
         name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.holeInTheWall.wins)),
-        inline: true,
+        value: formatNum(numberify(acc.holeInTheWall?.wins ?? 0)),
+        inline: false,
       });
       fields.push({
         name: `${EmojiGetter(hasPerms, "skill")} Qualifers`,
-        value: `${acc.holeInTheWall.qualifers}`,
+        value: `${acc.holeInTheWall?.qualifiers ?? 0}`,
         inline: true,
       });
       fields.push({
         name: `${EmojiGetter(hasPerms, "skill")} Finals`,
-        value: `${acc.holeInTheWall.finals}`,
+        value: `${acc.holeInTheWall?.finals ?? 0}`,
         inline: true,
       });
       fields.push({
         name: `${EmojiGetter(hasPerms, "skill2")} Q+F`,
-        value: `${acc.holeInTheWall.qualifiers + acc.holeInTheWall.finals}`,
+        value: `${(acc.holeInTheWall?.qualifiers ?? 0) + (acc?.holeInTheWall?.finals ?? 0)}`,
         inline: true,
       });
       fields.push({
-        name: `${EmojiGetter(hasPerms, "game")} Rounds`,
-        value: formatNum(numberify(acc.holeInTheWall.rounds)),
-        inline: true,
+        name: `${EmojiGetter(hasPerms, "game")} Completed Walls`,
+        value: formatNum(numberify(acc.holeInTheWall?.rounds ?? 0)),
+        inline: false,
       });
       title = "Hole in the wall";
       gamename = "hitw";
