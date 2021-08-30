@@ -650,6 +650,150 @@ module.exports = class AdvancedEmbeds {
       break;
     }
 
+    case "all" : {
+      if(acc1.blockingDead.wins > acc2.blockingDead.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDead.wins))}`;
+      side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDead.wins))}`;
+
+      if(acc1.bountyHunters.wins > acc2.bountyHunters.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHunters.wins))}`;
+      side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHunters.wins))}`;
+      
+      if(acc1.dragonWars.wins > acc2.dragonWars.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Dragon wars wins**\n${formatNum(numberify(acc1.dragonWars.wins))}`;
+      side2 += `**Dragon wars wins**\n${formatNum(numberify(acc2.dragonWars.wins))}`;
+
+      if(acc1.enderSpleef.wins > acc2.enderSpleef.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Ender spleef wins**\n${formatNum(numberify(acc1.enderSpleef.wins))}`;
+      side2 += `**Ender spleef wins**\n${formatNum(numberify(acc2.enderSpleef.wins))}`;
+
+      if(acc1.galaxyWars.wins > acc2.galaxyWars.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWars.wins))}`;
+      side2 += `**Galaxy wars wins**\n${formatNum(numberify(acc2.galaxyWars.wins))}`;
+
+      if(acc1.hideAndSeek.wins > acc2.hideAndSeek.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeek.wins))}`;
+      side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeek.wins))}`;
+
+      if(acc1.holeInTheWall.wins > acc2.holeInTheWall.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**HITW wins**\n${formatNum(numberify(acc1.holeInTheWall.wins))}`;
+      side2 += `**HITW wins**\n${formatNum(numberify(acc2.holeInTheWall.wins))}`;
+
+      if(acc1.hypixelSays.wins > acc2.hypixelSays.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Hypixel says wins**\n${formatNum(numberify(acc1.hypixelSays.wins))}`;
+      side2 += `**Hypixel says wins**\n${formatNum(numberify(acc2.hypixelSays.wins))}`;
+
+      if(acc1.miniWalls.wins > acc2.miniWalls.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWalls.wins))}`;
+      side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWalls.wins))}`;
+
+      if(acc1.partyGames.wins > acc2.partyGames.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Party games wins**\n${formatNum(numberify(acc1.partyGames.wins))}`;
+      side2 += `**Party games wins**\n${formatNum(numberify(acc2.partyGames.wins))}`;
+
+      if(acc1.pixelPainters.wins > acc2.pixelPainters.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPainters.wins))}`;
+      side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPainters.wins))}`;
+
+      if(acc1.seasonalWins.total > acc2.seasonalWins.total) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Seasonal wins**\n${formatNum(numberify(acc1.seasonalWins.total))}`;
+      side2 += `**Seasonal wins**\n${formatNum(numberify(acc2.seasonalWins.total))}`;
+
+      if(acc1.throwOut.wins > acc2.throwOut.wins) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOut.wins))}`;
+      side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOut.wins))}`;
+
+      if(acc1.zombies.wins_zombies > acc2.zombies.wins_zombies) {
+        side1 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side2 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      } else {
+        side2 += ` ${EmojiGetter(hasPerms, "better")} `;
+        side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
+      }
+      side1 += `**Zombies wins**\n${formatNum(numberify(acc1.zombies.wins_zombies))}`;
+      side2 += `**Zombies wins**\n${formatNum(numberify(acc2.zombies.wins_zombies))}`;
+
+      break;
+    }
+
     default : {
       if(acc1.arcadeWins > acc2.arcadeWins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;

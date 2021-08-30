@@ -23,6 +23,10 @@ module.exports = {
       value: "arc",
     },
     {
+      name: "All games",
+      value: "all",
+    },
+    {
       name: "Party games",
       value: "pg",
     },
