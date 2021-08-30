@@ -756,7 +756,7 @@ module.exports = class AdvancedEmbeds {
         inline: true,
       });
       fields.push({
-        name: `${EmojiGetter(hasPerms, "poop")} poop collected`,
+        name: `${EmojiGetter(hasPerms, "poop")} Poop collected`,
         value: formatNum(numberify(acc.farmhunt.poop)),
         inline: true,
       });
@@ -777,7 +777,7 @@ module.exports = class AdvancedEmbeds {
         inline: true,
       });
       fields.push({
-        name: `${EmojiGetter(hasPerms, "game")} rounds`,
+        name: `${EmojiGetter(hasPerms, "game")} Rounds completed`,
         value: formatNum(numberify(acc.hypixelSays.rounds)),
         inline: true,
       });
