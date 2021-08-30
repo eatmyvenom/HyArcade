@@ -10,4 +10,4 @@ exports.quake = require("./Commands/Quake");
 exports.arena = require("./Commands/Arena");
 exports.pball = require("./Commands/PBall");
 exports.walls = require("./Commands/Walls");
-exports.zombies = require("./Commands/TopGames");
+exports.zombies = require("./Commands/Zombies");
