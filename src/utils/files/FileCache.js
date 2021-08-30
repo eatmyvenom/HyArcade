@@ -83,11 +83,11 @@ class FileCache {
       Logger.debug("Refreshing file cache...");
 
       try {
-        const accounts = await BSONreader("accounts.json");
-        const dailyAccounts = await BSONreader("accounts.day.json");
+        const accounts = await utils.readJSON("accounts.json");
+        const dailyAccounts = await utils.readJSON("accounts.day.json");
         const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
         const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        const acclist = await BSONreader("acclist.json");
+        const acclist = await utils.readJSON("acclist.json");
         const disclist = await utils.readJSON("disclist.json");
         const status = await utils.readJSON("status.json");
         const updatetime = await fs.readFile("timeupdate");
