@@ -1,6 +1,10 @@
-import { Client } from "discord.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 import logger from "hyarcade-logger";
 import BotRuntime from "./BotRuntime";
+
+const { Client } = require("discord.js");
 
 /**
  * @param {Client} client
