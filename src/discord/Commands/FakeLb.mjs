@@ -1,7 +1,4 @@
-import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
-import LBDiffAdv from "../../utils/leaderboard/LBDiffAdv.js";
-import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import Database from "../Utils/Database.js";
@@ -14,49 +11,6 @@ import Database from "../Utils/Database.js";
 function formatNum (n) {
   const r = Intl.NumberFormat("en").format(Number(n));
   return r;
-}
-
-/**
- * 
- * @param {Account[]} list 
- * @returns {Account[]}
- */
-async function hackerTransformer (list) {
-  const hackers = await BotRuntime.getHackerlist();
-  let newlist = list.filter((a) => !hackers.includes(a.uuid));
-  newlist = newlist.filter((a) => a.name != undefined || a.name != "");
-  newlist = newlist.filter((a) => a.miniWalls != undefined);
-  return newlist;
-}
-
-/**
- * 
- * @param {Account} b 
- * @param {Account} a 
- * @returns {Account}
- */
-function mwComparitor (b, a) {
-  return (a?.miniWalls.wins ?? 0) - (b?.miniWalls.wins ?? 0);
-}
-
-/**
- * 
- * @param {Account} n 
- * @param {Account} o 
- * @returns {Account}
- */
-function cb (n, o) {
-  if(n.miniWalls == undefined) {
-    n.miniWalls = {};
-  }
-  n.miniWalls.wins = toInt(n?.miniWalls?.wins ?? 0) - toInt(o?.miniWalls?.wins ?? 0);
-  n.miniWalls.kills = toInt(n?.miniWalls?.kills ?? 0) - toInt(o?.miniWalls?.kills ?? 0);
-  n.miniWalls.deaths = toInt(n?.miniWalls?.deaths ?? 0) - toInt(o?.miniWalls?.deaths ?? 0);
-  n.miniWalls.witherDamage = toInt(n?.miniWalls?.witherDamage ?? 0) - toInt(o?.miniWalls?.witherDamage ?? 0);
-  n.miniWalls.witherKills = toInt(n?.miniWalls?.witherKills ?? 0) - toInt(o?.miniWalls?.witherKills ?? 0);
-  n.miniWalls.finalKills = toInt(n?.miniWalls?.finalKills ?? 0) - toInt(o?.miniWalls?.finalKills ?? 0);
-
-  return n;
 }
 
 /**
@@ -108,7 +62,7 @@ export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"],
 
   let topTen;
   if(path == undefined) {
-    topTen = await LBDiffAdv(mwComparitor, 10, "monthly", cb, hackerTransformer);
+    topTen = (await Database.getMWLeaderboard("wins", "monthly")).slice(0, 10);
   } else {
     topTen = (await Database.getLeaderboard(path, category, time)).slice(0, 10);
   }
