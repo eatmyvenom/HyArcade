@@ -9,7 +9,7 @@ module.exports = class InteractionUtils {
    *
    * @static
    * @param {string} uuid
-   * @returns {Account}
+   * @returns {Promise<Account>}
    */
   static async accFromUUID (uuid) {
     let acc;

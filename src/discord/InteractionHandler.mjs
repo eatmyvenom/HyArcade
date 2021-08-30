@@ -147,7 +147,11 @@ async function buttonHandler (interaction) {
 async function menuHandler (interaction) {
   if(await ForceOGuser(interaction)) {
     const updatedData = await MenuParser(interaction);
-    await interaction.update(updatedData.toDiscord());
+    if(interaction.deferred) {
+      await interaction.editReply(updatedData.toDiscord());
+    } else {
+      await interaction.update(updatedData.toDiscord());
+    }
     await logBtn(interaction);
   }
 }

@@ -16,7 +16,7 @@ module.exports = async function MenuParser (interaction) {
   const commandType = data[0];
   switch(commandType) {
   case "s": {
-    return await statsHandler(data[1], interaction.values[0]);
+    return await statsHandler(data[1], interaction.values[0], interaction);
   }
   }
 };
@@ -24,9 +24,11 @@ module.exports = async function MenuParser (interaction) {
 /**
  * @param {string} accUUID
  * @param {string} game
+ * @param {SelectMenuInteraction} interaction
  * @returns {ButtonResponse}
  */
-async function statsHandler (accUUID, game) {
+async function statsHandler (accUUID, game, interaction) {
+  interaction.deferUpdate();
   const accData = await InteractionUtils.accFromUUID(accUUID);
   const statsRes = await BotRuntime.getStats(accData, game);
   const {
