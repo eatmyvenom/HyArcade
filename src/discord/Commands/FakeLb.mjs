@@ -81,7 +81,7 @@ export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"],
   const category = args[1];
   const time = args[2];
 
-  const timeTitle = path == undefined ? "Monthly Wins" : (time != undefined) ? "Lifetime Wins" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)} Wins`;
+  const timeTitle = path == undefined ? "Monthly Wins" : (time == undefined) ? "Lifetime Wins" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)} Wins`;
   let gameTitle = "";
 
   switch(category) {
@@ -114,7 +114,7 @@ export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"],
   }
 
   for(let i = 0; i < topTen.length; i += 1) {
-    img.drawLBPos(`${i + 1}`, topTen[i].rank, "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i].miniWallsWins), x, y += dy, fontSize);
+    img.drawLBPos(`${i + 1}`, topTen[i].rank, "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i]?.[category]?.[path]), x, y += dy, fontSize);
   }
 
   y += 10;
