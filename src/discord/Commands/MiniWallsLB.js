@@ -48,7 +48,7 @@ async function getLB (prop, timetype, limit) {
   }
 
   default: {
-    time = "Daily";
+    time = "Lifetime";
     res = await Database.getMWLeaderboard(prop);
     res = res.slice(0, Math.min(limit, res.length));
     break;
