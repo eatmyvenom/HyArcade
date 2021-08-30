@@ -74,12 +74,12 @@ module.exports = class BotEvents {
       await BotRuntime.client.destroy();
     } else if(mode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotRuntime.client);
+      await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
     } else if(mode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler(BotRuntime.client);
+      await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
     } else if(BotRuntime.botMode == "mw") {
