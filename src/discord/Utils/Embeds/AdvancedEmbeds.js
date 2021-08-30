@@ -644,8 +644,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPainters.wins))}`;
-      side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPainters.wins))}`;
+      side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPainters.wins))}\n`;
+      side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPainters.wins))}\n`;
 
       break;
     }
@@ -658,8 +658,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDead.wins))}`;
-      side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDead.wins))}`;
+      side1 += `**Blocking dead wins**\n${formatNum(numberify(acc1.blockingDead.wins))}\n`;
+      side2 += `**Blocking dead wins**\n${formatNum(numberify(acc2.blockingDead.wins))}\n`;
 
       if(acc1.bountyHunters.wins > acc2.bountyHunters.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -668,8 +668,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHunters.wins))}`;
-      side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHunters.wins))}`;
+      side1 += `**Bounty hunters wins**\n${formatNum(numberify(acc1.bountyHunters.wins))}\n`;
+      side2 += `**Bounty hunters wins**\n${formatNum(numberify(acc2.bountyHunters.wins))}\n`;
       
       if(acc1.dragonWars.wins > acc2.dragonWars.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -678,8 +678,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Dragon wars wins**\n${formatNum(numberify(acc1.dragonWars.wins))}`;
-      side2 += `**Dragon wars wins**\n${formatNum(numberify(acc2.dragonWars.wins))}`;
+      side1 += `**Dragon wars wins**\n${formatNum(numberify(acc1.dragonWars.wins))}\n`;
+      side2 += `**Dragon wars wins**\n${formatNum(numberify(acc2.dragonWars.wins))}\n`;
 
       if(acc1.enderSpleef.wins > acc2.enderSpleef.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -688,8 +688,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Ender spleef wins**\n${formatNum(numberify(acc1.enderSpleef.wins))}`;
-      side2 += `**Ender spleef wins**\n${formatNum(numberify(acc2.enderSpleef.wins))}`;
+      side1 += `**Ender spleef wins**\n${formatNum(numberify(acc1.enderSpleef.wins))}\n`;
+      side2 += `**Ender spleef wins**\n${formatNum(numberify(acc2.enderSpleef.wins))}\n`;
 
       if(acc1.galaxyWars.wins > acc2.galaxyWars.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -698,8 +698,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWars.wins))}`;
-      side2 += `**Galaxy wars wins**\n${formatNum(numberify(acc2.galaxyWars.wins))}`;
+      side1 += `**Galaxy wars wins**\n${formatNum(numberify(acc1.galaxyWars.wins))}\n`;
+      side2 += `**Galaxy wars wins**\n${formatNum(numberify(acc2.galaxyWars.wins))}\n`;
 
       if(acc1.hideAndSeek.wins > acc2.hideAndSeek.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -708,8 +708,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeek.wins))}`;
-      side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeek.wins))}`;
+      side1 += `**Hide and seek wins**\n${formatNum(numberify(acc1.hideAndSeek.wins))}\n`;
+      side2 += `**Hide and seek wins**\n${formatNum(numberify(acc2.hideAndSeek.wins))}\n`;
 
       if(acc1.holeInTheWall.wins > acc2.holeInTheWall.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -718,8 +718,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**HITW wins**\n${formatNum(numberify(acc1.holeInTheWall.wins))}`;
-      side2 += `**HITW wins**\n${formatNum(numberify(acc2.holeInTheWall.wins))}`;
+      side1 += `**HITW wins**\n${formatNum(numberify(acc1.holeInTheWall.wins))}\n`;
+      side2 += `**HITW wins**\n${formatNum(numberify(acc2.holeInTheWall.wins))}\n`;
 
       if(acc1.hypixelSays.wins > acc2.hypixelSays.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -728,8 +728,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Hypixel says wins**\n${formatNum(numberify(acc1.hypixelSays.wins))}`;
-      side2 += `**Hypixel says wins**\n${formatNum(numberify(acc2.hypixelSays.wins))}`;
+      side1 += `**Hypixel says wins**\n${formatNum(numberify(acc1.hypixelSays.wins))}\n`;
+      side2 += `**Hypixel says wins**\n${formatNum(numberify(acc2.hypixelSays.wins))}\n`;
 
       if(acc1.miniWalls.wins > acc2.miniWalls.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -738,8 +738,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWalls.wins))}`;
-      side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWalls.wins))}`;
+      side1 += `**Mini walls wins**\n${formatNum(numberify(acc1.miniWalls.wins))}\n`;
+      side2 += `**Mini walls wins**\n${formatNum(numberify(acc2.miniWalls.wins))}\n`;
 
       if(acc1.partyGames.wins > acc2.partyGames.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -748,8 +748,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Party games wins**\n${formatNum(numberify(acc1.partyGames.wins))}`;
-      side2 += `**Party games wins**\n${formatNum(numberify(acc2.partyGames.wins))}`;
+      side1 += `**Party games wins**\n${formatNum(numberify(acc1.partyGames.wins))}\n`;
+      side2 += `**Party games wins**\n${formatNum(numberify(acc2.partyGames.wins))}\n`;
 
       if(acc1.pixelPainters.wins > acc2.pixelPainters.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -758,8 +758,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPainters.wins))}`;
-      side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPainters.wins))}`;
+      side1 += `**Pixel painter wins**\n${formatNum(numberify(acc1.pixelPainters.wins))}\n`;
+      side2 += `**Pixel painter wins**\n${formatNum(numberify(acc2.pixelPainters.wins))}\n`;
 
       if(acc1.seasonalWins.total > acc2.seasonalWins.total) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -768,8 +768,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Seasonal wins**\n${formatNum(numberify(acc1.seasonalWins.total))}`;
-      side2 += `**Seasonal wins**\n${formatNum(numberify(acc2.seasonalWins.total))}`;
+      side1 += `**Seasonal wins**\n${formatNum(numberify(acc1.seasonalWins.total))}\n`;
+      side2 += `**Seasonal wins**\n${formatNum(numberify(acc2.seasonalWins.total))}\n`;
 
       if(acc1.throwOut.wins > acc2.throwOut.wins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -778,8 +778,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOut.wins))}`;
-      side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOut.wins))}`;
+      side1 += `**Throw out wins**\n${formatNum(numberify(acc1.throwOut.wins))}\n`;
+      side2 += `**Throw out wins**\n${formatNum(numberify(acc2.throwOut.wins))}\n`;
 
       if(acc1.zombies.wins_zombies > acc2.zombies.wins_zombies) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -802,8 +802,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Arcade wins**\n${formatNum(numberify(acc1.arcadeWins))}`;
-      side2 += `**Arcade wins**\n${formatNum(numberify(acc2.arcadeWins))}`;
+      side1 += `**Arcade wins**\n${formatNum(numberify(acc1.arcadeWins))}\n`;
+      side2 += `**Arcade wins**\n${formatNum(numberify(acc2.arcadeWins))}\n`;
 
       if(acc1.combinedArcadeWins > acc2.combinedArcadeWins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -812,8 +812,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Combined arcade wins**\n${formatNum(numberify(acc1.combinedArcadeWins))}`;
-      side2 += `**Combined arcade wins**\n${formatNum(numberify(acc2.combinedArcadeWins))}`;
+      side1 += `**Combined arcade wins**\n${formatNum(numberify(acc1.combinedArcadeWins))}\n`;
+      side2 += `**Combined arcade wins**\n${formatNum(numberify(acc2.combinedArcadeWins))}\n`;
 
       if(acc1.arcadeCoins > acc2.arcadeCoins) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -822,8 +822,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Arcade coins**\n${formatNum(numberify(acc1.arcadeCoins))}`;
-      side2 += `**Arcade coins**\n${formatNum(numberify(acc2.arcadeCoins))}`;
+      side1 += `**Arcade coins**\n${formatNum(numberify(acc1.arcadeCoins))}\n`;
+      side2 += `**Arcade coins**\n${formatNum(numberify(acc2.arcadeCoins))}\n`;
 
       if(acc1.achievementPoints > acc2.achievementPoints) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -832,8 +832,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Achievement Points**\n${formatNum(numberify(acc1.achievementPoints))}`;
-      side2 += `**Achievement Points**\n${formatNum(numberify(acc2.achievementPoints))}`;
+      side1 += `**Achievement Points**\n${formatNum(numberify(acc1.achievementPoints))}\n`;
+      side2 += `**Achievement Points**\n${formatNum(numberify(acc2.achievementPoints))}\n`;
 
       if(acc1.karma > acc2.karma) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
@@ -842,8 +842,8 @@ module.exports = class AdvancedEmbeds {
         side2 += ` ${EmojiGetter(hasPerms, "better")} `;
         side1 += ` ${EmojiGetter(hasPerms, "worse")} `;
       }
-      side1 += `**Karma**\n${formatNum(numberify(acc1.karma))}`;
-      side2 += `**Karma**\n${formatNum(numberify(acc2.karma))}`;
+      side1 += `**Karma**\n${formatNum(numberify(acc1.karma))}\n`;
+      side2 += `**Karma**\n${formatNum(numberify(acc2.karma))}\n`;
 
       if(acc1.ranksGifted > acc2.ranksGifted) {
         side1 += ` ${EmojiGetter(hasPerms, "better")} `;
