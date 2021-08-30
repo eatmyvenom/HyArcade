@@ -1,7 +1,6 @@
 const Config = require("./Config");
 const cfg = Config.fromJSON();
 const fs = require("fs-extra");
-const BSONwriter = require("./utils/files/BSONwriter");
 const {
   default: fetch
 } = require("node-fetch");

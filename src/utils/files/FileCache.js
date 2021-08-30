@@ -1,7 +1,6 @@
 const utils = require("../../utils");
 const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
-const BSONreader = require("./BSONreader");
 const AccountArray = require("../../request/types/AccountArray");
 const Account = require("hyarcade-requests/types/Account");
 
