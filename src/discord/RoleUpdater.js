@@ -1,4 +1,5 @@
 const Role = require("../classes/Role");
+const { logger } = require("../utils");
 const BotRuntime = require("./BotRuntime");
 const Webhooks = require("./Utils/Webhooks");
 
@@ -48,7 +49,7 @@ module.exports = class RoleUpdater {
       const newRole = this.getRole(wins);
 
       if(wins == 0) {
-        await Webhooks.logHook.send(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
+        logger.info(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
         return;
       }
       if(newRole == undefined) return;
