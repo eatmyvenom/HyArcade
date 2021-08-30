@@ -1,9 +1,9 @@
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 const CommandResponse = require("../Utils/CommandResponse");
 
 module.exports = new Command("FetchChannel", ["156952208045375488"], async (args) => {
-    let id = args[0];
-    let channel = await BotUtils.client.channels.fetch(id);
-    return new CommandResponse(`\`\`\`\nChannel data:\n${JSON.stringify(channel, null, 4)}\n\`\`\``);
+  const id = args[0];
+  const channel = await BotRuntime.client.channels.fetch(id);
+  return new CommandResponse(`\`\`\`\nChannel data:\n${JSON.stringify(channel, null, 2)}\n\`\`\``);
 });

@@ -1,10 +1,11 @@
-module.exports = function isValidIGN(txt) {
-    return (
-        txt.length < 17 &&
+module.exports = function isValidIGN (txt) {
+  return (
+    txt.length < 17 &&
         txt.length > 2 &&
         !txt.includes("!") &&
         !txt.includes("?") &&
         !txt.includes("<") &&
+        !txt.includes(":") &&
         !txt.includes(";") &&
         !txt.includes("\"") &&
         !txt.includes("(") &&
@@ -20,6 +21,13 @@ module.exports = function isValidIGN(txt) {
         txt != "are" &&
         txt != "gamer" &&
         txt != "yea" &&
-        txt != "okay"
-    );
+        txt != "okay" &&
+        txt != "bruh" &&
+        txt != "so" &&
+        txt != "dream" &&
+        txt != "technoblade" &&
+        txt != "tommyinit" &&
+        txt != "dreamwastaken" &&
+        txt != "hypixel"
+  );
 };

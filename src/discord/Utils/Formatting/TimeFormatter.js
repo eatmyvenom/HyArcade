@@ -4,5 +4,5 @@ TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 module.exports = function (time) {
-    return timeAgo.format(time);
+  return timeAgo.format(time);
 };

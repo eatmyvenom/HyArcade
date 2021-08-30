@@ -1,7 +1,7 @@
 const Webhook = require("../events/webhook");
 const {
-    stringNormal,
-    stringDaily
+  stringNormal,
+  stringDaily
 } = require("../listUtils");
 const utils = require("../utils");
 const config = require("../Config").fromJSON();
@@ -11,35 +11,42 @@ const EventDetector = require("../events/EventDetector");
 const lists = require("../listParser");
 let accounts = [];
 const {
-    winsSorter, logger
+  winsSorter,
+  logger
 } = require("../utils");
+const { HypixelApi } = require("hyarcade-requests");
 
 /**
  * Generate the data for all accounts
  *
  * @returns {string[]} files changed by this task
  */
-async function accs() {
-    let acclist = await lists.accounts();
-    accounts = await dataGen.updateAllAccounts(acclist);
-    let old = await utils.readDB("accounts");
-    old.sort(winsSorter);
-    accounts.sort(winsSorter);
+async function accs () {
 
-    try {
-        if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-            let ED = new EventDetector(old, accounts);
-            await ED.runDetection();
-            await ED.logEvents();
-            await ED.sendEvents();
-            await ED.saveEvents();
-        }
-    } catch (e) {
-        logger.err(e);
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
+  const acclist = await lists.accounts();
+  accounts = await dataGen.updateAllAccounts(acclist);
+  const old = await utils.readDB("accounts");
+  old.sort(winsSorter);
+  accounts.sort(winsSorter);
+
+  try {
+    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
+      const ED = new EventDetector(old, accounts);
+      await ED.runDetection();
+      await ED.logEvents();
+      await ED.sendEvents();
+      await ED.saveEvents();
     }
+  } catch (e) {
+    logger.err(e);
+  }
 
-    await utils.writeDB("accounts", accounts);
-    return ["accounts.json"];
+  await utils.writeDB("accounts", accounts);
+  return ["accounts.json"];
 }
 
 /**
@@ -47,17 +54,23 @@ async function accs() {
  *
  * @returns {string[]} files changed by this task
  */
-async function plrs() {
-    let players = await lists.players(accounts);
-    await Promise.all(
-        players.map(async (player) => {
-            await player.updateWins();
-        })
-    );
+async function plrs () {
 
-    players.sort(utils.winsSorter);
-    await utils.writeJSON("players.json", players);
-    return ["players.json"];
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
+
+  const players = await lists.players(accounts);
+  await Promise.all(
+    players.map(async (player) => {
+      await player.updateWins();
+    })
+  );
+
+  players.sort(utils.winsSorter);
+  await utils.writeJSON("players.json", players);
+  return ["players.json"];
 }
 
 /**
@@ -65,17 +78,23 @@ async function plrs() {
  *
  * @returns {string[]} files changed by this task
  */
-async function glds() {
-    let guilds = await lists.guilds(accounts);
-    await Promise.all(
-        guilds.map(async (guild) => {
-            await guild.updateWins();
-        })
-    );
+async function glds () {
 
-    guilds.sort(utils.winsSorter);
-    await utils.writeJSON("guild.json", guilds);
-    return ["guild.json"];
+  if(!(await HypixelApi.key()).success) {
+    return [];
+  }
+
+
+  const guilds = await lists.guilds(accounts);
+  await Promise.all(
+    guilds.map(async (guild) => {
+      await guild.updateWins();
+    })
+  );
+
+  guilds.sort(utils.winsSorter);
+  await utils.writeJSON("guild.json", guilds);
+  return ["guild.json"];
 }
 
 /**
@@ -83,8 +102,8 @@ async function glds() {
  *
  * @returns {string[]} files changed by this task
  */
-async function stats() {
-    return await [].concat(await accs(), await plrs(), await glds());
+async function stats () {
+  return await [].concat(await accs(), await plrs(), await glds());
 }
 
 /**
@@ -92,17 +111,17 @@ async function stats() {
  *
  * @returns {*}
  */
-async function gamesPlayed() {
-    await dataGen.gamesPlayed();
-    return ["gamesPlayed.json"];
+async function gamesPlayed () {
+  await dataGen.gamesPlayed();
+  return ["gamesPlayed.json"];
 }
 
 /**
  * @returns {string[]}
  */
-async function addLeaderboards() {
-    await dataGen.addLeaderboards();
-    return ["acclist.json"];
+async function addLeaderboards () {
+  await dataGen.addLeaderboards();
+  return ["acclist.json"];
 }
 
 /**
@@ -110,17 +129,17 @@ async function addLeaderboards() {
  *
  * @returns {string[]} files changed by this task
  */
-async function status() {
-    await dataGen.genStatus();
-    return await ["status.json", "status.txt"];
+async function status () {
+  await dataGen.genStatus();
+  return await ["status.json", "status.txt"];
 }
 
 /**
  * @returns {string[]}
  */
-async function statusTxtSorted() {
-    await dataGen.statusTxtSorted();
-    return await ["status.txt"];
+async function statusTxtSorted () {
+  await dataGen.statusTxtSorted();
+  return await ["status.txt"];
 }
 
 /**
@@ -130,31 +149,31 @@ async function statusTxtSorted() {
  * @param {number} maxamnt
  * @returns {string[]} files changed by this task
  */
-async function webhook(type, maxamnt) {
-    await Webhook.send(await stringNormal(type, maxamnt));
-    await Webhook.send(await stringDaily(type, maxamnt));
+async function webhook (type, maxamnt) {
+  await Webhook.send(await stringNormal(type, maxamnt));
+  await Webhook.send(await stringDaily(type, maxamnt));
 
-    return [];
+  return [];
 }
 
 /**
  * Run the discord bot
  *
  */
-async function discord() {
-    const DiscordBot = require("../discord/bot");
-    await DiscordBot();
+async function discord () {
+  const DiscordBot = require("../discord/bot");
+  await DiscordBot();
 }
 
 module.exports = {
-    accounts: accs,
-    players: plrs,
-    guilds: glds,
-    gamesPlayed: gamesPlayed,
-    addLeaderboards: addLeaderboards,
-    stats: stats,
-    statusTxtSorted: statusTxtSorted,
-    status: status,
-    webhook: webhook,
-    discord: discord,
+  accounts: accs,
+  players: plrs,
+  guilds: glds,
+  gamesPlayed,
+  addLeaderboards,
+  stats,
+  statusTxtSorted,
+  status,
+  webhook,
+  discord,
 };

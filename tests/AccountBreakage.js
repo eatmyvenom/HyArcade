@@ -1,12 +1,13 @@
-const Account = require("hyarcade-requests/types/Account");
+/* eslint-disable */
 
-/**
- * Test if "fizzyferns" works correctly
- */
+const Account = require("../src/request/types/Account");
+
 async function main () {
-    let a = new Account("fizzyferns", 0, "7855118f2df742cdb91719b0c679c4d9");
+    let a = new Account("bigc1109", 0, "f0133668f8da4ab7ad3e62ca1b5574da");
     await a.updateData();
-    console.log(a);
+    console.log(a.arcadeAchievments.captureTheWool);
 }
 
-main();
+main()
+    .then(console.log)
+    .catch(console.error);

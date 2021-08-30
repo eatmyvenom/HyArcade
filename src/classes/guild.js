@@ -1,3 +1,4 @@
+const Account = require("hyarcade-requests/types/Account");
 const hypixelApi = require("../hypixelApi");
 let accounts = [];
 
@@ -5,25 +6,34 @@ let accounts = [];
  * @param {string} str
  * @returns {number}
  */
-function numberify(str) {
-    return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
+function numberify (str) {
+  return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
 }
 
-module.exports = function Gld(acclist) {
-    accounts = acclist;
-    return Guild;
+module.exports = function Gld (acclist) {
+  accounts = acclist;
+  return Guild;
 };
 
 class Guild {
-    members = [];
+
+  /**
+   *
+   * @type {Account[]}
+   * @memberof Guild
+   */
+  members = [];
     name = "";
     wins = 0;
     arcadeEXP = 0;
     gxp = 0;
     uuid = "";
     memberUUIDs = [];
+    membersStats = [];
     color = "";
     tag = "";
+    games = [];
+    createTime = 0;
     wins = 0;
     arcadeCoins = 0;
     combinedAP = 0;
@@ -34,6 +44,7 @@ class Guild {
     farmhuntWins = 0;
     miniWallsWins = 0;
     footballWins = 0;
+    hypixelSaysWins = 0;
     enderSpleefWins = 0;
     throwOutWins = 0;
     galaxyWarsWins = 0;
@@ -51,8 +62,8 @@ class Guild {
      * @param {string} uuid
      * @memberof Guild
      */
-    constructor(uuid) {
-        this.uuid = uuid;
+    constructor (uuid) {
+      this.uuid = uuid;
     }
 
     /**
@@ -60,24 +71,28 @@ class Guild {
      *
      * @memberof Guild
      */
-    async updateMemberData() {
-        let data = await this.getGuild();
-        this.name = data?.guild?.name ?? "INVALID-NAME";
-        this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
-        this.gxp = data?.guild?.exp ?? 0;
-        this.color = data?.guild?.tagColor ?? "GREY";
-        this.tag = data?.guild?.tag ?? "NONE";
+    async updateMemberData () {
+      const data = await this.getGuild();
+      this.name = data?.guild?.name ?? "INVALID-NAME";
+      this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
+      this.gxp = data?.guild?.exp ?? 0;
+      this.color = data?.guild?.tagColor ?? "GREY";
+      this.tag = data?.guild?.tag ?? "NONE";
+      this.games = data?.guild?.preferredGames ?? [ "ARCADE" ];
+      this.createTime = data?.guild?.created ?? 0;
 
-        let gmembers = data?.guild?.members ?? [];
-        for(let i = 0; i < gmembers.length; i++) {
-            // find a corrosponding account in my account list
-            let gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
-            // dont add empty accounts
-            if(gamer != undefined) {
-                this.memberUUIDs.push(gamer.uuid);
-                this.members.push(gamer);
-            }
+      const gmembers = data?.guild?.members ?? [];
+      for(let i = 0; i < gmembers.length; i += 1) {
+
+        // find a corrosponding account in my account list
+        const gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
+
+        // dont add empty accounts
+        if(gamer != undefined) {
+          this.memberUUIDs.push(gamer.uuid);
+          this.members.push(gamer);
         }
+      }
     }
 
     /**
@@ -86,8 +101,8 @@ class Guild {
      * @returns {object}
      * @memberof Guild
      */
-    async getGuild() {
-        return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
+    async getGuild () {
+      return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
     }
 
     /**
@@ -96,31 +111,50 @@ class Guild {
      * @returns {number}
      * @memberof Guild
      */
-    async updateWins() {
-        await this.updateMemberData();
-        for(let i = 0; i < this.members.length; i++) {
-            let member = this.members[i];
-            this.wins += member.wins;
-            this.arcadeCoins += member.arcadeCoins;
-            this.combinedAP += member.achievementPoints;
-            this.arcadeWins += member.combinedArcadeWins;
-            this.karma += numberify(member.karma);
-            this.ranksGifted += numberify(member.ranksGifted);
-            this.hitwWins += numberify(member.hitwWins);
-            this.farmhuntWins += numberify(member.farmhuntWins);
-            this.miniWallsWins += numberify(member.miniWallsWins);
-            this.footballWins += numberify(member.footballWins);
-            this.enderSpleefWins += numberify(member.enderSpleefWins);
-            this.throwOutWins += numberify(member.throwOutWins);
-            this.galaxyWarsWins += numberify(member.galaxyWarsWins);
-            this.dragonWarsWins += numberify(member.dragonWarsWins);
-            this.blockingDeadWins += numberify(member.blockingDeadWins);
-            this.hideAndSeekWins += numberify(member.hideAndSeekWins);
-            this.zombiesWins += numberify(member.zombiesWins);
-            this.pixelPaintersWins += numberify(member.pixelPaintersWins);
-            this.simWins += numberify(member.simTotal);
-        }
-        this.members = undefined;
-        return this.wins;
+    async updateWins () {
+      await this.updateMemberData();
+      this.updateMemberStats();
+
+      // TODO: Use this.members.forEach
+      for(let i = 0; i < this.members.length; i += 1) {
+        const member = this.members[i];
+        this.wins += member.wins;
+        this.arcadeCoins += member.arcadeCoins;
+        this.combinedAP += member.achievementPoints;
+        this.arcadeWins += member.combinedArcadeWins;
+        this.karma += numberify(member.karma);
+        this.ranksGifted += numberify(member.ranksGifted);
+        this.hitwWins += numberify(member.holeInTheWall.wins);
+        this.farmhuntWins += numberify(member.farmhunt.wins);
+        this.miniWallsWins += numberify(member.miniWalls.wins);
+        this.footballWins += numberify(member.football.wins);
+        this.enderSpleefWins += numberify(member.enderSpleef.wins);
+        this.throwOutWins += numberify(member.throwOut.wins);
+        this.galaxyWarsWins += numberify(member.galaxyWars.wins);
+        this.dragonWarsWins += numberify(member.dragonWars.wins);
+        this.bountyHuntersWins += numberify(member.bountyHunters.wins);
+        this.blockingDeadWins += numberify(member.blockingDead.wins);
+        this.hideAndSeekWins += numberify(member.hideAndSeek.wins);
+        this.hypixelSaysWins += numberify(member.hypixelSays.wins);
+        this.zombiesWins += numberify(member.zombies.wins_zombies);
+        this.pixelPaintersWins += numberify(member.pixelPainters.wins);
+        this.partyGamesWins += numberify(member.partyGames.wins);
+        this.simWins += numberify(member.seasonalWins.total);
+      }
+      delete this.members;
+      return this.wins;
+    }
+
+    updateMemberStats () {
+      this.members.forEach((member) => {
+        const obj = {};
+        obj.wins = member.combinedArcadeWins;
+        obj.rank = member.rank;
+        obj.name = member.name;
+        obj.uuid = member.uuid;
+        obj.online = member.isLoggedIn;
+        obj.plusColor = member.plusColor;
+        this.membersStats.push(obj);
+      }, this);
     }
 }

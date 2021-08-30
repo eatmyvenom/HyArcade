@@ -1,7 +1,7 @@
 const {
-    SelectMenuInteraction
+  SelectMenuInteraction
 } = require("discord.js");
-const BotUtils = require("../../BotUtils");
+const BotRuntime = require("../../BotRuntime");
 const ButtonResponse = require("../Buttons/ButtonResponse");
 const InteractionUtils = require("../InteractionUtils");
 const MenuGenerator = require("./MenuGenerator");
@@ -11,26 +11,30 @@ const MenuGenerator = require("./MenuGenerator");
  * @param {SelectMenuInteraction} interaction 
  * @returns {ButtonResponse}
  */
-module.exports = async function MenuParser(interaction) {
-    let data = interaction.customId.split(":");
-    let commandType = data[0];
-    switch(commandType) {
-    case "s": {
-        return await statsHandler(data[1], interaction.values[0]);
-    }
-    }
+module.exports = async function MenuParser (interaction) {
+  const data = interaction.customId.split(":");
+  const commandType = data[0];
+  switch(commandType) {
+  case "s": {
+    return await statsHandler(data[1], interaction.values[0], interaction);
+  }
+  }
 };
 
 /**
  * @param {string} accUUID
  * @param {string} game
+ * @param {SelectMenuInteraction} interaction
  * @returns {ButtonResponse}
  */
-async function statsHandler(accUUID, game) {
-    let accData = await InteractionUtils.accFromUUID(accUUID);
-    let statsRes = await BotUtils.getStats(accData, game);
-    let embed = statsRes.embed;
+async function statsHandler (accUUID, game, interaction) {
+  interaction.deferUpdate();
+  const accData = await InteractionUtils.accFromUUID(accUUID);
+  const statsRes = await BotRuntime.getStats(accData, game);
+  const {
+    embed
+  } = statsRes;
 
-    let mnu = await MenuGenerator.statsMenu(accUUID);
-    return new ButtonResponse("", [embed], mnu);
+  const mnu = await MenuGenerator.statsMenu(accUUID);
+  return new ButtonResponse("", [embed], mnu);
 }

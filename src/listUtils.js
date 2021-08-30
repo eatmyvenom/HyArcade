@@ -2,7 +2,7 @@ const utils = require("./utils");
 const config = require("./Config").fromJSON();
 const listDiffByProp = require("./utils/leaderboard/LBFromProp");
 const {
-    stringifyList
+  stringifyList
 } = require("./utils/leaderboard/ListUtils");
 const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
 const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
@@ -16,25 +16,25 @@ const TimSort = require("timsort");
  * @param {number} maxamnt the maximum index to reach
  * @returns {string} Formatted list
  */
-async function txtPlayerList(list, maxamnt) {
-    let str = "";
-    let len = maxamnt != undefined ? maxamnt : list.length;
-    for(let i = 0; i < len; i++) {
-        // don't print if player has 0 wins
-        if(list[i].wins < 1 && !config.printAllWins) continue;
+async function txtPlayerList (list, maxamnt) {
+  let str = "";
+  const len = maxamnt != undefined ? maxamnt : list.length;
+  for(let i = 0; i < len; i += 1) {
+    // don't print if player has 0 wins
+    if(list[i].wins < 1 && !config.printAllWins) continue;
 
-        // this hack is because js has no real string formatting and its
-        // not worth it to use wasm or node native for this
-        let num = (`000${i + 1}`).slice(-3);
+    // this hack is because js has no real string formatting and its
+    // not worth it to use wasm or node native for this
+    const num = (`000${i + 1}`).slice(-3);
 
-        let name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
-            0,
-            17
-        );
-        //         001) MonkeyCity17     : 5900
-        str += `${num}) ${name}: ${list[i].wins}\n`;
-    }
-    return str;
+    const name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
+      0,
+      17
+    );
+    //         001) MonkeyCity17     : 5900
+    str += `${num}) ${name}: ${list[i].wins}\n`;
+  }
+  return str;
 }
 
 /**
@@ -44,11 +44,11 @@ async function txtPlayerList(list, maxamnt) {
  * @param {number} maxamnt Max amount of players
  * @returns {object[]} Final list
  */
-async function listNormal(name, maxamnt) {
-    let thelist = await utils.readJSON(`${name}.json`);
-    TimSort.sort(thelist, utils.winsSorter);
-    thelist = thelist.slice(0, maxamnt);
-    return thelist;
+async function listNormal (name, maxamnt) {
+  let thelist = await utils.readJSON(`${name}.json`);
+  TimSort.sort(thelist, utils.winsSorter);
+  thelist = thelist.slice(0, maxamnt);
+  return thelist;
 }
 
 /**
@@ -59,8 +59,8 @@ async function listNormal(name, maxamnt) {
  * @param {number} maxamnt Maximum accounts
  * @returns {object[]} Final list
  */
-async function listDiff(name, timetype, maxamnt) {
-    return await listDiffByProp(name, "wins", timetype, maxamnt);
+async function listDiff (name, timetype, maxamnt) {
+  return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
 /**
@@ -70,9 +70,9 @@ async function listDiff(name, timetype, maxamnt) {
  * @param {number} maxamnt Maximum accounts
  * @returns {string} Stringified list
  */
-async function stringNormal(name, maxamnt) {
-    let list = await listNormal(name, maxamnt);
-    return await txtPlayerList(list);
+async function stringNormal (name, maxamnt) {
+  const list = await listNormal(name, maxamnt);
+  return await txtPlayerList(list);
 }
 
 /**
@@ -83,9 +83,9 @@ async function stringNormal(name, maxamnt) {
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringDiff(name, timetype, maxamnt) {
-    let list = await listDiff(name, timetype, maxamnt);
-    return await txtPlayerList(list, maxamnt);
+async function stringDiff (name, timetype, maxamnt) {
+  const list = await listDiff(name, timetype, maxamnt);
+  return await txtPlayerList(list, maxamnt);
 }
 
 /**
@@ -95,8 +95,8 @@ async function stringDiff(name, timetype, maxamnt) {
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringDaily(name, maxamnt) {
-    return await stringDiff(name, "day", maxamnt);
+async function stringDaily (name, maxamnt) {
+  return await stringDiff(name, "day", maxamnt);
 }
 
 /**
@@ -108,19 +108,15 @@ async function stringDaily(name, maxamnt) {
  * @param {number} startingIndex
  * @returns {string} Stringified list
  */
-async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
-    let list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
-    if(category == undefined) {
-        TimSort.sort(list, (b, a) => {
-            return (a[lbprop] ?? 0) - (b[lbprop] ?? 0);
-        });
-    } else {
-        TimSort.sort(list, (b, a) => {
-            return (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0);
-        });
-    }
+async function stringLBDiff (lbprop, maxamnt, timetype, category, startingIndex = 0) {
+  const list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
+  if(category == undefined) {
+    TimSort.sort(list, (b, a) => (a[lbprop] ?? 0) - (b[lbprop] ?? 0));
+  } else {
+    TimSort.sort(list, (b, a) => (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0));
+  }
 
-    return stringifyList(list, lbprop, category, maxamnt, startingIndex);
+  return stringifyList(list, lbprop, category, maxamnt, startingIndex);
 }
 
 /**
@@ -128,22 +124,22 @@ async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex =
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringLBDaily(lbprop, maxamnt) {
-    return await stringLBDiff(lbprop, maxamnt, "day");
+async function stringLBDaily (lbprop, maxamnt) {
+  return await stringLBDiff(lbprop, maxamnt, "day");
 }
 
 module.exports = {
-    listDiffByProp: listDiffByProp,
-    txtPlayerList: txtPlayerList,
-    listNormal: listNormal,
-    listDiff: listDiff,
-    stringNormal: stringNormal,
-    stringDiff: stringDiff,
-    stringDaily: stringDaily,
-    addAccounts: require("./datagen/addAccounts"),
-    stringLB: stringLB,
-    stringLBDaily: stringLBDaily,
-    stringLBDiff: stringLBDiff,
-    stringLBAdv: stringLBAdv,
-    stringDiffAdv: stringLBDiffAdv,
+  listDiffByProp,
+  txtPlayerList,
+  listNormal,
+  listDiff,
+  stringNormal,
+  stringDiff,
+  stringDaily,
+  addAccounts: require("./datagen/addAccounts"),
+  stringLB,
+  stringLBDaily,
+  stringLBDiff,
+  stringLBAdv,
+  stringDiffAdv: stringLBDiffAdv,
 };

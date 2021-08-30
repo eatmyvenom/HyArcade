@@ -15,24 +15,57 @@
     "rules": {
         "jsdoc/require-param-description": 0,
         "jsdoc/require-returns-description": 0,
-        "no-param-reassign": 2,
-        "prefer-template": "warn",
         "template-curly-spacing": ["error", "never"],
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
+        "space-before-blocks": ["error", "always"],
+        "no-loop-func": "error",
+        "space-before-function-paren": "error",
+        "prefer-arrow-callback": "error",
+        "arrow-spacing": "error",
+        "arrow-parens": "error",
+        "no-unneeded-ternary": "error",
+        "no-param-reassign": "error",
+        "no-case-declarations": "error",
+        "no-whitespace-before-property": "error",
+        "no-var":"error",
+        "object-shorthand": "error",
+        "quote-props": ["error", "as-needed"],
+        "array-callback-return":"error",
+        "prefer-rest-params":"error",
+        "class-methods-use-this":"error",
+        "no-duplicate-imports":"error",
+        "one-var": ["error", "never"],
+        "no-plusplus": "error",
+        "indent": ["error", 2],
+        "object-curly-spacing": ["warn", "always"],
+        "func-call-spacing":"error",
+        "no-restricted-globals":"error",
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "comma-spacing":"warn",
+        "key-spacing":"warn",
+        "space-infix-ops": "warn",
+        "no-multi-assign": "warn",
+        "dot-notation":"warn",
+        "object-curly-newline":"warn",
+        "prefer-const":"warn",
+        "newline-per-chained-call": "warn",
+        "arrow-body-style": "warn",
+        "no-else-return": "warn",
+        "prefer-template": "warn",
+        "prefer-destructuring": ["warn", {
+                "VariableDeclarator": {
+                    "array": false,
+                    "object": true
+                },
+                "AssignmentExpression": {
+                    "array": false,
+                    "object": false
+                }
+            },
+            {
+                "enforceForRenamedProperties": false
+            }
         ]
     }
 }

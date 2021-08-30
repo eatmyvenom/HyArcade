@@ -1,10 +1,10 @@
 const Command = require("../../classes/Command");
-const BotUtils = require("../BotUtils");
+const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("SetAvatar", ["%trusted%"], async (args) => {
-    let avatarURL = args[0];
-    await BotUtils.client.user.setAvatar(avatarURL);
-    return {
-        res: "Avatar updated!"
-    };
+  const avatarURL = args[0];
+  await BotRuntime.client.user.setAvatar(avatarURL);
+  return {
+    res: "Avatar updated!"
+  };
 });

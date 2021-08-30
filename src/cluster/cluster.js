@@ -2,7 +2,7 @@ const cfg = require("../Config").fromJSON();
 const task = require("./task");
 const logger = require("hyarcade-logger");
 const {
-    exec
+  exec
 } = require("child_process");
 
 /**
@@ -11,16 +11,16 @@ const {
  * @param {string} command
  * @returns {string}
  */
-function run(command) {
-    return new Promise((resolve, reject) => {
-        exec(command, (err, stdout, stderr) => {
-            resolve(stdout);
-            if(err) {
-                logger.err(stderr);
-                reject(err);
-            }
-        });
+function run (command) {
+  return new Promise((resolve, reject) => {
+    exec(command, (err, stdout, stderr) => {
+      resolve(stdout);
+      if(err) {
+        logger.err(stderr);
+        reject(err);
+      }
     });
+  });
 }
 
 class clusterClient {
@@ -58,10 +58,10 @@ class clusterClient {
      * @param {string} name
      * @memberof clusterClient
      */
-    constructor(name) {
-        this.name = name;
-        this.key = cfg.clusters[name].key;
-        this.tasks = cfg.clusters[name].tasks;
+    constructor (name) {
+      this.name = name;
+      this.key = cfg.clusters[name].key;
+      this.tasks = cfg.clusters[name].tasks;
     }
 
     /**
@@ -69,11 +69,11 @@ class clusterClient {
      *
      * @memberof clusterClient
      */
-    async doTasks() {
-        for(let t of this.tasks) {
-            logger.out(`Executing task ${t}`);
-            this.files.concat(await task[t]());
-        }
+    async doTasks () {
+      for(const t of this.tasks) {
+        logger.out(`Executing task ${t}`);
+        this.files.concat(await task[t]());
+      }
     }
 
     /**
@@ -81,13 +81,13 @@ class clusterClient {
      *
      * @memberof clusterClient
      */
-    async uploadData() {
-        if(this.name != "main") {
-            for(let file of this.files) {
-                // this requires rsync to be installed on both the server and client
-                await run(`rsync -a --rsh=ssh ${file} ${cfg.cluserTarget}/${file}`);
-            }
+    async uploadData () {
+      if(this.name != "main") {
+        for(const file of this.files) {
+          // this requires rsync to be installed on both the server and client
+          await run(`rsync -a --rsh=ssh ${file} ${cfg.cluserTarget}/${file}`);
         }
+      }
     }
 }
 

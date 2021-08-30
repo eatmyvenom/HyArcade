@@ -3,9 +3,9 @@ const Account = require("hyarcade-requests/types/Account");
 /** @type {Account[]} */
 let accounts = [];
 
-module.exports = function Plr(acclist) {
-    accounts = acclist;
-    return Player;
+module.exports = function Plr (acclist) {
+  accounts = acclist;
+  return Player;
 };
 
 class Player {
@@ -22,19 +22,19 @@ class Player {
      * @param {number} wins The preset amount of wins
      * @memberof Player
      */
-    constructor(name, altnames, wins) {
-        this.name = name;
-        this.altnames = altnames;
-        this.wins = wins;
+    constructor (name, altnames, wins) {
+      this.name = name;
+      this.altnames = altnames;
+      this.wins = wins;
 
-        for(let i = 0; i < altnames.length; i++) {
-            // if uuid then check uuid
-            if(altnames[i].length == 32) {
-                this.alts.push(accounts.find((acc) => acc.uuid?.toLowerCase() == altnames[i].toLowerCase()));
-            } else {
-                this.alts.push(accounts.find((acc) => acc.name?.toLowerCase() == altnames[i].toLowerCase()));
-            }
+      for(let i = 0; i < altnames.length; i += 1) {
+        // if uuid then check uuid
+        if(altnames[i].length == 32) {
+          this.alts.push(accounts.find((acc) => acc.uuid?.toLowerCase() == altnames[i].toLowerCase()));
+        } else {
+          this.alts.push(accounts.find((acc) => acc.name?.toLowerCase() == altnames[i].toLowerCase()));
         }
+      }
     }
 
     /**
@@ -43,15 +43,15 @@ class Player {
      * @returns {number}
      * @memberof Player
      */
-    async updateWins() {
-        let newWins = 0;
-        for(let i = 0; i < this.alts.length; i++) {
-            if(this.alts[i] == undefined) {
-                continue;
-            }
-            newWins += await this.alts[i].wins;
+    async updateWins () {
+      let newWins = 0;
+      for(let i = 0; i < this.alts.length; i += 1) {
+        if(this.alts[i] == undefined) {
+          continue;
         }
-        this.wins = newWins;
-        return newWins;
+        newWins += await this.alts[i].wins;
+      }
+      this.wins = newWins;
+      return newWins;
     }
 }

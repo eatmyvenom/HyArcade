@@ -1,10 +1,10 @@
 const {
-    getGuildFromPlayer
+  getGuildFromPlayer
 } = require("./hypixelApi");
 const {
-    stringNormal,
-    stringDaily,
-    addAccounts
+  stringNormal,
+  stringDaily,
+  addAccounts
 } = require("./listUtils");
 const utils = require("./utils");
 const mojangRequest = require("./request/mojangRequest");
@@ -15,116 +15,120 @@ const webRequest = require("./request/webRequest");
 const Runtime = require("./Runtime");
 const process = require("process");
 const args = process.argv;
-const logger = utils.logger;
+const {
+  logger
+} = utils;
 
 /**
  * Add a new account to the acclist
  *
  */
-async function newAcc() {
-    let category = args[args.length - 1];
-    let nameArr = args.slice(3, -1);
-    await addAccounts(category, nameArr);
+async function newAcc () {
+  const category = args[args.length - 1];
+  const nameArr = args.slice(3, -1);
+  await addAccounts(category, nameArr);
 }
 
 /**
  * @param {object} database
  */
-async function mNewAcc(database) {
-    let player = args[3];
-    let uuid = player;
-    if(player.length < 16) {
-        uuid = await mojangRequest.getUUID(player);
-    }
+async function mNewAcc (database) {
+  const player = args[3];
+  let uuid = player;
+  if(player.length < 16) {
+    uuid = await mojangRequest.getUUID(player);
+  }
 
-    let acc = new Account(player, 0, uuid);
-    await acc.updateData();
-    await AccountCreator(database, acc);
+  const acc = new Account(player, 0, uuid);
+  await acc.updateData();
+  await AccountCreator(database, acc);
 }
 
 /**
  *
  */
-async function linkDiscord() {
-    let player = args[3];
-    let discord = args[4];
-    let uuid = player;
-    if(player.length < 16) {
-        uuid = await mojangRequest.getUUID(player);
-    }
-    let disclist = await utils.readJSON("./disclist.json");
-    disclist[discord] = uuid;
-    await utils.writeJSON("./disclist.json", disclist);
+async function linkDiscord () {
+  const player = args[3];
+  const discord = args[4];
+  let uuid = player;
+  if(player.length < 16) {
+    uuid = await mojangRequest.getUUID(player);
+  }
+  const disclist = await utils.readJSON("./disclist.json");
+  disclist[discord] = uuid;
+  await utils.writeJSON("./disclist.json", disclist);
 }
 
 /**
  * Move an account to a different category in the acclist
  *
  */
-async function moveAcc() {
-    let oldName = args[3];
-    let oldCategory = args[4];
-    let newCategory = args[5];
-    let acclist = await utils.readJSON("../acclist.json");
-    let oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
+async function moveAcc () {
+  const oldName = args[3];
+  const oldCategory = args[4];
+  const newCategory = args[5];
+  const acclist = await utils.readJSON("../acclist.json");
+  const oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
 
-    if(oldVer) {
-        acclist[newCategory].push(oldVer);
-        acclist[oldCategory][oldName] = undefined;
-        utils.writeJSON("./acclist.json", acclist);
-    } else {
-        logger.err(`Couldn't find old version of ${oldName}`);
-    }
+  if(oldVer) {
+    acclist[newCategory].push(oldVer);
+    acclist[oldCategory][oldName] = undefined;
+    utils.writeJSON("./acclist.json", acclist);
+  } else {
+    logger.err(`Couldn't find old version of ${oldName}`);
+  }
 }
 
 /**
  * Create a new player with the specified accounts
  *
  */
-async function newPlayer() {
-    let name = args[3];
-    let alts = args.slice(4);
+async function newPlayer () {
+  const name = args[3];
+  const alts = args.slice(4);
 
-    // construct object
-    let playerObj = {
-        name: name,
-        accs: alts
-    };
+  // construct object
+  const playerObj = {
+    name,
+    accs: alts
+  };
 
-    // add object to list
-    let plrlist = await utils.readJSON("../playerlist.json");
-    plrlist.push(playerObj);
+  // add object to list
+  const plrlist = await utils.readJSON("../playerlist.json");
+  plrlist.push(playerObj);
 
-    // write new list
-    await utils.writeJSON("./playerlist.json", plrlist);
-    logger.out(`Player "${name}" has been added with ${alts.length} alts.`);
+  // write new list
+  await utils.writeJSON("./playerlist.json", plrlist);
+  logger.out(`Player "${name}" has been added with ${alts.length} alts.`);
 }
 
 /**
  * Create a new guild from the guild a player is in
  *
  */
-async function newGuild() {
-    let playerUUID = args[3];
+async function newGuild () {
+  const playerUUID = args[3];
 
-    // get data from hypixel
-    let gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
+  // get data from hypixel
+  const gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
 
-    // create the actual guild object
-    let id = gldInfo.guild._id;
-    let name = gldInfo.guild.name;
-    let gldObj = {
-        id: id,
-        name: name
-    };
+  // create the actual guild object
+  const id = gldInfo.guild._id;
+  const {
+    name
+  } = gldInfo.guild;
+  const gldObj = {
+    id,
+    name
+  };
 
-    // add object to list
-    let gldLst = await utils.readJSON("../guildlist.json");
-    gldLst.push(gldObj);
+  // add object to list
+  const gldLst = await utils.readJSON("../guildlist.json");
+  gldLst.push(gldObj);
 
-    // write new list
-    await utils.writeJSON("./guildlist.json", gldLst);
-    logger.out(`Guild "${name}" has been added successfully.`);
+  // write new list
+  await utils.writeJSON("./guildlist.json", gldLst);
+  logger.out(`Guild "${name}" has been added successfully.`);
 }
 
 /**
@@ -132,8 +136,8 @@ async function newGuild() {
  *
  * @param {string} name
  */
-async function logNormal(name) {
-    logger.out(await stringNormal(name));
+async function logNormal (name) {
+  logger.out(await stringNormal(name));
 }
 
 /**
@@ -141,30 +145,30 @@ async function logNormal(name) {
  *
  * @param {string} name
  */
-async function logDaily(name) {
-    logger.out(await stringDaily(name));
+async function logDaily (name) {
+  logger.out(await stringDaily(name));
 }
 
 /**
  * Check for any name changes
  *
  */
-async function checkNames() {
-    let acclist = await utils.readJSON("./acclist.json");
-    let realAccs = await utils.readJSON("./accounts.json");
+async function checkNames () {
+  const acclist = await utils.readJSON("./acclist.json");
+  const realAccs = await utils.readJSON("./accounts.json");
 
-    for(let list in acclist) {
-        for(let acc of acclist[list]) {
-            let real = realAccs.find((a) => a.uuid == acc.uuid);
-            if(real != undefined && acc.name != real.name) {
-                logger.out(`${acc.name} -> ${real.name}`);
-                acc.name = real.name;
-            }
-        }
+  for(const list in acclist) {
+    for(const acc of acclist[list]) {
+      const real = realAccs.find((a) => a.uuid == acc.uuid);
+      if(real != undefined && acc.name != real.name) {
+        logger.out(`${acc.name} -> ${real.name}`);
+        acc.name = real.name;
+      }
     }
+  }
 
-    await utils.writeJSON("./acclist.json", acclist);
-    logger.out("\nName check complete");
+  await utils.writeJSON("./acclist.json", acclist);
+  logger.out("\nName check complete");
 }
 
 /**
@@ -172,11 +176,11 @@ async function checkNames() {
  *
  * @param {string[]} args
  */
-async function log(args) {
-    let logName = args[3];
-    let str = await stringNormal(logName);
+async function log (args) {
+  const logName = args[3];
+  const str = await stringNormal(logName);
 
-    logger.out(str);
+  logger.out(str);
 }
 
 /**
@@ -184,11 +188,11 @@ async function log(args) {
  *
  * @param {string[]} args
  */
-async function logD(args) {
-    let logName = args[3];
-    let str = await stringDaily(logName);
+async function logD (args) {
+  const logName = args[3];
+  const str = await stringDaily(logName);
 
-    logger.out(str);
+  logger.out(str);
 }
 
 /**
@@ -196,72 +200,72 @@ async function logD(args) {
  *
  * @param {string[]} args
  */
-async function getUUIDCli(args) {
-    let name = args[3];
-    let uuid = await mojangRequest.getUUIDRaw(name);
-    logger.out(`${name}'s uuid is ${uuid}`);
+async function getUUIDCli (args) {
+  const name = args[3];
+  const uuid = await mojangRequest.getUUIDRaw(name);
+  logger.out(`${name}'s uuid is ${uuid}`);
 }
 
 /**
  * @param {string[]} args
  */
-async function addGuildMembers(args) {
-    let uuid = args[3];
-    await dataGeneration.addGuild(uuid);
+async function addGuildMembers (args) {
+  const uuid = args[3];
+  await dataGeneration.addGuild(uuid);
 }
 
 /**
  * @param {string[]} args
  */
-async function addGIDMembers(args) {
-    let uuid = args[3];
-    await dataGeneration.addGuildID(uuid);
+async function addGIDMembers (args) {
+  const uuid = args[3];
+  await dataGeneration.addGuildID(uuid);
 }
 
 /**
  * @returns {object}
  */
-async function getServerStatus() {
-    let hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
-    let hyStatus = JSON.parse(hyStatusRaw.data);
-    let mojangStatusRaw = await webRequest("https://status.mojang.com/check");
-    let mojangStatus = JSON.parse(mojangStatusRaw.data);
-    let runtime = Runtime.fromJSON();
-    let mwBot = runtime.mwHeartBeat;
-    let arcadeBot = runtime.undefinedHeartBeat;
-    let marcadeBot = runtime.miniHeartBeat;
-    let interactions = runtime.slashHeartBeat;
-    let database = runtime.dbERROR;
+async function getServerStatus () {
+  const hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
+  const hyStatus = JSON.parse(hyStatusRaw.data);
+  const mojangStatusRaw = await webRequest("https://status.mojang.com/check");
+  const mojangStatus = JSON.parse(mojangStatusRaw.data);
+  const runtime = Runtime.fromJSON();
+  const mwBot = runtime.mwHeartBeat;
+  const arcadeBot = runtime.undefinedHeartBeat;
+  const marcadeBot = runtime.miniHeartBeat;
+  const interactions = runtime.slashHeartBeat;
+  const database = runtime.dbERROR;
 
-    let obj = {
-        Hypixel: hyStatus.status.indicator,
-        MSession: mojangStatus[1]["session.minecraft.net"],
-        MAcc: mojangStatus[2]["account.mojang.com"],
-        MAuth: mojangStatus[3]["authserver.mojang.com"],
-        mw: Date.now() - mwBot < 900000,
-        arc: Date.now() - arcadeBot < 900000,
-        marc: Date.now() - marcadeBot < 900000,
-        slash: Date.now() - interactions < 900000,
-        database: !database,
-    };
-    await utils.writeJSON("serverStatus.json", obj);
-    return obj;
+  const obj = {
+    Hypixel: hyStatus.status.indicator,
+    MSession: mojangStatus[1]["session.minecraft.net"],
+    MAcc: mojangStatus[2]["account.mojang.com"],
+    MAuth: mojangStatus[3]["authserver.mojang.com"],
+    mw: Date.now() - mwBot < 900000,
+    arc: Date.now() - arcadeBot < 900000,
+    marc: Date.now() - marcadeBot < 900000,
+    slash: Date.now() - interactions < 900000,
+    database: !database,
+  };
+  await utils.writeJSON("serverStatus.json", obj);
+  return obj;
 }
 
 module.exports = {
-    newAcc: newAcc,
-    newGuild: newGuild,
-    newPlayer: newPlayer,
-    logNormal: logNormal,
-    logDaily: logDaily,
-    log: log,
-    logD: logD,
-    checkNames: checkNames,
-    addGuildMembers: addGuildMembers,
-    addGIDMembers: addGIDMembers,
-    getUUID: getUUIDCli,
-    moveAcc: moveAcc,
-    linkDiscord: linkDiscord,
-    mNewAcc: mNewAcc,
-    getServerStatus: getServerStatus,
+  newAcc,
+  newGuild,
+  newPlayer,
+  logNormal,
+  logDaily,
+  log,
+  logD,
+  checkNames,
+  addGuildMembers,
+  addGIDMembers,
+  getUUID: getUUIDCli,
+  moveAcc,
+  linkDiscord,
+  mNewAcc,
+  getServerStatus,
 };

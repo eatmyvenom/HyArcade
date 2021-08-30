@@ -19,7 +19,8 @@
     "license": "MPL-2.0",
     "dependencies": {
         "@babel/eslint-parser": "^7.14.7",
-        "bson": "^1.1.6",
+        "bson": "^4.4.1",
+        "bson-ext": "^4.0.0",
         "canvas": "^2.8.0",
         "compression": "^1.7.4",
         "discord.js": "github:discordjs/discord.js",
@@ -32,6 +33,7 @@
         "js-beautify": "^1.14.0",
         "mongo": "^0.1.0",
         "node-fetch": "^2.6.1",
+        "nodejs": "^0.0.0",
         "timsort": "^0.3.0"
     },
     "devDependencies": {
