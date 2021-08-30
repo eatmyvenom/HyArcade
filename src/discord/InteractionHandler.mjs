@@ -186,7 +186,7 @@ async function registerAll (client) {
       if(BotRuntime.botMode != "test") {
         await g.commands.set([]);
       } else {
-        // await g.commands.set(cmdarr);
+        await g.commands.set(cmdarr);
       }
     } catch (e) {
       Logger.error("Couldn't change guild slash commands!");
