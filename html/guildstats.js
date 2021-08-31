@@ -44,6 +44,15 @@ function formatNumber (n) {
  * 
  * @param {object} guild 
  */
+function formatTitle (guild) {
+  const titleEle = document.querySelector("header");
+  titleEle.innerHTML = `<p>${guild.name}</p><div class="tag" ${guild.color}>${guild.tag}</div>`;
+}
+
+/**
+ * 
+ * @param {object} guild 
+ */
 function formatWins (guild) {
   const memberEle = document.querySelector(".members");
   const members = guild.membersStats;
@@ -107,6 +116,7 @@ function updateData () {
     v.json().then((v) => {
       const guild = v.find((g) => g.tag.toLowerCase() == tag.toLowerCase());
 
+      formatTitle(guild);
       formatStats(guild);
       formatGames(guild);
       formatWins(guild);
