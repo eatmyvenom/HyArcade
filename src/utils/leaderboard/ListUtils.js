@@ -38,7 +38,7 @@ exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt,
 
     propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
     // don't print if player has 0 wins
-    if((propVal | 0) < 1 && !cfg.printAllWins) continue;
+    if((propVal | 0) < 0.0001 && !cfg.printAllWins) continue;
 
     const {
       name
