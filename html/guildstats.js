@@ -19,19 +19,13 @@ function formatRank (rank, plusColor) {
   let betterRank = rank.replace(/_PLUS/g, "+");
 
   if(betterRank == "MVP++") {
-    betterRank = `<b class="gold">${betterRank}</b>`;
+    betterRank = `<b class="gold">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="gold">]</b>`;
   } else if(betterRank == "MVP+" || betterRank == "MVP") {
-    betterRank = `<b class="aqua">${betterRank}</b>`;
+    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]</b></b>`;
   } else if(betterRank == "VIP+" || betterRank == "VIP") {
-    betterRank = `<b class="green">${betterRank}</b>`;
+    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]</b></b>`;
   } else {
     betterRank = "";
-  }
-
-  betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`);
-
-  if(betterRank != "") {
-    return `[${betterRank}]`;
   }
 
   return "";
