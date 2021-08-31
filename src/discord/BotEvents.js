@@ -97,16 +97,6 @@ module.exports = class BotEvents {
     await SetPresence(BotRuntime.client, mode);
   }
 
-  static async tick () {
-    const runtime = Runtime.fromJSON();
-    if(runtime.needRoleupdate && BotRuntime.botMode == undefined) {
-      await roleHandler(BotRuntime.client);
-      logger.out("Roles updated!");
-      runtime.needRoleupdate = false;
-      await runtime.save();
-    }
-  }
-
   static async heartBeat () {
     const runtime = Runtime.fromJSON();
     runtime[`${BotRuntime.botMode}HeartBeat`] = Date.now();
@@ -118,6 +108,13 @@ module.exports = class BotEvents {
         NameUpdater = await import("./NameUpdater.mjs"); 
       }
       await NameUpdater(BotRuntime.client);
+    }
+
+    if(runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
+      await roleHandler(BotRuntime.client);
+      logger.out("Roles updated!");
+      runtime.needRoleupdate = false;
+      await runtime.save();
     }
   }
 

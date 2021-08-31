@@ -63,8 +63,6 @@ module.exports = function doBot () {
       logger.debug("Registering message event");
       const messageHandler = await import("./messageHandler.mjs");
       client.on("messageCreate", messageHandler.default);
-  
-      setInterval(BotEvents.tick, 45000);
     }
 
   });
