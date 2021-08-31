@@ -73,7 +73,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
 
   res = stringifyList(res, prop, category, limit, start);
 
-  res = res != "" ? res : "Nobody has won.";
+  res = res != "" ? res : "Nobody did this yet...";
   const embed = new MessageEmbed()
     .setTitle(time)
     .setColor(0x00cc66)
