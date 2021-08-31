@@ -38,34 +38,48 @@ async function generateLeaderboard (fileCache, stat, time) {
     });
   }
 
+  accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
+
   switch(stat) {
   case "wins" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.wins ?? 0) > 0);
     break;
   }
 
   case "kills" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.kills ?? 0) - (a?.miniWalls?.kills ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
     break;
   }
 
   case "deaths" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.deaths ?? 0) - (a?.miniWalls?.deaths ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.deaths ?? 0) > 0);
     break;
   }
 
   case "witherDamage" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherDamage ?? 0) - (a?.miniWalls?.witherDamage ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.witherDamage ?? 0) > 0);
     break;
   }
 
   case "witherKills" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherKills ?? 0) - (a?.miniWalls?.witherKills ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.witherKills ?? 0) > 0);
     break;
   }
 
   case "finalKills" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.finalKills ?? 0) - (a?.miniWalls?.finalKills ?? 0));
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.finalKills ?? 0) > 0);
     break;
   }
 
@@ -77,10 +91,11 @@ async function generateLeaderboard (fileCache, stat, time) {
       accounts = accounts.slice(0, 25);
     }
     accounts.map((acc) => {
-      acc.miniWalls.ratio = (acc.miniWalls.kills + acc.miniWalls.finalKills) / acc.miniWalls.deaths;
+      acc.miniWalls.ratio = ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
       return acc; 
     });
 
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
@@ -97,6 +112,8 @@ async function generateLeaderboard (fileCache, stat, time) {
       acc.miniWalls.ratio = acc.miniWalls.kills / acc.miniWalls.deaths;
       return acc; 
     });
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
 
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
@@ -115,6 +132,8 @@ async function generateLeaderboard (fileCache, stat, time) {
       return acc; 
     });
 
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
+
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
     break;
   }
@@ -130,6 +149,8 @@ async function generateLeaderboard (fileCache, stat, time) {
       acc.miniWalls.ratio = acc.miniWalls.witherDamage / acc.miniWalls.deaths;
       return acc; 
     });
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
 
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
@@ -148,6 +169,8 @@ async function generateLeaderboard (fileCache, stat, time) {
       return acc; 
     });
 
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
+
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
     break;
@@ -164,6 +187,8 @@ async function generateLeaderboard (fileCache, stat, time) {
       acc.miniWalls.ratio = acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot;
       return acc; 
     });
+
+    accounts = accounts.filter((acc) => (acc?.miniWalls?.ratio ?? 0) > 0);
 
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
