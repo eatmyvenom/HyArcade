@@ -146,7 +146,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "kfdr":
   case "killdeath": {
     gameName = "Kills+Finals/Deaths";
-    const lb = await getLB("kb", timetype, limit, "miniWalls");
+    const lb = await getLB("kd", timetype, limit, "miniWalls");
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
