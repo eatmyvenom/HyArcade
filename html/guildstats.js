@@ -21,9 +21,9 @@ function formatRank (rank, plusColor) {
   if(betterRank == "MVP++") {
     betterRank = `<b class="gold">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="gold">]</b>`;
   } else if(betterRank == "MVP+" || betterRank == "MVP") {
-    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]</b></b>`;
+    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]</b>`;
   } else if(betterRank == "VIP+" || betterRank == "VIP") {
-    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]</b></b>`;
+    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]</b>`;
   } else {
     betterRank = "";
   }
@@ -58,7 +58,7 @@ function formatWins (guild) {
   const members = guild.membersStats;
 
   members.forEach((m) => {
-    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "")} ${m.name}</b><i>Wins ${formatNumber(m?.wins ?? 0)}</i></p>`;
+    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "GOLD")} ${m.name}</b><i>Wins ${formatNumber(m?.wins ?? 0)}</i></p>`;
   });
 }
 
