@@ -36,21 +36,21 @@ header > .tag, header > p {
 }
 
 .black { color : "#000000" }
-.dark_blue { color :"#0000AA" }
+.dark_blue { color :"#0000aa" }
 .dark_green { color :"#00AA00" }
-.dark_aqua { color :"#00AAAA" }
-.dark_red { color :"#AA0000" }
-.dark_purple { color :"#AA00AA" }
-.gold { color :"#FFAA00" }
-.gray { color :"#AAAAAA" }
+.dark_aqua { color :"#00aaaa" }
+.dark_red { color :"#aa0000" }
+.dark_purple { color :"#aa00aa" }
+.gold { color :"#ffaa00" }
+.gray { color :"#aaaaaa" }
 .dark_gray { color :"#555555" }
-.blue { color :"#5555FF" }
-.green { color :"#55FF55" }
-.aqua { color :"#55FFFF" }
-.red { color :"#FF5555" }
-.light_purple { color :"#FF55FF" }
-.yellow { color :"#FFFF55" }
-.white { color :"#FFFFFF" }
+.blue { color :"#5555ff" }
+.green { color :"#55ff55" }
+.aqua { color :"#55ffff" }
+.red { color :"#f5555" }
+.light_purple { color :"#ff55ff" }
+.yellow { color :"#ffff55" }
+.white { color :"#ffffff" }
 
 header > .tag::before {
     content: "[";
