@@ -41,17 +41,17 @@ module.exports = async (req, res, fileCache) => {
         const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
         if(category == null) {
           a[lbprop] = numberify(n[lbprop] - a[lbprop]);
-          a.name = n.name;
+          a.name = n?.name ?? "INVALID-NAME";
           newAcclist.push(a);
         } else {
           if(a[category] != undefined) {
             a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
-            a.name = n.name;
+            a.name = n?.name ?? "INVALID-NAME";
             newAcclist.push(a);
           } else {
             a[category] = {};
             a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
-            a.name = n.name;
+            a.name = n?.name ?? "INVALID-NAME";
             newAcclist.push(a);
           }
         }
