@@ -15,7 +15,7 @@ async function generateLeaderboard (fileCache, stat, time) {
   let accounts = new AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
   accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
-  accounts = accounts.filter((a) => fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
+  accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
 
   if(time != undefined) {
 
