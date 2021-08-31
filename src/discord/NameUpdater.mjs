@@ -2,7 +2,7 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 import logger from "hyarcade-logger";
-import BotRuntime from "./BotRuntime";
+import BotRuntime from "./BotRuntime.js";
 
 const { Client } = require("discord.js");
 
