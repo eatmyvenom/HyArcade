@@ -35,22 +35,22 @@ header > .tag, header > p {
     width: 49%;
 }
 
-.black { color : "#000000" }
-.dark_blue { color :"#0000aa" }
-.dark_green { color :"#00AA00" }
-.dark_aqua { color :"#00aaaa" }
-.dark_red { color :"#aa0000" }
-.dark_purple { color :"#aa00aa" }
-.gold { color :"#ffaa00" }
-.gray { color :"#aaaaaa" }
-.dark_gray { color :"#555555" }
-.blue { color :"#5555ff" }
-.green { color :"#55ff55" }
-.aqua { color :"#55ffff" }
-.red { color :"#f5555" }
-.light_purple { color :"#ff55ff" }
-.yellow { color :"#ffff55" }
-.white { color :"#ffffff" }
+.black { color : #000000 }
+.dark_blue { color :#0000aa }
+.dark_green { color :#00AA00 }
+.dark_aqua { color :#00aaaa }
+.dark_red { color :#aa0000 }
+.dark_purple { color :aa00aa }
+.gold { color :#ffaa00 }
+.gray { color :#aaaaaa }
+.dark_gray { color :#555555 }
+.blue { color :#5555ff }
+.green { color :#55ff55 }
+.aqua { color :#55ffff }
+.red { color :#ff5555 }
+.light_purple { color :#ff55ff }
+.yellow { color :#ffff55 }
+.white { color :#ffffff }
 
 header > .tag::before {
     content: "[";
