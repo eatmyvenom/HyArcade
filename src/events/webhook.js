@@ -316,7 +316,7 @@ async function genHSMEmbed () {
  * @returns {number}
  */
 function wComp (b, a) {
-  return (a?.miniWallsWins ?? 0) - (b?.miniWallsWins ?? 0);
+  return (a?.miniWalls.wins ?? 0) - (b?.miniWalls.wins ?? 0);
 }
 
 /**
