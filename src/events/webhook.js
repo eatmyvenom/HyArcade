@@ -407,9 +407,9 @@ async function getLB (prop, timetype, limit) {
   let transformer = hackerTransformer;
   let parser = null;
   switch(prop) {
-  case "miniWallsWins": {
+  case "wins": {
     comparitor = wComp;
-    parser = (a) => a.miniWallsWins;
+    parser = (a) => a.miniWalls.wins;
     break;
   }
 
@@ -619,7 +619,7 @@ async function sendMW () {
     .setDescription(str)
     .setColor(0xc60532);
 
-  const wins = await getMW("miniWallsWins", 25);
+  const wins = await getMW("wins", 25);
   const kills = await getMW("kills", 10);
   const finals = await getMW("finalKills", 10);
   const witherdmg = await getMW("witherDamage", 10);
