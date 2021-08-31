@@ -25,14 +25,14 @@ async function generateLeaderboard (fileCache, stat, time) {
     accounts.map((acc) => {
       const timeAcc = timedAccounts.find((a) => a.uuid == acc.uuid);
 
-      acc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? 0;
-      acc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? 0;
-      acc.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? 0;
-      acc.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? 0;
-      acc.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? 0;
-      acc.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? 0;
-      acc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? 0;
-      acc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? 0;
+      acc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? acc.miniWalls.wins;
+      acc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? acc.miniWalls.arrowsHit;
+      acc.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? acc.miniWalls.arrowsShot;
+      acc.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? acc.miniWalls.deaths;
+      acc.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? acc.miniWalls.finalKills;
+      acc.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? acc.miniWalls.kills;
+      acc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? acc.miniWalls.witherDamage;
+      acc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? acc.miniWalls.witherKills;
 
       return acc;
     });
