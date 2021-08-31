@@ -46,7 +46,7 @@ function formatNumber (n) {
  */
 function formatTitle (guild) {
   const titleEle = document.querySelector("header");
-  titleEle.innerHTML = `<p>${guild.name}</p> <div class="tag ${guild.color}">${guild.tag}</div>`;
+  titleEle.innerHTML = `<p>${guild.name}</p> <div class="tag ${guild.color.toLowerCase()}">${guild.tag}</div>`;
 }
 
 /**
