@@ -35,10 +35,10 @@ header > .tag, header > p {
     width: 49%;
 }
 
-[black] { color : "#000000" }
-[dark_blue] { color :"#0000AA" }
-[dark_green] { color :"#00AA00" }
-[dark_aqua] { color :"#00AAAA" }
+[black=""] { color : "#000000" }
+[dark_blue=""] { color :"#0000AA" }
+[dark_green=""] { color :"#00AA00" }
+[dark_aqua=""] { color :"#00AAAA" }
 [dark_red] { color :"#AA0000" }
 [dark_purple] { color :"#AA00AA" }
 [gold] { color :"#FFAA00" }
