@@ -863,11 +863,11 @@ async function getDaily (element, timetype) {
 
   if (idArr.length > 1) {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i][id[0]][id[1]], lb[i].uuid);
+      text += formatLine(i + 1, lb[i].name, lb[i]?.[idArr[0]]?.[idArr[1]], lb[i].uuid);
     }
   } else {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i][id[0]], lb[i].uuid);
+      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]], lb[i].uuid);
     }
   }
 
