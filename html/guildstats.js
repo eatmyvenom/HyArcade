@@ -49,7 +49,7 @@ function formatWins (guild) {
   const members = guild.membersStats;
 
   members.forEach((m) => {
-    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m.rank, m.plusColor)} ${m.name}</b><i>Wins ${formatNumber(m.wins)}</i></p>`;
+    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "")} ${m.name}</b><i>Wins ${formatNumber(m.wins)}</i></p>`;
   });
 }
 
