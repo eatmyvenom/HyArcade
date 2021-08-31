@@ -16,7 +16,7 @@ function playerHead (uuid) {
  * @returns {string}
  */
 function formatRank (rank, plusColor) {
-  let betterRank = rank.replace(/_PLUS/g, `<b ${plusColor}>+</b>`);
+  let betterRank = rank.replace(/_PLUS/g, "+");
 
   if(betterRank == "MVP++") {
     betterRank = `<b gold>${betterRank}</b>`;
@@ -27,6 +27,8 @@ function formatRank (rank, plusColor) {
   } else {
     betterRank = "";
   }
+
+  betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`);
 
   return betterRank;
 }
