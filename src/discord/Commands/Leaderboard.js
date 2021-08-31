@@ -1,5 +1,4 @@
 const {
-  MessageEmbed,
   Message,
   CommandInteraction,
   ButtonInteraction
@@ -532,9 +531,7 @@ async function hander (args, rawMsg, interaction) {
       }
 
       gid = undefined;
-      res = new MessageEmbed().setTitle(timetype)
-        .setColor(0x00cc66)
-        .setDescription(lb);
+      res = lb;
     } else {
       return {
         res: "",
