@@ -30,7 +30,11 @@ function formatRank (rank, plusColor) {
 
   betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`);
 
-  return `[${betterRank}]`;
+  if(betterRank != "") {
+    return `[${betterRank}]`;
+  }
+
+  return "";
 }
 
 /**
