@@ -49,7 +49,7 @@ function formatWins (guild) {
   const members = guild.membersStats;
 
   members.forEach((m) => {
-    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "")} ${m.name}</b><i>Wins ${formatNumber(m.wins)}</i></p>`;
+    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "")} ${m.name}</b><i>Wins ${formatNumber(m?.wins ?? 0)}</i></p>`;
   });
 }
 
@@ -78,7 +78,7 @@ function formatGames (guild) {
     ["Seasonal games", guild.simWins]
   ];
 
-  gamesArr.sort((a, b) => a[1] - b[1]);
+  gamesArr.sort((a, b) => b[1] - a[1]);
 
   gamesArr.forEach((g) => {
     gamesEle.innerHTML += `<p><b>${g[0]}</b><i>${formatNumber(g[1])}</i></p><br>`;

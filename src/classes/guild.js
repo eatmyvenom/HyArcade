@@ -133,12 +133,12 @@ class Guild {
         this.galaxyWarsWins += numberify(member.galaxyWars.wins);
         this.dragonWarsWins += numberify(member.dragonWars.wins);
         this.bountyHuntersWins += numberify(member.bountyHunters.wins);
-        this.blockingDeadWins += numberify(member.blockingDead.wins);
-        this.hideAndSeekWins += numberify(member.hideAndSeek.wins);
-        this.hypixelSaysWins += numberify(member.hypixelSays.wins);
-        this.zombiesWins += numberify(member.zombies.wins_zombies);
-        this.pixelPaintersWins += numberify(member.pixelPainters.wins);
-        this.partyGamesWins += numberify(member.partyGames.wins);
+        this.blockingDeadWins += numberify(member.blockingDead.wins ?? 0);
+        this.hideAndSeekWins += numberify(member.hideAndSeek.wins ?? 0);
+        this.hypixelSaysWins += numberify(member.hypixelSays.wins ?? 0);
+        this.zombiesWins += numberify(member.zombies.wins_zombies ?? 0);
+        this.pixelPaintersWins += numberify(member.pixelPainters.wins ?? 0);
+        this.partyGamesWins += numberify(member?.partyGames?.wins ?? 0);
         this.simWins += numberify(member.seasonalWins.total);
       }
       delete this.members;
