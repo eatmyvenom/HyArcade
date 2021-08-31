@@ -45,12 +45,12 @@ module.exports = async (req, res, fileCache) => {
           newAcclist.push(a);
         } else {
           if(a[category] != undefined) {
-            a[category][lbprop] = numberify(n[category]?.[lbprop]) - numberify(a[category]?.[lbprop]);
+            a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
             a.name = n.name;
             newAcclist.push(a);
           } else {
             a[category] = {};
-            a[category][lbprop] = numberify(n[category]?.[lbprop]) - numberify(a[category]?.[lbprop]);
+            a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
             a.name = n.name;
             newAcclist.push(a);
           }
