@@ -28,7 +28,7 @@ function formatRank (rank, plusColor) {
     betterRank = "";
   }
 
-  return "";
+  return betterRank;
 }
 
 /**
