@@ -631,7 +631,7 @@ async function sendMW () {
   finals.setTitle("Lifetime Finals");
   witherdmg.setTitle("Lifetime Wither Damage");
   witherkills.setTitle("Lifetime Wither Kills");
-  const hook = new Discord.WebhookClient(config.otherHooks.MW.id, config.otherHooks.MW.token);
+  const hook = new Discord.WebhookClient({ id: config.otherHooks.MW.id, token: config.otherHooks.MW.token });
   try {
     await hook.deleteMessage(mwMsg);
   } catch (e) {
