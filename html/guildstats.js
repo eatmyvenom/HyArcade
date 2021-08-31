@@ -1,4 +1,4 @@
-const guildURL = "";
+const guildURL = "https://cdn.hyarcade.xyz/db?path=guilds";
 
 /**
  * 
