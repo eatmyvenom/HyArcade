@@ -12,8 +12,6 @@ const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
 
-let NameUpdater;
-
 module.exports = class BotEvents {
   static async rateLimit (rlInfo) {
     const {
@@ -102,13 +100,6 @@ module.exports = class BotEvents {
     runtime[`${BotRuntime.botMode}HeartBeat`] = Date.now();
     await runtime.save();
     logger.info("Heart beat - I'm alive!");
-
-    if(BotRuntime.botMode == "mw") {
-      if(NameUpdater == undefined) {
-        NameUpdater = await import("./NameUpdater.mjs"); 
-      }
-      await NameUpdater.default(BotRuntime.client);
-    }
 
     if(runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
       await roleHandler(BotRuntime.client);
