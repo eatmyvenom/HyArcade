@@ -107,7 +107,7 @@ module.exports = class BotEvents {
       if(NameUpdater == undefined) {
         NameUpdater = await import("./NameUpdater.mjs"); 
       }
-      await NameUpdater(BotRuntime.client);
+      await NameUpdater.default(BotRuntime.client);
     }
 
     if(runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
