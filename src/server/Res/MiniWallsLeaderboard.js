@@ -71,7 +71,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "kd" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWallsWins ?? 0) - (a?.miniWallsWins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = (acc.miniWalls.kills + acc.miniWalls.finalKills) / acc.miniWalls.deaths;
       return acc; 
@@ -84,7 +88,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "kdnf" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.kills / acc.miniWalls.deaths;
       return acc; 
@@ -97,7 +105,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "fd" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.finalKills / acc.miniWalls.deaths;
       return acc; 
@@ -109,7 +121,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "wdd" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.witherDamage / acc.miniWalls.deaths;
       return acc; 
@@ -122,7 +138,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "wkd" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.witherKills / acc.miniWalls.deaths;
       return acc; 
@@ -135,7 +155,11 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   case "aa" : {
     TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-    accounts = accounts.slice(0, 150);
+    if(time != undefined) {
+      accounts = accounts.slice(0, 150);
+    } else {
+      accounts = accounts.slice(0, 25);
+    }
     accounts.map((acc) => {
       acc.miniWalls.ratio = acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot;
       return acc; 
