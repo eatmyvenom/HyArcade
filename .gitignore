@@ -16,3 +16,4 @@ data/*
 timeupdate
 *.log
 starttime
+*.code-workspace
