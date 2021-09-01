@@ -518,6 +518,26 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "quests":
+  case "qst":
+  case "quest": {
+    gameName = "Quests completed";
+    res = await getLB("questsCompleted", timetype, limit, undefined, startingIndex);
+    gid = "qst";
+    break;
+  }
+
+  case "arcadeap":
+  case "arcap":
+  case "aap":
+  case "arcadeach":
+  case "arcadeachievements": {
+    gameName = "Arcade Achievements";
+    res = await getLB("totalEarned", timetype, limit, "arcadeAchievements", startingIndex);
+    gid = "aap";
+    break;
+  }
+
   default: {
     if(type.trim().startsWith(".")) {
       gameName = type.trim().slice(1);

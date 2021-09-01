@@ -25,10 +25,13 @@
 * `tokills` - Throw out kills
 ###### --------------------------------------------------------------------------
 * `galaxywars` - Galaxy wars wins
+* `galaxywarskills` - Galaxy wars kills
 ###### --------------------------------------------------------------------------
 * `dragonwars` - Dragon wars wins
+* `dragonwarskills` - Dragon wars kills
 ###### --------------------------------------------------------------------------
 * `bountyhunters` - Bounty hunters wins
+* `bountyhunterkills` - Bounty hunters kills
 ###### --------------------------------------------------------------------------
 * `blockingdead` - Blocking dead wins
 ###### --------------------------------------------------------------------------
@@ -53,13 +56,8 @@
 * `grinchsim` - Grinch simulator wins
 * `totalsim` - Total simulator wins
 ###### --------------------------------------------------------------------------
-* `bountyhunterkills` - Bounty hunters kills
-###### --------------------------------------------------------------------------
-* `dragonwarskills` - Dragon wars kills
-###### --------------------------------------------------------------------------
-* `galaxywarskills` - Galaxy wars kills
-###### --------------------------------------------------------------------------
 * `achievements` - Total achievement points
+* `quests` - Total quests completed
 ###### --------------------------------------------------------------------------
 
 There is also shortened versions available for use! These are usually just abbreviations of the game name.
