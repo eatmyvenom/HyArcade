@@ -20,7 +20,6 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "d": {
     time = "Daily";
     res = await Database.getLeaderboard(prop, category, "day");
-    res = res?.slice(startingIndex) ?? [];
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -34,7 +33,6 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "w": {
     time = "Weekly";
     res = await Database.getLeaderboard(prop, category, "weekly");
-    res = res?.slice(startingIndex) ?? [];
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -47,7 +45,6 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "m": {
     time = "Monthly";
     res = await Database.getLeaderboard(prop, category, "monthly");
-    res = res?.slice(startingIndex) ?? [];
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -60,7 +57,6 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   default: {
     time = "Lifetime";
     res = await Database.getLeaderboard(prop, category);
-    res = res?.slice(startingIndex) ?? [];
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
