@@ -147,6 +147,7 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
+    await interaction.defer();
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
   }
