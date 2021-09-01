@@ -527,6 +527,34 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "agamer":
+  case "arcadegamer":
+  case "arcgamer": {
+    gameName = "'Arcade gamer' quests";
+    res = await getLB("arcadeGamer", timetype, limit, "quests", startingIndex);
+    gid = "agamer";
+    break;
+  }
+
+  case "awinner":
+  case "arcadewinner":
+  case "arcwinner": {
+    gameName = "'Arcade winner' quests";
+    res = await getLB("arcadeWinner", timetype, limit, "quests", startingIndex);
+    gid = "awinner";
+    break;
+  }
+
+  case "aspec":
+  case "aspecial":
+  case "arcadespecialist":
+  case "arcspecial": {
+    gameName = "'Arcade specialist' completed";
+    res = await getLB("arcadeSpecialist", timetype, limit, "quests", startingIndex);
+    gid = "aspec";
+    break;
+  }
+
   case "arcadeap":
   case "arcap":
   case "aap":

@@ -56,6 +56,10 @@
 * `grinchsim` - Grinch simulator wins
 * `totalsim` - Total simulator wins
 ###### --------------------------------------------------------------------------
+* `arcadegamer` - "Arcade gamer" quest completions
+* `arcadewinner` - "Arcade winner" quest completions
+* `arcadespecialist` - "Arcade specialist" quest completions
+###### --------------------------------------------------------------------------
 * `achievements` - Total achievement points
 * `quests` - Total quests completed
 ###### --------------------------------------------------------------------------
