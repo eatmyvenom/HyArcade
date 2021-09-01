@@ -5,9 +5,7 @@ This is a roadmap of what is planned so far for future versions of the HyArcade 
 This is feature complete and the changelog can be viewed [here](./changelogs/v1.7)
 
 ## Version 1.8
-* Arcade AP completion per game
-* Different modes for the non-arcade games
-* Speed up leaderboards
+This has been released and the changelog can be viewed [here](./changelogs/v1.8)
 
 ## Version 2.0
 * Release in conjunction with the arcade update
