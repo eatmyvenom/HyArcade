@@ -549,7 +549,7 @@ async function hander (args, rawMsg, interaction) {
   case "aspecial":
   case "arcadespecialist":
   case "arcspecial": {
-    gameName = "'Arcade specialist' completed";
+    gameName = "'Arcade specialist' quests";
     res = await getLB("arcadeSpecialist", timetype, limit, "quests", startingIndex);
     gid = "aspec";
     break;
@@ -561,8 +561,107 @@ async function hander (args, rawMsg, interaction) {
   case "arcadeach":
   case "arcadeachievements": {
     gameName = "Arcade Achievements";
-    res = await getLB("totalEarned", timetype, limit, "arcadeAchievements", startingIndex);
+    res = await getLB("totalEarned", timetype, limit, "arcadeAchievments", startingIndex);
     gid = "aap";
+    break;
+  }
+
+  case "blockingdeadchallenge":
+  case "creeperattackchallenge":
+  case "dragonwarschallenge":
+  case "enderspleefchallenge":
+  case "farmhuntchallenge": 
+  case "footballchallenge":
+  case "galaxywarschallenge": {
+    gameName = "Galaxy wars challenges";
+    res = await getLB("galaxyWars", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "aap";
+    break;
+  }
+
+  case "chns":
+  case "hnsc":
+  case "hidec":
+  case "chide":
+  case "hasc":
+  case "chas":
+  case "hideandseekchallenge": {
+    gameName = "Hide and seek challenges";
+    res = await getLB("hideAndSeek", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "chns";
+    break;
+  }
+
+  case "hitwc":
+  case "chitw":
+  case "challengehitw":
+  case "chole":
+  case "holec":
+  case "holeinthewallchallenge": {
+    gameName = "Hole in the wall challenges";
+    res = await getLB("holeInTheWall", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "chitw";
+    break;
+  }
+
+  case "chs":
+  case "hsc":
+  case "hypixelchallenge":
+  case "hschal":
+  case "challengehs":
+  case "hypixelsayschallenge": {
+    gameName = "Hypixel says challenges";
+    res = await getLB("hypixelSays", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "chs";
+    break;
+  }
+
+  case "mwc":
+  case "cmw":
+  case "minichallenge":
+  case "challengemini":
+  case "challengeminiwalls":
+  case "mwchallenges":
+  case "miniwallschallenge": {
+    gameName = "Mini walls challenges";
+    res = await getLB("miniWalls", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "cmw";
+    break;
+  }
+
+  case "pc":
+  case "partychallenge":
+  case "pgamechallenge":
+  case "cpg":
+  case "pgc":
+  case "partygameschallenge": {
+    gameName = "Party games challenges";
+    res = await getLB("partyGames", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "cpg";
+    break;
+  }
+
+
+  case "toc":
+  case "cto":
+  case "challengeto":
+  case "tochallenge":
+  case "throwoutchallenge": {
+    gameName = "Throw out challenges";
+    res = await getLB("throwOut", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "toc";
+    break;
+  }
+
+  case "czombies":
+  case "zchallenge":
+  case "zbc":
+  case "czb":
+  case "zc": 
+  case "zombieschallenge": {
+    gameName = "Zombies challenges";
+    res = await getLB("zombies", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "zc";
     break;
   }
 
