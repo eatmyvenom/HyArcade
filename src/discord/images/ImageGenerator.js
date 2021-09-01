@@ -157,7 +157,7 @@ module.exports = class ImageGenerator {
       let plus = "";
       let rankEnd = "";
       if(txtRank.includes("_PLUS_PLUS")) {
-        plus = " += 1";
+        plus = "++";
       } else if(txtRank.includes("_PLUS")) {
         plus = "+";
       }
