@@ -1,6 +1,6 @@
 navbar_entries:
   - title: Commands
-    url: Commands
+    url: Bot-Commands
 
   - title: Roadmap
     url: Roadmap
