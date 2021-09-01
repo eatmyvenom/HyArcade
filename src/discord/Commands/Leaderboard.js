@@ -566,16 +566,75 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
-  case "blockingdeadchallenge":
-  case "creeperattackchallenge":
-  case "dragonwarschallenge":
-  case "enderspleefchallenge":
-  case "farmhuntchallenge": 
-  case "footballchallenge":
+  case "bdc":
+  case "cbd":
+  case "bdchal":
+  case "blockingdeadchallenge": {
+    gameName = "Football challenges";
+    res = await getLB("blockingDead", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "bdc";
+    break;
+  }
+
+  case "cac":
+  case "cca":
+  case "creeperchal":
+  case "creeperattackchallenge": {
+    gameName = "Creeper attack challenges";
+    res = await getLB("creeperAttack", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "cac";
+    break;
+  }
+
+  case "dwc":
+  case "cdw":
+  case "dragonchallenge":
+  case "dwchallenge":
+  case "dragonwarschallenge": {
+    gameName = "Dragon wars challenges";
+    res = await getLB("dragonWars", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "dwc";
+    break;
+  }
+
+  case "esc":
+  case "cse":
+  case "spleefchallenge":
+  case "enderchallenge":
+  case "enderspleefchallenge": {
+    gameName = "Ender spleef challenges";
+    res = await getLB("enderSpleef", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "esc";
+    break;
+  }
+  
+  case "fhc":
+  case "cfh":
+  case "farmchallenge":
+  case "farmhuntchallenge": {
+    gameName = "Farmhunt challenges";
+    res = await getLB("farmhunt", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "cfh";
+    break;
+  }
+  case "cfb":
+  case "fbc":
+  case "footballc":
+  case "footballchallenge": {
+    gameName = "Football challenges";
+    res = await getLB("football", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "cfb";
+    break;
+  }
+
+  case "gwc":
+  case "cgw":
+  case "galaxychallenge":
+  case "galaxychal":
   case "galaxywarschallenge": {
     gameName = "Galaxy wars challenges";
     res = await getLB("galaxyWars", timetype, limit, "arcadeChallenges", startingIndex);
-    gid = "aap";
+    gid = "cgw";
     break;
   }
 
