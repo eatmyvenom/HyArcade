@@ -1,5 +1,6 @@
 const Account = require("hyarcade-requests/types/Account");
 const hypixelApi = require("../hypixelApi");
+const { logger } = require("../utils");
 let accounts = [];
 
 /**
@@ -74,6 +75,8 @@ class Guild {
     async updateMemberData () {
       const data = await this.getGuild();
       this.name = data?.guild?.name ?? "INVALID-NAME";
+      logger.info(`Updating data for ${this.name}`);
+
       this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
       this.gxp = data?.guild?.exp ?? 0;
       this.color = data?.guild?.tagColor ?? "GREY";
