@@ -23,7 +23,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
     logger.err("Refusing to send empty message to webhook!");
     return;
   }
-  const hook = new Discord.WebhookClient(webhookID, webhookToken);
+  const hook = new Discord.WebhookClient({ id: webhookID, token: webhookToken });
   await hook.send({
     content,
     username: config.webhook.username,
@@ -39,7 +39,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
  * @param {object} webhook
  */
 async function sendBasic (content, webhook) {
-  const hook = new Discord.WebhookClient(webhook.id, webhook.token);
+  const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     content,
     username: webhook.username,
@@ -55,7 +55,7 @@ async function sendBasic (content, webhook) {
  */
 async function sendBasicEmbed (content, embed, webhook) {
   try {
-    const hook = new Discord.WebhookClient(webhook.id, webhook.token);
+    const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
     await hook.send({
       embeds: embed,
       username: webhook.username,
@@ -76,7 +76,7 @@ async function sendBasicEmbed (content, embed, webhook) {
  * @param {string} [webhookToken=config.webhook.token]
  */
 async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
-  const hook = new Discord.WebhookClient(webhookID, webhookToken);
+  const hook = new Discord.WebhookClient({ id: webhookID, token: webhookToken });
   await hook.send({
     embeds: [generateEmbed(list)],
     username: config.webhook.username,
@@ -92,7 +92,7 @@ async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, web
  * @param {object} webhook
  */
 async function sendEmbed (embed, webhook) {
-  const hook = new Discord.WebhookClient(webhook.id, webhook.token);
+  const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     embeds: [embed],
     username: webhook.username,
