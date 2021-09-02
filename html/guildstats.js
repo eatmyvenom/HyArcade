@@ -110,11 +110,11 @@ function formatStats (guild) {
  *
  */
 function updateData () {
-  const tag = new URLSearchParams(window.location.search).get("tag");
+  const name = new URLSearchParams(window.location.search).get("name");
 
   fetch(guildURL).then((v) => {
     v.json().then((v) => {
-      const guild = v.find((g) => g.tag.toLowerCase() == tag.toLowerCase());
+      const guild = v.find((g) => g.name.toLowerCase() == name.toLowerCase());
 
       formatTitle(guild);
       formatStats(guild);
