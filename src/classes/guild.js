@@ -8,7 +8,7 @@ let accounts = [];
  * @returns {number}
  */
 function numberify (str) {
-  return Number((`${str}`).replace(/undefined/g, 0).replace(/null/g, 0));
+  return Number(str);
 }
 
 module.exports = function Gld (acclist) {
@@ -55,6 +55,7 @@ class Guild {
     hideAndSeekWins = 0;
     zombiesWins = 0;
     pixelPaintersWins = 0;
+    partyGamesWins = 0;
     simWins = 0;
 
     /**
