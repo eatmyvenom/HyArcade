@@ -1,3 +1,6 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import CommandResponse from "../Utils/CommandResponse.js";
