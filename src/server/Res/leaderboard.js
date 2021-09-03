@@ -40,7 +40,7 @@ module.exports = async (req, res, fileCache) => {
       for(const a of oldCopy) {
         const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
         if(category == null) {
-          a[lbprop] = numberify(n[lbprop] - a[lbprop]);
+          a[lbprop] = numberify(n?.[lbprop] - a?.[lbprop]);
           a.name = n?.name ?? "INVALID-NAME";
           newAcclist.push(a);
         } else {
