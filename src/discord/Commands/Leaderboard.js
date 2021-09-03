@@ -677,6 +677,8 @@ async function hander (args, rawMsg, interaction) {
 
   case "mwc":
   case "cmw":
+  case "miwc":
+  case "cmiw":
   case "minichallenge":
   case "challengemini":
   case "challengeminiwalls":
@@ -716,7 +718,8 @@ async function hander (args, rawMsg, interaction) {
   case "zchallenge":
   case "zbc":
   case "czb":
-  case "zc": 
+  case "zc":
+  case "zombiesc":
   case "zombieschallenge": {
     gameName = "Zombies challenges";
     res = await getLB("zombies", timetype, limit, "arcadeChallenges", startingIndex);
