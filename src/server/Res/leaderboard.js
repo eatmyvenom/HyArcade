@@ -58,9 +58,9 @@ module.exports = async (req, res, fileCache) => {
       }
       accounts = newAcclist;
       if(category == null) {
-        TimSort.sort(accounts, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
+        TimSort.sort(accounts, (b, a) => (a?.[lbprop] | 0) - (b?.[lbprop] | 0));
       } else {
-        TimSort.sort(accounts, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));
+        TimSort.sort(accounts, (b, a) => (a?.[category]?.[lbprop] | 0) - (b?.[category]?.[lbprop] | 0));
       }
     }
 
