@@ -4,15 +4,25 @@ const {
 } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
 const EmojiGetter = require("../Formatting/EmojiGetter");
+const Arcade = require("./Stats/Arcade");
 
-/**
- * @param {number} n
- * @returns {number}
- */
-function formatR (n) {
-  const r = (Math.round(n * 100) / 100) ?? 0.0;
-  return r;
-}
+const BlockingDead = require("./Stats/BlockingDead");
+const BountyHunters = require("./Stats/BountyHunters");
+const CaptureTheWool = require("./Stats/CaptureTheWool");
+const DragonWars = require("./Stats/DragonWars");
+const EnderSpleef = require("./Stats/EnderSpleef");
+const FarmHunt = require("./Stats/FarmHunt");
+const Football = require("./Stats/Football");
+const GalaxyWars = require("./Stats/GalaxyWars");
+const HideAndSeek = require("./Stats/HideAndSeek");
+const HoleInTheWall = require("./Stats/HoleInTheWall");
+const HypixelSays = require("./Stats/HypixelSays");
+const MiniWalls = require("./Stats/MiniWalls");
+const PartyGames = require("./Stats/PartyGames");
+const PixelPainters = require("./Stats/PixelPainters");
+const SeasonalGames = require("./Stats/SeasonalGames");
+const ThrowOut = require("./Stats/ThrowOut");
+const Zombies = require("./Stats/Zombies");
 
 /**
  * @param {string} str
@@ -863,26 +873,27 @@ module.exports = class AdvancedEmbeds {
     return embed;
   }
 
-  static async getStats (acc, game, hasPerms = false) {
-    const thumbURL = `https://crafatar.com/renders/head/${acc.uuid}?overlay&time=${Date.now()}`;
+  static async getStats (acc, game) {
+    let rank = (`${acc.rank}`)
+      .replace(/_PLUS/g, "+")
+      .replace(/undefined/g, "");
 
-    let lvl = Math.round(acc.level * 100) / 100;
-    lvl = `${lvl}`;
+    rank = rank == "" ? "" : `[${rank}]`;
+
+    let embed = new MessageEmbed()
+      .setAuthor(`${rank} ${acc.name}`, null, `https://hyarcade.xyz/player.html?q=${acc.name}`)
+      .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay&time=${Date.now()}`)
+      .setColor(0xee0061);
+
     let gamename = "";
     let title = "";
-
-    const fields = [];
 
     switch(game.toLowerCase()) {
     case "12":
     case "party":
     case "partygames":
     case "pg": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.partyGames.wins)),
-        inline: true,
-      });
+      embed = PartyGames(acc, embed);
       gamename = "pg";
       title = "Party games";
       break;
@@ -894,16 +905,7 @@ module.exports = class AdvancedEmbeds {
     case "farmhunt":
     case "5":
     case "frmhnt": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.farmhunt.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "poop")} Poop collected`,
-        value: formatNum(numberify(acc.farmhunt.poop)),
-        inline: true,
-      });
+      embed = FarmHunt(acc, embed);
       title = "Farm hunt";
       gamename = "fh";
       break;
@@ -915,16 +917,7 @@ module.exports = class AdvancedEmbeds {
     case "hypixel":
     case "says":
     case "hysays": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.hypixelSays.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "game")} Rounds completed`,
-        value: formatNum(numberify(acc.hypixelSays.rounds)),
-        inline: true,
-      });
+      embed = HypixelSays(acc, embed);
       title = "Hypixel says";
       gamename = "hs";
       break;
@@ -935,31 +928,7 @@ module.exports = class AdvancedEmbeds {
     case "hit":
     case "hole":
     case "pain": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.holeInTheWall?.wins ?? 0)),
-        inline: false,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "skill")} Qualifers`,
-        value: `${acc.holeInTheWall?.qualifiers ?? 0}`,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "skill")} Finals`,
-        value: `${acc.holeInTheWall?.finals ?? 0}`,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "skill2")} Q+F`,
-        value: `${(acc.holeInTheWall?.qualifiers ?? 0) + (acc?.holeInTheWall?.finals ?? 0)}`,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "game")} Completed Walls`,
-        value: formatNum(numberify(acc.holeInTheWall?.rounds ?? 0)),
-        inline: false,
-      });
+      embed = HoleInTheWall(acc, embed);
       title = "Hole in the wall";
       gamename = "hitw";
       break;
@@ -973,56 +942,7 @@ module.exports = class AdvancedEmbeds {
     case "wall":
     case "pvp":
     case "miniwalls": {
-      // <br>
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.miniWalls.wins)),
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.miniWalls.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "bow")} Arrows shot`,
-        value: formatNum(numberify(acc.miniWalls.arrowsShot)),
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "bow")} Arrows hit`,
-        value: formatNum(numberify(acc.miniWalls.arrowsHit)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Final kills`,
-        value: formatNum(numberify(acc.miniWalls.finalKills)),
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Wither kills`,
-        value: formatNum(numberify(acc.miniWalls.witherKills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Wither damage`,
-        value: formatNum(numberify(acc.miniWalls.witherDamage)),
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "death")} Deaths`,
-        value: formatNum(numberify(acc.miniWalls.deaths)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-        value: `${formatR((acc.miniWalls?.kills + acc?.miniWalls?.finalKills) / acc.miniWalls?.deaths)}`,
-        inline: true,
-      });
+      embed = MiniWalls(acc, embed);
       title = "Mini walls";
       gamename = "mw";
       break;
@@ -1036,29 +956,7 @@ module.exports = class AdvancedEmbeds {
     case "fuck":
     case "shit":
     case "football": {
-      // <br>
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.football.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "goal")} Goals`,
-        value: formatNum(numberify(acc.football.goals)),
-        inline: true,
-      });
-
-      // <br>
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "shoe")} Power kicks`,
-        value: formatNum(numberify(acc.football.powerkicks)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "shoe")} Kicks`,
-        value: formatNum(numberify(acc.football.kicks)),
-        inline: true,
-      });
+      embed = Football(acc, embed);
       title = "Football";
       gamename = "fb";
       break;
@@ -1075,11 +973,7 @@ module.exports = class AdvancedEmbeds {
     case "enderman":
     case "trash":
     case "enderspleef": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.enderSpleef.wins)),
-        inline: true,
-      });
+      embed = EnderSpleef(acc, embed);
       title = "Ender spleef";
       gamename = "es";
       break;
@@ -1091,28 +985,7 @@ module.exports = class AdvancedEmbeds {
     case "toss":
     case "sumo2":
     case "throwout": {
-      // <br>
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.throwOut.wins)),
-        inline: true,
-      });
-      // <br>
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.throwOut.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "death")} Deaths`,
-        value: formatNum(numberify(acc.throwOut.deaths)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-        value: `${Math.round((acc.throwOut.kills / acc.throwOut.deaths) * 100) / 100}`,
-        inline: true,
-      });
+      embed = ThrowOut(acc, embed);
       title = "Throw out";
       gamename = "to";
       break;
@@ -1123,26 +996,7 @@ module.exports = class AdvancedEmbeds {
     case "sw":
     case "galaxy":
     case "galaxywars": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.galaxyWars.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.galaxyWars.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "death")} Deaths`,
-        value: formatNum(numberify(acc.galaxyWars.deaths)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-        value: `${Math.round((acc.galaxyWars.kills / acc.galaxyWars.deaths) * 100) / 100}`,
-        inline: true,
-      });
+      embed = GalaxyWars(acc, embed);
       title = "Galaxy wars";
       gamename = "gw";
       break;
@@ -1152,16 +1006,7 @@ module.exports = class AdvancedEmbeds {
     case "dw":
     case "dragon":
     case "dragonwars": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.dragonWars.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.dragonWars.kills)),
-        inline: true,
-      });
+      embed = DragonWars(acc, embed);
       title = "Dragon wars";
       gamename = "dw";
       break;
@@ -1174,26 +1019,7 @@ module.exports = class AdvancedEmbeds {
     case "bounty":
     case "oneinthequiver":
     case "bountyhunters": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.bountyHunters.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.bountyHunters.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "death")} Deaths`,
-        value: formatNum(numberify(acc.bountyHunters.deaths)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} KDR`,
-        value: `${Math.round((acc.bountyHunters.kills / acc.bountyHunters.deaths) * 100) / 100}`,
-        inline: true,
-      });
+      embed = BountyHunters(acc, embed);
       title = "Bounty hunters";
       gamename = "bh";
       break;
@@ -1205,21 +1031,7 @@ module.exports = class AdvancedEmbeds {
     case "dayone":
     case "blocking":
     case "blockingdead": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.blockingDead.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.blockingDead.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "headshot")} Headshots`,
-        value: formatNum(numberify(acc.blockingDead.headshots)),
-        inline: true,
-      });
+      embed = BlockingDead(acc, embed);
       title = "Blocking dead";
       gamename = "bd";
       break;
@@ -1234,26 +1046,7 @@ module.exports = class AdvancedEmbeds {
     case "hideandseek":
     case "hidenseek":
     case "hideseek": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.hideAndSeek.wins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.hideAndSeek.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Seeker wins`,
-        value: formatNum(numberify(acc.hideAndSeek.seekerWins)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "blind")} Hider wins`,
-        value: formatNum(numberify(acc.hideAndSeek.hiderWins)),
-        inline: true,
-      });
+      embed = HideAndSeek(acc, embed);
       title = "Hide and seek";
       gamename = "hns";
       break;
@@ -1266,11 +1059,7 @@ module.exports = class AdvancedEmbeds {
     case "zomb":
     case "zbies":
     case "zombies": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.zombies.wins_zombies)),
-        inline: true,
-      });
+      embed = Zombies(acc, embed);
       title = "Zombies";
       gamename = "z";
       break;
@@ -1284,16 +1073,7 @@ module.exports = class AdvancedEmbeds {
     case "ctwwool":
     case "ctwwoolcaptured":
     case "ctwkills": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "pvp")} Kills`,
-        value: formatNum(numberify(acc.captureTheWool.kills)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "goal")} Captures`,
-        value: formatNum(numberify(acc.captureTheWool.woolCaptures)),
-        inline: true,
-      });
+      embed = CaptureTheWool(acc, embed);
       title = "Capture the wool";
       gamename = "ctw";
       break;
@@ -1308,11 +1088,7 @@ module.exports = class AdvancedEmbeds {
     case "drawmything":
     case "drawtheirthing":
     case "drawing": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Wins`,
-        value: formatNum(numberify(acc.pixelPainters.wins)),
-        inline: true,
-      });
+      embed = PixelPainters(acc, embed);
       title = "Pixel painters";
       gamename = "pp";
       break;
@@ -1324,95 +1100,21 @@ module.exports = class AdvancedEmbeds {
     case "season":
     case "14":
     case "sea": {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Easter wins`,
-        value: `${acc.seasonalWins.easter}`,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Scuba wins`,
-        value: `${acc.seasonalWins.scuba}`,
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Halloween wins`,
-        value: `${acc.seasonalWins.halloween}`,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Grinch wins`,
-        value: `${acc.seasonalWins.grinch}`,
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Total wins`,
-        value: `${acc.seasonalWins.total}`,
-        inline: true,
-      });
+      embed = SeasonalGames(acc, embed);
       gamename = "sim";
       title = "Seasonal Games";
       break;
     }
 
     default: {
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "ap")} Level`,
-        value: lvl,
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} All hypixel wins`,
-        value: formatNum(numberify(acc.anyWins)),
-        inline: true,
-      });
-      //
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "win")} Arcade wins`,
-        value: formatNum(numberify(acc.arcadeWins)),
-        inline: true,
-      });
-
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "coin")} Arcade Coins`,
-        value: formatNum(numberify(acc.arcadeCoins)),
-        inline: true,
-      });
-      //
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "ap")} AP`,
-        value: formatNum(numberify(acc.achievementPoints)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "positive")} Karma`,
-        value: formatNum(numberify(acc.karma)),
-        inline: true,
-      });
-      fields.push({
-        name: `${EmojiGetter(hasPerms, "id")} UUID`,
-        value: acc.uuid,
-        inline: true,
-      });
+      embed = Arcade(acc, embed);
       gamename = "arc";
       title = "Overall";
       break;
     }
     }
 
-    let rank = (`${acc.rank}`)
-      .replace(/_/g, "")
-      .replace(/PLUS/g, "+")
-      .replace(/undefined/g, "");
-    rank = rank == "" ? "" : `[${rank}]`;
-
-    const embed = new MessageEmbed()
-      .setTitle(`:mag_right: ${title} stats`)
-      .setAuthor(`${rank} ${acc.name}`, null, `https://hyarcade.xyz/player.html?q=${acc.name}`)
-      .setThumbnail(thumbURL)
-      .setColor(0x44a3e7)
-      .addFields(fields);
+    embed.setTitle(`:mag_right: ${title} stats`);
 
     return {
       res: "",

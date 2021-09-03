@@ -107,5 +107,5 @@ exports.ERROR_LOG = function (error, note) {
     .setTitle("ERROR")
     .setDescription(note)
     .addField("Error", `\`${error.message}\``)
-    .addField("Stack", `\`${error.stack}\``);
+    .addField("Stack", `\`${error.stack.slice(0, Math.min(1000, error.stack.length))}\``);
 };

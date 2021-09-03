@@ -1,0 +1,23 @@
+const { MessageEmbed } = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
+
+/**
+ * @param {number} number
+ * @returns {string}
+ */
+function f (number) {
+  return Intl.NumberFormat("en").format(number);
+}
+
+/**
+ * 
+ * @param {Account} acc 
+ * @param {MessageEmbed} embed
+ * @returns {MessageEmbed}
+ */
+module.exports = function GalaxyWars (acc, embed) {
+  embed.addField("Stats", `**- Wins** (\`${f(acc.galaxyWars.wins)}\`)\n**- Kills** (\`${f(acc.galaxyWars.kills)}\`)\n**- Headshots** (\`${f(acc.galaxyWars.deaths)}\`)`);
+  embed.addField("Info", `**- Challenges** (\`${f(acc.arcadeChallenges.galaxyWars)}\`)\n**- Kills/Deaths** (\`${f((acc.galaxyWars.kills / acc.galaxyWars.deaths).toFixed(2))}\`)`);
+
+  return embed;
+};
