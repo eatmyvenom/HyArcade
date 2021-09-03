@@ -122,7 +122,8 @@ module.exports = class BotRuntime {
   
     static async getBlacklist () {
       if(blacklist == null) {
-        blacklist = blacklist.toString().trim()
+        const list = await fs.readFile(`data/blacklist`);
+        blacklist = list.toString().trim()
           .split("\n")
           .filter((v) => v != "");
         setTimeout(() => blacklist = null, 3600000);
