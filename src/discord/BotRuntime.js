@@ -7,6 +7,7 @@ const { AccountArray } = require("hyarcade-requests").types;
 const {
   MessageEmbed, Client
 } = require("discord.js");
+const { readFile } = require("fs-extra");
 
 let hackerlist = null;
 let blacklist = null;
@@ -122,7 +123,7 @@ module.exports = class BotRuntime {
   
     static async getBlacklist () {
       if(blacklist == null) {
-        const list = await fs.readFile(`data/blacklist`);
+        const list = await readFile("data/blacklist");
         blacklist = list.toString().trim()
           .split("\n")
           .filter((v) => v != "");
