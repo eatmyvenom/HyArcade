@@ -7,6 +7,8 @@ const InteractionUtils = require("../InteractionUtils");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
+let zombies = undefined;
+
 /**
  * 
  * @param {ButtonInteraction} interaction 
@@ -26,6 +28,10 @@ module.exports = async function ButtonParser (interaction) {
 
   case "ez": {
     return await ezHandler();
+  }
+
+  case "z": {
+    return await zombiesHandler(data[1], data[2], interaction);
   }
   }
 };
@@ -74,3 +80,21 @@ async function ezHandler () {
   const buttons = await ButtonGenerator.getEZ();
   return new ButtonResponse(msg, undefined, buttons);
 }
+
+/**
+ * 
+ * @param {string} accUUID 
+ * @param {string} map 
+ * @param {ButtonInteraction} interaction 
+ * @returns {ButtonResponse}
+ */
+async function zombiesHandler (accUUID, map, interaction) {
+
+  if(zombies == undefined) {
+    zombies = await import("../../Commands/Zombies.mjs");
+  }
+
+  const zombiesRes = await zombies.default.execute([accUUID, map], interaction.user.id, undefined, interaction);
+
+  return new ButtonResponse("", [zombiesRes.embed], zombiesRes.components);
+} 

@@ -7,6 +7,7 @@ import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 
 const { MessageEmbed } = require("discord.js");
 
@@ -146,38 +147,46 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
-    acc = await InteractionUtils.resolveAccount(interaction, "player");
+    if(interaction.isButton()) {
+      await interaction.deferUpdate();
+      acc = await InteractionUtils.accFromUUID(plr);
+    } else {
+      await interaction.defer();
+      acc = await InteractionUtils.resolveAccount(interaction, "player");
+    }
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);
     }
   }
 
   let embed;
+  let buttons;
 
   switch(map.toLowerCase()) {
   case "bb" : {
     embed = createBadBloodEmbed(acc);
+    buttons = await ButtonGenerator.getZombies("bb", acc.uuid);
     break;
   }
 
   case "de" : {
     embed = createDeadEndEmbed(acc);
+    buttons = await ButtonGenerator.getZombies("de", acc.uuid);
     break;
   }
 
   case "aa" : {
     embed = createAlienArcadiumEmbed(acc);
+    buttons = await ButtonGenerator.getZombies("aa", acc.uuid);
     break;
   }
 
   default : {
     embed = createDefaultEmbed(acc);
+    buttons = await ButtonGenerator.getZombies("o", acc.uuid);
     break;
   }
   }
 
-  return {
-    res: "",
-    embed
-  };
+  return new CommandResponse("", embed, undefined, buttons);
 });
