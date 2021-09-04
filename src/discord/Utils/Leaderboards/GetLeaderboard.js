@@ -5,7 +5,7 @@ const Database = require("../Database");
 
 let lbCache = {};
 
-setInterval(() => lbCache = {}, 300000);
+setInterval(() => lbCache = {}, 600000);
 
 /**
  * @param {string} prop
