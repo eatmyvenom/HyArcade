@@ -157,7 +157,7 @@ export default async (interaction) => {
   }
 
   case "arcade": {
-    switch(interaction.options.getSubcommand()) {
+    switch(interaction.options.getSubCommand()) {
     case "ez" : {
       logger.debug("Adding ez button to message");
       const buttons = await ButtonGenerator.getEZ();
