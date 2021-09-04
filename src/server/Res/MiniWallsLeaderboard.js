@@ -184,7 +184,7 @@ async function generateLeaderboard (fileCache, stat, time) {
       accounts = accounts.slice(0, 25);
     }
     accounts.map((acc) => {
-      acc.miniWalls.ratio = acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot;
+      acc.miniWalls.ratio = (acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot) * 100;
       return acc; 
     });
 
