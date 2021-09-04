@@ -84,7 +84,7 @@ exports.ERROR_ACCOUNT_PREVIOUSLY_LINKED = new MessageEmbed()
 exports.ERROR_NO_LEADERBOARD = new MessageEmbed()
   .setTitle("ERROR")
   .setDescription(
-    "Sorry that category does not exist. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
+    "Sorry that leaderboard is not availiable. Go to [this page](https://docs.hyarcade.xyz/bots/Leaderboards) to see what is available."
   )
   .setColor(COLOR_RED);
 

@@ -744,7 +744,7 @@ async function hander (args, rawMsg, interaction) {
     } else {
       return {
         res: "",
-        ERROR_NO_LEADERBOARD
+        embed: ERROR_NO_LEADERBOARD
       };
     }
   }
