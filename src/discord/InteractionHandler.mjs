@@ -150,7 +150,15 @@ async function menuHandler (interaction) {
     if(interaction.deferred) {
       await interaction.editReply(updatedData.toDiscord());
     } else {
-      await interaction.update(updatedData.toDiscord());
+      try {
+        await interaction.update(updatedData.toDiscord());
+      } catch (e) {
+        Logger.err(`Error from /${interaction.customId}`);
+        Logger.err(e.stack);
+        Webhooks.errHook.send({
+          embeds: [ ERROR_LOG(e, `Component usage by ${interaction.user.tag}\n\`/${interaction.customId}\``) ]
+        });
+      }
     }
     await logBtn(interaction);
   }

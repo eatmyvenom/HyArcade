@@ -28,7 +28,7 @@ module.exports = async function MenuParser (interaction) {
  * @returns {ButtonResponse}
  */
 async function statsHandler (accUUID, game, interaction) {
-  interaction.deferUpdate();
+  await interaction.deferUpdate();
   const accData = await InteractionUtils.accFromUUID(accUUID);
   const statsRes = await BotRuntime.getStats(accData, game);
   const {

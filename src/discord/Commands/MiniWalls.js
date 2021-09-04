@@ -42,7 +42,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
   const plr = args[0];
   let acc;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 1);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0);
   } else {
     acc = await InteractionUtils.resolveAccount(interaction, 0);
   }
@@ -51,7 +51,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
     return {};
   }
 
-  if(acc.uuid == undefined && acc.name != "INVALID-NAME") {
+  if(acc?.uuid == undefined && acc?.name != "INVALID-NAME") {
     return {
       res: "",
       embed: ERROR_NEED_PLAYER

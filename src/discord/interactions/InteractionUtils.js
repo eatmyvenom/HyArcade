@@ -1,11 +1,13 @@
 const BotRuntime = require("../BotRuntime");
+const fetch = require("node-fetch");
+const cfg = require("hyarcade-config").fromJSON();
 const Account = require("hyarcade-requests/types/Account");
 const AccountResolver = require("./Utils/AccountResolver");
+const Database = require("../Utils/Database");
 
 module.exports = class InteractionUtils {
   /**
-   * Get an account just purely from a uuid without going
-   * through the full resolver
+   * Get an account just purely from a uuid quickly
    *
    * @static
    * @param {string} uuid
@@ -13,15 +15,29 @@ module.exports = class InteractionUtils {
    */
   static async accFromUUID (uuid) {
     let acc;
+
+    if(Database.accCache[uuid] != undefined) {
+      return Database.accCache[uuid];
+    }
+
     if(BotRuntime.botMode != "mini") {
-      const acclist = await BotRuntime.getFromDB("accounts");
-      acc = acclist.find((a) => a?.uuid == uuid);
+      const url = new URL("account", cfg.dbUrl);
+      const urlArgs = url.searchParams;
+    
+      urlArgs.set("uuid", uuid.toLowerCase());
+      let accdata = await fetch(url.toString());
+      if(accdata.status == 200) {
+        accdata = await accdata.json();
+        acc = accdata;
+      }
     }
 
     if(acc == undefined) {
       acc = new Account("", 0, `${uuid}`);
       await acc.updateData();
     }
+
+    Database.accCache[uuid] = acc;
 
     return acc;
   }

@@ -4,6 +4,7 @@ const logger = require("hyarcade-logger");
 const {
   Message
 } = require("discord.js");
+const Database = require("./Database");
 
 /**
  * @param {*} str
@@ -68,8 +69,14 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
       uuid = await mojangRequest.getUUID(plr);
     }
 
-    acc = new Account("", 0, `${uuid}`);
-    await acc.updateData();
+    if(Database.accCache[uuid] != undefined) {
+      acc = Database.accCache[uuid];
+    } else {
+      acc = new Account("", 0, `${uuid}`);
+      await acc.updateData();
+      Database.accCache[acc.uuid] = acc;
+    }
+
   }
   return acc;
 };

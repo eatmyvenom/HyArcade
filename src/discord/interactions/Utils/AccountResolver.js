@@ -6,6 +6,7 @@ const {
   CommandInteraction
 } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
+const Database = require("../../Utils/Database");
 const cfg = require("hyarcade-config").fromJSON();
 
 /**
@@ -27,8 +28,15 @@ async function getFromHypixel (string, interaction) {
     uuid = await mojangRequest.getUUID(plr);
   }
 
-  const acc = new Account("", 0, `${uuid}`);
-  await acc.updateData();
+  let acc;
+  if(Database.accCache[uuid] != undefined) {
+    acc = Database.accCache[uuid];
+  } else {
+    acc = new Account("", 0, `${uuid}`);
+    await acc.updateData();
+    Database.accCache[acc.uuid] = acc;
+  }
+
 
   if(acc.name == "INVALID-NAME") {
     return undefined;

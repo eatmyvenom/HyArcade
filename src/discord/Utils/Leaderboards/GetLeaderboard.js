@@ -3,6 +3,10 @@ const { stringifyList } = require("../../../utils/leaderboard/ListUtils");
 //// const listUtils = require("../../listUtils");
 const Database = require("../Database");
 
+let lbCache = {};
+
+setInterval(() => lbCache = {}, 300000);
+
 /**
  * @param {string} prop
  * @param {string} timetype
@@ -19,7 +23,15 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   switch(timetype) {
   case "d": {
     time = "Daily";
-    res = await Database.getLeaderboard(prop, category, "day");
+
+    if(lbCache[prop + category] != undefined) {
+      res = [...lbCache[prop + category]];
+    } else {
+      const lb = await Database.getLeaderboard(prop, category, "day");
+      lbCache[prop + category] = lb;
+      res = [...lb];
+    }
+
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -32,7 +44,14 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
 
   case "w": {
     time = "Weekly";
-    res = await Database.getLeaderboard(prop, category, "weekly");
+
+    if(lbCache[prop + category] != undefined) {
+      res = [...lbCache[prop + category]];
+    } else {
+      const lb = await Database.getLeaderboard(prop, category, "weekly");
+      lbCache[prop + category] = lb;
+      res = [...lb];
+    }
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -44,7 +63,14 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
 
   case "m": {
     time = "Monthly";
-    res = await Database.getLeaderboard(prop, category, "monthly");
+
+    if(lbCache[prop + category] != undefined) {
+      res = [...lbCache[prop + category]];
+    } else {
+      const lb = await Database.getLeaderboard(prop, category, "monthly");
+      lbCache[prop + category] = lb;
+      res = [...lb];
+    }
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
@@ -56,7 +82,14 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
 
   default: {
     time = "Lifetime";
-    res = await Database.getLeaderboard(prop, category);
+
+    if(lbCache[prop + category] != undefined) {
+      res = [...lbCache[prop + category]];
+    } else {
+      const lb = await Database.getLeaderboard(prop, category);
+      lbCache[prop + category] = lb;
+      res = [...lb];
+    }
 
     if(limit != undefined) {
       res = res.slice(0, startingIndex + limit);
