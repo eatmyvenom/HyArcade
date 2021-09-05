@@ -25,7 +25,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
     time = "Daily";
 
     if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[prop + category]];
+      res = [...lbCache[`${prop}:${category}:${timetype}`]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "day");
       lbCache[prop + category] = lb;
@@ -46,7 +46,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
     time = "Weekly";
 
     if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[prop + category]];
+      res = [...lbCache[`${prop}:${category}:${timetype}`]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "weekly");
       lbCache[prop + category] = lb;
@@ -65,7 +65,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
     time = "Monthly";
 
     if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[prop + category]];
+      res = [...lbCache[`${prop}:${category}:${timetype}`]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "monthly");
       lbCache[prop + category] = lb;
@@ -84,7 +84,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
     time = "Lifetime";
 
     if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[prop + category]];
+      res = [...lbCache[`${prop}:${category}:${timetype}`]];
     } else {
       const lb = await Database.getLeaderboard(prop, category);
       lbCache[prop + category] = lb;
