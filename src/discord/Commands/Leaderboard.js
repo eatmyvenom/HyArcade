@@ -338,13 +338,14 @@ async function hander (args, rawMsg, interaction) {
   case "capwool":
   case "ctwwool":
   case "ctwcaps":
+  case "ctwc":
   case "woolcap":
   case "caps":
   case "captures":
   case "woolcaps":
   case "ctwwoolcaptured": {
     gameName = "Capture the wool captures";
-    res = await getLB("woolCaptured", timetype, limit, "captureTheWool", startingIndex);
+    res = await getLB("woolCaptures", timetype, limit, "captureTheWool", startingIndex);
     gid = "ctww";
     break;
   }
