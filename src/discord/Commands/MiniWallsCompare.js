@@ -92,7 +92,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
   let acc2;
   if(interaction == undefined) {
     if(plr2 == undefined) {
-      acc1 = await BotRuntime.resolveAccount("undefinednullnothingnononononononono", rawMsg, true);
+      acc1 = await BotRuntime.resolveAccount(null, rawMsg, true);
       acc2 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
     } else {
       acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
