@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { stringLBAdv } = require("../../../listUtils");
+const StringifyLBDiffAdv = require("../../../utils/leaderboard/StringifyLBDiffAdv");
 
 /**
  * @param {object} o
@@ -31,7 +32,14 @@ module.exports = async function CustomLeaderboard (timetype, type, startingIndex
     lb = await stringLBAdv((a, b) => (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0), (a) => getProp(a, type.trim()), limit,
       (l) => l, startingIndex);
   } else {
-    throw new Error("This leaderboard does not exist");
+    if(resTime == "d") resTime = "Daily";
+    if(resTime == "w") resTime = "Weekly";
+    if(resTime == "m") resTime = "Monthly";
+    lb = await StringifyLBDiffAdv((a, b) => (getProp(b, type.trim()) ?? 0) - (getProp(a, type.trim()) ?? 0), (a) => a.val, limit, timetype, (n, o) => n.val = getProp(n, type.trim()) - getProp(o, type.trim()), (l) => l);
+  }
+
+  if(lb.includes("(NaN)")) {
+    throw new Error("Leaderboard Invalid");
   }
   return new MessageEmbed().setTitle(resTime)
     .setColor(0x00cc66)
