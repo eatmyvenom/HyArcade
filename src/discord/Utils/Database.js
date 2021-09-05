@@ -81,4 +81,36 @@ module.exports = class Database {
     return lb;
   }
 
+  static async timedAccount (ign, uuid, discordID, time) {
+    const url = new URL("timeacc");
+
+    if(ign != undefined) {
+      url.searchParams.set("ign", ign);
+    }
+
+    if(uuid != undefined) {
+      url.searchParams.set(uuid);
+    }
+
+    if(discordID != undefined) {
+      url.searchParams.set("discid", discordID);
+    }
+
+    if(time != undefined) {
+      url.searchParams.set("time", time);
+    }
+
+    let acc;
+    try {
+      acc = await (await fetch(url)).json();
+    } catch (e) {
+      Logger.err("Can't connect to database");
+      Logger.err(e);
+      Logger.err(acc);
+      return {};
+    }
+
+    return acc;
+  }
+
 };

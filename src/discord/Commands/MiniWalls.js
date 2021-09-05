@@ -40,9 +40,52 @@ function formatN (str) {
 
 module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
+  let time = args[1] ?? "lifetime";
+
+  switch (time.toLowerCase()) {
+  case "d":
+  case "day":
+  case "dae":
+  case "daily":
+  case "today": {
+    time = "day";
+    break;
+  }
+
+  case "w":
+  case "week":
+  case "weak":
+  case "weekly":
+  case "weeekly": {
+    time = "weekly";
+    break;
+  }
+
+  case "m":
+  case "monthly":
+  case "month":
+  case "mnth":
+  case "mnthly":
+  case "mon": {
+    time = "monthly";
+    break;
+  }
+
+  default: {
+    time = "lifetime";
+  }
+  }
+
   let acc;
+  let timed;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0);
+    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0, time);
+    if(time != "lifetime") {
+      acc = res.acc;
+      timed = res.timed;
+    } else {
+      acc = res;
+    }
   } else {
     acc = await InteractionUtils.resolveAccount(interaction, 0);
   }
@@ -63,6 +106,17 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
       res: "",
       embed: ERROR_IGN_UNDEFINED
     };
+  }
+
+  if(timed != undefined) {
+    acc.miniWalls.wins -= timed?.miniWalls?.wins ?? 0;
+    acc.miniWalls.kills -= timed?.miniWalls?.kills ?? 0;
+    acc.miniWalls.finalKills -= timed?.miniWalls?.finalKills ?? 0;
+    acc.miniWalls.witherDamage -= timed?.miniWalls?.witherDamage ?? 0;
+    acc.miniWalls.witherKills -= timed?.miniWalls?.witherKills ?? 0;
+    acc.miniWalls.deaths -= timed?.miniWalls?.deaths ?? 0;
+    acc.miniWalls.arrowsHit -= timed?.miniWalls?.arrowsHit ?? 0;
+    acc.miniWalls.arrowsShot -= timed?.miniWalls?.arrowsShot ?? 0;
   }
 
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;

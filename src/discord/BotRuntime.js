@@ -67,14 +67,21 @@ module.exports = class BotRuntime {
      * @param {string} str 
      * @param {Message} rawMessage 
      * @param {boolean} canbeSelf 
+     * @param {string} time
      * @returns {Promise<Account>}
      */
-    static async resolveAccount (str, rawMessage, canbeSelf = true) {
+    static async resolveAccount (str, rawMessage, canbeSelf = true, time = "lifetime") {
       if(BotRuntime.botMode == "mini") {
         return await getFromHypixel(str);
       }
     
-      const url = new URL("account", cfg.dbUrl);
+      let url;
+      if (time != "lifetime") {
+        url = new URL("timeacc", cfg.dbUrl);
+      } else {
+        url = new URL("account", cfg.dbUrl);
+      }
+
       const urlArgs = url.searchParams;
     
       if(str?.length == 32) {
@@ -87,10 +94,14 @@ module.exports = class BotRuntime {
         urlArgs.set("discid", str.slice(3, -1));
       } else if(str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
         urlArgs.set("discid", str);
-      } else if(str != null && str != "null" && str != undefined && str != "!") {
+      } else if(str != null && str != "null" && str != "" && str != undefined && str != "!") {
         urlArgs.set("ign", str.toLowerCase());
       } else if (canbeSelf) {
         urlArgs.set("discid", rawMessage.author.id);
+      }
+
+      if (time != "lifetime") {
+        urlArgs.set("time", time);
       }
     
       logger.debug(`Fetching ${url.searchParams.toString()} from database`);
