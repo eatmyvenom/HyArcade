@@ -24,11 +24,11 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "d": {
     time = "Daily";
 
-    if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[`${prop}:${category}:${timetype}`]];
+    if(lbCache[prop + category + timetype] != undefined) {
+      res = [...lbCache[prop + category + timetype]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "day");
-      lbCache[prop + category] = lb;
+      lbCache[prop + category + timetype] = lb;
       res = [...lb];
     }
 
@@ -45,11 +45,11 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "w": {
     time = "Weekly";
 
-    if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[`${prop}:${category}:${timetype}`]];
+    if(lbCache[prop + category + timetype] != undefined) {
+      res = [...lbCache[prop + category + timetype]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "weekly");
-      lbCache[prop + category] = lb;
+      lbCache[prop + category + timetype] = lb;
       res = [...lb];
     }
 
@@ -64,11 +64,11 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   case "m": {
     time = "Monthly";
 
-    if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[`${prop}:${category}:${timetype}`]];
+    if(lbCache[prop + category + timetype] != undefined) {
+      res = [...lbCache[prop + category + timetype]];
     } else {
       const lb = await Database.getLeaderboard(prop, category, "monthly");
-      lbCache[prop + category] = lb;
+      lbCache[prop + category + timetype] = lb;
       res = [...lb];
     }
 
@@ -83,11 +83,11 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
   default: {
     time = "Lifetime";
 
-    if(lbCache[prop + category] != undefined) {
-      res = [...lbCache[`${prop}:${category}:${timetype}`]];
+    if(lbCache[prop + category + timetype] != undefined) {
+      res = [...lbCache[prop + category + timetype]];
     } else {
       const lb = await Database.getLeaderboard(prop, category);
-      lbCache[prop + category] = lb;
+      lbCache[prop + category + timetype] = lb;
       res = [...lb];
     }
 
