@@ -12,7 +12,7 @@ const FileCache = require("../../utils/files/FileCache");
  */
 async function generateLeaderboard (fileCache, stat, time) {
   /** @type {Account[]} */
-  let accounts = AccountArray([...fileCache.accounts]);
+  let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
   accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
@@ -88,7 +88,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
@@ -110,7 +110,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
@@ -133,7 +133,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
@@ -155,7 +155,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
@@ -178,7 +178,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
@@ -201,7 +201,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = AccountArray([...fileCache.accounts]);
+      let top150 = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
       TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
       top150 = top150.slice(0, 150);
 
