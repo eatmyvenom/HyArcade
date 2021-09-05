@@ -11,7 +11,10 @@ const urlModules = {
   leaderboard: require("./Res/leaderboard"),
   lb: require("./Res/leaderboard"),
   db: require("./Res/Database"),
-  mwlb: require("./Res/MiniWallsLeaderboard")
+  mwlb: require("./Res/MiniWallsLeaderboard"),
+  miniwalls: require("./Res/MiniWallsLeaderboard"),
+  timeacc: require("./Res/TimeAcc"),
+  acctimed: require("./Res/TimeAcc")
 };
 let fileCache;
 const compression = require("compression");
@@ -53,6 +56,9 @@ app.all("/acc", callback);
 app.all("/leaderboard", callback);
 app.all("/lb", callback);
 app.all("/mwlb", callback);
+app.all("/miniwalls", callback);
+app.all("/timeacc", callback);
+app.all("/acctimed", callback);
 
 module.exports = function start (port) {
   app.listen(port, () => {
