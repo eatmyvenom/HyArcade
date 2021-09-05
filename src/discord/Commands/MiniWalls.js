@@ -76,6 +76,10 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
   }
   }
 
+  if(args.length == 1) {
+    time = "lifetime";
+  }
+
   let acc;
   let timed;
   if(interaction == undefined) {
