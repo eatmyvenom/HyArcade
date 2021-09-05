@@ -83,10 +83,10 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
   let acc;
   let timed;
   if(interaction == undefined) {
-    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0, time);
+    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0 || plr == "!", time);
     if(time != "lifetime") {
-      acc = res.acc;
-      timed = res.timed;
+      acc = res?.acc;
+      timed = res?.timed;
     } else {
       acc = res;
     }
