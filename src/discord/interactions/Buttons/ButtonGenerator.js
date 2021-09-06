@@ -179,12 +179,12 @@ module.exports = class ButtonGenerator {
     const left = new MessageButton()
       .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
       .setLabel("    ⟵")
-      .setStyle("PRIMARY");
+      .setStyle("SECONDARY");
 
     const right = new MessageButton()
       .setCustomId(`lb:${lb}:${time}:${currentIndex + 10}`)
       .setLabel("⟶    ")
-      .setStyle("PRIMARY");
+      .setStyle("SECONDARY");
 
     if(currentIndex - 10 < 0) {
       left.setDisabled(true);
