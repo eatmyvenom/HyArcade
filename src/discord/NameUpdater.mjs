@@ -16,7 +16,7 @@ export default async function NameUpdater (client) {
   const mwMembers = await mwServer.members.fetch();
 
   mwMembers.forEach(async (m) => {
-    const acc = accs.find((a) => a.discord = m.id);
+    const acc = accs.find((a) => a.discord == m.id);
     if(acc != undefined && acc.name != undefined && acc.name != "INVALID-NAME" && (acc.name != m.nickname || acc.name != m.user.username)) {
       try {
         await m.setNickname(acc.name);
