@@ -49,15 +49,22 @@ async function getFromHypixel (string, interaction) {
  *
  * @param {CommandInteraction} interaction
  * @param {string} namearg
+ * @param {string} time
  * @returns {Promise<Account>}
  */
-module.exports = async function resolveAccount (interaction, namearg = "player") {
+module.exports = async function resolveAccount (interaction, namearg = "player", time = "lifetime") {
   const str = interaction.options.getString(namearg, false);
   if(BotRuntime.botMode == "mini") {
     return await getFromHypixel(str, interaction);
   }
 
-  const url = new URL("account", cfg.dbUrl);
+  let url;
+  if (time != "lifetime") {
+    url = new URL("timeacc", cfg.dbUrl);
+  } else {
+    url = new URL("account", cfg.dbUrl);
+  }
+
   const urlArgs = url.searchParams;
 
   if(str?.length == 32) {
@@ -74,6 +81,10 @@ module.exports = async function resolveAccount (interaction, namearg = "player")
     urlArgs.set("ign", str.toLowerCase());
   } else {
     urlArgs.set("discid", interaction.user.id);
+  }
+
+  if (time != "lifetime") {
+    urlArgs.set("time", time);
   }
 
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);

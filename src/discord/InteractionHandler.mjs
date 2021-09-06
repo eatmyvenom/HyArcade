@@ -8,6 +8,7 @@ import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from 
 import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import microInteractionObjects from "./interactions/microInteractionObjects.js";
 import fullInteractionObjects from "./interactions/interactionObjects.js";
+import MiniWallsInteractionObjects from "./interactions/MiniWallsInteractionObjects.js";
 import CommandParser from "./interactions/CommandParser.mjs";
 
 import { createRequire } from "module";
@@ -188,21 +189,23 @@ async function registerAll (client) {
   const cmdarr = [];
   if(BotRuntime.botMode == "mini") {
     interactionObjects = microInteractionObjects;
+  } else if(BotRuntime.botMode == "mw") {
+    interactionObjects = MiniWallsInteractionObjects;
   }
+
   for(const c in interactionObjects) {
     cmdarr.push(interactionObjects[c]);
   }
 
-  const {
-    guilds
-  } = client;
+  const { guilds } = client;
   guilds.cache.array();
+
   for(const g of guilds.cache.array()) {
     try {
       if(BotRuntime.botMode != "test") {
         await g.commands.set([]);
       } else {
-        // await g.commands.set(cmdarr);
+        await g.commands.set(cmdarr);
       }
     } catch (e) {
       Logger.error("Couldn't change guild slash commands!");

@@ -94,7 +94,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
       acc = res;
     }
   } else {
-    acc = await InteractionUtils.resolveAccount(interaction, 0);
+    acc = await InteractionUtils.resolveAccount(interaction);
   }
 
   if(await isHacker(acc)) {

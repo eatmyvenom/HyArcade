@@ -25,6 +25,8 @@ import { Verify } from "../Commands/LinkMe.mjs";
 import { Compare } from "../Commands/Compare.mjs";
 
 import { createRequire } from "module";
+import MiniWalls from "../Commands/MiniWalls.js";
+import MiniWallsLB from "../Commands/MiniWallsLB.js";
 const require = createRequire(import.meta.url);
 const { MessageEmbed, CommandInteraction } = require("discord.js");
 
@@ -175,6 +177,20 @@ export default async (interaction) => {
 
     case "help" : {
       return await Help.execute([], authorID, null, interaction);
+    }
+    }
+
+    break;
+  }
+
+  case "mini-walls": {
+    switch(interaction.options.getSubcommand()) {
+    case "stats" : {
+      return await MiniWalls.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
+    }
+
+    case "leaderboard" : {
+      return await MiniWallsLB.execute([opts.getString("type"), opts.getString("time"), opts.getString("amount")], authorID, null, interaction);
     }
     }
   }

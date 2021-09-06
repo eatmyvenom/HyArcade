@@ -81,6 +81,8 @@ module.exports = class BotEvents {
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
     } else if(BotRuntime.botMode == "mw") {
+      const InteractionHandler = await import("./InteractionHandler.mjs");
+      await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
     } else if(BotRuntime.botMode == "test") {
