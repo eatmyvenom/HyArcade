@@ -13,6 +13,7 @@ const {
 const {
   Message
 } = require("discord.js");
+const UpdateNames = require("./Commands/UpdateNames");
 
 /**
  * @param {Message} msg
@@ -101,11 +102,13 @@ async function checkCommands (rawMsg, command, args, author) {
     return await Ping.execute(args, author, rawMsg);
   }
 
+  case "updnames": {
+    return await UpdateNames.execute(args, author, rawMsg);
+  }
+
   default: {
     logger.out(`Nonexistent command "${command.toLowerCase()}" was attempted.`);
-    return {
-      res: ""
-    };
+    return {};
   }
   }
 }
