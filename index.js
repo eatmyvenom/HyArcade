@@ -400,6 +400,10 @@ async function main () {
     await Webhook.sendHSMEmbed();
     break;
 
+  case "discordDWK":
+    await Webhook.sendDWKillEmbed();
+    break;
+
   case "discordTOK":
     await sendToKill();
     break;

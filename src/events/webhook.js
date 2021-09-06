@@ -177,6 +177,21 @@ async function sendTOKillEmbed () {
 }
 
 /**
+ *
+ */
+async function sendDWKillEmbed () {
+  const hook = new Discord.WebhookClient(config.otherHooks.DW.id, config.otherHooks.DW.token);
+  await hook.send({
+    embeds: [await genDWKillEmbed()],
+    username: config.otherHooks.TO.username,
+    avatarURL: config.otherHooks.TO.pfp,
+  });
+  // this closes the hook client so the nodejs doesnt hang
+  // forever
+  hook.destroy();
+}
+
+/**
  * Do not look at this... I need a better solution
  * TODO: fix
  *
@@ -205,8 +220,8 @@ function generateEmbed (list) {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGEmbed () {
-  const alltime = await listUtils.stringLB("wins", 25);
-  const day = await listUtils.stringLBDaily("wins", 25);
+  const alltime = await listUtils.stringLB("wins", 25, "partyGames");
+  const day = await listUtils.stringLBDaily("wins", 25, "partyGames");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
@@ -222,7 +237,22 @@ async function genPGEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genTOKillEmbed () {
-  const alltime = await listUtils.stringLB("throwOutKills", 10, "extras");
+  const alltime = await listUtils.stringLB("kills", 10, "throwOut");
+
+  const embed = new Discord.MessageEmbed()
+    .setTitle("Throw out leaderboards")
+    .setColor(0x44a3e7)
+    .setTimestamp(Date.now())
+    .addField("------------- Top lifetime kills -------------", alltime, true);
+
+  return embed;
+}
+
+/**
+ * @returns {Discord.MessageEmbed}
+ */
+async function genDWKillEmbed () {
+  const alltime = await listUtils.stringLB("kills", 10, "dragonWars");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Throw out leaderboards")
@@ -237,7 +267,7 @@ async function genTOKillEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGWEmbed () {
-  const week = await listUtils.stringLBDiff("wins", 25, "weekly");
+  const week = await listUtils.stringLBDiff("wins", 25, "weekly", "partyGames");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
@@ -252,7 +282,7 @@ async function genPGWEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGMEmbed () {
-  const month = await listUtils.stringLBDiff("wins", 25, "monthly");
+  const month = await listUtils.stringLBDiff("wins", 25, "monthly", "partyGames");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
@@ -267,8 +297,8 @@ async function genPGMEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSEmbed () {
-  const alltime = await listUtils.stringLB("hypixelSaysWins", 25);
-  const day = await listUtils.stringLBDaily("hypixelSaysWins", 25);
+  const alltime = await listUtils.stringLB("wins", 25, "hypixelSays");
+  const day = await listUtils.stringLBDaily("wins", 25, "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
@@ -284,7 +314,7 @@ async function genHSEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSWEmbed () {
-  const week = await listUtils.stringLBDiff("hypixelSaysWins", 25, "weekly");
+  const week = await listUtils.stringLBDiff("wins", 25, "weekly", "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
@@ -299,7 +329,7 @@ async function genHSWEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSMEmbed () {
-  const month = await listUtils.stringLBDiff("hypixelSaysWins", 25, "monthly");
+  const month = await listUtils.stringLBDiff("wins", 25, "monthly", "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
@@ -661,5 +691,6 @@ module.exports = {
   sendHSWEmbed,
   sendHSMEmbed,
   sendTOKillEmbed,
+  sendDWKillEmbed,
   sendMW,
 };
