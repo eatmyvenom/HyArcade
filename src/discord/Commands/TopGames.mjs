@@ -161,11 +161,10 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
     if(timetype == "lifetime") {
       acc = res;
     } else {
+      if(res?.timed == undefined) {
+        return nonDatabaseError(res?.acc?.name);
+      }
       acc = getTimedAccount(res?.acc, res?.timed);
-    }
-
-    if(res?.timed == undefined) {
-      return nonDatabaseError(res?.acc?.name);
     }
 
     if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
