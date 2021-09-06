@@ -152,7 +152,7 @@ module.exports = class ImageGenerator {
     }
 
     writeAccTitle (rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
-      const txtRank = rank == undefined ? "" : `[${rank}`;
+      const txtRank = rank == "" ? "" : `[${rank}`;
 
       let plus = "";
       let rankEnd = "";
