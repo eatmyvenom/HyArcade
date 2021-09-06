@@ -178,24 +178,19 @@ module.exports = class ButtonGenerator {
   static async getLBButtons (currentIndex, lb, time) {
     const left = new MessageButton()
       .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
-      .setLabel("<< 10")
+      .setLabel("    ⟵")
       .setStyle("PRIMARY");
-
-    const mid = new MessageButton()
-      .setCustomId(`lb:${lb}:${time}:${currentIndex}`)
-      .setLabel("↻ Refresh")
-      .setStyle("SECONDARY");
 
     const right = new MessageButton()
       .setCustomId(`lb:${lb}:${time}:${currentIndex + 10}`)
-      .setLabel("10 >>")
+      .setLabel("⟶    ")
       .setStyle("PRIMARY");
 
     if(currentIndex - 10 < 0) {
       left.setDisabled(true);
     }
 
-    const row = new MessageActionRow().addComponents(left, mid, right);
+    const row = new MessageActionRow().addComponents(left, right);
 
     return row;
   }
