@@ -42,7 +42,7 @@ module.exports = class InteractionUtils {
     return acc;
   }
 
-  static async resolveAccount (interaction, namearg = "player") {
-    return await AccountResolver(interaction, namearg);
+  static async resolveAccount (interaction, namearg = "player", time) {
+    return await AccountResolver(interaction, namearg, time);
   }
 };

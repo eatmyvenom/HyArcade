@@ -142,43 +142,33 @@ function nonDatabaseError (ign) {
 
 export default new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
-  const timetype = args[1];
+  let timetype = args[1];
+
+  timetype = timetype == "d" ? "day" : timetype == "w" ? "weekly" : timetype == "m" ? "monthly" : "lifetime";
+
   let acc;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
+    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2, timetype);
+    if(timetype == "lifetime") {
+      acc = res;
+    } else {
+      acc = getTimedAccount(res.acc, res.timed);
+    }
+
   } else {
     await interaction.defer();
-    acc = await InteractionUtils.resolveAccount(interaction);
+    const res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
+    if(timetype == "lifetime") {
+      acc = res;
+    } else {
+      acc = getTimedAccount(res.acc, res.timed);
+    }
+
+    if(res.timed == undefined) {
+      return nonDatabaseError(res?.acc?.name);
+    }
+
     if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
-  }
-
-  if(timetype == "d") {
-    const daily = await BotRuntime.getFromDB("dayaccounts");
-    const timedAcc = await daily.find((a) => a?.uuid == acc.uuid);
-
-    if(timedAcc == undefined) {
-      return nonDatabaseError(acc.name);
-    }
-
-    acc = getTimedAccount(acc, timedAcc);
-  } else if(timetype == "w") {
-    const weekly = await BotRuntime.getFromDB("weeklyaccounts");
-    const timedAcc = await weekly.find((a) => a?.uuid == acc.uuid);
-
-    if(timedAcc == undefined) {
-      return nonDatabaseError(acc.name);
-    }
-
-    acc = getTimedAccount(acc, timedAcc);
-  } else if(timetype == "m") {
-    const monthly = await BotRuntime.getFromDB("monthlyaccounts");
-    const timedAcc = await monthly.find((a) => a?.uuid == acc.uuid);
-
-    if(timedAcc == undefined) {
-      return nonDatabaseError(acc.name);
-    }
-
-    acc = getTimedAccount(acc, timedAcc);
   }
 
   const embed = new MessageEmbed()
