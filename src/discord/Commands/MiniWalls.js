@@ -39,7 +39,7 @@ function formatN (str) {
 }
 
 module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
-  const plr = args[0];
+  let plr = args[0];
   let time = args[1] ?? "lifetime";
 
   switch (time.toLowerCase()) {
@@ -78,6 +78,9 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
 
   if(args.length == 1) {
     time = "lifetime";
+    if(plr.length == 1) {
+      plr = "";
+    }
   }
 
   let acc;
