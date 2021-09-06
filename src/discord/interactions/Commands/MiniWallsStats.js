@@ -1,5 +1,5 @@
 module.exports = {
-  name: "mini-walls",
+  name: "stats",
   description: "Get someones mini walls stats",
   options: [{
     type: 3,
