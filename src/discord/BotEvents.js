@@ -11,7 +11,6 @@ const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
-const { default: NameUpdater } = require("./NameUpdater.mjs");
 
 module.exports = class BotEvents {
   static async rateLimit (rlInfo) {
@@ -112,7 +111,8 @@ module.exports = class BotEvents {
     }
 
     if(BotRuntime.botMode == "mw") {
-      await NameUpdater(BotRuntime.client);
+      const NameUpdater = await import("./NameUpdater.mjs");
+      await NameUpdater.default(BotRuntime.client);
     }
   }
 
