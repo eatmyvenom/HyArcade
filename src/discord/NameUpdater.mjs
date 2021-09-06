@@ -10,7 +10,7 @@ const { Client } = require("discord.js");
  * @param {Client} client
  */
 export default async function NameUpdater (client) {
-  const accs = BotRuntime.getFromDB("accounts");
+  const accs = await BotRuntime.getFromDB("accounts");
 
   const mwServer = await client.guilds.fetch("789718245015289886");
   const mwMembers = await mwServer.members.fetch();
