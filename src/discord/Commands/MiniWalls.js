@@ -94,7 +94,13 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
       acc = res;
     }
   } else {
-    acc = await InteractionUtils.resolveAccount(interaction);
+    const res = await InteractionUtils.resolveAccount(interaction, "player", time);
+    if(time != "lifetime") {
+      acc = res?.acc;
+      timed = res?.timed;
+    } else {
+      acc = res;
+    }
   }
 
   if(await isHacker(acc)) {
