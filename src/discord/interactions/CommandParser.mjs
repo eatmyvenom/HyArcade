@@ -184,7 +184,7 @@ export default async (interaction) => {
   }
 
   case "mini-walls": {
-    switch(interaction.options.getSubcommand()) {
+    switch(interaction.options.getSubCommand()) {
     case "stats" : {
       return await MiniWalls.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
     }
