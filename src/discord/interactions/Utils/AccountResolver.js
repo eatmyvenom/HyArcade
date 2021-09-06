@@ -18,7 +18,7 @@ async function getFromHypixel (string, interaction) {
   if(!interaction.deferred) {
     await interaction.defer();
   }
-  logger.info("Unable to resolve, getting by ign from hypixel.");
+  logger.info("Database miss, reading uuid.");
 
   const plr = string;
   let uuid;
@@ -30,10 +30,13 @@ async function getFromHypixel (string, interaction) {
 
   let acc;
   if(Database.accCache[uuid] != undefined) {
+    logger.info("Cache hit, returning cached version.");
     acc = Database.accCache[uuid];
   } else {
+    logger.info("Cache miss, querying from hypixel.");
     acc = new Account("", 0, `${uuid}`);
     await acc.updateData();
+    logger.debug(`${acc.uuid} cached`);
     Database.accCache[acc.uuid] = acc;
   }
 
@@ -59,23 +62,23 @@ module.exports = async function resolveAccount (interaction, namearg = "player",
   }
 
   let url;
+  let urlArgs;
   if (time != "lifetime") {
     url = new URL("timeacc", cfg.dbUrl);
+
+    urlArgs = url.searchParams;
+    urlArgs.set("time", time);
   } else {
     url = new URL("account", cfg.dbUrl);
+
+    urlArgs = url.searchParams;
   }
 
-  const urlArgs = url.searchParams;
-
-  if(str?.length == 32) {
-    urlArgs.set("uuid", str.toLowerCase());
-  } else if(str?.length == 36) {
+  if(str?.length == 32 || str?.length == 36) {
     urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
-  } else if(str?.length == 21 && str.startsWith("<@")) {
-    urlArgs.set("discid", str.slice(2, -1));
-  } else if(str?.length == 22 && str.startsWith("<!@")) {
-    urlArgs.set("discid", str.slice(3, -1));
-  } else if(str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
+  } else if(str.startsWith("<@") || str.startsWith("<!@")) {
+    urlArgs.set("discid", str.replace(/<|@|!|>/g, ""));
+  } else if(str?.length == 18) {
     urlArgs.set("discid", str);
   } else if(str != null && str != "null" && str != undefined && str != "!") {
     urlArgs.set("ign", str.toLowerCase());
@@ -83,15 +86,11 @@ module.exports = async function resolveAccount (interaction, namearg = "player",
     urlArgs.set("discid", interaction.user.id);
   }
 
-  if (time != "lifetime") {
-    urlArgs.set("time", time);
-  }
-
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
   let accdata = await fetch(url.toString());
   if(accdata.status == 200) {
     accdata = await accdata.json();
-    if(str == undefined || accdata.name == "INVALID-NAME" || accdata.name == "null") {
+    if(str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined) {
       return undefined;
     }
     return accdata;
@@ -102,5 +101,4 @@ module.exports = async function resolveAccount (interaction, namearg = "player",
   }
 
   return undefined;
-
 };
