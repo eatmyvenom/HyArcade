@@ -11,6 +11,7 @@ const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
+const { default: NameUpdater } = require("./NameUpdater.mjs");
 
 module.exports = class BotEvents {
   static async rateLimit (rlInfo) {
@@ -108,6 +109,10 @@ module.exports = class BotEvents {
       logger.out("Roles updated!");
       runtime.needRoleupdate = false;
       await runtime.save();
+    }
+
+    if(BotRuntime.botMode == "mw") {
+      await NameUpdater(BotRuntime.client);
     }
   }
 

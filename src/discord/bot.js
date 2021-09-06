@@ -20,6 +20,13 @@ const lesserIntents = [
   Discord.Intents.FLAGS.GUILDS,
 ];
 
+const mwIntents = [
+  Discord.Intents.FLAGS.GUILD_MESSAGES,
+  Discord.Intents.FLAGS.GUILD_WEBHOOKS,
+  Discord.Intents.FLAGS.GUILD_MEMBERS,
+  Discord.Intents.FLAGS.GUILDS,
+];
+
 /**
  * Execute the discord bot
  *
@@ -37,7 +44,7 @@ module.exports = function doBot () {
     });
   } else if(mode == "mw") {
     client = new Discord.Client({
-      intents: lesserIntents,
+      intents: mwIntents,
       allowedMentions: {
         parse: [],
         repliedUser: false
