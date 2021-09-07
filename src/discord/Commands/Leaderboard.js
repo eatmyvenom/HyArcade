@@ -338,7 +338,7 @@ async function hander (args, rawMsg, interaction) {
   case "capwool":
   case "ctwwool":
   case "ctwcaps":
-  case "ctwc":
+  case "ctwcap":
   case "woolcap":
   case "caps":
   case "captures":
@@ -712,6 +712,17 @@ async function hander (args, rawMsg, interaction) {
     gameName = "Throw out challenges";
     res = await getLB("throwOut", timetype, limit, "arcadeChallenges", startingIndex);
     gid = "toc";
+    break;
+  }
+
+  case "ctwc":
+  case "cctw":
+  case "capturethewoolc":
+  case "cwc":
+  case "capc": {
+    gameName = "Capture the Wool challenges";
+    res = await getLB("captureTheWool", timetype, limit, "arcadeChallenges", startingIndex);
+    gid = "ctwc";
     break;
   }
 
