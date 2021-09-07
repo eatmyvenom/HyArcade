@@ -221,7 +221,7 @@ function generateEmbed (list) {
  */
 async function genPGEmbed () {
   const alltime = await listUtils.stringLB("wins", 25, "partyGames");
-  const day = await listUtils.stringLBDaily("wins", 25, "partyGames");
+  const day = await listUtils.stringLBDiff("wins", 25, "day", "partyGames");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
@@ -298,7 +298,7 @@ async function genPGMEmbed () {
  */
 async function genHSEmbed () {
   const alltime = await listUtils.stringLB("wins", 25, "hypixelSays");
-  const day = await listUtils.stringLBDaily("wins", 25, "hypixelSays");
+  const day = await listUtils.stringLBDiff("wins", 25, "day", "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
