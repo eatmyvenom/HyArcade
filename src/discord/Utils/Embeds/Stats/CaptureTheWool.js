@@ -17,7 +17,7 @@ function f (number) {
  */
 module.exports = function CaptureTheWool (acc, embed) {
   embed.addField("Stats", `**- Kills** (\`${f(acc.captureTheWool.kills)}\`)\n**- Captures** (\`${f(acc.captureTheWool.woolCaptures)}\`)`);
-  embed.addField("Info", `**- AP** (\`${f(acc.arcadeAchievments.captureTheWool.apEarned)} / ${f(acc.arcadeAchievments.captureTheWool.apAvailable)}\`)`);
+  embed.addField("Info", `**- AP** (\`${f(acc.arcadeAchievments.captureTheWool.apEarned)} / ${f(acc.arcadeAchievments.captureTheWool.apAvailable)}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.captureTheWool)}\`)`);
 
   return embed;
 };
