@@ -31,7 +31,7 @@ async function getLB (prop, timetype, limit) {
   case "week":
   case "weak":
   case "weekly": {
-    time = "Daily";
+    time = "Weekly";
     res = await Database.getMWLeaderboard(prop, "weekly");
     res = res.slice(0, Math.min(limit, res.length));
     break;
