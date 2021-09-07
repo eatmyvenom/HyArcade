@@ -571,7 +571,7 @@ async function hander (args, rawMsg, interaction) {
   case "cbd":
   case "bdchal":
   case "blockingdeadchallenge": {
-    gameName = "Football challenges";
+    gameName = "Blocking dead challenges";
     res = await getLB("blockingDead", timetype, limit, "arcadeChallenges", startingIndex);
     gid = "bdc";
     break;
@@ -718,6 +718,7 @@ async function hander (args, rawMsg, interaction) {
   case "ctwc":
   case "cctw":
   case "capturethewoolc":
+  case "capturethewoolchallenge":
   case "cwc":
   case "capc": {
     gameName = "Capture the Wool challenges";

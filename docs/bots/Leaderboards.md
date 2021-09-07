@@ -60,6 +60,22 @@
 * `arcadewinner` - "Arcade winner" quest completions
 * `arcadespecialist` - "Arcade specialist" quest completions
 ###### --------------------------------------------------------------------------
+* `blockingdeadchallenge` - Blocking dead challenge completions
+* `creeperattackchallenge` - Crepper attack challenge completions
+* `dragonwarschallenge` - Dragon wars challenge completions
+* `enderspleefchallenge` - Ender spleef challenge completions
+* `farmhuntchallenge` - Farm hunt challenge completions
+* `footballchallenge` - Football challenge completions
+* `galaxywarschallenge` - Galaxy wars challenge completions
+* `hideandseekchallenge` - Hide and Seek challenge completions
+* `holeinthewallchallenge` - Hole in the wall challenge completions
+* `hypixelsayschallenge` - Hypixel says challenge completions
+* `miniwallschallenge` - Mini walls challenge completions
+* `partygameschallenge` - Party games challenge completions
+* `throwoutchallenge` - Throw out challenge completions
+* `capturethewoolchallenge` - Capture the wool challenge completions
+* `zombieschallenge` - Zombies challenge completions
+###### --------------------------------------------------------------------------
 * `achievements` - Total achievement points
 * `quests` - Total quests completed
 ###### --------------------------------------------------------------------------
