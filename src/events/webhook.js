@@ -135,7 +135,7 @@ async function sendHSMEmbed () {
  *
  */
 async function sendPGWEmbed () {
-  const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+  const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
   await hook.send({
     embeds: [await genPGWEmbed()],
     username: config.webhook.username,
@@ -150,7 +150,7 @@ async function sendPGWEmbed () {
  *
  */
 async function sendPGMEmbed () {
-  const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token);
+  const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
   await hook.send({
     embeds: [await genPGMEmbed()],
     username: config.webhook.username,
@@ -165,7 +165,7 @@ async function sendPGMEmbed () {
  *
  */
 async function sendTOKillEmbed () {
-  const hook = new Discord.WebhookClient(config.otherHooks.TO.id, config.otherHooks.TO.token);
+  const hook = new Discord.WebhookClient({ id: config.otherHooks.TO.id, token: config.otherHooks.TO.token });
   await hook.send({
     embeds: [await genTOKillEmbed()],
     username: config.otherHooks.TO.username,
@@ -180,7 +180,7 @@ async function sendTOKillEmbed () {
  *
  */
 async function sendDWKillEmbed () {
-  const hook = new Discord.WebhookClient(config.otherHooks.DW.id, config.otherHooks.DW.token);
+  const hook = new Discord.WebhookClient({ id: config.otherHooks.TEST.id, token: config.otherHooks.TEST.token });
   await hook.send({
     embeds: [await genDWKillEmbed()],
     username: config.otherHooks.TO.username,
@@ -255,7 +255,7 @@ async function genDWKillEmbed () {
   const alltime = await listUtils.stringLB("kills", 10, "dragonWars");
 
   const embed = new Discord.MessageEmbed()
-    .setTitle("Throw out leaderboards")
+    .setTitle("Dragon Wars Leaderboard")
     .setColor(0x44a3e7)
     .setTimestamp(Date.now())
     .addField("------------- Top lifetime kills -------------", alltime, true);
