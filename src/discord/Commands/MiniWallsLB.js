@@ -230,7 +230,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     .setTitle(correctedTime)
     .setColor(0xc60532)
     .setDescription(res)
-    .setAuthor(`${gameName} Leaderboard`, "https://eatmyvenom.me/share/images/miniwalls.jpg");
+    .setAuthor(`${gameName} Leaderboard`, "https://eatmyvenom.me/share/images/MWPfp3.png");
 
   if(res.length > 6000) {
     return new MessageEmbed()
