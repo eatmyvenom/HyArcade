@@ -2,9 +2,9 @@ const Logger = require("hyarcade-logger");
 const fetch = require("node-fetch");
 const cfg = require("hyarcade-config").fromJSON();
 
-setInterval(() => module.exports.accCache == {}, 30000);
+setInterval(() => Database.accCache = {}, 30000);
 
-module.exports = class Database {
+class Database {
 
   static accCache = {};
 
@@ -113,4 +113,6 @@ module.exports = class Database {
     return acc;
   }
 
-};
+}
+
+module.exports = Database;
