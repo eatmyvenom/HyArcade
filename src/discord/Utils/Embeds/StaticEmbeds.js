@@ -20,7 +20,7 @@ exports.ERROR_NEED_PLAYER = new MessageEmbed()
 exports.ERROR_UNLINKED = new MessageEmbed()
   .setTitle("ERROR")
   .setColor(COLOR_RED)
-  .setDescription("You need to input an IGN or verify yourself.");
+  .setDescription("No account was able to be resolved from your input.");
 
 exports.ERROR_API_DOWN = new MessageEmbed()
   .setTitle("ERROR")
