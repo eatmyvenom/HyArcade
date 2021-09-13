@@ -60,7 +60,9 @@ class FileCache {
         if(this.hackerlist.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}hackerlist`, this.hackerlist.join("\n").trim());
         }
-        await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
+        if(this.ezmsgs.join("\n").trim() != "") {
+          await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
+        }
         Logger.debug("Files saved...");
         this.dirty = false;
       } catch (e) {
@@ -103,7 +105,7 @@ class FileCache {
         fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
         fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
         if(ezmsgs.toString().trim() != "") {
-          ezmsgs.blacklist = ezmsgs.toString().trim()
+          fileCache.ezmsgs = ezmsgs.toString().trim()
             .split("\n")
             .filter((v) => v != "");
         }
