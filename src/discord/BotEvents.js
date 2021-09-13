@@ -13,6 +13,7 @@ const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
 
 module.exports = class BotEvents {
+
   static async rateLimit (rlInfo) {
     const {
       timeout
@@ -117,12 +118,11 @@ module.exports = class BotEvents {
   }
 
   static warn (info) {
-    logger.warn("Discord sent a warning:");
     logger.warn(info);
   }
 
   static invalidated () {
-    logger.error("Discord session invalidated!");
+    logger.error("Discord session invalidated! Bot will most likely stop soon.");
   }
 
   /**
@@ -140,7 +140,6 @@ module.exports = class BotEvents {
    * @param {Error} error 
    */
   static error (error) {
-    logger.err("Discord encountered an error");
     logger.err(`${error.name} : ${error.message}`);
     logger.err(`Current stack:\n${error.stack}`);
   }
@@ -158,7 +157,7 @@ module.exports = class BotEvents {
    * @param {Guild} guild 
    */
   static guildUnavailable (guild) {
-    logger.warn(`Guild ${guild.name} has become unavailable!`);
+    logger.warn(`Guild ${guild.name} has become unavailable! Bot will no longer respond there.`);
   }
 
   /**
@@ -169,12 +168,34 @@ module.exports = class BotEvents {
     logger.warn(`An invalid request was made, this is number ${warning.count}!`);
   }
 
-  static debug (info) {
-    logger.debug(info);
-  }
-
   static async cyclePresence () {
     logger.info("Cycling presence...");
     await SetPresence(BotRuntime.client, BotRuntime.botMode);
+  }
+
+  static guildIntegrationsUpdate (guild) {
+    logger.debug(`${guild.name}'s integrations updated`);
+  }
+
+  static shardDisconnect (event, id) {
+    logger.warn(`Shard ${id} has disconnected and will no longer reconnect!`);
+    logger.warn(`Code : ${event.code} - ${event.reason}`);
+  }
+
+  static shardError (error, shardId) {
+    logger.error(`Shard ${shardId} has encountered an error!`);
+    logger.error(error.stack);
+  }
+
+  static shardReady (id) {
+    logger.info(`Shard ${id} is ready!`);
+  }
+
+  static shardReconnecting (id) {
+    logger.out(`Shard ${id} is reconnecting, bot is unable to respond during this time`);
+  }
+
+  static shardResume (id, replayedEvents) {
+    logger.out(`Shard ${id} has resumed succesfully with ${replayedEvents} replayed events.`);
   }
 };

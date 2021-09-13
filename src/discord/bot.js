@@ -82,7 +82,11 @@ module.exports = function doBot () {
   client.on("webhookUpdate", BotEvents.webhookUpdate);
   client.on("guildUnavailable", BotEvents.guildUnavailable);
   client.on("invalidRequestWarning", BotEvents.invalidRequestWarning);
-  client.on("debug", BotEvents.debug);
+  client.on("shardDisconnect", BotEvents.shardDisconnect);
+  client.on("shardError", BotEvents.shardError);
+  client.on("shardReady", BotEvents.shardReady);
+  client.on("shardReconnecting", BotEvents.shardReconnecting);
+  client.on("shardResume", BotEvents.shardResume);
 
   if(Runtime.bot != "backup") {
     if(mode == "mini") {
