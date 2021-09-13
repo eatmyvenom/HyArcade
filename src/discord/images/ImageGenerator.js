@@ -176,6 +176,7 @@ module.exports = class ImageGenerator {
       if(x != undefined) {
         startX = x;
       }
+
       let rankColor;
       if(txtRank == "[MVP_PLUS_PLUS") {
         rankColor = "#FFAA00";

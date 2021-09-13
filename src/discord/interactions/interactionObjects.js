@@ -10,3 +10,4 @@ exports.leaderboard = require("./Commands/Leaderboard");
 exports.arcade = require("./Commands/Arcade");
 exports.topgames = require("./Commands/TopGames");
 exports.zombies = require("./Commands/Zombies");
+exports.status = require("./Commands/Status");

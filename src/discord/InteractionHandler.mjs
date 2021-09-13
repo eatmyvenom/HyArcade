@@ -186,16 +186,13 @@ async function interactionHandler (interaction) {
 async function registerAll (client) {
   let interactionObjects = fullInteractionObjects;
   Logger.info("Registering global commands with discord");
-  const cmdarr = [];
   if(BotRuntime.botMode == "mini") {
     interactionObjects = microInteractionObjects;
   } else if(BotRuntime.botMode == "mw") {
     interactionObjects = MiniWallsInteractionObjects;
   }
-
-  for(const c in interactionObjects) {
-    cmdarr.push(interactionObjects[c]);
-  }
+  
+  const cmdarr = Object.values(interactionObjects);
 
   const { guilds } = client;
   guilds.cache.array();

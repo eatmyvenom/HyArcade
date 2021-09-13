@@ -63,7 +63,7 @@ function lastSeen (acc) {
     return "right now";
   } 
   return TimeFormatter(acc.lastLogout);
-  
+
 }
 
 export const Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
