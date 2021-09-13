@@ -638,7 +638,7 @@ async function sendMW () {
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
   let str = "";
-  guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
+  guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0" && g.uuid != "5f43abfb8ea8c9a71bc961f6");
   for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
     const g = guildlist[i];
     str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
