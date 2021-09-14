@@ -1,4 +1,3 @@
-import logger from "hyarcade-logger";
 import { addAccounts } from "../../listUtils.js";
 
 import CommandResponse from "../Utils/CommandResponse.js";
@@ -166,7 +165,6 @@ export default async (interaction) => {
   case "arcade": {
     switch(interaction.options.getSubCommand()) {
     case "ez" : {
-      logger.debug("Adding ez button to message");
       const buttons = await ButtonGenerator.getEZ();
 
       /** @type {CommandResponse} */

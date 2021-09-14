@@ -18,6 +18,7 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
     acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
     channel = rawMsg.channel;
   } else {
+    await interaction.defer();
     acc1 = await InteractionUtils.resolveAccount(interaction, "player1");
     acc2 = await InteractionUtils.resolveAccount(interaction, "player2");
     channel = interaction.channel;
