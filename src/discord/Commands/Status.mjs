@@ -373,7 +373,7 @@ async function callback (args, rawmsg, interaction) {
   }
 
 
-  return new CommandResponse(`\`\`\`${JSON.stringify(status, null, 4)}\`\`\``, undefined, img.toDiscord());
+  return new CommandResponse("", undefined, img.toDiscord());
 }
 
 
