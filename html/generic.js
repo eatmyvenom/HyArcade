@@ -585,8 +585,7 @@ async function load () {
     const mw1L = document.createElement("div");
     mw1L.setAttribute("class", "life");
     mw1L.title = "Lifetime kills";
-    mw1L.id = "kills";
-    mw1L.setAttribute("miniWalls", mw1L.id);
+    mw1L.id = "miniWalls.kills";
     main.appendChild(mw1L);
 
     const mw1D = document.createElement("div");
