@@ -1,4 +1,9 @@
-const BSON = require("bson-ext");
+let BSON;
+try {
+  BSON = require("bson-ext");
+} catch(e) {
+  BSON = require("bson");
+}
 const fs = require("fs-extra");
 
 module.exports = async function BSONreader (path) {

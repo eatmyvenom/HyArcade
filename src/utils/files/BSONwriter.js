@@ -1,5 +1,10 @@
 const fs = require("fs-extra");
-const BSON = require("bson-ext");
+let BSON;
+try {
+  BSON = require("bson-ext");
+} catch(e) {
+  BSON = require("bson");
+}
 
 module.exports = async function BSONwriter (path, object) {
   if(Array.isArray(object)) {
