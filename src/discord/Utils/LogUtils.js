@@ -16,9 +16,9 @@ module.exports = class LogUtils {
    */
   static async logcopy (msg, hook) {
     const pfp = msg.author.avatarURL();
-    let name = "unknown";
+    let name;
     if(msg.member) {
-      name = msg.member.displayName;
+      name = msg.member.displayColor ?? "Unknown";
     }
 
     await hook.send({

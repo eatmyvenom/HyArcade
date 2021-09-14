@@ -30,7 +30,6 @@ async function isBlacklisted (id) {
  */
 async function commandHandler (interaction) {
 
-
   if(await isBlacklisted(interaction?.user?.id)) {
     return;
   }
@@ -77,11 +76,6 @@ async function commandHandler (interaction) {
     return;
   }
 
-  const logString = `${interaction?.member?.user?.tag} invoked command interaction \`${
-    interaction.commandName
-  }\` with options \`${JSON.stringify(interaction.options.data)}\``;
-  Logger.out(logString.replace(/`/g, "'"));
-  await Webhooks.logHook.send(logString);
   await logCmd(interaction);
 }
 

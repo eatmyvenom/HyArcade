@@ -76,10 +76,10 @@ exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, va
     .setTitle(`Component used by ${usertag}`)
     .setColor(COLOR_PURPLE)
     .addField("ID", `\`${componentID}\``, false)
+    .addField("Values", `\`${values?.join(", ")}\``, false)
     .addField("User", `<@${userid}>`, true)
     .addField("Server", `${server}`, true)
-    .addField("Channel", `<#${channel}>`, true)
-    .addField("Values", `\`${values?.join(", ")}\``, false);
+    .addField("Channel", `<#${channel}>`, true);
 };
 
 exports.INFO_WHOIS = function (acc) {
