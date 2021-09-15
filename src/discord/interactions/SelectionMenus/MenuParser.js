@@ -9,7 +9,7 @@ const MenuGenerator = require("./MenuGenerator");
 /**
  * 
  * @param {SelectMenuInteraction} interaction 
- * @returns {ButtonResponse}
+ * @returns {Promise<ButtonResponse>}
  */
 module.exports = async function MenuParser (interaction) {
   const data = interaction.customId.split(":");

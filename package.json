@@ -13,12 +13,14 @@
         "test": "node . save",
         "lint": "eslint ./src --fix",
         "beautify": "find ./src -type f -name '*.js' -exec js-beautify -r {} +",
-        "beautifyhtml": "find ./html -type f -name '*.js' -exec js-beautify -r {} +"
+        "beautifyhtml": "find ./html -type f -name '*.js' -exec js-beautify -r {} +",
+        "setworker": "cd src/Worker;wrangler publish;cd ../.." 
     },
     "author": "EatMyVenom",
     "license": "MPL-2.0",
     "dependencies": {
         "@babel/eslint-parser": "^7.14.7",
+        "@cloudflare/wrangler": "^1.19.2",
         "bson": "^4.4.1",
         "bson-ext": "^4.0.0",
         "canvas": "^2.8.0",

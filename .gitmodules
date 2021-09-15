@@ -7,3 +7,6 @@
 [submodule "src/utils/Logger"]
 	path = src/utils/Logger
 	url = git@github.com:eatmyvenom/hyarcade-logger.git
+[submodule "src/Worker"]
+	path = src/Worker
+	url = git@github.com:eatmyvenom/Hyarcade-Worker.git
