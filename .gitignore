@@ -17,3 +17,4 @@ timeupdate
 *.log
 starttime
 *.code-workspace
+wrangler.toml
