@@ -14,7 +14,7 @@
         "lint": "eslint ./src --fix",
         "beautify": "find ./src -type f -name '*.js' -exec js-beautify -r {} +",
         "beautifyhtml": "find ./html -type f -name '*.js' -exec js-beautify -r {} +",
-        "setworker": "cd src/Worker;wrangler publish;cd ../.." 
+        "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },
     "author": "EatMyVenom",
     "license": "MPL-2.0",
