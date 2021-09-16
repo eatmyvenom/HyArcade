@@ -5,14 +5,112 @@ const force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
+const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
+const process = require("process");
+const { sleep } = require("../utils");
+
+class Response {
+  key = {};
+  data = [];
+}
+
+/**
+ * 
+ * @param {string[]} uuids 
+ * @returns {Response}
+ */
+async function requestData (uuids) {
+  try {
+    return await HyarcadeWorkerRequest(uuids);
+  } catch (e) {
+    return await requestData(uuids);
+  }
+}
+
+async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, perSegment) {
+  const uuidArr = [];
+
+  for (const acc of accs) {
+    uuidArr.push(acc.uuid);
+  }
+
+  logger.debug(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
+  const workerData = await requestData(uuidArr);
+
+  if(workerData.key.remaining < perSegment) {
+    logger.info(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
+    await sleep(workerData.key.reset * 1000);
+  }
+
+  for (const acc of accs) {
+    logger.log(`Setting data for ${acc.uuid}`);
+    const accData = workerData.data[acc.uuid];
+    if(accData?.success == false) {
+      logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
+      logger.err(JSON.stringify(accData, null, 2));
+      process.exit(344);
+    }
+    acc.setHypixel(accData);
+    updatedAccs.push(acc);
+  }
+}
 
 /**
  * Update the player data for all players in the list
  *
  * @param {Account[]} accounts
- * @returns {Account[]}
+ * @returns {Promise<Account[]>}
+ */
+async function fastUpdate (accounts) {
+  await fs.writeFile("starttime", (`${Date.now()}`));
+
+  const oldAccs = await utils.readDB("accounts");
+  const importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
+
+  const perSegment = cfg.segmentSize;
+
+  const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => { 
+    const segmentIndex = Math.floor(index / perSegment);
+
+    if(!resultArray[segmentIndex]) {
+      resultArray[segmentIndex] = [];
+    }
+
+    resultArray[segmentIndex].push(item);
+
+    return resultArray;
+  }, []);
+
+  const updatedAccs = [];
+
+  for(let i = 0;i < segmentedAccs.length; i += 1) {
+    const accs = segmentedAccs[i];
+    await Promise.all([
+      updateSegment(accs, i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(accs, i += 1, updatedAccs, segmentedAccs, perSegment)]
+    );
+  }
+
+  const runtime = Runtime.fromJSON();
+  runtime.needRoleupdate = true;
+  await runtime.save();
+
+  await updatedAccs.sort(utils.winsSorter);
+  return updatedAccs;
+}
+
+/**
+ * Update the player data for all players in the list
+ *
+ * @param {Account[]} accounts
+ * @returns {Promise<Account[]>}
  */
 module.exports = async function updateAccounts (accounts) {
+
+  if(cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
+    return await fastUpdate(accounts);
+  }
+
   let accs = accounts.sort(utils.winsSorter);
   await fs.writeFile("starttime", (`${Date.now()}`));
 
@@ -68,48 +166,62 @@ async function updateAccountsInArr (accounts, oldAccs) {
   return await Promise.all(
     accounts.map(async (account) => {
       const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
-      if(oldAcc != undefined && !force) {
-
-        // Make sure they have a relavent amount of arcade games wins
-        const isArcadePlayer = oldAcc.arcadeWins >= 1500;
-
-        // Make sure their arcade wins are not inflated due to football
-        const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 15000;
-        const fbBelowInflationLimit = (oldAcc?.football?.wins ?? 0) <= 250;
-
-        const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
-
-        // Make sure their arcade wins are not inflated due to mini walls
-        const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 12000;
-        const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 250;
-
-        const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
-
-        // Make sure their arcade wins are not inflated due to hide and seek
-        const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 3000;
-        const hnsBelowInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) <= 200;
-
-        const nothnsInflated = hnsBelowInflationLimit || hnsAboveInflationLimit;
-
-        // Linked players should update more often since they will check their own stats
-        const isLinked = !!oldAcc.discord;
-
-        // Ignore people who have not played within the last 3 days
-        const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 259200000;
-
-        const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated && nothnsInflated;
-
-        if((isLinked || hasImportantStats) && hasPlayedRecently) {
-          logger.out(`Updating ${oldAcc.name}'s data`);
-          await account.updateData();
-        } else {
-          logger.info(`Ignoring ${oldAcc.name} for this refresh`);
-          account.setData(oldAcc);
-        }
-      } else {
-        logger.out(`Updating ${account.name}'s data`);
+      if(isImportant(oldAcc)) {
+        logger.out(`Updating ${oldAcc.name}'s data`);
         await account.updateData();
+      } else {
+        logger.info(`Ignoring ${oldAcc.name} for this refresh`);
+        account.setData(oldAcc);
       }
     })
   );
+}
+
+/**
+ * 
+ * @param {Account} oldAcc 
+ * @returns {boolean}
+ */
+function isImportant (oldAcc) {
+
+  if(oldAcc == undefined) {
+    return true;
+  }
+
+  if(force) {
+    return true;
+  }
+
+  // Make sure they have a relavent amount of arcade games wins
+  const isArcadePlayer = oldAcc.arcadeWins >= 1500;
+
+  // Make sure their arcade wins are not inflated due to football
+  const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 15000;
+  const fbBelowInflationLimit = (oldAcc?.football?.wins ?? 0) <= 250;
+
+  const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
+
+  // Make sure their arcade wins are not inflated due to mini walls
+  const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 12000;
+  const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 250;
+
+  const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
+
+  // Make sure their arcade wins are not inflated due to hide and seek
+  const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 3000;
+  const hnsBelowInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) <= 200;
+
+  const nothnsInflated = hnsBelowInflationLimit || hnsAboveInflationLimit;
+
+  // Linked players should update more often since they will check their own stats
+  const isLinked = !!oldAcc.discord;
+
+  // Ignore people who have not played within the last 3 days
+  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 259200000;
+
+  const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated && nothnsInflated;
+
+  const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
+
+  return meetsRequirements;
 }
