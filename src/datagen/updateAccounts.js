@@ -27,6 +27,14 @@ async function requestData (uuids) {
   }
 }
 
+/**
+ * 
+ * @param {*} accs 
+ * @param {*} currentBatch 
+ * @param {*} updatedAccs 
+ * @param {*} segmentedAccs 
+ * @param {*} perSegment 
+ */
 async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, perSegment) {
   const uuidArr = [];
 
