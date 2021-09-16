@@ -180,7 +180,7 @@ async function sendTOKillEmbed () {
  *
  */
 async function sendDWKillEmbed () {
-  const hook = new Discord.WebhookClient({ id: config.otherHooks.TEST.id, token: config.otherHooks.TEST.token });
+  const hook = new Discord.WebhookClient({ id: config.otherHooks.DW.id, token: config.otherHooks.DW.token });
   await hook.send({
     embeds: [await genDWKillEmbed()],
     username: config.otherHooks.TO.username,
