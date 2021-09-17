@@ -21,93 +21,11 @@ class EventDetector {
         return;
       }
 
-      const oldIndex = this.OldAccounts.indexOf(oldAcc);
-      const newIndex = this.NewAccounts.indexOf(newAcc);
-
-      this.detectWinsAuto(oldAcc, newAcc, "wins", "PG");
-      this.detectWinsAuto(oldAcc, newAcc, "hypixelSaysWins", "HYSAYS");
-      this.detectWinsAuto(oldAcc, newAcc, "farmhuntWins", "FH");
-      this.detectWinsAuto(oldAcc, newAcc, "hitwWins", "HITW");
-      this.detectWinsAuto(oldAcc, newAcc, "throwOutWins", "TO");
-      this.detectWinsAuto(oldAcc, newAcc, "miniWallsWins", "MW");
-      this.detectWinsAuto(oldAcc, newAcc, "footballWins", "FB");
-      this.detectWinsAuto(oldAcc, newAcc, "zombiesWins", "Z");
-      this.detectWinsAuto(oldAcc, newAcc, "blockingDeadWins", "BD");
-      this.detectWinsAuto(oldAcc, newAcc, "dragonWarsWins", "DW");
-      this.detectWinsAuto(oldAcc, newAcc, "bountyHuntersWins", "BH");
-
       this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
       this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
 
-      if(newIndex <= 24 && newIndex == (oldIndex + 1) && oldAcc.wins != newAcc.wins) {
-        this.Events.push(
-          new AccountEvent(newAcc.name, "LBPOS", oldIndex, newIndex, this.OldAccounts[newIndex].name, newAcc.uuid)
-        );
-      }
-
       if(oldAcc.name != newAcc.name) {
         this.Events.push(new AccountEvent(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid));
-      }
-
-      if(
-        oldAcc.discord != newAcc.discord &&
-            newAcc.discord != undefined &&
-            newAcc.discord != "" &&
-            newAcc.discord != 0
-      ) {
-        this.Events.push(new AccountEvent(newAcc.name, "LINK", oldAcc.discord, newAcc.discord, "", newAcc.uuid));
-      }
-
-      if(
-        Date.now() - oldAcc.lastLogout > 2629743000 &&
-            newAcc.lastLogout != oldAcc.lastLogout &&
-            newAcc.lastLogout != "" &&
-            newAcc.lastLogout != 0 &&
-            newAcc.lastLogout != undefined
-      ) {
-        this.Events.push(
-          new AccountEvent(newAcc.name, "LOGIN", oldAcc.lastLogout, newAcc.lastLogout, "", newAcc.uuid)
-        );
-      }
-
-      if(oldAcc.rank != newAcc.rank && newAcc.rank != "" && newAcc.rank != undefined) {
-        this.Events.push(new AccountEvent(newAcc.name, "RANK", oldAcc.rank, newAcc.rank, "", newAcc.uuid));
-      }
-
-      if(
-        oldAcc.ranksGifted != newAcc.ranksGifted &&
-            newAcc.ranksGifted != 0 &&
-            newAcc.ranksGifted != "" &&
-            newAcc.ranksGifted != undefined
-      ) {
-        this.Events.push(
-          new AccountEvent(newAcc.name, "SIMP", oldAcc.ranksGifted, newAcc.ranksGifted, "", newAcc.uuid)
-        );
-      }
-
-      if(oldAcc.hasOptifineCape != newAcc.hasOptifineCape && newAcc.hasOptifineCape == false) {
-        this.Events.push(
-          new AccountEvent(newAcc.name, "OF", oldAcc.hasOptifineCape, newAcc.hasOptifineCape, "", newAcc.uuid)
-        );
-      }
-
-      if(
-        Math.floor(oldAcc.level) < Math.floor(newAcc.level) &&
-            newAcc.level != undefined &&
-            newAcc.level != 0 &&
-            newAcc.level != 1 &&
-            Math.floor(newAcc) % 10 == 0
-      ) {
-        this.Events.push(
-          new AccountEvent(
-            newAcc.name,
-            "LVL",
-            Math.floor(oldAcc.level),
-            Math.floor(newAcc.level),
-            "",
-            newAcc.uuid
-          )
-        );
       }
 
       if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
@@ -129,7 +47,7 @@ class EventDetector {
       }
     }
 
-    detectWinsAuto (oldAcc, newAcc, prop, type) {
+    detectWinsAuto (oldAcc, newAcc, prop, cate, type) {
       if(newAcc[prop] % cfg.events[type].winMod == 0 && newAcc[prop] > oldAcc[prop]) {
         this.Events.push(new AccountEvent(newAcc.name, type, oldAcc[prop], newAcc[prop], "", newAcc.uuid));
       }
