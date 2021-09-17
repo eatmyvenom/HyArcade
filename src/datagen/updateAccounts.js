@@ -36,6 +36,9 @@ async function requestData (uuids) {
  * @param {*} perSegment 
  */
 async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, perSegment) {
+  if(accs == undefined) {
+    return;
+  }
   const uuidArr = [];
 
   for (const acc of accs) {
