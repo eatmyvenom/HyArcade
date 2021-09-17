@@ -175,10 +175,10 @@ async function updateAccountsInArr (accounts, oldAccs) {
     accounts.map(async (account) => {
       const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
       if(isImportant(oldAcc)) {
-        logger.out(`Updating ${oldAcc.name}'s data`);
+        logger.out(`Updating ${oldAcc?.name}'s data`);
         await account.updateData();
       } else {
-        logger.info(`Ignoring ${oldAcc.name} for this refresh`);
+        logger.info(`Ignoring ${oldAcc?.name} for this refresh`);
         account.setData(oldAcc);
       }
     })
