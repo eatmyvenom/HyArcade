@@ -76,12 +76,12 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
 async function fastUpdate (accounts) {
   await fs.writeFile("starttime", (`${Date.now()}`));
 
+  const perSegment = cfg.segmentSize;
+
   const oldAccs = AccountArray(await utils.readDB("accounts"));
   let importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
 
-  importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, 25));
-
-  const perSegment = cfg.segmentSize;
+  importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, perSegment));
 
   const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => { 
     const segmentIndex = Math.floor(index / perSegment);
