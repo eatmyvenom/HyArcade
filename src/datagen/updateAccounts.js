@@ -92,7 +92,7 @@ async function fastUpdate (accounts) {
     return resultArray;
   }, []);
 
-  const updatedAccs = [];
+  let updatedAccs = [];
 
   for(let i = 0;i < segmentedAccs.length; i += 1) {
     await Promise.all([
@@ -105,6 +105,8 @@ async function fastUpdate (accounts) {
   const runtime = Runtime.fromJSON();
   runtime.needRoleupdate = true;
   await runtime.save();
+
+  updatedAccs = updatedAccs.concat(accounts.filter((a) => !isImportant(oldAccs.find((oa) => oa.uuid == a.uuid))));
 
   await updatedAccs.sort(utils.winsSorter);
   return updatedAccs;
