@@ -76,7 +76,9 @@ async function fastUpdate (accounts) {
   await fs.writeFile("starttime", (`${Date.now()}`));
 
   const oldAccs = await utils.readDB("accounts");
-  const importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
+  let importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
+
+  importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, 25));
 
   const perSegment = cfg.segmentSize;
 
