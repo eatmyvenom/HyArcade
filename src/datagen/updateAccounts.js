@@ -92,11 +92,11 @@ async function fastUpdate (accounts) {
   const updatedAccs = [];
 
   for(let i = 0;i < segmentedAccs.length; i += 1) {
-    const accs = segmentedAccs[i];
     await Promise.all([
-      updateSegment(accs, i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(accs, i += 1, updatedAccs, segmentedAccs, perSegment)]
-    );
+      updateSegment(segmentedAccs[i], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+    ]);
   }
 
   const runtime = Runtime.fromJSON();
