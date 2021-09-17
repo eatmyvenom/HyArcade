@@ -8,6 +8,7 @@ const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const process = require("process");
 const { sleep } = require("../utils");
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 
 class Response {
   key = {};
@@ -75,7 +76,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
 async function fastUpdate (accounts) {
   await fs.writeFile("starttime", (`${Date.now()}`));
 
-  const oldAccs = await utils.readDB("accounts");
+  const oldAccs = AccountArray(await utils.readDB("accounts"));
   let importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
 
   importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, 25));
