@@ -1,20 +1,23 @@
+# Workspace / metadata files
 *.json
+data/*
+*.sh
+*.txt
+*.log
+*.code-workspace
+starttime
+force
+pid
+timeupdate
+wrangler.toml
+
+# Config files
 !package.json
 !package-lock.json
 !.prettierrc.json
 !.eslintrc.json
 !babel.config.json
-!clean.sh
 !config.def.json
-*.sh
-*.txt
+
+# Npm
 node_modules
-key
-force
-pid
-data/*
-timeupdate
-*.log
-starttime
-*.code-workspace
-wrangler.toml
