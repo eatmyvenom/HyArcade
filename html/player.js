@@ -356,7 +356,7 @@ function captureTheWool (data) {
   let html = "";
 
   html += "<h6>Capture the wool</h6><br />" +
-    `- Captures : ${formatNum(data.captureTheWool.woolCaptured)}<br />` + 
+    `- Captures : ${formatNum(data.captureTheWool.woolCaptures)}<br />` + 
     `- Kills : ${formatNum(data.captureTheWool.kills)}<br >` +
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.captureTheWool.apEarned / data.arcadeAchievments.captureTheWool.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.captureTheWool.apEarned}" max="${data.arcadeAchievments.captureTheWool.apAvailable}"></progress>`;
