@@ -347,7 +347,7 @@ async function callback (args, rawmsg, interaction) {
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 84 * 2, 272 * 2, 28) * 2;
+    img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
     img.context.fillStyle = BORDER_COLOR;
     img.context.stroke();
     
