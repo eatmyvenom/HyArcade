@@ -171,7 +171,7 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   }
 
   const embed = new MessageEmbed()
-    .setTitle(`${acc.name} top games won`)
+    .setTitle(`${acc.name}'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`)
     .setDescription(getGames(acc))
     .setColor(0x44a3e7);
   
