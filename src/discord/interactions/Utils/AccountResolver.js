@@ -90,7 +90,9 @@ module.exports = async function resolveAccount (interaction, namearg = "player",
   let accdata = await fetch(url.toString());
   if(accdata.status == 200) {
     accdata = await accdata.json();
-    if(str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined) {
+    if(time == "lifetime" && (str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined)) {
+      return undefined;
+    } else if (time != "lifetime" && (accdata?.acc?.name == undefined || accdata?.timed?.name == undefined)) {
       return undefined;
     }
     return accdata;
