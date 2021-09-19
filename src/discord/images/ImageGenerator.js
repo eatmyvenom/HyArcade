@@ -1,5 +1,6 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
+const Account = require("hyarcade-requests/types/Account");
 Canvas.registerFont("resources/minecraftia.ttf", {
   family: "myFont"
 });
@@ -149,6 +150,73 @@ module.exports = class ImageGenerator {
 
     writeTextCenter (txt, spacing = 36) {
       this.writeText(txt, this.canvas.width / 2, 96, "center", "#ffffff", "32px", spacing);
+    }
+
+    /**
+     * 
+     * @param {Account} acc
+     * @param {number} x
+     * @param {number} y
+     * @param {string} fontSize
+     * @returns {object}
+     */
+    writeAcc (acc, x, y, fontSize) {
+      const txtRank = acc.rank == "" ? "" : `[${acc.rank}`;
+
+      let plus = "";
+      let rankEnd = "";
+      if(txtRank.includes("_PLUS_PLUS")) {
+        plus = "++";
+      } else if(txtRank.includes("_PLUS")) {
+        plus = "+";
+      }
+
+      if(txtRank != "") {
+        rankEnd = "] ";
+      }
+
+      this.context.font = `${fontSize} ${this.font}`;
+      const rankWidth = this.context.measureText(txtRank.replace(/_PLUS/g, "")).width;
+      const plusWidth = this.context.measureText(plus).width;
+      const rankEndWidth = this.context.measureText(rankEnd).width;
+      const nameWidth = this.context.measureText(acc.name).width;
+
+      let startX = this.canvas.width / 2 - (rankWidth + rankEndWidth + plusWidth + nameWidth) / 2;
+      if(x != undefined) {
+        startX = x;
+      }
+
+      let rankColor;
+      if(txtRank == "[MVP_PLUS_PLUS") {
+        rankColor = (acc.mvpColor != "") ? PlusColors[acc.mvpColor.toLowerCase()] : "#FFAA00";
+      } else if(txtRank == "[MVP_PLUS" || txtRank == "[MVP") {
+        rankColor = "#55FFFF";
+      } else if(txtRank == "[VIP_PLUS" || txtRank == "[VIP") {
+        rankColor = "#55FF55";
+      } else {
+        rankColor = "#AAAAAA";
+      }
+
+      if(txtRank != "") {
+        this.writeText(txtRank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
+        startX += rankWidth;
+        if(plus != "") {
+          this.writeText(plus, startX, y, "left", PlusColors[(`${acc.plusColor}`).toLowerCase()], fontSize, 36);
+          startX += plusWidth;
+        }
+        this.writeText(rankEnd, startX, y, "left", rankColor, fontSize, 36);
+        startX += rankEndWidth;
+      }
+
+      this.writeText(acc.name, startX, y, "left", rankColor, fontSize, 36);
+
+
+      startX += nameWidth;
+
+      return {
+        x: startX,
+        w: rankWidth + rankEndWidth + plusWidth + nameWidth
+      };
     }
 
     writeAccTitle (rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {

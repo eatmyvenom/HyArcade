@@ -260,7 +260,7 @@ async function callback (args, rawmsg, interaction) {
   img.context.stroke();
 
   await img.writeText("-", 18 * 2, 42 * 2, "center", "#FFFFFFFF", "28px");
-  await img.writeAccTitle(acc.rank, acc.plusColor, acc.name, 36 * 2, 42 * 2, "28px");
+  await img.writeAcc(acc, 36 * 2, 42 * 2, "28px");
 
   if(status.session.online) {
     img.context.beginPath();
@@ -352,7 +352,7 @@ async function callback (args, rawmsg, interaction) {
     img.context.stroke();
     
     await img.writeText("-", 18 * 2, 98 * 2, "center", "#FFFFFFFF", "28px");
-    await img.writeText(`Last seen : ${lastSeen(acc)}`, 36 * 2, 98 * 2, "left", "#55FF55", "28px");
+    await img.writeText(`Logout : ${lastSeen(acc)}`, 36 * 2, 98 * 2, "left", "#55FF55", "28px");
 
     img.context.beginPath();
     img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
