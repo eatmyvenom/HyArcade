@@ -8,6 +8,7 @@ import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import fetch from "node-fetch";
 
 const { MessageEmbed, Util } = require("discord.js");
 const { escapeItalic, escapeUnderline } = Util;
@@ -56,14 +57,22 @@ function getMain (acc) {
     }
   }
 
-  return `${game.replace(/_/g, " ")}: **${numberify(max)} wins**`;
+  return `**${game.replace(/_/g, " ")}** - ${numberify(max)} wins`;
+}
+
+function getNameDate (time) {
+  if(time == undefined) {
+    return "";
+  }
+
+  return ` - <t:${Math.floor(Date.parse(time) / 1000)}:d>`;
 }
 
 /**
  * @param {Account} acc
- * @returns {MessageEmbed}
+ * @returns {Promise<MessageEmbed>}
  */
-function generateWhoisEmbed (acc) {
+async function generateWhoisEmbed (acc) {
 
   const rank = acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined ? `[${acc.rank.replace(/_PLUS/g, "+")}] ` : "";
 
@@ -73,6 +82,18 @@ function generateWhoisEmbed (acc) {
     .setColor(COLOR_PURPLE);
 
   let discord = "";
+  const moj = await (await fetch(`https://api.ashcon.app/mojang/v2/user/${acc.uuid}`)).json();
+
+  let nameHist = moj.username_history
+    .reverse()
+    .map((n) => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`)
+
+  if(nameHist.length > 25) {
+    nameHist = nameHist.slice(0, 25);
+  }
+
+  nameHist = nameHist.join("\n");
+
 
   if(acc.discord != undefined && acc.discord != "") {
     discord = `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}`;
@@ -80,9 +101,9 @@ function generateWhoisEmbed (acc) {
     discord = "Unknown!";
   }
 
-  embed.addField("--------- Names ---------", acc.nameHist.map((n, i) => `${i + 1} - **${escapeUnderline(escapeItalic(n))}**`).join("\n"), true);
+  embed.addField("--------- Names ---------", nameHist, true);
   embed.addField("-------- Discord --------", discord, true);
-  embed.addField("--------- Info ----------", `**Guild** - ${acc.guild ?? "Unknown"}\n**Main** - ${getMain(acc)}`, false);
+  embed.addField("--------- Info ----------", `**Guild** - ${acc.guild ?? "Unknown"}\n${getMain(acc)}`, false);
 
   return embed;
 }
@@ -99,6 +120,6 @@ export const WhoIS = new Command("whois", ["*"], async (args, rawMsg, interactio
       return new CommandResponse("", ERROR_UNLINKED);
     }
   }
-  const embed = generateWhoisEmbed(acc);
+  const embed = await generateWhoisEmbed(acc);
   return new CommandResponse("", embed);
 });
