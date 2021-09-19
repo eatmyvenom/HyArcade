@@ -60,6 +60,11 @@ function getMain (acc) {
   return `**${game.replace(/_/g, " ")}** - ${numberify(max)} wins`;
 }
 
+/**
+ * 
+ * @param {Date} time 
+ * @returns {string}
+ */
 function getNameDate (time) {
   if(time == undefined) {
     return "";
@@ -86,7 +91,7 @@ async function generateWhoisEmbed (acc) {
 
   let nameHist = moj.username_history
     .reverse()
-    .map((n) => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`)
+    .map((n) => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
 
   if(nameHist.length > 25) {
     nameHist = nameHist.slice(0, 25);
