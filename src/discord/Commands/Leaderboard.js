@@ -749,6 +749,7 @@ async function hander (args, rawMsg, interaction) {
       try {
         lb = await CustomLeaderboard(timetype, type, startingIndex, limit);
       } catch (e) {
+        logger.err(e.stack);
         return { res: "", embed: ERROR_NO_LEADERBOARD };
       }
 
