@@ -57,7 +57,7 @@ module.exports = class ImageGenerator {
       this.context.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
-    writeText (txt, x, y, align, color = "#ffffff", size = "32px", spacing = 36) {
+    writeText (txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36) {
       this.context.font = `${size} ${this.font}`;
       this.context.fillStyle = color;
       this.context.textAlign = align;

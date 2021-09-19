@@ -19,6 +19,7 @@ import PBall from "../Commands/PBall.mjs";
 import Zombies from "../Commands/Zombies.mjs";
 import Walls from "../Commands/Walls.mjs";
 import Status from "../Commands/Status.mjs";
+import PartyGames from "../Commands/PartyGames.mjs";
 import { Profile } from "../Commands/Profile.mjs";
 import { WhoIS } from "../Commands/WhoIS.mjs";
 import { Verify } from "../Commands/LinkMe.mjs";
@@ -160,6 +161,10 @@ export default async (interaction) => {
 
   case "status": {
     return await Status.execute([opts.getString("player")], authorID, null, interaction);
+  }
+
+  case PartyGames.name: {
+    return await PartyGames.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
   }
 
   case "arcade": {

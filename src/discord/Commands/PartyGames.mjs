@@ -1,14 +1,19 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 const Command = require("../../classes/Command");
-const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
+const PartyGamesImg = require("../images/PartyGamesImg");
 const {
   ERROR_UNLINKED
 } = require("../Utils/Embeds/StaticEmbeds");
 
-module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) => {
-  const game = args[1];
+
+
+export default new Command("party-games", ["*"], async (args, rawMsg, interaction) => {
+  const game = args[1] ?? "Party Games";
   
   await interaction.defer();
   const acc = await InteractionUtils.resolveAccount(interaction, "player");
@@ -17,12 +22,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
     return new CommandResponse("", ERROR_UNLINKED);
   }
   
-  const res = await BotRuntime.getStats(acc, `${game}`);
-  const e = res.embed;
-  const menu = await MenuGenerator.statsMenu(acc.uuid);
-  return {
-    res: "",
-    embed: e,
-    b: menu
-  };
+  const img = await PartyGamesImg(acc, game);
+  const menu = await MenuGenerator.partyGamesMenu(acc.uuid);
+  return new CommandResponse("", undefined, img, menu);
 });
