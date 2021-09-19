@@ -34,6 +34,7 @@ module.exports = new Command("get-data-raw", ["*"], async (args, rawMsg, interac
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
+    await interaction.defer();
     acc = await InteractionUtils.resolveAccount(interaction);
   }
   const path = args[args.length - 1];
