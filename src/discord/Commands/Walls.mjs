@@ -30,7 +30,7 @@ export default new Command("walls", ["*"], async (args, rawMsg, interaction) => 
     .setTitle(`${data.displayname} Walls stats`)
     .addField("-----Overall stats-----",
       `**Wins** - ${numberify(data?.stats?.Walls?.wins ?? 0)}\n` +
-        `**Losses** - ${numberify(data?.stats?.Walls?.losses ?? 0)}s\n` +
+        `**Losses** - ${numberify(data?.stats?.Walls?.losses ?? 0)}\n` +
         `**Kills** - ${numberify(data?.stats?.Walls?.kills ?? 0)}\n` +
         `**Assists** - ${numberify(data?.stats?.Walls?.assists ?? 0)}\n` +
         `**Deaths** - ${numberify(data?.stats?.Walls?.deaths ?? 0)}\n`,
