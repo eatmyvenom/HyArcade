@@ -1,4 +1,3 @@
-import Logger from "hyarcade-logger";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
@@ -6,7 +5,6 @@ import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
 /**
  * @param {number} n
@@ -51,19 +49,7 @@ function getMain (acc) {
     }
   }
 
-  return `${game.replace(/_/g, " ")} wins - ${numberify(max)}`;
-}
-
-/**
- * @param {Account} acc
- * @returns {string}
- */
-function lastSeen (acc) {
-  if (acc.isLoggedIn) {
-    return "right now";
-  } 
-  return TimeFormatter(acc.lastLogout);
-
+  return `${game.replace(/_/g, " ")} - ${numberify(max)}`;
 }
 
 export const Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
@@ -72,50 +58,32 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   if (interaction == undefined) {
     acc = await BotRuntime.resolveAccount(player, rawMsg, args.length != 1);
   } else {
+    await interaction.defer();
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);
     }
   }
-  const lvl = Math.round(acc.level * 100) / 100;
-  const img = new ImageGenerator(640, 400, "'myFont'");
-  try {
-    await img.addBackground("resources/arc.png");
-  } catch (e) {
-    Logger.err(e);
-    Logger.err("Error setting background");
-    throw new Error("Error setting background");
-  }
+  const img = new ImageGenerator(1280, 800, "'myFont'");
+  await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000005F");
 
-  try {
-    await img.addImage(`https://crafatar.com/renders/body/${acc.uuid}?overlay`, 12, 116, 32, "08");
-  } catch (e) {
-    Logger.err(e);
-    Logger.err("Error setting skin");
-    await img.addImage("resources/wtf.png", 12, 116, 96, "04");
-    // throw new Error("Error setting skin");
-  }
+  img.writeText("Arcade Games Stats", 640, 40, "center", "#FFFFFF", "48px");
+  img.writeAcc(acc, undefined, 100, "42px");
 
-  if(acc.name?.toLowerCase() == "vn3m") {
-    await img.addImage("https://i.eatmyvenom.me/vn3m.png", img.canvas.width / 2 - 110, 12, 0, "00", 200, 60);
-  } else {
-    img.writeAccTitle(acc.rank, acc.plusColor, acc.name);
-  }
+  const wins = `${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`;
+  const ap = `${numberify(acc.arcadeAchievments.totalEarned)} / ${numberify(acc.arcadeAchievments.totalAvailiable)}`;
+  const quests = `${Object.values(acc.quests).reduce((p, c) => p + c, 0)}`;
+  const challenges = `${numberify(Object.values(acc.arcadeChallenges).reduce((p, c) => p + c, 0))}`;
 
-  let y = 112;
+  img.writeText(`Total Wins - ${wins}`, 640, 300, "center", "#FFFF55", "34px");
 
-  img.writeTextRight(`Level - ${lvl}`, y, "#55FFFF", 32);
-  img.writeTextRight(`Karma - ${numberify(acc.karma)}`, (y += 42), "#FF55FF", 32);
-  img.writeTextRight(`Achievements - ${numberify(acc.achievementPoints)}`, (y += 42), "#55FF55", 32);
-  img.writeTextRight(`Arcade Coins - ${numberify(acc.arcadeCoins)}`, (y += 42), "#FFAA00", 32);
-  img.writeTextRight(
-    `Arcade wins - ${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`,
-    (y += 42),
-    "#5555FF",
-    32
-  );
-  img.writeTextRight(getMain(acc), (y += 42), "#FF5555", 32);
-  img.writeTextRight(`Last seen - ${lastSeen(acc)}`, (y += 42), "#FFFF55", 32);
+  img.writeText(`AP - ${ap}`, 320, 400, "center", "#55FFFF", "34px");
+  img.writeText(`Quests - ${numberify(quests)}`, 320, 500, "center", "#FF55FF", "34px");
+  img.writeText(`Total Coins - ${numberify(acc.arcadeCoins)}`, 320, 600, "center", "#55FF55", "34px");
+
+  img.writeText(`${getMain(acc)}`, 960, 400, "center", "#55FFFF", "34px");
+  img.writeText(`Challenges - ${challenges}`, 960, 500, "center", "#FF55FF", "34px");
+  img.writeText(`Coins Earned - ${numberify(acc.coinsEarned)}`, 960, 600, "center", "#55FF55", "34px");
 
   const attachment = img.toDiscord();
 
