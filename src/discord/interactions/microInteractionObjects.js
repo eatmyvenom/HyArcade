@@ -1,7 +1,6 @@
 exports.statsCommand = require("./Commands/Stats");
 exports.compare = require("./Commands/Compare");
 exports.info = require("./Commands/Info");
-exports.gamecounts = require("./Commands/GameCounts");
 exports.whois = require("./Commands/Whois");
 exports.profile = require("./Commands/Profile");
 exports.topgames = require("./Commands/TopGames");
