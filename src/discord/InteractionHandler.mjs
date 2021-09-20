@@ -67,18 +67,23 @@ async function commandHandler (interaction) {
       await interaction.followUp(res.toDiscord());
     }
   } catch (e) {
-    Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
-    Logger.err(e.stack);
-    Webhooks.errHook.send({
-      embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
-    });
+    try {
+      Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
+      Logger.err(e.stack);
+      Webhooks.errHook.send({
+        embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
+      });
 
-    if(!interaction.deferred && !interaction.replied) {
-      await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
-    } else {
-      await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      if(!interaction.deferred && !interaction.replied) {
+        await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      } else {
+        await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      }
+      return;
+    } catch (e) {
+      Logger.err("Unable to give error response");
+      await Webhooks.errHook.send({ content: `Unable to send error response in <#${interaction.channelId}>` });
     }
-    return;
   }
 
   await logCmd(interaction);
