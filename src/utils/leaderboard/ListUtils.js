@@ -1,5 +1,6 @@
 const logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 const cfg = require("../../Config").fromJSON();
 const fetch = require("node-fetch");
 
@@ -24,7 +25,7 @@ exports.getList = async function getList (type = "") {
 
   const list = await (await fetch(url)).json();
   logger.debug("Data fetched!");
-  return list;
+  return AccountArray(list);
 };
 
 exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
