@@ -1,3 +1,8 @@
+const leaderboard = require("./Leaderboard");
+leaderboard.type = 1;
+const profile = require("./Profile");
+profile.type = 1;
+
 module.exports = {
   name: "arcade",
   description: "A command with other various sub commands which don't need full commands.",
@@ -17,6 +22,8 @@ module.exports = {
     name: "ping",
     description: "Get the bots ping and status",
     options: [],
-  }
+  },
+  leaderboard,
+  profile
   ],
 };

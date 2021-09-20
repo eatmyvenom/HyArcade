@@ -186,6 +186,30 @@ export default async (interaction) => {
     case "help" : {
       return await Help.execute([], authorID, null, interaction);
     }
+
+    case "leaderboard": {
+      const res = await Leaderboard.execute(
+        [
+          opts.getString("game"),
+          opts.getString("type"),
+          opts.getInteger("amount"),
+          opts.getInteger("start"),
+        ],
+        authorID,
+        null,
+        interaction
+      );
+      const e = res.embed;
+      if(res.game != undefined) {
+        const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
+        return new CommandResponse("", e, undefined, buttons);
+      }
+      return new CommandResponse("", e);
+    }
+
+    case "profile": {
+      return await Profile.execute([opts.getString("player")], authorID, null, interaction);
+    }
     }
 
     break;
