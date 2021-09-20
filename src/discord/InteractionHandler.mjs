@@ -38,14 +38,19 @@ async function commandHandler (interaction) {
   try {
     responseObj = await CommandParser(interaction);
   } catch (e) {
-    Logger.err(e.stack);
-    await Webhooks.errHook.send({ embeds: [ERROR_LOG(e, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map((a) => `${a.name} : ${a.value}`))}`)] });
-    if(!interaction.deferred && !interaction.replied) {
-      await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
-    } else {
-      await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+    try {
+      Logger.err(e.stack);
+      await Webhooks.errHook.send({ embeds: [ERROR_LOG(e, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map((a) => `${a.name} : ${a.value}`))}`)] });
+      if(!interaction.deferred && !interaction.replied) {
+        await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      } else {
+        await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      }
+      return;
+    } catch (e) {
+      Logger.err("Unable to give error response");
+      await Webhooks.errHook.send({ content: `Unable to send error response in <#${interaction.channelId}>` });
     }
-    return;
   }
 
   let res;
