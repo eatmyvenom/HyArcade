@@ -161,21 +161,41 @@ module.exports = class ImageGenerator {
      * @returns {object}
      */
     writeAcc (acc, x, y, fontSize) {
-      const txtRank = acc.rank == "" ? "" : `[${acc.rank}`;
+      let txtRank = acc.rank ?? "";
 
       let plus = "";
       let rankEnd = "";
+      let rankStart = "";
+      let plusColor = PlusColors[(`${acc.plusColor}`).toLowerCase()];
       if(txtRank.includes("_PLUS_PLUS")) {
         plus = "++";
       } else if(txtRank.includes("_PLUS")) {
         plus = "+";
       }
 
+      if(acc.rank == "§d[PIG§b+++§d]") {
+        txtRank = "PIG_PLUS_PLUS_PLUS";
+        plus = "+++";
+        plusColor = "#55FFFF";
+      } else if (acc.rank == "§c[OWNER]") {
+        txtRank = "OWNER";
+        plus = "";
+        plusColor = "#55FFFF";
+      } else if (acc.rank == "NONE" || acc.rank == "NORMAL") {
+        txtRank = "";
+      }
+
+      if(txtRank == "YOUTUBER") {
+        txtRank = "YOUTUBE";
+      }
+
       if(txtRank != "") {
+        rankStart = "[";
         rankEnd = "] ";
       }
 
       this.context.font = `${fontSize} ${this.font}`;
+      const rankStartWidth = this.context.measureText(rankStart).width;
       const rankWidth = this.context.measureText(txtRank.replace(/_PLUS/g, "")).width;
       const plusWidth = this.context.measureText(plus).width;
       const rankEndWidth = this.context.measureText(rankEnd).width;
@@ -187,28 +207,63 @@ module.exports = class ImageGenerator {
       }
 
       let rankColor;
-      if(txtRank == "[MVP_PLUS_PLUS") {
+      let bracketColor;
+      if(txtRank == "MVP_PLUS_PLUS") {
         rankColor = (acc.mvpColor != "") ? PlusColors[acc.mvpColor.toLowerCase()] : "#FFAA00";
-      } else if(txtRank == "[MVP_PLUS" || txtRank == "[MVP") {
+        bracketColor = rankColor;
+      } else if(txtRank == "MVP_PLUS" || txtRank == "MVP") {
         rankColor = "#55FFFF";
-      } else if(txtRank == "[VIP_PLUS" || txtRank == "[VIP") {
+        bracketColor = rankColor;
+      } else if(txtRank == "VIP_PLUS" || txtRank == "VIP") {
         rankColor = "#55FF55";
+        bracketColor = rankColor;
+      } else if (txtRank == "YOUTUBE") {
+        txtRank = "YOUTUBE";
+        bracketColor = "#FF5555";
+        rankColor = "#FFFFFF";
+      } else if (txtRank == "ADMIN") {
+        bracketColor = "#FF5555";
+        rankColor = "#FF5555";
+      } else if (txtRank == "GM") {
+        bracketColor = "#00AA00";
+        rankColor = "#00AA00";
+      } else if (txtRank == "PIG_PLUS_PLUS_PLUS") {
+        bracketColor = "#FF55FF";
+        rankColor = "#FF55FF";
+      }  else if (txtRank == "OWNER") {
+        bracketColor = "#FF5555";
+        rankColor = "#FF5555";
       } else {
+        bracketColor = "#AAAAAA";
         rankColor = "#AAAAAA";
+        txtRank = "";
+        rankStart = "";
+        rankEnd = "";
       }
 
       if(txtRank != "") {
-        this.writeText(txtRank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
-        startX += rankWidth;
+        if(rankStart != "") {
+          this.writeText(rankStart, startX, y, "left", bracketColor, fontSize, 36);
+          startX += rankStartWidth;
+        }
+
+        if(txtRank != "") {
+          this.writeText(txtRank.replace(/_PLUS/g, ""), startX, y, "left", rankColor, fontSize, 36);
+          startX += rankWidth;
+        }
+
         if(plus != "") {
-          this.writeText(plus, startX, y, "left", PlusColors[(`${acc.plusColor}`).toLowerCase()], fontSize, 36);
+          this.writeText(plus, startX, y, "left", plusColor, fontSize, 36);
           startX += plusWidth;
         }
-        this.writeText(rankEnd, startX, y, "left", rankColor, fontSize, 36);
-        startX += rankEndWidth;
+
+        if(rankEnd != "") {
+          this.writeText(rankEnd, startX, y, "left", bracketColor, fontSize, 36);
+          startX += rankEndWidth;
+        }
       }
 
-      this.writeText(acc.name, startX, y, "left", rankColor, fontSize, 36);
+      this.writeText(acc.name, startX, y, "left", bracketColor, fontSize, 36);
 
 
       startX += nameWidth;
@@ -246,12 +301,14 @@ module.exports = class ImageGenerator {
       }
 
       let rankColor;
-      if(txtRank == "[MVP_PLUS_PLUS") {
+      if(txtRank == "MVP_PLUS_PLUS") {
         rankColor = "#FFAA00";
-      } else if(txtRank == "[MVP_PLUS" || txtRank == "[MVP") {
+      } else if(txtRank == "MVP_PLUS" || txtRank == "[MVP") {
         rankColor = "#55FFFF";
-      } else if(txtRank == "[VIP_PLUS" || txtRank == "[VIP") {
+      } else if(txtRank == "VIP_PLUS" || txtRank == "[VIP") {
         rankColor = "#55FF55";
+      } else if (txtRank == "YOUTUBER") {
+        rankColor = "#FF5555";
       } else {
         rankColor = "#AAAAAA";
       }
