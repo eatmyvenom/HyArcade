@@ -898,7 +898,7 @@ async function getDaily (element, timetype) {
  */
 function formatLine (pos, name, value, uuid) {
   let longName = (`${pos}) ${name}                         `).slice(0, 21);
-  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}" height="25">${longName}</a>`;
+  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="25"/> ${longName}</a>`;
   if(value > 0) {
     return `${longName}: ${formatNum(value)}\n`;
   } 

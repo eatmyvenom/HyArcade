@@ -81,6 +81,7 @@ aside {
 div a {
     text-decoration: none;
     color: white;
+    line-height: 2;
 }
 
 input {
