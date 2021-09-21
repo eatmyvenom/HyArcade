@@ -1,5 +1,14 @@
-const maxLength = 25;
+let maxLength = 25;
 let interval;
+
+
+// eslint-disable-next-line
+function maxValChange (val) {
+  maxLength = val;
+  refresh()
+    .then(console.log)
+    .catch(console.error);
+}
 
 /**
  *
@@ -889,7 +898,7 @@ async function getDaily (element, timetype) {
  */
 function formatLine (pos, name, value, uuid) {
   let longName = (`${pos}) ${name}                         `).slice(0, 21);
-  longName = `<a href="player.html?q=${uuid}">${longName}</a>`;
+  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}" height="25">${longName}</a>`;
   if(value > 0) {
     return `${longName}: ${formatNum(value)}\n`;
   } 
