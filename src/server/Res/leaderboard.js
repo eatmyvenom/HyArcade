@@ -1,3 +1,4 @@
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 
@@ -26,7 +27,7 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     // Full copy to prevent accounts list from being messed up
-    let accounts = JSON.parse(JSON.stringify(fileCache.accounts));
+    let accounts = new AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
     if(timePeriod == undefined) {
       if(category == null) {
@@ -68,7 +69,7 @@ module.exports = async (req, res, fileCache) => {
       if(category == null) {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != lbprop && key != "name" && key != "uuid") {
+            if(key != lbprop && key != "name" && key != "uuid" && key != "rank" && key != "plusColor") {
               delete a[key];
             }
           }
@@ -76,7 +77,7 @@ module.exports = async (req, res, fileCache) => {
       } else {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != category && key != "name" && key != "uuid") {
+            if(key != category && key != "name" && key != "uuid" && key != "rank" && key != "plusColor") {
               delete a[key];
             }
           }
