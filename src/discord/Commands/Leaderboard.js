@@ -740,6 +740,68 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "pgrounds":
+  case "pgr": {
+    gameName = "Party Games Rounds Won";
+    res = await getLB("roundsWon", timetype, limit, "partyGames", startingIndex);
+    gid = "pgr";
+    break;
+  }
+
+  case "pgstars":
+  case "pgs": {
+    gameName = "Party Games Stars";
+    res = await getLB("starsEarned", timetype, limit, "partyGames", startingIndex);
+    gid = "pgr";
+    break;
+  }
+
+  case "pganimalslaughter":
+  case "pgas":
+  case "pgasw": {
+    gameName = "Party Games Animal Slaughter Wins";
+    res = await getLB("animalSlaughterWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgas";
+    break;
+  }
+
+  case "pganimalslaughterkills":
+  case "pgask":
+  case "pgaskills": {
+    gameName = "Party Games Animal Slaughter Kills";
+    res = await getLB("animalSlaughterKills", timetype, limit, "partyGames", startingIndex);
+    gid = "pgask";
+    break;
+  }
+
+  case "pganimalslaughterrecord":
+  case "pganimalslaughterpg":
+  case "pgaspb": {
+    gameName = "Party Games Animal Slaughter PB";
+    res = await getLB("animalSlaughterPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pgaspb";
+    break;
+  }
+
+  case "pganvilspleefwins":
+  case "pgansw":
+  case "pgans": {
+    gameName = "Party Games Anvil Spleef Wins";
+    res = await getLB("anvilSpleefWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgans";
+    break;
+  }
+
+  case "pganvilspleefpb":
+  case "pganvilpb":
+  case "pganspb": {
+    gameName = "Party Games Anvil Spleef PB";
+    res = await getLB("anvilSpleefPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pgans";
+    break;
+  }
+  
+
   default: {
     if(type.trim().startsWith(".")) {
       gameName = type.trim().slice(1);
