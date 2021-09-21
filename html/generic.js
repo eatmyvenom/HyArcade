@@ -477,18 +477,6 @@ async function load () {
 
     killsL.id = "arcadeCoins";
 
-    const apL = document.createElement("div");
-    apL.setAttribute("class", "life");
-    apL.title = "Lifetime AP";
-    apL.id = "achievementPoints";
-    main.appendChild(apL);
-
-    const apD = document.createElement("div");
-    apD.setAttribute("class", "day");
-    apD.title = "Daily AP";
-    apD.id = "achievementPoints";
-    main.appendChild(apD);
-
     break;
   }
 
@@ -792,14 +780,14 @@ async function getLeaderboards (element) {
     const category = idArr[0];
     const path = idArr[1];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&min`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
   } else {
     const path = idArr[0];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&min`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
@@ -854,14 +842,14 @@ async function getDaily (element, timetype) {
     const category = idArr[0];
     const path = idArr[1];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}&min`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
   } else {
     const path = idArr[0];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}&min`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
