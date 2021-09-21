@@ -12,8 +12,8 @@ import Requests from "hyarcade-requests";
 
 const { CommandInteraction, Message } = require("discord.js");
 
-const BORDER_COLOR = "#FFFFFFAA";
-const BG_COLOR = "#999999CC";
+const BORDER_COLOR = "#000000FF";
+const BG_COLOR = "#444444CC";
 
 /**
  * 
@@ -247,7 +247,7 @@ async function callback (args, rawmsg, interaction) {
 
   const img = new ImageGenerator(1280, 800, "'myFont'");
 
-  await img.addBackground(getImage(status), 0, 0, 1280, 800, "#00000018");
+  await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000002F");
 
   img.context.beginPath();
   img.context.rect(0, 28 * 2, 272 * 2, 28 * 2);
@@ -256,7 +256,7 @@ async function callback (args, rawmsg, interaction) {
 
   img.context.beginPath();
   img.context.rect(0, 28 * 2, 272 * 2, 28 * 2);
-  img.context.fillStyle = BORDER_COLOR;
+  img.context.strokeStyle = BORDER_COLOR;
   img.context.stroke();
 
   await img.writeText("-", 18 * 2, 42 * 2, "center", "#FFFFFFFF", "28px");
@@ -270,7 +270,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
     await img.writeText("-", 18 * 2, 98 * 2, "center", "#FFFFFFFF", "28px");
@@ -283,7 +283,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
     await img.writeText("-", 18 * 2, 154 * 2, "center", "#FFFFFFFF", "28px");
@@ -296,7 +296,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(1280 - 544, 112 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
     await img.writeText("-", 1280 - 544 + (18 * 2), 126 * 2, "center", "#FFFFFFFF", "28px");
@@ -309,7 +309,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(1280 - 544, 168 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
     await img.writeText("-", 1280 - 544 + (18 * 2), 182 * 2, "center", "#FFFFFFFF", "28px");
@@ -322,7 +322,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 196 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
     await img.writeText("-", 18 * 2, 210 * 2, "center", "#FFFFFFFF", "28px");
@@ -335,7 +335,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 252 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
     await img.writeText("-", 18 * 2, 266 * 2, "center", "#FFFFFFFF", "28px");
@@ -348,7 +348,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
     await img.writeText("-", 18 * 2, 98 * 2, "center", "#FFFFFFFF", "28px");
@@ -361,7 +361,7 @@ async function callback (args, rawmsg, interaction) {
     
     img.context.beginPath();
     img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
-    img.context.fillStyle = BORDER_COLOR;
+    img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
 
