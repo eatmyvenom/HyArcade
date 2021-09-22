@@ -13,6 +13,23 @@ body {
     vertical-align: middle;
 }
 
+.black { color : #000000 }
+.dark_blue { color :#0000aa }
+.dark_green { color :#00AA00 }
+.dark_aqua { color :#00aaaa }
+.dark_red { color :#aa0000 }
+.dark_purple { color :aa00aa }
+.gold { color :#ffaa00 }
+.gray { color :#aaaaaa }
+.dark_gray { color :#555555 }
+.blue { color :#5555ff }
+.green { color :#55ff55 }
+.aqua { color :#55ffff }
+.red { color :#ff5555 }
+.light_purple { color :#ff55ff }
+.yellow { color :#ffff55 }
+.white { color :#ffffff }
+
 div {
     white-space: pre;
     display: inline-block;
@@ -20,7 +37,7 @@ div {
 }
 main {
     display: grid;
-    grid-template-columns: 24vw auto auto 24vw;
+    grid-template-columns: 25vw auto auto 25vw;
 }
 
 .lifetime {
@@ -78,10 +95,35 @@ aside {
     display: inline-block;
 }
 
-div a {
+div li img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+ol li::marker {
+    font-weight: 600;
+}
+
+div ol li a {
     text-decoration: none;
     color: white;
+    vertical-align: middle;
+    width : 80%;
+    display : inline-block;
+}
+
+div ol li i {
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    width : 20%;
+    display : inline-block;
+}
+
+div ol li {
     line-height: 2;
+    vertical-align: middle;
 }
 
 input {

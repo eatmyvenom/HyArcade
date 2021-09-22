@@ -798,11 +798,11 @@ async function getLeaderboards (element) {
   if (idArr.length > 1) {
     console.log(idArr);
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid);
+      text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
     }
   } else {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]], lb[i].uuid);
+      text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
     }
   }
 
@@ -812,8 +812,8 @@ async function getLeaderboards (element) {
       .replace(/>/g, "&gt;")
       .replace(/</g, "&lt;")
       .replace(/"/g, "&quot;") 
-  }</h2>${ 
-    text}`;
+  }</h2><ol>${ 
+    text}</ol>`;
 
 }
 
@@ -858,12 +858,14 @@ async function getDaily (element, timetype) {
   let text = "";
 
   if (idArr.length > 1) {
+    console.log(idArr);
+    console.log(lb.length);
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i]?.[idArr[0]]?.[idArr[1]], lb[i].uuid);
+      text += formatLine(lb[i].name, lb[i]?.[idArr[0]]?.[idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
     }
   } else {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(i + 1, lb[i].name, lb[i][idArr[0]], lb[i].uuid);
+      text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
     }
   }
 
@@ -873,25 +875,47 @@ async function getDaily (element, timetype) {
             .replace(/>/g, "&gt;")
             .replace(/</g, "&lt;")
             .replace(/"/g, "&quot;") 
-        }</h2>${ 
-          text}`;
+        }</h2><ol>${ 
+          text}</ol>`;
 }
 
 /**
- * @param {number} pos
  * @param {string} name
  * @param {string} value
  * @param {string} uuid
+ * @param {string} rank
+ * @param {string} plusColor
  * @returns {string}
  */
-function formatLine (pos, name, value, uuid) {
-  let longName = (`${pos}) ${name}                         `).slice(0, 21);
-  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="25"/> ${longName}</a>`;
+function formatLine (name, value, uuid, rank, plusColor) {
+  let longName = `${name}`;
+  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(rank, plusColor)}${longName}</a>`;
   if(value > 0) {
-    return `${longName}: ${formatNum(value)}\n`;
+    return `<li>${longName} <i>${formatNum(value)}</i></li>`;
   } 
   return "";
-    
+}
+
+/**
+ * 
+ * @param {string} rank 
+ * @param {string} plusColor 
+ * @returns {string}
+ */
+function formatRank (rank, plusColor) {
+  let betterRank = `${rank}`.replace(/_PLUS/g, "+");
+
+  if(betterRank == "MVP++") {
+    betterRank = `<b class="gold">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="gold">]</b> `;
+  } else if(betterRank == "MVP+" || betterRank == "MVP") {
+    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]</b> `;
+  } else if(betterRank == "VIP+" || betterRank == "VIP") {
+    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]</b> `;
+  } else {
+    betterRank = "";
+  }
+
+  return betterRank;
 }
 
 /**
