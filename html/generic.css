@@ -37,7 +37,7 @@ div {
 }
 main {
     display: grid;
-    grid-template-columns: 25vw auto auto 25vw;
+    grid-template-columns: 26vw auto auto 26vw;
 }
 
 .lifetime {
