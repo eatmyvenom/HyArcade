@@ -34,13 +34,13 @@ class FileCache {
     constructor (path = "data/") {
       this.path = path;
       FileCache.refresh(this);
-      this._interval = setInterval(FileCache.refresh, 25000, this);
+      this._interval = setInterval(FileCache.refresh, 600000, this);
     }
 
     destroy () {
       this._interval.unref();
       for(const prop in this) {
-        this[prop] = undefined;
+        delete this[prop];
       }
     }
 
@@ -66,6 +66,7 @@ class FileCache {
         Logger.debug("Files saved...");
         this.dirty = false;
       } catch (e) {
+        Logger.err("ERROR SAVING FILES!");
         Logger.err(e);
       }
     }
@@ -73,10 +74,11 @@ class FileCache {
     /**
      * 
      * @param {FileCache} fileCache 
+     * @returns {object}
      */
     static async refresh (fileCache) {
       if(fileCache.dirty) {
-        await fileCache.runSave();
+        return await fileCache.runSave();
       }
 
       Logger.debug("Refreshing file cache...");
