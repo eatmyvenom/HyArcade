@@ -4,6 +4,7 @@ const {
 const cfg = require("../../Config").fromJSON();
 const Logger = require("hyarcade-logger");
 const FileCache = require("../../utils/files/FileCache");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
  * 
@@ -61,19 +62,14 @@ module.exports = async (req, res, fileCache) => {
       req.on("data", (d) => data += d);
       req.on("end", async () => {
         json = JSON.parse(data);
-        const newAccs = [];
-        if(fileCache.accounts.find((a) => a.uuid == json.uuid)) {
-          for(const a of fileCache.accounts) {
-            if(a.uuid != json.uuid) {
-              newAccs.push(a);
-            } else {
-              newAccs.push(json);
-            }
-          }
+        const prevAcc = fileCache.accounts.indexOf(fileCache.accounts.find((a) => a.uuid == json.uuid));
+        if(prevAcc != -1) {
+          const newAcc = Account.from(json);
+          fileCache.accounts[prevAcc] = newAcc;
         } else {
           fileCache.accounts.push(json);
         }
-        await fileCache.save();
+        fileCache.save();
         res.end();
       });
     } else {
