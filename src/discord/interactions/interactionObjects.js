@@ -11,4 +11,3 @@ exports.arcade = require("./Commands/Arcade");
 exports.topgames = require("./Commands/TopGames");
 exports.zombies = require("./Commands/Zombies");
 exports.status = require("./Commands/Status");
-exports.partyGames = require("./Commands/PartyGames");

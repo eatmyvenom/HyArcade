@@ -34,13 +34,13 @@ class FileCache {
     constructor (path = "data/") {
       this.path = path;
       FileCache.refresh(this);
-      this._interval = setInterval(FileCache.refresh, 600000, this);
+      this._interval = setInterval(FileCache.refresh, 25000, this);
     }
 
     destroy () {
       this._interval.unref();
       for(const prop in this) {
-        delete this[prop];
+        this[prop] = undefined;
       }
     }
 
@@ -72,12 +72,11 @@ class FileCache {
 
     /**
      * 
-     * @param {FileCache} fileCache
-     * @returns {object}
+     * @param {FileCache} fileCache 
      */
     static async refresh (fileCache) {
       if(fileCache.dirty) {
-        return await fileCache.runSave();
+        await fileCache.runSave();
       }
 
       Logger.debug("Refreshing file cache...");
