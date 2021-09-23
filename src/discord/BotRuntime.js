@@ -68,9 +68,10 @@ module.exports = class BotRuntime {
      * @param {Message} rawMessage 
      * @param {boolean} canbeSelf 
      * @param {string} time
+     * @param {boolean} force
      * @returns {Promise<Account>}
      */
-    static async resolveAccount (str, rawMessage, canbeSelf = true, time = "lifetime") {
+    static async resolveAccount (str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
       if(BotRuntime.botMode == "mini") {
         return await getFromHypixel(str);
       }
@@ -85,8 +86,10 @@ module.exports = class BotRuntime {
       const urlArgs = url.searchParams;
     
       if(str?.length == 32) {
+        if(force && time == "lifetime") return await getFromHypixel(str);
         urlArgs.set("uuid", str.toLowerCase());
       } else if(str?.length == 36) {
+        if(force && time == "lifetime") return await getFromHypixel(str);
         urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
       } else if(str?.length == 21 && str.startsWith("<@")) {
         urlArgs.set("discid", str.slice(2, -1));
@@ -95,6 +98,7 @@ module.exports = class BotRuntime {
       } else if(str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
         urlArgs.set("discid", str);
       } else if(str != null && str != "null" && str != "" && str != undefined && str != "!") {
+        if(force && time == "lifetime") return await getFromHypixel(str);
         urlArgs.set("ign", str.toLowerCase());
       } else if (canbeSelf) {
         urlArgs.set("discid", rawMessage.author.id);

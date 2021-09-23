@@ -86,7 +86,7 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
   let acc;
   let timed;
   if(interaction == undefined) {
-    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0 || plr == "!", time);
+    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0 || plr == "!", time, true);
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
