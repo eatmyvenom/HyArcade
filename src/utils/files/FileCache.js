@@ -25,6 +25,7 @@ class FileCache {
     guildsDay = [];
     disclist = {};
     updatetime = 0;
+    modTime = 0;
     hackerlist = [];
     blacklist = [];
     ezmsgs = [];
@@ -65,6 +66,7 @@ class FileCache {
         }
         Logger.debug("Files saved...");
         this.dirty = false;
+        this.modTime = Date.now();
       } catch (e) {
         Logger.err("ERROR SAVING FILES!");
         Logger.err(e);
@@ -84,45 +86,90 @@ class FileCache {
       Logger.debug("Refreshing file cache...");
 
       try {
-        const accounts = await utils.readJSON("accounts.json");
-        const dailyAccounts = await utils.readJSON("accounts.day.json");
-        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        const acclist = await utils.readJSON("acclist.json");
-        const disclist = await utils.readJSON("disclist.json");
-        const updatetime = await fs.readFile("timeupdate");
-        const players = await utils.readJSON("players.json");
-        const guilds = await utils.readJSON("guild.json");
-        const blacklist = await fs.readFile(`${fileCache.path}blacklist`);
-        const hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
-        const ezmsgs = await fs.readFile(`${fileCache.path}ez`);
-        
-        fileCache.acclist = acclist;
-        fileCache.disclist = disclist;
-        fileCache.updatetime = updatetime;
-        fileCache.players = players;
-        fileCache.guilds = guilds;
-        fileCache.accounts = new AccountArray(accounts);
-        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
-        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
-        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
-        if(ezmsgs.toString().trim() != "") {
-          fileCache.ezmsgs = ezmsgs.toString().trim()
-            .split("\n")
-            .filter((v) => v != "");
+        const accStat = await fs.stat(`${fileCache.path}accounts.json`);
+        if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
+          const accounts = await utils.readJSON("accounts.json");
+          fileCache.accounts = new AccountArray(accounts);
         }
-        
-        if(blacklist.toString().trim() != "") {
-          fileCache.blacklist = blacklist.toString().trim()
-            .split("\n")
-            .filter((v) => v != "");
+
+        const daccStat = await fs.stat(`${fileCache.path}accounts.day.json`);
+        if(Math.max(daccStat.ctimeMs, daccStat.mtimeMs) > fileCache.modTime) {
+          const dailyAccounts = await utils.readJSON("accounts.day.json");
+          fileCache.dailyAccounts = new AccountArray(dailyAccounts);
         }
-        
-        if(hackerlist.toString().trim() != "") {
-          fileCache.hackerlist = hackerlist.toString().trim()
-            .split("\n")
-            .filter((v) => v != "");
+
+        const waccStat = await fs.stat(`${fileCache.path}accounts.weekly.json`);
+        if(Math.max(waccStat.ctimeMs, waccStat.mtimeMs) > fileCache.modTime) {
+          const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+          fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
         }
+
+        const maccStat = await fs.stat(`${fileCache.path}accounts.monthly.json`);
+        if(Math.max(maccStat.ctimeMs, maccStat.mtimeMs) > fileCache.modTime) {
+          const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+          fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+        }
+
+        const acclistStat = await fs.stat(`${fileCache.path}acclist.json`);
+        if(Math.max(acclistStat.ctimeMs, acclistStat.mtimeMs) > fileCache.modTime) {
+          const acclist = await utils.readJSON("acclist.json");
+          fileCache.acclist = acclist;
+        }
+
+        const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
+        if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
+          const disclist = await utils.readJSON("disclist.json");
+          fileCache.disclist = disclist;
+        }
+
+        const timeStat = await fs.stat("timeupdate");
+        if(Math.max(timeStat.ctimeMs, timeStat.mtimeMs) > fileCache.modTime) {
+          const updatetime = await fs.readFile("timeupdate");
+          fileCache.updatetime = updatetime;
+        }
+
+        const plrStat = await fs.stat(`${fileCache.path}players.json`);
+        if(Math.max(plrStat.ctimeMs, plrStat.mtimeMs) > fileCache.modTime) {
+          const players = await utils.readJSON("players.json");
+          fileCache.players = players;
+        }
+
+        const gldStat = await fs.stat(`${fileCache.path}guild.json`);
+        if(Math.max(gldStat.ctimeMs, gldStat.mtimeMs) > fileCache.modTime) {
+          const guilds = await utils.readJSON("guild.json");
+          fileCache.guilds = guilds;
+        }
+
+        const blackStat = await fs.stat(`${fileCache.path}blacklist`);
+        if(Math.max(blackStat.ctimeMs, blackStat.mtimeMs) > fileCache.modTime) {
+          const blacklist = await fs.readFile(`${fileCache.path}blacklist`);
+          if(blacklist.toString().trim() != "") {
+            fileCache.blacklist = blacklist.toString().trim()
+              .split("\n")
+              .filter((v) => v != "");
+          }
+        }
+
+        const hackStat = await fs.stat(`${fileCache.path}hackerlist`);
+        if(Math.max(hackStat.ctimeMs, hackStat.mtimeMs) > fileCache.modTime) {
+          const hackerlist = await fs.readFile(`${fileCache.path}hackerlist`);
+          if(hackerlist.toString().trim() != "") {
+            fileCache.hackerlist = hackerlist.toString().trim()
+              .split("\n")
+              .filter((v) => v != "");
+          }
+        }
+
+        const ezStat = await fs.stat(`${fileCache.path}ez`);
+        if(Math.max(ezStat.ctimeMs, ezStat.mtimeMs) > fileCache.modTime) {
+          const ezmsgs = await fs.readFile(`${fileCache.path}ez`);
+          if(ezmsgs.toString().trim() != "") {
+            fileCache.ezmsgs = ezmsgs.toString().trim()
+              .split("\n")
+              .filter((v) => v != "");
+          }
+        }
+
         Logger.debug("File cache updated");
 
       } catch (e) {
