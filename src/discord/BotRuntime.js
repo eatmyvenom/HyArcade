@@ -43,6 +43,7 @@ async function getFromHypixel (string) {
     return undefined;
   }
 
+  await Database.addAccount(acc);
   return acc;
 }
 
