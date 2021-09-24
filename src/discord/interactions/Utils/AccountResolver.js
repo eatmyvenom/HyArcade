@@ -45,6 +45,7 @@ async function getFromHypixel (string, interaction) {
     return undefined;
   }
 
+  await Database.addAccount(acc);
   return acc;
 }
 
@@ -53,10 +54,12 @@ async function getFromHypixel (string, interaction) {
  * @param {CommandInteraction} interaction
  * @param {string} namearg
  * @param {string} time
+ * @param {boolean} force
  * @returns {Promise<Account>}
  */
-module.exports = async function resolveAccount (interaction, namearg = "player", time = "lifetime") {
+module.exports = async function resolveAccount (interaction, namearg = "player", time = "lifetime", force = false) {
   const str = interaction.options.getString(namearg, false);
+
   if(BotRuntime.botMode == "mini") {
     return await getFromHypixel(str, interaction);
   }
@@ -75,12 +78,14 @@ module.exports = async function resolveAccount (interaction, namearg = "player",
   }
 
   if(str?.length == 32 || str?.length == 36) {
+    if (force && time == "lifetime") return await getFromHypixel(str, interaction);
     urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
   } else if(str.startsWith("<@") || str.startsWith("<!@")) {
     urlArgs.set("discid", str.replace(/<|@|!|>/g, ""));
   } else if(str?.length == 18) {
     urlArgs.set("discid", str);
   } else if(str != null && str != "null" && str != undefined && str != "!") {
+    if (force && time == "lifetime") return await getFromHypixel(str, interaction);
     urlArgs.set("ign", str.toLowerCase());
   } else {
     urlArgs.set("discid", interaction.user.id);

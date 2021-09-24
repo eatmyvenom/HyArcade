@@ -1,10 +1,10 @@
-const Account = require("../../classes/account");
 const mojangRequest = require("../../request/mojangRequest");
 const logger = require("hyarcade-logger");
 const {
   Message
 } = require("discord.js");
 const Database = require("./Database");
+const Account = require("hyarcade-requests/types/Account");
 
 /**
  * @param {*} str
@@ -12,6 +12,39 @@ const Database = require("./Database");
  */
 function stringify (str) {
   return `${str}`;
+}
+
+/**
+ * 
+ * @param {string} string 
+ * @returns {Promise<Account>}
+ */
+async function getFromHypixel (string) {
+  logger.info("Unable to resolve, getting by ign from hypixel.");
+
+  const plr = string;
+  let uuid;
+  if(plr?.length > 17) {
+    uuid = plr;
+  } else {
+    uuid = await mojangRequest.getUUID(plr);
+  }
+
+  let acc;
+  if(Database.accCache[uuid] != undefined) {
+    acc = Database.accCache[uuid];
+  } else {
+    acc = new Account("", 0, `${uuid}`);
+    await acc.updateData();
+    Database.accCache[acc.uuid] = acc;
+  }
+
+  if(acc.name == "INVALID-NAME") {
+    return undefined;
+  }
+
+  await Database.addAccount(acc);
+  return acc;
 }
 
 /**
@@ -26,6 +59,8 @@ function stringify (str) {
 module.exports = async function resolveAccount (string, rawMessage, canbeSelf, acclist, disclist) {
   logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
   const queryString = stringify(string).toLowerCase();
+
+
   let acc;
   if(queryString.length == 18) {
     acc = acclist.find((a) => a.discord == queryString);
@@ -59,24 +94,7 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
   if(acc) {
     logger.info(`resolved as ${acc.name}`);
   } else {
-    logger.out("Unable to resolve account in database, getting by ign from hypixel.");
-
-    const plr = queryString;
-    let uuid;
-    if(plr.length > 17) {
-      uuid = plr;
-    } else {
-      uuid = await mojangRequest.getUUID(plr);
-    }
-
-    if(Database.accCache[uuid] != undefined) {
-      acc = Database.accCache[uuid];
-    } else {
-      acc = new Account("", 0, `${uuid}`);
-      await acc.updateData();
-      Database.accCache[acc.uuid] = acc;
-    }
-
+    acc = await getFromHypixel(queryString);
   }
   return acc;
 };
