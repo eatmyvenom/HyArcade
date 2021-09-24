@@ -14,135 +14,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://eatmyvenom.me/style.css" />
-        <style>
-
-            * {
-                font-size: 16px;
-            }
-
-            h3 {
-                font-size: 24px;
-            }
-
-
-            #home {
-                margin-left: 14px;
-            }
-
-            main {
-                display: grid;
-                grid-template-columns: 25% 25% 25% 25%;
-                width: 100%;
-            }
-
-            aside {
-                grid-column-start: 4;
-                /* position: absolute; */
-                /* display: block; */
-                /* top: 5vh; */
-                /* right: 2vw; */
-                width: 100%;
-            }
-
-            article {
-                grid-column-start: 1;
-            }
-
-            input {
-                background: #181c30;
-                border: 2px solid #44a3e7;
-                color: white;
-                height: inherit;
-                outline: none !important;
-            }
-
-            img {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                height: auto;
-                width: 100%;
-            }
-
-            img#render {
-                width: 25%;
-                height: auto;
-            }
-
-            button {
-                background-color: #181c30;
-                border: 2px solid #44a3e7;
-                border-radius: 0;
-                color: white;
-            }
-
-            .material-icons {
-                text-align: center;
-                vertical-align: middle;
-            }
-
-            body > main > article > div, body > main > aside > div {
-                border: 2px solid transparent;
-                border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
-                border-image-slice: 1;
-                max-width: 500px;
-                margin-top: 8px;
-                padding: 5px;
-                transition-duration: 0.3s;
-            }
-
-            #stats,
-            #info {
-                line-height: 1.25;
-            }
-
-            input {
-                display: inline-block;
-                height: 32px;
-                transition-duration: 0.3s;
-            }
-
-            nav > button:hover {
-                background: #06c;
-            }
-
-            nav > input:hover {
-                border-color: #06c;
-            }
-
-            button {
-                height: 32px;
-            }
-
-            h6 {
-                font-size: 18px;
-                margin: auto;
-                display: inline-block;
-            }
-
-            nav {
-                margin-top : 0.5vh;
-                border: none;
-            }
-
-            div:hover {
-                box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
-            }
-
-            .pre {
-                white-space: pre-line;
-            }
-
-            @media only screen and (max-width: 600px) {
-                main {
-                    display: block;
-                }
-
-                #uuid {
-                    font-size: 14px;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="player.css" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <script src="player.js"></script>
         <link href="footer.css" rel="stylesheet" />
@@ -159,58 +31,50 @@
             </button>
         </nav>
         <main>
-            <article>
-                <div id="stats">
-                    <h3>Stats</h3>
-                    <p id="arcwins">Arcade wins:</p>
-                    <p id="bd">Blocking dead wins:</p>
-                    <p id="bh">Bounty hunter wins:</p>
-                    <p id="ctw">Capture the wool:</p>
-                    <p id="dw">Dragon wars wins:</p>
-                    <p id="es">Ender spleef wins:</p>
-                    <p id="fh-wins">Farm hunt wins:</p>
-                    <p id="fb">Football wins:</p>
-                    <p id="gw">Galaxy wars wins:</p>
-                    <p id="hns">Hide and seek wins:</p>
-                    <p id="hitw">HITW:</p>
-                    <p id="hysay">Hypixel says wins:</p>
-                    <p id="mw">Mini walls wins:</p>
-                    <p id="pg-wins">Party games wins:</p>
-                    <p id="pp">Pixel painter wins:</p>
-                    <p id="to">Throw out wins:</p>
-                    <p id="z">Zombie wins:</p>
-                </div>
-            </article>
+            <div id="info">
+                <h3 id="acctitle">Info</h3>
+                <p id="name"></p>
+                <p id="xp">Level - </p>
+                <p id="karma">Karma -</p>
+                <p id="aap"></p>
+                <p id="namehist"></p>
+            </div>
+            <div id="status">
+                <h3>Status</h3>
+                <p id="stsonline"></p>
+                <p id="stsgame"></p>
+                <p id="stsmode"></p>
+                <p id="stsmap"></p>
+            </div>
 
-            <aside>
-                <div>
-                    <img
-                        id="render"
-                        src="https://crafatar.com/renders/body/00000000000000000000000000000000?size=512&default=MHF_Steve&scale=10&overlay"
-                    />
-                    <img id="lvlimg" src="https://gen.plancke.io/exp/ilmango.png" />
-                    <br />
-                    <img id="achivimg" src="https://gen.plancke.io/achievementPoints/ilmango.png" />
-                </div>
-                <div id="info">
-                    <h3>Info</h3>
-                    <p id="name">Name:</p>
-                    <p id="uuid">UUID:</p>
-                    <p id="rank">Rank:</p>
-                    <p id="xp">Level: 0</p>
-                    <p id="karma">Karma: 0</p>
-                    <p id="version">Version:</p>
-                    <p id="loggedIn">Online:</p>
-                    <p id="firstLogin">First login:</p>
-                </div>
-            </aside>
+            <div id="stats">
+                <h3>Stats</h3>
+                <p id="arcwins">Arcade wins:</p>
+                <p id="bd">Blocking dead wins:</p>
+                <p id="bh">Bounty hunter wins:</p>
+                <p id="ctw">Capture the wool:</p>
+                <p id="dw">Dragon wars wins:</p>
+                <p id="es">Ender spleef wins:</p>
+                <p id="fh-wins">Farm hunt wins:</p>
+                <p id="fb">Football wins:</p>
+                <p id="gw">Galaxy wars wins:</p>
+                <p id="hns">Hide and seek wins:</p>
+                <p id="hitw">HITW:</p>
+                <p id="hysay">Hypixel says wins:</p>
+                <p id="mw">Mini walls wins:</p>
+                <p id="pg-wins">Party games wins:</p>
+                <p id="pp">Pixel painter wins:</p>
+                <p id="to">Throw out wins:</p>
+                <p id="z">Zombie wins:</p>
+            </div>
+
         </main>
         <footer>
             <div>
-                <a class="devlink" href="https://eatmyvenom.me"><img src="assets/v.png" width="24px" height="24px"></a>
-                <a class="gitlink" href="https://github.com/eatmyvenom/hyarcade"><img src="assets/GitHub-Mark-32px.png" width="24px" height="24px"></a>
-                <a class="patlink" href="https://www.patreon.com/bePatron?u=57169466"><img src="assets/Digital-Patreon-Logo_White.png" width="24px" height="24px"></a>
-                <a class="dislink" href="https://discord.gg/6kFBVDcRd5"><img src="assets/Discord-Logo-White.png" width="24px" height="24px"></a>
+                <a class="devlink" href="https://eatmyvenom.me"><img src="https://hyarcade.xyz/assets/v.png" width="24px" height="24px"></a>
+                <a class="gitlink" href="https://github.com/eatmyvenom/hyarcade"><img src="https://hyarcade.xyz/assets/GitHub-Mark-32px.png" width="24px" height="24px"></a>
+                <a class="patlink" href="https://www.patreon.com/bePatron?u=57169466"><img src="https://hyarcade.xyz/assets/Digital-Patreon-Logo_White.png" width="24px" height="24px"></a>
+                <a class="dislink" href="https://discord.gg/6kFBVDcRd5"><img src="https://hyarcade.xyz/assets/Discord-Logo-White.png" width="24px" height="24px"></a>
                 <a class="botinvite" href="https://hyarcade.xyz/botinvite.html">Bot invite</a>
                 <a class="home" href="https://hyarcade.xyz/">Home</a>
             </div>

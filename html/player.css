@@ -1,0 +1,180 @@
+* {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+.vnm_light_blue { color: #44a3e7; }
+
+.black { color : #000000 }
+.dark_blue { color :#0000aa }
+.dark_green { color :#00AA00 }
+.dark_aqua { color :#00aaaa }
+.dark_red { color :#aa0000 }
+.dark_purple { color :aa00aa }
+.gold { color :#ffaa00 }
+.gray { color :#aaaaaa }
+.dark_gray { color :#555555 }
+.blue { color :#5555ff }
+.green { color :#55ff55 }
+.aqua { color :#55ffff }
+.red { color :#ff5555 }
+.light_purple { color :#ff55ff }
+.yellow { color :#ffff55 }
+.white { color :#ffffff }
+
+#home {
+    margin-left: 14px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    width: 100%;
+}
+
+#info {
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#status {
+    grid-column: 1;
+    grid-row-start: 2;
+}
+
+#stats {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+#info img {
+    float: right;
+}
+
+#stats {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+#stats > h3 {
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+aside {
+    grid-column-start: 4;
+    /* position: absolute; */
+    /* display: block; */
+    /* top: 5vh; */
+    /* right: 2vw; */
+    width: 100%;
+}
+
+article {
+    grid-column-start: 1;
+}
+
+input {
+    background: #181c30;
+    border: 2px solid #44a3e7;
+    color: white;
+    height: inherit;
+    outline: none !important;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 100%;
+}
+
+img#render {
+    height: auto;
+    width: 10%;
+}
+
+button {
+    background-color: #181c30;
+    border: 2px solid #44a3e7;
+    border-radius: 0;
+    color: white;
+}
+
+.material-icons {
+    text-align: center;
+    vertical-align: middle;
+}
+
+body > main div {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
+    border-image-slice: 1;
+    margin-top: 8px;
+    padding: 12px;
+    transition-duration: 0.3s;
+}
+
+#stats,
+#info {
+    line-height: 1.25;
+}
+
+input {
+    display: inline-block;
+    height: 32px;
+    transition-duration: 0.3s;
+}
+
+nav > button:hover {
+    background: #06c;
+}
+
+nav > input:hover {
+    border-color: #06c;
+}
+
+button {
+    height: 32px;
+}
+
+h6 {
+    font-size: 18px;
+    margin: auto;
+    display: inline-block;
+}
+
+nav {
+    margin-top : 0.5vh;
+    border: none;
+}
+
+div:hover {
+    box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
+}
+
+.pre {
+    white-space: pre-line;
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        display: block;
+    }
+
+    #uuid {
+        font-size: 14px;
+    }
+
+    #stats {
+        display: block;
+    }
+}
