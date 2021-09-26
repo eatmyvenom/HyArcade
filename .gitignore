@@ -10,6 +10,7 @@ force
 pid
 timeupdate
 wrangler.toml
+wrangler.toml
 
 # Config files
 !package.json
