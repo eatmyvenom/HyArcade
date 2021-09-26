@@ -72,7 +72,7 @@ export default async (interaction) => {
       ephemeral: true
     });
 
-    const names = opts.getString("accounts").split(" ");
+    const names = opts.getString("accounts").split(/\s/g);
     let res = await addAccounts("others", names);
     res = `\`\`\`\n${res}\n\`\`\``;
     const embed = new MessageEmbed()
