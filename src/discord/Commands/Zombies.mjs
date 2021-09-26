@@ -21,6 +21,22 @@ function numberify (n) {
 }
 
 /**
+ * @param {number} secs
+ * @returns {string}
+ */
+function toHHMMSS (secs) {
+  const sec_num = parseInt(secs, 10);
+  const hours   = Math.floor(sec_num / 3600);
+  const minutes = Math.floor(sec_num / 60) % 60;
+  const seconds = sec_num % 60;
+
+  return [hours, minutes, seconds]
+    .map((v) => v < 10 ? `0${v}` : v)
+    .filter((v, i) => v !== "00" || i > 0)
+    .join(":");
+}
+
+/**
  * 
  * @param {Account} acc
  * @returns {MessageEmbed}
@@ -37,7 +53,7 @@ function createDefaultEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\n` +
-        `**Fastest win** - ${numberify(Math.min(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999))}s\n` +
+        `**Fastest win** - ${toHHMMSS(Math.min(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999))}s\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies ?? 0)}\n`,
       true)
@@ -68,7 +84,7 @@ function createBadBloodEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_badblood ?? 0)}\n` +
-        `**Fastest win** - ${numberify(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999)}s\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_badblood ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_badblood ?? 0)}\n`,
       true)
@@ -97,7 +113,7 @@ function createDeadEndEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_deadend ?? 0)}\n` +
-        `**Fastest win** - ${numberify(acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999)}s\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_deadend ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_deadend ?? 0)}\n`,
       true)
@@ -126,7 +142,7 @@ function createAlienArcadiumEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_alienarcadium ?? 0)}\n` +
-        `**Fastest win** - ${numberify(acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999)}s\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_alienarcadium ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_alienarcadium ?? 0)}\n`,
       true)
