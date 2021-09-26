@@ -113,7 +113,7 @@ function createDeadEndEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_deadend ?? 0)}\n` +
-        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999)}\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_deadend ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_deadend ?? 0)}\n`,
       true)
