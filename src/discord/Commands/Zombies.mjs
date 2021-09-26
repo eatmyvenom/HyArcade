@@ -53,7 +53,7 @@ function createDefaultEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\n` +
-        `**Fastest win** - ${toHHMMSS(Math.min(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999))}s\n` +
+        `**Fastest win** - ${toHHMMSS(Math.min(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999))}\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies ?? 0)}\n`,
       true)
@@ -84,7 +84,7 @@ function createBadBloodEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_badblood ?? 0)}\n` +
-        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999)}\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_badblood ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_badblood ?? 0)}\n`,
       true)
@@ -142,7 +142,7 @@ function createAlienArcadiumEmbed (acc) {
       true)
     .addField("Info",
       `**Doors opened** - ${numberify(acc.zombies?.doors_opened_zombies_alienarcadium ?? 0)}\n` +
-        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999)}s\n` +
+        `**Fastest win** - ${toHHMMSS(acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999)}\n` +
         `**Best round** - ${numberify(acc.zombies?.best_round_zombies_alienarcadium ?? 0)}\n` +
         `**Revives** - ${numberify(acc.zombies?.players_revived_zombies_alienarcadium ?? 0)}\n`,
       true)
