@@ -151,17 +151,10 @@ function fileExists (path) {
  * @param {string} timetype the way of specifying this file
  */
 async function archiveJson (oldfile, path, timetype) {
-  const old = JSON.parse(await fs.readFile(`data/${oldfile}.json`));
-  await writeJSON(`${path}${oldfile}.${timetype}.json`, old);
+  logger.info(`Snapshotting: data/${oldfile}.json -> ${path}${oldfile}.${timetype}.json`);
 
-  if(fs.existsSync(`data/${oldfile}.bson`)) {
-    await fs.copy(`data/${oldfile}.bson`, `${path}${oldfile}.${timetype}.bson`);
-  }
-
-  if(fs.existsSync(`data/${oldfile}.bson.1`)) {
-    await fs.copy(`data/${oldfile}.bson.1`, `data/${path}${oldfile}.${timetype}.bson.1`);
-    await fs.copy(`data/${oldfile}.bson.2`, `data/${path}${oldfile}.${timetype}.bson.2`);
-  }
+  await fs.copy(`data/${oldfile}.json`, `data/${path}${oldfile}.${timetype}.json`, { overwrite: true });
+  logger.info(`Snapshot of "data/${oldfile}.json" complete!`);
 }
 
 
