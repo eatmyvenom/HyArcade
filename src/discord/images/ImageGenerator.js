@@ -301,13 +301,13 @@ module.exports = class ImageGenerator {
       }
 
       let rankColor;
-      if(txtRank == "MVP_PLUS_PLUS") {
+      if(txtRank == "[MVP_PLUS_PLUS") {
         rankColor = "#FFAA00";
-      } else if(txtRank == "MVP_PLUS" || txtRank == "[MVP") {
+      } else if(txtRank == "[MVP_PLUS" || txtRank == "[MVP") {
         rankColor = "#55FFFF";
-      } else if(txtRank == "VIP_PLUS" || txtRank == "[VIP") {
+      } else if(txtRank == "[VIP_PLUS" || txtRank == "[VIP") {
         rankColor = "#55FF55";
-      } else if (txtRank == "YOUTUBER") {
+      } else if (txtRank == "[YOUTUBER") {
         rankColor = "#FF5555";
       } else {
         rankColor = "#AAAAAA";
