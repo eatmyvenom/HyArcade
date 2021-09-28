@@ -223,7 +223,7 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   return accounts.map((acc) => {
     for(const stat in acc) {
-      if(stat != "miniWalls" && stat != "rank" && stat != "uuid" && stat != "name") {
+      if(stat != "miniWalls" && stat != "rank" && stat != "uuid" && stat != "name" && stat != "plusColor" && stat.toLowerCase().includes("guild")) {
         delete acc[stat];
       }
     }
