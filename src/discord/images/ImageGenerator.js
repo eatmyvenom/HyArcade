@@ -1,7 +1,7 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
-Canvas.registerFont("resources/minecraftia.ttf", {
+Canvas.registerFont("resources/mc.otf", {
   family: "myFont"
 });
 
@@ -13,6 +13,7 @@ const PlusColors = {
   dark_red: "#AA0000",
   dark_purple: "#AA00AA",
   gold: "#FFAA00",
+  grey: "#AAAAAA",
   gray: "#AAAAAA",
   dark_gray: "#555555",
   blue: "#5555FF",
@@ -79,7 +80,7 @@ module.exports = class ImageGenerator {
       this.context.textAlign = "center";
       this.context.textBaseline = "middle";
       const realX = x - width / 2;
-      this.context.rect(realX - 2, y - (size / 2), width + 3, size + 4);
+      this.context.rect(realX - 2, y - (size / 2) - 2, width + 3, size + 4);
       this.context.fillStyle = "#33333372";
       this.context.fill();
       this.context.fillStyle = color;
@@ -95,7 +96,7 @@ module.exports = class ImageGenerator {
       const width = lWidth + mWidth + wWidth;
       this.context.textAlign = "center";
       this.context.textBaseline = "middle";
-      this.context.rect((x - width / 2) - 2, y - (size / 2), width + 3, size + 4);
+      this.context.rect((x - width / 2) - 2, y - (size / 2) - 2, width + 3, size + 4);
       this.context.fillStyle = "#33333372";
       this.context.fill();
       let currentX = x - width / 3.3;
@@ -128,8 +129,8 @@ module.exports = class ImageGenerator {
       const width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
       let currentX = x - width / 2;
       this.context.textBaseline = "middle";
-      this.context.rect(currentX - 3, y - (size / 2), width + 4, size + 5);
-      this.context.fillStyle = "#33333377";
+      this.context.rect(currentX - 3, y - (size / 2) - 2, width + 4, size + 2);
+      this.context.fillStyle = "#33333366";
       this.context.fill();
       this.writeAccTitle(rank, plusColor, name, currentX + posWidth, y, `${size}px`, false);
       this.context.fillStyle = "#FFFF55";

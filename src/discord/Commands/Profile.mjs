@@ -67,23 +67,23 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   const img = new ImageGenerator(1280, 800, "'myFont'");
   await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000005F");
 
-  img.writeText("Arcade Games Stats", 640, 40, "center", "#FFFFFF", "48px");
-  img.writeAcc(acc, undefined, 100, "42px");
+  img.writeText("Arcade Games Stats", 640, 40, "center", "#FFFFFF", "52px");
+  img.writeAcc(acc, undefined, 100, "46px");
 
   const wins = `${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`;
   const ap = `${numberify(acc.arcadeAchievments.totalEarned)} / ${numberify(acc.arcadeAchievments.totalAvailiable)}`;
   const quests = `${Object.values(acc.quests).reduce((p, c) => p + c, 0)}`;
   const challenges = `${numberify(Object.values(acc.arcadeChallenges).reduce((p, c) => p + c, 0))}`;
 
-  img.writeText(`Total Wins - ${wins}`, 640, 300, "center", "#FFFF55", "34px");
+  img.writeText(`Total Wins - ${wins}`, 640, 300, "center", "#FFFF55", "38px");
 
   img.writeText(`AP - ${ap}`, 320, 400, "center", "#55FFFF", "34px");
-  img.writeText(`Quests - ${numberify(quests)}`, 320, 500, "center", "#FF55FF", "34px");
-  img.writeText(`Total Coins - ${numberify(acc.arcadeCoins)}`, 320, 600, "center", "#55FF55", "34px");
+  img.writeText(`Quests - ${numberify(quests)}`, 320, 500, "center", "#FF55FF", "38px");
+  img.writeText(`Total Coins - ${numberify(acc.arcadeCoins)}`, 320, 600, "center", "#55FF55", "38px");
 
-  img.writeText(`${getMain(acc)}`, 960, 400, "center", "#55FFFF", "34px");
-  img.writeText(`Challenges - ${challenges}`, 960, 500, "center", "#FF55FF", "34px");
-  img.writeText(`Coins Earned - ${numberify(acc.coinsEarned)}`, 960, 600, "center", "#55FF55", "34px");
+  img.writeText(`${getMain(acc)}`, 960, 400, "center", "#55FFFF", "38px");
+  img.writeText(`Challenges - ${challenges}`, 960, 500, "center", "#FF55FF", "38px");
+  img.writeText(`Coins Earned - ${numberify(acc.coinsEarned)}`, 960, 600, "center", "#55FF55", "38px");
 
   const attachment = img.toDiscord();
 

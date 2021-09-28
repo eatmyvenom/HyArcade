@@ -13,8 +13,8 @@ async function generateImage (account, game) {
 
   await img.addBackground("resources/blur.png", 0, 0, 1280, 800, "#00000044");
 
-  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "48px");
-  await img.writeAcc(account, undefined, 100, "42px");
+  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "54px");
+  await img.writeAcc(account, undefined, 100, "48px");
 
   let stat1 = "";
   let stat2 = "";
@@ -182,12 +182,12 @@ async function generateImage (account, game) {
   }
   }
 
-  if(stat1 != "") img.writeText(stat1, 320, 300, "center", "#55FF55", "32px");
-  if(stat2 != "") img.writeText(stat2, 320, 400, "center", "#55FFFF", "32px");
-  if(stat3 != "") img.writeText(stat3, 320, 500, "center", "#FFFF55", "32px");
-  if(stat4 != "") img.writeText(stat4, 960, 300, "center", "#55FF55", "32px");
-  if(stat5 != "") img.writeText(stat5, 960, 400, "center", "#55FFFF", "32px");
-  if(stat6 != "") img.writeText(stat6, 960, 500, "center", "#FFFF55", "32px");
+  if(stat1 != "") img.writeText(stat1, 320, 350, "center", "#55FF55", "38px");
+  if(stat2 != "") img.writeText(stat2, 320, 450, "center", "#55FFFF", "38px");
+  if(stat3 != "") img.writeText(stat3, 320, 550, "center", "#FFFF55", "38px");
+  if(stat4 != "") img.writeText(stat4, 960, 350, "center", "#55FF55", "38px");
+  if(stat5 != "") img.writeText(stat5, 960, 450, "center", "#55FFFF", "38px");
+  if(stat6 != "") img.writeText(stat6, 960, 550, "center", "#FFFF55", "38px");
 
   return img.toDiscord();
 }

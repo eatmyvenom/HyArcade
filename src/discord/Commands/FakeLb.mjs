@@ -17,10 +17,10 @@ export const FakeLb = new Command("fakelb", ["%trusted%", "303732854787932160"],
   const img = new ImageGenerator(1900, 1035, "'myFont'");
   await img.addBackground("resources/lb3.png", 0, 0, 1900, 1035, "#00000000");
     
-  let y = 104;
-  const dy = 44;
+  let y = 100;
+  const dy = 48;
   const x = 915;
-  const fontSize = 26;
+  const fontSize = 32;
 
   const path = args[0];
   const category = args[1];
