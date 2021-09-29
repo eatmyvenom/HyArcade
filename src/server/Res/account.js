@@ -58,6 +58,7 @@ module.exports = async (req, res, fileCache) => {
       if (uuid != null) {
         acc = new Account(ign, 0, uuid);
         await acc.updateHypixel();
+        fileCache.accounts.push(acc);
       }
     }
 
