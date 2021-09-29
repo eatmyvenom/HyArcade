@@ -47,15 +47,18 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc == undefined) {
-
       if(uuid == null) {
         let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
         elecreq = await elecreq.json();
-
-        uuid = elecreq.uuid.replace(/-/g, "");
+        if(elecreq != undefined) {
+          uuid = elecreq.uuid.replace(/-/g, "");
+        } 
       }
 
-      acc = new Account(ign, 0, uuid);
+      if (uuid != null) {
+        acc = new Account(ign, 0, uuid);
+        await acc.updateHypixel();
+      }
     }
 
     if(acc.name == "INVALID-NAME" && acc.name == undefined && acc != undefined) {
