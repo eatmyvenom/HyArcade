@@ -15,7 +15,7 @@ module.exports = async (req, res, fileCache) => {
 
     const { accounts } = fileCache;
 
-    const list = accounts.filter((a) => {
+    let list = accounts.filter((a) => {
       if(a.nameHist && a.nameHist.length > 0) {
         for(const name of a.nameHist) {
           if(name.toLowerCase().startsWith(ign)) {
@@ -26,7 +26,9 @@ module.exports = async (req, res, fileCache) => {
       return false;
     });
 
-    res.write(JSON.stringify(list));
+    list = list.map((a) => a.name);
+
+    res.write(JSON.stringify(list.slice(0, Math.min(list.length, 20))));
     res.end();
   } else {
     res.statusCode = 404;
