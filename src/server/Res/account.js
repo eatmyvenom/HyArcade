@@ -5,6 +5,7 @@ const cfg = require("../../Config").fromJSON();
 const Logger = require("hyarcade-logger");
 const FileCache = require("../../utils/files/FileCache");
 const Account = require("hyarcade-requests/types/Account");
+const { default: fetch } = require("node-fetch");
 
 /**
  * 
@@ -16,7 +17,7 @@ module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
     const ign = url.searchParams.get("ign");
-    const uuid = url.searchParams.get("uuid");
+    let uuid = url.searchParams.get("uuid");
     const discid = url.searchParams.get("discid");
     res.setHeader("Content-Type", "application/json");
     const {
@@ -46,6 +47,18 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc == undefined) {
+
+      if(uuid == null) {
+        let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
+        elecreq = await elecreq.json();
+
+        uuid = elecreq.uuid.replace(/-/g, "");
+      }
+
+      acc = new Account(ign, 0, uuid);
+    }
+
+    if(acc.name == "INVALID-NAME" && acc.name == undefined && acc != undefined) {
       res.statusCode = 404;
       res.end(JSON.stringify({
         error: "ACC_UNDEFINED"
