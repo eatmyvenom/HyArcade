@@ -14,7 +14,9 @@ const urlModules = {
   mwlb: require("./Res/MiniWallsLeaderboard"),
   miniwalls: require("./Res/MiniWallsLeaderboard"),
   timeacc: require("./Res/TimeAcc"),
-  acctimed: require("./Res/TimeAcc")
+  acctimed: require("./Res/TimeAcc"),
+  resolve: require("./Res/NameSearch"),
+  namesearch: require("./Res/NameSearch")
 };
 let fileCache;
 const compression = require("compression");
@@ -50,6 +52,8 @@ async function callback (res, req) {
   }
 }
 
+app.all("/namesearch", callback);
+app.all("/resolve", callback);
 app.all("/db", callback);
 app.all("/account", callback);
 app.all("/acc", callback);
