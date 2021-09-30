@@ -11,7 +11,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
   const game = args[1];
   
   await interaction.defer();
-  const acc = await InteractionUtils.resolveAccount(interaction, "player", "lifetime", true);
+  const acc = await InteractionUtils.resolveAccount(interaction, "player", "lifetime");
   
   if(acc == undefined || acc.name == "INVALID-NAME" || acc.miniWalls == undefined) {
     return new CommandResponse("", ERROR_UNLINKED);
