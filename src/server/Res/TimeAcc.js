@@ -53,6 +53,10 @@ module.exports = async (req, res, fileCache) => {
       return;
     }
 
+    if(acc.updateTime < (Date.now() - 600000)) {
+      await acc.updateHypixel();
+    }
+
     const response = {};
 
     if(time != null) {

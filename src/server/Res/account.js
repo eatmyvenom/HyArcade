@@ -70,6 +70,10 @@ module.exports = async (req, res, fileCache) => {
       return;
     }
 
+    if(acc.updateTime < (Date.now() - 600000)) {
+      await acc.updateHypixel();
+    }
+
     res.write(JSON.stringify(acc));
     res.end();
   } else if(req.method == "POST") {
