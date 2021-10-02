@@ -112,38 +112,56 @@ module.exports = class ImageGenerator {
     }
 
     drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
+
+      // datafixer 
+      if(guild == "NONE") {
+        // eslint-disable-next-line no-param-reassign
+        guild = undefined;
+      }
+
       this.context.beginPath();
+
       this.context.textAlign = "left";
+      this.context.textBaseline = "middle";
       this.context.font = `${size}px 'myFont'`;
+
       const posWidth = this.context.measureText(`${pos}. `).width;
       const title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
       const ignWidth = title.w;
+
       let guildWidth;
       if(guild != undefined) {
         guildWidth = this.context.measureText(` [${guild}]`).width;
       } else {
         guildWidth = 0;
       }
+
       const dashWidth = this.context.measureText(" - ").width;
       const winsWidth = this.context.measureText(`${count}`).width;
       const width = posWidth + ignWidth + guildWidth + dashWidth + winsWidth;
+
       let currentX = x - width / 2;
-      this.context.textBaseline = "middle";
+
       this.context.rect(currentX - 3, y - (size / 2) - 2, width + 4, size + 2);
       this.context.fillStyle = "#33333366";
       this.context.fill();
+
       this.writeAccTitle(rank, plusColor, name, currentX + posWidth, y, `${size}px`, false);
+
       this.context.fillStyle = "#FFFF55";
       this.context.fillText(`${pos}. `, currentX, y);
+
       currentX += posWidth;
       currentX += ignWidth;
       this.context.fillStyle = PlusColors[guildColor?.toLowerCase()];
       if(guild != undefined) {
         this.context.fillText(` [${guild}]`, currentX, y);
       }
+
       currentX += guildWidth;
       this.context.fillStyle = "#AAAAAA";
       this.context.fillText(" - ", currentX, y);
+
       currentX += dashWidth;
       this.context.fillStyle = "#FFFF55";
       this.context.fillText(`${count}`, currentX, y);
