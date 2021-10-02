@@ -1,7 +1,7 @@
 const utils = require("../../utils");
 const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
-const AccountArray = require("../../request/types/AccountArray");
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 const Account = require("hyarcade-requests/types/Account");
 
 class FileCache {
@@ -90,54 +90,72 @@ class FileCache {
         if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
           const accounts = await utils.readJSON("accounts.json");
           fileCache.accounts = new AccountArray(accounts);
+        } else {
+          Logger.debug("accounts has not been modified, ignoring!");
         }
 
         const daccStat = await fs.stat(`${fileCache.path}accounts.day.json`);
         if(Math.max(daccStat.ctimeMs, daccStat.mtimeMs) > fileCache.modTime) {
           const dailyAccounts = await utils.readJSON("accounts.day.json");
           fileCache.dailyAccounts = new AccountArray(dailyAccounts);
+        } else {
+          Logger.debug("day accounts has not been modified, ignoring!");
         }
 
         const waccStat = await fs.stat(`${fileCache.path}accounts.weekly.json`);
         if(Math.max(waccStat.ctimeMs, waccStat.mtimeMs) > fileCache.modTime) {
           const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
           fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
+        } else {
+          Logger.debug("weekly accounts has not been modified, ignoring!");
         }
 
         const maccStat = await fs.stat(`${fileCache.path}accounts.monthly.json`);
         if(Math.max(maccStat.ctimeMs, maccStat.mtimeMs) > fileCache.modTime) {
           const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
           fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+        } else {
+          Logger.debug("monthly accounts has not been modified, ignoring!");
         }
 
         const acclistStat = await fs.stat(`${fileCache.path}acclist.json`);
         if(Math.max(acclistStat.ctimeMs, acclistStat.mtimeMs) > fileCache.modTime) {
           const acclist = await utils.readJSON("acclist.json");
           fileCache.acclist = acclist;
+        } else {
+          Logger.debug("acclist has not been modified, ignoring!");
         }
 
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
           const disclist = await utils.readJSON("disclist.json");
           fileCache.disclist = disclist;
+        } else {
+          Logger.debug("disclist has not been modified, ignoring!");
         }
 
         const timeStat = await fs.stat("timeupdate");
         if(Math.max(timeStat.ctimeMs, timeStat.mtimeMs) > fileCache.modTime) {
           const updatetime = await fs.readFile("timeupdate");
           fileCache.updatetime = updatetime;
+        } else {
+          Logger.debug("updatetime has not been modified, ignoring!");
         }
 
         const plrStat = await fs.stat(`${fileCache.path}players.json`);
         if(Math.max(plrStat.ctimeMs, plrStat.mtimeMs) > fileCache.modTime) {
           const players = await utils.readJSON("players.json");
           fileCache.players = players;
+        } else {
+          Logger.debug("players has not been modified, ignoring!");
         }
 
         const gldStat = await fs.stat(`${fileCache.path}guild.json`);
         if(Math.max(gldStat.ctimeMs, gldStat.mtimeMs) > fileCache.modTime) {
           const guilds = await utils.readJSON("guild.json");
           fileCache.guilds = guilds;
+        } else {
+          Logger.debug("guilds has not been modified, ignoring!");
         }
 
         const blackStat = await fs.stat(`${fileCache.path}blacklist`);
@@ -148,6 +166,8 @@ class FileCache {
               .split("\n")
               .filter((v) => v != "");
           }
+        } else {
+          Logger.debug("blacklist has not been modified, ignoring!");
         }
 
         const hackStat = await fs.stat(`${fileCache.path}hackerlist`);
@@ -158,6 +178,8 @@ class FileCache {
               .split("\n")
               .filter((v) => v != "");
           }
+        } else {
+          Logger.debug("hackerlist has not been modified, ignoring!");
         }
 
         const ezStat = await fs.stat(`${fileCache.path}ez`);
@@ -168,6 +190,8 @@ class FileCache {
               .split("\n")
               .filter((v) => v != "");
           }
+        } else {
+          Logger.debug("ezmsgs has not been modified, ignoring!");
         }
 
         Logger.debug("File cache updated");
