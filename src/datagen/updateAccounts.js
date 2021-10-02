@@ -17,6 +17,29 @@ class Response {
 
 /**
  * 
+ * @param {Account[]} accounts 
+ * @returns {Promise<Account[]>}
+ */
+async function fakeStats (accounts) {
+  try {
+    const fakeFile = await utils.readJSON("fakeStats.json");
+
+    for (const acc of accounts) {
+      if(Object.keys(fakeFile).includes(acc.uuid)) {
+        logger.log(`Setting data for ${acc.name}`);
+        Object.assign(acc, fakeFile[acc.uuid]);
+      }
+    }
+
+    return accounts;
+  } catch (e) {
+    logger.err("Fake stats file unaccessable");
+    return accounts;
+  }
+}
+
+/**
+ * 
  * @param {string[]} uuids 
  * @returns {Response}
  */
@@ -68,6 +91,21 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
 }
 
 /**
+ * 
+ * @param {Array} a 
+ * @param {Function} key 
+ * @returns {Array}
+ */
+function uniqBy (a, key) {
+  const seen = {};
+  return a.filter((item) => {
+    const k = key(item);
+    // eslint-disable-next-line no-prototype-builtins
+    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+  });
+}
+
+/**
  * Update the player data for all players in the list
  *
  * @param {Account[]} accounts
@@ -79,7 +117,18 @@ async function fastUpdate (accounts) {
   const perSegment = cfg.segmentSize;
 
   const oldAccs = AccountArray(await utils.readDB("accounts"));
-  let importantAccounts = accounts.filter((a) => isImportant(oldAccs.find((oa) => oa.uuid == a.uuid)));
+  
+  let importantAccounts = [];
+  const ignoreAccounts = [];
+
+  for (const acc of accounts) {
+    const oldAcc = oldAccs.find((a) => a.uuid == acc.uuid);
+    if(isImportant(oldAcc)) {
+      importantAccounts.push(acc);
+    } else {
+      ignoreAccounts.push(oldAcc);
+    }
+  }
 
   importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, perSegment));
 
@@ -95,7 +144,7 @@ async function fastUpdate (accounts) {
     return resultArray;
   }, []);
 
-  const updatedAccs = [];
+  let updatedAccs = [];
 
   for(let i = 0;i < segmentedAccs.length; i += 1) {
     await Promise.all([
@@ -109,13 +158,14 @@ async function fastUpdate (accounts) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  for(const oldAcc of oldAccs) {
-    if(updatedAccs.find((a) => a.uuid == oldAcc.uuid) == undefined) {
-      updatedAccs.push(oldAcc);
-    }
-  }
+  updatedAccs = updatedAccs.concat(ignoreAccounts);
 
   await updatedAccs.sort(utils.winsSorter);
+
+  updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
+
+  updatedAccs = await fakeStats(updatedAccs);
+
   return updatedAccs;
 }
 
@@ -213,22 +263,22 @@ function isImportant (oldAcc) {
   }
 
   // Make sure they have a relavent amount of arcade games wins
-  const isArcadePlayer = oldAcc.arcadeWins >= 1500;
+  const isArcadePlayer = oldAcc.arcadeWins >= 500;
 
   // Make sure their arcade wins are not inflated due to football
-  const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 15000;
+  const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 8000;
   const fbBelowInflationLimit = (oldAcc?.football?.wins ?? 0) <= 250;
 
   const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
 
   // Make sure their arcade wins are not inflated due to mini walls
-  const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 12000;
-  const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 250;
+  const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 750;
+  const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 100;
 
   const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
 
   // Make sure their arcade wins are not inflated due to hide and seek
-  const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 3000;
+  const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 1000;
   const hnsBelowInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) <= 200;
 
   const nothnsInflated = hnsBelowInflationLimit || hnsAboveInflationLimit;
