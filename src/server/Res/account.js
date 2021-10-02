@@ -6,6 +6,9 @@ const Logger = require("hyarcade-logger");
 const FileCache = require("../../utils/files/FileCache");
 const Account = require("hyarcade-requests/types/Account");
 const { default: fetch } = require("node-fetch");
+const utils = require("../../utils");
+let fakeFile;
+
 
 /**
  * 
@@ -14,6 +17,11 @@ const { default: fetch } = require("node-fetch");
  * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
+
+  if(fakeFile == undefined) {
+    fakeFile = await utils.readJSON("fakeStats.json");
+  }
+
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
     const ign = url.searchParams.get("ign");
@@ -72,6 +80,11 @@ module.exports = async (req, res, fileCache) => {
 
     if(acc.updateTime < (Date.now() - 600000)) {
       await acc.updateHypixel();
+
+      if(Object.keys(fakeFile).includes(acc.uuid)) {
+        Logger.log(`Overwriting data for ${acc.name}`);
+        Object.assign(acc, fakeFile[acc.uuid]);
+      }
     }
 
     res.write(JSON.stringify(acc));
