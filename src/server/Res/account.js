@@ -71,6 +71,7 @@ module.exports = async (req, res, fileCache) => {
       }
 
       if (uuid != null) {
+        Logger.debug("Getting data from hypixel");
         acc = new Account(ign, 0, uuid);
         await acc.updateHypixel();
         fileCache.accounts.push(acc);
