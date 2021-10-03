@@ -67,7 +67,7 @@ async function fakeStats (accounts) {
  * @returns {Promise<Account[]>}
  */
 async function discordIDs (accounts) {
-  const disclist = await utils.readJSON("disclist");
+  const disclist = await utils.readJSON("disclist.json");
 
   for (const acc of accounts) {
     acc.discord = getKeyByValue(disclist, acc.uuid);
@@ -235,8 +235,8 @@ async function fastUpdate (accounts) {
   updatedAccs = updatedAccs.concat(ignoreAccounts);
 
   await updatedAccs.sort(utils.winsSorter);
+  
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
-
   updatedAccs = await fakeStats(updatedAccs);
   updatedAccs = await discordIDs(updatedAccs);
   updatedAccs = await guilds(updatedAccs);
