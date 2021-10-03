@@ -68,6 +68,7 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc == undefined) {
+      Logger.debug("Getting data from hypixel");
       if(uuid == null) {
         let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
         elecreq = await elecreq.json();
@@ -77,7 +78,6 @@ module.exports = async (req, res, fileCache) => {
       }
 
       if (uuid != null) {
-        Logger.debug("Getting data from hypixel");
         acc = new Account(ign, 0, uuid);
         await acc.updateHypixel();
         fileCache.accounts.push(acc);
@@ -88,7 +88,7 @@ module.exports = async (req, res, fileCache) => {
       acc = undefined;
     }
 
-    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc != undefined) {
+    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
       res.end(JSON.stringify({
