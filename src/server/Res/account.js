@@ -44,7 +44,7 @@ module.exports = async (req, res, fileCache) => {
       acc = accounts.find((a) => a.discord == discid);
     }
 
-    if(acc.name == "null") {
+    if(acc?.name == "null") {
       acc = undefined;
     }
 
