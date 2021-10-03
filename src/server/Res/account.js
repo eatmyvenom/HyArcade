@@ -41,6 +41,10 @@ module.exports = async (req, res, fileCache) => {
       acc = accounts.find((a) => a.discord == discid);
     }
 
+    if(acc.name == "null") {
+      acc = undefined;
+    }
+
     if(acc == undefined && ign != null) {
       acc = accounts.find((a) => {
         if(a.nameHist && a.nameHist.length > 0) {
