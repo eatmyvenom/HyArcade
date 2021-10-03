@@ -17,6 +17,29 @@ class Response {
 
 /**
  * 
+ * @param {object[]} guildlist the raw guild list
+ * @param {string} uuid the players uuid
+ * @returns {object} The guild of the specified player
+ */
+function getGuild (guildlist, uuid) {
+  for(const guild of guildlist) {
+    if(guild.memberUUIDs.includes((`${uuid}`).toLowerCase())) {
+      return guild;
+    }
+  }
+}
+
+/**
+ * @param {object} object
+ * @param {string} value
+ * @returns {any} The value in the object 
+ */
+function getKeyByValue (object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
+/**
+ * 
  * @param {Account[]} accounts 
  * @returns {Promise<Account[]>}
  */
@@ -36,6 +59,57 @@ async function fakeStats (accounts) {
     logger.err("Fake stats file unaccessable");
     return accounts;
   }
+}
+
+/**
+ * 
+ * @param {Account[]} accounts
+ * @returns {Promise<Account[]>}
+ */
+async function discordIDs (accounts) {
+  const disclist = await utils.readJSON("disclist");
+
+  for (const acc of accounts) {
+    acc.discord = getKeyByValue(disclist, acc.uuid);
+  }
+
+  return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts 
+ * @returns {Promise<Account[]>}
+ */
+async function guilds (accounts) {
+  const guildlist = await utils.readJSON("guild.json");
+
+  for (const acc of accounts) {
+    const guild = getGuild(guildlist, acc.uuid);
+    if(guild) {
+      acc.guildID = guild.uuid;
+      acc.guild = guild.name;
+      acc.guildTag = guild.tag;
+      acc.guildTagColor = guild.color;
+    }
+  }
+
+  return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts 
+ * @returns {Promise<Account[]>}
+ */
+async function hackerlist (accounts) {
+  const hackerlist = await fs.readFile("data/hackerlist");
+
+  for (const acc of accounts) {
+    acc.hacker = hackerlist.includes(acc.uuid);
+  }
+
+  return accounts;
 }
 
 /**
@@ -161,10 +235,12 @@ async function fastUpdate (accounts) {
   updatedAccs = updatedAccs.concat(ignoreAccounts);
 
   await updatedAccs.sort(utils.winsSorter);
-
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
 
   updatedAccs = await fakeStats(updatedAccs);
+  updatedAccs = await discordIDs(updatedAccs);
+  updatedAccs = await guilds(updatedAccs);
+  updatedAccs = await hackerlist(updatedAccs);
 
   return updatedAccs;
 }
