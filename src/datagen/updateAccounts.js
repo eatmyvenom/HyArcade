@@ -35,7 +35,7 @@ function getGuild (guildlist, uuid) {
  * @returns {any} The value in the object 
  */
 function getKeyByValue (object, value) {
-  return Object.keys(object).find((key) => object[key] === value);
+  return Object.keys(object).find((key) => object[key] == value);
 }
 
 /**
