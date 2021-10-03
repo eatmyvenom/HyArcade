@@ -34,10 +34,13 @@ module.exports = async (req, res, fileCache) => {
     let acc;
 
     if(ign != null) {
+      Logger.debug(`Using ign "${ign}"`)
       acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
     } else if(uuid != null) {
+      Logger.debug(`Using uuid ${uuid}`);
       acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
     } else if(discid != null) {
+      Logger.debug(`Using discord id ${discid}`);
       acc = accounts.find((a) => a.discord == discid);
     }
 
