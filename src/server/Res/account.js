@@ -41,7 +41,9 @@ module.exports = async (req, res, fileCache) => {
       acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
     } else if(discid != null) {
       Logger.debug(`Using discord id ${discid}`);
-      acc = accounts.find((a) => a.discord == discid);
+      const uuid = fileCache.disclist[discid];
+
+      acc = accounts.find((a) => a.uuid == uuid);
     }
 
     if(acc?.name == "null") {
@@ -71,7 +73,7 @@ module.exports = async (req, res, fileCache) => {
         elecreq = await elecreq.json();
         if(elecreq != undefined) {
           uuid = elecreq.uuid.replace(/-/g, "");
-        } 
+        }
       }
 
       if (uuid != null) {
@@ -87,6 +89,7 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc != undefined) {
+      Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
       res.end(JSON.stringify({
         error: "ACC_UNDEFINED"
