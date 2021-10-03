@@ -34,7 +34,7 @@ module.exports = async (req, res, fileCache) => {
     let acc;
 
     if(ign != null) {
-      Logger.debug(`Using ign "${ign}"`)
+      Logger.debug(`Using ign "${ign}"`);
       acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
     } else if(uuid != null) {
       Logger.debug(`Using uuid ${uuid}`);
@@ -77,7 +77,7 @@ module.exports = async (req, res, fileCache) => {
       }
     }
 
-    if(acc.name == "INVALID-NAME" && acc.name == undefined && acc != undefined) {
+    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc != undefined) {
       res.statusCode = 404;
       res.end(JSON.stringify({
         error: "ACC_UNDEFINED"
