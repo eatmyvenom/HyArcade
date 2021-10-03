@@ -79,12 +79,17 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc.updateTime < (Date.now() - 600000)) {
-      await acc.updateHypixel();
+      const nacc = new Account(ign, 0, uuid);
+      Object.assign(nacc, acc);
 
-      if(Object.keys(fakeFile).includes(acc.uuid)) {
-        Logger.log(`Overwriting data for ${acc.name}`);
-        Object.assign(acc, fakeFile[acc.uuid]);
+      await nacc.updateHypixel();
+
+      if(Object.keys(fakeFile).includes(nacc.uuid)) {
+        Logger.log(`Overwriting data for ${nacc.name}`);
+        Object.assign(nacc, fakeFile[nacc.uuid]);
       }
+
+      acc = nacc;
     }
 
     res.write(JSON.stringify(acc));
