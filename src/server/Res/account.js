@@ -79,6 +79,7 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc.updateTime < (Date.now() - 600000)) {
+      Logger.debug(`Updating data for ${acc.name}`);
       const nacc = new Account(ign, 0, uuid);
       Object.assign(nacc, acc);
 
