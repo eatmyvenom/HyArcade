@@ -184,7 +184,7 @@ async function handleCommand (msg, cmdResponse) {
  */
 async function checkMW (msg) {
   if(msg.channel.id == "791122377333407784") await MiniWallsVerify(msg);
-  if(msg.guild.id == "789718245015289886" || msg.guild.id == "677552571568619531") {
+  if(cfg.discord.miniWalls.guilds.includes(msg.guild.id) || cfg.discord.miniWalls.channels.includes(msg.channel.id)) {
     await mwMode(msg);
     return;
   }
