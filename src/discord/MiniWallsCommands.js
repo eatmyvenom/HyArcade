@@ -64,7 +64,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "player":
   case "mw":
   case "stats": {
-    rawMsg.channel.sendTyping();
+
     return await MiniWalls.execute(args, author, rawMsg);
   }
 
@@ -74,7 +74,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "mlb":
   case "miniwallsleaderboard":
   case "miniwallslb": {
-    rawMsg.channel.sendTyping();
+
     return await MiniWallsLB.execute(args, author, rawMsg);
   }
 
@@ -83,7 +83,7 @@ async function checkCommands (rawMsg, command, args, author) {
   case "c":
   case "compare":
   case "comparemw": {
-    rawMsg.channel.sendTyping();
+
     return MiniWallsCompare.execute(args, author, rawMsg);
   }
 
@@ -91,7 +91,6 @@ async function checkCommands (rawMsg, command, args, author) {
     const {
       FakeLb
     } = await import("./Commands/FakeLb.mjs");
-    rawMsg.channel.sendTyping();
     return await FakeLb.execute(args, author, rawMsg);
   }
 
