@@ -7,6 +7,7 @@ const FileCache = require("../../utils/files/FileCache");
 const Account = require("hyarcade-requests/types/Account");
 const { default: fetch } = require("node-fetch");
 const utils = require("../../utils");
+const AccountResolver = require("../AccountResolver");
 let fakeFile;
 
 
@@ -24,69 +25,8 @@ module.exports = async (req, res, fileCache) => {
 
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
-    const ign = url.searchParams.get("ign");
-    let uuid = url.searchParams.get("uuid");
-    const discid = url.searchParams.get("discid");
     res.setHeader("Content-Type", "application/json");
-    const {
-      accounts
-    } = fileCache;
-    let acc;
-
-    if(ign != null) {
-      Logger.debug(`Using ign "${ign}"`);
-      acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
-    } else if(uuid != null) {
-      Logger.debug(`Using uuid ${uuid}`);
-      acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
-    } else if(discid != null) {
-      Logger.debug(`Using discord id ${discid}`);
-      const uuid = fileCache.disclist[discid];
-
-      acc = accounts.find((a) => a.uuid == uuid);
-    }
-
-    if(acc?.name == "null") {
-      acc = undefined;
-    }
-
-    if(acc == undefined && ign != null) {
-      acc = accounts.find((a) => {
-        if(a.nameHist && a.nameHist.length > 0) {
-          for(const name of a.nameHist) {
-            if(name.toLowerCase().startsWith(ign)) {
-              return true;
-            }
-          }
-        }
-        return false;
-      });
-    }
-
-    if(acc?.name == "null") {
-      acc = undefined;
-    }
-
-    if(acc == undefined) {
-      Logger.debug("Getting data from hypixel");
-      if(uuid == null) {
-        let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
-        elecreq = await elecreq.json();
-        if(elecreq != undefined) {
-          uuid = elecreq.uuid.replace(/-/g, "");
-        }
-      }
-
-      if (uuid != null) {
-        acc = new Account(ign, 0, uuid);
-        await acc.updateHypixel();
-        fileCache.accounts.push(acc);
-      }
-    }
-
-    if(acc?.name == "null") {
-      acc = undefined;
-    }
+    let acc = await AccountResolver(fileCache, url);
 
     if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
@@ -99,7 +39,7 @@ module.exports = async (req, res, fileCache) => {
 
     if(acc.updateTime < (Date.now() - 600000)) {
       Logger.debug(`Updating data for ${acc.name}`);
-      const nacc = new Account(ign, 0, uuid);
+      const nacc = new Account(acc.name, 0, acc.uuid);
       Object.assign(nacc, acc);
 
       await nacc.updateHypixel();

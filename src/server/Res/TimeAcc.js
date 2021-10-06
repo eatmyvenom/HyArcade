@@ -1,9 +1,12 @@
+const Logger = require("hyarcade-logger");
+const Account = require("hyarcade-requests/types/Account");
 const {
   URL
 } = require("url");
-const cfg = require("../../Config").fromJSON();
-const Logger = require("hyarcade-logger");
+const utils = require("../../utils");
 const FileCache = require("../../utils/files/FileCache");
+const AccountResolver = require("../AccountResolver");
+let fakeFile;
 
 /**
  * 
@@ -12,40 +15,18 @@ const FileCache = require("../../utils/files/FileCache");
  * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
+
+  if(fakeFile == undefined) {
+    fakeFile = await utils.readJSON("fakeStats.json");
+  }
+
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
-    const ign = url.searchParams.get("ign");
-    const uuid = url.searchParams.get("uuid");
-    const discid = url.searchParams.get("discid");
-    const time = url.searchParams.get("time");
     res.setHeader("Content-Type", "application/json");
-    const {
-      accounts
-    } = fileCache;
-    let acc;
+    let acc = await AccountResolver(fileCache, url);
 
-    if(ign != null) {
-      acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
-    } else if(uuid != null) {
-      acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
-    } else if(discid != null) {
-      acc = accounts.find((a) => a.discord == discid);
-    }
-
-    if(acc == undefined && ign != null) {
-      acc = accounts.find((a) => {
-        if(a.nameHist && a.nameHist.length > 0) {
-          for(const name of a.nameHist) {
-            if(name.toLowerCase().startsWith(ign)) {
-              return true;
-            }
-          }
-        }
-        return false;
-      });
-    }
-
-    if(acc == undefined) {
+    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
+      Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
       res.end(JSON.stringify({
         error: "ACC_UNDEFINED"
@@ -54,9 +35,21 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(acc.updateTime < (Date.now() - 600000)) {
-      await acc.updateHypixel();
+      Logger.debug(`Updating data for ${acc.name}`);
+      const nacc = new Account(acc.name, 0, acc.uuid);
+      Object.assign(nacc, acc);
+
+      await nacc.updateHypixel();
+
+      if(Object.keys(fakeFile).includes(nacc.uuid)) {
+        Logger.log(`Overwriting data for ${nacc.name}`);
+        Object.assign(nacc, fakeFile[nacc.uuid]);
+      }
+
+      acc = nacc;
     }
 
+    const time = url.searchParams.get("time");
     const response = {};
 
     if(time != null) {
@@ -67,33 +60,6 @@ module.exports = async (req, res, fileCache) => {
 
     res.write(JSON.stringify(response));
     res.end();
-  } else if(req.method == "POST") {
-    let data = "";
-    let json = {};
-    if(req.headers.authorization == cfg.dbPass) {
-      req.on("data", (d) => data += d);
-      req.on("end", async () => {
-        json = JSON.parse(data);
-        const newAccs = [];
-        if(fileCache.accounts.find((a) => a.uuid == json.uuid)) {
-          for(const a of fileCache.accounts) {
-            if(a.uuid != json.uuid) {
-              newAccs.push(a);
-            } else {
-              newAccs.push(json);
-            }
-          }
-        } else {
-          fileCache.accounts.push(json);
-        }
-        await fileCache.save();
-        res.end();
-      });
-    } else {
-      Logger.warn("Someone tried to post without correct AUTH");
-      res.statusCode = 403;
-      res.end();
-    }
   } else {
     res.statusCode = 404;
     res.end();
