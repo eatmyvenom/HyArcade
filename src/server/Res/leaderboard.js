@@ -19,10 +19,13 @@ function numberify (str) {
  */
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
+
   const lbprop = url.searchParams.get("path");
   const category = url.searchParams.get("category");
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
+  const reverse = url.searchParams.has("reverse");
+
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
@@ -89,6 +92,10 @@ module.exports = async (req, res, fileCache) => {
           }
         });
       }
+    }
+
+    if(reverse) {
+      accounts = accounts.reverse();
     }
 
     accounts = accounts.slice(0, Math.min(accounts.length, 300));
