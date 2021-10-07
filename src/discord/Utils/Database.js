@@ -29,7 +29,7 @@ class Database {
     }
   }
 
-  static async getLeaderboard (path, category, time, min) {
+  static async getLeaderboard (path, category, time, min, reverse) {
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path);
     
@@ -43,6 +43,10 @@ class Database {
 
     if(min) {
       url.searchParams.set("min", "");
+    }
+
+    if(reverse) {
+      url.searchParams.set("reverse", "");
     }
 
     let lb;
