@@ -5,6 +5,8 @@ const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const Util = require("util");
+const Logger = require("hyarcade-logger");
+const AccountComparitor = require("../Utils/AccountComparitor");
 
 /**
  * @param {object} o
@@ -30,14 +32,23 @@ function getProp (o, s) {
 
 module.exports = new Command("get-data-raw", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
+  const time = args[2];
   let acc;
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
     await interaction.defer();
-    acc = await InteractionUtils.resolveAccount(interaction);
+    acc = await InteractionUtils.resolveAccount(interaction, "player", time);
   }
-  const path = args[args.length - 1];
+
+  if(acc.timed != undefined) {
+    Logger.info("Getting account diff");
+    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
+
+    acc = tmpAcc;
+  }
+
+  const path = args[1];
   let val = getProp(acc, path);
 
   if(typeof val == "number" || typeof val == "boolean") {

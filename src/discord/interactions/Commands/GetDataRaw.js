@@ -13,5 +13,11 @@ module.exports = {
     description: "The field name of the data you are looking for",
     required: true,
   },
+  {
+    type: 3,
+    name: "time",
+    description: "The time period you are looking for",
+    required: false,
+  },
   ],
 };

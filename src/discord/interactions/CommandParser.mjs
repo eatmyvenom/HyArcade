@@ -44,7 +44,7 @@ export default async (interaction) => {
 
   switch(interaction.commandName) {
   case "stats": {
-    return Stats.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
+    return Stats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
   }
 
   case Leaderboard.name: {
@@ -103,7 +103,7 @@ export default async (interaction) => {
   }
 
   case GetDataRaw.name: {
-    return await GetDataRaw.execute([opts.getString("player"), opts.getString("path")], authorID, null, interaction);
+    return await GetDataRaw.execute([opts.getString("player"), opts.getString("path"), opts.getString("time")], authorID, null, interaction);
   }
 
   case Verify.name: {

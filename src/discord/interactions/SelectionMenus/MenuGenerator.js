@@ -4,12 +4,12 @@ const {
 } = require("discord.js");
 
 module.exports = class MenuGenerator {
-  static statsMenu (uuid) {
+  static statsMenu (uuid, time) {
     const row = new MessageActionRow();
     const menu = new MessageSelectMenu()
       .setMaxValues(1)
       .setMinValues(1)
-      .setCustomId(`s:${uuid}:menu`)
+      .setCustomId(`s:${uuid}:${time}:menu`)
       .setPlaceholder("Select game to see stats from")
       .addOptions([{
         label: "Overall Arcade",

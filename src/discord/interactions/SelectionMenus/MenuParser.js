@@ -6,6 +6,8 @@ const ButtonResponse = require("../Buttons/ButtonResponse");
 const InteractionUtils = require("../InteractionUtils");
 const MenuGenerator = require("./MenuGenerator");
 const PartyGamesImg = require("../../images/PartyGamesImg");
+const Logger = require("hyarcade-logger");
+const AccountComparitor = require("../../Utils/AccountComparitor");
 
 /**
  * 
@@ -17,7 +19,7 @@ module.exports = async function MenuParser (interaction) {
   const commandType = data[0];
   switch(commandType) {
   case "s": {
-    return await statsHandler(data[1], interaction.values[0], interaction);
+    return await statsHandler(data[1], data[2], interaction.values[0], interaction);
   }
 
   case "pg" : {
@@ -28,19 +30,28 @@ module.exports = async function MenuParser (interaction) {
 
 /**
  * @param {string} accUUID
+ * @param {string} time
  * @param {string} game
  * @param {SelectMenuInteraction} interaction
  * @returns {ButtonResponse}
  */
-async function statsHandler (accUUID, game, interaction) {
+async function statsHandler (accUUID, time, game, interaction) {
   await interaction.deferUpdate();
-  const accData = await InteractionUtils.accFromUUID(accUUID);
-  const statsRes = await BotRuntime.getStats(accData, game);
+  let acc = await BotRuntime.resolveAccount(accUUID, undefined, false, time, false);
+
+  if(acc.timed != undefined) {
+    Logger.info("Getting account diff");
+    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
+
+    acc = tmpAcc;
+  }
+
+  const statsRes = await BotRuntime.getStats(acc, game);
   const {
     embed
   } = statsRes;
 
-  const mnu = await MenuGenerator.statsMenu(accUUID);
+  const mnu = await MenuGenerator.statsMenu(accUUID, time);
   return new ButtonResponse("", [embed], mnu);
 }
 

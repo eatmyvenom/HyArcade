@@ -101,7 +101,7 @@ module.exports = class BotRuntime {
         if(force && time == "lifetime") return await getFromHypixel(str);
         urlArgs.set("ign", str.toLowerCase());
       } else if (canbeSelf) {
-        urlArgs.set("discid", rawMessage.author.id);
+        urlArgs.set("discid", rawMessage?.author?.id ?? "");
       }
 
       if (time != "lifetime") {
