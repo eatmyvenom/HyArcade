@@ -5,7 +5,6 @@ const cfg = require("../../Config").fromJSON();
 const Logger = require("hyarcade-logger");
 const FileCache = require("../../utils/files/FileCache");
 const Account = require("hyarcade-requests/types/Account");
-const { default: fetch } = require("node-fetch");
 const utils = require("../../utils");
 const AccountResolver = require("../AccountResolver");
 let fakeFile;
