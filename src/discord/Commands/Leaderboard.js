@@ -41,7 +41,12 @@ async function hander (args, rawMsg, interaction) {
   let gid = "";
   let gameName = "";
 
-  switch(type.toLowerCase().trim()) {
+  const sanitizedType = type
+    .toLowerCase()
+    .trim()
+    .replace(/ /g, "");
+
+  switch(sanitizedType) {
   case "sex":
   case "sexy":
   case "party":
@@ -740,67 +745,422 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
-  case "pgrounds":
-  case "pgr": {
-    gameName = "Party Games Rounds Won";
+  case "blockingdeadkills":
+  case "bdk": {
+    gameName = "Blocking dead kills";
+    res = await getLB("kills", timetype, limit, "blockingDead", startingIndex);
+    gid = "bdk";
+    break;
+  }
+
+  case "bdhs":
+  case "blockingdeadheadshots": {
+    gameName = "Blocking dead headshots";
+    res = await getLB("headshots", timetype, limit, "blockingDead", startingIndex);
+    gid = "bdhs";
+    break;
+  }
+
+  case "ca":
+  case "creeperattack": {
+    gameName = "Creeper attack highest wave";
+    res = await getLB("maxWave", timetype, limit, "creeperAttack", startingIndex);
+    gid = "ca";
+    break;
+  }
+
+  case "pgr":
+  case "partygamesroundswon" : {
+    gameName = "Party games rounds won";
     res = await getLB("roundsWon", timetype, limit, "partyGames", startingIndex);
     gid = "pgr";
     break;
   }
 
-  case "pgstars":
-  case "pgs": {
-    gameName = "Party Games Stars";
+  case "pgs":
+  case "partygamesstars" : {
+    gameName = "Party games stars";
     res = await getLB("starsEarned", timetype, limit, "partyGames", startingIndex);
-    gid = "pgr";
+    gid = "pgs";
     break;
   }
 
-  case "pganimalslaughter":
   case "pgas":
-  case "pgasw": {
-    gameName = "Party Games Animal Slaughter Wins";
+  case "pgasw":
+  case "partygamesanimalslaughterwins" : {
+    gameName = "Party games animal slaughter wins";
     res = await getLB("animalSlaughterWins", timetype, limit, "partyGames", startingIndex);
-    gid = "pgas";
+    gid = "pgasw";
     break;
   }
 
-  case "pganimalslaughterkills":
   case "pgask":
-  case "pgaskills": {
-    gameName = "Party Games Animal Slaughter Kills";
+  case "partygamesanimalslaughterkills" : {
+    gameName = "Party games animal slaughter kills";
     res = await getLB("animalSlaughterKills", timetype, limit, "partyGames", startingIndex);
     gid = "pgask";
     break;
   }
 
-  case "pganimalslaughterrecord":
-  case "pganimalslaughterpg":
-  case "pgaspb": {
-    gameName = "Party Games Animal Slaughter PB";
-    res = await getLB("animalSlaughterPB", timetype, limit, "partyGames", startingIndex);
+  case "pgaspb":
+  case "partygamesanimalslaughterpersonalbest" : {
+    gameName = "Party games animal slaughter personal best";
+    res = await getLB("animalSlaughterKills", timetype, limit, "partyGames", startingIndex);
     gid = "pgaspb";
     break;
   }
 
-  case "pganvilspleefwins":
-  case "pgansw":
-  case "pgans": {
-    gameName = "Party Games Anvil Spleef Wins";
+  case "pganw":
+  case "partygamesanvilspleefwins" : {
+    gameName = "Party games anvil spleef wins";
     res = await getLB("anvilSpleefWins", timetype, limit, "partyGames", startingIndex);
-    gid = "pgans";
+    gid = "pganw";
     break;
   }
 
-  case "pganvilspleefpb":
-  case "pganvilpb":
-  case "pganspb": {
-    gameName = "Party Games Anvil Spleef PB";
+  case "pganpb":
+  case "partygamesanvilspleefpersonalbest" : {
+    gameName = "Party games anvil spleef personal best";
     res = await getLB("anvilSpleefPB", timetype, limit, "partyGames", startingIndex);
-    gid = "pgans";
+    gid = "pganpb";
     break;
   }
-  
+
+  case "pgbw":
+  case "partygamesbombardmentwins" : {
+    gameName = "Party games bombardment wins";
+    res = await getLB("bombardmentWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgbw";
+    break;
+  }
+
+  case "pgbpb":
+  case "partygamesbombardmentpersonalbest" : {
+    gameName = "Party games anvil spleef personal best";
+    res = await getLB("bombardmentPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pgbpb";
+    break;
+  }
+
+  case "pgcrw":
+  case "partygameschickenringswins" : {
+    gameName = "Party games chicken rings wins";
+    res = await getLB("chickenRingsWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgcrw";
+    break;
+  }
+
+  case "pgcrpb":
+  case "partygameschickenringspersonalbest" : {
+    gameName = "Party games chicken rings personal best";
+    res = await getLB("chickenRingsPB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgcrpb";
+    break;
+  }
+
+  case "pbdw":
+  case "partygamesdivewins" : {
+    gameName = "Party games dive wins";
+    res = await getLB("diveWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pbdw";
+    break;
+  }
+
+  case "pgds":
+  case "partygamesdivescore" : {
+    gameName = "Party games dive score";
+    res = await getLB("diveScore", timetype, limit, "partyGames", startingIndex);
+    gid = "pgds";
+    break;
+  }
+
+  case "pgdpb":
+  case "partygamesdivepersonalbest" : {
+    gameName = "Party games dive personal best";
+    res = await getLB("divePB", timetype, limit, "partyGames", startingIndex);
+    gid = "pgdpb";
+    break;
+  }
+
+  case "pbhgw":
+  case "partygameshighgroundwins" : {
+    gameName = "Party games high ground wins";
+    res = await getLB("highGroundWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pbhgw";
+    break;
+  }
+
+  case "pghgs":
+  case "partygameshighgroundscore" : {
+    gameName = "Party games high ground score";
+    res = await getLB("highGroundScore", timetype, limit, "partyGames", startingIndex);
+    gid = "pghgs";
+    break;
+  }
+
+  case "pghgpb":
+  case "partygameshighgroundpersonalbest" : {
+    gameName = "Party games high ground personal best";
+    res = await getLB("highGroundPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pghgpb";
+    break;
+  }
+
+  case "pbhw":
+  case "partygameshoehoehoewins" : {
+    gameName = "Party games hoe hoe hoe wins";
+    res = await getLB("hoeWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pbhw";
+    break;
+  }
+
+  case "pghs":
+  case "partygameshoehoehoescore" : {
+    gameName = "Party games hoe hoe hoe score";
+    res = await getLB("hoeScore", timetype, limit, "partyGames", startingIndex);
+    gid = "pghs";
+    break;
+  }
+
+  case "pghpb":
+  case "partygameshoehoehoepersonalbest" : {
+    gameName = "Party games hoe hoe hoe personal best";
+    res = await getLB("hoePB", timetype, limit, "partyGames", startingIndex);
+    gid = "pghpb";
+    break;
+  }
+
+  case "pgjw":
+  case "partygamesjigsawwins" : {
+    gameName = "Party games jigsaw rush wins";
+    res = await getLB("jigsawWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgjw";
+    break;
+  }
+
+  case "pgjpb":
+  case "partygamesjigsawpersonalbest" : {
+    gameName = "Party games jigsaw personal best";
+    res = await getLB("jigsawPB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgjpb";
+    break;
+  }
+
+  case "pgjjw":
+  case "partygamesjunglejumpwins" : {
+    gameName = "Party games jungle jump wins";
+    res = await getLB("jungleJumpWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgjjw";
+    break;
+  }
+
+  case "pgjjpb":
+  case "partygamesjunglejumppersonalbest" : {
+    gameName = "Party games jungle jump personal best";
+    res = await getLB("jungleJumpPB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgjjpb";
+    break;
+  }
+
+  case "pglw":
+  case "partygameslabescapewins" : {
+    gameName = "Party games lab escape wins";
+    res = await getLB("labEscapeWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pglw";
+    break;
+  }
+
+  case "pglpb":
+  case "partygameslabescapepersonalbest" : {
+    gameName = "Party games lab escape personal best";
+    res = await getLB("labEscapePB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pglpb";
+    break;
+  }
+
+  case "pblmw":
+  case "partygameslawnmoowerwins" : {
+    gameName = "Party games lawn moower wins";
+    res = await getLB("lawnMoowerWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pblmw";
+    break;
+  }
+
+  case "pglms":
+  case "partygameslawnmoowerscore" : {
+    gameName = "Party games lawn moower score";
+    res = await getLB("lawnMoowerScore", timetype, limit, "partyGames", startingIndex);
+    gid = "pglms";
+    break;
+  }
+
+  case "pglmpb":
+  case "partygameslawnmoowerpersonalbest" : {
+    gameName = "Party games lawn moower personal best";
+    res = await getLB("lawnMoowerPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pglmpb";
+    break;
+  }
+
+  case "pgmrw":
+  case "partygamesminecartracingwins" : {
+    gameName = "Party games minecart racing wins";
+    res = await getLB("minecartRacingWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgmrw";
+    break;
+  }
+
+  case "pgmrpb":
+  case "partygamesminecartracingpersonalbest" : {
+    gameName = "Party games minecart racing personal best";
+    res = await getLB("minecartRacingPB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgmrpb";
+    break;
+  }
+
+  case "pbrpgw":
+  case "partygamesrpgwins" : {
+    gameName = "Party games RPG-16 wins";
+    res = await getLB("rpgWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pbrpgw";
+    break;
+  }
+
+  case "pgrpgk":
+  case "partygamesrpgkills" : {
+    gameName = "Party games RPG-16 score";
+    res = await getLB("rpgKills", timetype, limit, "partyGames", startingIndex);
+    gid = "pgrpgk";
+    break;
+  }
+
+  case "pgrpgpb":
+  case "partygamesrpgpersonalbest" : {
+    gameName = "Party games RPG-16 personal best";
+    res = await getLB("rpgPB", timetype, limit, "partyGames", startingIndex);
+    gid = "pgrpgpb";
+    break;
+  }
+
+  case "pgsmw":
+  case "partygamesspidermazewins" : {
+    gameName = "Party games spider maze wins";
+    res = await getLB("spiderMazeWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgsmw";
+    break;
+  }
+
+  case "pgsmpb":
+  case "partygamesspidermazepersonalbest" : {
+    gameName = "Party games spider maze personal best";
+    res = await getLB("spiderMazePB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgsmpb";
+    break;
+  }
+
+  case "pgtfilw":
+  case "partygamesthefloorislavawins" : {
+    gameName = "Party games the floor is lava wins";
+    res = await getLB("theFloorIsLavaWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgtfilw";
+    break;
+  }
+
+  case "pgtfilpb":
+  case "partygamesthefloorislavapersonalbest" : {
+    gameName = "Party games the floor is lava personal best";
+    res = await getLB("theFloorIsLavaPB", timetype, limit, "partyGames", startingIndex, true);
+    gid = "pgtfilpb";
+    break;
+  }
+
+  case "pgavaw":
+  case "partygamesavalanchewins" : {
+    gameName = "Party games avalanche wins";
+    res = await getLB("avalancheWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgavaw";
+    break;
+  }
+
+  case "pgvw":
+  case "partygamesvolcanowins" : {
+    gameName = "Party games volcano wins";
+    res = await getLB("volcanoWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgvw";
+    break;
+  }
+
+  case "pgpfw":
+  case "partygamespigfishingwins" : {
+    gameName = "Party games pig fishing wins";
+    res = await getLB("pigFishingWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgpfw";
+    break;
+  }
+
+  case "pgtw":
+  case "partygamestrampoliniowins" : {
+    gameName = "Party games trampolinio wins";
+    res = await getLB("trampolinioWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgtw";
+    break;
+  }
+
+  case "pgpjw":
+  case "partygamespigjoustingwins" : {
+    gameName = "Party games pig jousting wins";
+    res = await getLB("pigJoustingWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgpjw";
+    break;
+  }
+
+  case "pgww":
+  case "partygamesworkshopwins" : {
+    gameName = "Party games workshop wins";
+    res = await getLB("workshopWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgww";
+    break;
+  }
+
+  case "pgsrw":
+  case "partygamesshootingrangewins" : {
+    gameName = "Party games shooting range wins";
+    res = await getLB("shootingRangeWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgsrw";
+    break;
+  }
+
+  case "pgffw":
+  case "partygamesfrozenfloorwins" : {
+    gameName = "Party games frozen floor wins";
+    res = await getLB("frozenFloorWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgffw";
+    break;
+  }
+
+  case "pgcpw":
+  case "partygamescannonpaintingwins" : {
+    gameName = "Party games cannon painting wins";
+    res = await getLB("cannonPaintingWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgcpw";
+    break;
+  }
+
+  case "pgflw":
+  case "partygamesfireleaperswins" : {
+    gameName = "Party gamesfire leapers wins";
+    res = await getLB("fireLeapersWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgflw";
+    break;
+  }
+
+  case "pgssw":
+  case "partygamessupersheepins" : {
+    gameName = "Party games super sheep wins";
+    res = await getLB("superSheepWins", timetype, limit, "partyGames", startingIndex);
+    gid = "pgssw";
+    break;
+  }
 
   default: {
     if(type.trim().startsWith(".")) {
