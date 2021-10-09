@@ -211,8 +211,12 @@ module.exports = class BotRuntime {
   
     static async getBlacklist () {
       if(blacklist == null) {
-        blacklist = await BotRuntime.getFromDB("blacklist");
+        BotRuntime.getFromDB("blacklist")
+          .then((bl) => blacklist = bl)
+          .catch(logger.err);
+
         setTimeout(() => blacklist = null, 3600000);
+        return [];
       }
   
       return blacklist;
