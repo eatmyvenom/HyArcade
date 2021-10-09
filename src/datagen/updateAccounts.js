@@ -185,6 +185,7 @@ function uniqBy (a, key) {
  * @param {Account[]} accounts
  * @returns {Promise<Account[]>}
  */
+// eslint-disable-next-line no-unused-vars
 async function fastUpdate (accounts) {
   await fs.writeFile("starttime", (`${Date.now()}`));
 
@@ -195,12 +196,11 @@ async function fastUpdate (accounts) {
   let importantAccounts = [];
   const ignoreAccounts = [];
 
-  for (const acc of accounts) {
-    const oldAcc = oldAccs.find((a) => a.uuid == acc.uuid);
-    if(isImportant(oldAcc)) {
+  for (const acc of oldAccs) {
+    if(isImportant(acc)) {
       importantAccounts.push(acc);
     } else {
-      ignoreAccounts.push(oldAcc);
+      ignoreAccounts.push(acc);
     }
   }
 
