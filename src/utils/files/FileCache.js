@@ -66,7 +66,7 @@ class FileCache {
         }
         Logger.debug("Files saved...");
         this.dirty = false;
-        this.modTime = Date.now();
+        this.modTime = Date.now() - 1000;
       } catch (e) {
         Logger.err("ERROR SAVING FILES!");
         Logger.err(e);
@@ -94,37 +94,14 @@ class FileCache {
           Logger.debug("accounts has not been modified, ignoring!");
         }
 
-        const daccStat = await fs.stat(`${fileCache.path}accounts.day.json`);
-        if(Math.max(daccStat.ctimeMs, daccStat.mtimeMs) > fileCache.modTime) {
-          const dailyAccounts = await utils.readJSON("accounts.day.json");
-          fileCache.dailyAccounts = new AccountArray(dailyAccounts);
-        } else {
-          Logger.debug("day accounts has not been modified, ignoring!");
-        }
+        const dailyAccounts = await utils.readJSON("accounts.day.json");
+        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
 
-        const waccStat = await fs.stat(`${fileCache.path}accounts.weekly.json`);
-        if(Math.max(waccStat.ctimeMs, waccStat.mtimeMs) > fileCache.modTime) {
-          const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-          fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
-        } else {
-          Logger.debug("weekly accounts has not been modified, ignoring!");
-        }
+        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
 
-        const maccStat = await fs.stat(`${fileCache.path}accounts.monthly.json`);
-        if(Math.max(maccStat.ctimeMs, maccStat.mtimeMs) > fileCache.modTime) {
-          const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-          fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
-        } else {
-          Logger.debug("monthly accounts has not been modified, ignoring!");
-        }
-
-        const acclistStat = await fs.stat(`${fileCache.path}acclist.json`);
-        if(Math.max(acclistStat.ctimeMs, acclistStat.mtimeMs) > fileCache.modTime) {
-          const acclist = await utils.readJSON("acclist.json");
-          fileCache.acclist = acclist;
-        } else {
-          Logger.debug("acclist has not been modified, ignoring!");
-        }
+        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
 
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
