@@ -44,7 +44,7 @@ exports.players = async function players (acclist) {
  * @returns {object} All of the accounts in the database
  */
 exports.accounts = async function accounts () {
-  const acclistjson = await utils.readDB("acclist");
+  const acclistjson = await utils.readJSON("acclist.json");
   const disclist = await utils.readDB("disclist");
   const guilds = await utils.readJSON("guild.json");
   const acclist = {};
