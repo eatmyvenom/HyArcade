@@ -1,7 +1,6 @@
 exports.statsCommand = require("./Commands/Stats");
 exports.compare = require("./Commands/Compare");
 exports.whois = require("./Commands/Whois");
-exports.getdataraw = require("./Commands/GetDataRaw");
 exports.info = require("./Commands/Info");
 exports.addaccount = require("./Commands/AddAccount");
 exports.verify = require("./Commands/Verify");
@@ -11,3 +10,8 @@ exports.arcade = require("./Commands/Arcade");
 exports.topgames = require("./Commands/TopGames");
 exports.zombies = require("./Commands/Zombies");
 exports.status = require("./Commands/Status");
+exports.quake = require("./Commands/Quake");
+exports.arena = require("./Commands/Arena");
+exports.pball = require("./Commands/PBall");
+exports.walls = require("./Commands/Walls");
+exports.zombies = require("./Commands/Zombies");
