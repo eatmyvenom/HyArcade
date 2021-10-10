@@ -31,6 +31,7 @@ import FetchUser from "./Commands/FetchUser.js";
 import FetchGuild from "./Commands/FetchGuild.js";
 import FetchChannel from "./Commands/FetchChannel.js";
 import TopGames from "./Commands/TopGames.mjs";
+import { Profile } from "./Commands/Profile.mjs";
 import DBInfo from "./Commands/DBInfo.js";
 import Help from "./Commands/Help.js";
 
@@ -265,6 +266,13 @@ async function checkCommands (rawMsg, command, args, author) {
 
   case "apiraw" : {
     return await ApiRaw.execute(args, author, rawMsg);
+  }
+
+  case "p" :
+  case "arcprofile":
+  case "arcadeprofile":
+  case "profile" : {
+    return await Profile.execute(args, author, rawMsg);
   }
 
   default: {

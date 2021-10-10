@@ -60,10 +60,12 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   } else {
     await interaction.defer();
     acc = await InteractionUtils.resolveAccount(interaction);
-    if(acc == undefined) {
-      return new CommandResponse("", ERROR_UNLINKED);
-    }
   }
+
+  if(acc == undefined) {
+    return new CommandResponse("", ERROR_UNLINKED);
+  }
+
   const img = new ImageGenerator(1280, 800, "'myFont'");
   await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000005F");
 
