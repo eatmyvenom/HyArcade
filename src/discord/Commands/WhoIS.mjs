@@ -117,7 +117,7 @@ export const WhoIS = new Command("whois", ["*"], async (args, rawMsg, interactio
   const plr = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 1);
   } else {
     await interaction.defer();
     acc = await InteractionUtils.resolveAccount(interaction);
