@@ -18,6 +18,7 @@ import EZ from "./Commands/EZ.mjs";
 import Ping from "./Commands/Ping.mjs";
 import Echo from "./Commands/Echo.mjs";
 import Blacklist from "./Commands/Blacklist.mjs";
+import ApiRaw from "./Commands/ApiRaw.mjs";
 import CyclePresence from "./Commands/CyclePresence.mjs";
 import Eval from "./Commands/Eval.mjs";
 import Ezmsgs from "./Commands/ezmsgs.mjs";
@@ -260,6 +261,10 @@ async function checkCommands (rawMsg, command, args, author) {
       return await TopGames.execute(args, author, rawMsg);
     }
     return new CommandResponse("", ERROR_USE_SLASH_COMMAND("topgames", "top-games"));
+  }
+
+  case "apiraw" : {
+    return await ApiRaw.execute(args, author, rawMsg);
   }
 
   default: {
