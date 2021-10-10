@@ -61,7 +61,7 @@ module.exports = new Command("get-data-raw", ["*"], async (args, rawMsg, interac
 
   const embed = new MessageEmbed()
     .setTitle(`${acc.name}.${path}`)
-    .setDescription(val)
+    .setDescription(`\`\`\`${val}\`\`\``)
     .setColor(0x44a3e7);
   return {
     res: "",
