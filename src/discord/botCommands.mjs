@@ -4,7 +4,6 @@ import config from "hyarcade-config";
 const cfg = config.fromJSON();
 import Logger from "hyarcade-logger";
 import Runtime from "hyarcade-config/Runtime.js";
-const owner = "156952208045375488";
 
 import Link from "./Commands/Link.js";
 import { Verify } from "./Commands/LinkMe.mjs";
@@ -27,6 +26,7 @@ import SetAvatar from "./Commands/SetAvatar.js";
 import SetPresence from "./Commands/SetPresence.js";
 import SetUsername from "./Commands/SetUsername.js";
 import Exec from "./Commands/Exec.js";
+import GetDataRaw from "./Commands/GetDataRaw.js";
 import FetchUser from "./Commands/FetchUser.js";
 import FetchGuild from "./Commands/FetchGuild.js";
 import FetchChannel from "./Commands/FetchChannel.js";
@@ -98,12 +98,6 @@ async function checkCommands (rawMsg, command, args, author) {
       res: "", embed: ERROR_USE_SLASH_COMMAND("s", "stats")
     };
 
-  case "newacc":
-  case "addacc":
-    return {
-      res: "", embed: ERROR_USE_SLASH_COMMAND("addacc", "addaccount")
-    };
-
   case "lb":
   case "lead":
   case "leaderboard":
@@ -125,23 +119,9 @@ async function checkCommands (rawMsg, command, args, author) {
   case "getacc":
   case "getdata":
   case "rawdata":
+  case "raw":
   case "dataraw": {
-    return {
-      res: "",
-      embed: ERROR_USE_SLASH_COMMAND("getdataraw", "getdataraw")
-    };
-  }
-
-  case "players":
-  case "amnts":
-  case "plrs":
-  case "counts":
-  case "amounts":
-  case "gamecounts": {
-    return {
-      res: "",
-      embed: ERROR_USE_SLASH_COMMAND("gamecounts", "gamecounts")
-    };
+    return await GetDataRaw.execute(args, author, rawMsg);
   }
 
   case "lastupdate":
@@ -175,15 +155,6 @@ async function checkCommands (rawMsg, command, args, author) {
 
   case "updroles": {
     return await UpdateRoles.execute(args, author);
-  }
-
-  case "names":
-  case "namehist":
-  case "namehistory": {
-    return {
-      res: "",
-      embed: ERROR_USE_SLASH_COMMAND("namehistory", "whois")
-    };
   }
 
   case "whois":
@@ -257,11 +228,10 @@ async function checkCommands (rawMsg, command, args, author) {
     return await DBInfo.execute(args, author, rawMsg);
   }
 
+  case "topgames":
+  case "top":
   case TopGames.name.toLowerCase(): {
-    if(author == owner) {
-      return await TopGames.execute(args, author, rawMsg);
-    }
-    return new CommandResponse("", ERROR_USE_SLASH_COMMAND("topgames", "top-games"));
+    return await TopGames.execute(args, author, rawMsg);
   }
 
   case "apiraw" : {
