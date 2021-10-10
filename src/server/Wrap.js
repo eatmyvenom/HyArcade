@@ -42,7 +42,7 @@ async function callback (res, req) {
     response.end();
   } else {
     try {
-      logger.out(`Getting data for ${url}`);
+      logger.debug(`${req.method.toUpperCase()} ${url}`);
       await mod(request, response, fileCache);
     } catch (e) {
       logger.err(e);
