@@ -31,6 +31,7 @@ import FetchUser from "./Commands/FetchUser.js";
 import FetchGuild from "./Commands/FetchGuild.js";
 import FetchChannel from "./Commands/FetchChannel.js";
 import TopGames from "./Commands/TopGames.mjs";
+import { WhoIS } from "./Commands/WhoIS.mjs";
 import { Profile } from "./Commands/Profile.mjs";
 import DBInfo from "./Commands/DBInfo.js";
 import Help from "./Commands/Help.js";
@@ -159,11 +160,11 @@ async function checkCommands (rawMsg, command, args, author) {
 
   case "whois":
   case "whoam":
+  case "who":
+  case "names":
+  case "namehist":
   case "whos": {
-    return {
-      res: "",
-      embed: ERROR_USE_SLASH_COMMAND("whois", "whois")
-    };
+    return await WhoIS.execute(args, author, rawMsg);
   }
 
   case "info":
