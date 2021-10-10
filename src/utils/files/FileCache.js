@@ -79,6 +79,22 @@ class FileCache {
      * @returns {object}
      */
     static async refresh (fileCache) {
+
+      try {
+        Logger.info("Refreshing static files");
+
+        const dailyAccounts = await utils.readJSON("accounts.day.json");
+        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
+
+        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
+  
+        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+      } catch (e) {
+        Logger.err("Error refreshing static files!");
+      }
+
       if(fileCache.dirty) {
         return await fileCache.runSave();
       }
@@ -94,14 +110,8 @@ class FileCache {
           Logger.debug("accounts has not been modified, ignoring!");
         }
 
-        const dailyAccounts = await utils.readJSON("accounts.day.json");
-        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
-
-        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
-
-        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+        const acclist = await utils.readJSON("acclist.json");
+        fileCache.acclist = acclist;
 
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
