@@ -62,7 +62,7 @@ async function execute (msg, senderID) {
         embed: ERROR_API_DOWN
       };
     }
-    const cmdArr = msg.content.slice(1).split(/\s/g);
+    const cmdArr = msg.content.slice(cfg.commandCharacter.length).split(/\s/g);
     const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
     if(res instanceof CommandResponse) {
       return res;
