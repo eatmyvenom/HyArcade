@@ -21,7 +21,41 @@ function nonDatabaseError (ign) {
 module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const game = args[1];
-  const time = args[2] ?? "lifetime";
+  let time = args[2] ?? "lifetime";
+
+  switch (time.toLowerCase()) {
+  case "d":
+  case "day":
+  case "dae":
+  case "daily":
+  case "today": {
+    time = "day";
+    break;
+  }
+
+  case "w":
+  case "week":
+  case "weak":
+  case "weekly":
+  case "weeekly": {
+    time = "weekly";
+    break;
+  }
+
+  case "m":
+  case "monthly":
+  case "month":
+  case "mnth":
+  case "mnthly":
+  case "mon": {
+    time = "monthly";
+    break;
+  }
+
+  default: {
+    time = "lifetime";
+  }
+  }
 
   let acc;
   let res;
