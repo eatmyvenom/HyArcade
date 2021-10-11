@@ -44,7 +44,7 @@ import Help from "./Commands/Help.js";
 import CommandResponse from "./Utils/CommandResponse.js";
 import Leaderboard from "./Commands/Leaderboard.js";
 
-const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
+const { ERROR_DATABASE_ERROR } = require("./Utils/Embeds/DynamicEmbeds");
 const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
 const { Message } = require("discord.js");
 
