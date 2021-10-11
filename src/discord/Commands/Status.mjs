@@ -208,7 +208,12 @@ function getImage (status) {
 function lastSeen (acc) {
   if (acc.isLoggedIn) {
     return "right now";
-  } 
+  }
+
+  if (acc.lastLogout == 0) {
+    return "Hidden";
+  }
+
   return TimeFormatter(acc.lastLogout);
 
 }
@@ -250,117 +255,117 @@ async function callback (args, rawmsg, interaction) {
   await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000002F");
 
   img.context.beginPath();
-  img.context.rect(0, 28 * 2, 272 * 2, 28 * 2);
+  img.context.rect(0, 56, 544, 56);
   img.context.fillStyle = BG_COLOR;
   img.context.fill();
 
   img.context.beginPath();
-  img.context.rect(0, 28 * 2, 272 * 2, 28 * 2);
+  img.context.rect(0, 56, 544, 56);
   img.context.strokeStyle = BORDER_COLOR;
   img.context.stroke();
 
-  await img.writeText("-", 18 * 2, 42 * 2, "center", "#FFFFFFFF", "32px");
-  await img.writeAcc(acc, 36 * 2, 42 * 2, "32px");
+  await img.writeText("-", 36, 84, "center", "#FFFFFFFF", "32px");
+  await img.writeAcc(acc, 72, 84, "32px");
 
   if(status.session.online) {
     img.context.beginPath();
-    img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 168, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 168, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
-    await img.writeText("-", 18 * 2, 98 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Type : ${status.session.gameType}`, 36 * 2, 98 * 2, "left", "#55FF55", "32px");
+    await img.writeText("-", 36, 196, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Type : ${status.session.gameType}`, 72, 196, "left", "#55FF55", "32px");
     
     img.context.beginPath();
-    img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 280, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 280, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
-    await img.writeText("-", 18 * 2, 154 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Mode : ${status.session.mode}`, 36 * 2, 154 * 2, "left", "#55FFFF", "32px");
+    await img.writeText("-", 36, 154 * 2, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Mode : ${status.session.mode}`, 72, 154 * 2, "left", "#55FFFF", "32px");
 
     img.context.beginPath();
-    img.context.rect(1280 - 544, 112 * 2, 272 * 2, 28 * 2);
+    img.context.rect(736, 224, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(1280 - 544, 112 * 2, 272 * 2, 28 * 2);
+    img.context.rect(736, 224, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
-    await img.writeText("-", 1280 - 544 + (18 * 2), 126 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`${status.session.gameType} : ${typeOthers}`, 1280 - 544 + (36 * 2), 126 * 2, "left", "#55FF55", "32px");
+    await img.writeText("-", 736 + (36), 252, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`${status.session.gameType} : ${typeOthers}`, 736 + (72), 252, "left", "#55FF55", "32px");
 
     img.context.beginPath();
-    img.context.rect(1280 - 544, 168 * 2, 272 * 2, 28 * 2);
+    img.context.rect(736, 224, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(1280 - 544, 168 * 2, 272 * 2, 28 * 2);
+    img.context.rect(736, 224, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
-    await img.writeText("-", 1280 - 544 + (18 * 2), 182 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`${status.session.mode} : ${modeOthers}`, 1280 - 544 + (36 * 2), 182 * 2, "left", "#55FFFF", "32px");
+    await img.writeText("-", 736 + (36), 182 * 2, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`${status.session.mode} : ${modeOthers}`, 736 + (72), 182 * 2, "left", "#55FFFF", "32px");
 
     img.context.beginPath();
-    img.context.rect(0, 196 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 392, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 196 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 392, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
-    await img.writeText("-", 18 * 2, 210 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Map : ${status.session.map ?? status.session.mode}`, 36 * 2, 210 * 2, "left", "#FFFF55", "32px");
+    await img.writeText("-", 36, 210 * 2, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Map : ${status.session.map ?? status.session.mode}`, 72, 210 * 2, "left", "#FFFF55", "32px");
 
     img.context.beginPath();
-    img.context.rect(0, 252 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 504, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 252 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 504, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
-    await img.writeText("-", 18 * 2, 266 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Login : ${loggedIn(acc)}`, 36 * 2, 266 * 2, "left", "#55FF55", "32px");
+    await img.writeText("-", 36, 266 * 2, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Login : ${loggedIn(acc)}`, 72, 266 * 2, "left", "#55FF55", "32px");
   } else {
     img.context.beginPath();
-    img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 168, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 84 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 168, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
-    await img.writeText("-", 18 * 2, 98 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Logout : ${lastSeen(acc)}`, 36 * 2, 98 * 2, "left", "#55FF55", "32px");
+    await img.writeText("-", 36, 196, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Logout : ${lastSeen(acc)}`, 72, 196, "left", "#55FF55", "32px");
 
     img.context.beginPath();
-    img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 280, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(0, 140 * 2, 272 * 2, 28 * 2);
+    img.context.rect(0, 280, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
     
@@ -368,8 +373,8 @@ async function callback (args, rawmsg, interaction) {
     let game = acc.mostRecentGameType;
     game = `${game.slice(0, 1).toUpperCase()}${game.slice(1).toLowerCase()}`.replace(/_/g, " ");
 
-    await img.writeText("-", 18 * 2, 154 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Last Mode : ${game}`, 36 * 2, 154 * 2, "left", "#55FFFF", "32px");
+    await img.writeText("-", 36, 154 * 2, "center", "#FFFFFFFF", "32px");
+    await img.writeText(`Last Mode : ${game}`, 72, 154 * 2, "left", "#55FFFF", "32px");
   }
 
 
