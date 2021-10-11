@@ -148,7 +148,7 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
 
   let acc;
   if(interaction == undefined) {
-    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2, timetype);
+    const res = await BotRuntime.resolveAccount(plr, rawMsg, true, timetype);
     if(timetype == "lifetime") {
       acc = res;
     } else {
