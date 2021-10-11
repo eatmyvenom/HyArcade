@@ -5,6 +5,8 @@ const cfg = config.fromJSON();
 import Logger from "hyarcade-logger";
 import Runtime from "hyarcade-config/Runtime.js";
 
+const owner = 156952208045375488;
+
 import Link from "./Commands/Link.js";
 import { Verify } from "./Commands/LinkMe.mjs";
 import LastUpdate from "./Commands/LastUpdate.js";
@@ -37,6 +39,8 @@ import DBInfo from "./Commands/DBInfo.js";
 import Help from "./Commands/Help.js";
 
 import CommandResponse from "./Utils/CommandResponse.js";
+import MiniWalls from "./Commands/MiniWalls.js";
+import MiniWallsLB from "./Commands/MiniWallsLB.js";
 
 const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
 const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
@@ -244,6 +248,22 @@ async function checkCommands (rawMsg, command, args, author) {
   case "arcadeprofile":
   case "profile" : {
     return await Profile.execute(args, author, rawMsg);
+  }
+
+  case "mw" : {
+    if (author == owner) {
+      return await MiniWalls.execute(args, author, rawMsg);
+    }
+
+    return { res: "" };
+  }
+
+  case "mwlb" : {
+    if (author == owner) {
+      return await MiniWallsLB.execute(args, author, rawMsg);
+    }
+
+    return { res: "" };
   }
 
   default: {

@@ -64,7 +64,6 @@ async function checkCommands (rawMsg, command, args, author) {
   case "player":
   case "mw":
   case "stats": {
-
     return await MiniWalls.execute(args, author, rawMsg);
   }
 
@@ -74,7 +73,6 @@ async function checkCommands (rawMsg, command, args, author) {
   case "mlb":
   case "miniwallsleaderboard":
   case "miniwallslb": {
-
     return await MiniWallsLB.execute(args, author, rawMsg);
   }
 
@@ -83,7 +81,6 @@ async function checkCommands (rawMsg, command, args, author) {
   case "c":
   case "compare":
   case "comparemw": {
-
     return MiniWallsCompare.execute(args, author, rawMsg);
   }
 
