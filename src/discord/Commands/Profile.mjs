@@ -80,11 +80,11 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   img.writeText(`Total Wins - ${wins}`, 640, 300, "center", "#FFFF55", "40px");
 
   img.writeText(`AP - ${ap}`, 320, 400, "center", "#55FFFF", "40px");
-  img.writeText(`Quests - ${numberify(quests)}`, 320, 500, "center", "#FF55FF", "40px");
+  img.writeText(`Quests - ${numberify(quests)}`, 320, 500, "center", "#FFAA00", "40px");
   img.writeText(`Total Coins - ${numberify(acc.arcadeCoins)}`, 320, 600, "center", "#55FF55", "40px");
 
   img.writeText(`${getMain(acc)}`, 960, 400, "center", "#55FFFF", "40px");
-  img.writeText(`Challenges - ${challenges}`, 960, 500, "center", "#FF55FF", "40px");
+  img.writeText(`Challenges - ${challenges}`, 960, 500, "center", "#FFAA00", "40px");
   img.writeText(`Coins Earned - ${numberify(acc.coinsEarned)}`, 960, 600, "center", "#55FF55", "40px");
 
   const attachment = img.toDiscord();
