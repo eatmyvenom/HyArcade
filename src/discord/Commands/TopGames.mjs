@@ -7,7 +7,7 @@ import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 /**
  * @param {Account} acc
@@ -147,28 +147,24 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   timetype = timetype == "d" ? "day" : timetype == "w" ? "weekly" : timetype == "m" ? "monthly" : "lifetime";
 
   let acc;
+  let res;
   if(interaction == undefined) {
-    const res = await BotRuntime.resolveAccount(plr, rawMsg, true, timetype);
-    if(timetype == "lifetime") {
-      acc = res;
-    } else {
-      acc = getTimedAccount(res?.acc, res?.timed);
-    }
-
+    res = await BotRuntime.resolveAccount(plr, rawMsg, true, timetype);
   } else {
     await interaction.defer();
-    const res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
-    if(timetype == "lifetime") {
-      acc = res;
-    } else {
-      if(res?.timed == undefined) {
-        return nonDatabaseError(res?.acc?.name);
-      }
-      acc = getTimedAccount(res?.acc, res?.timed);
-    }
-
-    if(acc == undefined) return new CommandResponse("", ERROR_UNLINKED);
+    res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
   }
+
+  if(timetype == "lifetime") {
+    acc = res;
+  } else {
+    if(res?.timed == undefined) {
+      return nonDatabaseError(res?.acc?.name);
+    }
+    acc = getTimedAccount(res?.acc, res?.timed);
+  }
+
+  if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
   const embed = new MessageEmbed()
     .setTitle(`${acc.name}'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`)
