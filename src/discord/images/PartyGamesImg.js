@@ -13,8 +13,8 @@ async function generateImage (account, game) {
 
   await img.addBackground("resources/blur.png", 0, 0, 1280, 800, "#00000044");
 
-  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "54px");
-  await img.writeAcc(account, undefined, 100, "48px");
+  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "56px");
+  await img.writeAcc(account, undefined, 110, "48px");
 
   let stat1 = "";
   let stat2 = "";
