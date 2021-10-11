@@ -9,6 +9,8 @@ const logger = require("hyarcade-logger");
 const getLB = require("../Utils/Leaderboards/GetLeaderboard");
 const CustomLeaderboard = require("../Utils/Leaderboards/CustomLeaderboard");
 const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
+const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command("leaderboard", ["*"], hander);
 
@@ -28,6 +30,10 @@ async function hander (args, rawMsg, interaction) {
     await interaction.defer();
   } else if(interaction?.isButton()) {
     await interaction.deferUpdate();
+  }
+
+  if(args.length < 1) {
+    return new CommandResponse("", ERROR_ARGS_LENGTH(1));
   }
 
   const type = args[0];
