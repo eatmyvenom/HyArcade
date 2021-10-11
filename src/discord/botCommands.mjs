@@ -33,14 +33,16 @@ import FetchUser from "./Commands/FetchUser.js";
 import FetchGuild from "./Commands/FetchGuild.js";
 import FetchChannel from "./Commands/FetchChannel.js";
 import TopGames from "./Commands/TopGames.mjs";
+import Stats from "./Commands/Stats.js";
+import MiniWalls from "./Commands/MiniWalls.js";
+import MiniWallsLB from "./Commands/MiniWallsLB.js";
 import { WhoIS } from "./Commands/WhoIS.mjs";
 import { Profile } from "./Commands/Profile.mjs";
 import DBInfo from "./Commands/DBInfo.js";
 import Help from "./Commands/Help.js";
 
 import CommandResponse from "./Utils/CommandResponse.js";
-import MiniWalls from "./Commands/MiniWalls.js";
-import MiniWallsLB from "./Commands/MiniWallsLB.js";
+import Leaderboard from "./Commands/Leaderboard.js";
 
 const { ERROR_DATABASE_ERROR, ERROR_USE_SLASH_COMMAND } = require("./Utils/Embeds/DynamicEmbeds");
 const { ERROR_API_DOWN } = require("./Utils/Embeds/StaticEmbeds");
@@ -98,19 +100,15 @@ async function checkCommands (rawMsg, command, args, author) {
   }
 
   case "stats":
-  case "s":
-    return {
-      res: "", embed: ERROR_USE_SLASH_COMMAND("s", "stats")
-    };
+  case "s": {
+    return await Stats.execute(args, author, rawMsg);
+  }
 
   case "lb":
   case "lead":
   case "leaderboard":
   case "leadb": {
-    return {
-      res: "",
-      embed: ERROR_USE_SLASH_COMMAND("lb", "leaderboard")
-    };
+    return await Leaderboard.execute(args, author, rawMsg);
   }
 
   case "quit":

@@ -1,35 +1,51 @@
-const Logger = require("hyarcade-logger");
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const {
-  ERROR_UNLINKED
+  ERROR_IGN_UNDEFINED
 } = require("../Utils/Embeds/StaticEmbeds");
 
+/**
+ * 
+ * @param {string} ign 
+ * @returns {CommandResponse}
+ */
+function nonDatabaseError (ign) {
+  return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
+}
+
 module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) => {
+  const plr = args[0];
   const game = args[1];
-  const time = args[2];
+  const time = args[2] ?? "lifetime";
 
-  await interaction.defer();
-  let acc = await InteractionUtils.resolveAccount(interaction, "player", time ?? "lifetime");
-
-  if(acc.timed != undefined) {
-    Logger.info("Getting account diff");
-    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
-
-    acc = tmpAcc;
+  let acc;
+  let res;
+  if(interaction == undefined) {
+    res = await BotRuntime.resolveAccount(plr, rawMsg, true, time);
+  } else {
+    await interaction.defer();
+    res = await InteractionUtils.resolveAccount(interaction, "player", time);
   }
 
-  if(acc == undefined || acc.name == "INVALID-NAME" || acc.miniWalls == undefined) {
-    return new CommandResponse("", ERROR_UNLINKED);
+  if(time == "lifetime") {
+    acc = res;
+  } else {
+    if(res?.timed == undefined) {
+      return nonDatabaseError(res?.acc?.name);
+    }
+    acc = AccountComparitor(res?.acc, res?.timed);
   }
 
+  if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
-  const res = await BotRuntime.getStats(acc, `${game}`);
-  const e = res.embed;
+
+  const cmdRes = await BotRuntime.getStats(acc, `${game}`);
+  const e = cmdRes.embed;
   const menu = await MenuGenerator.statsMenu(acc.uuid, time);
   return {
     res: "",

@@ -26,9 +26,7 @@ async function hander (args, rawMsg, interaction) {
   if(interaction != undefined && !interaction.isButton()) {
     logger.debug("Deferring interaction");
     await interaction.defer();
-  }
-
-  if(interaction.isButton()) {
+  } else if(interaction?.isButton()) {
     await interaction.deferUpdate();
   }
 
