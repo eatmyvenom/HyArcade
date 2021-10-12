@@ -14,11 +14,7 @@ const fullIntents = [
   Discord.Intents.FLAGS.GUILD_MEMBERS,
 ];
 
-const lesserIntents = [
-  Discord.Intents.FLAGS.GUILD_MESSAGES,
-  Discord.Intents.FLAGS.GUILD_WEBHOOKS,
-  Discord.Intents.FLAGS.GUILDS,
-];
+const lesserIntents = [Discord.Intents.FLAGS.GUILDS];
 
 const mwIntents = [
   Discord.Intents.FLAGS.GUILD_MESSAGES,
@@ -45,6 +41,14 @@ module.exports = function doBot () {
   } else if(mode == "mw") {
     client = new Discord.Client({
       intents: mwIntents,
+      allowedMentions: {
+        parse: [],
+        repliedUser: false
+      },
+    });
+  } else if (mode == "slash") {
+    client = new Discord.Client({
+      intents: lesserIntents,
       allowedMentions: {
         parse: [],
         repliedUser: false

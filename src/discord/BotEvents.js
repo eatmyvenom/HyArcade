@@ -74,12 +74,12 @@ module.exports = class BotEvents {
 
       // eslint-disable-next-line no-undef
       process.exit(0);
-    } else if(mode == "slash") {
+    } else if(BotRuntime.botMode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
-    } else if(mode == "mini") {
+    } else if(BotRuntime.botMode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
