@@ -1,6 +1,5 @@
 const Role = require("../classes/Role");
 const { logger } = require("../utils");
-const BotRuntime = require("./BotRuntime");
 const Webhooks = require("./Utils/Webhooks");
 
 module.exports = class RoleUpdater {
@@ -30,9 +29,7 @@ module.exports = class RoleUpdater {
       return undefined;
     }
 
-    async updateAll () {
-      const disclist = await BotRuntime.getFromDB("disclist");
-      const acclist = await BotRuntime.getFromDB("accounts");
+    async updateAll (disclist, acclist) {
       const mbrList = await this.guild.members.fetch();
       for(const discid in disclist) {
         if(mbrList.has(discid)) {
@@ -52,6 +49,7 @@ module.exports = class RoleUpdater {
         logger.info(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
         return;
       }
+
       if(newRole == undefined) return;
       if(discMember.roles == undefined) return;
 

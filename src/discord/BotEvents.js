@@ -70,7 +70,10 @@ module.exports = class BotEvents {
     logger.info("Selecting mode");
     if(mode == "role") {
       await roleHandler(BotRuntime.client);
-      await BotRuntime.client.destroy();
+      BotRuntime.client.destroy();
+
+      // eslint-disable-next-line no-undef
+      process.exit(0);
     } else if(mode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
