@@ -121,7 +121,6 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
     };
   }
 
-
   const embed = new MessageEmbed();
 
   try {

@@ -12,7 +12,10 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
   const plr1 = args[0];
   const plr2 = args[1];
   const game = args[2];
-  let acc1; let acc2; let channel;
+  let acc1;
+  let acc2;
+
+  let channel;
   if (interaction == undefined) {
     acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
     acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
@@ -26,7 +29,7 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
 
   let hasEmojiPerms = false;
 
-  if(!interaction && channel.permissionsFor(BotRuntime.client.user).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
+  if(channel.permissionsFor(channel.guild.roles.everyone).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
 
   const embed = AdvancedEmbeds.compareStats(acc1, acc2, game, hasEmojiPerms);
   return { res: "", embed };
