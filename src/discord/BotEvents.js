@@ -95,6 +95,9 @@ module.exports = class BotEvents {
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag}!`);
     } else {
+      const InteractionHandler = await import("./InteractionHandler.mjs");
+      await InteractionHandler.default(BotRuntime.client);
+
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
       logHook.send(`Logged in as ${BotRuntime.client.user.tag}!`);
     }
