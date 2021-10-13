@@ -89,5 +89,9 @@ module.exports = function EmojiGetter (nitro, emoji) {
     return ":red_square:";
 
   }
+
+  case "neutral": {
+    return ":white_small_square:";
+  }
   }
 };

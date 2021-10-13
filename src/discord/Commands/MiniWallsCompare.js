@@ -40,6 +40,8 @@ function formatN (str) {
 function clr (stat1, stat2, hasPerms) {
   if(stat1 > stat2) {
     return EmojiGetter(hasPerms, "better");
+  } else if(stat1 == stat2) {
+    return EmojiGetter(hasPerms, "neutral");
   }
   return EmojiGetter(hasPerms, "worse");
 
