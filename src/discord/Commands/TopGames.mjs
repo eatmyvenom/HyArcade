@@ -1,6 +1,6 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message, Interaction } = require("discord.js");
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
@@ -8,6 +8,7 @@ import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
+import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 
 /**
  * @param {Account} acc
@@ -140,7 +141,14 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-export default new Command("top-games", ["*"], async (args, rawMsg, interaction) => {
+/**
+ * 
+ * @param {string[]} args 
+ * @param {Message} rawMsg 
+ * @param {Interaction} interaction 
+ * @returns {CommandResponse}
+ */
+async function topGamesHandler (args, rawMsg, interaction) {
   const plr = args[0];
   let timetype = args[1];
 
@@ -151,8 +159,13 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   if(interaction == undefined) {
     res = await BotRuntime.resolveAccount(plr, rawMsg, true, timetype);
   } else {
-    await interaction.defer();
-    res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
+    if(interaction.isButton()) {
+      await interaction.deferUpdate();
+      res = await BotRuntime.resolveAccount(plr, undefined, false, timetype);
+    } else {
+      await interaction.defer();
+      res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
+    }
   }
 
   if(timetype == "lifetime") {
@@ -169,7 +182,11 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
   const embed = new MessageEmbed()
     .setTitle(`${acc.name}'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`)
     .setDescription(getGames(acc))
-    .setColor(0x44a3e7);
-  
-  return new CommandResponse("", embed);
-}, 4000);
+    .setColor(0x57F287);
+
+  const buttons = await ButtonGenerator.getTopGames(timetype, acc.uuid);
+
+  return new CommandResponse("", embed, undefined, buttons);
+}
+
+export default new Command("top-games", ["*"], topGamesHandler, 4000);

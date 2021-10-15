@@ -8,6 +8,7 @@ const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
 let zombies = undefined;
+let topGames = undefined;
 
 /**
  * 
@@ -32,6 +33,10 @@ module.exports = async function ButtonParser (interaction) {
 
   case "z": {
     return await zombiesHandler(data[1], data[2], interaction);
+  }
+
+  case "t": {
+    return await topGamesHandler(data[1], data[2], interaction);
   }
   }
 };
@@ -97,4 +102,22 @@ async function zombiesHandler (accUUID, map, interaction) {
   const zombiesRes = await zombies.default.execute([accUUID, map], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", [zombiesRes.embed], zombiesRes.components);
+}
+
+
+/**
+ * 
+ * @param {string} accUUID 
+ * @param {string} timetype 
+ * @param {ButtonInteraction} interaction 
+ * @returns {ButtonResponse}
+ */
+async function topGamesHandler (accUUID, timetype, interaction) {
+  if(topGames == undefined) {
+    topGames = await import("../../Commands/TopGames.mjs");
+  }
+
+  const topGamesRes = await topGames.default.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
+
+  return new ButtonResponse("", [topGamesRes.embed], topGamesRes.components);
 } 
