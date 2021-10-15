@@ -384,4 +384,4 @@ async function callback (args, rawmsg, interaction) {
 
 
 
-export default new Command("status", ["*"], callback);
+export default new Command("status", ["*"], callback, 10000);

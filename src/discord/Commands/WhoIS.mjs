@@ -127,4 +127,4 @@ export const WhoIS = new Command("whois", ["*"], async (args, rawMsg, interactio
   }
   const embed = await generateWhoisEmbed(acc);
   return new CommandResponse("", embed);
-});
+}, 10000);

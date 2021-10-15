@@ -4,7 +4,11 @@ const { MessageEmbed } = require("discord.js");
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
 
-export default new Command("info", ["*"], async () => {
+/**
+ * 
+ * @returns {object}
+ */
+async function infoHandler () {
   const embed = new MessageEmbed()
     .setTitle(`${BotRuntime.client.user.username} info`)
     .setDescription("A discord bot to allow you to get the stats and info from arcade games and arcade players!")
@@ -19,4 +23,6 @@ export default new Command("info", ["*"], async () => {
     res: "",
     embed
   };
-});
+}
+
+export default new Command("info", ["*"], infoHandler, 0);

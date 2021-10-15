@@ -86,4 +86,4 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
     embed: e,
     b: menu
   };
-});
+}, 2500);

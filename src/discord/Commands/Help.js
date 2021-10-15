@@ -4,7 +4,11 @@ const {
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 
-module.exports = new Command("help", ["*"], async () => {
+/**
+ * 
+ * @returns {object}
+ */
+async function helpHandler () {
   let desc = "";
   if(BotRuntime.botMode == "mini") {
     desc = "Read about how to use the arcade bot [here](https://docs.hyarcade.xyz/Commands)";
@@ -21,4 +25,6 @@ module.exports = new Command("help", ["*"], async () => {
     res: "",
     embed
   };
-});
+}
+
+module.exports = new Command("help", ["*"], helpHandler, 0);

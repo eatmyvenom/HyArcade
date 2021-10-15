@@ -4,7 +4,14 @@ import BotRuntime from "../BotRuntime.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
-export const Compare = new Command("compare", ["*"], async (args, rawMsg, interaction) => {
+/**
+ * 
+ * @param {string[]} args 
+ * @param {object} rawMsg 
+ * @param {object} interaction 
+ * @returns {object}
+ */
+async function compareHandler (args, rawMsg, interaction) {
   if (args.length < 3) {
     return { res: "", embed: ERROR_ARGS_LENGTH(3) };
   }
@@ -33,4 +40,6 @@ export const Compare = new Command("compare", ["*"], async (args, rawMsg, intera
 
   const embed = AdvancedEmbeds.compareStats(acc1, acc2, game, hasEmojiPerms);
   return { res: "", embed };
-});
+}
+
+export const Compare = new Command("compare", ["*"], compareHandler, 10000);

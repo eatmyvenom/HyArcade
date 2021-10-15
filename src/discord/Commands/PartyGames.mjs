@@ -25,4 +25,4 @@ export default new Command("party-games", ["*"], async (args, rawMsg, interactio
   const img = await PartyGamesImg(acc, game);
   const menu = await MenuGenerator.partyGamesMenu(acc.uuid);
   return new CommandResponse("", undefined, img, menu);
-});
+}, 2500);

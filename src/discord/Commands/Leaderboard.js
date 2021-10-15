@@ -12,8 +12,6 @@ const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
-module.exports = new Command("leaderboard", ["*"], hander);
-
 /**
  * 
  * @param {string[]} args 
@@ -1206,3 +1204,5 @@ async function hander (args, rawMsg, interaction) {
 
   return response;
 }
+
+module.exports = new Command("leaderboard", ["*"], hander, 10000);

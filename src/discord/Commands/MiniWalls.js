@@ -38,7 +38,14 @@ function formatN (str) {
   return r;
 }
 
-module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interaction) => {
+/**
+ * 
+ * @param {string[]} args 
+ * @param {object} rawMsg 
+ * @param {object} interaction 
+ * @returns {object}
+ */
+async function miniWallsStats (args, rawMsg, interaction) {
   let plr = args[0];
   let time = args[1] ?? "lifetime";
 
@@ -160,4 +167,6 @@ module.exports = new Command("mini-walls", ["*"], async (args, rawMsg, interacti
     res: "",
     embed
   };
-});
+}
+
+module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);

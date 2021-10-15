@@ -175,4 +175,4 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
     res: "",
     embed
   };
-});
+}, 10000);

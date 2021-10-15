@@ -90,4 +90,4 @@ export const Profile = new Command("profile", ["*"], async (args, rawMsg, intera
   const attachment = img.toDiscord();
 
   return { res: "", img: attachment };
-});
+}, 7500);

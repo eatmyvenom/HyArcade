@@ -254,4 +254,4 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
   return new CommandResponse("", embed);
-});
+}, 10000);

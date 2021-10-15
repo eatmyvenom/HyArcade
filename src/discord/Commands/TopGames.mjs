@@ -172,4 +172,4 @@ export default new Command("top-games", ["*"], async (args, rawMsg, interaction)
     .setColor(0x44a3e7);
   
   return new CommandResponse("", embed);
-});
+}, 4000);
