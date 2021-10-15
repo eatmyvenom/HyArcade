@@ -5,20 +5,28 @@ const {
 } = require("discord.js");
 const utils = require("../../utils");
 
-module.exports = new Command("LastUpdate", ["*"], async () => {
+/**
+ * 
+ * @returns {object}
+ */
+async function lastUpdateHandler () {
   let time;
   if(utils.fileExists("timeupdate")) {
-    time = await (await fs.readFile("timeupdate")).toString();
+    time = Date.parse(await (await fs.readFile("timeupdate")).toString());
   } else {
-    time = "Saving data!";
+    time = Date.now();
   }
 
+  time = Math.floor(time / 1000);
+
   const embed = new MessageEmbed().setTitle("Update time")
-    .setDescription(time)
+    .setDescription(`<t:${time}:d><t:${time}:T> -- <t:${time}:R>`)
     .setColor(0x00b37b);
 
   return {
     res: "",
     embed
   };
-});
+}
+
+module.exports = new Command("LastUpdate", ["*"], lastUpdateHandler, 2500);
