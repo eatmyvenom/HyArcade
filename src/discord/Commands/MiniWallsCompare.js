@@ -108,16 +108,16 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
   const hackers = await BotRuntime.getHackerlist();
 
   if(hackers.includes(acc1.uuid)) {
-    acc1 = {
-      miniWallsWins: 0,
-      miniWalls: {}
+    return {
+      res: "",
+      embed: ERROR_IGN_UNDEFINED
     };
   }
 
   if(hackers.includes(acc2.uuid)) {
-    acc2 = {
-      miniWallsWins: 0,
-      miniWalls: {}
+    return {
+      res: "",
+      embed: ERROR_IGN_UNDEFINED
     };
   }
 
