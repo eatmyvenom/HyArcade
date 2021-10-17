@@ -1,6 +1,6 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { MessageEmbed, Message, Interaction } = require("discord.js");
+const { Message, Interaction } = require("discord.js");
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
@@ -9,10 +9,11 @@ import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
+import ImageGenerator from "../images/ImageGenerator.js";
 
 /**
  * @param {Account} acc
- * @returns {string}
+ * @returns {object[]}
  */
 function getGames (acc) {
   let games = [{
@@ -20,7 +21,7 @@ function getGames (acc) {
     wins: acc?.partyGames?.wins ?? 0
   },
   {
-    name: "HITW",
+    name: "Hole in the Wall",
     wins: acc?.holeInTheWall?.wins ?? 0
   },
   {
@@ -93,16 +94,7 @@ function getGames (acc) {
     return b.wins - a.wins;
   });
 
-  let str = "";
-  let i = 0;
-
-  for(const g of games) {
-    if(g.wins != 0 && g.wins != undefined) {
-      str += `${i += 1}) **${g.name}** (${g.wins})\n`;
-    }
-  }
-
-  return str;
+  return games;
 
 }
 
@@ -133,12 +125,64 @@ function getTimedAccount (acc1, acc2) {
 }
 
 /**
+ * @param {number} n
+ * @returns {string}
+ */
+function numberify (n) {
+  const r = Intl.NumberFormat("en").format(Number(n));
+  return r;
+}
+
+/**
  * 
  * @param {string} ign 
  * @returns {CommandResponse}
  */
 function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
+}
+
+/**
+ * 
+ * @param {Account} acc
+ * @param {string} timetype 
+ * @returns {object}
+ */
+async function generateImage (acc, timetype) {
+  const games = getGames(acc);
+  const title = `'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`;
+
+  const img = new ImageGenerator(1280, 1060, "'myFont'");
+  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000001F");
+
+  img.context.beginPath();
+  img.context.rect(0, 0, 1280, 80);
+  img.context.fillStyle = "#222222AF";
+  img.context.fill();
+
+  img.context.beginPath();
+  img.context.rect(0, 80, 1280, 2);
+  img.context.fillStyle = "#FFFFFF";
+  img.context.fill();
+
+  img.writeAcc(acc, undefined, 40, "48px", title);
+  let y = 130;
+
+  for(let i = 0; i < games.length; i += 1) {
+
+    img.context.beginPath();
+    img.context.rect(640 - 440, y - 25, 900, 50);
+    img.context.fillStyle = "#222222AF";
+    img.context.fill();
+
+    img.writeText(`#${i + 1}`, 640 - 380, y, "center", "#55FFFF", "40px");
+    img.writeText(games[i].name, 640, y, "center", "#55FF55", "40px");
+    img.writeText(`${numberify(games[i].wins)}`, 640 + 380, y, "center", "#FFFF55", "40px");
+
+    y += 60;
+  }
+
+  return img.toDiscord();
 }
 
 /**
@@ -179,14 +223,11 @@ async function topGamesHandler (args, rawMsg, interaction) {
 
   if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
-  const embed = new MessageEmbed()
-    .setTitle(`${acc.name}'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`)
-    .setDescription(getGames(acc))
-    .setColor(0x57F287);
+  const img = await generateImage(acc, timetype);
 
   const buttons = await ButtonGenerator.getTopGames(timetype, acc.uuid);
 
-  return new CommandResponse("", embed, undefined, buttons);
+  return new CommandResponse("", undefined, img, buttons);
 }
 
 export default new Command("top-games", ["*"], topGamesHandler, 4000);
