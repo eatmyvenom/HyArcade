@@ -308,12 +308,12 @@ async function callback (args, rawmsg, interaction) {
     await img.writeText(`${status.session.gameType} : ${typeOthers}`, 736 + (72), 252, "left", "#55FF55", "32px");
 
     img.context.beginPath();
-    img.context.rect(736, 224, 544, 56);
+    img.context.rect(736, 336, 544, 56);
     img.context.fillStyle = BG_COLOR;
     img.context.fill();
     
     img.context.beginPath();
-    img.context.rect(736, 224, 544, 56);
+    img.context.rect(736, 336, 544, 56);
     img.context.strokeStyle = BORDER_COLOR;
     img.context.stroke();
 
