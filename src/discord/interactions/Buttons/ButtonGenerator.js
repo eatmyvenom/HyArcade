@@ -63,7 +63,7 @@ module.exports = class ButtonGenerator {
   static async getMiw (currentTime, uuid) {
     const lifetime = new MessageButton().setCustomId(`mw:${uuid}:l`)
       .setLabel("Lifetime")
-      .setStyle("SUCCESS")
+      .setStyle("PRIMARY")
       .setDisabled(currentTime == "lifetime");
 
     const day = new MessageButton().setCustomId(`mw:${uuid}:d`)
