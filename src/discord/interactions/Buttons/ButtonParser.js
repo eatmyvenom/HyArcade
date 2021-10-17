@@ -4,6 +4,7 @@ const {
 const Logger = require("hyarcade-logger");
 const BotRuntime = require("../../BotRuntime");
 const Leaderboard = require("../../Commands/Leaderboard");
+const miwCommand = require("../../Commands/MiniWalls");
 const AccountComparitor = require("../../Utils/AccountComparitor");
 const MenuGenerator = require("../SelectionMenus/MenuGenerator");
 const ButtonGenerator = require("./ButtonGenerator");
@@ -39,6 +40,10 @@ module.exports = async function ButtonParser (interaction) {
 
   case "t": {
     return await topGamesHandler(data[1], data[2], interaction);
+  }
+
+  case "mw" : {
+    return await miwHandler(data[1], data[2], interaction);
   }
   }
 };
@@ -133,4 +138,17 @@ async function topGamesHandler (accUUID, timetype, interaction) {
   const topGamesRes = await topGames.default.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", undefined, topGamesRes.components, [ topGamesRes.file ]);
-} 
+}
+
+/**
+ * 
+ * @param {string} accUUID 
+ * @param {string} timetype 
+ * @param {ButtonInteraction} interaction 
+ * @returns {ButtonResponse}
+ */
+async function miwHandler (accUUID, timetype, interaction) {
+  const miwRes = await miwCommand.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
+
+  return new ButtonResponse("", [ miwRes.embed ], miwRes.components);
+}

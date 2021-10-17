@@ -4,9 +4,10 @@ const {
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
+const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 const InteractionUtils = require("../interactions/InteractionUtils");
+const CommandResponse = require("../Utils/CommandResponse");
 const {
-  ERROR_NEED_PLAYER,
   ERROR_IGN_UNDEFINED
 } = require("../Utils/Embeds/StaticEmbeds");
 
@@ -92,7 +93,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
 
   let acc;
   let timed;
-  if(interaction == undefined) {
+  if(interaction == undefined || interaction.isButton()) {
     const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0 || plr == "!", time, false);
     if(time != "lifetime") {
       acc = res?.acc;
@@ -114,14 +115,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
     return {};
   }
 
-  if(acc?.uuid == undefined && acc?.name != "INVALID-NAME") {
-    return {
-      res: "",
-      embed: ERROR_NEED_PLAYER
-    };
-  }
-
-  if(acc.miniWalls == undefined) {
+  if(acc?.uuid == undefined || acc?.name == "INVALID-NAME" || acc?.miniWalls == undefined) {
     return {
       res: "",
       embed: ERROR_IGN_UNDEFINED
@@ -163,10 +157,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
     .addField("━━━━━━ Stats: ━━━━━", stats, true)
     .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
-  return {
-    res: "",
-    embed
-  };
+  return new CommandResponse("", embed, undefined, await ButtonGenerator.getMiw(time, acc.uuid));
 }
 
 module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);
