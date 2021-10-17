@@ -119,5 +119,5 @@ async function topGamesHandler (accUUID, timetype, interaction) {
 
   const topGamesRes = await topGames.default.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", [topGamesRes.embed], topGamesRes.components);
+  return new ButtonResponse("", undefined, topGamesRes.components, [ topGamesRes.file ]);
 } 

@@ -17,10 +17,14 @@ module.exports = class ButtonResponse {
     }
 
     toDiscord () {
+      if(!Array.isArray(this.newButtons)) {
+        this.newButtons = [ this.newButtons ];
+      }
+
       return {
         content: this.content,
         embeds: this.embeds,
-        components: [this.newButtons],
+        components: this.newButtons,
         attachments: [],
         files: this.img,
       };
