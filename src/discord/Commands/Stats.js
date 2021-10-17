@@ -80,7 +80,7 @@ module.exports = new Command("stats", ["*"], async (args, rawMsg, interaction) =
 
   const cmdRes = await BotRuntime.getStats(acc, `${game}`);
   const e = cmdRes.embed;
-  const menu = await MenuGenerator.statsMenu(acc.uuid, time);
+  const menu = await MenuGenerator.statsMenu(acc.uuid, time, cmdRes.game);
   return {
     res: "",
     embed: e,

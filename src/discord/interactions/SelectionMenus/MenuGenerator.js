@@ -1,15 +1,16 @@
+const { MessageButton } = require("discord.js");
 const {
   MessageActionRow,
   MessageSelectMenu
 } = require("discord.js");
 
 module.exports = class MenuGenerator {
-  static statsMenu (uuid, time) {
+  static statsMenu (uuid, time, game) {
     const row = new MessageActionRow();
     const menu = new MessageSelectMenu()
       .setMaxValues(1)
       .setMinValues(1)
-      .setCustomId(`s:${uuid}:${time}:menu`)
+      .setCustomId(`s:${uuid}:${time}:${game}:menu`)
       .setPlaceholder("Select game to see stats from")
       .addOptions([{
         label: "Overall Arcade",
@@ -104,7 +105,32 @@ module.exports = class MenuGenerator {
       ]);
 
     row.addComponents(menu);
-    return row;
+
+    const row2 = new MessageActionRow();
+
+    const lifetime = new MessageButton().setCustomId(`s:${uuid}:lifetime:${game}:b`)
+      .setLabel("Lifetime")
+      .setStyle("SUCCESS")
+      .setDisabled(time == "lifetime");
+
+    const day = new MessageButton().setCustomId(`s:${uuid}:day:${game}:b`)
+      .setLabel("Daily")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "day");
+
+    const weekly = new MessageButton().setCustomId(`s:${uuid}:weekly:${game}:b`)
+      .setLabel("Weekly")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "weekly");
+
+    const monthly = new MessageButton().setCustomId(`s:${uuid}:monthly:${game}:b`)
+      .setLabel("Monthly")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "monthly");
+
+    row2.addComponents(lifetime, day, weekly, monthly);
+
+    return [row2, row];
   }
 
   static partyGamesMenu (uuid) {

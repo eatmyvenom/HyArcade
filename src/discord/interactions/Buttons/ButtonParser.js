@@ -1,9 +1,11 @@
 const {
-  ButtonInteraction
+  ButtonInteraction, Interaction
 } = require("discord.js");
+const Logger = require("hyarcade-logger");
 const BotRuntime = require("../../BotRuntime");
 const Leaderboard = require("../../Commands/Leaderboard");
-const InteractionUtils = require("../InteractionUtils");
+const AccountComparitor = require("../../Utils/AccountComparitor");
+const MenuGenerator = require("../SelectionMenus/MenuGenerator");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
@@ -24,7 +26,7 @@ module.exports = async function ButtonParser (interaction) {
   }
 
   case "s": {
-    return await statsHandler(data[1], data[2]);
+    return await statsHandler(data[1], data[2], data[3], interaction);
   }
 
   case "ez": {
@@ -40,6 +42,33 @@ module.exports = async function ButtonParser (interaction) {
   }
   }
 };
+
+/**
+ * @param {string} accUUID
+ * @param {string} time
+ * @param {string} game
+ * @param {Interaction} interaction
+ * @returns {ButtonResponse}
+ */
+async function statsHandler (accUUID, time, game, interaction) {
+  await interaction.deferUpdate();
+  let acc = await BotRuntime.resolveAccount(accUUID, undefined, false, time, false);
+
+  if(acc.timed != undefined) {
+    Logger.info("Getting account diff");
+    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
+
+    acc = tmpAcc;
+  }
+
+  const statsRes = await BotRuntime.getStats(acc, game);
+  const {
+    embed
+  } = statsRes;
+
+  const mnu = await MenuGenerator.statsMenu(accUUID, time, game);
+  return new ButtonResponse("", [embed], mnu);
+}
 
 /**
  * @param {ButtonInteraction} interaction
@@ -58,22 +87,6 @@ async function leaderboardHandler (interaction, leaderboard, time, index) {
   const e = res.embed;
   const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, time);
   return new ButtonResponse("", [e], buttons);
-}
-
-/**
- * @param {string} accUUID
- * @param {string} game
- * @returns {ButtonResponse}
- */
-async function statsHandler (accUUID, game) {
-  const accData = await InteractionUtils.accFromUUID(accUUID);
-  const statsRes = await BotRuntime.getStats(accData, game);
-  const {
-    embed
-  } = statsRes;
-
-  const buttons = await ButtonGenerator.getStatsButtons(game, accData.uuid);
-  return new ButtonResponse("", [embed], buttons);
 }
 
 /**

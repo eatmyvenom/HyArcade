@@ -51,7 +51,7 @@ async function statsHandler (accUUID, time, game, interaction) {
     embed
   } = statsRes;
 
-  const mnu = await MenuGenerator.statsMenu(accUUID, time);
+  const mnu = await MenuGenerator.statsMenu(accUUID, time, game);
   return new ButtonResponse("", [embed], mnu);
 }
 
