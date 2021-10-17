@@ -179,7 +179,7 @@ module.exports = class ImageGenerator {
      * @param {string} fontSize
      * @returns {object}
      */
-    writeAcc (acc, x, y, fontSize) {
+    writeAcc (acc, x, y, fontSize, appendTxt = "") {
       let txtRank = acc.rank ?? "";
 
       let plus = "";
@@ -219,8 +219,9 @@ module.exports = class ImageGenerator {
       const plusWidth = this.context.measureText(plus).width;
       const rankEndWidth = this.context.measureText(rankEnd).width;
       const nameWidth = this.context.measureText(acc.name).width;
+      const appendWidth = this.context.measureText(appendTxt).width;
 
-      let startX = this.canvas.width / 2 - (rankWidth + rankEndWidth + plusWidth + nameWidth) / 2;
+      let startX = this.canvas.width / 2 - (rankWidth + rankEndWidth + plusWidth + nameWidth + appendWidth) / 2;
       if(x != undefined) {
         startX = x;
       }
@@ -283,9 +284,12 @@ module.exports = class ImageGenerator {
       }
 
       this.writeText(acc.name, startX, y, "left", bracketColor, fontSize, 36);
-
-
       startX += nameWidth;
+
+      if(appendTxt != "") {
+        this.writeText(appendTxt, startX, y, "left", bracketColor, fontSize, 36);
+        startX += appendWidth;
+      }
 
       return {
         x: startX,
