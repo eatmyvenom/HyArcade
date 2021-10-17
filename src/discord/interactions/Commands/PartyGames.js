@@ -110,5 +110,28 @@ module.exports = {
     }
     ]
   },
+  {
+    type: 3,
+    name: "time",
+    description: "The time period of stats you want",
+    required: false,
+    choices: [{
+      name: "lifetime",
+      value: "lifetime",
+    },
+    {
+      name: "daily",
+      value: "day",
+    },
+    {
+      name: "weekly",
+      value: "weekly",
+    },
+    {
+      name: "monthly",
+      value: "monthly",
+    }
+    ],
+  },
   ],
 };

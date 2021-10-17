@@ -12,6 +12,7 @@ const ButtonResponse = require("./ButtonResponse");
 
 let zombies = undefined;
 let topGames = undefined;
+let partyGames = undefined;
 
 /**
  * 
@@ -28,6 +29,10 @@ module.exports = async function ButtonParser (interaction) {
 
   case "s": {
     return await statsHandler(data[1], data[2], data[3], interaction);
+  }
+
+  case "pg": {
+    return pgHandler(data[1], data[2], data[3], interaction);
   }
 
   case "ez": {
@@ -151,4 +156,21 @@ async function miwHandler (accUUID, timetype, interaction) {
   const miwRes = await miwCommand.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", [ miwRes.embed ], miwRes.components);
+}
+
+/**
+ * @param {string} accUUID
+ * @param {string} time
+ * @param {string} game
+ * @param {Interaction} interaction
+ * @returns {ButtonResponse}
+ */
+async function pgHandler (accUUID, time, game, interaction) {
+  if(partyGames == undefined) {
+    partyGames = await import("../../Commands/PartyGames.mjs");
+  }
+
+  const pgRes = await partyGames.default.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
+
+  return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
 }

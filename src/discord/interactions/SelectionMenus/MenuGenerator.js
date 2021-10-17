@@ -133,12 +133,12 @@ module.exports = class MenuGenerator {
     return [row2, row];
   }
 
-  static partyGamesMenu (uuid) {
+  static partyGamesMenu (uuid, game, time) {
     const row = new MessageActionRow();
     const menu = new MessageSelectMenu()
       .setMaxValues(1)
       .setMinValues(1)
-      .setCustomId(`pg:${uuid}:menu`)
+      .setCustomId(`pg:${uuid}:${time}:menu`)
       .setPlaceholder("Select a party game")
       .addOptions([{
         label: "Overall",
@@ -239,6 +239,31 @@ module.exports = class MenuGenerator {
       ]);
 
     row.addComponents(menu);
-    return row;
+
+    const row2 = new MessageActionRow();
+
+    const lifetime = new MessageButton().setCustomId(`pg:${uuid}:lifetime:${game}:b`)
+      .setLabel("Lifetime")
+      .setStyle("SUCCESS")
+      .setDisabled(time == "lifetime");
+
+    const day = new MessageButton().setCustomId(`pg:${uuid}:day:${game}:b`)
+      .setLabel("Daily")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "day");
+
+    const weekly = new MessageButton().setCustomId(`pg:${uuid}:weekly:${game}:b`)
+      .setLabel("Weekly")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "weekly");
+
+    const monthly = new MessageButton().setCustomId(`pg:${uuid}:monthly:${game}:b`)
+      .setLabel("Monthly")
+      .setStyle("SECONDARY")
+      .setDisabled(time == "monthly");
+
+    row2.addComponents(lifetime, day, weekly, monthly);
+
+    return [row2, row];
   }
 };

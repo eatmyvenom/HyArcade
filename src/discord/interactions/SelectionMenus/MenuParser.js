@@ -3,11 +3,11 @@ const {
 } = require("discord.js");
 const BotRuntime = require("../../BotRuntime");
 const ButtonResponse = require("../Buttons/ButtonResponse");
-const InteractionUtils = require("../InteractionUtils");
 const MenuGenerator = require("./MenuGenerator");
-const PartyGamesImg = require("../../images/PartyGamesImg");
 const Logger = require("hyarcade-logger");
 const AccountComparitor = require("../../Utils/AccountComparitor");
+
+let partyGames = undefined;
 
 /**
  * 
@@ -23,7 +23,7 @@ module.exports = async function MenuParser (interaction) {
   }
 
   case "pg" : {
-    return await partyGamesHandler(data[1], interaction.values[0], interaction);
+    return await partyGamesHandler(data[1], data[2], interaction.values[0], interaction);
   }
   }
 };
@@ -57,15 +57,17 @@ async function statsHandler (accUUID, time, game, interaction) {
 
 /**
  * @param {string} accUUID
+ * @param {string} time
  * @param {string} game
  * @param {SelectMenuInteraction} interaction
  * @returns {ButtonResponse}
  */
-async function partyGamesHandler (accUUID, game, interaction) {
-  await interaction.deferUpdate();
-  const accData = await InteractionUtils.accFromUUID(accUUID);
-  const img = await PartyGamesImg(accData, game);
+async function partyGamesHandler (accUUID, time, game, interaction) {
+  if(partyGames == undefined) {
+    partyGames = await import("../../Commands/PartyGames.mjs");
+  }
 
-  const mnu = await MenuGenerator.partyGamesMenu(accUUID);
-  return new ButtonResponse("", undefined, mnu, [ img ]);
+  const pgRes = await partyGames.default.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
+
+  return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
 }
