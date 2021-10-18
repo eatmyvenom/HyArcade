@@ -110,7 +110,7 @@ function formatStats (guild) {
  *
  */
 function updateData () {
-  const name = new URLSearchParams(window.location.search).get("name");
+  const name = decodeURI(new URLSearchParams(window.location.search).get("name"));
 
   fetch(guildURL).then((v) => {
     v.json().then((v) => {
