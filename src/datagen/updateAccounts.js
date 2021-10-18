@@ -367,7 +367,7 @@ function isImportant (oldAcc) {
     return true;
   }
 
-  const hasImportantStats = normalize(oldAcc) > 12000;
+  const hasImportantStats = normalize(oldAcc) >= cfg.importanceLimit;
 
   // Linked players should update more often since they will check their own stats
   const isLinked = !!oldAcc.discord;
