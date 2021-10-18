@@ -1,4 +1,5 @@
 const Logger = require("hyarcade-logger");
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
 
@@ -55,8 +56,15 @@ module.exports = async (req, res, fileCache) => {
             }
           }
 
+          for(const acc of old) {
+            const newAcc = newAccs.find((a) => a.uuid = acc.uuid);
+            if(newAcc == undefined) {
+              newAccs.push(acc);
+            }
+          }
+
           Logger.log(`New accounts length is ${newAccs.length}`);
-          fileCache.accounts = newAccs;
+          fileCache.accounts = AccountArray(newAccs);
 
         } else {
           fileCache[url.searchParams.get("path")] = json;
