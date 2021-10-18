@@ -242,6 +242,10 @@ async function fastUpdate (accounts) {
   updatedAccs = await guilds(updatedAccs);
   updatedAccs = await hackerlist(updatedAccs);
 
+  if(force && utils.fileExists("force")) {
+    await fs.rm("force");
+  }
+
   return updatedAccs;
 }
 
