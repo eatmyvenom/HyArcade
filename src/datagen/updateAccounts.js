@@ -9,6 +9,7 @@ const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const process = require("process");
 const { sleep } = require("../utils");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
+const NormalizeAccount = require("./utils/NormalizeAccount");
 
 class Response {
   key = {};
@@ -329,31 +330,6 @@ async function updateAccountsInArr (accounts, oldAccs) {
 
 /**
  * 
- * @param {Account} acc 
- * @returns {number}
- */
-function normalize (acc) {
-  return (
-    (acc.blockingDead.wins * 7) +
-    (acc.bountyHunters.wins * 8) +
-    (acc.dragonWars.wins * 11) +
-    (acc.enderSpleef.wins * 4.5) +
-    (acc.farmhunt.wins * 6) +
-    (acc.football.wins * 2) +
-    (acc.galaxyWars.wins * 7) +
-    (acc.miniWalls.wins * 3) +
-    (acc.hideAndSeek.wins * 3.5) +
-    (acc.hypixelSays.wins * 2.5) +
-    (acc.partyGames.wins * 7.5) +
-    (acc.pixelPainters.wins * 10) +
-    (acc.throwOut.wins * 8) +
-    (acc.seasonalWins.total * 4) +
-    ((acc.zombies.wins_zombies ?? 0) * 30)
-  );
-}
-
-/**
- * 
  * @param {Account} oldAcc 
  * @returns {boolean}
  */
@@ -367,7 +343,7 @@ function isImportant (oldAcc) {
     return true;
   }
 
-  const hasImportantStats = normalize(oldAcc) >= cfg.importanceLimit;
+  const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.importanceLimit;
 
   // Linked players should update more often since they will check their own stats
   const isLinked = !!oldAcc.discord;

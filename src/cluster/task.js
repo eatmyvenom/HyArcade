@@ -10,11 +10,19 @@ const EventDetector = require("../events/EventDetector");
 
 const lists = require("../listParser");
 let accounts = [];
-const {
-  winsSorter,
-  logger
-} = require("../utils");
+const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
+const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
+
+/**
+ * 
+ * @param {*} b 
+ * @param {*} a 
+ * @returns {number}
+ */
+function accSorter (b, a) {
+  return NormalizeAccount(a) - NormalizeAccount(b);
+}
 
 /**
  * Generate the data for all accounts
@@ -30,8 +38,8 @@ async function accs () {
   const acclist = await lists.accounts();
   accounts = await dataGen.updateAllAccounts(acclist);
   const old = await utils.readDB("accounts");
-  old.sort(winsSorter);
-  accounts.sort(winsSorter);
+  old.sort(accSorter);
+  accounts.sort(accSorter);
 
   try {
     if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {

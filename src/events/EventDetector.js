@@ -21,17 +21,8 @@ class EventDetector {
         return;
       }
 
-      this.detectDiff(oldAcc, newAcc, "hitwQual", "HITWPB", "qualifiers");
-      this.detectDiff(oldAcc, newAcc, "hitwFinal", "HITWPB", "finals");
-
       if(oldAcc.name != newAcc.name) {
         this.Events.push(new AccountEvent(newAcc.name, "NAME", oldAcc.name, newAcc.name, "", newAcc.uuid));
-      }
-
-      if(oldAcc.plusColor != newAcc.plusColor && newAcc.plusColor != undefined && newAcc.plusColor != "") {
-        this.Events.push(
-          new AccountEvent(newAcc.name, "PLUS", oldAcc.plusColor, newAcc.plusColor, "", newAcc.uuid)
-        );
       }
     }
 
