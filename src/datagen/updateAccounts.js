@@ -325,6 +325,31 @@ async function updateAccountsInArr (accounts, oldAccs) {
 
 /**
  * 
+ * @param {Account} acc 
+ * @returns {number}
+ */
+function normalize (acc) {
+  return (
+    (acc.blockingDead.wins * 7) +
+    (acc.bountyHunters.wins * 8) +
+    (acc.dragonWars.wins * 11) +
+    (acc.enderSpleef.wins * 4.5) +
+    (acc.farmhunt.wins * 6) +
+    (acc.football.wins * 2) +
+    (acc.galaxyWars.wins * 7) +
+    (acc.miniWalls.wins * 3) +
+    (acc.hideAndSeek.wins * 3.5) +
+    (acc.hypixelSays.wins * 2.5) +
+    (acc.partyGames.wins * 7.5) +
+    (acc.pixelPainters.wins * 10) +
+    (acc.throwOut.wins * 8) +
+    (acc.seasonalWins.total * 4) +
+    ((acc.zombies.wins_zombies ?? 0) * 30)
+  );
+}
+
+/**
+ * 
  * @param {Account} oldAcc 
  * @returns {boolean}
  */
@@ -338,34 +363,13 @@ function isImportant (oldAcc) {
     return true;
   }
 
-  // Make sure they have a relavent amount of arcade games wins
-  const isArcadePlayer = oldAcc.arcadeWins >= 500;
-
-  // Make sure their arcade wins are not inflated due to football
-  const fbAboveInflationLimit = (oldAcc?.football?.wins ?? 0) >= 8000;
-  const fbBelowInflationLimit = (oldAcc?.football?.wins ?? 0) <= 250;
-
-  const notFbInflated = fbBelowInflationLimit || fbAboveInflationLimit;
-
-  // Make sure their arcade wins are not inflated due to mini walls
-  const mwAboveInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) >= 750;
-  const mwBelowInflationLimit = (oldAcc?.miniWalls?.wins ?? 0) <= 100;
-
-  const notMwInflated = mwBelowInflationLimit || mwAboveInflationLimit;
-
-  // Make sure their arcade wins are not inflated due to hide and seek
-  const hnsAboveInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) >= 1000;
-  const hnsBelowInflationLimit = (oldAcc?.hideAndSeek?.wins ?? 0) <= 200;
-
-  const nothnsInflated = hnsBelowInflationLimit || hnsAboveInflationLimit;
+  const hasImportantStats = normalize(oldAcc) > 12000;
 
   // Linked players should update more often since they will check their own stats
   const isLinked = !!oldAcc.discord;
 
   // Ignore people who have not played within the last 3 days
   const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 259200000;
-
-  const hasImportantStats = isArcadePlayer && notFbInflated && notMwInflated && nothnsInflated;
 
   const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
 
