@@ -57,7 +57,7 @@ module.exports = async (req, res, fileCache) => {
           }
 
           for(const acc of old) {
-            const newAcc = newAccs.find((a) => a.uuid = acc.uuid);
+            const newAcc = newAccs.find((a) => a.uuid == acc.uuid);
             if(newAcc == undefined) {
               newAccs.push(acc);
             }
