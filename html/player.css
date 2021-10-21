@@ -46,6 +46,12 @@ main {
     grid-row-start: 2;
 }
 
+#guild {
+    grid-column: 1;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
 #stats {
     grid-column-start: 2;
     grid-column-end: 4;
@@ -59,7 +65,7 @@ main {
     display: grid;
     grid-template-columns: auto auto;
     grid-row-start: 1;
-    grid-row-end: 4;
+    grid-row-end: 5;
 }
 
 #stats > h3 {
@@ -82,7 +88,7 @@ article {
 }
 
 input {
-    background: #181c30;
+    background: #2d3040;
     border: 2px solid #44a3e7;
     color: white;
     height: inherit;
@@ -115,10 +121,11 @@ button {
 }
 
 body > main div {
+    background-color: #2d3040;
     border: 2px solid transparent;
     border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
     border-image-slice: 1;
-    margin-top: 8px;
+    margin: 4px;
     padding: 12px;
     transition-duration: 0.3s;
 }
@@ -131,7 +138,20 @@ body > main div {
 input {
     display: inline-block;
     height: 32px;
+    width: 100%;
     transition-duration: 0.3s;
+}
+
+#home {
+    margin-left: auto;
+}
+
+#query {
+    margin-right: auto;
+}
+
+nav {
+    margin-bottom: 1%;
 }
 
 nav > button:hover {
@@ -164,6 +184,24 @@ div:hover {
 .pre {
     white-space: pre-line;
 }
+
+article {
+    display: inline-block;
+    width: 40%;
+}
+
+/* article:focus-within span {
+    display: block;
+    position: absolute;
+    width: inherit;
+    background: #2d3040;
+    border: 1px solid #44a3e7;
+} */
+
+article:not(:focus-within) span {
+    display: none;
+}
+
 
 @media only screen and (max-width: 600px) {
     main {

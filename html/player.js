@@ -1,10 +1,27 @@
 let playername = undefined;
+let playerdata = undefined;
 let urlParams = undefined;
+let guildData = undefined;
 
 // eslint-disable-next-line
 function setName (name) {
   playername = name;
   refresh();
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} event 
+ */
+function ignIpt (event) {
+  if (event.key == "Enter") {
+    setName(event.target.value);
+    event.target.blur();
+  }
+}
+
+function btnClick () {
+  setName(document.getElementById("ign").value);
 }
 
 /**
@@ -23,14 +40,6 @@ function refresh () {
 }
 
 /**
- * @param {string} time
- * @returns {string}
- */
-function formatTime (time) {
-  return new Date(time).toLocaleString();
-}
-
-/**
  * @param {number} number
  * @returns {string}
  */
@@ -41,19 +50,6 @@ function formatNum (number) {
   } 
   return str.toLocaleString();
     
-}
-
-/**
- * @param {string} uuid
- */
-function setIcon (uuid) {
-  let link = document.querySelector("link[rel~='icon']");
-  if(!link) {
-    link = document.createElement("link");
-    link.rel = "icon";
-    document.getElementsByTagName("head")[0].appendChild(link);
-  }
-  link.href = `https://crafatar.com/avatars/${uuid}?overlay`;
 }
 
 /**
@@ -75,8 +71,13 @@ function arcade (data) {
 
   html += "<h6 class='vnm_light_blue'>Overall arcade</h6><br />" +
     `- Wins : ${formatNum(data.arcadeWins)}<br />` + 
-    `- Combined wins : ${formatNum(data.combinedArcadeWins)} ${lilQuestionMark("arcade-wins")}<br />` +
-    `- Coins : ${formatNum(data.arcadeCoins)}<br >` +
+    `- Combined wins : ${formatNum(data.combinedArcadeWins)} ${lilQuestionMark("arcade-wins")}<br /><br />` +
+
+    `- Challenges : ${formatNum(Object.values(data.arcadeChallenges).reduce((p, c) => p + c, 0))}<br />` +
+    `- Quests : ${formatNum(Object.values(data.quests).reduce((p, c) => p + c, 0))}<br /><br />` +
+
+    `- Coins : ${formatNum(data.arcadeCoins)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.totalEarned / data.arcadeAchievments.totalAvailiable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.totalEarned}" max="${data.arcadeAchievments.totalAvailiable}"></progress>`;
 
@@ -91,7 +92,12 @@ function partyGames (data) {
   const ele = document.getElementById("pg-wins");
   let html = "";
 
-  html += `<h6 class='vnm_light_blue'>Party games</h6><br />- Wins : ${formatNum(data.partyGames.wins)}<br >` +
+  html += "<h6 class='vnm_light_blue'>Party games</h6><br />" +
+  `- Wins : ${formatNum(data.partyGames.wins)}<br /><br />` +
+
+  `- Rounds Won : ${formatNum(data.partyGames.roundsWon)}<br />` +
+  `- Stars Earned : ${formatNum(data.partyGames.starsEarned)}<br /><br />` +
+
   `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.partyGames.apEarned / data.arcadeAchievments.partyGames.apAvailable) * 100)}% </label>` +
   `<progress id="ap" value="${data.arcadeAchievments.partyGames.apEarned}" max="${data.arcadeAchievments.partyGames.apAvailable}"></progress>`;
 
@@ -106,7 +112,25 @@ function farmhunt (data) {
   const ele = document.getElementById("fh-wins");
   let html = "";
 
-  html += `<h6 class='vnm_light_blue'>Farmhunt</h6><br />- Wins : ${formatNum(data.farmhunt.wins)}<br />- Poop collected : ${formatNum(data.farmhunt.poop)}<br >` +
+  html += `<h6 class='vnm_light_blue'>Farmhunt</h6><br />- Total Wins : ${formatNum(data.farmhunt.wins)}<br />` +
+  `- Animal Wins : ${formatNum(data.farmhunt.animalWins)}<br />` + 
+  `- Hunter Wins : ${formatNum(data.farmhunt.hunterWins)}<br /><br />` + 
+
+  `- Total Kills : ${formatNum(data.farmhunt.kills)}<br />` + 
+  `- Animal Kills : ${formatNum(data.farmhunt.animalKills)}<br />` + 
+  `- Hunter Kills : ${formatNum(data.farmhunt.hunterKills)}<br /><br />` +
+
+  `- Total Bow Kills : ${formatNum(data.farmhunt.bowKills)}<br />` +
+  `- Animal Bow Kills : ${formatNum(data.farmhunt.animalBowKills)}<br />` +
+  `- Hunter Bow Kills : ${formatNum(data.farmhunt.hunterBowKills)}<br /><br />` +
+
+  `- Taunts Used : ${formatNum(data.farmhunt.tauntsUsed)}<br />` +
+  `- Safe Taunts Used : ${formatNum(data.farmhunt.safeTauntsUsed)}<br />` +
+  `- Risky Taunts Used : ${formatNum(data.farmhunt.riskyTauntsUsed)}<br />` +
+  `- Dangerous Taunts Used : ${formatNum(data.farmhunt.dangerousTauntsUsed)}<br />` +
+  `- Fireworks Used : ${formatNum(data.farmhunt.fireworksUsed)}<br /><br />` +
+
+  `- Poop collected : ${formatNum(data.farmhunt.poop)}<br /><br />` +
   `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.farmHunt.apEarned / data.arcadeAchievments.farmHunt.apAvailable) * 100)}% </label>` +
   `<progress id="ap" value="${data.arcadeAchievments.farmHunt.apEarned}" max="${data.arcadeAchievments.farmHunt.apAvailable}"></progress>`;
 
@@ -122,10 +146,13 @@ function hitw (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Hole in the wall</h6><br />" +
-    `- Wins : ${formatNum(data.holeInTheWall.wins)}<br />` + 
+    `- Wins : ${formatNum(data.holeInTheWall.wins)}<br /><br />` + 
+
     `- Qualifiers : ${formatNum(data.holeInTheWall.qualifiers)}<br />` +
-    `- Finals : ${formatNum(data.holeInTheWall.finals)}<br />` +
-    `- Rounds : ${formatNum(data.holeInTheWall.rounds)} ${lilQuestionMark("rounds")}<br >` +
+    `- Finals : ${formatNum(data.holeInTheWall.finals)}<br /><br />` +
+
+    `- Walls Faced : ${formatNum(data.holeInTheWall.rounds)} ${lilQuestionMark("rounds")}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.holeInTheWall.apEarned / data.arcadeAchievments.holeInTheWall.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.holeInTheWall.apEarned}" max="${data.arcadeAchievments.holeInTheWall.apAvailable}"></progress>`;
 
@@ -141,8 +168,11 @@ function hypixelSays (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Hypixel says</h6><br />" +
-    `- Wins : ${formatNum(data.hypixelSays.wins)}<br />` + 
-    `- Rounds : ${formatNum(data.hypixelSays.rounds)} ${lilQuestionMark("rounds")}<br >` +
+    `- Wins : ${formatNum(data.hypixelSays.wins)}<br /><br />` +
+
+    `- Round Wins : ${formatNum(data.hypixelSays.totalRoundWins)}<br />` +
+    `- Best Score : ${formatNum(data.hypixelSays.maxScore)}<br />` +
+    `- Points : ${formatNum(data.hypixelSays.rounds)}<br /><br />` +
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.hypixelSays.apEarned / data.arcadeAchievments.hypixelSays.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.hypixelSays.apEarned}" max="${data.arcadeAchievments.hypixelSays.apAvailable}"></progress>`;
 
@@ -160,7 +190,8 @@ function blockingDead (data) {
   html += "<h6 class='vnm_light_blue'>Blocking dead</h6><br />" +
     `- Wins : ${formatNum(data.blockingDead.wins)}<br />` + 
     `- Kills : ${formatNum(data.blockingDead.kills)}<br />` +
-    `- Headshots : ${formatNum(data.blockingDead.headshots)}<br >` +
+    `- Headshots : ${formatNum(data.blockingDead.headshots)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.blockingDead.apEarned / data.arcadeAchievments.blockingDead.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.blockingDead.apEarned}" max="${data.arcadeAchievments.blockingDead.apAvailable}"></progress>`;
 
@@ -176,12 +207,15 @@ function miniWalls (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Mini walls</h6><br />" +
-    `- Wins : ${formatNum(data.miniWalls.wins)}<br />` + 
+    `- Wins : ${formatNum(data.miniWalls.wins)}<br /><br />` +
+
     `- Kills : ${formatNum(data.miniWalls.kills)}<br />` +
-    `- Deaths : ${formatNum(data.miniWalls.deaths)}<br />` +
-    `- Final kills : ${formatNum(data.miniWalls.finalKills)}<br />` +
+    `- Final kills : ${formatNum(data.miniWalls.finalKills)}<br /><br />` +
+
+    `- Deaths : ${formatNum(data.miniWalls.deaths)}<br /><br />` +
+
     `- Wither damage : ${formatNum(data.miniWalls.witherDamage)}<br />` +
-    `- Wither kills : ${formatNum(data.miniWalls.witherKills)}<br >` +
+    `- Wither kills : ${formatNum(data.miniWalls.witherKills)}<br /><br />` +
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.miniWalls.apEarned / data.arcadeAchievments.miniWalls.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.miniWalls.apEarned}" max="${data.arcadeAchievments.miniWalls.apAvailable}"></progress>`;
 
@@ -197,10 +231,13 @@ function football (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Football</h6><br />" +
-    `- Wins : ${formatNum(data.football.wins)}<br />` + 
+    `- Wins : ${formatNum(data.football.wins)}<br /><br />` + 
+
     `- Kicks : ${formatNum(data.football.kicks)}<br />` +
-    `- Power kicks : ${formatNum(data.football.powerkicks)}<br />` +
-    `- Goals : ${formatNum(data.football.goals)}<br >` +
+    `- Power kicks : ${formatNum(data.football.powerkicks)}<br /><br />` +
+
+    `- Goals : ${formatNum(data.football.goals)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.football.apEarned / data.arcadeAchievments.football.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.football.apEarned}" max="${data.arcadeAchievments.football.apAvailable}"></progress>`;
 
@@ -216,9 +253,11 @@ function throwOut (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Throw out</h6><br />" +
-    `- Wins : ${formatNum(data.throwOut.wins)}<br />` + 
+    `- Wins : ${formatNum(data.throwOut.wins)}<br /><br />` + 
+
     `- Kills : ${formatNum(data.throwOut.kills)}<br />` +
-    `- Deaths : ${formatNum(data.throwOut.deaths)}<br >` +
+    `- Deaths : ${formatNum(data.throwOut.deaths)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.throwOut.apEarned / data.arcadeAchievments.throwOut.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.throwOut.apEarned}" max="${data.arcadeAchievments.throwOut.apAvailable}"></progress>`;
 
@@ -234,9 +273,16 @@ function enderSpleef (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Ender spleef</h6><br />" +
-    `- Wins : ${formatNum(data.enderSpleef.wins)}<br >` +
-    `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.enderSpleef.apEarned / data.arcadeAchievments.enderSpleef.apAvailable) * 100)}% </label>` +
-    `<progress id="ap" value="${data.arcadeAchievments.enderSpleef.apEarned}" max="${data.arcadeAchievments.enderSpleef.apAvailable}"></progress>`;
+  `- Wins : ${formatNum(data.enderSpleef.wins)}<br /><br />` +
+
+  `- Blocks Broken : ${formatNum(data.enderSpleef.blocksBroken)}<br /><br />` +
+
+  `- Total Powerups : ${formatNum(data.enderSpleef.totalPowerups)}<br />` +
+  `- Big Shot Powerups : ${formatNum(data.enderSpleef.bigshotPowerups)}<br />` +
+  `- Triple Shot Powerups : ${formatNum(data.enderSpleef.tripleshotPowerups)}<br /><br />` +
+
+  `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.enderSpleef.apEarned / data.arcadeAchievments.enderSpleef.apAvailable) * 100)}% </label>` +
+  `<progress id="ap" value="${data.arcadeAchievments.enderSpleef.apEarned}" max="${data.arcadeAchievments.enderSpleef.apAvailable}"></progress>`;
 
   ele.innerHTML = html;
 }
@@ -250,9 +296,13 @@ function galaxyWars (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Galaxy wars</h6><br />" +
-    `- Wins : ${formatNum(data.galaxyWars.wins)}<br />` + 
+    `- Wins : ${formatNum(data.galaxyWars.wins)}<br /><br />` +
+
     `- Kills : ${formatNum(data.galaxyWars.kills)}<br />` +
-    `- Deaths : ${formatNum(data.galaxyWars.deaths)}`;
+    `- Deaths : ${formatNum(data.galaxyWars.deaths)}<br /><br />` + 
+
+    `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.galaxyWars.apEarned / data.arcadeAchievments.galaxyWars.apAvailable) * 100)}% </label>` +
+    `<progress id="ap" value="${data.arcadeAchievments.galaxyWars.apEarned}" max="${data.arcadeAchievments.galaxyWars.apAvailable}"></progress>`;
 
   ele.innerHTML = html;
 }
@@ -267,7 +317,7 @@ function dragonWars (data) {
 
   html += "<h6 class='vnm_light_blue'>Dragon wars</h6><br />" +
     `- Wins : ${formatNum(data.dragonWars.wins)}<br />` + 
-    `- Kills : ${formatNum(data.dragonWars.kills)}<br >` +
+    `- Kills : ${formatNum(data.dragonWars.kills)}<br /><br />` +
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.dragonWars.apEarned / data.arcadeAchievments.dragonWars.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.dragonWars.apEarned}" max="${data.arcadeAchievments.dragonWars.apAvailable}"></progress>`;
 
@@ -283,10 +333,16 @@ function bountyHunters (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Bounty hunters</h6><br />" +
-    `- Wins : ${formatNum(data.bountyHunters.wins)}<br />` + 
+    `- Wins : ${formatNum(data.bountyHunters.wins)}<br /><br />` + 
+
     `- Kills : ${formatNum(data.bountyHunters.kills)}<br />` +
-    `- Bounty kills : ${formatNum(data.bountyHunters.bountyKills)}<br />` +
-    `- Deaths : ${formatNum(data.bountyHunters.deaths)}<br >` +
+    `- Sword Kills : ${formatNum(data.bountyHunters.swordKills)}<br />` +
+    `- Bow Kills : ${formatNum(data.bountyHunters.bowKills)}<br /><br />` +
+
+    `- Bounty kills : ${formatNum(data.bountyHunters.bountyKills)}<br /><br />` +
+
+    `- Deaths : ${formatNum(data.bountyHunters.deaths)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.bountyHunters.apEarned / data.arcadeAchievments.bountyHunters.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.bountyHunters.apEarned}" max="${data.arcadeAchievments.bountyHunters.apAvailable}"></progress>`;
 
@@ -304,8 +360,10 @@ function hideAndSeek (data) {
   html += "<h6 class='vnm_light_blue'>Hide and seek</h6><br />" +
     `- Wins : ${formatNum(data.hideAndSeek.wins)}<br />` + 
     `- Hider wins : ${formatNum(data.hideAndSeek.hiderWins)}<br />` +
-    `- Seeker wins : ${formatNum(data.hideAndSeek.seekerWins)}<br />` +
-    `- Kills : ${formatNum(data.hideAndSeek.kills)}<br >` +
+    `- Seeker wins : ${formatNum(data.hideAndSeek.seekerWins)}<br /><br />` +
+
+    `- Kills : ${formatNum(data.hideAndSeek.kills)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.hideAndSeek.apEarned / data.arcadeAchievments.hideAndSeek.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.hideAndSeek.apEarned}" max="${data.arcadeAchievments.hideAndSeek.apAvailable}"></progress>`;
 
@@ -324,7 +382,8 @@ function zombies (data) {
     `- Wins : ${formatNum(data.zombies.wins_zombies)}<br />` + 
     `- Bad blood wins : ${formatNum(data.zombies.wins_zombies_badblood)}<br />` +
     `- Dead end wins : ${formatNum(data.zombies.wins_zombies_deadend)}<br />` +
-    `- Alien arcadium wins : ${formatNum(data.zombies.wins_zombies_alienarcadium)}<br >` +
+    `- Alien arcadium wins : ${formatNum(data.zombies.wins_zombies_alienarcadium)}<br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.hideAndSeek.apEarned / data.arcadeAchievments.hideAndSeek.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.hideAndSeek.apEarned}" max="${data.arcadeAchievments.hideAndSeek.apAvailable}"></progress>`;
 
@@ -340,7 +399,7 @@ function pixelPainters (data) {
   let html = "";
 
   html += "<h6 class='vnm_light_blue'>Pixel painters</h6><br />" +
-    `- Wins : ${formatNum(data.pixelPainters.wins)}<br >` +
+    `- Wins : ${formatNum(data.pixelPainters.wins)}<br /><br />` +
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.pixelPainters.apEarned / data.arcadeAchievments.pixelPainters.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.pixelPainters.apEarned}" max="${data.arcadeAchievments.pixelPainters.apAvailable}"></progress>`;
 
@@ -357,7 +416,8 @@ function captureTheWool (data) {
 
   html += "<h6 class='vnm_light_blue'>Capture the wool</h6><br />" +
     `- Captures : ${formatNum(data.captureTheWool.woolCaptures)}<br />` + 
-    `- Kills : ${formatNum(data.captureTheWool.kills)}<br >` +
+    `- Kills + Assists : ${formatNum(data.captureTheWool.kills)}<br /><br />` +
+
     `<label for="ap">- Achievements : ${Math.round((data.arcadeAchievments.captureTheWool.apEarned / data.arcadeAchievments.captureTheWool.apAvailable) * 100)}% </label>` +
     `<progress id="ap" value="${data.arcadeAchievments.captureTheWool.apEarned}" max="${data.arcadeAchievments.captureTheWool.apAvailable}"></progress>`;
 
@@ -423,13 +483,20 @@ function formatRank (rank, plusColor) {
  */
 async function handleData () {
   let rawjson;
+
+  if(playerdata?.name?.toLowerCase()?.startsWith(playername.toLowerCase())) {
+    return;
+  }
+
   if(playername.length > 16) {
     rawjson = await fetch(`https://cdn.hyarcade.xyz/account?uuid=${playername}`);
   } else {
     rawjson = await fetch(`https://cdn.hyarcade.xyz/account?ign=${playername}`);
   }
-  const playerdata = await rawjson.json();
+  playerdata = await rawjson.json();
+
   if(playerdata != undefined && playerdata.name != undefined) {
+    playername = playerdata.name;
     displayData(playerdata);
     if(urlParams.has("q")) {
       if(urlParams.get("q").toLowerCase() != playername.toLowerCase()) {
@@ -449,8 +516,32 @@ async function handleData () {
       );
     }
 
-    await nameHist(playerdata.uuid);
-    await accStatus(playerdata.uuid);
+  }
+
+  await nameHist(playerdata.uuid);
+  await accStatus(playerdata.uuid);
+  await guildStats(playerdata.guildID);
+}
+
+function makeTag (tag, color) {
+  return `<b class="${color.toLowerCase()}">[${tag.toUpperCase()}]</b>`;
+}
+
+async function guildStats (id) {
+  if (guildData == undefined) {
+    guildData = await fetch("https://hyarcade.xyz/resources/guild.json");
+    guildData = await guildData.json();
+  }
+
+  const guild = guildData.find((g) => g.uuid == id);
+
+  if(guild != undefined) {
+    document.getElementById("guild").style.display = "block";
+    setHtmlByName("gname", `<b class="aqua">Name - ${guild.name}</b>`);
+    setHtmlByName("gtag", `<b class="white">Tag - ${makeTag(guild.tag, guild.color)}</b>`);
+    setHtmlByName("gmembercount", `<b class="light_purple">Members - ${guild.memberUUIDs.length}</b>`);
+  } else {
+    document.getElementById("guild").style.display = "none";
   }
 }
 
@@ -468,9 +559,36 @@ async function nameHist (uuid) {
   let mojData = await fetch(`https://api.ashcon.app/mojang/v2/user/${uuid}`);
   mojData = await mojData.json();
 
-  setHtmlByName("namehist", `<b class="gold"><u>Name History</u></b><br><b class="yellow">${mojData.username_history.map((e) => e.username).join("<br>")}</b>`);
+  setHtmlByName("namehist", `<b class="gold"><u>Name History</u></b><br><b class="yellow">${mojData.username_history.map((e) => e.username).reverse().join("<br>")}</b>`);
 }
 
+function focusSearch (event) {
+  if(event.key == "/") {
+    event.preventDefault();
+    document.getElementById("ign").focus();
+    document.getElementById("ign").select();
+  }
+}
+
+function getSuggestions (event) {
+  const query = event.target.value;
+  if(query.trim() != "") {
+    fetch(`https://cdn.hyarcade.xyz/resolve?q=${query.trim()}`)
+      .then(displaySuggestions)
+      .catch(console.error);
+  }
+}
+
+async function displaySuggestions (data) {
+  const list = await data.json();
+
+  const suggestions = document.querySelector("body > nav > article > span");
+  suggestions.innerHTML = "";
+
+  list.forEach((name) => {
+    suggestions.innerHTML += `<b>${name}</b><br />`;
+  });
+}
 
 /**
  *
@@ -482,6 +600,11 @@ function loadPage () {
 
   refresh();
   document.getElementById("ign").value = urlParams.get("q");
+  document.getElementById("ign").addEventListener("keydown", ignIpt);
+  // document.getElementById("ign").addEventListener("input", getSuggestions);
+  document.getElementById("query").addEventListener("click", btnClick);
+
+  window.addEventListener("keydown", focusSearch);
 }
 
 window.addEventListener("load", loadPage);

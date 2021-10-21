@@ -89,14 +89,12 @@ async function statsHandler (accUUID, time, game, interaction) {
  */
 async function leaderboardHandler (interaction, leaderboard, time, index) {
   const res = await Leaderboard.execute(
-    [leaderboard, time, 10, index],
+    [leaderboard, time, index],
     interaction.user.id,
     undefined,
     interaction
   );
-  const e = res.embed;
-  const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, time);
-  return new ButtonResponse("", [e], buttons);
+  return new ButtonResponse("", undefined, res.components, [res.file]);
 }
 
 /**

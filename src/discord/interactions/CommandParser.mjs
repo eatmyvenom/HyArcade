@@ -47,24 +47,8 @@ export default async (interaction) => {
     return Stats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
   }
 
-  case Leaderboard.name: {
-    const res = await Leaderboard.execute(
-      [
-        opts.getString("game"),
-        opts.getString("type"),
-        opts.getInteger("amount"),
-        opts.getInteger("start"),
-      ],
-      authorID,
-      null,
-      interaction
-    );
-    const e = res.embed;
-    if(res.game != undefined) {
-      const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
-      return new CommandResponse("", e, undefined, buttons);
-    }
-    return new CommandResponse("", e);
+  case "leaderboard": {
+    return await Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start"), ], authorID, null, interaction);
   }
 
   case "add-account": {
@@ -188,23 +172,7 @@ export default async (interaction) => {
     }
 
     case "leaderboard": {
-      const res = await Leaderboard.execute(
-        [
-          opts.getString("game"),
-          opts.getString("type"),
-          opts.getInteger("amount"),
-          opts.getInteger("start"),
-        ],
-        authorID,
-        null,
-        interaction
-      );
-      const e = res.embed;
-      if(res.game != undefined) {
-        const buttons = await ButtonGenerator.getLBButtons(res.start, res.game, opts.getString("type"));
-        return new CommandResponse("", e, undefined, buttons);
-      }
-      return new CommandResponse("", e);
+      return await Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start"), ], authorID, null, interaction);
     }
 
     case "profile": {

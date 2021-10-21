@@ -3,14 +3,15 @@ const {
   CommandInteraction,
   ButtonInteraction
 } = require("discord.js");
-const BotRuntime = require("../BotRuntime");
 const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
 const getLB = require("../Utils/Leaderboards/GetLeaderboard");
-const CustomLeaderboard = require("../Utils/Leaderboards/CustomLeaderboard");
+// // const CustomLeaderboard = require("../Utils/Leaderboards/CustomLeaderboard");
 const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+const ImageGenerator = require("../images/ImageGenerator");
+const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 
 /**
  * 
@@ -35,11 +36,13 @@ async function hander (args, rawMsg, interaction) {
   }
 
   const type = args[0];
-  const limit = args[2] != undefined ? Number(args[2]) : 10;
-  const startingIndex = args[3] != undefined ? Number(args[3]) : 0;
+  const startingIndex = args[2] != undefined ? Number(args[2]) : 0;
   const timetype = args[1] != undefined ? args[1] : "lifetime";
 
-  let res = "";
+  /**
+   * @type {ImageGenerator}
+   */
+  let res;
   let gid = "";
   let gameName = "";
 
@@ -58,7 +61,7 @@ async function hander (args, rawMsg, interaction) {
   case "party games":
   case "pg": {
     gameName = "Party games";
-    res = await getLB("wins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("wins", timetype, "partyGames", startingIndex);
     gid = "pg";
     break;
   }
@@ -71,7 +74,7 @@ async function hander (args, rawMsg, interaction) {
   case "farm hunt":
   case "frmhnt": {
     gameName = "Farm hunt";
-    res = await getLB("wins", timetype, limit, "farmhunt", startingIndex);
+    res = await getLB("wins", timetype, "farmhunt", startingIndex);
     gid = "fh";
     break;
   }
@@ -86,7 +89,7 @@ async function hander (args, rawMsg, interaction) {
   case "poopcollected":
   case "fmhntpoop": {
     gameName = "Farm hunt poop";
-    res = await getLB("poop", timetype, limit, "farmhunt", startingIndex);
+    res = await getLB("poop", timetype, "farmhunt", startingIndex);
     gid = "fhp";
     break;
   }
@@ -102,7 +105,7 @@ async function hander (args, rawMsg, interaction) {
   case "says":
   case "hysays": {
     gameName = "Hypixel Says";
-    res = await getLB("wins", timetype, limit, "hypixelSays", startingIndex);
+    res = await getLB("wins", timetype, "hypixelSays", startingIndex);
     gid = "hs";
     break;
   }
@@ -120,7 +123,7 @@ async function hander (args, rawMsg, interaction) {
   case "h.i.t.w.":
   case "pain": {
     gameName = "Hole in the wall";
-    res = await getLB("wins", timetype, limit, "holeInTheWall", startingIndex);
+    res = await getLB("wins", timetype, "holeInTheWall", startingIndex);
     gid = "hitw";
     break;
   }
@@ -134,7 +137,7 @@ async function hander (args, rawMsg, interaction) {
   case "miniwalls":
   case "mwwins": {
     gameName = "Mini walls";
-    res = await getLB("wins", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("wins", timetype, "miniWalls", startingIndex);
     gid = "mw";
     break;
   }
@@ -142,7 +145,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwk":
   case "mwkills": {
     gameName = "Mini Walls Kills";
-    res = await getLB("kills", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("kills", timetype, "miniWalls", startingIndex);
     gid = "mwk";
     break;
   }
@@ -150,7 +153,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwd":
   case "mwdeaths": {
     gameName = "Mini Walls Deaths";
-    res = await getLB("deaths", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("deaths", timetype, "miniWalls", startingIndex);
     gid = "mwd";
     break;
   }
@@ -158,7 +161,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwwd":
   case "mwwitherdmg": {
     gameName = "Mini Walls Wither Damage";
-    res = await getLB("witherDamage", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("witherDamage", timetype, "miniWalls", startingIndex);
     gid = "mwwd";
     break;
   }
@@ -166,7 +169,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwwk":
   case "mwwitherkills": {
     gameName = "Mini Walls Wither Kills";
-    res = await getLB("witherKills", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("witherKills", timetype, "miniWalls", startingIndex);
     gid = "mwwk";
     break;
   }
@@ -174,7 +177,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwf":
   case "mwfinals": {
     gameName = "Mini Walls Final Kills";
-    res = await getLB("finalKills", timetype, limit, "miniWalls", startingIndex);
+    res = await getLB("finalKills", timetype, "miniWalls", startingIndex);
     gid = "mwf";
     break;
   }
@@ -187,7 +190,7 @@ async function hander (args, rawMsg, interaction) {
   case "shit":
   case "football": {
     gameName = "Football";
-    res = await getLB("wins", timetype, limit, "football", startingIndex);
+    res = await getLB("wins", timetype, "football", startingIndex);
     gid = "fb";
     break;
   }
@@ -199,7 +202,7 @@ async function hander (args, rawMsg, interaction) {
   case "trash":
   case "enderspleef": {
     gameName = "Ender spleef";
-    res = await getLB("wins", timetype, limit, "enderSpleef", startingIndex);
+    res = await getLB("wins", timetype, "enderSpleef", startingIndex);
     gid = "es";
     break;
   }
@@ -210,7 +213,7 @@ async function hander (args, rawMsg, interaction) {
   case "sumo2":
   case "throwout": {
     gameName = "Throw out";
-    res = await getLB("wins", timetype, limit, "throwOut", startingIndex);
+    res = await getLB("wins", timetype, "throwOut", startingIndex);
     gid = "to";
     break;
   }
@@ -220,7 +223,7 @@ async function hander (args, rawMsg, interaction) {
   case "throwkills":
   case "tokills": {
     gameName = "Throw out kills";
-    res = await getLB("kills", timetype, limit, "throwOut", startingIndex);
+    res = await getLB("kills", timetype, "throwOut", startingIndex);
     gid = "tok";
     break;
   }
@@ -232,7 +235,7 @@ async function hander (args, rawMsg, interaction) {
   case "galawar":
   case "galaxywars": {
     gameName = "Galaxy wars";
-    res = await getLB("wins", timetype, limit, "galaxyWars", startingIndex);
+    res = await getLB("wins", timetype, "galaxyWars", startingIndex);
     gid = "gw";
     break;
   }
@@ -251,7 +254,7 @@ async function hander (args, rawMsg, interaction) {
   case "dragonwars":
   case "dragon wars": {
     gameName = "Dragon wars";
-    res = await getLB("wins", timetype, limit, "dragonWars", startingIndex);
+    res = await getLB("wins", timetype, "dragonWars", startingIndex);
     gid = "dw";
     break;
   }
@@ -262,7 +265,7 @@ async function hander (args, rawMsg, interaction) {
   case "oneinthequiver":
   case "bountyhunters": {
     gameName = "Bounty hunters";
-    res = await getLB("wins", timetype, limit, "bountyHunters", startingIndex);
+    res = await getLB("wins", timetype, "bountyHunters", startingIndex);
     gid = "bh";
     break;
   }
@@ -276,7 +279,7 @@ async function hander (args, rawMsg, interaction) {
   case "blockdead":
   case "blockingdead": {
     gameName = "Blocking dead";
-    res = await getLB("wins", timetype, limit, "blockingDead", startingIndex);
+    res = await getLB("wins", timetype, "blockingDead", startingIndex);
     gid = "bd";
     break;
   }
@@ -286,7 +289,7 @@ async function hander (args, rawMsg, interaction) {
   case "overall":
   case "all": {
     gameName = "Arcade wins";
-    res = await getLB("arcadeWins", timetype, limit, undefined, startingIndex);
+    res = await getLB("arcadeWins", timetype, undefined, startingIndex);
     gid = "arc";
     break;
   }
@@ -300,7 +303,7 @@ async function hander (args, rawMsg, interaction) {
   case "hidenseek":
   case "hideseek": {
     gameName = "Hide and seek";
-    res = await getLB("wins", timetype, limit, "hideAndSeek", startingIndex);
+    res = await getLB("wins", timetype, "hideAndSeek", startingIndex);
     gid = "hns";
     break;
   }
@@ -313,7 +316,7 @@ async function hander (args, rawMsg, interaction) {
   case "seekerkills":
   case "hide and seek kills": {
     gameName = "Hide and seek kills";
-    res = await getLB("kills", timetype, limit, "hideAndSeek", startingIndex);
+    res = await getLB("kills", timetype, "hideAndSeek", startingIndex);
     gid = "hnsk";
     break;
   }
@@ -325,7 +328,7 @@ async function hander (args, rawMsg, interaction) {
   case "zbies":
   case "zombies": {
     gameName = "Zombies";
-    res = await getLB("wins_zombies", timetype, limit, "zombies", startingIndex);
+    res = await getLB("wins_zombies", timetype, "zombies", startingIndex);
     gid = "z";
     break;
   }
@@ -335,7 +338,7 @@ async function hander (args, rawMsg, interaction) {
   case "ctkills":
   case "ctwkills": {
     gameName = "Capture the wool kills";
-    res = await getLB("kills", timetype, limit, "captureTheWool", startingIndex);
+    res = await getLB("kills", timetype, "captureTheWool", startingIndex);
     gid = "ctw";
     break;
   }
@@ -352,7 +355,7 @@ async function hander (args, rawMsg, interaction) {
   case "woolcaps":
   case "ctwwoolcaptured": {
     gameName = "Capture the wool captures";
-    res = await getLB("woolCaptures", timetype, limit, "captureTheWool", startingIndex);
+    res = await getLB("woolCaptures", timetype, "captureTheWool", startingIndex);
     gid = "ctww";
     break;
   }
@@ -367,7 +370,7 @@ async function hander (args, rawMsg, interaction) {
   case "drawtheirthing":
   case "drawing": {
     gameName = "Pixel painters";
-    res = await getLB("wins", timetype, limit, "pixelPainters", startingIndex);
+    res = await getLB("wins", timetype, "pixelPainters", startingIndex);
     gid = "pp";
     break;
   }
@@ -379,7 +382,7 @@ async function hander (args, rawMsg, interaction) {
   case "arcadecoins":
   case "arcade_coins": {
     gameName = "Arcade coins";
-    res = await getLB("arcadeCoins", timetype, limit, undefined, startingIndex);
+    res = await getLB("arcadeCoins", timetype, undefined, startingIndex);
     gid = "c";
     break;
   }
@@ -391,7 +394,7 @@ async function hander (args, rawMsg, interaction) {
   case "eastersimulator":
   case "easter-simulator": {
     gameName = "Easter simulator";
-    res = await getLB("easter", timetype, limit, "seasonalWins", startingIndex);
+    res = await getLB("easter", timetype, "seasonalWins", startingIndex);
     gid = "esim";
     break;
   }
@@ -402,7 +405,7 @@ async function hander (args, rawMsg, interaction) {
   case "scubasimulator":
   case "scuba-simulator": {
     gameName = "Scuba simulator";
-    res = await getLB("scuba", timetype, limit, "seasonalWins", startingIndex);
+    res = await getLB("scuba", timetype, "seasonalWins", startingIndex);
     gid = "ssim";
     break;
   }
@@ -414,7 +417,7 @@ async function hander (args, rawMsg, interaction) {
   case "halloweensimulator":
   case "halloween-simulator": {
     gameName = "Halloween simulator";
-    res = await getLB("halloween", timetype, limit, "seasonalWins", startingIndex);
+    res = await getLB("halloween", timetype, "seasonalWins", startingIndex);
     gid = "hsim";
     break;
   }
@@ -425,7 +428,7 @@ async function hander (args, rawMsg, interaction) {
   case "grinchsimulator":
   case "grinch-simulator": {
     gameName = "Grinch simulator";
-    res = await getLB("grinch", timetype, limit, "seasonalWins", startingIndex);
+    res = await getLB("grinch", timetype, "seasonalWins", startingIndex);
     gid = "gsim";
     break;
   }
@@ -436,7 +439,7 @@ async function hander (args, rawMsg, interaction) {
   case "totalsimulator":
   case "total-simulator": {
     gameName = "Total simulator";
-    res = await getLB("total", timetype, limit, "seasonalWins", startingIndex);
+    res = await getLB("total", timetype, "seasonalWins", startingIndex);
     gid = "tsim";
     break;
   }
@@ -449,7 +452,7 @@ async function hander (args, rawMsg, interaction) {
   case "advance":
   case "achiev": {
     gameName = "Achievement points";
-    res = await getLB("achievementPoints", timetype, limit, undefined, startingIndex);
+    res = await getLB("achievementPoints", timetype, undefined, startingIndex);
     gid = "ap";
     break;
   }
@@ -461,7 +464,7 @@ async function hander (args, rawMsg, interaction) {
   case "oitckills":
   case "bountyhuntkills": {
     gameName = "Bounty hunter kills";
-    res = await getLB("kills", timetype, limit, "bountyHunters", startingIndex);
+    res = await getLB("kills", timetype, "bountyHunters", startingIndex);
     gid = "bhk";
     break;
   }
@@ -474,7 +477,7 @@ async function hander (args, rawMsg, interaction) {
   case "dragwarkil":
   case "dragonwarskills": {
     gameName = "Dragon wars kills";
-    res = await getLB("kills", timetype, limit, "dragonWars", startingIndex);
+    res = await getLB("kills", timetype, "dragonWars", startingIndex);
     gid = "dwk";
     break;
   }
@@ -488,7 +491,7 @@ async function hander (args, rawMsg, interaction) {
   case "soccergoals":
   case "footballgoals": {
     gameName = "Football goals";
-    res = await getLB("goals", timetype, limit, "football", startingIndex);
+    res = await getLB("goals", timetype, "football", startingIndex);
     gid = "fbg";
     break;
   }
@@ -501,7 +504,7 @@ async function hander (args, rawMsg, interaction) {
   case "galaxywarkil":
   case "galaxywarskills": {
     gameName = "Galaxy wars kills";
-    res = await getLB("kills", timetype, limit, "galaxyWars", startingIndex);
+    res = await getLB("kills", timetype, "galaxyWars", startingIndex);
     gid = "gwk";
     break;
   }
@@ -511,7 +514,7 @@ async function hander (args, rawMsg, interaction) {
   case "hnshwins":
   case "hnshiderwins": {
     gameName = "HNS hider wins";
-    res = await getLB("hiderWins", timetype, limit, "hideAndSeek", startingIndex);
+    res = await getLB("hiderWins", timetype, "hideAndSeek", startingIndex);
     gid = "hwins";
     break;
   }
@@ -521,7 +524,7 @@ async function hander (args, rawMsg, interaction) {
   case "hnsswins":
   case "hnsseekerwins": {
     gameName = "HNS seeker wins";
-    res = await getLB("seekerWins", timetype, limit, "hideAndSeek", startingIndex);
+    res = await getLB("seekerWins", timetype, "hideAndSeek", startingIndex);
     gid = "swins";
     break;
   }
@@ -530,7 +533,7 @@ async function hander (args, rawMsg, interaction) {
   case "qst":
   case "quest": {
     gameName = "Quests completed";
-    res = await getLB("questsCompleted", timetype, limit, undefined, startingIndex);
+    res = await getLB("questsCompleted", timetype, undefined, startingIndex);
     gid = "qst";
     break;
   }
@@ -539,7 +542,7 @@ async function hander (args, rawMsg, interaction) {
   case "arcadegamer":
   case "arcgamer": {
     gameName = "'Arcade gamer' quests";
-    res = await getLB("arcadeGamer", timetype, limit, "quests", startingIndex);
+    res = await getLB("arcadeGamer", timetype, "quests", startingIndex);
     gid = "agamer";
     break;
   }
@@ -548,7 +551,7 @@ async function hander (args, rawMsg, interaction) {
   case "arcadewinner":
   case "arcwinner": {
     gameName = "'Arcade winner' quests";
-    res = await getLB("arcadeWinner", timetype, limit, "quests", startingIndex);
+    res = await getLB("arcadeWinner", timetype, "quests", startingIndex);
     gid = "awinner";
     break;
   }
@@ -558,7 +561,7 @@ async function hander (args, rawMsg, interaction) {
   case "arcadespecialist":
   case "arcspecial": {
     gameName = "'Arcade specialist' quests";
-    res = await getLB("arcadeSpecialist", timetype, limit, "quests", startingIndex);
+    res = await getLB("arcadeSpecialist", timetype, "quests", startingIndex);
     gid = "aspec";
     break;
   }
@@ -569,7 +572,7 @@ async function hander (args, rawMsg, interaction) {
   case "arcadeach":
   case "arcadeachievements": {
     gameName = "Arcade Achievements";
-    res = await getLB("totalEarned", timetype, limit, "arcadeAchievments", startingIndex);
+    res = await getLB("totalEarned", timetype, "arcadeAchievments", startingIndex);
     gid = "aap";
     break;
   }
@@ -579,7 +582,7 @@ async function hander (args, rawMsg, interaction) {
   case "bdchal":
   case "blockingdeadchallenge": {
     gameName = "Blocking dead challenges";
-    res = await getLB("blockingDead", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("blockingDead", timetype, "arcadeChallenges", startingIndex);
     gid = "bdc";
     break;
   }
@@ -589,7 +592,7 @@ async function hander (args, rawMsg, interaction) {
   case "creeperchal":
   case "creeperattackchallenge": {
     gameName = "Creeper attack challenges";
-    res = await getLB("creeperAttack", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("creeperAttack", timetype, "arcadeChallenges", startingIndex);
     gid = "cac";
     break;
   }
@@ -600,7 +603,7 @@ async function hander (args, rawMsg, interaction) {
   case "dwchallenge":
   case "dragonwarschallenge": {
     gameName = "Dragon wars challenges";
-    res = await getLB("dragonWars", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("dragonWars", timetype, "arcadeChallenges", startingIndex);
     gid = "dwc";
     break;
   }
@@ -611,7 +614,7 @@ async function hander (args, rawMsg, interaction) {
   case "enderchallenge":
   case "enderspleefchallenge": {
     gameName = "Ender spleef challenges";
-    res = await getLB("enderSpleef", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("enderSpleef", timetype, "arcadeChallenges", startingIndex);
     gid = "esc";
     break;
   }
@@ -621,7 +624,7 @@ async function hander (args, rawMsg, interaction) {
   case "farmchallenge":
   case "farmhuntchallenge": {
     gameName = "Farmhunt challenges";
-    res = await getLB("farmhunt", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("farmhunt", timetype, "arcadeChallenges", startingIndex);
     gid = "cfh";
     break;
   }
@@ -630,7 +633,7 @@ async function hander (args, rawMsg, interaction) {
   case "footballc":
   case "footballchallenge": {
     gameName = "Football challenges";
-    res = await getLB("football", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("football", timetype, "arcadeChallenges", startingIndex);
     gid = "cfb";
     break;
   }
@@ -641,7 +644,7 @@ async function hander (args, rawMsg, interaction) {
   case "galaxychal":
   case "galaxywarschallenge": {
     gameName = "Galaxy wars challenges";
-    res = await getLB("galaxyWars", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("galaxyWars", timetype, "arcadeChallenges", startingIndex);
     gid = "cgw";
     break;
   }
@@ -654,7 +657,7 @@ async function hander (args, rawMsg, interaction) {
   case "chas":
   case "hideandseekchallenge": {
     gameName = "Hide and seek challenges";
-    res = await getLB("hideAndSeek", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("hideAndSeek", timetype, "arcadeChallenges", startingIndex);
     gid = "chns";
     break;
   }
@@ -666,7 +669,7 @@ async function hander (args, rawMsg, interaction) {
   case "holec":
   case "holeinthewallchallenge": {
     gameName = "Hole in the wall challenges";
-    res = await getLB("holeInTheWall", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("holeInTheWall", timetype, "arcadeChallenges", startingIndex);
     gid = "chitw";
     break;
   }
@@ -678,7 +681,7 @@ async function hander (args, rawMsg, interaction) {
   case "challengehs":
   case "hypixelsayschallenge": {
     gameName = "Hypixel says challenges";
-    res = await getLB("hypixelSays", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("hypixelSays", timetype, "arcadeChallenges", startingIndex);
     gid = "chs";
     break;
   }
@@ -693,7 +696,7 @@ async function hander (args, rawMsg, interaction) {
   case "mwchallenges":
   case "miniwallschallenge": {
     gameName = "Mini walls challenges";
-    res = await getLB("miniWalls", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("miniWalls", timetype, "arcadeChallenges", startingIndex);
     gid = "cmw";
     break;
   }
@@ -705,7 +708,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgc":
   case "partygameschallenge": {
     gameName = "Party games challenges";
-    res = await getLB("partyGames", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("partyGames", timetype, "arcadeChallenges", startingIndex);
     gid = "cpg";
     break;
   }
@@ -717,7 +720,7 @@ async function hander (args, rawMsg, interaction) {
   case "tochallenge":
   case "throwoutchallenge": {
     gameName = "Throw out challenges";
-    res = await getLB("throwOut", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("throwOut", timetype, "arcadeChallenges", startingIndex);
     gid = "toc";
     break;
   }
@@ -729,7 +732,7 @@ async function hander (args, rawMsg, interaction) {
   case "cwc":
   case "capc": {
     gameName = "Capture the Wool challenges";
-    res = await getLB("captureTheWool", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("captureTheWool", timetype, "arcadeChallenges", startingIndex);
     gid = "ctwc";
     break;
   }
@@ -742,7 +745,7 @@ async function hander (args, rawMsg, interaction) {
   case "zombiesc":
   case "zombieschallenge": {
     gameName = "Zombies challenges";
-    res = await getLB("zombies", timetype, limit, "arcadeChallenges", startingIndex);
+    res = await getLB("zombies", timetype, "arcadeChallenges", startingIndex);
     gid = "zc";
     break;
   }
@@ -750,7 +753,7 @@ async function hander (args, rawMsg, interaction) {
   case "blockingdeadkills":
   case "bdk": {
     gameName = "Blocking dead kills";
-    res = await getLB("kills", timetype, limit, "blockingDead", startingIndex);
+    res = await getLB("kills", timetype, "blockingDead", startingIndex);
     gid = "bdk";
     break;
   }
@@ -758,7 +761,7 @@ async function hander (args, rawMsg, interaction) {
   case "bdhs":
   case "blockingdeadheadshots": {
     gameName = "Blocking dead headshots";
-    res = await getLB("headshots", timetype, limit, "blockingDead", startingIndex);
+    res = await getLB("headshots", timetype, "blockingDead", startingIndex);
     gid = "bdhs";
     break;
   }
@@ -766,7 +769,7 @@ async function hander (args, rawMsg, interaction) {
   case "ca":
   case "creeperattack": {
     gameName = "Creeper attack highest wave";
-    res = await getLB("maxWave", timetype, limit, "creeperAttack", startingIndex);
+    res = await getLB("maxWave", timetype, "creeperAttack", startingIndex);
     gid = "ca";
     break;
   }
@@ -774,7 +777,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgr":
   case "partygamesroundswon" : {
     gameName = "Party games rounds won";
-    res = await getLB("roundsWon", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("roundsWon", timetype, "partyGames", startingIndex);
     gid = "pgr";
     break;
   }
@@ -782,7 +785,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgs":
   case "partygamesstars" : {
     gameName = "Party games stars";
-    res = await getLB("starsEarned", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("starsEarned", timetype, "partyGames", startingIndex);
     gid = "pgs";
     break;
   }
@@ -791,7 +794,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgasw":
   case "partygamesanimalslaughterwins" : {
     gameName = "Party games animal slaughter wins";
-    res = await getLB("animalSlaughterWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("animalSlaughterWins", timetype, "partyGames", startingIndex);
     gid = "pgasw";
     break;
   }
@@ -799,7 +802,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgask":
   case "partygamesanimalslaughterkills" : {
     gameName = "Party games animal slaughter kills";
-    res = await getLB("animalSlaughterKills", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("animalSlaughterKills", timetype, "partyGames", startingIndex);
     gid = "pgask";
     break;
   }
@@ -807,7 +810,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgaspb":
   case "partygamesanimalslaughterpersonalbest" : {
     gameName = "Party games animal slaughter personal best";
-    res = await getLB("animalSlaughterKills", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("animalSlaughterKills", timetype, "partyGames", startingIndex);
     gid = "pgaspb";
     break;
   }
@@ -815,7 +818,7 @@ async function hander (args, rawMsg, interaction) {
   case "pganw":
   case "partygamesanvilspleefwins" : {
     gameName = "Party games anvil spleef wins";
-    res = await getLB("anvilSpleefWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("anvilSpleefWins", timetype, "partyGames", startingIndex);
     gid = "pganw";
     break;
   }
@@ -823,7 +826,7 @@ async function hander (args, rawMsg, interaction) {
   case "pganpb":
   case "partygamesanvilspleefpersonalbest" : {
     gameName = "Party games anvil spleef personal best";
-    res = await getLB("anvilSpleefPB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("anvilSpleefPB", timetype, "partyGames", startingIndex);
     gid = "pganpb";
     break;
   }
@@ -831,7 +834,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgbw":
   case "partygamesbombardmentwins" : {
     gameName = "Party games bombardment wins";
-    res = await getLB("bombardmentWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("bombardmentWins", timetype, "partyGames", startingIndex);
     gid = "pgbw";
     break;
   }
@@ -839,7 +842,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgbpb":
   case "partygamesbombardmentpersonalbest" : {
     gameName = "Party games anvil spleef personal best";
-    res = await getLB("bombardmentPB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("bombardmentPB", timetype, "partyGames", startingIndex);
     gid = "pgbpb";
     break;
   }
@@ -847,7 +850,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgcrw":
   case "partygameschickenringswins" : {
     gameName = "Party games chicken rings wins";
-    res = await getLB("chickenRingsWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("chickenRingsWins", timetype, "partyGames", startingIndex);
     gid = "pgcrw";
     break;
   }
@@ -855,7 +858,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgcrpb":
   case "partygameschickenringspersonalbest" : {
     gameName = "Party games chicken rings personal best";
-    res = await getLB("chickenRingsPB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("chickenRingsPB", timetype, "partyGames", startingIndex, true);
     gid = "pgcrpb";
     break;
   }
@@ -863,7 +866,7 @@ async function hander (args, rawMsg, interaction) {
   case "pbdw":
   case "partygamesdivewins" : {
     gameName = "Party games dive wins";
-    res = await getLB("diveWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("diveWins", timetype, "partyGames", startingIndex);
     gid = "pbdw";
     break;
   }
@@ -871,7 +874,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgds":
   case "partygamesdivescore" : {
     gameName = "Party games dive score";
-    res = await getLB("diveScore", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("diveScore", timetype, "partyGames", startingIndex);
     gid = "pgds";
     break;
   }
@@ -879,7 +882,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgdpb":
   case "partygamesdivepersonalbest" : {
     gameName = "Party games dive personal best";
-    res = await getLB("divePB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("divePB", timetype, "partyGames", startingIndex);
     gid = "pgdpb";
     break;
   }
@@ -887,7 +890,7 @@ async function hander (args, rawMsg, interaction) {
   case "pbhgw":
   case "partygameshighgroundwins" : {
     gameName = "Party games high ground wins";
-    res = await getLB("highGroundWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("highGroundWins", timetype, "partyGames", startingIndex);
     gid = "pbhgw";
     break;
   }
@@ -895,7 +898,7 @@ async function hander (args, rawMsg, interaction) {
   case "pghgs":
   case "partygameshighgroundscore" : {
     gameName = "Party games high ground score";
-    res = await getLB("highGroundScore", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("highGroundScore", timetype, "partyGames", startingIndex);
     gid = "pghgs";
     break;
   }
@@ -903,7 +906,7 @@ async function hander (args, rawMsg, interaction) {
   case "pghgpb":
   case "partygameshighgroundpersonalbest" : {
     gameName = "Party games high ground personal best";
-    res = await getLB("highGroundPB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("highGroundPB", timetype, "partyGames", startingIndex);
     gid = "pghgpb";
     break;
   }
@@ -911,7 +914,7 @@ async function hander (args, rawMsg, interaction) {
   case "pbhw":
   case "partygameshoehoehoewins" : {
     gameName = "Party games hoe hoe hoe wins";
-    res = await getLB("hoeWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("hoeWins", timetype, "partyGames", startingIndex);
     gid = "pbhw";
     break;
   }
@@ -919,7 +922,7 @@ async function hander (args, rawMsg, interaction) {
   case "pghs":
   case "partygameshoehoehoescore" : {
     gameName = "Party games hoe hoe hoe score";
-    res = await getLB("hoeScore", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("hoeScore", timetype, "partyGames", startingIndex);
     gid = "pghs";
     break;
   }
@@ -927,7 +930,7 @@ async function hander (args, rawMsg, interaction) {
   case "pghpb":
   case "partygameshoehoehoepersonalbest" : {
     gameName = "Party games hoe hoe hoe personal best";
-    res = await getLB("hoePB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("hoePB", timetype, "partyGames", startingIndex);
     gid = "pghpb";
     break;
   }
@@ -935,7 +938,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjw":
   case "partygamesjigsawwins" : {
     gameName = "Party games jigsaw rush wins";
-    res = await getLB("jigsawWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("jigsawWins", timetype, "partyGames", startingIndex);
     gid = "pgjw";
     break;
   }
@@ -943,7 +946,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjpb":
   case "partygamesjigsawpersonalbest" : {
     gameName = "Party games jigsaw personal best";
-    res = await getLB("jigsawPB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("jigsawPB", timetype, "partyGames", startingIndex, true);
     gid = "pgjpb";
     break;
   }
@@ -951,7 +954,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjjw":
   case "partygamesjunglejumpwins" : {
     gameName = "Party games jungle jump wins";
-    res = await getLB("jungleJumpWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("jungleJumpWins", timetype, "partyGames", startingIndex);
     gid = "pgjjw";
     break;
   }
@@ -959,7 +962,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjjpb":
   case "partygamesjunglejumppersonalbest" : {
     gameName = "Party games jungle jump personal best";
-    res = await getLB("jungleJumpPB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("jungleJumpPB", timetype, "partyGames", startingIndex, true);
     gid = "pgjjpb";
     break;
   }
@@ -967,7 +970,7 @@ async function hander (args, rawMsg, interaction) {
   case "pglw":
   case "partygameslabescapewins" : {
     gameName = "Party games lab escape wins";
-    res = await getLB("labEscapeWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("labEscapeWins", timetype, "partyGames", startingIndex);
     gid = "pglw";
     break;
   }
@@ -975,7 +978,7 @@ async function hander (args, rawMsg, interaction) {
   case "pglpb":
   case "partygameslabescapepersonalbest" : {
     gameName = "Party games lab escape personal best";
-    res = await getLB("labEscapePB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("labEscapePB", timetype, "partyGames", startingIndex, true);
     gid = "pglpb";
     break;
   }
@@ -983,7 +986,7 @@ async function hander (args, rawMsg, interaction) {
   case "pblmw":
   case "partygameslawnmoowerwins" : {
     gameName = "Party games lawn moower wins";
-    res = await getLB("lawnMoowerWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("lawnMoowerWins", timetype, "partyGames", startingIndex);
     gid = "pblmw";
     break;
   }
@@ -991,7 +994,7 @@ async function hander (args, rawMsg, interaction) {
   case "pglms":
   case "partygameslawnmoowerscore" : {
     gameName = "Party games lawn moower score";
-    res = await getLB("lawnMoowerScore", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("lawnMoowerScore", timetype, "partyGames", startingIndex);
     gid = "pglms";
     break;
   }
@@ -999,7 +1002,7 @@ async function hander (args, rawMsg, interaction) {
   case "pglmpb":
   case "partygameslawnmoowerpersonalbest" : {
     gameName = "Party games lawn moower personal best";
-    res = await getLB("lawnMoowerPB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("lawnMoowerPB", timetype, "partyGames", startingIndex);
     gid = "pglmpb";
     break;
   }
@@ -1007,7 +1010,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgmrw":
   case "partygamesminecartracingwins" : {
     gameName = "Party games minecart racing wins";
-    res = await getLB("minecartRacingWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("minecartRacingWins", timetype, "partyGames", startingIndex);
     gid = "pgmrw";
     break;
   }
@@ -1015,7 +1018,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgmrpb":
   case "partygamesminecartracingpersonalbest" : {
     gameName = "Party games minecart racing personal best";
-    res = await getLB("minecartRacingPB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("minecartRacingPB", timetype, "partyGames", startingIndex, true);
     gid = "pgmrpb";
     break;
   }
@@ -1023,7 +1026,7 @@ async function hander (args, rawMsg, interaction) {
   case "pbrpgw":
   case "partygamesrpgwins" : {
     gameName = "Party games RPG-16 wins";
-    res = await getLB("rpgWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("rpgWins", timetype, "partyGames", startingIndex);
     gid = "pbrpgw";
     break;
   }
@@ -1031,7 +1034,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgrpgk":
   case "partygamesrpgkills" : {
     gameName = "Party games RPG-16 score";
-    res = await getLB("rpgKills", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("rpgKills", timetype, "partyGames", startingIndex);
     gid = "pgrpgk";
     break;
   }
@@ -1039,7 +1042,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgrpgpb":
   case "partygamesrpgpersonalbest" : {
     gameName = "Party games RPG-16 personal best";
-    res = await getLB("rpgPB", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("rpgPB", timetype, "partyGames", startingIndex);
     gid = "pgrpgpb";
     break;
   }
@@ -1047,7 +1050,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgsmw":
   case "partygamesspidermazewins" : {
     gameName = "Party games spider maze wins";
-    res = await getLB("spiderMazeWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("spiderMazeWins", timetype, "partyGames", startingIndex);
     gid = "pgsmw";
     break;
   }
@@ -1055,7 +1058,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgsmpb":
   case "partygamesspidermazepersonalbest" : {
     gameName = "Party games spider maze personal best";
-    res = await getLB("spiderMazePB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("spiderMazePB", timetype, "partyGames", startingIndex, true);
     gid = "pgsmpb";
     break;
   }
@@ -1063,7 +1066,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgtfilw":
   case "partygamesthefloorislavawins" : {
     gameName = "Party games the floor is lava wins";
-    res = await getLB("theFloorIsLavaWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("theFloorIsLavaWins", timetype, "partyGames", startingIndex);
     gid = "pgtfilw";
     break;
   }
@@ -1071,7 +1074,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgtfilpb":
   case "partygamesthefloorislavapersonalbest" : {
     gameName = "Party games the floor is lava personal best";
-    res = await getLB("theFloorIsLavaPB", timetype, limit, "partyGames", startingIndex, true);
+    res = await getLB("theFloorIsLavaPB", timetype, "partyGames", startingIndex, true);
     gid = "pgtfilpb";
     break;
   }
@@ -1079,7 +1082,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgavaw":
   case "partygamesavalanchewins" : {
     gameName = "Party games avalanche wins";
-    res = await getLB("avalancheWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("avalancheWins", timetype, "partyGames", startingIndex);
     gid = "pgavaw";
     break;
   }
@@ -1087,7 +1090,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgvw":
   case "partygamesvolcanowins" : {
     gameName = "Party games volcano wins";
-    res = await getLB("volcanoWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("volcanoWins", timetype, "partyGames", startingIndex);
     gid = "pgvw";
     break;
   }
@@ -1095,7 +1098,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgpfw":
   case "partygamespigfishingwins" : {
     gameName = "Party games pig fishing wins";
-    res = await getLB("pigFishingWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("pigFishingWins", timetype, "partyGames", startingIndex);
     gid = "pgpfw";
     break;
   }
@@ -1103,7 +1106,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgtw":
   case "partygamestrampoliniowins" : {
     gameName = "Party games trampolinio wins";
-    res = await getLB("trampolinioWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("trampolinioWins", timetype, "partyGames", startingIndex);
     gid = "pgtw";
     break;
   }
@@ -1111,7 +1114,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgpjw":
   case "partygamespigjoustingwins" : {
     gameName = "Party games pig jousting wins";
-    res = await getLB("pigJoustingWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("pigJoustingWins", timetype, "partyGames", startingIndex);
     gid = "pgpjw";
     break;
   }
@@ -1119,7 +1122,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgww":
   case "partygamesworkshopwins" : {
     gameName = "Party games workshop wins";
-    res = await getLB("workshopWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("workshopWins", timetype, "partyGames", startingIndex);
     gid = "pgww";
     break;
   }
@@ -1127,7 +1130,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgsrw":
   case "partygamesshootingrangewins" : {
     gameName = "Party games shooting range wins";
-    res = await getLB("shootingRangeWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("shootingRangeWins", timetype, "partyGames", startingIndex);
     gid = "pgsrw";
     break;
   }
@@ -1135,7 +1138,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgffw":
   case "partygamesfrozenfloorwins" : {
     gameName = "Party games frozen floor wins";
-    res = await getLB("frozenFloorWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("frozenFloorWins", timetype, "partyGames", startingIndex);
     gid = "pgffw";
     break;
   }
@@ -1143,7 +1146,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgcpw":
   case "partygamescannonpaintingwins" : {
     gameName = "Party games cannon painting wins";
-    res = await getLB("cannonPaintingWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("cannonPaintingWins", timetype, "partyGames", startingIndex);
     gid = "pgcpw";
     break;
   }
@@ -1151,7 +1154,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgflw":
   case "partygamesfireleaperswins" : {
     gameName = "Party gamesfire leapers wins";
-    res = await getLB("fireLeapersWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("fireLeapersWins", timetype, "partyGames", startingIndex);
     gid = "pgflw";
     break;
   }
@@ -1159,50 +1162,43 @@ async function hander (args, rawMsg, interaction) {
   case "pgssw":
   case "partygamessupersheepins" : {
     gameName = "Party games super sheep wins";
-    res = await getLB("superSheepWins", timetype, limit, "partyGames", startingIndex);
+    res = await getLB("superSheepWins", timetype, "partyGames", startingIndex);
     gid = "pgssw";
     break;
   }
 
   default: {
-    if(type.trim().startsWith(".")) {
-      gameName = type.trim().slice(1);
+    // // if(type.trim().startsWith(".")) {
+    // //   gameName = type.trim().slice(1);
       
-      let lb;
+    // //   let lb;
 
-      try {
-        lb = await CustomLeaderboard(timetype, type, startingIndex, limit);
-      } catch (e) {
-        logger.err(e.stack);
-        return { res: "", embed: ERROR_NO_LEADERBOARD };
-      }
+    // //   try {
+    // //     lb = await CustomLeaderboard(timetype, type, startingIndex, limit);
+    // //   } catch (e) {
+    // //     logger.err(e.stack);
+    // //     return { res: "", embed: ERROR_NO_LEADERBOARD };
+    // //   }
 
-      gid = undefined;
-      res = lb;
-    } else {
-      return {
-        res: "",
-        embed: ERROR_NO_LEADERBOARD
-      };
-    }
+    // //   gid = undefined;
+    // //   res = lb;
+    // // } else {
+    return {
+      res: "",
+      embed: ERROR_NO_LEADERBOARD
+    };
+    // // }
   }
   }
 
-  const finalRes = res
-    .setAuthor(`${gameName} leaderboard`, BotRuntime.client.user.avatarURL());
+  res.writeText(gameName, res.canvas.width / 2, 40, "center", "#FFFF55", "56px");
+  const finalRes = res.toDiscord("leaderboard.png");
 
   logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
+  const buttons = await ButtonGenerator.getLBButtons(startingIndex, gid, timetype);
 
-  // Use custom response since it gets fixed by the parser
-  const response = {
-    res: "",
-    embed: finalRes,
-    game: gid,
-    start: startingIndex
-  };
-
-  return response;
+  return new CommandResponse("", undefined, finalRes, buttons);
 }
 
 module.exports = new Command("leaderboard", ["*"], hander, 10000);

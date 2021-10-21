@@ -28,9 +28,9 @@ exports.getList = async function getList (type = "") {
   return AccountArray(list);
 };
 
-exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
+exports.stringifyList = function stringifyList (list, lbprop, category, startingIndex = 0) {
   let str = "";
-  let size = maxamnt + (startingIndex | 0);
+  let size = 10 + (startingIndex | 0);
   size = size > list.length ? list.length : size;
   const sizedList = list.slice(0, size);
 

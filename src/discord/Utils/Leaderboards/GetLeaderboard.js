@@ -1,10 +1,18 @@
 const { MessageEmbed } = require("discord.js");
-const { stringifyList } = require("../../../utils/leaderboard/ListUtils");
+const ImageGenerator = require("../../images/ImageGenerator");
 const Database = require("../Database");
 
 let lbCache = {};
 
 setInterval(() => lbCache = {}, 600000);
+
+/**
+ * @param {number} number
+ * @returns {string} Formatted number
+ */
+function formatNum (number) {
+  return Intl.NumberFormat("en").format(number);
+}
 
 /**
  * @param {string} prop
@@ -15,7 +23,7 @@ setInterval(() => lbCache = {}, 600000);
  * @param {boolean} reverse
  * @returns {Promise<MessageEmbed>}
  */
-module.exports = async function GetLeaderboard (prop, timetype, limit, category, start, reverse = false) {
+module.exports = async function GetLeaderboard (prop, timetype, category, start, reverse = false) {
   let res = "";
   let time;
   const startingIndex = start ?? 0;
@@ -32,12 +40,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
       res = [...lb];
     }
 
-
-    if(limit != undefined) {
-      res = res.slice(0, startingIndex + limit);
-    } else {
-      res = res.slice(0, 10);
-    }
+    res = res.slice(startingIndex, startingIndex + 10);
     break;
   }
 
@@ -52,11 +55,8 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
       res = [...lb];
     }
 
-    if(limit != undefined) {
-      res = res.slice(0, startingIndex + limit);
-    } else {
-      res = res.slice(0, 10);
-    }
+    res = res.slice(startingIndex, startingIndex + 10);
+
     break;
   }
 
@@ -71,11 +71,7 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
       res = [...lb];
     }
 
-    if(limit != undefined) {
-      res = res.slice(0, startingIndex + limit);
-    } else {
-      res = res.slice(0, 10);
-    }
+    res = res.slice(startingIndex, startingIndex + 10);
     break;
   }
 
@@ -89,42 +85,45 @@ module.exports = async function GetLeaderboard (prop, timetype, limit, category,
       lbCache[prop + category + timetype] = lb;
       res = [...lb];
     }
-
-    if(limit != undefined) {
-      res = res.slice(0, startingIndex + limit);
-    } else {
-      res = res.slice(0, 10);
-    }
+    res = res.slice(startingIndex, startingIndex + 10);
     break;
   }
   }
 
-  res = stringifyList(res, prop, category, limit, start);
+  const img = new ImageGenerator(1280, 800, "'myFont'");
+  await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000008F");
 
-  res = res != "" ? res : "Nobody did this yet...";
-  const embed = new MessageEmbed()
-    .setTitle(time)
-    .setColor(0x00cc66)
-    .setDescription(res);
+  img.writeText(`${time} Leaderboard`, 640, 85, "center", "#55FF55", "40px");
 
-  if(res.length > 6000) {
-    return new MessageEmbed()
-      .setTitle("ERROR")
-      .setColor(0xff0000)
-      .setDescription(
-        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
-      );
+  let testVal;
+  if(category == undefined) {
+    testVal = res[0]?.[prop] ?? 0;
+  } else {
+    testVal = res[0]?.[category]?.[prop] ?? 0;
   }
 
-  if(res.length > 2000) {
-    let resArr = res.trim().split("\n");
-    embed.setDescription("");
-    while(resArr.length > 0) {
-      const end = Math.min(25, resArr.length);
-      embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
-      resArr = resArr.slice(end);
+  if(testVal == 0) {
+    img.writeText("Nobody has done this yet!", 640, 400, "center", "#FF5555", "48px");
+    return img;
+  }
+
+
+  for(let i = 0; i < res.length; i += 1) {
+
+    const y = 160 + (i * 65);
+    const size = "40px";
+
+    img.writeText(`${startingIndex + i + 1})`, 260, y, "left", "#FFFF55", size);
+    img.writeAcc(res[i], 360, y, size);
+    let val;
+    if(category == undefined) {
+      val = res[i]?.[prop] ?? 0;
+    } else {
+      val = res[i]?.[category]?.[prop] ?? 0;
     }
+
+    img.writeText(`${formatNum(val)}`, 920, y, "left", "#FFFFFF", size);
   }
 
-  return embed;
+  return img;
 };

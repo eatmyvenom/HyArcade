@@ -25,9 +25,15 @@
                 <span class="material-icons md-light">arrow_back_ios_new</span>
             </button>
 
-            <input id="ign" type="text" oninput="setName(this.value)" />
-            <button onclick="refresh()">
-                <span class="material-icons md-light">autorenew</span>
+            <article>
+            <input id="ign" type="text" autocomplete="off" />
+
+            <span>
+
+            </span>
+            </article>
+            <button id="query" onclick="refresh()">
+                <span class="material-icons md-light">search</span>
             </button>
         </nav>
         <main>
@@ -45,6 +51,13 @@
                 <p id="stsgame"></p>
                 <p id="stsmode"></p>
                 <p id="stsmap"></p>
+            </div>
+
+            <div id="guild" style="display: none;">
+                <h3>Guild</h3>
+                <p id="gname"></p>
+                <p id="gtag"></p>
+                <p id="gmembercount"></p>
             </div>
 
             <div id="stats">

@@ -32,12 +32,6 @@ module.exports = {
   },
   {
     type: 4,
-    name: "amount",
-    description: "The amount of players you want to see in the leaderboard",
-    required: false,
-  },
-  {
-    type: 4,
     name: "start",
     description: "The starting point you want to see on the leaderboard",
     required: false,
