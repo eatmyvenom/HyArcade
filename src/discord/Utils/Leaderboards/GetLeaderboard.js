@@ -17,7 +17,6 @@ function formatNum (number) {
 /**
  * @param {string} prop
  * @param {string} timetype
- * @param {number} limit
  * @param {string} category
  * @param {number} start
  * @param {boolean} reverse
