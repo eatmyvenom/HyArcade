@@ -4,6 +4,21 @@ const ImageGenerator = require("./ImageGenerator");
 
 /**
  * 
+ * @param {number} time 
+ * @returns {string}
+ */
+function ms2time (time) {
+  // eslint-disable-next-line no-unused-vars
+  const hours = Math.floor(time / 60 / 60);
+  const minutes = Math.floor((time / 1000) / 60);
+  const seconds = Math.floor(time / 1000);
+  const milliseconds = `${time}`.slice(-3);
+
+  return `${minutes}:${seconds}.${milliseconds}`;
+}
+
+/**
+ * 
  * @param {Account} account
  * @param {string} game
  * @returns {MessageAttachment}
@@ -43,19 +58,19 @@ async function generateImage (account, game) {
 
   case "Anvil Spleef" : {
     stat2 = `Wins - ${account.partyGames.anvilSpleefWins}`;
-    stat5 = `Personal Best - ${account.partyGames.anvilSpleefPB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.anvilSpleefPB)}`;
     break;
   }
 
   case "Bombardment" : {
     stat2 = `Wins - ${account.partyGames.bombardmentWins}`;
-    stat5 = `Personal Best - ${account.partyGames.bombardmentPB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.bombardmentPB)}`;
     break;
   }
 
   case "Chicken Rings" : {
     stat2 = `Wins - ${account.partyGames.chickenRingsWins}`;
-    stat5 = `Personal Best - ${account.partyGames.chickenRingsPB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.chickenRingsPB)}`;
     break;
   }
 
@@ -82,17 +97,17 @@ async function generateImage (account, game) {
 
   case "Jigsaw Rush" : {
     stat2 = `Wins - ${account.partyGames.jigsawWins}`;
-    stat5 = `Personal Best - ${account.partyGames.jigsawPB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.jigsawPB)}`;
     break;
   }
 
   case "Parkour" : {
     stat1 = "Jungle Jump";
     stat2 = `Wins - ${account.partyGames.jungleJumpWins}`;
-    stat3 = `Personal Best - ${account.partyGames.jungleJumpPB}`;
+    stat3 = `Personal Best - ${ms2time(account.partyGames.jungleJumpPB)}`;
     stat4 = "The Floor is Lava";
     stat5 = `Wins - ${account.partyGames.theFloorIsLavaWins}`;
-    stat6 = `Personal Best - ${account.partyGames.theFloorIsLavaPB}`;
+    stat6 = `Personal Best - ${ms2time(account.partyGames.theFloorIsLavaPB)}`;
     break;
   }
 
@@ -111,7 +126,7 @@ async function generateImage (account, game) {
 
   case "Minecart Racing" : {
     stat2 = `Wins - ${account.partyGames.minecartRacingWins}`;
-    stat5 = `Personal Best - ${account.partyGames.minecartRacingPB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.minecartRacingPB)}`;
     break;
   }
 
@@ -124,7 +139,7 @@ async function generateImage (account, game) {
 
   case "Spider Maze" : {
     stat2 = `Wins - ${account.partyGames.spiderMazeWins}`;
-    stat5 = `Personal Best - ${account.partyGames.spiderMazePB}`;
+    stat5 = `Personal Best - ${ms2time(account.partyGames.spiderMazePB)}`;
     break;
   }
 
