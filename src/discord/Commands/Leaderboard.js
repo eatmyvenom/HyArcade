@@ -15,6 +15,21 @@ const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 
 /**
  * 
+ * @param {number} time 
+ * @returns {string}
+ */
+function ms2time (time) {
+  // eslint-disable-next-line no-unused-vars
+  const hours = Math.floor(time / 60 / 60);
+  const minutes = Math.floor((time / 1000) / 60);
+  const seconds = Math.floor(time / 1000);
+  const milliseconds = `${time}`.slice(-3);
+
+  return `${minutes}:${seconds}.${milliseconds}`;
+}
+
+/**
+ * 
  * @param {string[]} args 
  * @param {Message} rawMsg 
  * @param {CommandInteraction | ButtonInteraction} interaction 
@@ -827,7 +842,7 @@ async function hander (args, rawMsg, interaction) {
   case "pganpb":
   case "partygamesanvilspleefpersonalbest" : {
     gameName = "Party games anvil spleef personal best";
-    res = await getLB("anvilSpleefPB", timetype, "partyGames", startingIndex);
+    res = await getLB("anvilSpleefPB", timetype, "partyGames", startingIndex, false, ms2time);
     gid = "pganpb";
     break;
   }
@@ -843,7 +858,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgbpb":
   case "partygamesbombardmentpersonalbest" : {
     gameName = "Party games anvil spleef personal best";
-    res = await getLB("bombardmentPB", timetype, "partyGames", startingIndex);
+    res = await getLB("bombardmentPB", timetype, "partyGames", startingIndex, false, ms2time);
     gid = "pgbpb";
     break;
   }
@@ -859,7 +874,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgcrpb":
   case "partygameschickenringspersonalbest" : {
     gameName = "Party games chicken rings personal best";
-    res = await getLB("chickenRingsPB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("chickenRingsPB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgcrpb";
     break;
   }
@@ -947,7 +962,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjpb":
   case "partygamesjigsawpersonalbest" : {
     gameName = "Party games jigsaw personal best";
-    res = await getLB("jigsawPB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("jigsawPB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgjpb";
     break;
   }
@@ -963,7 +978,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgjjpb":
   case "partygamesjunglejumppersonalbest" : {
     gameName = "Party games jungle jump personal best";
-    res = await getLB("jungleJumpPB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("jungleJumpPB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgjjpb";
     break;
   }
@@ -979,7 +994,7 @@ async function hander (args, rawMsg, interaction) {
   case "pglpb":
   case "partygameslabescapepersonalbest" : {
     gameName = "Party games lab escape personal best";
-    res = await getLB("labEscapePB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("labEscapePB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pglpb";
     break;
   }
@@ -1019,7 +1034,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgmrpb":
   case "partygamesminecartracingpersonalbest" : {
     gameName = "Party games minecart racing personal best";
-    res = await getLB("minecartRacingPB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("minecartRacingPB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgmrpb";
     break;
   }
@@ -1059,7 +1074,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgsmpb":
   case "partygamesspidermazepersonalbest" : {
     gameName = "Party games spider maze personal best";
-    res = await getLB("spiderMazePB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("spiderMazePB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgsmpb";
     break;
   }
@@ -1075,7 +1090,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgtfilpb":
   case "partygamesthefloorislavapersonalbest" : {
     gameName = "Party games the floor is lava personal best";
-    res = await getLB("theFloorIsLavaPB", timetype, "partyGames", startingIndex, true);
+    res = await getLB("theFloorIsLavaPB", timetype, "partyGames", startingIndex, true, ms2time);
     gid = "pgtfilpb";
     break;
   }
