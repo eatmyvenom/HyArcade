@@ -11,7 +11,7 @@ const ImageGenerator = require("./ImageGenerator");
 async function generateImage (account, game) {
   const img = new ImageGenerator(1280, 800, "'myFont'");
 
-  await img.addBackground("resources/blur.png", 0, 0, 1280, 800, "#00000044");
+  await img.addBackground("resources/blur.png", 0, 0, 1280, 800, "#00000064");
 
   await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "56px");
   await img.writeAcc(account, undefined, 110, "48px");
