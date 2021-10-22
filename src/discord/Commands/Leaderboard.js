@@ -1033,7 +1033,7 @@ async function hander (args, rawMsg, interaction) {
 
   case "pgrpgk":
   case "partygamesrpgkills" : {
-    gameName = "Party games RPG-16 score";
+    gameName = "Party games RPG-16 kills";
     res = await getLB("rpgKills", timetype, "partyGames", startingIndex);
     gid = "pgrpgk";
     break;
