@@ -112,8 +112,8 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     const y = 160 + (i * 65);
     const size = "40px";
 
-    img.writeText(`${startingIndex + i + 1})`, 260, y, "left", "#FFFF55", size);
-    img.writeAcc(res[i], 360, y, size);
+    img.writeText(`${startingIndex + i + 1})`, 240, y, "left", "#FFFF55", size);
+    img.writeAcc(res[i], 340, y, size);
     let val;
     if(category == undefined) {
       val = res[i]?.[prop] ?? 0;
@@ -121,7 +121,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
       val = res[i]?.[category]?.[prop] ?? 0;
     }
 
-    img.writeText(`${formatNum(val)}`, 920, y, "left", "#FFFFFF", size);
+    img.writeText(`${formatNum(val)}`, 980, y, "right", "#FFFFFF", size);
   }
 
   return img;

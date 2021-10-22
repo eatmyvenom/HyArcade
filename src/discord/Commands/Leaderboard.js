@@ -446,6 +446,7 @@ async function hander (args, rawMsg, interaction) {
 
   case "ap":
   case "achieve":
+  case "achievements":
   case "achievemnts":
   case "ach":
   case "advancements":
@@ -1153,7 +1154,7 @@ async function hander (args, rawMsg, interaction) {
 
   case "pgflw":
   case "partygamesfireleaperswins" : {
-    gameName = "Party gamesfire leapers wins";
+    gameName = "Party games fire leapers wins";
     res = await getLB("fireLeapersWins", timetype, "partyGames", startingIndex);
     gid = "pgflw";
     break;
