@@ -20,9 +20,10 @@ function formatNum (number) {
  * @param {string} category
  * @param {number} start
  * @param {boolean} reverse
+ * @param {Function} formatter
  * @returns {Promise<MessageEmbed>}
  */
-module.exports = async function GetLeaderboard (prop, timetype, category, start, reverse = false) {
+module.exports = async function GetLeaderboard (prop, timetype, category, start, reverse = false, formatter = formatNum) {
   let res = "";
   let time;
   const startingIndex = start ?? 0;
@@ -121,7 +122,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
       val = res[i]?.[category]?.[prop] ?? 0;
     }
 
-    img.writeText(`${formatNum(val)}`, 1000, y, "right", "#FFFFFF", size);
+    img.writeText(`${formatter(val)}`, 1000, y, "right", "#FFFFFF", size);
   }
 
   return img;
