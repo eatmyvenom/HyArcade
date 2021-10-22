@@ -8,13 +8,9 @@ const ImageGenerator = require("./ImageGenerator");
  * @returns {string}
  */
 function ms2time (time) {
-  // eslint-disable-next-line no-unused-vars
-  const hours = Math.floor(time / 60 / 60);
-  const minutes = Math.floor((time / 1000) / 60);
-  const seconds = Math.floor(time / 1000);
-  const milliseconds = `${time}`.slice(-3);
+  const date = new Date(time);
 
-  return `${minutes}:${seconds}.${milliseconds}`;
+  return `${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
 }
 
 /**
