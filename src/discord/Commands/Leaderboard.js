@@ -811,7 +811,7 @@ async function hander (args, rawMsg, interaction) {
   case "pgaspb":
   case "partygamesanimalslaughterpersonalbest" : {
     gameName = "Party games animal slaughter personal best";
-    res = await getLB("animalSlaughterKills", timetype, "partyGames", startingIndex);
+    res = await getLB("animalSlaughterPB", timetype, "partyGames", startingIndex);
     gid = "pgaspb";
     break;
   }
