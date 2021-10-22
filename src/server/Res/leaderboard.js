@@ -3,6 +3,19 @@ const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 
 /**
+ * 
+ * @param {*} val 
+ * @returns {boolean}
+ */
+function testNullish (val) {
+  if(!(val ?? false)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * @param {string} str
  * @returns {number}
  */
@@ -30,7 +43,13 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     // Full copy to prevent accounts list from being messed up
-    let accounts = new AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
+    let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
+
+    if(category == null) {
+      accounts = accounts.filter((a) => testNullish(a?.[lbprop]));
+    } else {
+      accounts = accounts.filter((a) => testNullish(a?.[category]?.[lbprop]));
+    }
 
     if(timePeriod == undefined) {
       if(category == null) {
