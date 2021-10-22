@@ -1168,6 +1168,30 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "hitwf":
+  case "holeinthewallfinals" : {
+    gameName = "Hole in the Wall finals score";
+    res = await getLB("finals", timetype, "holeInTheWall", startingIndex);
+    gid = "hitwf";
+    break;
+  }
+
+  case "hitwq":
+  case "holeinthewallqualifiers" : {
+    gameName = "Hole in the Wall qualifiers score";
+    res = await getLB("qualifiers", timetype, "holeInTheWall", startingIndex);
+    gid = "hitwq";
+    break;
+  }
+
+  case "hitww":
+  case "holeinthewallwalls" : {
+    gameName = "Hole in the Wall walls completed";
+    res = await getLB("rounds", timetype, "holeInTheWall", startingIndex);
+    gid = "hitwq";
+    break;
+  }
+
   default: {
     // // if(type.trim().startsWith(".")) {
     // //   gameName = type.trim().slice(1);
