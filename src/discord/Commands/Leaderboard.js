@@ -914,11 +914,11 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
-  case "pbhgw":
+  case "pghgw":
   case "partygameshighgroundwins" : {
     gameName = "Party games high ground wins";
     res = await getLB("highGroundWins", timetype, "partyGames", startingIndex);
-    gid = "pbhgw";
+    gid = "pghgw";
     break;
   }
 

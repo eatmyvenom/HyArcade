@@ -15,7 +15,7 @@
 * `pbdw` - Party games dive wins
 * `pgds` - Party games dive score
 * `pgdpb` - Party games dive personal best
-* `pbhgw` - Party games high ground wins
+* `pghgw` - Party games high ground wins
 * `pghgs` - Party games high ground score
 * `pghgpb` - Party games high ground personal best
 * `pbhw` - Party games hoe hoe hoe wins
