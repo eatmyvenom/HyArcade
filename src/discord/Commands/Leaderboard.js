@@ -21,7 +21,22 @@ const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 function ms2time (time) {
   const date = new Date(time);
 
-  return `${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}.${date.getMilliseconds().toString().padStart(3, "0")}`;
+  return `${
+    date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")
+  }:${
+    date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")
+  }.${
+    date
+      .getMilliseconds()
+      .toString()
+      .padStart(3, "0")
+  }`;
 }
 
 /**
