@@ -29,4 +29,4 @@ async function lastUpdateHandler () {
   };
 }
 
-module.exports = new Command("LastUpdate", ["*"], lastUpdateHandler, 2500);
+module.exports = new Command(["lastupdate", "catlock", "timeupdate"], ["*"], lastUpdateHandler, 2500);

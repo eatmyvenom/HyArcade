@@ -5,7 +5,7 @@ import { addAccounts } from "../../listUtils.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_ACCOUNT_PREVIOUSLY_LINKED, ERROR_IGN_UNDEFINED, ERROR_INPUT_IGN, ERROR_LINK_HYPIXEL_MISMATCH, ERROR_PLAYER_PREVIOUSLY_LINKED, INFO_LINK_SUCCESS } from "../Utils/Embeds/StaticEmbeds.js";
 
-export const Verify = new Command("verify", ["*"], async (args, rawMsg, interaction) => {
+export default new Command("verify", ["*"], async (args, rawMsg, interaction) => {
   const player = args[0];
   if (player == undefined) {
     const embed = ERROR_INPUT_IGN;

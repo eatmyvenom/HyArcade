@@ -17,7 +17,7 @@ function makeField (name, link) {
   };
 }
 
-module.exports = new Command("mkdisclist", ["%trusted%"], async (args) => {
+module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
   const channelID = args[0];
   const msgID = args[1];
   const channel = await BotRuntime.client.channels.fetch(channelID);

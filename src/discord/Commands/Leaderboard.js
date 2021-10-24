@@ -1252,4 +1252,4 @@ async function hander (args, rawMsg, interaction) {
   return new CommandResponse("", undefined, finalRes, buttons);
 }
 
-module.exports = new Command("leaderboard", ["*"], hander, 10000);
+module.exports = new Command(["leaderboard", "lb"], ["*"], hander, 10000);

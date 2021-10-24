@@ -8,7 +8,7 @@ async function main () {
    */
   let accs = await fs.readJSON("data/accounts.json");
 
-  accs = accs.sort((a, b) => {
+  accs = accs.sort((b, a) => {
     const normalizedWinsA = normalize(a);
 
     const normalizedWinsB = normalize(b);
@@ -16,11 +16,11 @@ async function main () {
     return normalizedWinsA - normalizedWinsB;
   });
 
-  accs = accs.slice(-720);
+  accs = accs.slice(0, 120);
 
   accs = accs.map((oldAcc) => {
     const normalizedWins = normalize(oldAcc);
-    
+
     return `${oldAcc.name.padEnd(17, " ")} : ${Math.round(normalizedWins)}`;
   });
 

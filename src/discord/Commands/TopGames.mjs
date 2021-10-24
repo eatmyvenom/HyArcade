@@ -230,4 +230,4 @@ async function topGamesHandler (args, rawMsg, interaction) {
   return new CommandResponse("", undefined, img, buttons);
 }
 
-export default new Command("top-games", ["*"], topGamesHandler, 4000);
+export default new Command(["top-games", "topgames", "tg", "top"], ["*"], topGamesHandler, 4000);

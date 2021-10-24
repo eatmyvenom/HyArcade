@@ -52,7 +52,7 @@ function getMain (acc) {
   return `${game.replace(/_/g, " ")} - ${numberify(max)}`;
 }
 
-export const Profile = new Command("profile", ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, rawMsg, interaction) => {
   const player = args[0];
   let acc;
   if (interaction == undefined) {

@@ -113,7 +113,7 @@ async function generateWhoisEmbed (acc) {
   return embed;
 }
 
-export const WhoIS = new Command("whois", ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["whois", "who", "namehist"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   let acc;
   if (interaction == undefined) {

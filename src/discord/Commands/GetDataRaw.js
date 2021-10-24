@@ -30,7 +30,7 @@ function getProp (o, s) {
   return obj;
 }
 
-module.exports = new Command("get-data-raw", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "rawdata"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const time = args[2];
   let acc;

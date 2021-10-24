@@ -42,4 +42,4 @@ async function compareHandler (args, rawMsg, interaction) {
   return { res: "", embed };
 }
 
-export const Compare = new Command("compare", ["*"], compareHandler, 10000);
+export default new Command("compare", ["*"], compareHandler, 10000);

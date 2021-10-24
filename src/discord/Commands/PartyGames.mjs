@@ -22,7 +22,7 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-export default new Command("party-games", ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["party-games", "pg", "partygames"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const game = args[1] ?? "Party Games";
   let time = args[2] ?? "lifetime";

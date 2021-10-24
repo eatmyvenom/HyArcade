@@ -6,6 +6,7 @@ const CommandResponse = require("../discord/Utils/CommandResponse");
 
 module.exports = class Command {
     name = "";
+    aliases = [];
     allowed = [];
     callback = async function () {
       return {
@@ -15,8 +16,14 @@ module.exports = class Command {
     rateLimit = 5000;
     executors = {};
 
-    constructor (name, allowed, callback, rateLimit = 5000) {
-      this.name = name;
+    constructor (aliases, allowed, callback, rateLimit = 5000) {
+      if(Array.isArray(aliases)) {
+        this.name = aliases[0];
+        this.aliases = aliases;
+      } else {
+        this.name = aliases;
+        this.aliases = [ aliases ];
+      }
       this.allowed = allowed;
       this.callback = callback;
       this.rateLimit = rateLimit;
@@ -31,9 +38,8 @@ module.exports = class Command {
      * @returns {*}
      */
     async execute (args, author, rawMsg, interaction) {
-
       let rate = this.rateLimit;
-      
+
       if(interaction != undefined && !interaction.isCommand()) {
         rate = 0;
       }

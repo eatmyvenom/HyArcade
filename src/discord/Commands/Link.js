@@ -15,7 +15,7 @@ const {
   ERROR_ACCOUNT_PREVIOUSLY_LINKED
 } = require("../Utils/Embeds/StaticEmbeds");
 
-module.exports = new Command("link", ["%trusted%"], async (args) => {
+module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
   if(args.length < 1) {
     return {
       res: "",
