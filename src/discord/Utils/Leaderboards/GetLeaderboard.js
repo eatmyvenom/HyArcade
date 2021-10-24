@@ -122,7 +122,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
       val = res[i]?.[category]?.[prop] ?? 0;
     }
 
-    img.writeText(`${formatter(val)}`, 1200, y, "right", "#FFFFFF", size);
+    img.writeText(`${formatter(val)}`, 1020, y, "right", "#FFFFFF", size);
   }
 
   return img;
