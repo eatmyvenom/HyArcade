@@ -107,14 +107,16 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     return img;
   }
 
+  const size = "40px";
+  const placeColor = "#FFFF55";
+
+  img.context.font = `${size} ${img.font}`;
+  let longestName = 0;
+  let longestVal = 0;
 
   for(let i = 0; i < res.length; i += 1) {
+    const name = img.context.measureText(res[i].name);
 
-    const y = 160 + (i * 65);
-    const size = "40px";
-
-    img.writeText(`${startingIndex + i + 1})`, 200, y, "left", "#FFFF55", size);
-    img.writeAcc(res[i], 300, y, size);
     let val;
     if(category == undefined) {
       val = res[i]?.[prop] ?? 0;
@@ -122,7 +124,31 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
       val = res[i]?.[category]?.[prop] ?? 0;
     }
 
-    img.writeText(`${formatter(val)}`, 1020, y, "right", "#FFFFFF", size);
+    const valM = img.context.measureText(`${formatter(val)}`);
+
+    if(name.width > longestName) {
+      longestName = name.width;
+    }
+
+    if(valM.width > longestVal) {
+      longestVal = valM.width;
+    }
+  }
+
+  for(let i = 0; i < res.length; i += 1) {
+
+    const y = 160 + (i * 65);
+
+    img.writeText(`${startingIndex + i + 1})`, 640 - (longestName / 1.2) - 100, y, "left", placeColor, size);
+    img.writeAcc(res[i], 640 - (longestName / 1.2), y, size);
+    let val;
+    if(category == undefined) {
+      val = res[i]?.[prop] ?? 0;
+    } else {
+      val = res[i]?.[category]?.[prop] ?? 0;
+    }
+
+    img.writeText(`${formatter(val)}`, 640 + (longestName / 1.2) + (longestVal), y, "right", "#FFFFFF", size);
   }
 
   return img;
