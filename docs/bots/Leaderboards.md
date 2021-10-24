@@ -12,13 +12,13 @@
 * `pgbpb` - Party games anvil spleef personal best
 * `pgcrw` - Party games chicken rings wins
 * `pgcrpb` - Party games chicken rings personal best
-* `pbdw` - Party games dive wins
+* `pgdw` - Party games dive wins
 * `pgds` - Party games dive score
 * `pgdpb` - Party games dive personal best
 * `pghgw` - Party games high ground wins
 * `pghgs` - Party games high ground score
 * `pghgpb` - Party games high ground personal best
-* `pbhw` - Party games hoe hoe hoe wins
+* `pghw` - Party games hoe hoe hoe wins
 * `pghs` - Party games hoe hoe hoe score
 * `pghpb` - Party games hoe hoe hoe personal best
 * `pgjw` - Party games jigsaw rush wins
@@ -27,12 +27,12 @@
 * `pgjjpb` - Party games jungle jump personal best
 * `pglw` - Party games lab escape wins
 * `pglpb` - Party games lab escape personal best
-* `pblmw` - Party games lawn moower wins
+* `pglmw` - Party games lawn moower wins
 * `pglms` - Party games lawn moower score
 * `pglmpb` - Party games lawn moower personal best
 * `pgmrw` - Party games minecart racing wins
 * `pgmrpb` - Party games minecart racing personal best
-* `pbrpgw` - Party games RPG-16 wins
+* `pgrpgw` - Party games RPG-16 wins
 * `pgrpgk` - Party games RPG-16 kills
 * `pgrpgpb` - Party games RPG-16 personal best
 * `pgsmw` - Party games spider maze wins
