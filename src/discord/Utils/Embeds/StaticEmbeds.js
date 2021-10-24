@@ -98,3 +98,8 @@ exports.WARN_WAITING = new MessageEmbed()
   .setFooter(
     "Please avoid using this unless they should actually be in the database, too many people slows down the overall system."
   );
+
+exports.INFO_HOW_TO_SLASH = new MessageEmbed()
+  .setTitle("Incorrect usage...")
+  .setColor(COLOR_YELLOW)
+  .setDescription("Having trouble with slash commands? Read [this article](https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ) for help!");

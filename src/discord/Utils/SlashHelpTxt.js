@@ -1,6 +1,7 @@
 const {
   Message
 } = require("discord.js");
+const { INFO_HOW_TO_SLASH } = require("./Embeds/StaticEmbeds");
 
 /**
  * 
@@ -16,14 +17,13 @@ module.exports = function SlashHelpTxt (msg) {
     case "arcade":
     case "help":
     case "verify":
-    case "ez":
     case "stats":
     case "top-games":
     case "topgames":
-    case "get-data-raw":
     case "whois": {
       return {
-        res: "Having trouble with slash commands? Read this article for help: https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ"
+        res: "",
+        embed: INFO_HOW_TO_SLASH
       };
     }
     }
