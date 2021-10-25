@@ -226,6 +226,9 @@ async function fastUpdate (accounts) {
       updateSegment(segmentedAccs[i], i, updatedAccs, segmentedAccs, perSegment),
       updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
       updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
     ]);
   }
 
