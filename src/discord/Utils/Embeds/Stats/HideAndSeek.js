@@ -17,7 +17,7 @@ function f (number) {
  */
 module.exports = function HideAndSeek (acc, embed) {
   embed.addField("Stats", `**- Wins** (\`${f(acc.hideAndSeek.wins)}\`)\n**- Hider Wins** (\`${f(acc.hideAndSeek.hiderWins)}\`)\n**- Seeker Wins** (\`${f(acc.hideAndSeek.seekerWins)}\`)`);
-  embed.addField("Info", `**- Wins** (\`${f(acc.arcadeAchievments.hideAndSeek.tieredAP[1].amount)}\`)\n**- AP** (\`${f(acc.arcadeAchievments.hideAndSeek.apEarned)} / ${f(acc.arcadeAchievments.hideAndSeek.apAvailable)}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.hideAndSeek)}\`)`);
+  embed.addField("Info", `**- Objectives** (\`${f(acc.arcadeAchievments.hideAndSeek.tieredAP[1].amount)}\`)\n**- Kills** (\`${f(acc.arcadeAchievments.hideAndSeek.tieredAP[0].amount)}\`)\n**- AP** (\`${f(acc.arcadeAchievments.hideAndSeek.apEarned)} / ${f(acc.arcadeAchievments.hideAndSeek.apAvailable)}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.hideAndSeek)}\`)`);
 
   return embed;
 };
