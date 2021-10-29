@@ -1242,7 +1242,7 @@ async function hander (args, rawMsg, interaction) {
   }
   }
 
-  res.writeText(gameName, res.canvas.width / 2, 40, "center", "#FFFF55", "56px");
+  res.writeText(gameName, res.canvas.width / 2, 80, "center", "#FFFF55", "112px");
   const finalRes = res.toDiscord("leaderboard.png");
 
   logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);

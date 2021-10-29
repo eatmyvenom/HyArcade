@@ -90,10 +90,10 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
   }
 
-  const img = new ImageGenerator(1280, 800, "'myFont'");
-  await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000008F");
+  const img = new ImageGenerator(2560, 1600, "'myFont'");
+  await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
 
-  img.writeText(`${time} Leaderboard`, 640, 85, "center", "#55FF55", "40px");
+  img.writeText(`${time} Leaderboard`, 1280, 170, "center", "#55FF55", "80px");
 
   let testVal;
   if(category == undefined) {
@@ -103,19 +103,19 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
 
   if(testVal == 0) {
-    img.writeText("Nobody has done this yet!", 640, 400, "center", "#FF5555", "48px");
+    img.writeText("Nobody has done this yet!", 1280, 800, "center", "#FF5555", "96px");
     return img;
   }
 
-  const size = "40px";
+  const size = "80px";
   const placeColor = "#FFFF55";
-
+  
   img.context.font = `${size} ${img.font}`;
   let longestName = 0;
   let longestVal = 0;
 
   for(let i = 0; i < res.length; i += 1) {
-    const name = img.context.measureText(res[i].name);
+    const name = img.context.measureText(`${res[i]?.rank?.replace(/_PLUS/g, "+") ?? ""} ${res[i].name} `);
 
     let val;
     if(category == undefined) {
@@ -137,10 +137,10 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
 
   for(let i = 0; i < res.length; i += 1) {
 
-    const y = 160 + (i * 65);
+    const y = 320 + (i * 130);
 
-    img.writeText(`${startingIndex + i + 1})`, 640 - (longestName / 1.2) - 100, y, "left", placeColor, size);
-    img.writeAcc(res[i], 640 - (longestName / 1.2), y, size);
+    img.writeText(`${startingIndex + i + 1})`, 1280 - (longestName / 1.5) - 200, y, "left", placeColor, size);
+    img.writeAcc(res[i], 1280 - (longestName / 1.5), y, size);
     let val;
     if(category == undefined) {
       val = res[i]?.[prop] ?? 0;
@@ -148,7 +148,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
       val = res[i]?.[category]?.[prop] ?? 0;
     }
 
-    img.writeText(`${formatter(val)}`, 640 + (longestName / 1.2) + (longestVal), y, "right", "#FFFFFF", size);
+    img.writeText(`${formatter(val)}`, 1280 + (longestName / 1.5) + (longestVal) - 155, y, "right", "#FFFFFF", size);
   }
 
   return img;
