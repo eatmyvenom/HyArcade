@@ -89,13 +89,13 @@ module.exports = async (req, res, fileCache) => {
       for(const a of oldCopy) {
         const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
 
-        a.lbProp = numberify(getter(n)) - numberify(getter(a));
+        a.lbProp = numberify(getter(n)) - numberify(getter(a)) ?? 0;
         a.name = n?.name ?? "INVALID-NAME";
         newAcclist.push(a);
       }
 
       accounts = newAcclist;
-      TimSort.sort(accounts, (b, a) => (getter(a)) - (getter(b)));
+      TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
     }
 
     if(min) {
