@@ -6,7 +6,6 @@ const {
 const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
 const getLB = require("../Utils/Leaderboards/GetLeaderboard");
-// // const CustomLeaderboard = require("../Utils/Leaderboards/CustomLeaderboard");
 const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
@@ -1187,7 +1186,7 @@ async function hander (args, rawMsg, interaction) {
   }
 
   case "pgssw":
-  case "partygamessupersheepins" : {
+  case "partygamessupersheepwins" : {
     gameName = "Party games super sheep wins";
     res = await getLB("superSheepWins", timetype, "partyGames", startingIndex);
     gid = "pgssw";
@@ -1218,27 +1217,22 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "hnsobj":
+  case "hnsobjective":
+  case "hiderobjective":
+  case "hnso": {
+    gameName = "Hide and Seek objectives completed";
+    res = await getLB(".arcadeAchievments.hideAndSeek.tieredAP.1.amount", timetype, undefined, startingIndex);
+    gid = "hnso";
+    break;
+  }
+
   default: {
-    // // if(type.trim().startsWith(".")) {
-    // //   gameName = type.trim().slice(1);
-      
-    // //   let lb;
 
-    // //   try {
-    // //     lb = await CustomLeaderboard(timetype, type, startingIndex, limit);
-    // //   } catch (e) {
-    // //     logger.err(e.stack);
-    // //     return { res: "", embed: ERROR_NO_LEADERBOARD };
-    // //   }
-
-    // //   gid = undefined;
-    // //   res = lb;
-    // // } else {
     return {
       res: "",
       embed: ERROR_NO_LEADERBOARD
     };
-    // // }
   }
   }
 

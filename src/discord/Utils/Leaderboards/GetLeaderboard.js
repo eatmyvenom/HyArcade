@@ -1,6 +1,6 @@
-const { MessageEmbed } = require("discord.js");
 const ImageGenerator = require("../../images/ImageGenerator");
 const Database = require("../Database");
+const DrawLeaderboard = require("./DrawLeaderboard");
 
 let lbCache = {};
 
@@ -21,7 +21,7 @@ function formatNum (number) {
  * @param {number} start
  * @param {boolean} reverse
  * @param {Function} formatter
- * @returns {Promise<MessageEmbed>}
+ * @returns {Promise<ImageGenerator>}
  */
 module.exports = async function GetLeaderboard (prop, timetype, category, start, reverse = false, formatter = formatNum) {
   let res = "";
@@ -90,66 +90,13 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
   }
 
-  const img = new ImageGenerator(2560, 1600, "'myFont'");
-  await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
-
-  img.writeText(`${time} Leaderboard`, 1280, 170, "center", "#55FF55", "80px");
-
-  let testVal;
-  if(category == undefined) {
-    testVal = res[0]?.[prop] ?? 0;
-  } else {
-    testVal = res[0]?.[category]?.[prop] ?? 0;
-  }
-
-  if(testVal == 0) {
-    img.writeText("Nobody has done this yet!", 1280, 800, "center", "#FF5555", "96px");
-    return img;
-  }
-
-  const size = "80px";
-  const placeColor = "#FFFF55";
-  
-  img.context.font = `${size} ${img.font}`;
-  let longestName = 0;
-  let longestVal = 0;
-
-  for(let i = 0; i < res.length; i += 1) {
-    const name = img.context.measureText(`${res[i]?.rank?.replace(/_PLUS/g, "+") ?? ""} ${res[i].name} `);
-
-    let val;
-    if(category == undefined) {
-      val = res[i]?.[prop] ?? 0;
-    } else {
-      val = res[i]?.[category]?.[prop] ?? 0;
+  const getter = (a) => {
+    if(category != undefined) {
+      return a?.[category]?.[prop];
     }
+    return a?.[prop];
+  };
 
-    const valM = img.context.measureText(`${formatter(val)}`);
-
-    if(name.width > longestName) {
-      longestName = name.width;
-    }
-
-    if(valM.width > longestVal) {
-      longestVal = valM.width;
-    }
-  }
-
-  for(let i = 0; i < res.length; i += 1) {
-
-    const y = 320 + (i * 130);
-
-    img.writeText(`${startingIndex + i + 1})`, 1280 - (longestName / 1.5) - 200, y, "left", placeColor, size);
-    img.writeAcc(res[i], 1280 - (longestName / 1.5), y, size);
-    let val;
-    if(category == undefined) {
-      val = res[i]?.[prop] ?? 0;
-    } else {
-      val = res[i]?.[category]?.[prop] ?? 0;
-    }
-
-    img.writeText(`${formatter(val)}`, 1280 + (longestName / 1.5) + (longestVal) - 155, y, "right", "#FFFFFF", size);
-  }
-
-  return img;
+  return DrawLeaderboard(res, getter, time, startingIndex, formatter);
 };
+
