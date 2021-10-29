@@ -7,6 +7,28 @@ let lbCache = {};
 setInterval(() => lbCache = {}, 600000);
 
 /**
+ * @param {object} o
+ * @param {string} s
+ * @returns {*}
+ */
+function getProp (o, s) {
+  let obj = o;
+  let str = s;
+  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/^\./, ""); // strip a leading dot
+  const a = str.split(".");
+  for(let i = 0, n = a.length; i < n; i += 1) {
+    const k = a[i];
+    if(k in obj) {
+      obj = obj[k];
+    } else {
+      return;
+    }
+  }
+  return obj;
+}
+
+/**
  * @param {number} number
  * @returns {string} Formatted number
  */
@@ -90,12 +112,14 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
   }
 
-  const getter = (a) => {
-    if(category != undefined) {
-      return a?.[category]?.[prop];
-    }
-    return a?.[prop];
-  };
+  let getter;
+  if(prop?.startsWith(".")) {
+    getter = (a) => getProp(a, prop) ?? 0;
+  } else if(category == null) {
+    getter = (a) => a?.[prop] ?? 0;
+  } else {
+    getter = (a) => a?.[category]?.[prop] ?? 0;
+  }
 
   return DrawLeaderboard(res, getter, time, startingIndex, formatter);
 };
