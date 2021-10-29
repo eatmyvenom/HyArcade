@@ -25,6 +25,28 @@ function numberify (str) {
 }
 
 /**
+ * @param {object} o
+ * @param {string} s
+ * @returns {*}
+ */
+function getProp (o, s) {
+  let obj = o;
+  let str = s;
+  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/^\./, ""); // strip a leading dot
+  const a = str.split(".");
+  for(let i = 0, n = a.length; i < n; i += 1) {
+    const k = a[i];
+    if(k in obj) {
+      obj = obj[k];
+    } else {
+      return;
+    }
+  }
+  return obj;
+}
+
+/**
  * 
  * @param {*} req 
  * @param {*} res 
@@ -33,58 +55,47 @@ function numberify (str) {
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
 
+  let category = url.searchParams.get("category");
   const lbprop = url.searchParams.get("path");
-  const category = url.searchParams.get("category");
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
 
   if(req.method == "GET") {
+
+    let getter;
+    if(lbprop?.startsWith(".")) {
+      category = lbprop.split(".")[1];
+      getter = (a) => getProp(a, lbprop) ?? 0;
+    } else if(category == null) {
+      getter = (a) => a?.[lbprop] ?? 0;
+    } else {
+      getter = (a) => a?.[category]?.[lbprop] ?? 0;
+    }
+
     res.setHeader("Content-Type", "application/json");
 
     // Full copy to prevent accounts list from being messed up
     let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
-    if(category == null) {
-      accounts = accounts.filter((a) => testNullish(a?.[lbprop]));
-    } else {
-      accounts = accounts.filter((a) => testNullish(a?.[category]?.[lbprop]));
-    }
+    accounts = accounts.filter((a) => testNullish(getter(a)));
 
     if(timePeriod == undefined) {
-      if(category == null) {
-        TimSort.sort(accounts, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
-      } else {
-        TimSort.sort(accounts, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));
-      }
+      TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
       const newAcclist = [];
       const oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
+
       for(const a of oldCopy) {
         const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
-        if(category == null) {
-          a[lbprop] = numberify(n?.[lbprop] - a?.[lbprop]);
-          a.name = n?.name ?? "INVALID-NAME";
-          newAcclist.push(a);
-        } else {
-          if(a[category] != undefined) {
-            a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
-            a.name = n?.name ?? "INVALID-NAME";
-            newAcclist.push(a);
-          } else {
-            a[category] = {};
-            a[category][lbprop] = numberify(n?.[category]?.[lbprop]) - numberify(a?.[category]?.[lbprop]);
-            a.name = n?.name ?? "INVALID-NAME";
-            newAcclist.push(a);
-          }
-        }
+
+        a[lbprop] = numberify(getter(n) - getter(a));
+        a.name = n?.name ?? "INVALID-NAME";
+        newAcclist.push(a);
       }
+
       accounts = newAcclist;
-      if(category == null) {
-        TimSort.sort(accounts, (b, a) => (a?.[lbprop] | 0) - (b?.[lbprop] | 0));
-      } else {
-        TimSort.sort(accounts, (b, a) => (a?.[category]?.[lbprop] | 0) - (b?.[category]?.[lbprop] | 0));
-      }
+      TimSort.sort(accounts, (b, a) => (getter(a)) - (getter(b)));
     }
 
     if(min) {
