@@ -48,12 +48,16 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
   for(let i = 0; i < res.length; i += 1) {
 
     const y = 320 + (i * 130);
-
-    img.writeText(`${startingIndex + i + 1})`, 1280 - (longestName / 1.5) - 200, y, "left", placeColor, size);
-    img.writeAcc(res[i], 1280 - (longestName / 1.5), y, size);
     const val = valueGetter(res[i]) ?? 0;
 
-    img.writeText(`${formatter(val)}`, 1280 + (longestName / 1.5) + (longestVal) - 155, y, "right", "#FFFFFF", size);
+    if (!(val > 0)) {
+      continue;
+    }
+
+    img.writeText(`${startingIndex + i + 1})`, 1280 - (longestName / 1.5) - 100, y, "left", placeColor, size);
+    img.writeAcc(res[i], 1280 - (longestName / 1.5) + 100, y, size);
+
+    img.writeText(`${formatter(val)}`, 1280 + (longestName / 1.5) + (longestVal) - 55, y, "right", "#FFFFFF", size);
   }
 
   return img;
