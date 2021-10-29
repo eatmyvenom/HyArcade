@@ -89,7 +89,7 @@ module.exports = async (req, res, fileCache) => {
       for(const a of oldCopy) {
         const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
 
-        a[lbprop] = numberify(getter(n) - getter(a));
+        a.lbProp = numberify(getter(n)) - numberify(getter(a));
         a.name = n?.name ?? "INVALID-NAME";
         newAcclist.push(a);
       }
@@ -102,7 +102,7 @@ module.exports = async (req, res, fileCache) => {
       if(category == null) {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != lbprop && key != "name" && key != "uuid" && key != "rank" && key != "plusColor") {
+            if(key != lbprop && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor") {
               delete a[key];
             }
           }
@@ -110,7 +110,7 @@ module.exports = async (req, res, fileCache) => {
       } else {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != category && key != "name" && key != "uuid" && key != "rank" && key != "plusColor") {
+            if(key != category && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor") {
               delete a[key];
             }
           }
