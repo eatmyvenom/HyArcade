@@ -115,7 +115,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   let getter;
   if(time != "Lifetime") {
     getter = (a) => a?.lbProp ?? 0;
-  } if(prop?.startsWith(".")) {
+  } else if(prop?.startsWith(".")) {
     getter = (a) => getProp(a, prop) ?? 0;
   } else if(category == null) {
     getter = (a) => a?.[prop] ?? 0;
