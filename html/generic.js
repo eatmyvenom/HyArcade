@@ -728,12 +728,14 @@ async function load () {
 
   const lifetimes = document.querySelectorAll(".life");
   for(const e of lifetimes) {
-    e.innerHTML = "Loading...";
+    e.setAttribute("vis", false);
+    e.innerHTML = "<div class=\"lds-default\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>";
   }
 
   const days = document.querySelectorAll(".day");
   for(const e of days) {
-    e.innerHTML = "Loading...";
+    e.setAttribute("vis", false);
+    e.innerHTML = "<div class=\"lds-default\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>";
   }
 
   await refresh();
@@ -814,7 +816,7 @@ async function getLeaderboards (element) {
       .replace(/"/g, "&quot;") 
   }</h2><ol>${ 
     text}</ol>`;
-
+  element.setAttribute("vis", true);
 }
 
 /**
@@ -871,6 +873,8 @@ async function getDaily (element, timetype) {
             .replace(/"/g, "&quot;") 
         }</h2><ol>${ 
           text}</ol>`;
+
+  element.setAttribute("vis", true);
 }
 
 /**
