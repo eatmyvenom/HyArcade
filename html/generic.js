@@ -34,10 +34,38 @@ async function load () {
   case "pg": {
     mainTitle.innerHTML = "Party games";
     address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
+    lifetime.title = "Lifetime Wins";
     lifetime.id = "partyGames.wins";
-    daily.title = "Daily wins";
+    daily.title = "Daily Wins";
     daily.id = "partyGames.wins";
+
+    const starsL = document.createElement("div");
+    starsL.setAttribute("class", "life");
+    starsL.title = "Lifetime Stars";
+    main.appendChild(starsL);
+
+    const starsD = document.createElement("div");
+    starsD.setAttribute("class", "day");
+    starsD.title = "Daily Stars";
+    main.appendChild(starsD);
+
+    starsD.id = "partyGames.starsEarned";
+
+    starsL.id = "partyGames.starsEarned";
+
+    const roundsL = document.createElement("div");
+    roundsL.setAttribute("class", "life");
+    roundsL.title = "Lifetime Rounds Won";
+    main.appendChild(roundsL);
+
+    const roundsD = document.createElement("div");
+    roundsD.setAttribute("class", "day");
+    roundsD.title = "Daily Rounds Won";
+    main.appendChild(roundsD);
+
+    roundsD.id = "partyGames.roundsWon";
+
+    roundsL.id = "partyGames.roundsWon";
     break;
   }
 
