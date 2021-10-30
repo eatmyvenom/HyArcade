@@ -2,13 +2,14 @@ const Logger = require("hyarcade-logger");
 const fetch = require("node-fetch");
 const cfg = require("hyarcade-config").fromJSON();
 
-const cacheClear = setInterval(() => Database.accCache = {}, 30000);
+let cacheClear;
 
 class Database {
 
   static accCache = {};
 
   static async addAccount (json) {
+    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const data = JSON.stringify(json);
     const url = new URL("account", cfg.dbUrl);
     Logger.info(`Adding ${data.name} to accounts in database`);
@@ -30,6 +31,7 @@ class Database {
   }
 
   static async getLeaderboard (path, category, time, min, reverse) {
+    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path);
     
@@ -64,6 +66,7 @@ class Database {
   }
 
   static async getMWLeaderboard (stat, time) {
+    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("mwlb", cfg.dbUrl);
     url.searchParams.set("stat", stat);
 
@@ -86,6 +89,7 @@ class Database {
   }
 
   static async timedAccount (ign, uuid, discordID, time) {
+    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("timeacc");
 
     if(ign != undefined) {
@@ -117,7 +121,7 @@ class Database {
     return acc;
   }
 
-  static destroy() {
+  static destroy () {
     cacheClear.unref();
   }
 
