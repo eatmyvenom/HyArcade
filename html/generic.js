@@ -857,16 +857,10 @@ async function getDaily (element, timetype) {
 
   let text = "";
 
-  if (idArr.length > 1) {
-    console.log(idArr);
-    console.log(lb.length);
-    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i]?.[idArr[0]]?.[idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
-    }
-  } else {
-    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
-    }
+  console.log(idArr);
+  console.log(lb.length);
+  for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+    text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].rank, lb[i].plusColor);
   }
 
   element.innerHTML =
