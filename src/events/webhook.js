@@ -12,14 +12,6 @@ const Account = require("hyarcade-requests/types/Account");
 const Database = require("../discord/Utils/Database");
 
 /**
- * @param {number} number
- * @returns {string} Formatted number
- */
-function formatNum (number) {
-  return Intl.NumberFormat("en").format(number);
-}
-
-/**
  * Send text to a discord webhook
  *
  * @param {string} [content=""]

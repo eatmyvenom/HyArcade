@@ -284,8 +284,9 @@ async function logGames () {
  *
  */
 async function main () {
-  // let database = await Connection();
-  // let db = database.db("hyarcade");
+
+  let killable = true;
+
   if(Runtime.apiDown) {
     if(!(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB")) {
       logger.err("Refusing to run while api is down");
@@ -297,8 +298,6 @@ async function main () {
     await writePID();
   }
 
-  // use different functions for different args
-  // switch has one x86 instruction vs multiple for if statements
   logger.debug(`Args are [${args}] - executing`);
   switch(args[2]) {
   case "logG":
@@ -456,6 +455,7 @@ async function main () {
     break;
 
   case "bot":
+    killable = false;
     await discordBot();
     break;
 
@@ -485,6 +485,7 @@ async function main () {
   case "serveDB": {
     logger.out("Starting server for database and listening on port 6000");
     Server(6000);
+    killable = false;
     break;
   }
   }
@@ -492,6 +493,12 @@ async function main () {
   if(!(args[2] == "bot" || args[2] == "serveDB")) {
     await rmPID();
   }
+
+  if(killable) {
+    process.exit(0);
+  }
 }
 
-main();
+main()
+  .then(logger.log)
+  .catch(logger.err);
