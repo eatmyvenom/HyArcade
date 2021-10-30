@@ -9,6 +9,15 @@ const fs = require("fs/promises");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
 const Account = require("hyarcade-requests/types/Account");
+const Database = require("../discord/Utils/Database");
+
+/**
+ * @param {number} number
+ * @returns {string} Formatted number
+ */
+function formatNum (number) {
+  return Intl.NumberFormat("en").format(number);
+}
 
 /**
  * Send text to a discord webhook
@@ -101,13 +110,6 @@ async function sendEmbed (embed, webhook) {
   // this closes the hook client so the nodejs doesnt hang
   // forever
   await hook.destroy();
-}
-
-/**
- *
- */
-async function sendPGEmbed () {
-  await sendEmbed(await genPGEmbed(), config.webhook);
 }
 
 /**
@@ -217,20 +219,75 @@ function generateEmbed (list) {
 }
 
 /**
- * @returns {Discord.MessageEmbed}
+ * 
+ * @param {Account[]} list 
+ * @param {string} stat 
+ * @param {string} category 
+ * @param {number} amount 
+ * @returns {string}
  */
-async function genPGEmbed () {
-  const alltime = await listUtils.stringLB("wins", 25, "partyGames");
-  const day = await listUtils.stringLBDiff("wins", 25, "day", "partyGames");
+function stringifyList (list, stat, category, amount = 10) {
+  let str = "";
+  for(let i = 0; i < Math.min(list.length, amount); i += 1) {
+    if(category != undefined) {
+      str += `${i + 1}) **${list[i].name}** (\`${formatNum(list[i]?.[category]?.[stat] ?? 0)}\`)\n`;
+    } else {
+      str += `${i + 1}) **${list[i].name}** (\`${formatNum(list[i]?.[stat] ?? 0)}\`)\n`;
+    }
+  }
 
-  const embed = new Discord.MessageEmbed()
-    .setTitle("Party games leaderboards")
+  return str;
+}
+
+/**
+ * @returns {Promise}
+ */
+async function sendPGEmbed () {
+  const lifeWinsList = await Database.getLeaderboard("wins", "partyGames", undefined, true);
+  const dayWinsList = await Database.getLeaderboard("wins", "partyGames", "day", true);
+  const lifeWins = stringifyList(lifeWinsList, "wins", "partyGames", 25);
+  const dayWins = stringifyList(dayWinsList, "lbProp", undefined, 25);
+
+  const lifeRList = await Database.getLeaderboard("roundsWon", "partyGames", undefined, true);
+  const dayRList = await Database.getLeaderboard("roundsWon", "partyGames", "day", true);
+  const lifeR = stringifyList(lifeRList, "roundsWon", "partyGames", 25);
+  const dayR = stringifyList(dayRList, "lbProp", undefined, 25);
+
+  const lifeSList = await Database.getLeaderboard("starsEarned", "partyGames", undefined, true);
+  const daySList = await Database.getLeaderboard("starsEarned", "partyGames", "day", true);
+  const lifeS = stringifyList(lifeSList, "starsEarned", "partyGames", 25);
+  const dayS = stringifyList(daySList, "lbProp", undefined, 25);
+
+  const Wins = new Discord.MessageEmbed()
+    .setTitle("Party games Wins")
     .setColor(0x44a3e7)
     .setTimestamp(Date.now())
-    .addField("------------- Top lifetime wins -------------", alltime, true)
-    .addField("--------------- Top daily wins --------------", day, true);
+    .addField("------------- Lifetime -------------", lifeWins, true)
+    .addField("--------------- Daily --------------", dayWins, true);
 
-  return embed;
+  const rounds = new Discord.MessageEmbed()
+    .setTitle("Party games Rounds")
+    .setColor(0x44a3e7)
+    .setTimestamp(Date.now())
+    .addField("------------- Lifetime -------------", lifeR, true)
+    .addField("--------------- Daily --------------", dayR, true);
+
+  const stars = new Discord.MessageEmbed()
+    .setTitle("Party games Stars")
+    .setColor(0x44a3e7)
+    .setTimestamp(Date.now())
+    .addField("------------- Lifetime -------------", lifeS, true)
+    .addField("--------------- Daily --------------", dayS, true);
+  
+
+  const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
+  await hook.send({
+    embeds: [Wins, rounds, stars],
+    username: config.username,
+    avatarURL: config.webhook.pfp,
+  });
+  hook.destroy();
+  Database.destroy();
 }
 
 /**
@@ -683,7 +740,6 @@ module.exports = {
   sendBasic,
   sendBasicEmbed,
   generateEmbed,
-  genPGEmbed,
   sendPGEmbed,
   sendPGWEmbed,
   sendPGMEmbed,
