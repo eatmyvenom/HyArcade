@@ -90,13 +90,13 @@ module.exports = class ImageGenerator {
     drawTimeType (type, x, y, size) {
       this.context.beginPath();
       this.context.font = `${size}px 'myFont'`;
+      this.context.textAlign = "center";
+      this.context.textBaseline = "middle";
       const lWidth = this.context.measureText("Lifetime ").width;
       const mWidth = this.context.measureText("Monthly ").width;
       const wWidth = this.context.measureText("Weekly").width;
       const width = lWidth + mWidth + wWidth;
-      this.context.textAlign = "center";
-      this.context.textBaseline = "middle";
-      this.context.rect((x - width / 2) - 2, y - (size / 2) - 2, width + 3, size + 4);
+      this.context.rect((x - width / 2) - 2, y - (size / 2) - 2, width + 5, size + 4);
       this.context.fillStyle = "#33333372";
       this.context.fill();
       let currentX = x - width / 3.3;
@@ -105,7 +105,7 @@ module.exports = class ImageGenerator {
       currentX += lWidth / 1;
       this.context.fillStyle = type == "monthly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Monthly ", currentX, y);
-      currentX += mWidth / 1;
+      currentX += mWidth / 1.15;
       this.context.fillStyle = type == "weekly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Weekly", currentX, y);
       currentX += wWidth;
