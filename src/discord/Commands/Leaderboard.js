@@ -1213,7 +1213,7 @@ async function hander (args, rawMsg, interaction) {
   case "holeinthewallwalls" : {
     gameName = "Hole in the Wall walls completed";
     res = await getLB("rounds", timetype, "holeInTheWall", startingIndex);
-    gid = "hitwq";
+    gid = "hitww";
     break;
   }
 
@@ -1224,6 +1224,46 @@ async function hander (args, rawMsg, interaction) {
     gameName = "Hide and Seek objectives completed";
     res = await getLB(".arcadeAchievments.hideAndSeek.tieredAP.1.amount", timetype, undefined, startingIndex);
     gid = "hnso";
+    break;
+  }
+
+  case "hspb":
+  case "hsbestscore":
+  case "hypixelsayspb":
+  case "hypixelsaysmaxscore":
+  case "besths": {
+    gameName = "Hypixel Says best score";
+    res = await getLB("maxScore", timetype, "hypixelSays", startingIndex);
+    gid = "hspb";
+    break;
+  }
+
+  case "hsr":
+  case "hsrounds":
+  case "hypixelsaysrounds":
+  case "hsrnd": {
+    gameName = "Hypixel Says rounds won";
+    res = await getLB("totalRoundWins", timetype, "hypixelSays", startingIndex);
+    gid = "hsr";
+    break;
+  }
+
+  case "fhk" :
+  case "farmkills":
+  case "farmhuntkills": {
+    gameName = "Farm Hunt kills";
+    res = await getLB("kills", timetype, "farmhunt", startingIndex);
+    gid = "fhk";
+    break;
+  }
+
+  case "fht" : 
+  case "farmtaunts":
+  case "fhtaunts":
+  case "farmhunttaunts": {
+    gameName = "Farm Hunt taunts";
+    res = await getLB("tauntsUsed", timetype, "farmhunt", startingIndex);
+    gid = "fht";
     break;
   }
 
