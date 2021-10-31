@@ -105,7 +105,7 @@ module.exports = class ImageGenerator {
       currentX += lWidth / 1;
       this.context.fillStyle = type == "monthly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Monthly ", currentX, y);
-      currentX += mWidth / 1.2;
+      currentX += mWidth / 1;
       this.context.fillStyle = type == "weekly" ? "#55FF55" : "#AAAAAA";
       this.context.fillText("Weekly", currentX, y);
       currentX += wWidth;
