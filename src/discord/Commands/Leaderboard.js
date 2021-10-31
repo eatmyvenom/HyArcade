@@ -1228,11 +1228,26 @@ async function hander (args, rawMsg, interaction) {
   }
 
   default: {
+    if(type.trim().startsWith(".")) {
+      gameName = type.trim().slice(1);
+      
+      let lb;
 
-    return {
-      res: "",
-      embed: ERROR_NO_LEADERBOARD
-    };
+      try {
+        lb = await getLB(type, timetype, undefined, startingIndex);
+      } catch (e) {
+        logger.err(e.stack);
+        return { res: "", embed: ERROR_NO_LEADERBOARD };
+      }
+
+      gid = type;
+      res = lb;
+    } else {
+      return {
+        res: "",
+        embed: ERROR_NO_LEADERBOARD
+      };
+    }
   }
   }
 
