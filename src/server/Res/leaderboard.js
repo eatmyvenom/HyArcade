@@ -94,6 +94,7 @@ module.exports = async (req, res, fileCache) => {
         a.rank = n?.rank;
         a.plusColor = n?.plusColor;
         a.guildTag = n?.guildTag;
+        a.guildTagColor = n?.guildTagColor;
         newAcclist.push(a);
       }
 
