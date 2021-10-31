@@ -91,6 +91,9 @@ module.exports = async (req, res, fileCache) => {
 
         a.lbProp = numberify(getter(n)) - numberify(getter(a)) ?? 0;
         a.name = n?.name ?? "INVALID-NAME";
+        a.rank = n.rank;
+        a.plusColor = n.plusColor;
+        a.guildTag = n.guildTag;
         newAcclist.push(a);
       }
 
