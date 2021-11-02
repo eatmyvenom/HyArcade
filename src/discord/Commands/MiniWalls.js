@@ -160,9 +160,9 @@ async function miniWallsStats (args, rawMsg, interaction) {
   const fontSize = "96px";
   const increment = 200;
   const leftAlign = "left";
-  const rightAlign = "left";
+  const rightAlign = "right";
   const leftX = 100;
-  const rightX = 1380;
+  const rightX = 2460;
   const winColor = gradient;
   const killColor = gradient;
   const witherColor = gradient;
