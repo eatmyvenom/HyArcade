@@ -1,9 +1,7 @@
-const {
-  MessageEmbed
-} = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
+const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
@@ -135,29 +133,59 @@ async function miniWallsStats (args, rawMsg, interaction) {
 
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;
 
-  const stats =
-        `Wins: **${formatN(wins ?? 0)}**\n` +
-        `Kills: **${formatN(kills ?? 0)}**\n` +
-        `Finals: **${formatN(finalKills ?? 0)}**\n` +
-        `Wither Damage: **${formatN(witherDamage ?? 0)}**\n` +
-        `Wither Kills: **${formatN(witherKills ?? 0)}**\n` +
-        `Deaths: **${formatN(deaths ?? 0)}**\n`;
+  const img = new ImageGenerator(2560, 1600, "'Fira Code Bold'");
+  // await img.addBackground("resources/miwblur2.png", 0, 0, 2560, 1600, "#0000008E");
+  img.context.beginPath();
+  img.context.rect(0, 0, 2560, 1600);
+  img.context.fillStyle = "#181c30";
+  img.context.fill();
 
-  const ratios =
-        `K/D: **${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}**\n` +
-        `K/D (no finals): **${formatR((kills ?? 0) / deaths)}**\n` +
-        `F/D: **${formatR((finalKills ?? 0) / deaths)}**\n` +
-        `WD/D: **${formatR((witherDamage ?? 0) / deaths)}**\n` +
-        `WK/D: **${formatR((witherKills ?? 0) / deaths)}**\n` +
-        `Arrow Accuracy: **${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}**\n`;
+  const gradient = img.context.createLinearGradient(0, 0, img.canvas.width, img.canvas.height);
+  // gradient.addColorStop(0, "#4da6ff");
+  // gradient.addColorStop(1, "#e44dff");
+  gradient.addColorStop(0, "#FF5555");
+  gradient.addColorStop(0.40, "#55FF55");
+  gradient.addColorStop(0.60, "#FFFF55");
+  gradient.addColorStop(1, "#00AAFF");
 
-  const embed = new MessageEmbed()
-    .setTitle(`Player: ${acc?.name}`)
-    .setColor(0x7873f5)
-    .addField("━━━━━━ Stats: ━━━━━", stats, true)
-    .addField("━━━━━ Ratios: ━━━━━", ratios, true);
+  img.context.beginPath();
+  img.context.rect(1, 1, 2559, 1599);
+  img.context.strokeStyle = gradient;
+  img.context.lineWidth = 20;
+  img.context.stroke();
 
-  return new CommandResponse("", embed, undefined, await ButtonGenerator.getMiw(time, acc.uuid));
+  img.writeText("Mini Walls Stats", 1280, 100, "center", "#FFFFFF", "112px");
+  img.writeAcc(acc, undefined, 220, "112px");
+
+  const fontSize = "96px";
+  const increment = 200;
+  const leftAlign = "left";
+  const rightAlign = "left";
+  const leftX = 100;
+  const rightX = 1380;
+  const winColor = gradient;
+  const killColor = gradient;
+  const witherColor = gradient;
+  const deathColor = gradient;
+  const aaColor = gradient;
+
+  let y = 250;
+  img.writeText(`Wins: ${formatN(wins ?? 0)}`, leftX, y += increment, leftAlign, winColor, fontSize);
+  img.writeText(`Kills: ${formatN(kills ?? 0)}`, leftX, y += increment, leftAlign, killColor, fontSize);
+  img.writeText(`Finals: ${formatN(finalKills ?? 0)}`, leftX, y += increment, leftAlign, killColor, fontSize);
+  img.writeText(`Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, y += increment, leftAlign, witherColor, fontSize);
+  img.writeText(`Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, y += increment, leftAlign, witherColor, fontSize);
+  img.writeText(`Deaths: ${formatN(deaths ?? 0)}`, leftX, y += increment, leftAlign, deathColor, fontSize);
+
+  y = 250;
+  img.writeText(`K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
+  img.writeText(`K/D (no finals): ${formatR((kills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
+  img.writeText(`F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
+  img.writeText(`WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, y += increment, rightAlign, witherColor, fontSize);
+  img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, witherColor, fontSize);
+  img.writeText(`Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, y += increment, rightAlign, aaColor, fontSize);
+
+  return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
 }
 
 module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);

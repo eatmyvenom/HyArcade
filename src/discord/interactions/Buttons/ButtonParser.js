@@ -151,9 +151,10 @@ async function topGamesHandler (accUUID, timetype, interaction) {
  * @returns {ButtonResponse}
  */
 async function miwHandler (accUUID, timetype, interaction) {
+  await interaction.deferUpdate();
   const miwRes = await miwCommand.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", [ miwRes.embed ], miwRes.components);
+  return new ButtonResponse("", undefined, miwRes.components, [ miwRes.file ]);
 }
 
 /**
