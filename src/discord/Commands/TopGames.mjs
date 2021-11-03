@@ -152,7 +152,7 @@ async function generateImage (acc, timetype) {
   const games = getGames(acc);
   const title = `'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`;
 
-  const img = new ImageGenerator(1280, 1060, "'myFont'");
+  const img = new ImageGenerator(1280, 1060, "'myFont'", true);
   await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000001F");
 
   img.context.beginPath();

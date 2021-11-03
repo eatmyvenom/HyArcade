@@ -66,7 +66,7 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
     return new CommandResponse("", ERROR_UNLINKED);
   }
 
-  const img = new ImageGenerator(1280, 800, "'myFont'");
+  const img = new ImageGenerator(1280, 800, "'myFont'", true);
   await img.addBackground("resources/arcblur.png", 0, 0, 1280, 800, "#0000005F");
 
   img.writeText("Arcade Games Stats", 640, 40, "center", "#FFFFFF", "48px");
