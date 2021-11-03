@@ -30,10 +30,12 @@ module.exports = class ImageGenerator {
     canvas;
     context;
     font;
-    constructor (width, height, font = "Fira Code") {
+    shadow = false;
+    constructor (width, height, font = "Fira Code", shadow = false) {
       this.canvas = Canvas.createCanvas(width, height);
       this.context = this.canvas.getContext("2d");
       this.font = font;
+      this.shadow = shadow;
     }
 
     async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
@@ -59,6 +61,7 @@ module.exports = class ImageGenerator {
     }
 
     writeText (txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36) {
+      const offset = (Number(size.replace(/px/g, ""))) * 0.1;
       this.context.font = `${size} ${this.font}`;
       this.context.fillStyle = color;
       this.context.textAlign = align;
@@ -66,6 +69,11 @@ module.exports = class ImageGenerator {
       const txtarr = txt.split("\n");
       let newY = y;
       for(const t of txtarr) {
+        if(this.shadow) {
+          this.context.fillStyle = "#00000068";
+          this.context.fillText(t, x + offset, newY + offset);
+          this.context.fillStyle = color;
+        }
         this.context.fillText(t, x, newY);
         newY += spacing;
       }
@@ -92,23 +100,29 @@ module.exports = class ImageGenerator {
       this.context.font = `${size}px 'myFont'`;
       this.context.textAlign = "center";
       this.context.textBaseline = "middle";
+
       const lWidth = this.context.measureText("Lifetime ").width;
       const mWidth = this.context.measureText("Monthly ").width;
       const wWidth = this.context.measureText("Weekly").width;
       const width = lWidth + mWidth + wWidth;
+
       this.context.rect((x - width / 2) - 2, y - (size / 2) - 2, width + 5, size + 4);
       this.context.fillStyle = "#33333372";
       this.context.fill();
+
       let currentX = x - width / 3.3;
-      this.context.fillStyle = type == "lifetime" ? "#55FF55" : "#AAAAAA";
-      this.context.fillText("Lifetime ", currentX, y);
+      const lifetimeColor = type == "lifetime" ? "#55FF55" : "#AAAAAA";
+      this.writeText("Lifetime ", currentX, y, "center", lifetimeColor, `${size}px`);
+
       currentX += lWidth / 1;
-      this.context.fillStyle = type == "monthly" ? "#55FF55" : "#AAAAAA";
-      this.context.fillText("Monthly ", currentX, y);
+      const monthlyColor = type == "monthly" ? "#55FF55" : "#AAAAAA";
+      this.writeText("Monthly ", currentX, y, "center", monthlyColor, `${size}px`);
+
       currentX += mWidth / 1.15;
-      this.context.fillStyle = type == "weekly" ? "#55FF55" : "#AAAAAA";
-      this.context.fillText("Weekly", currentX, y);
-      currentX += wWidth;
+      const weeklyColor = type == "weekly" ? "#55FF55" : "#AAAAAA";
+      this.writeText("Weekly", currentX, y, "center", weeklyColor, `${size}px`);
+
+      return currentX += wWidth;
     }
 
     drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
@@ -148,23 +162,20 @@ module.exports = class ImageGenerator {
 
       this.writeAccTitle(rank, plusColor, name, currentX + posWidth, y, `${size}px`, false);
 
-      this.context.fillStyle = "#FFFF55";
-      this.context.fillText(`${pos}. `, currentX, y);
-
+      this.writeText(`${pos}. `, currentX, y, "left", "#FFFF55", `${size}px`);
       currentX += posWidth;
       currentX += ignWidth;
+
       this.context.fillStyle = PlusColors[guildColor?.toLowerCase()];
       if(guild != undefined) {
-        this.context.fillText(` [${guild}]`, currentX, y);
+        this.writeText(` [${guild}]`, currentX, y, "left", PlusColors[guildColor?.toLowerCase()], `${size}px`);
       }
-
       currentX += guildWidth;
-      this.context.fillStyle = "#AAAAAA";
-      this.context.fillText(" - ", currentX, y);
 
+      this.writeText(" - ", currentX, y, "left", "#AAAAAA", `${size}px`);
       currentX += dashWidth;
-      this.context.fillStyle = "#FFFF55";
-      this.context.fillText(`${count}`, currentX, y);
+
+      this.writeText(`${count}`, currentX, y, "left", "#FFFF55", `${size}px`);
     }
 
     writeTextCenter (txt, spacing = 36) {
@@ -177,6 +188,7 @@ module.exports = class ImageGenerator {
      * @param {number} x
      * @param {number} y
      * @param {string} fontSize
+     * @param {string} appendTxt
      * @returns {object}
      */
     writeAcc (acc, x, y, fontSize, appendTxt = "") {
