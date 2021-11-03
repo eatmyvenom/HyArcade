@@ -10,6 +10,7 @@ const Runtime = require("../Runtime");
 const utils = require("../utils");
 const Account = require("hyarcade-requests/types/Account");
 const Database = require("../discord/Utils/Database");
+const FakeLB = require("../discord/images/FakeLB");
 
 /**
  * Send text to a discord webhook
@@ -726,9 +727,93 @@ async function sendMW () {
   await run.save();
 }
 
+/**
+ * Generate and send fake lb sses
+ */
+async function sendFakeWeekLBs () {
+  const blockingDead = await FakeLB("wins", "blockingDead", "weekly");
+  const bountyHunters = await FakeLB("wins", "bountyHunters", "weekly");
+  const dragonWars = await FakeLB("wins", "dragonWars", "weekly");
+  const enderSpleef = await FakeLB("wins", "enderSpleef", "weekly");
+  const farmhunt = await FakeLB("wins", "farmhunt", "weekly");
+  const football = await FakeLB("wins", "football", "weekly");
+  const galaxyWars = await FakeLB("wins", "galaxyWars", "weekly");
+  const hideAndSeek = await FakeLB("wins", "hideAndSeek", "weekly");
+  const holeInTheWall = await FakeLB("wins", "holeInTheWall", "weekly");
+  const hypixelSays = await FakeLB("wins", "hypixelSays", "weekly");
+  const miniWalls = await FakeLB("wins", "miniWalls", "weekly");
+  const partyGames = await FakeLB("wins", "partyGames", "weekly");
+  const pixelPainters = await FakeLB("wins", "pixelPainters", "weekly");
+  const throwOut = await FakeLB("wins", "throwOut", "weekly");
+  const zombies = await FakeLB("wins_zombies", "zombies", "weekly");
+
+  const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
+  await bd.send({ files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  bd.destroy();
+
+  const bh = new Discord.WebhookClient({ url: config.discord.leaderboards.bh });
+  await bh.send({ files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  bh.destroy();
+
+  const dw = new Discord.WebhookClient({ url: config.discord.leaderboards.dw });
+  await dw.send({ files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  dw.destroy();
+
+  const es = new Discord.WebhookClient({ url: config.discord.leaderboards.es });
+  await es.send({ files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  es.destroy();
+
+  const fh = new Discord.WebhookClient({ url: config.discord.leaderboards.fh });
+  await fh.send({ files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  fh.destroy();
+
+  const fb = new Discord.WebhookClient({ url: config.discord.leaderboards.fb });
+  await fb.send({ files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  fb.destroy();
+
+  const gw = new Discord.WebhookClient({ url: config.discord.leaderboards.gw });
+  await gw.send({ files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  gw.destroy();
+
+  const hns = new Discord.WebhookClient({ url: config.discord.leaderboards.hns });
+  await hns.send({ files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  hns.destroy();
+
+  const hitw = new Discord.WebhookClient({ url: config.discord.leaderboards.hitw });
+  await hitw.send({ files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  hitw.destroy();
+
+  const hs = new Discord.WebhookClient({ url: config.discord.leaderboards.hs });
+  await hs.send({ files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  hs.destroy();
+
+  const miw = new Discord.WebhookClient({ url: config.discord.leaderboards.miw });
+  await miw.send({ files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  miw.destroy();
+
+  const pg = new Discord.WebhookClient({ url: config.discord.leaderboards.pg });
+  await pg.send({ files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  pg.destroy();
+
+  const pp = new Discord.WebhookClient({ url: config.discord.leaderboards.pp });
+  await pp.send({ files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  pp.destroy();
+
+  const to = new Discord.WebhookClient({ url: config.discord.leaderboards.to });
+  await to.send({ files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  to.destroy();
+
+  const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
+  await z.send({ files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  z.destroy();
+
+  Database.destroy();
+}
+
 module.exports = {
   send: sendToDiscord,
   sendEmbed: sendToEmbedDiscord,
+  sendFakeWeekLBs,
   sendBasic,
   sendBasicEmbed,
   generateEmbed,

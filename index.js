@@ -368,6 +368,10 @@ async function main () {
     await clusterHandler();
     break;
 
+  case "ssweek": 
+    await Webhook.sendFakeWeekLBs();
+    break;
+
   case "discord":
     await webhookLog(args[3], args[4]);
     break;
