@@ -372,6 +372,14 @@ async function main () {
     await Webhook.sendFakeWeekLBs();
     break;
 
+  case "ssmonth": 
+    await Webhook.sendFakeMonthLBs();
+    break;
+
+  case "sslife": 
+    await Webhook.sendFakeLifetimeLBs();
+    break;
+
   case "discord":
     await webhookLog(args[3], args[4]);
     break;
