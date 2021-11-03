@@ -21,10 +21,15 @@ async function isHacker (acc) {
 
 /**
  * @param {number} n
- * @returns {number}
+ * @returns {string}
  */
 function formatR (n) {
-  const r = Math.round(n * 1000) / 1000;
+  let r = Math.round(n * 1000) / 1000;
+  if(isNaN(r)) {
+    r = "N/A";
+  } else {
+    r = r.toFixed(3);
+  }
   return r;
 }
 
@@ -134,15 +139,12 @@ async function miniWallsStats (args, rawMsg, interaction) {
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;
 
   const img = new ImageGenerator(2560, 1600, "'Fira Code Bold'");
-  // await img.addBackground("resources/miwblur2.png", 0, 0, 2560, 1600, "#0000008E");
   img.context.beginPath();
   img.context.rect(0, 0, 2560, 1600);
   img.context.fillStyle = "#181c30";
   img.context.fill();
 
   const gradient = img.context.createLinearGradient(0, 0, img.canvas.width, img.canvas.height);
-  // gradient.addColorStop(0, "#4da6ff");
-  // gradient.addColorStop(1, "#e44dff");
   gradient.addColorStop(0, "#FF5555");
   gradient.addColorStop(0.40, "#55FF55");
   gradient.addColorStop(0.60, "#FFFF55");
