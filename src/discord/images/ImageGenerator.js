@@ -5,6 +5,10 @@ Canvas.registerFont("resources/mc.otf", {
   family: "myFont"
 });
 
+Canvas.registerFont("resources/mcbold.otf", {
+  family: "boldmc",
+});
+
 const PlusColors = {
   black: "#000000",
   dark_blue: "#0000AA",
@@ -60,9 +64,9 @@ module.exports = class ImageGenerator {
       this.context.drawImage(img, x, y, imgWidth, imgHeight);
     }
 
-    writeText (txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36) {
+    writeText (txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36, font = undefined) {
       const offset = (Number(size.replace(/px/g, ""))) * 0.1;
-      this.context.font = `${size} ${this.font}`;
+      this.context.font = `${size} ${font ?? this.font}`;
       this.context.fillStyle = color;
       this.context.textAlign = align;
       this.context.textBaseline = "middle";
@@ -79,9 +83,9 @@ module.exports = class ImageGenerator {
       }
     }
 
-    drawNameTag (txt, x, y, color, size) {
+    drawNameTag (txt, x, y, color, size, font = undefined) {
       this.context.beginPath();
-      this.context.font = `${size}px 'myFont'`;
+      this.context.font = `${size}px ${font ?? "'myFont'"}`;
       const {
         width
       } = this.context.measureText(txt);
@@ -97,30 +101,39 @@ module.exports = class ImageGenerator {
 
     drawTimeType (type, x, y, size) {
       this.context.beginPath();
-      this.context.font = `${size}px 'myFont'`;
-      this.context.textAlign = "center";
-      this.context.textBaseline = "middle";
 
-      const lWidth = this.context.measureText("Lifetime ").width;
-      const mWidth = this.context.measureText("Monthly ").width;
+      const lbold = type == "lifetime";
+      const mbold = type == "monthly";
+      const wbold = type == "weekly";
+
+      this.context.font = `${size}px ${lbold ? "'boldmc'" : this.font}`;
+      const lWidth = this.context.measureText("Lifetime").width;
+      this.context.font = `${size}px ${mbold ? "'boldmc'" : this.font}`;
+      const mWidth = this.context.measureText("Monthly").width;
+      this.context.font = `${size}px ${wbold ? "'boldmc'" : this.font}`;
       const wWidth = this.context.measureText("Weekly").width;
-      const width = lWidth + mWidth + wWidth;
+      this.context.font = `${size}px ${this.font}`;
+      const space = this.context.measureText("   ").width;
+      const width = lWidth + mWidth + wWidth + space;
 
-      this.context.rect((x - width / 2) - 2, y - (size / 2) - 2, width + 5, size + 4);
+      this.context.rect((x - width / 2) - 4, y - (size / 2) - 2, width + 6, size + 4);
       this.context.fillStyle = "#33333372";
       this.context.fill();
 
-      let currentX = x - width / 3.3;
+      let currentX = x - (width / 2) + (lWidth / 2);
+
       const lifetimeColor = type == "lifetime" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Lifetime ", currentX, y, "center", lifetimeColor, `${size}px`);
+      this.writeText("Lifetime", currentX, y, "center", lifetimeColor, `${size}px`, 0, lbold ? "'boldmc'" : this.font);
 
-      currentX += lWidth / 1;
+      currentX += lWidth / (lbold ? 1 : 0.8);
+
       const monthlyColor = type == "monthly" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Monthly ", currentX, y, "center", monthlyColor, `${size}px`);
+      this.writeText("Monthly", currentX, y, "center", monthlyColor, `${size}px`, 0, mbold ? "'boldmc'" : this.font);
 
-      currentX += mWidth / 1.15;
+      currentX += mWidth / (mbold ? 1 : 0.9);
+
       const weeklyColor = type == "weekly" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Weekly", currentX, y, "center", weeklyColor, `${size}px`);
+      this.writeText("Weekly", currentX, y, "center", weeklyColor, `${size}px`, 0, wbold ? "'boldmc'" : this.font);
 
       return currentX += wWidth;
     }

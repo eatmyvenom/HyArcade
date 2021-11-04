@@ -41,7 +41,7 @@ module.exports = async function FakeLb (path, category, time) {
   default : gameTitle = "Mini walls";
   }
 
-  await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize);
+  await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize, "'boldmc'");
   await img.drawNameTag(gameTitle, x, y += dy, "#AAAAAA", fontSize);
   y += 10;
 
@@ -61,7 +61,7 @@ module.exports = async function FakeLb (path, category, time) {
   }
 
   y += 10;
-  await img.drawNameTag("Click to toggle!", x, y += dy, "#FFAA00", fontSize);
+  await img.drawNameTag("Click to toggle!", x, y += dy, "#FFAA00", fontSize, "'boldmc'");
 
   const strTime = path == undefined ? "monthly" : time ?? "lifetime";
   await img.drawTimeType(strTime, x, y += dy, fontSize);
