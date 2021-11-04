@@ -74,7 +74,7 @@ module.exports = class ImageGenerator {
       let newY = y;
       for(const t of txtarr) {
         if(this.shadow) {
-          this.context.fillStyle = "#00000068";
+          this.context.fillStyle = "#00000072";
           this.context.fillText(t, x + offset, newY + offset);
           this.context.fillStyle = color;
         }
