@@ -38,6 +38,7 @@ module.exports = async function FakeLb (path, category, time) {
   case "partyGames" : gameTitle = "Party games"; break;
   case "pixelPainters" : gameTitle = "Pixel painters"; break;
   case "throwOut" : gameTitle = "Throw out"; break;
+  case "zombies" : gameTitle = "Zombies" ; break;
   default : gameTitle = "Mini walls";
   }
 
