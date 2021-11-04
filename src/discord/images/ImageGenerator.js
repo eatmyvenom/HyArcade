@@ -73,12 +73,119 @@ module.exports = class ImageGenerator {
       const txtarr = txt.split("\n");
       let newY = y;
       for(const t of txtarr) {
-        if(this.shadow) {
-          this.context.fillStyle = "#00000072";
-          this.context.fillText(t, x + offset, newY + offset);
-          this.context.fillStyle = color;
+        const lineArr = t.includes("&") ? t.split(/&/) : [`r${t}`];
+
+        if(align == "right") {
+          lineArr.reverse();
         }
-        this.context.fillText(t, x, newY);
+
+        let currentX = x;
+        for(const s of lineArr) {
+          switch(s.slice(0, 1)) {
+          case "0" : {
+            this.context.fillStyle = "#000000";
+            break;
+          }
+          
+          case "1" : {
+            this.context.fillStyle = "#0000AA";
+            break;
+          }
+          
+          case "2" : {
+            this.context.fillStyle = "#00AA00";
+            break;
+          }
+          
+          case "3" : {
+            this.context.fillStyle = "#00AAAA";
+            break;
+          }
+
+          case "4" : {
+            this.context.fillStyle = "#AA0000";
+            break;
+          }
+
+          case "5" : {
+            this.context.fillStyle = "#AA0000";
+            break;
+          }
+
+          case "6" : {
+            this.context.fillStyle = "#FFAA00";
+            break;
+          }
+
+          case "7" : {
+            this.context.fillStyle = "#AAAAAA";
+            break;
+          }
+
+          case "8" : {
+            this.context.fillStyle = "#555555";
+            break;
+          }
+
+          case "9" : {
+            this.context.fillStyle = "#5555FF";
+            break;
+          }
+
+          case "a" : {
+            this.context.fillStyle = "#55FF55";
+            break;
+          }
+
+          case "b" : {
+            this.context.fillStyle = "#55FFFF";
+            break;
+          }
+
+          case "c" : {
+            this.context.fillStyle = "#FF5555";
+            break;
+          }
+
+          case "d" : {
+            this.context.fillStyle = "#FF55FF";
+            break;
+          }
+
+          case "e" : {
+            this.context.fillStyle = "#FFFF55";
+            break;
+          }
+
+          case "f" : {
+            this.context.fillStyle = "#FFFFFF";
+            break;
+          }
+
+          case "l" : {
+            this.context.font = `${size} 'boldmc'`;
+            break;
+          }
+
+          case "r" : {
+            this.context.font = `${size} ${font ?? this.font}`;
+            this.context.fillStyle = color;
+            break;
+          }
+          }
+          if(this.shadow) {
+            const prevStyle = this.context.fillStyle;
+            this.context.fillStyle = "#00000072";
+            this.context.fillText(s.slice(1).replace(/&./g, ""), currentX + offset, newY + offset);
+            this.context.fillStyle = prevStyle;
+          }
+          this.context.fillText(s.slice(1).replace(/&./g, ""), currentX, newY);
+          if(align == "right") {
+            currentX -= this.context.measureText(s.slice(1).replace(/&./g, "")).width;
+          } else {
+            currentX += this.context.measureText(s.slice(1).replace(/&./g, "")).width;
+          }
+        }
         newY += spacing;
       }
     }
