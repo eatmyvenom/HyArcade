@@ -13,7 +13,7 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
   const img = new ImageGenerator(2560, 1600, "'myFont'", true);
   await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
 
-  img.writeText(`${time} Leaderboard`, 1280, 170, "center", "#55FF55", "80px");
+  img.writeText(`&l${time} Leaderboard`, 1280, 170, "center", "#55FF55", "80px");
 
   const testVal = valueGetter(res[0]) ?? 0;
 
