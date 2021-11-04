@@ -35,11 +35,11 @@ function ms2time (time) {
  * @returns {MessageAttachment}
  */
 async function generateImage (account, game) {
-  const img = new ImageGenerator(1280, 800, "'myFont'");
+  const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
   await img.addBackground("resources/blur.png", 0, 0, 1280, 800, "#00000064");
 
-  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "56px");
+  await img.writeText(`${game} Stats`, 640, 40, "center", "#FFFFFF", "56px", 36, "'boldmc'");
   await img.writeAcc(account, undefined, 110, "48px");
 
   let stat1 = "";
@@ -63,68 +63,68 @@ async function generateImage (account, game) {
   case "Animal Slaughter" : {
     stat1 = `Wins - ${account.partyGames.animalSlaughterWins}`;
     stat4 = `Total Kills - ${account.partyGames.animalSlaughterKills}`;
-    stat5 = `Personal Best - ${account.partyGames.animalSlaughterPB}`;
+    stat5 = `Best Score - ${account.partyGames.animalSlaughterPB}`;
     break;
   }
 
   case "Anvil Spleef" : {
     stat2 = `Wins - ${account.partyGames.anvilSpleefWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.anvilSpleefPB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.anvilSpleefPB)}`;
     break;
   }
 
   case "Bombardment" : {
     stat2 = `Wins - ${account.partyGames.bombardmentWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.bombardmentPB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.bombardmentPB)}`;
     break;
   }
 
   case "Chicken Rings" : {
     stat2 = `Wins - ${account.partyGames.chickenRingsWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.chickenRingsPB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.chickenRingsPB)}`;
     break;
   }
 
   case "Dive" : {
     stat1 = `Wins - ${account.partyGames.diveWins}`;
     stat4 = `Total Score - ${account.partyGames.diveScore}`;
-    stat5 = `Personal Best - ${account.partyGames.divePB}`;
+    stat5 = `Best Score - ${account.partyGames.divePB}`;
     break;
   }
 
   case "High Ground" : {
     stat1 = `Wins - ${account.partyGames.highGroundWins}`;
     stat4 = `Total Score - ${account.partyGames.highGroundScore}`;
-    stat5 = `Personal Best - ${account.partyGames.highGroundPB}`;
+    stat5 = `Best Score - ${account.partyGames.highGroundPB}`;
     break;
   }
 
   case "Hoe Hoe Hoe" : {
     stat1 = `Wins - ${account.partyGames.hoeWins}`;
     stat4 = `Total Score - ${account.partyGames.hoeScore}`;
-    stat5 = `Personal Best - ${account.partyGames.hoePB}`;
+    stat5 = `Best Score - ${account.partyGames.hoePB}`;
     break;
   }
 
   case "Jigsaw Rush" : {
     stat2 = `Wins - ${account.partyGames.jigsawWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.jigsawPB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.jigsawPB)}`;
     break;
   }
 
   case "Parkour" : {
     stat1 = "Jungle Jump";
     stat2 = `Wins - ${account.partyGames.jungleJumpWins}`;
-    stat3 = `Personal Best - ${ms2time(account.partyGames.jungleJumpPB)}`;
+    stat3 = `Best Time - ${ms2time(account.partyGames.jungleJumpPB)}`;
     stat4 = "The Floor is Lava";
     stat5 = `Wins - ${account.partyGames.theFloorIsLavaWins}`;
-    stat6 = `Personal Best - ${ms2time(account.partyGames.theFloorIsLavaPB)}`;
+    stat6 = `Best Time - ${ms2time(account.partyGames.theFloorIsLavaPB)}`;
     break;
   }
 
   case "Lab Escape" : {
     stat2 = `Wins - ${account.partyGames.labEscapeWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.labEscapePB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.labEscapePB)}`;
     break;
   }
 
@@ -137,20 +137,20 @@ async function generateImage (account, game) {
 
   case "Minecart Racing" : {
     stat2 = `Wins - ${account.partyGames.minecartRacingWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.minecartRacingPB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.minecartRacingPB)}`;
     break;
   }
 
   case "RPG-16" : {
     stat1 = `Wins - ${account.partyGames.rpgWins}`;
     stat4 = `Total Score - ${account.partyGames.rpgKills}`;
-    stat5 = `Personal Best - ${account.partyGames.rpgPB}`;
+    stat5 = `Best Score - ${account.partyGames.rpgPB}`;
     break;
   }
 
   case "Spider Maze" : {
     stat2 = `Wins - ${account.partyGames.spiderMazeWins}`;
-    stat5 = `Personal Best - ${ms2time(account.partyGames.spiderMazePB)}`;
+    stat5 = `Best Time - ${ms2time(account.partyGames.spiderMazePB)}`;
     break;
   }
 
@@ -208,12 +208,12 @@ async function generateImage (account, game) {
   }
   }
 
-  if(stat1 != "") img.writeText(stat1, 320, 350, "center", "#55FF55", "40px");
-  if(stat2 != "") img.writeText(stat2, 320, 450, "center", "#55FFFF", "40px");
-  if(stat3 != "") img.writeText(stat3, 320, 550, "center", "#FFFF55", "40px");
-  if(stat4 != "") img.writeText(stat4, 960, 350, "center", "#55FF55", "40px");
-  if(stat5 != "") img.writeText(stat5, 960, 450, "center", "#55FFFF", "40px");
-  if(stat6 != "") img.writeText(stat6, 960, 550, "center", "#FFFF55", "40px");
+  if(stat1 != "") img.writeText(stat1, 320, 350, "center", "#55FF55", "44px");
+  if(stat2 != "") img.writeText(stat2, 320, 450, "center", "#55FFFF", "44px");
+  if(stat3 != "") img.writeText(stat3, 320, 550, "center", "#FFFF55", "44px");
+  if(stat4 != "") img.writeText(stat4, 960, 350, "center", "#55FF55", "44px");
+  if(stat5 != "") img.writeText(stat5, 960, 450, "center", "#55FFFF", "44px");
+  if(stat6 != "") img.writeText(stat6, 960, 550, "center", "#FFFF55", "44px");
 
   return img.toDiscord();
 }
