@@ -145,6 +145,15 @@ export default async (interaction) => {
       return await commands.Ping.execute([], authorID, null, interaction);
     }
 
+    case commands.Compare.name: {
+      return await commands.Compare.execute(
+        [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
+        authorID,
+        null,
+        interaction
+      );
+    }
+
     case "help" : {
       return await commands.Help.execute([], authorID, null, interaction);
     }

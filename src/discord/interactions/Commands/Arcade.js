@@ -2,6 +2,8 @@ const leaderboard = require("./Leaderboard");
 leaderboard.type = 1;
 const profile = require("./Profile");
 profile.type = 1;
+const compare = require("./Compare");
+compare.type = 1;
 
 module.exports = {
   name: "arcade",
@@ -24,6 +26,7 @@ module.exports = {
     options: [],
   },
   leaderboard,
-  profile
+  profile,
+  compare,
   ],
 };
