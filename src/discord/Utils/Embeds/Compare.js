@@ -333,7 +333,7 @@ function renderComparator (acc1, acc2, game, hasPerms) {
   }
   }
 
-  embed.addField(gameName, str);
+  embed.setDescription(`**${gameName}**\n${str}`);
 
   return embed;
 }
