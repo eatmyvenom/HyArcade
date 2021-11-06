@@ -101,6 +101,7 @@ async function glds () {
   );
 
   guilds.sort(utils.winsSorter);
+  logger.info(`Saving guild data for ${guilds.length} guilds`);
   await utils.writeJSON("guild.json", guilds);
   return ["guild.json"];
 }
