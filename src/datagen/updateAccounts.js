@@ -95,7 +95,7 @@ async function guilds (accounts) {
     } else {
       acc.guildID = undefined;
       acc.guild = "NONE";
-      acc.guildTag = "";
+      acc.guildTag = "NONE";
       acc.guildTagColor = "";
     }
   }

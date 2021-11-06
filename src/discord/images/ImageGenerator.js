@@ -248,7 +248,7 @@ module.exports = class ImageGenerator {
     drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
 
       // datafixer 
-      if(guild == "NONE") {
+      if(guild == "NONE" || guild == "") {
         // eslint-disable-next-line no-param-reassign
         guild = undefined;
       }
