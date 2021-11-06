@@ -270,7 +270,7 @@ module.exports = async function updateAccounts (accounts) {
     return await fastUpdate(accounts);
   }
 
-  let accs = accounts.sort(utils.winsSorter);
+  const accs = accounts.sort(utils.winsSorter);
   await fs.writeFile("starttime", (`${Date.now()}`));
 
   const oldAccs = await utils.readDB("accounts");
@@ -283,25 +283,6 @@ module.exports = async function updateAccounts (accounts) {
   for(i = 0, j = accs.length; i < j; i += chunk) {
     temparray = accs.slice(i, i + chunk);
     await updateAccountsInArr(temparray, oldAccs);
-  }
-
-  if(utils.fileExists("data/accounts.json.part")) {
-    const addedAccounts = await utils.readJSON("accounts.json.part");
-    await fs.rm("data/accounts.json.part");
-    accs = accs.concat(addedAccounts);
-  }
-
-  if(utils.fileExists("data/accounts.json.full")) {
-    const fullList = await utils.readJSON("accounts.json.full");
-    await fs.rm("data/accounts.json.full");
-    for(let i = 0; i < accs.length; i += 1) {
-      const acc = accs[i];
-      const newAcc = fullList.find((a) => a.uuid == acc.uuid);
-      if(newAcc != undefined && newAcc.updateTime > acc.updateTime) {
-        logger.info(`Setting ${newAcc.name}'s data from outside source!`);
-        acc.setData(newAcc);
-      }
-    }
   }
 
   const runtime = Runtime.fromJSON();

@@ -85,7 +85,7 @@ exports.accounts = async function accounts () {
  * Gets a list of guild objects from the json guild list
  *
  * @param {Account[]} accs Accounts that can be used in these guilds
- * @returns {guild[]} Array of guilds with combined player data
+ * @returns {Promise<guild[]>} Array of guilds with combined player data
  */
 exports.guilds = async function gld (accs) {
   const accounts = accs;

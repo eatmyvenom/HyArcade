@@ -87,18 +87,25 @@ async function plrs () {
  * @returns {string[]} files changed by this task
  */
 async function glds () {
-
   if(!(await HypixelApi.key()).success) {
     return [];
   }
 
-
   const guilds = await lists.guilds(accounts);
-  await Promise.all(
-    guilds.map(async (guild) => {
-      await guild.updateWins();
-    })
-  );
+
+  let i;
+  let j;
+  let temparray;
+
+  const chunk = 120;
+  for(i = 0, j = guilds.length; i < j; i += chunk) {
+    temparray = guilds.slice(i, i + chunk);
+    await Promise.all(
+      temparray.map(async (guild) => {
+        await guild.updateWins();
+      })
+    );
+  }
 
   guilds.sort(utils.winsSorter);
   logger.info(`Saving guild data for ${guilds.length} guilds`);
