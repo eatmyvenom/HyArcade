@@ -153,7 +153,7 @@ async function generateImage (acc, timetype) {
   const title = `'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`;
 
   const img = new ImageGenerator(1280, 1060, "'myFont'", true);
-  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000001F");
+  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000007F");
 
   img.context.beginPath();
   img.context.rect(0, 0, 1280, 80);
@@ -170,14 +170,9 @@ async function generateImage (acc, timetype) {
 
   for(let i = 0; i < games.length; i += 1) {
 
-    img.context.beginPath();
-    img.context.rect(640 - 440, y - 25, 900, 50);
-    img.context.fillStyle = "#222222AF";
-    img.context.fill();
-
-    img.writeText(`#${i + 1}`, 640 - 380, y, "center", "#55FFFF", "40px");
-    img.writeText(games[i].name, 640, y, "center", "#55FF55", "40px");
-    img.writeText(`${numberify(games[i].wins)}`, 640 + 380, y, "center", "#FFFF55", "40px");
+    img.writeText(`&l#${i + 1}`, 640 - 320, y, "left", "#FFFF55", "40px");
+    img.writeText(games[i].name, 640, y, "center", "#55FFFF", "40px");
+    img.writeText(`${numberify(games[i].wins)}`, 640 + 320, y, "right", "#FFFFFF", "40px");
 
     y += 60;
   }

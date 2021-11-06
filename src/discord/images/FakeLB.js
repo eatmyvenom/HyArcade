@@ -14,14 +14,16 @@ function formatNum (n) {
 module.exports = async function FakeLb (path, category, time) {
   const img = new ImageGenerator(1900, 1035, "'myFont'", false);
   await img.addBackground("resources/lb3.png", 0, 0, 1900, 1035, "#00000000");
-    
+
   let y = 100;
   const dy = 48;
   const x = 915;
   const fontSize = 32;
 
-  const timeTitle = path == undefined ? "Monthly Wins" : (time == undefined) ? "Lifetime Wins" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)} Wins`;
+  let timeTitle = path == undefined ? "Monthly" : (time == undefined) ? "Lifetime" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
   let gameTitle = "";
+
+  timeTitle += `${(path ?? "wins").slice(0, 1).toUpperCase()}${(path ?? "wins").slice(1)}`.replace(/([A-Z])/g, " $1");
 
   switch(category) {
   case "blockingDead" : gameTitle = "Blocking dead"; break;
