@@ -106,7 +106,13 @@ class Guild {
      * @memberof Guild
      */
     async getGuild () {
-      return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
+      try {
+        return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
+      } catch (e) {
+        logger.err(e);
+        logger.err(this.uuid);
+        return await this.getGuild();
+      }
     }
 
     /**
