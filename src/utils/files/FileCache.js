@@ -91,6 +91,9 @@ class FileCache {
   
         const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
         fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+
+        const guild = await utils.readJSON("guild.json");
+        fileCache.guilds = guild;
       } catch (e) {
         Logger.err("Error refreshing static files!");
       }
@@ -135,14 +138,6 @@ class FileCache {
           fileCache.players = players;
         } else {
           Logger.debug("players has not been modified, ignoring!");
-        }
-
-        const gldStat = await fs.stat(`${fileCache.path}guild.json`);
-        if(Math.max(gldStat.ctimeMs, gldStat.mtimeMs) > fileCache.modTime) {
-          const guilds = await utils.readJSON("guild.json");
-          fileCache.guilds = guilds;
-        } else {
-          Logger.debug("guilds has not been modified, ignoring!");
         }
 
         const blackStat = await fs.stat(`${fileCache.path}blacklist`);
