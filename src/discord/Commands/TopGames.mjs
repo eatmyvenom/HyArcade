@@ -148,12 +148,12 @@ function nonDatabaseError (ign) {
  * @param {string} timetype 
  * @returns {object}
  */
-async function generateImage (acc, timetype) {
+async function generateImage (acc) {
   const games = getGames(acc);
-  const title = `'s ${timetype.slice(0, 1).toUpperCase()}${timetype.slice(1).toLowerCase()} Arcade Wins`;
+  const title = "'s Arcade Wins";
 
   const img = new ImageGenerator(1280, 1060, "'myFont'", true);
-  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000007F");
+  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000006F");
 
   img.context.beginPath();
   img.context.rect(0, 0, 1280, 80);
@@ -170,9 +170,9 @@ async function generateImage (acc, timetype) {
 
   for(let i = 0; i < games.length; i += 1) {
 
-    img.writeText(`&l#${i + 1}`, 640 - 320, y, "left", "#FFFF55", "40px");
-    img.writeText(games[i].name, 640, y, "center", "#55FFFF", "40px");
-    img.writeText(`${numberify(games[i].wins)}`, 640 + 320, y, "right", "#FFFFFF", "40px");
+    img.writeText(`#${i + 1}`, 640 - 240, y, "right", "#FFAA00", "40px");
+    img.writeText(`&l${games[i].name}`, 640 - 220, y, "left", "#FFFFFF", "37px");
+    img.writeText(`${numberify(games[i].wins)}`, 640 + 320, y, "right", "#FFFF55", "40px");
 
     y += 60;
   }
