@@ -1269,7 +1269,9 @@ async function hander (args, rawMsg, interaction) {
 
   default: {
     if(type.trim().startsWith(".")) {
-      gameName = type.trim().slice(1);
+      gameName = `${(type).slice(1, 2).toUpperCase()}${(type).slice(2)}`
+        .replace(/([A-Z])/g, " $1")
+        .replace(/(\.)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`);
       
       let lb;
 

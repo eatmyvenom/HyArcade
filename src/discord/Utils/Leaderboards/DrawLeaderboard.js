@@ -54,7 +54,7 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
       continue;
     }
 
-    img.writeText(`${startingIndex + i + 1})`, 1280 - (longestName / 1.5) - 100, y, "left", placeColor, size);
+    img.writeText(`#${startingIndex + i + 1}`, 1280 - (longestName / 1.5) - 100, y, "left", placeColor, size);
     img.writeAcc(res[i], 1280 - (longestName / 1.5) + 100, y, size);
 
     img.writeText(`${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + (longestVal) - 55, y, "right", "#FFFFFF", size);
