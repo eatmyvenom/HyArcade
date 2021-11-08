@@ -57,9 +57,9 @@ module.exports = async function FakeLb (path, category, time) {
 
   for(let i = 0; i < topTen.length; i += 1) {
     if(time == undefined) {
-      img.drawLBPos(`${i + 1}`, topTen[i].rank, "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i]?.[category]?.[path] ?? topTen[i]?.miniWalls?.wins), x, y += dy, fontSize);
+      img.drawLBPlayer(topTen[i], `${i + 1}`, formatNum(topTen[i]?.[category]?.[path] ?? topTen[i]?.miniWalls?.wins), x, y += dy, fontSize);
     } else {
-      img.drawLBPos(`${i + 1}`, topTen[i].rank, "", topTen[i].name, topTen[i].guildTag, topTen[i].guildTagColor, formatNum(topTen[i]?.lbProp ?? topTen[i]?.miniWalls?.wins), x, y += dy, fontSize);
+      img.drawLBPlayer(topTen[i], `${i + 1}`, formatNum(topTen[i]?.lbProp ?? topTen[i]?.miniWalls?.wins), x, y += dy, fontSize);
     }
   }
 

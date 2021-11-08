@@ -77,7 +77,7 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
   const quests = `${Object.values(acc.quests).reduce((p, c) => p + c, 0)}`;
   const challenges = `${numberify(Object.values(acc.arcadeChallenges).reduce((p, c) => p + c, 0))}`;
 
-  img.writeText(`&lTotal Wins - ${wins}`, 640, 300, "center", "#FFFF55", "42px");
+  img.drawMcText(`&l&eTotal Wins &r&7-&r&e ${wins}`, 640, 300, 42, "center");
 
   img.writeText(`&lAP&r &7-&r ${ap}`, 20, 400, "left", "#55FFFF", "42px");
   img.writeText(`&lQuests&r &7-&r ${numberify(quests)}`, 20, 500, "left", "#FFAA00", "42px");

@@ -30,6 +30,27 @@ const PlusColors = {
   undefined: "#FFAA00"
 };
 
+const colorFormatters = {
+  black: "&0",
+  dark_blue: "&1",
+  dark_green: "&2",
+  dark_aqua: "&3",
+  dark_red: "&4",
+  dark_purple: "&5",
+  gold: "&6",
+  grey: "&7",
+  gray: "&7",
+  dark_gray: "&8",
+  blue: "&9",
+  green: "&a",
+  aqua: "&b",
+  red: "&c",
+  light_purple: "&d",
+  yellow: "&e",
+  white: "&f",
+  undefined: "&6"
+};
+
 module.exports = class ImageGenerator {
     canvas;
     context;
@@ -62,6 +83,147 @@ module.exports = class ImageGenerator {
       const imgWidth = width == undefined ? img.width : width;
       const imgHeight = height == undefined ? img.height : height;
       this.context.drawImage(img, x, y, imgWidth, imgHeight);
+    }
+
+    drawMcText (txt, x, y, size = 32, align = "left", tag = false, fake = false) {
+      const offset = size * 0.1;
+      this.context.font = `${size}px 'myfont'`;
+      this.context.textAlign = align;
+      this.context.textBaseline = "middle";
+
+      const lineArr = txt.includes("&") ? txt.split(/&/) : [`r${txt}`];
+
+      let currentX = x;
+
+      if(align == "center") {
+        const totalWidth = this.drawMcText(txt, x, y, size, "left", false, true);
+
+        currentX -= totalWidth / 2;
+        this.context.textAlign = "left";
+      }
+
+      if(tag) {
+        const width = Math.abs(this.drawMcText(txt, x, y, size, "left", false, true));
+        this.context.beginPath();
+        this.context.rect(currentX - (size / 6), y - (size / 2) - 2, width + (size / 4), size + 4);
+        this.context.fillStyle = "#33333372";
+        this.context.fill();
+      }
+
+      for(const s of lineArr) {
+        switch(s.slice(0, 1)) {
+        case "0" : {
+          this.context.fillStyle = "#000000";
+          break;
+        }
+          
+        case "1" : {
+          this.context.fillStyle = "#0000AA";
+          break;
+        }
+          
+        case "2" : {
+          this.context.fillStyle = "#00AA00";
+          break;
+        }
+          
+        case "3" : {
+          this.context.fillStyle = "#00AAAA";
+          break;
+        }
+
+        case "4" : {
+          this.context.fillStyle = "#AA0000";
+          break;
+        }
+
+        case "5" : {
+          this.context.fillStyle = "#AA0000";
+          break;
+        }
+
+        case "6" : {
+          this.context.fillStyle = "#FFAA00";
+          break;
+        }
+
+        case "7" : {
+          this.context.fillStyle = "#AAAAAA";
+          break;
+        }
+
+        case "8" : {
+          this.context.fillStyle = "#555555";
+          break;
+        }
+
+        case "9" : {
+          this.context.fillStyle = "#5555FF";
+          break;
+        }
+
+        case "a" : {
+          this.context.fillStyle = "#55FF55";
+          break;
+        }
+
+        case "b" : {
+          this.context.fillStyle = "#55FFFF";
+          break;
+        }
+
+        case "c" : {
+          this.context.fillStyle = "#FF5555";
+          break;
+        }
+
+        case "d" : {
+          this.context.fillStyle = "#FF55FF";
+          break;
+        }
+
+        case "e" : {
+          this.context.fillStyle = "#FFFF55";
+          break;
+        }
+
+        case "f" : {
+          this.context.fillStyle = "#FFFFFF";
+          break;
+        }
+
+        case "l" : {
+          this.context.font = `${size}px 'boldmc'`;
+          break;
+        }
+
+        case "r" : {
+          this.context.font = `${size}px 'myfont'`;
+          this.context.fillStyle = "#FFFFFF";
+          break;
+        }
+        }
+        if(this.shadow) {
+          const prevStyle = this.context.fillStyle;
+          this.context.fillStyle = "#00000072";
+          if(!fake) {
+            this.context.fillText(s.slice(1).replace(/&./g, ""), currentX + offset, y + offset);
+          }
+          this.context.fillStyle = prevStyle;
+        }
+
+        if(!fake) {
+          this.context.fillText(s.slice(1).replace(/&./g, ""), currentX, y);
+        }
+
+        if(align == "right") {
+          currentX -= this.context.measureText(s.slice(1).replace(/&./g, "")).width;
+        } else {
+          currentX += this.context.measureText(s.slice(1).replace(/&./g, "")).width;
+        }
+      }
+
+      return currentX - x;
     }
 
     writeText (txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36, font = undefined) {
@@ -213,36 +375,28 @@ module.exports = class ImageGenerator {
       const mbold = type == "monthly";
       const wbold = type == "weekly";
 
-      this.context.font = `${size}px ${lbold ? "'boldmc'" : this.font}`;
-      const lWidth = this.context.measureText("Lifetime").width;
-      this.context.font = `${size}px ${mbold ? "'boldmc'" : this.font}`;
-      const mWidth = this.context.measureText("Monthly").width;
-      this.context.font = `${size}px ${wbold ? "'boldmc'" : this.font}`;
-      const wWidth = this.context.measureText("Weekly").width;
-      this.context.font = `${size}px ${this.font}`;
-      const space = this.context.measureText("   ").width;
-      const width = lWidth + mWidth + wWidth + space;
+      this.drawMcText(`${lbold ? "&l&a" : "&r&7"}Lifetime ${mbold ? "&l&a" : "&r&7"}Monthly ${wbold ? "&l&a" : "&r&7"}Weekly`, x, y, size, "center", true);
+    }
 
-      this.context.rect((x - width / 2) - 4, y - (size / 2) - 2, width + 6, size + 4);
-      this.context.fillStyle = "#33333372";
-      this.context.fill();
+    /**
+     * 
+     * @param {Account} acc 
+     * @param {number} pos 
+     * @param {number} count 
+     * @param {*} x 
+     * @param {*} y 
+     * @param {*} size 
+     */
+    drawLBPlayer (acc, pos, count, x, y, size) {
+      let guild = acc.guildTag;
 
-      let currentX = x - (width / 2) + (lWidth / 2);
+      if(guild == "NONE" || guild == undefined) {
+        guild = "";
+      } else {
+        guild = `[${guild}]`;
+      }
 
-      const lifetimeColor = type == "lifetime" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Lifetime", currentX, y, "center", lifetimeColor, `${size}px`, 0, lbold ? "'boldmc'" : this.font);
-
-      currentX += lWidth / (lbold ? 1 : 0.8);
-
-      const monthlyColor = type == "monthly" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Monthly", currentX, y, "center", monthlyColor, `${size}px`, 0, mbold ? "'boldmc'" : this.font);
-
-      currentX += mWidth / (mbold ? 1 : 0.9);
-
-      const weeklyColor = type == "weekly" ? "#55FF55" : "#AAAAAA";
-      this.writeText("Weekly", currentX, y, "center", weeklyColor, `${size}px`, 0, wbold ? "'boldmc'" : this.font);
-
-      return currentX += wWidth;
+      this.drawMcText(`&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true)}&r &7-&r &e${count}`, x, y, size, "center", true);
     }
 
     drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
@@ -277,7 +431,7 @@ module.exports = class ImageGenerator {
       let currentX = x - width / 2;
 
       this.context.rect(currentX - 3, y - (size / 2) - 2, width + 4, size + 2);
-      this.context.fillStyle = "#33333366";
+      this.context.fillStyle = "#33333372";
       this.context.fill();
 
       this.writeAccTitle(rank, plusColor, name, currentX + posWidth, y, `${size}px`, false);
@@ -300,6 +454,71 @@ module.exports = class ImageGenerator {
 
     writeTextCenter (txt, spacing = 36) {
       this.writeText(txt, this.canvas.width / 2, 96, "center", "#ffffff", "32px", spacing);
+    }
+
+    /**
+     * 
+     * @param {Account} acc 
+     * @param {boolean} showRank 
+     * @param {boolean} showGuild 
+     * @returns {string}
+     */
+    static formatAcc (acc, showRank = true, showGuild = false) {
+      let rank = colorFormatters.grey;
+      if(acc.rank != undefined && showRank) {
+        if(acc.rank == "MVP_PLUS_PLUS") {
+          const superStarColor = colorFormatters[acc.mvpColor.toLowerCase()];
+          rank = `${superStarColor}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}++${superStarColor}] `;
+        } else if (acc.rank == "MVP_PLUS") {
+          rank = `${colorFormatters.aqua}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}+${colorFormatters.aqua}] `;
+        } else if (acc.rank == "MVP") {
+          rank = `${colorFormatters.aqua}[MVP] `;
+        } else if (acc.rank == "VIP_PLUS") {
+          rank = `${colorFormatters.green}[VIP${colorFormatters.gold}+${colorFormatters.green}] `;
+        } else if (acc.rank == "VIP") {
+          rank = `${colorFormatters.green}[VIP] `;
+        } else if (acc.rank == "YOUTUBER") {
+          rank = `${colorFormatters.red}[${colorFormatters.white}YOUTUBE${colorFormatters.red}] `;
+        } else if (acc.rank == "GM") {
+          rank = `${colorFormatters.green}[GM] `;
+        } else if (acc.rank == "ADMIN") {
+          rank = `${colorFormatters.red}[ADMIN] `;
+        } else if (acc.rank == "NONE" || acc.rank == "NORMAL") {
+          rank = colorFormatters.grey;
+        } else {
+          rank = `${acc.rank.replace(/§/g, "&")} `;
+        }
+      } else {
+        if(acc.rank == "MVP_PLUS_PLUS") {
+          const superStarColor = colorFormatters[acc.mvpColor?.toLowerCase()];
+          rank = `${superStarColor}`;
+        } else if (acc.rank == "MVP_PLUS") {
+          rank = `${colorFormatters.aqua}`;
+        } else if (acc.rank == "MVP") {
+          rank = `${colorFormatters.aqua}`;
+        } else if (acc.rank == "VIP_PLUS") {
+          rank = `${colorFormatters.green}`;
+        } else if (acc.rank == "VIP") {
+          rank = `${colorFormatters.green}`;
+        } else if (acc.rank == "YOUTUBER") {
+          rank = `${colorFormatters.red}`;
+        } else if (acc.rank == "GM") {
+          rank = `${colorFormatters.green}`;
+        } else if (acc.rank == "ADMIN") {
+          rank = `${colorFormatters.red}`;
+        } else if (acc.rank == "NONE" || acc.rank == "NORMAL") {
+          rank = colorFormatters.grey;
+        } else if (acc.rank != "") {
+          rank = `${acc.rank.slice(acc.rank.lastIndexOf("§"), acc.rank.lastIndexOf("§") + 1)}`;
+        }
+      }
+
+      let guild = "";
+      if(acc.guildTag != "NONE" && acc.guildTag != "" && showGuild) {
+        guild = ` ${colorFormatters[acc.guildTagColor?.toLowerCase()]}[${acc.guildTag}]`;
+      }
+
+      return `${rank}${acc.name}${guild}`;
     }
 
     /**
