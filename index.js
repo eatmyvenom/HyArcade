@@ -29,6 +29,7 @@ const Server = require("./src/server/Wrap");
 const Translator = require("./src/mongo/Translator");
 const logger = require("hyarcade-logger");
 const BSONreader = require("./src/utils/files/BSONreader");
+const AddFriends = require("./src/datagen/AddFriends");
 const Runtime = require("./src/Runtime").fromJSON();
 
 /**
@@ -460,6 +461,12 @@ async function main () {
   case "gmembers":
   case "addGM":
     await cli.addGuildMembers(args);
+    break;
+
+  case "addfl":
+  case "addfriends":
+  case "addf": 
+    await AddFriends(args[3]);
     break;
 
   case "addGID":
