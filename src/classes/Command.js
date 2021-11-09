@@ -52,7 +52,7 @@ module.exports = class Command {
         logger.warn(`${author} has been rate limited for ${this.name}`);
         if(interaction != undefined) {
           if(interaction.isCommand()) {
-            return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined, true, true);
+            return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined, false, true);
           }
           return new CommandResponse("");
         }
