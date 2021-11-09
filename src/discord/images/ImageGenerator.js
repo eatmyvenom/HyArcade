@@ -56,11 +56,21 @@ module.exports = class ImageGenerator {
     context;
     font;
     shadow = false;
+    gradient;
     constructor (width, height, font = "Fira Code", shadow = false) {
       this.canvas = Canvas.createCanvas(width, height);
       this.context = this.canvas.getContext("2d");
       this.font = font;
       this.shadow = shadow;
+      const gradient = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+      gradient.addColorStop(0, "red");
+      gradient.addColorStop(1 / 6, "orange");
+      gradient.addColorStop(2 / 6, "yellow");
+      gradient.addColorStop(3 / 6, "green");
+      gradient.addColorStop(4 / 6, "blue");
+      gradient.addColorStop(5 / 6, "indigo");
+      gradient.addColorStop(1, "violet");
+      this.gradient = gradient;
     }
 
     async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
@@ -189,6 +199,11 @@ module.exports = class ImageGenerator {
 
         case "f" : {
           this.context.fillStyle = "#FFFFFF";
+          break;
+        }
+
+        case "z" : {
+          this.context.fillStyle = this.gradient;
           break;
         }
 

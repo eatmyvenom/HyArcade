@@ -145,36 +145,37 @@ function nonDatabaseError (ign) {
 /**
  * 
  * @param {Account} acc
- * @param {string} timetype 
  * @returns {object}
  */
 async function generateImage (acc) {
   const games = getGames(acc);
-  const title = "'s Arcade Wins";
 
-  const img = new ImageGenerator(1280, 1060, "'myFont'", true);
-  await img.addBackground("resources/arcblur.png", -320, 0, 1600, 1060, "#0000006F");
+  const img = new ImageGenerator(3000, 1600, "'myFont'", true);
+  await img.addBackground("resources/arcblur.png", 0, 0, 3000, 2040, "#0000007F");
 
-  img.context.beginPath();
-  img.context.rect(0, 0, 1280, 80);
-  img.context.fillStyle = "#222222AF";
-  img.context.fill();
+  img.drawMcText(ImageGenerator.formatAcc(acc), img.canvas.width / 2, 80, 128, "center");
 
-  img.context.beginPath();
-  img.context.rect(0, 80, 1280, 2);
-  img.context.fillStyle = "#FFFFFF";
-  img.context.fill();
+  img.drawMcText("&f&lTotal", img.canvas.width / 2, 250, 92, "center");
+  img.drawMcText(`&b${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 350, 108, "center");
 
-  img.writeAcc(acc, undefined, 40, "48px", title);
-  let y = 130;
+  let y = 500;
+  for(let i = 1; i <= games.length; i += 1) {
 
-  for(let i = 0; i < games.length; i += 1) {
+    let x;
+    switch((i - 1) % 4) {
+    case 0: x = 400; break;
+    case 1: x = 1133.33; break;
+    case 2: x = 1866.66; break;
+    case 3: x = 2600; break;
+      
+    }
 
-    img.writeText(`#${i + 1}`, 640 - 240, y, "right", "#FFAA00", "40px");
-    img.writeText(`&l${games[i].name}`, 640 - 220, y, "left", "#FFFFFF", "37px");
-    img.writeText(`${numberify(games[i].wins)}`, 640 + 320, y, "right", "#FFFF55", "40px");
+    img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 80, "center");
+    img.drawMcText(`&b${numberify(games[i - 1].wins)}`, x, y + 100, 108, "center");
 
-    y += 60;
+    if(i % 4 == 0) {
+      y += 300;
+    }
   }
 
   return img.toDiscord();
