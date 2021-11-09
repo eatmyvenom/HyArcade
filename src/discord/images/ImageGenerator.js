@@ -403,9 +403,9 @@ module.exports = class ImageGenerator {
      * @param {*} size 
      */
     drawLBPlayer (acc, pos, count, x, y, size) {
-      let guild = acc.guildTag;
+      let guild = acc.guildTag ?? "NONE";
 
-      if(guild == "NONE" || guild == undefined) {
+      if(guild == "NONE" || guild == "") {
         guild = "";
       } else {
         guild = `[${guild}]`;
