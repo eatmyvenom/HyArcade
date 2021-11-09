@@ -120,6 +120,7 @@ function getTimedAccount (acc1, acc2) {
   acc1.galaxyWars.wins = (acc1?.galaxyWars?.wins ?? 0) - (acc2?.galaxyWars?.wins ?? 0);
   acc1.pixelPainters.wins = (acc1?.pixelPainters?.wins ?? 0) - (acc2?.pixelPainters?.wins ?? 0);
   acc1.seasonalWins.total = (acc1?.seasonalWins?.total ?? 0) - (acc2?.seasonalWins?.total ?? 0);
+  acc1.combinedArcadeWins = (acc1?.combinedArcadeWins ?? 0) - (acc2?.combinedArcadeWins ?? 0);
 
   return acc1;
 }
