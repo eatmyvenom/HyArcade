@@ -41,7 +41,9 @@ module.exports = class Command {
       let rate = this.rateLimit;
 
       if(interaction != undefined && !interaction.isCommand()) {
-        rate = 0;
+        if(interaction.isMessageComponent()) {
+          rate = Math.max(this.rateLimit / 4, 1000);
+        }
       }
 
       if(BotRuntime.trustedUsers.includes(author) || author == "156952208045375488") {
@@ -54,7 +56,8 @@ module.exports = class Command {
           if(interaction.isCommand()) {
             return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined, false, true);
           }
-          return new CommandResponse("");
+          await interaction.deferUpdate();
+          return;
         }
         return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined);
       }

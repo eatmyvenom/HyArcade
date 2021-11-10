@@ -94,7 +94,12 @@ async function leaderboardHandler (interaction, leaderboard, time, index) {
     undefined,
     interaction
   );
-  return new ButtonResponse("", undefined, res.components, [res.file]);
+
+  if(res == undefined) {
+    return undefined;
+  }
+
+  return new ButtonResponse("", undefined, res?.components, [res?.file]);
 }
 
 /**
@@ -140,7 +145,11 @@ async function topGamesHandler (accUUID, timetype, interaction) {
 
   const topGamesRes = await topGames.default.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", undefined, topGamesRes.components, [ topGamesRes.file ]);
+  if(topGamesRes == undefined) {
+    return undefined;
+  }
+
+  return new ButtonResponse("", undefined, topGamesRes?.components, [ topGamesRes?.file ]);
 }
 
 /**

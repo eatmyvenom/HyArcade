@@ -11,6 +11,8 @@ const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
+const { MessageActionRow } = require("discord.js");
+const { MessageButton } = require("discord.js");
 
 /**
  * 
@@ -53,7 +55,9 @@ async function hander (args, rawMsg, interaction) {
     logger.debug("Deferring interaction");
     await interaction.defer();
   } else if(interaction?.isButton()) {
-    await interaction.deferUpdate();
+    const row = new MessageActionRow({ components: [new MessageButton({ customId: "h", disabled: true, label: "    ⟵", style: "SECONDARY" }), new MessageButton({ customId: "h2", disabled: true, label: "⟶    ", style: "SECONDARY" })] });
+    await interaction.update({ components: [row] });
+    interaction.deferred = true;
   }
 
   if(args.length < 1) {

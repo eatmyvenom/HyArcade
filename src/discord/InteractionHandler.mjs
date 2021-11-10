@@ -134,6 +134,11 @@ async function logBtn (interaction) {
 async function buttonHandler (interaction) {
   if(await ForceOGuser(interaction)) {
     const updatedData = await ButtonParser(interaction);
+
+    if(updatedData == undefined) {
+      return;
+    }
+
     if(interaction.deferred) {
       await interaction.editReply(updatedData.toDiscord());
     } else {
