@@ -1,5 +1,6 @@
 const Database = require("../Utils/Database");
 const Arc3 = require("./FakeLBs/Arc3");
+const ArcLeft = require("./FakeLBs/ArcLeft");
 
 
 module.exports = async function FakeLb (path, category, time) {
@@ -12,8 +13,8 @@ module.exports = async function FakeLb (path, category, time) {
   }
 
   switch(path) {
-  case "coins": {
-    return await Arc3(path, category, time, topTen);
+  case "arcadeCoins": {
+    return await ArcLeft("coins", category, time, topTen);
   }
 
   default : {

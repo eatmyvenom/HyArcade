@@ -1,4 +1,4 @@
-const ImageGenerator = require("./ImageGenerator");
+const ImageGenerator = require("../ImageGenerator");
 
 /**
  * 
@@ -24,7 +24,9 @@ module.exports = async function Arc3 (path, category, time, topTen) {
   let gameTitle = "";
 
   timeTitle += `${(path ?? "wins").slice(0, 1).toUpperCase()}${(path ?? "wins").slice(1)}`.replace(/([A-Z])/g, " $1");
-  timeTitle = timeTitle.slice(0, timeTitle.indexOf("_"));
+  if(timeTitle.includes("_")) {
+    timeTitle = timeTitle.slice(0, timeTitle.indexOf("_"));
+  }
 
   switch(category) {
   case "blockingDead" : gameTitle = "Blocking Dead"; break;
