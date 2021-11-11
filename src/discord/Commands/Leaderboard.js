@@ -55,7 +55,9 @@ async function hander (args, rawMsg, interaction) {
     logger.debug("Deferring interaction");
     await interaction.defer();
   } else if(interaction?.isButton()) {
-    const row = new MessageActionRow({ components: [new MessageButton({ customId: "h", disabled: true, label: "    ⟵", style: "SECONDARY" }), new MessageButton({ customId: "h2", disabled: true, label: "⟶    ", style: "SECONDARY" })] });
+    const row = new MessageActionRow({ components: [
+      new MessageButton({ customId: "h", disabled: true, label: "    ⟵", style: "SECONDARY" }), new MessageButton({ customId: "h2", disabled: true, label: "⟶    ", style: "SECONDARY" })
+    ] });
     await interaction.update({ components: [row] });
     interaction.deferred = true;
   }

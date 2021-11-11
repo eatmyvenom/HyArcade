@@ -26,22 +26,22 @@ module.exports = async function FakeLb (path, category, time) {
   timeTitle += `${(path ?? "wins").slice(0, 1).toUpperCase()}${(path ?? "wins").slice(1)}`.replace(/([A-Z])/g, " $1");
 
   switch(category) {
-  case "blockingDead" : gameTitle = "Blocking dead"; break;
-  case "bountyHunters" : gameTitle = "Bounty hunters"; break;
-  case "captureTheWool" : gameTitle = "Capture the wool"; break;
-  case "dragonWars" : gameTitle = "Dragon wars"; break;
-  case "enderSpleef" : gameTitle = "Ender spleef"; break;
-  case "farmhunt" : gameTitle = "Farm hunt"; break;
+  case "blockingDead" : gameTitle = "Blocking Dead"; break;
+  case "bountyHunters" : gameTitle = "Bounty Hunters"; break;
+  case "captureTheWool" : gameTitle = "Capture the Wool"; break;
+  case "dragonWars" : gameTitle = "Dragon Wars"; break;
+  case "enderSpleef" : gameTitle = "Ender Spleef"; break;
+  case "farmhunt" : gameTitle = "Farm Hunt"; break;
   case "football" : gameTitle = "Football"; break;
-  case "galaxyWars" : gameTitle = "Galaxy wars"; break;
-  case "hideAndSeek" : gameTitle = "Hide and seek"; break;
-  case "holeInTheWall" : gameTitle = "Hole in the wall"; break;
-  case "hypixelSays" : gameTitle = "Hypixel says"; break;
-  case "partyGames" : gameTitle = "Party games"; break;
-  case "pixelPainters" : gameTitle = "Pixel painters"; break;
-  case "throwOut" : gameTitle = "Throw out"; break;
+  case "galaxyWars" : gameTitle = "Galaxy Wars"; break;
+  case "hideAndSeek" : gameTitle = "Hide and Seek"; break;
+  case "holeInTheWall" : gameTitle = "Hole in the Wall"; break;
+  case "hypixelSays" : gameTitle = "Hypixel Says"; break;
+  case "partyGames" : gameTitle = "Party Games"; break;
+  case "pixelPainters" : gameTitle = "Pixel Painters"; break;
+  case "throwOut" : gameTitle = "Throw Out"; break;
   case "zombies" : gameTitle = "Zombies" ; break;
-  default : gameTitle = "Mini walls";
+  default : gameTitle = "Mini Walls";
   }
 
   await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize, "'boldmc'");
