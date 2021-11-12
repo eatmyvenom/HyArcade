@@ -24,11 +24,6 @@ let arcade;
 /**
  * @type {child_process.ChildProcess}
  */
-let mini;
-
-/**
- * @type {child_process.ChildProcess}
- */
 let mw;
 
 /**

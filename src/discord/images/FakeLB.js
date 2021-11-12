@@ -1,4 +1,4 @@
-const { getFromDB } = require("../BotRuntime");
+const { getFromDB, getBanlist } = require("../BotRuntime");
 const Database = require("../Utils/Database");
 const Arc3 = require("./FakeLBs/Arc3");
 const ArcLeft = require("./FakeLBs/ArcLeft");
@@ -11,13 +11,16 @@ module.exports = async function FakeLb (path, category, time) {
 
   if(category == "guild") {
     topTen = await getFromDB("guilds");
-    topTen = topTen.sort((a, b) => b.arcadeEXP - a.arcadeEXP);
-    topTen = topTen.slice(0, 10);
+    topTen = topTen.sort((a, b) => b?.[path] - a?.[path]);
   } else if(path == undefined) {
-    topTen = (await Database.getMWLeaderboard("wins", "monthly")).slice(0, 10);
+    topTen = await Database.getMWLeaderboard("wins", "monthly");
   } else {
-    topTen = (await Database.getLeaderboard(path, category, time)).slice(0, 10);
+    topTen = await Database.getLeaderboard(path, category, time);
   }
+
+  const banlist = await getBanlist();
+  topTen = topTen.filter((a) => !banlist.includes(a.uuid));
+  topTen = topTen.slice(0, 10);
 
   switch(path) {
   case "coinsEarned":

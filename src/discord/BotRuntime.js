@@ -13,6 +13,7 @@ const { mojangRequest } = require("hyarcade-requests");
 
 let hackerlist = null;
 let blacklist = null;
+let banlist = null;
 
 /**
  * 
@@ -220,5 +221,14 @@ module.exports = class BotRuntime {
       }
   
       return blacklist;
+    }
+
+    static async getBanlist () {
+      if(banlist == null) {
+        banlist = await BotRuntime.getFromDB("banlist");
+        setTimeout(() => banlist = null, 3600000);
+      }
+
+      return banlist;
     }
 };
