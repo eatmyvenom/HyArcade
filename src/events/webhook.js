@@ -747,7 +747,6 @@ async function sendFakeWeekLBs () {
   const throwOut = await FakeLB("wins", "throwOut", "weekly");
   const zombies = await FakeLB("wins_zombies", "zombies", "weekly");
   const coins = await FakeLB("arcadeCoins", undefined, "weekly");
-  const gexp = await FakeLB("arcadeEXP", "guild", "weekly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.bd });
   await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
@@ -813,10 +812,6 @@ async function sendFakeWeekLBs () {
   await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
 
-  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
-  g.destroy();
-
   Database.destroy();
 }
 
@@ -840,7 +835,6 @@ async function sendFakeMonthLBs () {
   const throwOut = await FakeLB("wins", "throwOut", "monthly");
   const zombies = await FakeLB("wins_zombies", "zombies", "monthly");
   const coins = await FakeLB("arcadeCoins", undefined, "monthly");
-  const gexp = await FakeLB("arcadeEXP", "guild", "monthly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.bd });
   await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
@@ -905,10 +899,6 @@ async function sendFakeMonthLBs () {
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.c });
   await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
-
-  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
-  g.destroy();
 
   Database.destroy();
 }
@@ -1006,12 +996,34 @@ async function sendFakeLifetimeLBs () {
   Database.destroy();
 }
 
+/**
+ * 
+ */
+async function sendFakeMonthGEXP () {
+  const gexp = await FakeLB("arcadeEXP", "guild", "monthly");
+  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  g.destroy();
+}
+
+/**
+ * 
+ */
+async function sendFakeWeekGEXP () {
+  const gexp = await FakeLB("arcadeEXP", "guild", "weekly");
+  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  g.destroy();
+}
+
 module.exports = {
   send: sendToDiscord,
   sendEmbed: sendToEmbedDiscord,
   sendFakeWeekLBs,
   sendFakeLifetimeLBs,
   sendFakeMonthLBs,
+  sendFakeWeekGEXP,
+  sendFakeMonthGEXP,
   sendBasic,
   sendBasicEmbed,
   generateEmbed,
