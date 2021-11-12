@@ -22,10 +22,7 @@ module.exports = async function ArcLeft (path, category, time, topTen) {
 
   let timeTitle = path == undefined ? "Monthly" : (time == undefined) ? "Lifetime" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
 
-  timeTitle += `${(path ?? "wins").slice(0, 1).toUpperCase()}${(path ?? "wins").slice(1)}`.replace(/([A-Z])/g, " $1");
-  if(timeTitle.includes("_")) {
-    timeTitle = timeTitle.slice(0, timeTitle.indexOf("_"));
-  }
+  timeTitle += " Coins";
 
   await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize, "'boldmc'");
   y += 18;

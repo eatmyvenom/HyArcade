@@ -746,6 +746,8 @@ async function sendFakeWeekLBs () {
   const pixelPainters = await FakeLB("wins", "pixelPainters", "weekly");
   const throwOut = await FakeLB("wins", "throwOut", "weekly");
   const zombies = await FakeLB("wins_zombies", "zombies", "weekly");
+  const coins = await FakeLB("arcadeCoins", undefined, "weekly");
+  const gexp = await FakeLB("arcadeEXP", "guild", "weekly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
   await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
@@ -806,6 +808,14 @@ async function sendFakeWeekLBs () {
   const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
   await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
   z.destroy();
+
+  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  c.destroy();
+
+  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  g.destroy();
 
   Database.destroy();
 }
@@ -829,6 +839,8 @@ async function sendFakeMonthLBs () {
   const pixelPainters = await FakeLB("wins", "pixelPainters", "monthly");
   const throwOut = await FakeLB("wins", "throwOut", "monthly");
   const zombies = await FakeLB("wins_zombies", "zombies", "monthly");
+  const coins = await FakeLB("arcadeCoins", undefined, "monthly");
+  const gexp = await FakeLB("arcadeEXP", "guild", "monthly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
   await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
@@ -889,6 +901,14 @@ async function sendFakeMonthLBs () {
   const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
   await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
   z.destroy();
+
+  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  c.destroy();
+
+  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  g.destroy();
 
   Database.destroy();
 }
@@ -912,6 +932,8 @@ async function sendFakeLifetimeLBs () {
   const pixelPainters = await FakeLB("wins", "pixelPainters");
   const throwOut = await FakeLB("wins", "throwOut");
   const zombies = await FakeLB("wins_zombies", "zombies");
+  const coins = await FakeLB("arcadeCoins");
+  const gexp = await FakeLB("arcadeEXP", "guild");
 
   const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
   await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
@@ -972,6 +994,14 @@ async function sendFakeLifetimeLBs () {
   const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
   await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
   z.destroy();
+
+  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  c.destroy();
+
+  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  g.destroy();
 
   Database.destroy();
 }
