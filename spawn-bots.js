@@ -50,20 +50,10 @@ async function main () {
         silent: false
       });
       await sleep(5500);
-      Logger.info("Micro bot starting...");
-      mini = child_process.fork("./src/discord/ShardManager.js", ["bot", "mini"], {
-        silent: false
-      });
-      await sleep(5500);
       Logger.info("Mini walls bot starting...");
       mw = child_process.fork("./src/discord/ShardManager.js", ["bot", "mw"], {
         silent: false
       });
-
-      mini.on("spawn", () => {
-        Logger.info("Micro bot spawned");
-      });
-      mini.on("exit", restartMini);
 
       mw.on("spawn", () => {
         Logger.info("Mini walls bot spawned");
@@ -94,34 +84,12 @@ function restartMW () {
 /**
  *
  */
-function restartMini () {
-  Logger.error("Mini bot crashed!");
-  mini = child_process.fork("index.js", ["bot", "mini"], {
-    silent: false
-  });
-  mini.on("exit", restartMini);
-}
-
-/**
- *
- */
 function restartArcade () {
   Logger.error("Arcade bot crashed!");
   arcade = child_process.fork("index.js", ["bot"], {
     silent: false
   });
   arcade.on("exit", restartArcade);
-}
-
-/**
- *
- */
-function restartInteraction () {
-  Logger.error("Interactions has crashed!");
-  interactions = child_process.fork("index.js", ["bot", "slash"], {
-    silent: false
-  });
-  interactions.on("exit", restartInteraction);
 }
 
 main();
