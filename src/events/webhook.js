@@ -749,72 +749,72 @@ async function sendFakeWeekLBs () {
   const coins = await FakeLB("arcadeCoins", undefined, "weekly");
   const gexp = await FakeLB("arcadeEXP", "guild", "weekly");
 
-  const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.bd });
+  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bd.destroy();
 
-  const bh = new Discord.WebhookClient({ url: config.discord.leaderboards.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.bh });
+  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bh.destroy();
 
-  const dw = new Discord.WebhookClient({ url: config.discord.leaderboards.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.dw });
+  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   dw.destroy();
 
-  const es = new Discord.WebhookClient({ url: config.discord.leaderboards.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const es = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.es });
+  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   es.destroy();
 
-  const fh = new Discord.WebhookClient({ url: config.discord.leaderboards.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.fh });
+  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fh.destroy();
 
-  const fb = new Discord.WebhookClient({ url: config.discord.leaderboards.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.fb });
+  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fb.destroy();
 
-  const gw = new Discord.WebhookClient({ url: config.discord.leaderboards.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.gw });
+  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   gw.destroy();
 
-  const hns = new Discord.WebhookClient({ url: config.discord.leaderboards.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hns });
+  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hns.destroy();
 
-  const hitw = new Discord.WebhookClient({ url: config.discord.leaderboards.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hitw });
+  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hitw.destroy();
 
-  const hs = new Discord.WebhookClient({ url: config.discord.leaderboards.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hs });
+  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hs.destroy();
 
-  const miw = new Discord.WebhookClient({ url: config.discord.leaderboards.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.miw });
+  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   miw.destroy();
 
-  const pg = new Discord.WebhookClient({ url: config.discord.leaderboards.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.pg });
+  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pg.destroy();
 
-  const pp = new Discord.WebhookClient({ url: config.discord.leaderboards.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.pp });
+  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pp.destroy();
 
-  const to = new Discord.WebhookClient({ url: config.discord.leaderboards.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const to = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.to });
+  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   to.destroy();
 
-  const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const z = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.z });
+  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   z.destroy();
 
-  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const c = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
 
-  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   g.destroy();
 
   Database.destroy();
@@ -842,72 +842,72 @@ async function sendFakeMonthLBs () {
   const coins = await FakeLB("arcadeCoins", undefined, "monthly");
   const gexp = await FakeLB("arcadeEXP", "guild", "monthly");
 
-  const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.bd });
+  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bd.destroy();
 
-  const bh = new Discord.WebhookClient({ url: config.discord.leaderboards.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.bh });
+  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bh.destroy();
 
-  const dw = new Discord.WebhookClient({ url: config.discord.leaderboards.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.dw });
+  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   dw.destroy();
 
-  const es = new Discord.WebhookClient({ url: config.discord.leaderboards.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const es = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.es });
+  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   es.destroy();
 
-  const fh = new Discord.WebhookClient({ url: config.discord.leaderboards.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.fh });
+  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fh.destroy();
 
-  const fb = new Discord.WebhookClient({ url: config.discord.leaderboards.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.fb });
+  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fb.destroy();
 
-  const gw = new Discord.WebhookClient({ url: config.discord.leaderboards.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.gw });
+  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   gw.destroy();
 
-  const hns = new Discord.WebhookClient({ url: config.discord.leaderboards.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hns });
+  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hns.destroy();
 
-  const hitw = new Discord.WebhookClient({ url: config.discord.leaderboards.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hitw });
+  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hitw.destroy();
 
-  const hs = new Discord.WebhookClient({ url: config.discord.leaderboards.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hs });
+  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hs.destroy();
 
-  const miw = new Discord.WebhookClient({ url: config.discord.leaderboards.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.miw });
+  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   miw.destroy();
 
-  const pg = new Discord.WebhookClient({ url: config.discord.leaderboards.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.pg });
+  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pg.destroy();
 
-  const pp = new Discord.WebhookClient({ url: config.discord.leaderboards.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.pp });
+  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pp.destroy();
 
-  const to = new Discord.WebhookClient({ url: config.discord.leaderboards.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const to = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.to });
+  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   to.destroy();
 
-  const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const z = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.z });
+  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   z.destroy();
 
-  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const c = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
 
-  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   g.destroy();
 
   Database.destroy();
@@ -935,72 +935,72 @@ async function sendFakeLifetimeLBs () {
   const coins = await FakeLB("arcadeCoins");
   const gexp = await FakeLB("arcadeEXP", "guild");
 
-  const bd = new Discord.WebhookClient({ url: config.discord.leaderboards.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.bd });
+  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bd.destroy();
 
-  const bh = new Discord.WebhookClient({ url: config.discord.leaderboards.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.bh });
+  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   bh.destroy();
 
-  const dw = new Discord.WebhookClient({ url: config.discord.leaderboards.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.dw });
+  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   dw.destroy();
 
-  const es = new Discord.WebhookClient({ url: config.discord.leaderboards.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const es = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.es });
+  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   es.destroy();
 
-  const fh = new Discord.WebhookClient({ url: config.discord.leaderboards.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.fh });
+  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fh.destroy();
 
-  const fb = new Discord.WebhookClient({ url: config.discord.leaderboards.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.fb });
+  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   fb.destroy();
 
-  const gw = new Discord.WebhookClient({ url: config.discord.leaderboards.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.gw });
+  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   gw.destroy();
 
-  const hns = new Discord.WebhookClient({ url: config.discord.leaderboards.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hns });
+  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hns.destroy();
 
-  const hitw = new Discord.WebhookClient({ url: config.discord.leaderboards.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hitw });
+  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hitw.destroy();
 
-  const hs = new Discord.WebhookClient({ url: config.discord.leaderboards.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hs });
+  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   hs.destroy();
 
-  const miw = new Discord.WebhookClient({ url: config.discord.leaderboards.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.miw });
+  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   miw.destroy();
 
-  const pg = new Discord.WebhookClient({ url: config.discord.leaderboards.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.pg });
+  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pg.destroy();
 
-  const pp = new Discord.WebhookClient({ url: config.discord.leaderboards.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.pp });
+  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   pp.destroy();
 
-  const to = new Discord.WebhookClient({ url: config.discord.leaderboards.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const to = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.to });
+  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   to.destroy();
 
-  const z = new Discord.WebhookClient({ url: config.discord.leaderboards.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const z = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.z });
+  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   z.destroy();
 
-  const c = new Discord.WebhookClient({ url: config.discord.leaderboards.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const c = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.c });
+  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
 
-  const g = new Discord.WebhookClient({ url: config.discord.leaderboards.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcade-pfp-3.png" });
+  const g = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.g });
+  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   g.destroy();
 
   Database.destroy();
