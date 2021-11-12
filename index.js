@@ -144,6 +144,16 @@ async function snap (timeType = "day") {
 }
 
 /**
+ * Snapshot the amount of wins into another json file
+ * 
+ * @param {string} timeType the inbetween of the file
+ */
+async function snapGuild (timeType = "day") {
+  // move all the current stats files to be the daily files
+  await archive("./", timeType);
+}
+
+/**
  * Run the status task
  *
  */
@@ -176,7 +186,6 @@ async function gameAmnt () {
  */
 async function archive (path = "./archive/", timetype = utils.day()) {
   await Promise.all([
-    utils.archiveJson("guild", path, timetype),
     utils.archiveJson("players", path, timetype),
     utils.archiveJson("accounts", path, timetype),
   ]);
@@ -340,6 +349,9 @@ async function main () {
     break;
   case "snap":
     await snap(args[3]);
+    break;
+  case "snapg":
+    await snapGuild(args[3]);
     break;
   case "archive":
     await archive();
