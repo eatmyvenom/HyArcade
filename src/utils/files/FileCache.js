@@ -28,6 +28,7 @@ class FileCache {
     modTime = 0;
     hackerlist = [];
     blacklist = [];
+    banlist = [];
     ezmsgs = [];
     dirty = false;
     path = "data/";
@@ -162,6 +163,18 @@ class FileCache {
           }
         } else {
           Logger.debug("hackerlist has not been modified, ignoring!");
+        }
+
+        const banStat = await fs.stat(`${fileCache.path}banlist`);
+        if(Math.max(banStat.ctimeMs, banStat.mtimeMs) > fileCache.modTime) {
+          const banlist = await fs.readFile(`${fileCache.path}banlist`);
+          if(banlist.toString().trim() != "") {
+            fileCache.banlist = banlist.toString().trim()
+              .split("\n")
+              .filter((v) => v != "");
+          }
+        } else {
+          Logger.debug("banlist has not been modified, ignoring!");
         }
 
         const ezStat = await fs.stat(`${fileCache.path}ez`);
