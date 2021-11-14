@@ -103,7 +103,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
       acc = res?.acc;
       timed = res?.timed;
       if(timed == undefined) {
-        return ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr);
+        return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr));
       }
     } else {
       acc = res;
@@ -114,7 +114,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
       acc = res?.acc;
       timed = res?.timed;
       if(timed == undefined) {
-        return ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr);
+        return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr));
       }
     } else {
       acc = res;
