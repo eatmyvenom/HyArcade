@@ -5,6 +5,7 @@ const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const {
   ERROR_IGN_UNDEFINED
 } = require("../Utils/Embeds/StaticEmbeds");
@@ -109,6 +110,9 @@ async function miniWallsStats (args, rawMsg, interaction) {
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
+      if(timed == undefined) {
+        return ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr);
+      }
     } else {
       acc = res;
     }
