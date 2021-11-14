@@ -102,6 +102,9 @@ async function miniWallsStats (args, rawMsg, interaction) {
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
+      if(timed == undefined) {
+        return ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr);
+      }
     } else {
       acc = res;
     }
