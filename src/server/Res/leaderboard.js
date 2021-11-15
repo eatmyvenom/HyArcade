@@ -1,3 +1,4 @@
+const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
@@ -87,7 +88,11 @@ module.exports = async (req, res, fileCache) => {
       const oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
 
       for(const a of oldCopy) {
-        const n = fileCache.accounts.find((u) => u.uuid == a.uuid);
+        const n = fileCache.accounts.find((u) => u.uuid === a.uuid);
+
+        if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME") || a.timePlaying == 0) {
+          newAcclist.push(new Account(a.name, 0, a.uuid));
+        }
 
         a.lbProp = numberify(getter(n)) - numberify(getter(a)) ?? 0;
         a.name = n?.name ?? "INVALID-NAME";

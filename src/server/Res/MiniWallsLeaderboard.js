@@ -14,7 +14,7 @@ async function generateLeaderboard (fileCache, stat, time) {
   /** @type {Account[]} */
   let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
 
-  accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
+  accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
 
   if(time != undefined) {
@@ -24,6 +24,10 @@ async function generateLeaderboard (fileCache, stat, time) {
 
     accounts.map((acc) => {
       const timeAcc = timedAccounts.find((a) => a.uuid == acc.uuid);
+
+      if(timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME") || timeAcc.timePlaying == 0) {
+        return new Account(timeAcc.name, 0, acc.uuid);
+      }
 
       acc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? acc.miniWalls.wins;
       acc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? acc.miniWalls.arrowsHit;
