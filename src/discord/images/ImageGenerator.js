@@ -115,7 +115,7 @@ module.exports = class ImageGenerator {
       if(tag) {
         const width = Math.abs(this.drawMcText(txt, x, y, size, "left", false, true));
         this.context.beginPath();
-        this.context.rect(currentX - 2, y - (size / 2) - 3, width + 3, size + 2);
+        this.context.rect(currentX - (size / 10) - 2, y - (size / 2) - 1, width + (size / 5) + 1, size + 3);
         this.context.fillStyle = "#33333372";
         this.context.fill();
       }
@@ -411,7 +411,7 @@ module.exports = class ImageGenerator {
         guild = `[${guild}]`;
       }
 
-      this.drawMcText(`&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true)}&r &7-&r &e${count}`, x, y, size, "center", true);
+      this.drawMcText(`&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true, true)}&r &7-&r &e${count}`, x, y, size, "center", true);
     }
 
     drawLBPos (pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
@@ -476,13 +476,14 @@ module.exports = class ImageGenerator {
      * @param {Account} acc 
      * @param {boolean} showRank 
      * @param {boolean} showGuild 
+     * @param {boolean} ignorePref
      * @returns {string}
      */
-    static formatAcc (acc, showRank = true, showGuild = false) {
+    static formatAcc (acc, showRank = true, showGuild = false, ignorePref = false) {
       let rank = colorFormatters.grey;
       if(acc.rank != undefined && showRank) {
         if(acc.rank == "MVP_PLUS_PLUS") {
-          const superStarColor = colorFormatters[acc.mvpColor.toLowerCase()];
+          const superStarColor = ignorePref ? colorFormatters.gold : colorFormatters[acc.mvpColor.toLowerCase()];
           rank = `${superStarColor}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}++${superStarColor}] `;
         } else if (acc.rank == "MVP_PLUS") {
           rank = `${colorFormatters.aqua}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}+${colorFormatters.aqua}] `;
@@ -505,7 +506,7 @@ module.exports = class ImageGenerator {
         }
       } else {
         if(acc.rank == "MVP_PLUS_PLUS") {
-          const superStarColor = colorFormatters[acc.mvpColor?.toLowerCase()];
+          const superStarColor = ignorePref ? colorFormatters.gold : colorFormatters[acc.mvpColor.toLowerCase()];
           rank = `${superStarColor}`;
         } else if (acc.rank == "MVP_PLUS") {
           rank = `${colorFormatters.aqua}`;
