@@ -1,15 +1,8 @@
 const linkCmd = require("./Commands/Link");
 const logger = require("hyarcade-logger");
-const Runtime = require("../Runtime");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsLB = require("./Commands/MiniWallsLB");
 const MiniWallsCompare = require("./Commands/MiniWallsCompare");
-const {
-  ERROR_DATABASE_ERROR
-} = require("./Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_API_DOWN
-} = require("./Utils/Embeds/StaticEmbeds");
 const {
   Message
 } = require("discord.js");
@@ -21,21 +14,7 @@ const UpdateNames = require("./Commands/UpdateNames");
  * @returns {object}
  */
 async function execute (msg, senderID) {
-  if(msg.content.startsWith(".")) {
-    if(Runtime.fromJSON().dbERROR) {
-      logger.warn("Someone tried to run a command while the database is corrupted!");
-      return {
-        res: "",
-        embed: ERROR_DATABASE_ERROR
-      };
-    }
-    if(Runtime.fromJSON().apiDown) {
-      logger.warn("Someone tried to run a command while the API is down!");
-      return {
-        res: "",
-        embed: ERROR_API_DOWN
-      };
-    }
+  if(msg.content.startsWith(".") && msg.content.length > 1) {
     const cmdArr = msg.content.slice(1).split(" ");
     return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
   }
@@ -88,7 +67,7 @@ async function checkCommands (rawMsg, command, args, author) {
     const {
       FakeLb
     } = await import("./Commands/FakeLb.mjs");
-    return await FakeLb.execute(args, author, rawMsg);
+    return await FakeLb.execute([], author, rawMsg);
   }
 
   case "ping": {
