@@ -92,6 +92,7 @@ module.exports = async (req, res, fileCache) => {
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME") || a.timePlaying == 0) {
           newAcclist.push(new Account(a.name, 0, a.uuid));
+          continue;
         }
 
         a.lbProp = numberify(getter(n)) - numberify(getter(a)) ?? 0;
