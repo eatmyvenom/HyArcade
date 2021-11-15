@@ -24,7 +24,7 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
 
   const size = "80px";
   const placeColor = "#FFFF55";
-  
+
   img.context.font = `${size} ${img.font}`;
   let longestName = 0;
   let longestVal = 0;
@@ -55,7 +55,7 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
     }
 
     img.writeText(`#${startingIndex + i + 1}`, 1280 - (longestName / 1.5) - 100, y, "left", placeColor, size);
-    img.writeAcc(res[i], 1280 - (longestName / 1.5) + 100, y, size);
+    img.drawMcText(ImageGenerator.formatAcc(res[i], true, false, false), 1280 - (longestName / 1.5) + 100, y, size.replace(/px/g, ""), "left");
 
     img.writeText(`${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + (longestVal) - 55, y, "right", "#FFFFFF", size);
   }

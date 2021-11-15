@@ -1,6 +1,9 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
+
+const imgCache = [];
+
 Canvas.registerFont("resources/mc.otf", {
   family: "myFont"
 });
@@ -62,19 +65,18 @@ module.exports = class ImageGenerator {
       this.context = this.canvas.getContext("2d");
       this.font = font;
       this.shadow = shadow;
-      const gradient = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-      gradient.addColorStop(0, "red");
-      gradient.addColorStop(1 / 6, "orange");
-      gradient.addColorStop(2 / 6, "yellow");
-      gradient.addColorStop(3 / 6, "green");
-      gradient.addColorStop(4 / 6, "blue");
-      gradient.addColorStop(5 / 6, "indigo");
-      gradient.addColorStop(1, "violet");
-      this.gradient = gradient;
     }
 
     async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
-      const bg = await Canvas.loadImage(path);
+      let bg;
+
+      if(imgCache[path] != undefined) {
+        bg = imgCache[path];
+      } else {
+        bg = await Canvas.loadImage(path);
+        imgCache[path] = bg;
+      }
+
       this.context.drawImage(bg, x, y, dx, dy);
       this.context.beginPath();
       this.context.rect(0, 0, this.canvas.width, this.canvas.height);
@@ -82,7 +84,7 @@ module.exports = class ImageGenerator {
       this.context.fill();
     }
 
-    async addImage (path, x, y, bgIterations = 48, bgStrenth = "11", width, height) {
+    async addImage (path, x, y, bgIterations = 0, bgStrenth = "11", width, height) {
       const img = await Canvas.loadImage(path);
       for(let i = bgIterations; i >= 4; i -= 1) {
         this.context.beginPath();
@@ -203,6 +205,18 @@ module.exports = class ImageGenerator {
         }
 
         case "z" : {
+          if(this.gradient == undefined) {
+            const gradient = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+            gradient.addColorStop(0, "red");
+            gradient.addColorStop(1 / 6, "orange");
+            gradient.addColorStop(2 / 6, "yellow");
+            gradient.addColorStop(3 / 6, "green");
+            gradient.addColorStop(4 / 6, "blue");
+            gradient.addColorStop(5 / 6, "indigo");
+            gradient.addColorStop(1, "violet");
+            this.gradient = gradient;
+          }
+
           this.context.fillStyle = this.gradient;
           break;
         }
@@ -749,6 +763,6 @@ module.exports = class ImageGenerator {
     }
 
     toDiscord (name = "image.png") {
-      return new Discord.MessageAttachment(this.canvas.toBuffer(), name);
+      return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 9 }), name);
     }
 };
