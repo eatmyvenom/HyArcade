@@ -90,7 +90,7 @@ module.exports = async (req, res, fileCache) => {
       for(const a of oldCopy) {
         const n = fileCache.accounts.find((u) => u.uuid === a.uuid);
 
-        if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME") || a.timePlaying == 0) {
+        if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
           newAcclist.push(new Account(a.name, 0, a.uuid));
           continue;
         }
