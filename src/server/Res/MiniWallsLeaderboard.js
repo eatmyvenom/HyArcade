@@ -25,7 +25,7 @@ async function generateLeaderboard (fileCache, stat, time) {
     accounts.map((acc) => {
       const timeAcc = timedAccounts.find((a) => a.uuid == acc.uuid);
 
-      if(timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME") || timeAcc.timePlaying == 0) {
+      if(timeAcc?.name == "INVALID-NAME" || timeAcc?.nameHist?.includes("INVALID-NAME") || timeAcc?.timePlaying == 0) {
         return new Account(timeAcc.name, 0, acc.uuid);
       }
 
