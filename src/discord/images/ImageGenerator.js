@@ -513,7 +513,7 @@ module.exports = class ImageGenerator {
           rank = `${colorFormatters.green}[GM] `;
         } else if (acc.rank == "ADMIN") {
           rank = `${colorFormatters.red}[ADMIN] `;
-        } else if (acc.rank == "NONE" || acc.rank == "NORMAL") {
+        } else if (acc.rank == "NONE" || acc.rank == "NORMAL" || acc.rank == undefined || acc.rank == "") {
           rank = colorFormatters.grey;
         } else {
           rank = `${acc.rank.replace(/§/g, "&")} `;
@@ -536,10 +536,12 @@ module.exports = class ImageGenerator {
           rank = `${colorFormatters.green}`;
         } else if (acc.rank == "ADMIN") {
           rank = `${colorFormatters.red}`;
-        } else if (acc.rank == "NONE" || acc.rank == "NORMAL") {
+        } else if (acc.rank == "NONE" || acc.rank == "NORMAL" || acc.rank == undefined || acc.rank == "") {
           rank = colorFormatters.grey;
         } else if (acc.rank != "") {
           rank = `${acc.rank.slice(acc.rank.lastIndexOf("§"), acc.rank.lastIndexOf("§") + 1)}`;
+        } else {
+          rank = colorFormatters.grey;
         }
       }
 
