@@ -35,7 +35,7 @@ module.exports = class Command {
      * @param {*} author 
      * @param {Message} rawMsg 
      * @param {Interaction} interaction 
-     * @returns {*}
+     * @returns {CommandResponse}
      */
     async execute (args, author, rawMsg, interaction) {
       let rate = this.rateLimit;
