@@ -4,6 +4,8 @@ const profile = require("./Profile");
 profile.type = 1;
 const compare = require("./Compare");
 compare.type = 1;
+const ap = require("./Achievements");
+ap.type = 1;
 
 module.exports = {
   name: "arcade",
@@ -28,5 +30,6 @@ module.exports = {
   leaderboard,
   profile,
   compare,
+  ap,
   ],
 };

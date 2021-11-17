@@ -165,6 +165,10 @@ export default async (interaction) => {
     case "profile": {
       return await commands.Profile.execute([opts.getString("player")], authorID, null, interaction);
     }
+
+    case "achievements": {
+      return await commands.ArcadeAP.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
+    }
     }
 
     break;

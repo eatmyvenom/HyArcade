@@ -6,6 +6,7 @@ const ButtonResponse = require("../Buttons/ButtonResponse");
 const MenuGenerator = require("./MenuGenerator");
 const Logger = require("hyarcade-logger");
 const AccountComparitor = require("../../Utils/AccountComparitor");
+const ArcadeAP = require("../../Commands/ArcadeAP");
 
 let partyGames = undefined;
 
@@ -20,6 +21,10 @@ module.exports = async function MenuParser (interaction) {
   switch(commandType) {
   case "s": {
     return await statsHandler(data[1], data[2], interaction.values[0], interaction);
+  }
+
+  case "ap": {
+    return await apHandler(data[1], interaction.values[0], interaction);
   }
 
   case "pg" : {
@@ -70,4 +75,15 @@ async function partyGamesHandler (accUUID, time, game, interaction) {
   const pgRes = await partyGames.default.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
+}
+
+/**
+ * @param {string} accUUID
+ * @param {string} game
+ * @param {SelectMenuInteraction} interaction
+ * @returns {ButtonResponse}
+ */
+async function apHandler (accUUID, game, interaction) {
+  const apRes = await ArcadeAP.execute([accUUID, game], interaction.user.id, undefined, interaction);
+  return new ButtonResponse("", [ apRes.embed ], apRes.components);
 }
