@@ -4,9 +4,9 @@
     "description": "A full system for gathering and displaying peoples arcade games stats",
     "main": "index.js",
     "scripts": {
-        "testbot" : "node index.js bot test",
-        "bot" : "node spawn-bots.js",
-        "cluster" : "node index.js cluster",
+        "testbot": "node index.js bot test",
+        "bot": "node spawn-bots.js",
+        "cluster": "node index.js cluster",
         "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },
     "author": "EatMyVenom",
@@ -25,7 +25,6 @@
         "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
         "javascript-time-ago": "^2.3.6",
         "js-beautify": "^1.14.0",
-        "mongo": "^0.1.0",
         "node-fetch": "^2.6.1",
         "nodejs": "^0.0.0",
         "timsort": "^0.3.0"
