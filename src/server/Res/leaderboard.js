@@ -77,7 +77,7 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     // Full copy to prevent accounts list from being messed up
-    let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
+    let accounts = AccountArray([...fileCache.accounts]);
 
     accounts = accounts.filter((a) => testNullish(getter(a)));
 
@@ -85,28 +85,43 @@ module.exports = async (req, res, fileCache) => {
       TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
       const newAcclist = [];
-      const oldCopy = JSON.parse(JSON.stringify(fileCache[`${timePeriod}accounts`]));
+      const old = fileCache[`${timePeriod}accounts`];
+      const retro = fileCache.retro[`${timePeriod}accounts`];
 
-      for(const a of oldCopy) {
-        const n = fileCache.accounts.find((u) => u.uuid === a.uuid);
+      for(const a of accounts) {
+        const o = old.find((u) => u.uuid === a.uuid);
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
           newAcclist.push(new Account(a.name, 0, a.uuid));
           continue;
         }
 
-        a.lbProp = numberify(getter(n)) - numberify(getter(a)) ?? 0;
-        a.name = n?.name ?? "INVALID-NAME";
-        a.rank = n?.rank;
-        a.plusColor = n?.plusColor;
-        a.guildTag = n?.guildTag;
-        a.guildTagColor = n?.guildTagColor;
+        let oldval = 0;
+        if(o == undefined) {
+          const rAcc = retro.find((u) => u.uuid === a.uuid);
+
+          if(rAcc == undefined) {
+            oldval = numberify(getter(a));
+          } else {
+            oldval = numberify(getter(rAcc));
+          }
+        } else {
+          oldval = numberify(getter(o));
+        }
+
+        a.lbProp = numberify(getter(a)) - (oldval);
         newAcclist.push(a);
       }
 
       accounts = newAcclist;
       TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
     }
+
+    if(reverse) {
+      accounts = accounts.reverse();
+    }
+
+    accounts = accounts.slice(0, Math.min(accounts.length, 300));
 
     if(min) {
       if(category == null) {
@@ -133,12 +148,6 @@ module.exports = async (req, res, fileCache) => {
         });
       }
     }
-
-    if(reverse) {
-      accounts = accounts.reverse();
-    }
-
-    accounts = accounts.slice(0, Math.min(accounts.length, 300));
 
     res.write(JSON.stringify(accounts));
     res.end();

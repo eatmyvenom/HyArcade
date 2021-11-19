@@ -20,6 +20,7 @@ class FileCache {
     /** @type {Account[]} */
     monthlyAccounts = [];
     acclist = {};
+    retro = {};
     players = [];
     guilds = [];
     guildsDay = [];
@@ -95,6 +96,12 @@ class FileCache {
 
         const guild = await utils.readJSON("guild.json");
         fileCache.guilds = guild;
+
+        const retroMonth = await utils.readJSON("accounts.retro.monthly.json");
+        fileCache.retro.monthlyaccounts = retroMonth;
+
+        const retroWeekly = await utils.readJSON("accounts.retro.weekly.json");
+        fileCache.retro.monthlyaccounts = retroWeekly;
       } catch (e) {
         Logger.err("Error refreshing static files!");
       }
