@@ -99,11 +99,9 @@ module.exports = async (req, res, fileCache) => {
 
         let oldval = 0;
         if(o == undefined) {
-          Logger.debug("Checking for retroactive data.");
           const rAcc = retro?.[a.uuid];
 
           if(rAcc == undefined) {
-            Logger.debug("No retroactive data availiable. Ignoring account!");
             oldval = numberify(getter(a));
           } else {
             oldval = numberify(getter(rAcc));
