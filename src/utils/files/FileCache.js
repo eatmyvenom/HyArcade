@@ -98,10 +98,10 @@ class FileCache {
         fileCache.guilds = guild;
 
         const retroMonth = await utils.readJSON("accounts.retro.monthly.json");
-        fileCache.retro.monthlyAccounts = retroMonth;
+        fileCache.retro.monthlyaccounts = retroMonth;
 
         const retroWeekly = await utils.readJSON("accounts.retro.weekly.json");
-        fileCache.retro.weeklyAccounts = retroWeekly;
+        fileCache.retro.weeklyaccounts = retroWeekly;
       } catch (e) {
         Logger.err("Error refreshing static files!");
       }
