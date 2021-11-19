@@ -98,7 +98,7 @@ module.exports = async (req, res, fileCache) => {
 
         let oldval = 0;
         if(o == undefined) {
-          const rAcc = retro?.[a.uuid] ?? {};
+          const rAcc = retro?.[a.uuid];
 
           if(rAcc == undefined) {
             oldval = numberify(getter(a));
