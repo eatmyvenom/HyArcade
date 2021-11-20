@@ -25,7 +25,7 @@ module.exports = async function FakeLb (path, category, time) {
   switch(path) {
   case "coinsEarned":
   case "arcadeCoins": {
-    return await ArcLeft(path, category, time, topTen);
+    return await ArcLeft(path, undefined, time, topTen);
   }
 
   default : {
