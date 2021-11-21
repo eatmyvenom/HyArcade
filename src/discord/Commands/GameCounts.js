@@ -43,4 +43,4 @@ module.exports = new Command(["game-counts", "gamecounts", "counts", "gc"], ["*"
     .setDescription(await getGames());
 
   return new CommandResponse("", embed);
-});
+}, 15000);
