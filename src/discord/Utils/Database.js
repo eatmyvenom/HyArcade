@@ -35,7 +35,7 @@ class Database {
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path);
     
-    if(category != undefined) {
+    if(category != undefined && category != "undefined") {
       url.searchParams.set("category", category);
     }
 

@@ -20,7 +20,7 @@ module.exports = async function ArcLeft (path, category, time, topTen) {
   const x = 970;
   const fontSize = 36;
 
-  let timeTitle = path == undefined ? "Monthly" : (time == undefined) ? "Lifetime" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
+  let timeTitle = (time == undefined) ? "Lifetime" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
 
   timeTitle += " Coins";
 
