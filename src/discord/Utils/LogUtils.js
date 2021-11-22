@@ -45,7 +45,7 @@ module.exports = class LogUtils {
     await Webhooks.commandHook.send({
       embeds: [LOG_COMMAND_EXECUTION(command, args, message)],
       avatarURL: BotRuntime?.client?.user?.avatarURL(),
-      username: `${BotRuntime?.client?.user?.username} - Shard ${BotRuntime?.client?.shard ?? 0}`
+      username: `${BotRuntime?.client?.user?.username} - Shard ${BotRuntime?.client?.shard?.ids ?? 0}`
     });
   }
 };
