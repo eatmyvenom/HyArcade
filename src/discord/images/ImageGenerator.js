@@ -117,7 +117,7 @@ module.exports = class ImageGenerator {
       if(tag) {
         const width = Math.abs(this.drawMcText(txt, x, y, size, "left", false, true));
         this.context.beginPath();
-        this.context.rect(currentX - (size / 10) - 2, y - (size / 2) - 1, width + (size / 5) + 1, size + 3);
+        this.context.rect(currentX - (size / 10) - 2, y - (size / 2) - 1, width + (size / 5) + 1, size);
         this.context.fillStyle = "#33333372";
         this.context.fill();
       }
