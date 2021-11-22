@@ -232,6 +232,7 @@ module.exports = class ImageGenerator {
           break;
         }
         }
+
         if(this.shadow) {
           const prevStyle = this.context.fillStyle;
           this.context.fillStyle = "#00000072";
@@ -381,20 +382,8 @@ module.exports = class ImageGenerator {
       }
     }
 
-    drawNameTag (txt, x, y, color, size, font = undefined) {
-      this.context.beginPath();
-      this.context.font = `${size}px ${font ?? "'myFont'"}`;
-      const {
-        width
-      } = this.context.measureText(txt);
-      this.context.textAlign = "center";
-      this.context.textBaseline = "middle";
-      const realX = x - width / 2;
-      this.context.rect(realX - 1, y - (size / 2) - 1, width + 1, size + 1);
-      this.context.fillStyle = "#33333372";
-      this.context.fill();
-      this.context.fillStyle = color;
-      this.context.fillText(txt, realX + width / 2, y);
+    drawNameTag (txt, x, y, color, size) {
+      this.drawMcText(`&${colorFormatters[color]}${txt}`, x, y, size, "center", true, false);
     }
 
     drawTimeType (type, x, y, size) {
@@ -417,14 +406,6 @@ module.exports = class ImageGenerator {
      * @param {*} size 
      */
     drawLBPlayer (acc, pos, count, x, y, size) {
-      let guild = acc.guildTag ?? "NONE";
-
-      if(guild == "NONE" || guild == "") {
-        guild = "";
-      } else {
-        guild = `[${guild}]`;
-      }
-
       this.drawMcText(`&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true, true)}&r &7-&r &e${count}`, x, y, size, "center", true);
     }
 
