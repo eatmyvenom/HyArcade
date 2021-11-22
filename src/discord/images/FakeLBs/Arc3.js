@@ -47,8 +47,8 @@ module.exports = async function Arc3 (path, category, time, topTen) {
   default : gameTitle = "Mini Walls";
   }
 
-  await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize, "'boldmc'");
-  await img.drawNameTag(gameTitle, x, y += dy, "#AAAAAA", fontSize);
+  await img.drawNameTag(timeTitle, x, y += dy, "b", fontSize, "'boldmc'");
+  await img.drawNameTag(gameTitle, x, y += dy, "7", fontSize);
   y += 10;
 
   for(let i = 0; i < topTen.length; i += 1) {
@@ -60,7 +60,7 @@ module.exports = async function Arc3 (path, category, time, topTen) {
   }
 
   y += 10;
-  await img.drawNameTag("Click to toggle!", x, y += dy, "#FFAA00", fontSize, "'boldmc'");
+  await img.drawNameTag("Click to toggle!", x, y += dy, "6", fontSize, "'boldmc'");
 
   const strTime = path == undefined ? "monthly" : time ?? "lifetime";
   await img.drawTimeType(strTime, x, y += dy, fontSize);

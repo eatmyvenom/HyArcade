@@ -24,7 +24,7 @@ module.exports = async function ArcLeft (path, category, time, topTen) {
 
   timeTitle += " Coins";
 
-  await img.drawNameTag(timeTitle, x, y += dy, "#55FFFF", fontSize, "'boldmc'");
+  await img.drawNameTag(timeTitle, x, y += dy, "6", fontSize, "'boldmc'");
   y += 18;
 
   for(let i = 0; i < topTen.length; i += 1) {
@@ -40,7 +40,7 @@ module.exports = async function ArcLeft (path, category, time, topTen) {
   }
 
   y += 10;
-  await img.drawNameTag("Click to toggle!", x, y += dy, "#FFAA00", fontSize, "'boldmc'");
+  await img.drawNameTag("Click to toggle!", x, y += dy, "6", fontSize, "'boldmc'");
 
   const strTime = path == undefined ? "monthly" : time ?? "lifetime";
   await img.drawTimeType(strTime, x, y += dy, fontSize);
