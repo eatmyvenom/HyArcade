@@ -34,7 +34,9 @@ async function logError (msg, e) {
  * @param {Message} msg 
  */
 async function logCmd (msg) {
-  LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg).then(()=>{}).catch(Logger.err);
+  LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg)
+    .then(() => {})
+    .catch(Logger.err);
   Logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 
