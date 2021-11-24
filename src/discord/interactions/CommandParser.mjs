@@ -17,7 +17,6 @@ export default async (interaction) => {
   const commands = await CommandStorage.getCommands();
   const authorID = interaction.member.user.id;
   const opts = interaction.options;
-  
 
 
   switch(interaction.commandName) {
@@ -169,9 +168,12 @@ export default async (interaction) => {
     case "achievements": {
       return await commands.ArcadeAP.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
     }
+
+    default: {
+      return await CommandStorage.execInteraction(interaction.options.getSubCommand(), interaction);
     }
 
-    break;
+    }
   }
 
   case "mini-walls": {

@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import Logger from "hyarcade-logger";
 import Command from "../classes/Command.js";
+import CommandResponse from "./Utils/CommandResponse.js";
 
 /**
  * @param {string} mod
@@ -34,6 +35,22 @@ class CommandStorage {
 
     Logger.warn(`Nonexistent command "${string}" was attempted.`);
     return { res: "" };
+  }
+
+  /**
+   * 
+   * @param {string} name
+   * @param {*} interaction
+   * @returns {CommandResponse}
+   */
+  static async execInteraction (name, interaction) {
+    const args = interaction.options.data.map((c) => c.value);
+
+    for(const mod in this._commands) {
+      if(this._commands[mod].aliases.includes(name.toLowerCase())) {
+        return await this._commands[mod].execute(args, interaction.member.id, null, interaction);
+      }
+    }
   }
 
   static async getCommands () {

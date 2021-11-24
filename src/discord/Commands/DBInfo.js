@@ -7,7 +7,11 @@ const { getFromDB } = require("../BotRuntime");
 const BotRuntime = require("../BotRuntime");
 const CommandResponse = require("../Utils/CommandResponse");
 
-module.exports = new Command("dbinfo", ["*"], async () => {
+module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
+
+  if(interaction != undefined) {
+    await interaction.defer();
+  }
 
   /**
    * @type {Account[]}

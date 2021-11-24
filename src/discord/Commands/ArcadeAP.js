@@ -21,8 +21,8 @@ module.exports = new Command(["ap", "achievements"], ["*"], async (args, rawMsg,
     }
   }
 
-  const embed = ArcadeAp(acc, args[1] ?? "overall");
-  const menu = apMenu(acc.uuid, args[1] ?? "overall");
+  const embed = ArcadeAp(acc, args[1]);
+  const menu = apMenu(acc.uuid, args[1]);
 
   return new CommandResponse("", embed, undefined, menu);
 });

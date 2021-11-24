@@ -14,6 +14,10 @@ module.exports = class MenuGenerator {
       .setCustomId(`ap:${uuid}:${game}:menu`)
       .setPlaceholder("Select game")
       .addOptions([{
+        label: "All Games",
+        value: "all",
+      },
+      {
         label: "Overall Arcade",
         value: "overall",
       },

@@ -95,6 +95,31 @@ function getGame (ap) {
 }
 
 module.exports = function (acc, game) {
+
+  if(game == undefined || game == "all") {
+    return new MessageEmbed()
+      .setTitle(`${acc.name}'s Arcade Achievements`)
+      .setColor(0x8c54fe)
+      .addField("General", getGame(acc.arcadeAchievments.overall), true)
+      .addField("Blocking Dead", getGame(acc.arcadeAchievments.blockingDead), true)
+      .addField("Bounty Hunters", getGame(acc.arcadeAchievments.bountyHunters), true)
+      .addField("Capture the Wool", getGame(acc.arcadeAchievments.captureTheWool), true)
+      .addField("Creeper Attack", getGame(acc.arcadeAchievments.creeperAttack), true)
+      .addField("Dragon Wars", getGame(acc.arcadeAchievments.dragonWars), true)
+      .addField("Ender Spleef", getGame(acc.arcadeAchievments.enderSpleef), true)
+      .addField("Farm Hunt", getGame(acc.arcadeAchievments.farmHunt), true)
+      .addField("Football", getGame(acc.arcadeAchievments.football), true)
+      .addField("Galaxy Wars", getGame(acc.arcadeAchievments.galaxyWars), true)
+      .addField("Hide and Seek", getGame(acc.arcadeAchievments.hideAndSeek), true)
+      .addField("Hole in the Wall", getGame(acc.arcadeAchievments.holeInTheWall), true)
+      .addField("Hypixel Says", getGame(acc.arcadeAchievments.hypixelSays), true)
+      .addField("Mini Walls", getGame(acc.arcadeAchievments.miniWalls), true)
+      .addField("Pixel Painters", getGame(acc.arcadeAchievments.pixelPainters), true)
+      .addField("Party Games", getGame(acc.arcadeAchievments.partyGames), true)
+      .addField("Throw Out", getGame(acc.arcadeAchievments.throwOut), true)
+      .addField("Zombies", getGame(acc.arcadeAchievments.zombies), true);
+  }
+
   const overall = getGame(acc.arcadeAchievments[game]);
   const tiered = getAllTiered(acc.arcadeAchievments[game]);
   const challenge = getAllChallenge(acc.arcadeAchievments[game]);

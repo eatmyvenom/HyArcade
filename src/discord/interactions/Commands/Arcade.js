@@ -6,6 +6,12 @@ const compare = require("./Compare");
 compare.type = 1;
 const ap = require("./Achievements");
 ap.type = 1;
+const info = require("./Info");
+info.type = 1;
+const gc = require("./GameCounts");
+gc.type = 1;
+const raw = require("./GetDataRaw");
+raw.type = 1;
 
 module.exports = {
   name: "arcade",
@@ -27,9 +33,23 @@ module.exports = {
     description: "Get the bots ping and status",
     options: [],
   },
+  {
+    type: 1,
+    name: "database",
+    description: "Get info about the database",
+    options: [],
+  },
+  {
+    type: 1,
+    name: "update-time",
+    description: "Get the time of the last database update",
+    options: [],
+  },
   leaderboard,
   profile,
-  compare,
   ap,
+  info,
+  gc,
+  raw,
   ],
 };
