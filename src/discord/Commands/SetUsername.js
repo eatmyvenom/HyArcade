@@ -1,10 +1,10 @@
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
+const CommandResponse = require("../Utils/CommandResponse");
 
-module.exports = new Command("SetUsername", ["%trusted%"], async (args) => {
+module.exports = new Command("setusername", ["%trusted%"], async (args) => {
   const username = args.join(" ");
   await BotRuntime.client.user.setUsername(username);
-  return {
-    res: "Username updated!"
-  };
+
+  return new CommandResponse("Username updated!");
 });

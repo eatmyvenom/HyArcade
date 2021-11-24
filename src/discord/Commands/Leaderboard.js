@@ -68,7 +68,7 @@ async function hander (args, rawMsg, interaction) {
 
   const type = args[0];
   const startingIndex = args[2] != undefined ? Number(args[2]) : 0;
-  const timetype = args[1] != undefined ? args[1] : "lifetime";
+  const timetype = args[1] ?? "lifetime";
 
   /**
    * @type {ImageGenerator}
@@ -464,6 +464,8 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "simulator":
+  case "seasonal":
   case "sim":
   case "tsim":
   case "totalsim":
@@ -489,6 +491,7 @@ async function hander (args, rawMsg, interaction) {
     break;
   }
 
+  case "oitck":
   case "bhk":
   case "bhkills":
   case "bountyhunterkills":

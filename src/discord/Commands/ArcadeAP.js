@@ -6,7 +6,8 @@ const CommandResponse = require("../Utils/CommandResponse");
 const ArcadeAp = require("../Utils/Embeds/ArcadeAp");
 
 module.exports = new Command(["ap", "achievements"], ["*"], async (args, rawMsg, interaction) => {
-  const plr = args[0];
+  const plr = args[0] ?? "!";
+
   let acc;
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);

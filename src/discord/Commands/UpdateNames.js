@@ -1,7 +1,7 @@
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 
-module.exports = new Command("UpdateNames", ["%trusted%"], async () => {
+module.exports = new Command("updatenames", ["%trusted%"], async () => {
   const NameUpdater = await import("../NameUpdater.mjs");
   await NameUpdater.default(BotRuntime.client);
   return {

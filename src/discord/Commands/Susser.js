@@ -22,19 +22,34 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
     reasons.push("Member of Tajik guild");
   }
 
-  if(acc.miniWalls.kills > acc.miniWallsWins * 8) {
+  if(acc.miniWalls.kills > acc.miniWalls.wins * 15) {
     hax += 10;
-    reasons.push("Has gotten more than 8 kills per mini walls win");
+    reasons.push("Has gotten more than 15 kills on average per mini walls win");
   }
 
-  if(acc.miniWalls.kills + acc.miniWalls.finalKills > acc.miniWalls.deaths * 3) {
+  if(acc.miniWalls.kills < acc.miniWalls.wins) {
+    hax += 30;
+    reasons.push("Has gotten less kills than mini walls wins");
+  }
+
+  if(acc.miniWalls.kills + acc.miniWalls.finalKills > acc.miniWalls.deaths * 5) {
     hax += 25;
-    reasons.push("Has greater than 3 KDR in miniwalls");
+    reasons.push("Has greater than 5 KDR in miniwalls");
   }
 
-  if(acc.miniWallsWins > acc.miniWalls.deaths * 1.5) {
+  if(acc.throwOut.kills > acc.throwOut.deaths * 7) {
+    hax += 25;
+    reasons.push("Has greater than 7 KDR in throw out");
+  }
+
+  if(acc.throwOut.kills < acc.throwOut.wins) {
+    hax += 30;
+    reasons.push("Has gotten less throw out kills than throw out wins");
+  }
+
+  if(acc.miniWallsWins > acc.miniWalls.deaths * 1) {
     hax += 15;
-    reasons.push("Has died less than 1.5 times per mini walls win");
+    reasons.push("Has died less than 1 times per mini walls win");
   }
 
   if(acc.name.toLowerCase().includes("tajik")) {
@@ -52,12 +67,12 @@ module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, intera
   }
 
   const embed = new MessageEmbed()
-    .setTitle(`Cheat level of ${acc.name}`)
+    .setTitle(`Level of ${acc.name}`)
     .setColor(0x8c54fe)
     .setDescription(
-      "Cheat levels above 40 should be considered most likely cheating. Levels above 25 should most likely be dodged in queue."
+      "Levels above 40 should be considered most likely cheating. Levels above 25 should most likely be dodged in queue."
     )
-    .addField("Cheat level", `${hax}`, false)
+    .addField("Level", `${hax}`, false)
     .addField("Reasons", `${reasons.join("\n")}`, false);
 
   return {

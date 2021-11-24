@@ -59,6 +59,10 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
     val = Util.inspect(val, true);
   }
 
+  if(val == "") {
+    val = "No response.";
+  }
+
   const embed = new MessageEmbed()
     .setTitle(`${acc.name}.${path}`)
     .setDescription(`\`\`\`${val}\`\`\``)

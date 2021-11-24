@@ -12,7 +12,7 @@ const BotRuntime = require("../BotRuntime");
 function makeField (name, link) {
   return {
     name,
-    value: `[<:join:841515519823708170> Invite](${link})`,
+    value: `[Server Invite](${link})`,
     inline: true,
   };
 }

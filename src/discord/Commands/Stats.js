@@ -18,7 +18,7 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-module.exports = new Command(["stats", "s", "sts"], ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
   const game = args[1];
   let time = args[2] ?? "lifetime";

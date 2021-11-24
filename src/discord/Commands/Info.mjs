@@ -3,6 +3,7 @@ const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
 import Command from "../../classes/Command.js";
 import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
 
 /**
  * 
@@ -19,10 +20,8 @@ async function infoHandler () {
     .addField("HyArcade server", "[Invite](https://discord.gg/6kFBVDcRd5)", true)
     .addField("Developer", "<@156952208045375488>", false)
     .setColor(0x2f3136);
-  return {
-    res: "",
-    embed
-  };
+
+  return new CommandResponse("", embed);
 }
 
 export default new Command("info", ["*"], infoHandler, 0);

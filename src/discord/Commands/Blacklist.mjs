@@ -4,12 +4,9 @@ import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("blacklist", ["%trusted%"], async (args) => {
-  /**
-   * @type {string[]}
-   */
   let blacklist = await BotRuntime.getFromDB("blacklist");
 
-  const operation = args[0];
+  const operation = args[0] ?? "ls";
 
   if(operation == undefined) {
     return {

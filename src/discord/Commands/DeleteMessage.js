@@ -1,7 +1,7 @@
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 
-module.exports = new Command("DelMsg", ["156952208045375488"], async (args) => {
+module.exports = new Command("delmsg", ["156952208045375488"], async (args) => {
   const channelId = args[0];
   const msgID = args[1];
   const channel = await BotRuntime.client.channels.fetch(channelId);

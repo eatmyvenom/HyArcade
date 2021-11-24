@@ -20,7 +20,7 @@ async function lastUpdateHandler () {
   time = Math.floor(time / 1000);
 
   const embed = new MessageEmbed().setTitle("Update time")
-    .setDescription(`<t:${time}:d><t:${time}:T> -- <t:${time}:R>`)
+    .setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`)
     .setColor(0x00b37b);
 
   return {
@@ -29,4 +29,4 @@ async function lastUpdateHandler () {
   };
 }
 
-module.exports = new Command(["lastupdate", "catlock", "timeupdate"], ["*"], lastUpdateHandler, 2500);
+module.exports = new Command(["lastupdate", "catlock", "timeupdate", "updatetime"], ["*"], lastUpdateHandler, 2500);

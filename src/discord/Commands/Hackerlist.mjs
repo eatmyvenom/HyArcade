@@ -3,19 +3,19 @@ import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("hackerlist", ["%trusted%"], async (args) => {
-  /**
-   * @type {string[]}
-   */
-  let hackers = await BotRuntime.getFromDB("hackerlist");
 
-  const operation = args[0];
-
+  
+  const operation = args[0] ?? "ls";
+  
   if(operation == undefined) {
     return {
       res: "",
       embed: ERROR_ARGS_LENGTH(1)
     };
   }
+
+  /** @type {string[]} */
+  let hackers = await BotRuntime.getFromDB("hackerlist");
 
   let res;
   let hasChange = false;
