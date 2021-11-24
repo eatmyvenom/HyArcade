@@ -62,6 +62,10 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     val = Util.inspect(val, true);
   }
 
+  if(val == "") {
+    val = "No response!";
+  }
+
   const embed = new MessageEmbed()
     .setTitle(`${data.displayname}.${path}`)
     .setDescription(`\`\`\`${val}\`\`\``)
