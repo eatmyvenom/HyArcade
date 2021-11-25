@@ -43,25 +43,7 @@ module.exports = async (req, res, fileCache) => {
         if(url.searchParams.get("path") == "accounts") {
           Logger.log("Saving new accounts");
           const old = fileCache[url.searchParams.get("path")];
-          const newAccs = [];
-
-          for(const acc of json) {
-            const oldAcc = old.find((a) => a.uuid == acc.uuid);
-            if(oldAcc != undefined && oldAcc.updateTime > acc.updateTime) {
-              newAccs.push(oldAcc);
-            } else {
-              if(acc != {}) {
-                newAccs.push(acc);
-              }
-            }
-          }
-
-          for(const acc of old) {
-            const newAcc = newAccs.find((a) => a.uuid == acc.uuid);
-            if(newAcc == undefined) {
-              newAccs.push(acc);
-            }
-          }
+          const newAccs = AccountArray([...json, ...old]);
 
           Logger.log(`New accounts length is ${newAccs.length}`);
           fileCache.accounts = AccountArray(newAccs);
