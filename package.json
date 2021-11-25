@@ -6,6 +6,7 @@
     "scripts": {
         "testbot": "node index.js bot test",
         "bot": "node spawn-bots.js",
+        "lint": "eslint ./src --fix",
         "cluster": "node index.js cluster",
         "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },

@@ -1,4 +1,3 @@
-const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const TimSort = require("timsort");
