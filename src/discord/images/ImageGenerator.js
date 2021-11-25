@@ -478,7 +478,7 @@ module.exports = class ImageGenerator {
       let rank = colorFormatters.grey;
       if(acc.rank != undefined && showRank) {
         if(acc.rank == "MVP_PLUS_PLUS") {
-          const superStarColor = ignorePref ? colorFormatters.gold : colorFormatters[acc.mvpColor.toLowerCase()];
+          const superStarColor = ignorePref ? colorFormatters.gold : colorFormatters[acc.mvpColor?.toLowerCase()];
           rank = `${superStarColor}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}++${superStarColor}] `;
         } else if (acc.rank == "MVP_PLUS") {
           rank = `${colorFormatters.aqua}[MVP${colorFormatters[acc.plusColor.toLowerCase()]}+${colorFormatters.aqua}] `;

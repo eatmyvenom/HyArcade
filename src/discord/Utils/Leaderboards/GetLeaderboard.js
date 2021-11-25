@@ -57,7 +57,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "day", false, reverse);
+      const lb = await Database.getLeaderboard(prop, category, "day", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -72,7 +72,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "weekly", false, reverse);
+      const lb = await Database.getLeaderboard(prop, category, "weekly", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -88,7 +88,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "monthly", false, reverse);
+      const lb = await Database.getLeaderboard(prop, category, "monthly", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -103,7 +103,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, undefined, false, reverse);
+      const lb = await Database.getLeaderboard(prop, category, undefined, true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
