@@ -42,13 +42,13 @@ module.exports = async function addAccounts (category, names) {
       continue;
     }
 
-    if(
-      acclist[category].find((acc) => acc.uuid == uuid) ||
+    const dupeAcc = acclist[category].find((acc) => acc.uuid == uuid) ||
             acclist.gamers.find((acc) => acc.uuid == uuid) ||
-            acclist.afkers.find((acc) => acc.uuid == uuid)
-    ) {
-      logger.warn(`Refusing to add duplicate! (${name})`);
-      res += `Refusing to add duplicate! (${name})\n`;
+            acclist.afkers.find((acc) => acc.uuid == uuid);
+
+    if(dupeAcc != undefined) {
+      logger.warn(`Refusing to add duplicate! (${dupeAcc.name})`);
+      res += `Refusing to add duplicate! (${dupeAcc.name})\n`;
       continue;
     }
 
@@ -67,8 +67,6 @@ module.exports = async function addAccounts (category, names) {
       res += `${name} with ${acc.arcadeWins} wins added.\n`;
     }
   }
-  const oldAccounts = await utils.readDB("accounts");
-  const fullNewAccounts = oldAccounts.concat(newAccs);
   acclist = await utils.readDB("acclist");
   for(const acc of newAccs) {
     const lilAcc = {
@@ -79,10 +77,9 @@ module.exports = async function addAccounts (category, names) {
   }
 
   acclist.others = acclist.others.filter((a) => a.uuid != undefined);
-  fullNewAccounts.filter((a) => a.uuid != undefined);
   newAccs.filter((a) => a.uuid != undefined);
 
   await utils.writeDB("acclist", acclist);
-  await utils.writeDB("accounts", fullNewAccounts);
+  await utils.writeDB("accounts", newAccs);
   return res;
 };
