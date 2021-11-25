@@ -128,7 +128,7 @@ module.exports = async (req, res, fileCache) => {
       if(category == null) {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != lbprop && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor") {
+            if(key != lbprop && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
               delete a[key];
             }
           }
@@ -136,7 +136,7 @@ module.exports = async (req, res, fileCache) => {
       } else {
         accounts.forEach((a) => {
           for(const key in a) {
-            if(key != category && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor") {
+            if(key != category && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
               delete a[key];
             }
           }
