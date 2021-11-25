@@ -30,7 +30,7 @@ class Database {
     }
   }
 
-  static async getLeaderboard (path, category, time, min, reverse) {
+  static async getLeaderboard (path, category, time, min, reverse, max) {
     cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path) ;
@@ -41,6 +41,10 @@ class Database {
 
     if(time != undefined) {
       url.searchParams.set("time", time);
+    }
+
+    if(max != undefined) {
+      url.searchParams.set("max", max);
     }
 
     if(min) {
