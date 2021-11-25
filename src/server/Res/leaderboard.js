@@ -61,6 +61,7 @@ module.exports = async (req, res, fileCache) => {
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
+  const max = url.searchParams.get("max") ?? 300;
 
   if(req.method == "GET") {
 
@@ -121,7 +122,7 @@ module.exports = async (req, res, fileCache) => {
       accounts = accounts.reverse();
     }
 
-    accounts = accounts.slice(0, Math.min(accounts.length, 300));
+    accounts = accounts.slice(0, Math.min(accounts.length, max));
 
     if(min) {
       if(category == null) {
