@@ -33,7 +33,7 @@ class Database {
   static async getLeaderboard (path, category, time, min, reverse) {
     cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("lb", cfg.dbUrl);
-    url.searchParams.set("path", path);
+    url.searchParams.set("path", path) ;
     
     if(category != undefined && category != "undefined") {
       url.searchParams.set("category", category);
