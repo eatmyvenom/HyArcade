@@ -57,7 +57,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "day", true, reverse, startingIndex + 10);
+      const lb = await Database.getLeaderboard(prop, category, "day", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -72,7 +72,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "weekly", true, reverse, startingIndex + 10);
+      const lb = await Database.getLeaderboard(prop, category, "weekly", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -88,7 +88,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, "monthly", true, reverse, startingIndex + 10);
+      const lb = await Database.getLeaderboard(prop, category, "monthly", true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -103,7 +103,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     if(lbCache[`${prop}${category}${timetype}`] != undefined) {
       res = [...lbCache[`${prop}${category}${timetype}`]];
     } else {
-      const lb = await Database.getLeaderboard(prop, category, undefined, true, reverse, startingIndex + 10);
+      const lb = await Database.getLeaderboard(prop, category, undefined, true, reverse);
       lbCache[`${prop}${category}${timetype}`] = lb;
       res = [...lb];
     }
@@ -113,16 +113,30 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
 
   let getter;
-  if(time != "Lifetime") {
-    getter = (a) => a?.lbProp ?? 0;
-  } else if(prop?.startsWith(".")) {
+  let title;
+  if(prop?.startsWith(".")) {
     getter = (a) => getProp(a, prop) ?? 0;
+    title = `${(prop).slice(1, 2).toUpperCase()}${(prop).slice(2)}`
+      .replace(/([A-Z])/g, " $1")
+      .replace(/(\.)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`)
+      .replace(/(_)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`);
   } else if(category == null) {
+    title = `${(prop).slice(0, 1).toUpperCase()}${(prop).slice(1)}`.replace(/([A-Z])/g, " $1");
     getter = (a) => a?.[prop] ?? 0;
   } else {
+    title = `${(category).slice(0, 1).toUpperCase()}${(category).slice(1)}.${prop}`
+      .replace(/([A-Z])/g, " $1")
+      .replace(/_zombies/g, "")
+      .replace(/(\.)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`)
+      .replace(/(_)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`);
+
     getter = (a) => a?.[category]?.[prop] ?? 0;
   }
 
-  return DrawLeaderboard(res, getter, time, startingIndex, formatter);
+  if(time != "Lifetime") {
+    getter = (a) => a?.lbProp ?? 0;
+  }
+
+  return DrawLeaderboard(res, getter, time, startingIndex, formatter, title);
 };
 

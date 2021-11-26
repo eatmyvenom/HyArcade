@@ -106,6 +106,7 @@ module.exports = class ImageGenerator {
       const lineArr = txt.includes("&") ? txt.split(/&/) : [`r${txt}`];
 
       let currentX = x;
+      let shadowColor = "#00000072";
 
       if(align == "center") {
         const totalWidth = this.drawMcText(txt, x, y, size, "left", false, true);
@@ -126,81 +127,97 @@ module.exports = class ImageGenerator {
         switch(s.slice(0, 1)) {
         case "0" : {
           this.context.fillStyle = "#000000";
+          shadowColor = "#000000";
           break;
         }
           
         case "1" : {
           this.context.fillStyle = "#0000AA";
+          shadowColor = "#00002A";
           break;
         }
           
         case "2" : {
           this.context.fillStyle = "#00AA00";
+          shadowColor = "#002A00";
           break;
         }
           
         case "3" : {
           this.context.fillStyle = "#00AAAA";
+          shadowColor = "#002A2A";
           break;
         }
 
         case "4" : {
           this.context.fillStyle = "#AA0000";
+          shadowColor = "#2A0000";
           break;
         }
 
         case "5" : {
           this.context.fillStyle = "#AA0000";
+          shadowColor = "#2A002A";
           break;
         }
 
         case "6" : {
           this.context.fillStyle = "#FFAA00";
+          shadowColor = "#3F2A00";
           break;
         }
 
         case "7" : {
           this.context.fillStyle = "#AAAAAA";
+          shadowColor = "#2A2A2A";
           break;
         }
 
         case "8" : {
           this.context.fillStyle = "#555555";
+          shadowColor = "#151515";
           break;
         }
 
         case "9" : {
           this.context.fillStyle = "#5555FF";
+          shadowColor = "#15153F";
           break;
         }
 
         case "a" : {
           this.context.fillStyle = "#55FF55";
+          shadowColor = "#153F15";
           break;
         }
 
         case "b" : {
           this.context.fillStyle = "#55FFFF";
+          shadowColor = "#153F3F";
           break;
         }
 
         case "c" : {
           this.context.fillStyle = "#FF5555";
+          shadowColor = "#3F1515";
           break;
         }
 
         case "d" : {
           this.context.fillStyle = "#FF55FF";
+          shadowColor = "#3F153F";
           break;
         }
 
         case "e" : {
           this.context.fillStyle = "#FFFF55";
+          shadowColor = "#3F3F15";
           break;
         }
 
         case "f" : {
           this.context.fillStyle = "#FFFFFF";
+          shadowColor = "#3F3F3F";
           break;
         }
 
@@ -216,7 +233,8 @@ module.exports = class ImageGenerator {
             gradient.addColorStop(1, "violet");
             this.gradient = gradient;
           }
-
+          
+          shadowColor = "#00000072";
           this.context.fillStyle = this.gradient;
           break;
         }
@@ -235,7 +253,7 @@ module.exports = class ImageGenerator {
 
         if(this.shadow) {
           const prevStyle = this.context.fillStyle;
-          this.context.fillStyle = "#00000072";
+          this.context.fillStyle = shadowColor;
           if(!fake) {
             this.context.fillText(s.slice(1).replace(/&./g, ""), currentX + offset, y + offset);
           }

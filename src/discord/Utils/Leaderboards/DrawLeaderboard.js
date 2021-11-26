@@ -4,16 +4,18 @@ const ImageGenerator = require("../../images/ImageGenerator");
  * 
  * @param {*} res 
  * @param {*} valueGetter
- * @param {*} time 
- * @param {*} startingIndex 
+ * @param {string} time 
+ * @param {number} startingIndex 
  * @param {*} formatter 
+ * @param {string} title
  * @returns {ImageGenerator}
  */
-async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter) {
+async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter, title) {
   const img = new ImageGenerator(2560, 1600, "'myFont'", true);
   await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
 
-  img.writeText(`&l${time} Leaderboard`, 1280, 170, "center", "#55FF55", "80px");
+  img.drawMcText(`&e${title}`, 1280, 80, 112, "center");
+  img.drawMcText(`&a&l${time} Leaderboard`, 1280, 170, 80, "center");
 
   const testVal = valueGetter(res[0]) ?? 0;
 
@@ -23,7 +25,6 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
   }
 
   const size = "80px";
-  const placeColor = "#FFFF55";
 
   img.context.font = `${size} ${img.font}`;
   let longestName = 0;
@@ -54,10 +55,20 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
       continue;
     }
 
-    img.writeText(`#${startingIndex + i + 1}`, 1280 - (longestName / 1.5) - 100, y, "left", placeColor, size);
-    img.drawMcText(ImageGenerator.formatAcc(res[i], true, false, false), 1280 - (longestName / 1.5) + 100, y, size.replace(/px/g, ""), "left");
+    let placeFormat = "&7#";
 
-    img.writeText(`${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + (longestVal) - 55, y, "right", "#FFFFFF", size);
+    if(startingIndex + i + 1 == 1) {
+      placeFormat = "&6&l#";
+    } else if (startingIndex + i + 1 == 2) {
+      placeFormat = "&f&l#";
+    } else if (startingIndex + i + 1 == 3) {
+      placeFormat = "&e&l#";
+    }
+
+    img.drawMcText(`${placeFormat}${startingIndex + i + 1}`, 1280 - (longestName / 1.5) - 50, y, size.replace(/px/g, ""), "right");
+    img.drawMcText(ImageGenerator.formatAcc(res[i], true, false, false), 1280 - (longestName / 1.5), y, size.replace(/px/g, ""), "left");
+
+    img.drawMcText(`&e${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + (longestVal) - 155, y, size.replace(/px/g, ""), "right");
   }
 
   return img;
