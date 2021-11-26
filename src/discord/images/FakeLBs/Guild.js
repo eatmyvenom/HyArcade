@@ -55,7 +55,7 @@ module.exports = async function Guild (path, category, time, topTen) {
   }
 
   y += 10;
-  await img.drawNameTag("Click to toggle!", x, y += dy, "#FFAA00", fontSize, "'boldmc'");
+  await img.drawMcText("&l&6Click to toggle!", x, y += dy, fontSize, "center", true);
 
   const strTime = time ?? "lifetime";
   await img.drawTimeType(strTime, x, y += dy, fontSize);
