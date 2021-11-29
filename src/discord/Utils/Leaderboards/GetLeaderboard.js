@@ -137,6 +137,22 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     getter = (a) => a?.lbProp ?? 0;
   }
 
+  title = title.replace(/P B/g, "PB");
+  title = title.replace(/Arcade Achievments /g, "");
+  title = title.replace(/Tiered A P\[0\]/g, "AP-1");
+  title = title.replace(/Tiered A P\[1\]/g, "AP-2");
+  title = title.replace(/Tiered A P\[2\]/g, "AP-3");
+  title = title.replace(/Tiered A P\[3\]/g, "AP-4");
+  title = title.replace(/Tiered A P\[4\]/g, "AP-5");
+  title = title.replace(/Farmhunt/g, "Farm Hunt");
+  title = title.replace(/Wool Wool/g, "Wool");
+
+  if(title.includes("Arcade Challenges")) {
+    title = title.replace(/Arcade Challenges/g, "");
+    title += " Challenge Completions";
+  }
+
+
   return DrawLeaderboard(res, getter, time, startingIndex, formatter, title);
 };
 
