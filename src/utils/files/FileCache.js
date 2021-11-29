@@ -3,10 +3,12 @@ const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const Account = require("hyarcade-requests/types/Account");
+const Accounts = require("./Accounts");
 
 class FileCache {
 
     _interval;
+    _accounts;
 
     /** @type {Account[]} */
     accounts = [];
@@ -38,6 +40,7 @@ class FileCache {
       this.path = path;
       FileCache.refresh(this);
       this._interval = setInterval(FileCache.refresh, 600000, this);
+      this._accounts = new Accounts(`${path}/accounts`);
     }
 
     destroy () {
@@ -66,9 +69,12 @@ class FileCache {
         if(this.ezmsgs.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
         }
+        this.modTime = Date.now() - 1000;
+
+        await this._accounts.writeAccounts(this.accounts);
+
         Logger.debug("Files saved...");
         this.dirty = false;
-        this.modTime = Date.now() - 1000;
       } catch (e) {
         Logger.err("ERROR SAVING FILES!");
         Logger.err(e);
@@ -115,7 +121,7 @@ class FileCache {
       try {
         const accStat = await fs.stat(`${fileCache.path}accounts.json`);
         if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
-          const accounts = await utils.readJSON("accounts.json");
+          const accounts = await fileCache._accounts.readAccounts();
           fileCache.accounts = new AccountArray(accounts);
         } else {
           Logger.debug("accounts has not been modified, ignoring!");
