@@ -6,7 +6,6 @@ const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
-const process = require("process");
 const { sleep } = require("../utils");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const NormalizeAccount = require("./utils/NormalizeAccount");
