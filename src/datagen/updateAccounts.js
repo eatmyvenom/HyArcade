@@ -124,10 +124,13 @@ async function hackerlist (accounts) {
  * @returns {Response}
  */
 async function requestData (uuids) {
+
+  const realUUIDs = uuids.filter((u) => u != "");
+
   try {
-    return await HyarcadeWorkerRequest(uuids);
+    return await HyarcadeWorkerRequest(realUUIDs);
   } catch (e) {
-    return await requestData(uuids);
+    return await requestData(realUUIDs);
   }
 }
 
