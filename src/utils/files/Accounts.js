@@ -53,5 +53,7 @@ module.exports = class Accounts {
     for(const fileName of files) {
       accounts.push(await this.readAccount(fileName));
     }
+
+    return accounts;
   }
 };
