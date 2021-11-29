@@ -70,7 +70,7 @@ module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg,
     acc = res;
   } else {
     if(res?.timed == undefined) {
-      return nonDatabaseError(res?.acc?.name);
+      return nonDatabaseError(res?.acc?.name ?? "INVALID-NAME");
     }
     acc = AccountComparitor(res?.acc, res?.timed);
   }

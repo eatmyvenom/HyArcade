@@ -1,11 +1,12 @@
 const {
   ButtonInteraction, Interaction
 } = require("discord.js");
-const Logger = require("hyarcade-logger");
 const BotRuntime = require("../../BotRuntime");
 const Leaderboard = require("../../Commands/Leaderboard");
 const miwCommand = require("../../Commands/MiniWalls");
 const AccountComparitor = require("../../Utils/AccountComparitor");
+const CommandResponse = require("../../Utils/CommandResponse");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../../Utils/Embeds/DynamicEmbeds");
 const MenuGenerator = require("../SelectionMenus/MenuGenerator");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
@@ -13,6 +14,15 @@ const ButtonResponse = require("./ButtonResponse");
 let zombies = undefined;
 let topGames = undefined;
 let partyGames = undefined;
+
+/**
+ * 
+ * @param {string} ign 
+ * @returns {CommandResponse}
+ */
+function nonDatabaseError (ign) {
+  return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
+}
 
 /**
  * 
@@ -53,6 +63,8 @@ module.exports = async function ButtonParser (interaction) {
   }
 };
 
+
+
 /**
  * @param {string} accUUID
  * @param {string} time
@@ -60,15 +72,15 @@ module.exports = async function ButtonParser (interaction) {
  * @param {Interaction} interaction
  * @returns {ButtonResponse}
  */
-async function statsHandler (accUUID, time, game, interaction) {
+async function statsHandler (accUUID, time = "lifetime", game, interaction) {
   await interaction.deferUpdate();
   let acc = await BotRuntime.resolveAccount(accUUID, undefined, false, time, false);
 
-  if(acc.timed != undefined) {
-    Logger.info("Getting account diff");
-    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
-
-    acc = tmpAcc;
+  if(time != "lifetime") {
+    if(acc?.timed == undefined) {
+      return nonDatabaseError(acc?.acc?.name ?? "INVALID-NAME");
+    }
+    acc = AccountComparitor(acc?.acc, acc?.timed);
   }
 
   const statsRes = await BotRuntime.getStats(acc, game);
