@@ -163,7 +163,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
     if(accData?.success == false) {
       logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
       logger.err(JSON.stringify(accData, null, 2));
-      process.exit(344);
+      continue;
     }
     acc.setHypixel(accData);
     updatedAccs.push(acc);
