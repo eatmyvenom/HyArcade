@@ -30,7 +30,7 @@ module.exports = class Accounts {
    * @param {Account} data
    */
   async writeAccount (uuid, data) {
-    const string = JSON.stringify(data);
+    const string = JSON.stringify(data, null, "\t");
 
     await fs.writeFile(`${this.folderPath}/${uuid ?? data.uuid}.json`, string);
   }
