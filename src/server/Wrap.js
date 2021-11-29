@@ -19,10 +19,8 @@ const urlModules = {
   namesearch: require("./Res/NameSearch")
 };
 let fileCache;
-const compression = require("compression");
 const express = require("express");
 const app = express();
-app.use(compression());
 
 
 /**
