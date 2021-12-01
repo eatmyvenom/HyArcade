@@ -53,7 +53,7 @@ class FileCache {
     }
 
     get accounts () {
-      return AccountArray(Object.entries(this.indexedAccounts));
+      return AccountArray(Object.values(this.indexedAccounts));
     }
 
     set accounts (accs) {
@@ -61,15 +61,15 @@ class FileCache {
     }
 
     get dailyAccounts () {
-      return AccountArray(Object.entries(this.indexedDaily));
+      return AccountArray(Object.values(this.indexedDaily));
     }
 
     get weeklyAccounts () {
-      return AccountArray(Object.entries(this.indexedWeekly));
+      return AccountArray(Object.values(this.indexedWeekly));
     }
 
     get monthlyAccounts () {
-      return AccountArray(Object.entries(this.indexedMonthly));
+      return AccountArray(Object.values(this.indexedMonthly));
     }
 
     destroy () {
