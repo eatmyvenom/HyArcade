@@ -86,8 +86,6 @@ class FileCache {
     async runSave () {
       try {
         Logger.info("Saving file changes...");
-        Logger.debug("Saving accounts");
-        await utils.writeJSON("accounts.json", `[${this.accounts.map((acc) => JSON.stringify(acc)).join(",")}]`);
 
         Logger.debug("Saving acclist");
         await utils.writeJSON("acclist.json", this.acclist);
@@ -113,6 +111,9 @@ class FileCache {
 
         Logger.debug("Saving seperate accounts");
         await this.AccountsProcessor.writeAccounts(this.accounts);
+
+        Logger.debug("Saving accounts");
+        await utils.writeJSON("accounts.json", `[${this.accounts.map((acc) => JSON.stringify(acc)).join(",")}]`);
 
         Logger.debug("Files saved...");
         this.dirty = false;
