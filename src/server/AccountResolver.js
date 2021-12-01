@@ -3,7 +3,6 @@ const Account = require("hyarcade-requests/types/Account");
 const FileCache = require("../utils/files/FileCache");
 const { default: fetch } = require("node-fetch");
 
-
 /**
  * 
  * @param {FileCache} fileCache 
@@ -41,7 +40,7 @@ async function AccountResolver (fileCache, url) {
     acc = accounts.find((a) => {
       if(a.nameHist && a.nameHist.length > 0) {
         for(const name of a.nameHist) {
-          if(name.toLowerCase().startsWith(ign)) {
+          if(name.toLowerCase().startsWith(ign.toLowerCase())) {
             return true;
           }
         }
@@ -55,12 +54,12 @@ async function AccountResolver (fileCache, url) {
   }
 
   if(acc == undefined) {
-    Logger.debug("Getting data from hypixel");
+    Logger.debug("Fetching account data from hypixel.");
     if(uuid == null) {
       let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
       elecreq = await elecreq.json();
       if(elecreq != undefined) {
-        uuid = elecreq.uuid.replace(/-/g, "");
+        uuid = elecreq.uuid.toLowerCase().replace(/-/g, "");
       }
     }
 
@@ -68,6 +67,7 @@ async function AccountResolver (fileCache, url) {
       acc = new Account(ign, 0, uuid);
       await acc.updateHypixel();
       fileCache.accounts.push(acc);
+      await fileCache._accounts.writeAccount(acc.uuid, acc);
     }
   }
 

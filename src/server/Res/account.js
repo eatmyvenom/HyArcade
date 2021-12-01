@@ -52,8 +52,7 @@ module.exports = async (req, res, fileCache) => {
 
       const prevAcc = fileCache.accounts.indexOf(fileCache.accounts.find((a) => a.uuid == acc.uuid));
       if(prevAcc != -1) {
-        const newAcc = acc;
-        fileCache.accounts[prevAcc] = newAcc;
+        fileCache.accounts[prevAcc] = acc;
       } else {
         fileCache.accounts.push(acc);
       }
