@@ -65,10 +65,10 @@ async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter
       placeFormat = "&e&l#";
     }
 
-    img.drawMcText(`${placeFormat}${startingIndex + i + 1}`, 1280 - (longestName / 1.5) - 50, y, size.replace(/px/g, ""), "right");
-    img.drawMcText(ImageGenerator.formatAcc(res[i], true, false, false), 1280 - (longestName / 1.5), y, size.replace(/px/g, ""), "left");
+    img.drawMcText(`${placeFormat}${startingIndex + i + 1}`, 1280 - (longestName / 2) - longestVal, y, size.replace(/px/g, ""), "right");
+    img.drawMcText(ImageGenerator.formatAcc(res[i], true, false, false), 50 + 1280 - (longestName / 2) - longestVal, y, size.replace(/px/g, ""), "left");
 
-    img.drawMcText(`&e${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + (longestVal) - 155, y, size.replace(/px/g, ""), "right");
+    img.drawMcText(`&e${formatter(val)}`.trim(), 1280 + (longestName / 1.5) + 50, y, size.replace(/px/g, ""), "right");
   }
 
   return img;
