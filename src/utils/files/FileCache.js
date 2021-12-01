@@ -77,7 +77,7 @@ class FileCache {
         this.dirty = false;
       } catch (e) {
         Logger.err("ERROR SAVING FILES!");
-        Logger.err(e);
+        Logger.err(e.stack);
       }
     }
 
@@ -91,18 +91,23 @@ class FileCache {
       try {
         Logger.info("Refreshing static files");
 
+        Logger.debug("Reading daily accounts");
         const dailyAccounts = await utils.readJSON("accounts.day.json");
         fileCache.dailyAccounts = new AccountArray(dailyAccounts);
 
+        Logger.debug("Reading weekly accounts");
         const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
         fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
   
+        Logger.debug("Reading monthly accounts");
         const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
         fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
 
+        Logger.debug("Reading guild data");
         const guild = await utils.readJSON("guild.json");
         fileCache.guilds = guild;
 
+        Logger.debug("Reading retroactive data");
         const retroMonth = await utils.readJSON("accounts.retro.monthly.json");
         fileCache.retro.monthlyaccounts = retroMonth;
 
@@ -116,22 +121,25 @@ class FileCache {
         return await fileCache.runSave();
       }
 
-      Logger.debug("Refreshing file cache...");
+      Logger.info("Refreshing file cache...");
 
       try {
         const accStat = await fs.stat(`${fileCache.path}accounts.json`);
         if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
+          Logger.debug("Reading accounts data");
           const accounts = await fileCache._accounts.readAccounts();
           fileCache.accounts = new AccountArray(accounts);
         } else {
           Logger.debug("accounts has not been modified, ignoring!");
         }
 
+        Logger.debug("Reading accounts list");
         const acclist = await utils.readJSON("acclist.json");
         fileCache.acclist = acclist;
 
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
+          Logger.debug("Reading discord links");
           const disclist = await utils.readJSON("disclist.json");
           fileCache.disclist = disclist;
         } else {
@@ -140,6 +148,7 @@ class FileCache {
 
         const timeStat = await fs.stat("timeupdate");
         if(Math.max(timeStat.ctimeMs, timeStat.mtimeMs) > fileCache.modTime) {
+          Logger.debug("Reading update time");
           const updatetime = await fs.readFile("timeupdate");
           fileCache.updatetime = updatetime;
         } else {
