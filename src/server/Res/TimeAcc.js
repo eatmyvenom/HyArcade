@@ -47,14 +47,7 @@ module.exports = async (req, res, fileCache) => {
       }
 
       acc = nacc;
-
-      const prevAcc = fileCache.accounts.indexOf(fileCache.accounts.find((a) => a.uuid == acc.uuid));
-      if(prevAcc != -1) {
-        const newAcc = acc;
-        fileCache.accounts[prevAcc] = newAcc;
-      } else {
-        fileCache.accounts.push(acc);
-      }
+      fileCache.accounts[acc.uuid] = acc;
     }
 
     const time = url.searchParams.get("time");
@@ -62,7 +55,7 @@ module.exports = async (req, res, fileCache) => {
 
     if(time != null) {
       response.acc = acc;
-      const timedAcc = fileCache[`${time}accounts`].find((a) => acc.uuid == a.uuid);
+      const timedAcc = fileCache[`indexed${time}`][acc.uuid];
       response.timed = timedAcc;
     }
 

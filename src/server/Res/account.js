@@ -49,13 +49,7 @@ module.exports = async (req, res, fileCache) => {
       }
 
       acc = nacc;
-
-      const prevAcc = fileCache.accounts.indexOf(fileCache.accounts.find((a) => a.uuid == acc.uuid));
-      if(prevAcc != -1) {
-        fileCache.accounts[prevAcc] = acc;
-      } else {
-        fileCache.accounts.push(acc);
-      }
+      fileCache.accounts[acc.uuid] = acc;
     }
 
     res.write(JSON.stringify(acc));
@@ -67,13 +61,9 @@ module.exports = async (req, res, fileCache) => {
       req.on("data", (d) => data += d);
       req.on("end", async () => {
         json = JSON.parse(data);
-        const prevAcc = fileCache.accounts.indexOf(fileCache.accounts.find((a) => a.uuid == json.uuid));
-        if(prevAcc != -1) {
-          const newAcc = Account.from(json);
-          fileCache.accounts[prevAcc] = newAcc;
-        } else {
-          fileCache.accounts.push(json);
-        }
+
+        const newAcc = Account.from(json);
+        fileCache.indexedAccounts[json.uuid] = newAcc;
         fileCache.save();
         res.end();
       });

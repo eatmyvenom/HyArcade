@@ -12,7 +12,7 @@ const FileCache = require("../../utils/files/FileCache");
  */
 async function generateLeaderboard (fileCache, stat, time) {
   /** @type {Account[]} */
-  let accounts = AccountArray(JSON.parse(JSON.stringify(fileCache.accounts)));
+  let accounts = AccountArray(fileCache.accounts);
 
   accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
@@ -20,10 +20,10 @@ async function generateLeaderboard (fileCache, stat, time) {
   if(time != undefined) {
 
     /** @type {Account[]} */
-    const timedAccounts = new AccountArray(JSON.parse(JSON.stringify(fileCache[`${time}accounts`])));
+    const timedAccounts = fileCache[`indexed${time}`];
 
     accounts.map((acc) => {
-      const timeAcc = timedAccounts.find((a) => a.uuid == acc.uuid);
+      const timeAcc = timedAccounts[acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
         acc.miniWalls.kills = 0;

@@ -86,11 +86,11 @@ module.exports = async (req, res, fileCache) => {
       TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
       const newAcclist = [];
-      const old = fileCache[`${timePeriod}accounts`];
+      const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
 
       for(const a of accounts) {
-        const o = old.find((u) => u.uuid === a.uuid);
+        const o = old[a.uuid];
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
           newAcclist.push(new Account(a.name, 0, a.uuid));

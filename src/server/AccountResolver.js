@@ -11,7 +11,8 @@ const { default: fetch } = require("node-fetch");
  */
 async function AccountResolver (fileCache, url) {
   const {
-    accounts
+    accounts,
+    indexedAccounts
   } = fileCache;
 
   const ign = url.searchParams.get("ign");
@@ -24,12 +25,12 @@ async function AccountResolver (fileCache, url) {
     acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
   } else if(uuid != null) {
     Logger.debug(`Using uuid ${uuid}`);
-    acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid?.toLowerCase());
+    acc = indexedAccounts[uuid?.toLowerCase()];
   } else if(discid != null) {
     Logger.debug(`Using discord id ${discid}`);
-    const uuid = fileCache.disclist[discid];
+    uuid = fileCache.disclist[discid];
 
-    acc = accounts.find((a) => a.uuid == uuid);
+    acc = indexedAccounts[uuid?.toLowerCase()];
   }
 
   if(acc?.name == "null") {
@@ -66,8 +67,8 @@ async function AccountResolver (fileCache, url) {
     if (uuid != null) {
       acc = new Account(ign, 0, uuid);
       await acc.updateHypixel();
-      fileCache.accounts.push(acc);
-      await fileCache._accounts.writeAccount(acc.uuid, acc);
+      fileCache.indexedAccounts[acc.uuid] = acc;
+      await fileCache.AccountsProcessor.writeAccount(acc.uuid, acc);
     }
   }
 

@@ -5,22 +5,31 @@ const AccountArray = require("hyarcade-requests/types/AccountArray");
 const Account = require("hyarcade-requests/types/Account");
 const Accounts = require("./Accounts");
 
+/**
+ * 
+ * @param {Account[]} accounts 
+ * @returns {*}
+ */
+function indexAccs (accounts) {
+  const obj = {};
+
+  for(const acc of accounts) {
+    obj[acc.uuid] = acc;
+  }
+
+  return obj;
+}
+
 class FileCache {
 
     _interval;
-    _accounts;
 
-    /** @type {Account[]} */
-    accounts = [];
+    indexedAccounts = {};
+    indexedDaily = {};
+    indexedWeekly = {};
+    indexedMonthly = {};
+    AccountsProcessor;
 
-    /** @type {Account[]} */
-    dailyAccounts = [];
-
-    /** @type {Account[]} */
-    weeklyAccounts = [];
-
-    /** @type {Account[]} */
-    monthlyAccounts = [];
     acclist = {};
     retro = {};
     players = [];
@@ -40,7 +49,27 @@ class FileCache {
       this.path = path;
       FileCache.refresh(this);
       this._interval = setInterval(FileCache.refresh, 600000, this);
-      this._accounts = new Accounts(`${path}/accounts`);
+      this.AccountsProcessor = new Accounts(`${path}/accounts`);
+    }
+
+    get accounts () {
+      return AccountArray(Object.entries(this.indexedAccounts));
+    }
+
+    set accounts (accs) {
+      this.indexedAccounts = indexAccs(accs);
+    }
+
+    get dailyAccounts () {
+      return AccountArray(Object.entries(this.indexedDaily));
+    }
+
+    get weeklyAccounts () {
+      return AccountArray(Object.entries(this.indexedWeekly));
+    }
+
+    get monthlyAccounts () {
+      return AccountArray(Object.entries(this.indexedMonthly));
     }
 
     destroy () {
@@ -57,21 +86,33 @@ class FileCache {
     async runSave () {
       try {
         Logger.info("Saving file changes...");
+        Logger.debug("Saving accounts");
         await utils.writeJSON("accounts.json", this.accounts);
+
+        Logger.debug("Saving acclist");
         await utils.writeJSON("acclist.json", this.acclist);
+
+        Logger.debug("Saving disclist");
         await utils.writeJSON("disclist.json", this.disclist);
+
+        Logger.debug("Saving blacklist");
         if(this.blacklist.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}blacklist`, this.blacklist.join("\n").trim());
         }
+
+        Logger.debug("Saving hackerlist");
         if(this.hackerlist.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}hackerlist`, this.hackerlist.join("\n").trim());
         }
+
+        Logger.debug("Saving ezmsgs");
         if(this.ezmsgs.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
         }
         this.modTime = Date.now() - 1000;
 
-        await this._accounts.writeAccounts(this.accounts);
+        Logger.debug("Saving seperate accounts");
+        await this.AccountsProcessor.writeAccounts(this.accounts);
 
         Logger.debug("Files saved...");
         this.dirty = false;
@@ -93,15 +134,15 @@ class FileCache {
 
         Logger.debug("Reading daily accounts");
         const dailyAccounts = await utils.readJSON("accounts.day.json");
-        fileCache.dailyAccounts = new AccountArray(dailyAccounts);
+        fileCache.indexedDaily = indexAccs(dailyAccounts);
 
         Logger.debug("Reading weekly accounts");
         const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
-        fileCache.weeklyAccounts = new AccountArray(weeklyAccounts);
-  
+        fileCache.indexedWeekly = indexAccs(weeklyAccounts);
+
         Logger.debug("Reading monthly accounts");
         const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
-        fileCache.monthlyAccounts = new AccountArray(monthlyAccounts);
+        fileCache.indexedMonthly = indexAccs(monthlyAccounts);
 
         Logger.debug("Reading guild data");
         const guild = await utils.readJSON("guild.json");
@@ -127,8 +168,8 @@ class FileCache {
         const accStat = await fs.stat(`${fileCache.path}accounts.json`);
         if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
           Logger.debug("Reading accounts data");
-          const accounts = await fileCache._accounts.readAccounts();
-          fileCache.accounts = new AccountArray(accounts);
+          const accounts = await fileCache.AccountsProcessor.readAccounts();
+          fileCache.indexedAccounts = indexAccs(accounts);
         } else {
           Logger.debug("accounts has not been modified, ignoring!");
         }
@@ -217,6 +258,18 @@ class FileCache {
         Logger.error("ERROR REFRESHING FILES!");
         Logger.error(e.stack);
       }
+    }
+
+    get indexedday () {
+      return this.indexedDaily;
+    }
+
+    get indexedweekly () {
+      return this.indexedWeekly;
+    }
+
+    get indexedmonthly () {
+      return this.indexedMonthly;
     }
 
     get dayaccounts () {
