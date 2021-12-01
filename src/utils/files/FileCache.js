@@ -87,7 +87,7 @@ class FileCache {
       try {
         Logger.info("Saving file changes...");
         Logger.debug("Saving accounts");
-        await utils.writeJSON("accounts.json", this.accounts);
+        await utils.writeJSON("accounts.json", `[${this.accounts.map((acc) => JSON.stringify(acc)).join(",")}]`);
 
         Logger.debug("Saving acclist");
         await utils.writeJSON("acclist.json", this.acclist);
