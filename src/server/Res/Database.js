@@ -30,7 +30,6 @@ module.exports = async (req, res, fileCache) => {
       res.write("]");
     }
 
-    res.write(JSON.stringify(data));
     res.end();
   } else if(req.method == "POST") {
     let data = "";
