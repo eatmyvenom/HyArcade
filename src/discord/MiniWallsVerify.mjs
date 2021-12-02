@@ -58,7 +58,7 @@ export default async function MiniWallsVerify (msg) {
     return;
   }
   if(acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
-    await addAccounts("others", [uuid]);
+    await addAccounts([uuid]);
     disclist[id] = uuid;
     await BotRuntime.writeToDB("disclist", disclist);
     Logger.out(`${tag} was autoverified in miniwalls as ${ign}`);

@@ -20,13 +20,12 @@ const {
 } = utils;
 
 /**
- * Add a new account to the acclist
+ * Add a new account to the database
  *
  */
 async function newAcc () {
-  const category = args[args.length - 1];
-  const nameArr = args.slice(3, -1);
-  await addAccounts(category, nameArr);
+  const nameArr = args.slice(2, -1);
+  await addAccounts(nameArr);
 }
 
 /**
@@ -57,26 +56,6 @@ async function linkDiscord () {
   const disclist = await utils.readJSON("./disclist.json");
   disclist[discord] = uuid;
   await utils.writeJSON("./disclist.json", disclist);
-}
-
-/**
- * Move an account to a different category in the acclist
- *
- */
-async function moveAcc () {
-  const oldName = args[3];
-  const oldCategory = args[4];
-  const newCategory = args[5];
-  const acclist = await utils.readJSON("../acclist.json");
-  const oldVer = acclist[oldCategory].find((acc) => acc.name == oldName);
-
-  if(oldVer) {
-    acclist[newCategory].push(oldVer);
-    acclist[oldCategory][oldName] = undefined;
-    utils.writeJSON("./acclist.json", acclist);
-  } else {
-    logger.err(`Couldn't find old version of ${oldName}`);
-  }
 }
 
 /**
@@ -147,28 +126,6 @@ async function logNormal (name) {
  */
 async function logDaily (name) {
   logger.out(await stringDaily(name));
-}
-
-/**
- * Check for any name changes
- *
- */
-async function checkNames () {
-  const acclist = await utils.readJSON("./acclist.json");
-  const realAccs = await utils.readJSON("./accounts.json");
-
-  for(const list in acclist) {
-    for(const acc of acclist[list]) {
-      const real = realAccs.find((a) => a.uuid == acc.uuid);
-      if(real != undefined && acc.name != real.name) {
-        logger.out(`${acc.name} -> ${real.name}`);
-        acc.name = real.name;
-      }
-    }
-  }
-
-  await utils.writeJSON("./acclist.json", acclist);
-  logger.out("\nName check complete");
 }
 
 /**
@@ -260,11 +217,9 @@ module.exports = {
   logDaily,
   log,
   logD,
-  checkNames,
   addGuildMembers,
   addGIDMembers,
   getUUID: getUUIDCli,
-  moveAcc,
   linkDiscord,
   mNewAcc,
   getServerStatus,

@@ -40,11 +40,11 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
   let uuid;
   let acc;
 
-  const acclist = await BotRuntime.getFromDB("accounts");
+  const accs = await BotRuntime.getFromDB("accounts");
   if(player.length < 17) {
-    acc = acclist.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
+    acc = accs.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
   } else {
-    acc = acclist.find((a) => (`${a.uuid}`).toLowerCase() == player.toLowerCase());
+    acc = accs.find((a) => (`${a.uuid}`).toLowerCase() == player.toLowerCase());
   }
 
   if(acc == undefined) {

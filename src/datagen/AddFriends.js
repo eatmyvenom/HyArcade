@@ -6,5 +6,5 @@ module.exports = async function AddFriends (uuid) {
 
   const uuids = friendsList.map((f) => f.uuid);
 
-  await addAccounts("others", uuids);
+  await addAccounts(uuids);
 };

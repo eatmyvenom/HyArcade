@@ -52,24 +52,24 @@ async function getFromHypixel (string) {
  * @param {string} string
  * @param {Message} rawMessage
  * @param {boolean} canbeSelf
- * @param {Account[]} acclist
+ * @param {Account[]} accounts
  * @param {object} disclist
  * @returns {Account}
  */
-module.exports = async function resolveAccount (string, rawMessage, canbeSelf, acclist, disclist) {
+module.exports = async function resolveAccount (string, rawMessage, canbeSelf, accounts, disclist) {
   logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);
   const queryString = stringify(string).toLowerCase();
 
 
   let acc;
   if(queryString.length == 18) {
-    acc = acclist.find((a) => a.discord == queryString);
+    acc = accounts.find((a) => a.discord == queryString);
   }
 
   if(acc == undefined && queryString.length != 0 && queryString.length > 16) {
-    acc = acclist.find((a) => a.uuid?.toLowerCase() == queryString);
+    acc = accounts.find((a) => a.uuid?.toLowerCase() == queryString);
   } else if(acc == undefined && queryString.length != 0 && queryString != "undefined" && queryString.length <= 16) {
-    acc = acclist.find((a) => a.name?.toLowerCase() == queryString);
+    acc = accounts.find((a) => a.name?.toLowerCase() == queryString);
   }
 
   if(acc == undefined) {
@@ -77,7 +77,7 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
       const discid = `${rawMessage.mentions.users.first()}`;
       const uuid = disclist[discid];
       if(uuid != undefined) {
-        acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
+        acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
       }
     }
   }
@@ -87,7 +87,7 @@ module.exports = async function resolveAccount (string, rawMessage, canbeSelf, a
     const uuid = disclist[discid];
     logger.debug(`Resolved as ${uuid} from discord account list`);
     if(uuid != undefined) {
-      acc = acclist.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
+      acc = accounts.find((a) => a.uuid?.toLowerCase() == uuid.toLowerCase());
     }
   }
 

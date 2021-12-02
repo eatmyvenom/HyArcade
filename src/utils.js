@@ -118,7 +118,7 @@ async function readDB (file) {
     fileData = await (await fetch(url)).json();
   } catch (e) {
     logger.err("Can't connect to database");
-    logger.err(e);
+    logger.err(e.stack);
     return {};
   }
   logger.debug("Data fetched!");

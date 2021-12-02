@@ -7,7 +7,7 @@ const BotRuntime = require("./BotRuntime");
 module.exports = async function roleHandler (client) {
   const roleSet = await fs.readJSON("config.roles.json");
   const disclist = await BotRuntime.getFromDB("disclist");
-  const acclist = await BotRuntime.getFromDB("accounts");
+  const accs = await BotRuntime.getFromDB("accounts");
 
   for(const server in roleSet) {
     const guild = await client.guilds.fetch(server);
@@ -21,7 +21,7 @@ module.exports = async function roleHandler (client) {
       const category = path.split(".")[0];
       const stat = path.split(".")[1];
       const updater = new RoleUpdater(guild, roles, category, stat);
-      await updater.updateAll(disclist, acclist);
+      await updater.updateAll(disclist, accs);
     }
   }
 

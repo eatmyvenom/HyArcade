@@ -11,18 +11,14 @@ const {
 /**
  * Add a list of accounts to another list
  *
- * @param {string} category
  * @param {string[]} names
  * @returns {null}
  */
-module.exports = async function addAccounts (category, names) {
+module.exports = async function addAccounts (names) {
+  const accs = await utils.readDB("accounts");
+
   let res = "";
-  let acclist = await utils.readDB("acclist");
   const newAccs = [];
-  if(acclist[category] == undefined) {
-    logger.err("Please input a valid category!");
-    return "Please input a valid category!";
-  }
   const nameArr = names;
   for(let name of nameArr) {
     let uuid;
@@ -42,44 +38,26 @@ module.exports = async function addAccounts (category, names) {
       continue;
     }
 
-    const dupeAcc = acclist[category].find((acc) => acc.uuid == uuid) ||
-            acclist.gamers.find((acc) => acc.uuid == uuid) ||
-            acclist.afkers.find((acc) => acc.uuid == uuid);
+    const dupeAcc = accs.find((a) => a.uuid == uuid);
 
-    if(dupeAcc != undefined) {
-      logger.warn(`Refusing to add duplicate! (${dupeAcc.name})`);
-      res += `Refusing to add duplicate! (${dupeAcc.name})\n`;
-      continue;
+    if(dupeAcc) {
+      res += `Refusing to add duplicate "${dupeAcc.name}"`;
     }
 
     const acc = new Account("", 0, uuid);
     await acc.updateHypixel();
-    const {
-      wins
-    } = acc;
     name = acc.name;
 
-    if(wins < 50 && category == "gamers") {
-      logger.warn("Refusing to add account with under 50 pg wins to gamers!");
-    } else {
-      newAccs.push(acc);
-      logger.out(`${name} with ${acc.arcadeWins} wins added.`);
-      res += `${name} with ${acc.arcadeWins} wins added.\n`;
-    }
-  }
-  acclist = await utils.readDB("acclist");
-  for(const acc of newAccs) {
-    const lilAcc = {
-      name: acc.name,
-      uuid: acc.uuid
-    };
-    acclist[category].push(lilAcc);
+    newAccs.push(acc);
+    logger.out(`${name} with ${acc.arcadeWins} wins added.`);
+    res += `${name} with ${acc.arcadeWins} wins added.\n`;
   }
 
-  acclist.others = acclist.others.filter((a) => a.uuid != undefined);
   newAccs.filter((a) => a.uuid != undefined);
 
-  await utils.writeDB("acclist", acclist);
-  await utils.writeDB("accounts", newAccs);
+  if(newAccs.length > 0) {
+    await utils.writeDB("accounts", newAccs);
+  }
+
   return res;
 };

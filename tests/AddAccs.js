@@ -254,7 +254,7 @@ fce01da6a3814f7cae7acc0f31c58eae
 
 
 async function main () {
-  await addAccounts("others", accs.trim().split("\n"));
+  await addAccounts(accs.trim().split("\n"));
 }
 
 main()

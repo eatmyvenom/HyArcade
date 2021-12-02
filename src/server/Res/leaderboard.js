@@ -85,7 +85,7 @@ module.exports = async (req, res, fileCache) => {
     if(timePeriod == undefined) {
       TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
-      const newAcclist = [];
+      const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
 
@@ -93,7 +93,7 @@ module.exports = async (req, res, fileCache) => {
         const o = old[a.uuid];
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
-          newAcclist.push(new Account(a.name, 0, a.uuid));
+          newAccs.push(new Account(a.name, 0, a.uuid));
           continue;
         }
 
@@ -111,10 +111,10 @@ module.exports = async (req, res, fileCache) => {
         }
 
         a.lbProp = numberify(getter(a)) - (oldval);
-        newAcclist.push(a);
+        newAccs.push(a);
       }
 
-      accounts = newAcclist;
+      accounts = newAccs;
       TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
     }
 

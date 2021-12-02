@@ -10,11 +10,11 @@ module.exports = async function (database) {
   const accs = await database.collection("accounts");
   const allAccs = await accs.find({});
   const rawAccs = await allAccs.toArray();
-  const acclist = [];
+  const list = [];
   for(const acc of rawAccs) {
     const newAcc = new Account(acc.name, acc.wins, acc.uuid);
     newAcc.setData(acc);
-    acclist.push(newAcc);
+    list.push(newAcc);
   }
 
   let i;
@@ -22,9 +22,9 @@ module.exports = async function (database) {
   let temparray;
 
   const chunk = 120;
-  for(i = 0, j = acclist.length; i < j; i += chunk) {
-    temparray = acclist.slice(i, i + chunk);
-    await updateAccountsInArr(temparray, acclist, accs);
+  for(i = 0, j = list.length; i < j; i += chunk) {
+    temparray = list.slice(i, i + chunk);
+    await updateAccountsInArr(temparray, list, accs);
   }
 };
 

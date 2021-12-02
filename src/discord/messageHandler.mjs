@@ -49,7 +49,7 @@ async function addIGNs (msg) {
     const firstWord = msg.content.split(" ")[0];
     if(!msg.author.bot && isValidIGN(firstWord)) {
       Logger.out(`Attempting to add "${firstWord}" to database.`);
-      await addAccounts("others", [firstWord]);
+      await addAccounts([firstWord]);
     }
   }
 }

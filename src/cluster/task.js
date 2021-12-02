@@ -35,8 +35,7 @@ async function accs () {
     return [];
   }
 
-  const acclist = await lists.accounts();
-  accounts = await dataGen.updateAllAccounts(acclist);
+  accounts = await dataGen.updateAllAccounts();
   const old = await utils.readDB("accounts");
   old.sort(accSorter);
   accounts.sort(accSorter);
@@ -55,30 +54,6 @@ async function accs () {
 
   await utils.writeDB("accounts", accounts);
   return ["accounts.json"];
-}
-
-/**
- * Populate the data for all of the players in the player list
- *
- * @returns {string[]} files changed by this task
- */
-async function plrs () {
-
-  if(!(await HypixelApi.key()).success) {
-    return [];
-  }
-
-
-  const players = await lists.players(accounts);
-  await Promise.all(
-    players.map(async (player) => {
-      await player.updateWins();
-    })
-  );
-
-  players.sort(utils.winsSorter);
-  await utils.writeJSON("players.json", players);
-  return ["players.json"];
 }
 
 /**
@@ -119,7 +94,7 @@ async function glds () {
  * @returns {string[]} files changed by this task
  */
 async function stats () {
-  return await [].concat(await accs(), await plrs(), await glds());
+  return await [].concat(await accs(), await glds());
 }
 
 /**
@@ -137,7 +112,7 @@ async function gamesPlayed () {
  */
 async function addLeaderboards () {
   await dataGen.addLeaderboards();
-  return ["acclist.json"];
+  return ["accounts.json"];
 }
 
 /**
@@ -183,7 +158,6 @@ async function discord () {
 
 module.exports = {
   accounts: accs,
-  players: plrs,
   guilds: glds,
   gamesPlayed,
   addLeaderboards,

@@ -29,12 +29,12 @@ module.exports = class RoleUpdater {
       return undefined;
     }
 
-    async updateAll (disclist, acclist) {
+    async updateAll (disclist, accs) {
       const mbrList = await this.guild.members.fetch();
       for(const discid in disclist) {
         if(mbrList.has(discid)) {
           const uuid = disclist[discid];
-          const acc = acclist.find((a) => a.uuid == uuid);
+          const acc = accs.find((a) => a.uuid == uuid);
           if(acc == undefined) continue;
           await this.updatePlayer(acc, mbrList.get(discid));
         }

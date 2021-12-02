@@ -34,7 +34,7 @@ export default async (interaction) => {
     });
 
     const names = opts.getString("accounts").split(/\s/g);
-    let res = await addAccounts("others", names);
+    let res = await addAccounts(names);
     res = `\`\`\`\n${res}\n\`\`\``;
     const embed = new MessageEmbed()
       .setTitle("Accounts added")

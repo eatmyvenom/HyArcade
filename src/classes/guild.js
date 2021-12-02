@@ -1,7 +1,8 @@
 const Account = require("hyarcade-requests/types/Account");
 const hypixelApi = require("../hypixelApi");
+const utils = require("../utils");
 const { logger } = require("../utils");
-let accounts = [];
+let accounts;
 
 /**
  * @param {string} str
@@ -11,8 +12,7 @@ function numberify (str) {
   return Number(str);
 }
 
-module.exports = function Gld (acclist) {
-  accounts = acclist;
+module.exports = function Gld () {
   return Guild;
 };
 
@@ -74,6 +74,11 @@ class Guild {
      * @memberof Guild
      */
     async updateMemberData () {
+
+      if(accounts == undefined) {
+        accounts = await utils.readDB("accounts");
+      }
+
       const data = await this.getGuild();
       this.name = data?.guild?.name ?? "INVALID-NAME";
       logger.info(`Updating data for ${this.name}`);

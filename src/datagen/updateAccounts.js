@@ -7,7 +7,6 @@ const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const { sleep } = require("../utils");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 
 class Response {
@@ -199,7 +198,7 @@ async function fastUpdate (accounts) {
 
   const perSegment = cfg.segmentSize;
 
-  const oldAccs = AccountArray(await utils.readDB("accounts"));
+  const oldAccs = accounts;
   
   let importantAccounts = [];
   const ignoreAccounts = [];
@@ -272,18 +271,17 @@ module.exports = async function updateAccounts (accounts) {
     return await fastUpdate(accounts);
   }
 
-  const accs = accounts.sort(utils.winsSorter);
   await fs.writeFile("starttime", (`${Date.now()}`));
 
-  const oldAccs = await utils.readDB("accounts");
+  const oldAccs = accounts;
 
   let i;
   let j;
   let temparray;
 
   const chunk = 120;
-  for(i = 0, j = accs.length; i < j; i += chunk) {
-    temparray = accs.slice(i, i + chunk);
+  for(i = 0, j = accounts.length; i < j; i += chunk) {
+    temparray = accounts.slice(i, i + chunk);
     await updateAccountsInArr(temparray, oldAccs);
   }
 
@@ -295,8 +293,7 @@ module.exports = async function updateAccounts (accounts) {
     await fs.rm("force");
   }
 
-  await accs.sort(utils.winsSorter);
-  return accs;
+  return accounts;
 };
 
 /**

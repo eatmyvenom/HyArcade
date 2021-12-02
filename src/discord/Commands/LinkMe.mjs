@@ -1,9 +1,9 @@
 import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
 import mojangRequest from "../../request/mojangRequest.js";
-import { addAccounts } from "../../listUtils.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_ACCOUNT_PREVIOUSLY_LINKED, ERROR_IGN_UNDEFINED, ERROR_INPUT_IGN, ERROR_LINK_HYPIXEL_MISMATCH, ERROR_PLAYER_PREVIOUSLY_LINKED, INFO_LINK_SUCCESS } from "../Utils/Embeds/StaticEmbeds.js";
+import Database from "../Utils/Database.js";
 
 export default new Command("verify", ["*"], async (args, rawMsg, interaction) => {
   const player = args[0];
@@ -12,8 +12,8 @@ export default new Command("verify", ["*"], async (args, rawMsg, interaction) =>
     return { res: "", embed };
   }
   await interaction.defer();
-  const acclist = await BotRuntime.getFromDB("accounts");
-  let acc = acclist.find(
+  const accs = await BotRuntime.getFromDB("accounts");
+  let acc = accs.find(
     (a) =>
       (`${a.uuid}`).toLowerCase() == player.toLowerCase() || (`${a.name}`).toLowerCase() == player.toLowerCase()
   );
@@ -25,8 +25,8 @@ export default new Command("verify", ["*"], async (args, rawMsg, interaction) =>
       return { res: "", embed: noexistEmbed };
     }
     acc = new Account(player, 0, uuid);
-    await addAccounts("others", [uuid]);
     await acc.updateHypixel();
+    await Database.addAccount(acc);
   }
 
   let tag;
