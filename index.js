@@ -485,6 +485,10 @@ async function main () {
     await cli.addGIDMembers(args);
     break;
 
+  case "addGIDs":
+    await cli.addGIDsMembers(args);
+    break;
+
   case "bot":
     killable = false;
     await discordBot();

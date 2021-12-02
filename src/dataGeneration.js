@@ -70,10 +70,28 @@ async function addGuildID (id) {
   await addAccounts(uuids);
 }
 
+/**
+ * @param {string[]} ids
+ */
+async function addGuildIDs (ids) {
+  const uuids = [];
+
+  for(const id of ids) {
+    const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
+    const gmembers = guild?.guild?.members;
+    for(const m of gmembers) {
+      uuids.push(m.uuid);
+    }
+  }
+
+  await addAccounts(uuids);
+}
+
 module.exports = {
   updateAllAccounts,
   addGuild,
   addGuildID,
+  addGuildIDs,
   addLeaderboards,
   saveBoosters,
 };

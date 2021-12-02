@@ -180,6 +180,14 @@ async function addGIDMembers (args) {
 }
 
 /**
+ * @param {string[]} args
+ */
+async function addGIDsMembers (args) {
+  const uuid = args.slice(3);
+  await dataGeneration.addGuildIDs(uuid);
+}
+
+/**
  * @returns {object}
  */
 async function getServerStatus () {
@@ -219,6 +227,7 @@ module.exports = {
   logD,
   addGuildMembers,
   addGIDMembers,
+  addGIDsMembers,
   getUUID: getUUIDCli,
   linkDiscord,
   mNewAcc,
