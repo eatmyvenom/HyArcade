@@ -64,10 +64,6 @@ class FileCache {
       return AccountArray(Object.values(this.indexedAccounts));
     }
 
-    set accounts (accs) {
-      this.indexedAccounts = indexAccs(accs);
-    }
-
     get dailyAccounts () {
       return AccountArray(Object.values(this.indexedDaily));
     }

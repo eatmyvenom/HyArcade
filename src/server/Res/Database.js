@@ -5,6 +5,21 @@ const cfg = require("../../Config").fromJSON();
 
 /**
  * 
+ * @param {object[]} accounts 
+ * @returns {*}
+ */
+function indexAccs (accounts) {
+  const obj = {};
+
+  for(const acc of accounts) {
+    obj[acc.uuid] = acc;
+  }
+
+  return obj;
+}
+
+/**
+ * 
  * @param {*} req 
  * @param {*} res 
  * @param {FileCache} fileCache 
@@ -58,7 +73,7 @@ module.exports = async (req, res, fileCache) => {
           const newAccs = AccountArray([...json, ...old]);
 
           Logger.log(`New accounts length is ${newAccs.length}`);
-          fileCache.accounts = AccountArray(newAccs);
+          fileCache.indexedAccounts = indexAccs(newAccs);
 
         } else {
           fileCache[url.searchParams.get("path")] = json;
