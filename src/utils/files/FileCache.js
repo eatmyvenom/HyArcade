@@ -31,6 +31,7 @@ class FileCache {
 
     AccountsProcessor;
     DailyProcessor;
+    MonthlyProcessor;
 
     acclist = {};
     retro = {};
@@ -54,7 +55,7 @@ class FileCache {
       this.AccountsProcessor = new Accounts(`${path}/accounts`);
       this.DailyProcessor = new Accounts(`${path}/accounts.day`);
       this.MonthlyProcessor = new Accounts(`${path}/accounts.monthly`);
-      this.WeeklyProcessor = new Accounts(`${path}/accounts.weekly`);
+      // this.WeeklyProcessor = new Accounts(`${path}/accounts.weekly`);
     }
 
     get accounts () {
@@ -139,7 +140,7 @@ class FileCache {
         Logger.info("Refreshing static files");
 
         Logger.debug("Reading daily accounts");
-        const dailyAccounts = await utils.readJSON("accounts.day.json");
+        const dailyAccounts = await fileCache.DailyProcessor.readAccounts();
         fileCache.indexedDaily = indexAccs(dailyAccounts);
 
         Logger.debug("Reading weekly accounts");
@@ -147,7 +148,7 @@ class FileCache {
         fileCache.indexedWeekly = indexAccs(weeklyAccounts);
 
         Logger.debug("Reading monthly accounts");
-        const monthlyAccounts = await utils.readJSON("accounts.monthly.json");
+        const monthlyAccounts = await fileCache.MonthlyProcessor.readAccounts();
         fileCache.indexedMonthly = indexAccs(monthlyAccounts);
 
         Logger.debug("Reading guild data");
