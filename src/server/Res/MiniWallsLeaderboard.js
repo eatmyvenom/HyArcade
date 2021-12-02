@@ -20,7 +20,7 @@ async function generateLeaderboard (fileCache, stat, time) {
   if(time != undefined) {
 
     /** @type {Account[]} */
-    const timedAccounts = fileCache[`indexed${time}`];
+    const timedAccounts = AccountArray([...fileCache[`indexed${time}`]]);
 
     accounts.map((acc) => {
       const timeAcc = timedAccounts[acc.uuid];
