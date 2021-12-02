@@ -163,6 +163,7 @@ class FileCache {
         fileCache.retro.weeklyaccounts = retroWeekly;
       } catch (e) {
         Logger.err("Error refreshing static files!");
+        Logger.err(e.stack);
       }
 
       if(fileCache.dirty) {
