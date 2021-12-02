@@ -28,6 +28,8 @@ module.exports = async (req, res, fileCache) => {
         res.write(`${JSON.stringify(item)},`);
       }
       res.write("]");
+    } else {
+      res.write(JSON.stringify(data));
     }
 
     res.end();
