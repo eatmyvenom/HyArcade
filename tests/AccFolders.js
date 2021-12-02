@@ -4,7 +4,7 @@ const Accounts = require("../src/utils/files/Accounts");
 async function main () {
   const accounts = await readDB("weeklyaccounts");
 
-  const h = new Accounts("data/accounts");
+  const h = new Accounts("data/accounts.weekly");
 
   h.writeAccounts(accounts);
 }
