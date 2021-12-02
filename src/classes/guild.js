@@ -2,7 +2,7 @@ const Account = require("hyarcade-requests/types/Account");
 const hypixelApi = require("../hypixelApi");
 const utils = require("../utils");
 const { logger } = require("../utils");
-let accounts;
+let allAccs;
 
 /**
  * @param {string} str
@@ -12,7 +12,10 @@ function numberify (str) {
   return Number(str);
 }
 
-module.exports = function Gld () {
+module.exports = function Gld (accounts) {
+  if(accounts != undefined) {
+    allAccs = accounts;
+  }
   return Guild;
 };
 
@@ -75,8 +78,8 @@ class Guild {
      */
     async updateMemberData () {
 
-      if(accounts == undefined) {
-        accounts = await utils.readDB("accounts");
+      if(allAccs == undefined) {
+        allAccs = await utils.readDB("accounts");
       }
 
       const data = await this.getGuild();
@@ -94,7 +97,7 @@ class Guild {
       for(let i = 0; i < gmembers.length; i += 1) {
 
         // find a corrosponding account in my account list
-        const gamer = accounts.find((acc) => acc.uuid == gmembers[i].uuid);
+        const gamer = allAccs.find((acc) => acc.uuid == gmembers[i].uuid);
 
         // dont add empty accounts
         if(gamer != undefined) {
