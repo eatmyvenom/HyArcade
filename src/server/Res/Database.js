@@ -24,8 +24,11 @@ module.exports = async (req, res, fileCache) => {
 
     if(Array.isArray(data)) {
       res.write("[");
-      for(const item of data) {
-        res.write(`${JSON.stringify(item)},`);
+      for(let i = 0; i < data.length; i += 1) {
+        res.write(`${JSON.stringify(data[i])}`);
+        if(i < data.length - 1) {
+          res.write(",");
+        }
       }
       res.write("]");
     } else {
