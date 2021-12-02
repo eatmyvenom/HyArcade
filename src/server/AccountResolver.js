@@ -66,7 +66,12 @@ async function AccountResolver (fileCache, url) {
 
     if (uuid != null) {
       acc = new Account(ign, 0, uuid);
-      await acc.updateHypixel();
+      try {
+        await acc.updateHypixel();
+      } catch (e) {
+        Logger.err("ERROR FETCHING ACCOUNT DATA FROM HYPIXEL...");
+        Logger.err(e.stack);
+      }
       fileCache.indexedAccounts[acc.uuid] = acc;
       await fileCache.AccountsProcessor.writeAccount(acc.uuid, acc);
     }
