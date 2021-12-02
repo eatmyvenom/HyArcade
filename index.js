@@ -305,6 +305,7 @@ async function main () {
   }
 
   if(!(args[2] == "bot" || args[2] == "serveDB")) {
+    logger.verbose("Writing pid file");
     await writePID();
   }
 
