@@ -69,13 +69,12 @@ function day () {
  * @param {object} json the json data
  */
 async function writeJSON (path, json) {
-  // await BSONwriter(path, json);
-  await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
-  try {
-    await readJSON(path);
-  } catch (e) {
-    await writeJSON(path, json);
+
+  if(Array.isArray(json)) {
+    await fs.writeFile(`data/${path}`, `[${this.json.map((acc) => JSON.stringify(acc)).join(",")}]`);
   }
+
+  await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
 }
 
 /**
