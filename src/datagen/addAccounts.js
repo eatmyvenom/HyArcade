@@ -23,7 +23,7 @@ module.exports = async function addAccounts (names) {
   for(let name of nameArr) {
     let uuid;
     if(name.length == 32 || name.length == 36) {
-      uuid = name.replace(/-/g, "");
+      uuid = name.replace(/-/g, "").toLowerCase();
     } else {
       if(!isValidIGN(name)) {
         logger.warn(`${name} is not a valid IGN and is being ignored!`);
@@ -42,6 +42,7 @@ module.exports = async function addAccounts (names) {
 
     if(dupeAcc) {
       res += `Refusing to add duplicate "${dupeAcc.name}"`;
+      logger.warn(`Refusing to add duplicate "${dupeAcc.name}"`);
     }
 
     const acc = new Account("", 0, uuid);
