@@ -25,7 +25,7 @@ class Database {
       });
     } catch (e) {
       Logger.err("Can't connect to database");
-      Logger.err(e);
+      Logger.err(e.stack);
       return {};
     }
   }
@@ -61,7 +61,7 @@ class Database {
       lb = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");
-      Logger.err(e);
+      Logger.err(e.stack);
       Logger.err(lb);
       return {};
     }
@@ -84,7 +84,7 @@ class Database {
       lb = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");
-      Logger.err(e);
+      Logger.err(e.stack);
       Logger.err(lb);
       return {};
     }
@@ -117,7 +117,7 @@ class Database {
       acc = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");
-      Logger.err(e);
+      Logger.err(e.stack);
       Logger.err(acc);
       return {};
     }

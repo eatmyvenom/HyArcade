@@ -100,7 +100,7 @@ async function writeDB (path, json) {
     logger.debug("Data written!");
   } catch (e) {
     logger.err("Can't connect to database");
-    logger.err(e);
+    logger.err(e.stack);
   }
 }
 

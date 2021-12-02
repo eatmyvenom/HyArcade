@@ -43,7 +43,6 @@ async function callback (res, req) {
       logger.info(`${request.method?.toUpperCase()} ${url}`);
       await mod(request, response, fileCache);
     } catch (e) {
-      logger.err(e);
       logger.err(e.stack);
       response.statusCode = 404;
       response.end();

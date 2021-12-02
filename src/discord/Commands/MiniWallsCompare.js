@@ -163,7 +163,7 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
       .addField("━━━━━ Ratios: ━━━━━", ratios, true);
 
   } catch (e) {
-    logger.err(e);
+    logger.err(e.stack);
     return {
       res: "",
       embed: ERROR_IGN_UNDEFINED

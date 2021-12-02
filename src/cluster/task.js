@@ -49,7 +49,7 @@ async function accs () {
       await ED.saveEvents();
     }
   } catch (e) {
-    logger.err(e);
+    logger.err(e.stack);
   }
 
   await utils.writeDB("accounts", accounts);

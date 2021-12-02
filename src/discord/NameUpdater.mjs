@@ -21,7 +21,7 @@ export default async function NameUpdater (client) {
       try {
         await m.setNickname(acc.name);
       } catch (e) {
-        logger.err(e);
+        logger.err(e.stack);
       }
     }
   });

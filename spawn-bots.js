@@ -61,7 +61,7 @@ async function main () {
     });
     arcade.on("exit", restartArcade);
   } catch (e) {
-    Logger.err(e);
+    Logger.err(e.stack);
   }
 }
 

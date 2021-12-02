@@ -715,7 +715,7 @@ async function sendMW () {
   try {
     await hook.deleteMessage(mwMsg);
   } catch (e) {
-    logger.err(e);
+    logger.err(e.stack);
   }
   const newMsg = await hook.send({
     embeds: [wins, kills, finals, witherdmg, witherkills, guilds],

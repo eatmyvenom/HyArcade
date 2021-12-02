@@ -117,7 +117,7 @@ class Guild {
       try {
         return JSON.parse(await hypixelApi.getGuildRaw(this.uuid));
       } catch (e) {
-        logger.err(e);
+        logger.err(e.stack);
         logger.err(this.uuid);
         return await this.getGuild();
       }

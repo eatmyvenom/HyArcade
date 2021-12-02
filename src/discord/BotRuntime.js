@@ -142,7 +142,7 @@ module.exports = class BotRuntime {
         fileData = await (await fetch(url)).json();
       } catch (e) {
         Logger.err("Can't connect to database");
-        Logger.err(e);
+        Logger.err(e.stack);
         return {};
       }
       Logger.debug("Data fetched!");
@@ -170,7 +170,7 @@ module.exports = class BotRuntime {
         });
       } catch (e) {
         Logger.err("Can't connect to database");
-        Logger.err(e);
+        Logger.err(e.stack);
         return {};
       }
     }
