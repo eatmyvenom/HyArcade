@@ -22,6 +22,14 @@ module.exports = async (req, res, fileCache) => {
       res.end();
     }
 
+    if(Array.isArray(data)) {
+      res.write("[");
+      for(const item of data) {
+        res.write(`${JSON.stringify(item)},`);
+      }
+      res.write("]");
+    }
+
     res.write(JSON.stringify(data));
     res.end();
   } else if(req.method == "POST") {
