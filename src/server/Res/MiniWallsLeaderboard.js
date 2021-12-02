@@ -12,7 +12,7 @@ const FileCache = require("../../utils/files/FileCache");
  */
 async function generateLeaderboard (fileCache, stat, time) {
   /** @type {Account[]} */
-  let accounts = AccountArray(fileCache.accounts);
+  let accounts = AccountArray([...fileCache.accounts]);
 
   accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
