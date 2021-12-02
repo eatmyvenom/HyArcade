@@ -72,9 +72,10 @@ async function writeJSON (path, json) {
 
   if(Array.isArray(json)) {
     await fs.writeFile(`data/${path}`, `[${this.json.map((acc) => JSON.stringify(acc)).join(",")}]`);
+  } else {
+    await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
   }
 
-  await fs.writeFile(`data/${path}`, JSON.stringify(json, null, 4));
 }
 
 /**
@@ -96,6 +97,7 @@ async function writeDB (path, json) {
         Authorization: cfg.dbPass
       }
     });
+    logger.debug("Data written!");
   } catch (e) {
     logger.err("Can't connect to database");
     logger.err(e);
