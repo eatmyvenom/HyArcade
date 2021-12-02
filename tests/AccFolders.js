@@ -2,7 +2,7 @@ const { readDB } = require("../src/utils");
 const Accounts = require("../src/utils/files/Accounts");
 
 async function main () {
-  const accounts = await readDB("accounts");
+  const accounts = await readDB("weeklyaccounts");
 
   const h = new Accounts("data/accounts");
 
