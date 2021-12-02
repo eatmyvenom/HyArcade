@@ -50,12 +50,13 @@ class FileCache {
 
     constructor (path = "data/") {
       this.path = path;
-      FileCache.refresh(this);
       this._interval = setInterval(FileCache.refresh, 600000, this);
       this.AccountsProcessor = new Accounts(`${path}/accounts`);
       this.DailyProcessor = new Accounts(`${path}/accounts.day`);
       this.MonthlyProcessor = new Accounts(`${path}/accounts.monthly`);
       // this.WeeklyProcessor = new Accounts(`${path}/accounts.weekly`);
+
+      FileCache.refresh(this);
     }
 
     get accounts () {
