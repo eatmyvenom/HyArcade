@@ -43,6 +43,7 @@ module.exports = async function addAccounts (names) {
     if(dupeAcc) {
       res += `Refusing to add duplicate "${dupeAcc.name}"`;
       logger.warn(`Refusing to add duplicate "${dupeAcc.name}"`);
+      continue;
     }
 
     const acc = new Account("", 0, uuid);
