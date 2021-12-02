@@ -46,6 +46,7 @@ class FileCache {
     banlist = [];
     ezmsgs = [];
     dirty = false;
+    ready = false;
     path = "data/";
 
     constructor (path = "data/") {
@@ -87,7 +88,9 @@ class FileCache {
     }
 
     save () {
-      this.dirty = true;
+      if(this.ready) {
+        this.dirty = true;
+      }
     }
 
     async runSave () {
@@ -267,6 +270,8 @@ class FileCache {
         Logger.error("ERROR REFRESHING FILES!");
         Logger.error(e.stack);
       }
+
+      fileCache.ready = true;
     }
 
     get indexedday () {
