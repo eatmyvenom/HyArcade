@@ -23,7 +23,7 @@ exports.getList = async function getList (type = "") {
   url.searchParams.set("path", path);
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
-  const list = await (await fetch(url)).json();
+  const list = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
   logger.debug("Data fetched!");
   return AccountArray(list);
 };

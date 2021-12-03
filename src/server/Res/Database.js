@@ -32,25 +32,33 @@ module.exports = async (req, res, fileCache) => {
     const file = url.searchParams.get("path");
     const data = fileCache[file];
 
-    if(data == undefined) {
-      res.statusCode = 404;
+    const largeReq = file.toLowerCase().includes("accounts") || file.toLowerCase().includes("indexed");
+    if(largeReq && req.headers.authorization != cfg.dbPass) {
+      res.statusCode = 403;
+      res.end();
+    } else {
+
+      
+      if(data == undefined) {
+        res.statusCode = 404;
+        res.end();
+      }
+      
+      if(Array.isArray(data)) {
+        res.write("[");
+        for(let i = 0; i < data.length; i += 1) {
+          res.write(`${JSON.stringify(data[i])}`);
+          if(i < data.length - 1) {
+            res.write(",");
+          }
+        }
+        res.write("]");
+      } else {
+        res.write(JSON.stringify(data));
+      }
+      
       res.end();
     }
-
-    if(Array.isArray(data)) {
-      res.write("[");
-      for(let i = 0; i < data.length; i += 1) {
-        res.write(`${JSON.stringify(data[i])}`);
-        if(i < data.length - 1) {
-          res.write(",");
-        }
-      }
-      res.write("]");
-    } else {
-      res.write(JSON.stringify(data));
-    }
-
-    res.end();
   } else if(req.method == "POST") {
     let data = "";
     let json = {};

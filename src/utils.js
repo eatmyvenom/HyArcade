@@ -116,7 +116,7 @@ async function readDB (file) {
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
   try {
-    fileData = await (await fetch(url)).json();
+    fileData = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
   } catch (e) {
     logger.err("Can't connect to database");
     logger.err(e.stack);

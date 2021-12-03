@@ -139,7 +139,7 @@ module.exports = class BotRuntime {
       Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
       try {
-        fileData = await (await fetch(url)).json();
+        fileData = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
       } catch (e) {
         Logger.err("Can't connect to database");
         Logger.err(e.stack);
