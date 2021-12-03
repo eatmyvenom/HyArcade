@@ -2,6 +2,8 @@ const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
+const { Readable, pipeline } = require("stream");
+const zlib = require("zlib");
 
 /**
  * @param {string} str
@@ -135,8 +137,33 @@ module.exports = async (req, res, fileCache) => {
       }
     }
 
-    res.write(JSON.stringify(accounts));
-    res.end();
+    let acceptEncoding = req.headers["accept-encoding"];
+    if (!acceptEncoding) {
+      acceptEncoding = "";
+    }
+
+    const cb = () => {};
+    const s = new Readable();
+
+    s._read = () => {};
+
+    s.push(JSON.stringify(accounts));
+    s.push(null);
+
+    if (/\bdeflate\b/.test(acceptEncoding)) {
+      res.writeHead(200, { "Content-Encoding": "deflate" });
+      pipeline(s, zlib.createDeflate(), res, cb);
+    } else if (/\bgzip\b/.test(acceptEncoding)) {
+      res.writeHead(200, { "Content-Encoding": "gzip" });
+      pipeline(s, zlib.createGzip(), res, cb);
+    } else if (/\bbr\b/.test(acceptEncoding)) {
+      res.writeHead(200, { "Content-Encoding": "br" });
+      pipeline(s, zlib.createBrotliCompress(), res, cb);
+    } else {
+      res.writeHead(200, {});
+      pipeline(s, res, cb);
+    }
+
   } else {
     res.statusCode = 404;
     res.end();

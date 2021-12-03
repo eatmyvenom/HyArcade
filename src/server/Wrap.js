@@ -19,18 +19,12 @@ const urlModules = {
   namesearch: require("./Res/NameSearch")
 };
 let fileCache;
-const express = require("express");
-const app = express();
-
 
 /**
- * @param {express.Response} res
- * @param {express.Request} req
+ * @param {Request} request
+ * @param {Response} response
  */
-async function callback (res, req) {
-  const request = req.req;
-  const response = res.res;
-
+async function callback (request, response) {
   const url = new URL(request.url, `https://${request.headers.host}`);
   const endpoint = url.pathname.slice(1);
   const mod = urlModules[endpoint];
@@ -50,21 +44,9 @@ async function callback (res, req) {
   }
 }
 
-app.all("/namesearch", callback);
-app.all("/resolve", callback);
-app.all("/db", callback);
-app.all("/account", callback);
-app.all("/acc", callback);
-app.all("/leaderboard", callback);
-app.all("/lb", callback);
-app.all("/mwlb", callback);
-app.all("/miniwalls", callback);
-app.all("/timeacc", callback);
-app.all("/acctimed", callback);
-
 module.exports = function start (port) {
-  app.listen(port, () => {
-    fileCache = new FileCache("data/");
-    logger.log(`Express app listening at http://localhost:${port}`);
-  });
+  fileCache = new FileCache("data/");
+  return require("http")
+    .createServer(callback)
+    .listen(port);
 };

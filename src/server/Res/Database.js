@@ -2,6 +2,8 @@ const Logger = require("hyarcade-logger");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
+const { Readable, pipeline } = require("stream");
+const zlib = require("zlib");
 
 /**
  * 
@@ -32,31 +34,43 @@ module.exports = async (req, res, fileCache) => {
     const file = url.searchParams.get("path");
     const data = fileCache[file];
 
-    const largeReq = file.toLowerCase().includes("accounts") || file.toLowerCase().includes("indexed");
+    const largeReq = /*file.toLowerCase().includes("accounts") || file.toLowerCase().includes("indexed");*/ false;
     if(largeReq && req.headers.authorization != cfg.dbPass) {
       res.statusCode = 403;
       res.end();
     } else {
 
+      let acceptEncoding = req.headers["accept-encoding"];
+      if (!acceptEncoding) {
+        acceptEncoding = "";
+      }
+      
       if(data == undefined) {
         res.statusCode = 404;
         res.end();
       }
-      
-      if(Array.isArray(data)) {
-        res.write("[");
-        for(let i = 0; i < data.length; i += 1) {
-          res.write(`${JSON.stringify(data[i])}`);
-          if(i < data.length - 1) {
-            res.write(",");
-          }
-        }
-        res.write("]");
+
+      const cb = () => {};
+      const s = new Readable();
+
+      s._read = () => {};
+
+      s.push(JSON.stringify(data));
+      s.push(null);
+
+      if (/\bdeflate\b/.test(acceptEncoding)) {
+        res.writeHead(200, { "Content-Encoding": "deflate" });
+        pipeline(s, zlib.createDeflate(), res, cb);
+      } else if (/\bgzip\b/.test(acceptEncoding)) {
+        res.writeHead(200, { "Content-Encoding": "gzip" });
+        pipeline(s, zlib.createGzip(), res, cb);
+      } else if (/\bbr\b/.test(acceptEncoding)) {
+        res.writeHead(200, { "Content-Encoding": "br" });
+        pipeline(s, zlib.createBrotliCompress(), res, cb);
       } else {
-        res.write(JSON.stringify(data));
+        res.writeHead(200, {});
+        pipeline(s, res, cb);
       }
-      
-      res.end();
     }
   } else if(req.method == "POST") {
     let data = "";
