@@ -21,23 +21,24 @@ async function generateLeaderboard (fileCache, stat, time) {
   if(time != undefined) {
 
     accounts.forEach((acc) => {
+      const realacc = JSON.parse(JSON.stringify(acc));
       const timeAcc = fileCache[`indexed${time}`][acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
-        acc.miniWalls.kills = 0;
+        realacc.miniWalls.kills = 0;
         return;
       }
 
-      acc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? acc.miniWalls.wins;
-      acc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? acc.miniWalls.arrowsHit;
-      acc.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? acc.miniWalls.arrowsShot;
-      acc.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? acc.miniWalls.deaths;
-      acc.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? acc.miniWalls.finalKills;
-      acc.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? acc.miniWalls.kills;
-      acc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? acc.miniWalls.witherDamage;
-      acc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? acc.miniWalls.witherKills;
+      realacc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? realacc.miniWalls.wins;
+      realacc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? realacc.miniWalls.arrowsHit;
+      realacc.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? realacc.miniWalls.arrowsShot;
+      realacc.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? realacc.miniWalls.deaths;
+      realacc.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? realacc.miniWalls.finalKills;
+      realacc.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? realacc.miniWalls.kills;
+      realacc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? realacc.miniWalls.witherDamage;
+      realacc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? realacc.miniWalls.witherKills;
 
-      newList.push(JSON.parse(JSON.stringify(acc)));
+      newList.push(realacc);
       return;
     });
   } else {
