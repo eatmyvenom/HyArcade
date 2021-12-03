@@ -19,11 +19,8 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   if(time != undefined) {
 
-    /** @type {Account[]} */
-    const timedAccounts = AccountArray([...fileCache[`indexed${time}`]]);
-
     accounts.map((acc) => {
-      const timeAcc = timedAccounts[acc.uuid];
+      const timeAcc = fileCache[`indexed${time}`][acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
         acc.miniWalls.kills = 0;
