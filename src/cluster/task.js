@@ -4,25 +4,14 @@ const {
   stringDaily
 } = require("../listUtils");
 const utils = require("../utils");
-const config = require("../Config").fromJSON();
 const dataGen = require("../dataGeneration");
-const EventDetector = require("../events/EventDetector");
 
 const lists = require("../listParser");
 let accounts = [];
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
-const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
 
-/**
- * 
- * @param {*} b 
- * @param {*} a 
- * @returns {number}
- */
-function accSorter (b, a) {
-  return NormalizeAccount(a) - NormalizeAccount(b);
-}
+// const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
 
 /**
  * Generate the data for all accounts
@@ -36,21 +25,6 @@ async function accs () {
   }
 
   accounts = await dataGen.updateAllAccounts();
-  const old = await utils.readDB("accounts");
-  old.sort(accSorter);
-  accounts.sort(accSorter);
-
-  try {
-    if(!config.clusters[config.cluster].flags.includes("ignoreEvents")) {
-      const ED = new EventDetector(old, accounts);
-      await ED.runDetection();
-      await ED.logEvents();
-      await ED.sendEvents();
-      await ED.saveEvents();
-    }
-  } catch (e) {
-    logger.err(e.stack);
-  }
 
   await utils.writeDB("accounts", accounts);
   return ["accounts.json"];
