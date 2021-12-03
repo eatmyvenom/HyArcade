@@ -38,7 +38,6 @@ module.exports = async (req, res, fileCache) => {
       res.end();
     } else {
 
-      
       if(data == undefined) {
         res.statusCode = 404;
         res.end();

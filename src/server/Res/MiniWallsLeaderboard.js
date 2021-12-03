@@ -16,15 +16,16 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
+  const newList = [];
 
   if(time != undefined) {
 
-    accounts.map((acc) => {
+    accounts.forEach((acc) => {
       const timeAcc = fileCache[`indexed${time}`][acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
         acc.miniWalls.kills = 0;
-        return acc;
+        return;
       }
 
       acc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? acc.miniWalls.wins;
@@ -36,11 +37,16 @@ async function generateLeaderboard (fileCache, stat, time) {
       acc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? acc.miniWalls.witherDamage;
       acc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? acc.miniWalls.witherKills;
 
-      return acc;
+      newList.push(JSON.parse(JSON.stringify(acc)));
+      return;
     });
+  } else {
+    for(const a of accounts) {
+      newList.push(JSON.parse(JSON.stringify(a)));
+    }
   }
 
-  accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
+  accounts = newList.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
 
   switch(stat) {
   case "wins" : {
