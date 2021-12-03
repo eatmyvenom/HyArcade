@@ -764,6 +764,6 @@ module.exports = class ImageGenerator {
     }
 
     toDiscord (name = "image.png") {
-      return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 9 }), name);
+      return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 5 }), name);
     }
 };
