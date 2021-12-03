@@ -50,6 +50,7 @@ function ms2time (time) {
 async function hander (args, rawMsg, interaction) {
   // Start time before any packets are sent
   const startTime = Date.now();
+  logger.verbose("Deferring");
 
   if(interaction != undefined && !interaction.isButton()) {
     logger.debug("Deferring interaction");
@@ -61,6 +62,7 @@ async function hander (args, rawMsg, interaction) {
     await interaction.update({ components: [row] });
     interaction.deferred = true;
   }
+  logger.verbose("Parsing");
 
   if(args.length < 1) {
     return new CommandResponse("", ERROR_ARGS_LENGTH(1));
@@ -80,6 +82,8 @@ async function hander (args, rawMsg, interaction) {
     .toLowerCase()
     .trim()
     .replace(/ /g, "");
+
+  logger.verbose("Processing");
 
   switch(sanitizedType) {
   case "sex":
@@ -1190,6 +1194,7 @@ async function hander (args, rawMsg, interaction) {
   }
   }
 
+  logger.verbose("Converting canvas");
   const finalRes = res.toDiscord("leaderboard.png");
 
   logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);

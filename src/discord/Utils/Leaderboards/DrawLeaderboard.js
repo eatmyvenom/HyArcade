@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const ImageGenerator = require("../../images/ImageGenerator");
 
 /**
@@ -12,8 +13,10 @@ const ImageGenerator = require("../../images/ImageGenerator");
  */
 async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter, title) {
   const img = new ImageGenerator(2560, 1600, "'myFont'", true);
+  Logger.verbose("Adding background");
   await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
 
+  Logger.verbose("Drawing text");
   img.drawMcText(`&e${title}`, 1280, 80, 112, "center");
   img.drawMcText(`&a&l${time} Leaderboard`, 1280, 170, 80, "center");
 

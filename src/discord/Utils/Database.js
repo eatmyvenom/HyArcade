@@ -31,6 +31,7 @@ class Database {
   }
 
   static async getLeaderboard (path, category, time, min, reverse, max) {
+    Logger.verbose("Reading database");
     cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path) ;

@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const ImageGenerator = require("../../images/ImageGenerator");
 const Database = require("../Database");
 const DrawLeaderboard = require("./DrawLeaderboard");
@@ -112,6 +113,8 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
   }
 
+  Logger.verbose("Generating getter");
+
   let getter;
   let title;
   if(prop?.startsWith(".")) {
@@ -153,6 +156,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   }
 
 
+  Logger.verbose("Drawing image");
   return DrawLeaderboard(res, getter, time, startingIndex, formatter, title);
 };
 
