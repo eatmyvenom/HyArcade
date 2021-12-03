@@ -810,7 +810,7 @@ async function getLeaderboards (element) {
     const category = idArr[0];
     const path = idArr[1];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&min`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();

@@ -4,19 +4,6 @@ const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 
 /**
- * 
- * @param {*} val 
- * @returns {boolean}
- */
-function testNullish (val) {
-  if(!(val ?? false)) {
-    return false;
-  }
-
-  return true;
-}
-
-/**
  * @param {string} str
  * @returns {number}
  */
@@ -80,8 +67,6 @@ module.exports = async (req, res, fileCache) => {
     // Full copy to prevent accounts list from being messed up
     let accounts = AccountArray([...fileCache.accounts]);
 
-    accounts = accounts.filter((a) => testNullish(getter(a)));
-
     if(timePeriod == undefined) {
       TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
@@ -115,11 +100,11 @@ module.exports = async (req, res, fileCache) => {
       }
 
       accounts = newAccs;
-      TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
-    }
-
-    if(reverse) {
-      accounts = accounts.reverse();
+      if(reverse) {
+        TimSort.sort(accounts, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+      } else {
+        TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+      }
     }
 
     accounts = accounts.slice(0, Math.min(accounts.length, max));

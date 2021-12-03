@@ -21,24 +21,24 @@ async function generateLeaderboard (fileCache, stat, time) {
   if(time != undefined) {
 
     accounts.forEach((acc) => {
-      const realacc = JSON.parse(JSON.stringify(acc));
+      const derefed = JSON.parse(JSON.stringify(acc));
       const timeAcc = fileCache[`indexed${time}`][acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
-        realacc.miniWalls.kills = 0;
+        derefed.miniWalls.kills = 0;
         return;
       }
 
-      realacc.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? realacc.miniWalls.wins;
-      realacc.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? realacc.miniWalls.arrowsHit;
-      realacc.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? realacc.miniWalls.arrowsShot;
-      realacc.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? realacc.miniWalls.deaths;
-      realacc.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? realacc.miniWalls.finalKills;
-      realacc.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? realacc.miniWalls.kills;
-      realacc.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? realacc.miniWalls.witherDamage;
-      realacc.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? realacc.miniWalls.witherKills;
+      derefed.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? derefed.miniWalls.wins;
+      derefed.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? derefed.miniWalls.arrowsHit;
+      derefed.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? derefed.miniWalls.arrowsShot;
+      derefed.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? derefed.miniWalls.deaths;
+      derefed.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? derefed.miniWalls.finalKills;
+      derefed.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? derefed.miniWalls.kills;
+      derefed.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? derefed.miniWalls.witherDamage;
+      derefed.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? derefed.miniWalls.witherKills;
 
-      newList.push(realacc);
+      newList.push(derefed);
       return;
     });
   } else {
