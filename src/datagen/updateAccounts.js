@@ -161,7 +161,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   for (const acc of accs) {
     logger.log(`Setting data for ${acc.uuid}`);
     const accData = workerData.data[acc.uuid];
-    if(accData?.success == false) {
+    if(accData?.success == false || accData?.player == undefined) {
       logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
       logger.err(JSON.stringify(accData, null, 2));
     } else {
