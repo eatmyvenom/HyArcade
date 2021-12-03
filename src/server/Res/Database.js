@@ -34,7 +34,7 @@ module.exports = async (req, res, fileCache) => {
     const file = url.searchParams.get("path");
     const data = fileCache[file];
 
-    const largeReq = /*file.toLowerCase().includes("accounts") || file.toLowerCase().includes("indexed");*/ false;
+    const largeReq = false;
     if(largeReq && req.headers.authorization != cfg.dbPass) {
       res.statusCode = 403;
       res.end();
