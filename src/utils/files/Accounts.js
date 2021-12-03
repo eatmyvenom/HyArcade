@@ -51,7 +51,9 @@ module.exports = class Accounts {
     const accounts = [];
 
     for(const fileName of files) {
-      accounts.push(await this.readAccount(fileName));
+      if(fileName.length == 37) {
+        accounts.push(await this.readAccount(fileName));
+      }
     }
 
     return accounts;

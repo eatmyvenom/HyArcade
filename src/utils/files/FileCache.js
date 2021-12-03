@@ -173,18 +173,10 @@ class FileCache {
       Logger.info("Refreshing file cache...");
 
       try {
-        const accStat = await fs.stat(`${fileCache.path}accounts.json`);
-        if(Math.max(accStat.ctimeMs, accStat.mtimeMs) > fileCache.modTime) {
-          Logger.debug("Reading accounts data");
-          const accounts = await fileCache.AccountsProcessor.readAccounts();
-          fileCache.indexedAccounts = indexAccs(accounts);
-        } else {
-          Logger.debug("accounts has not been modified, ignoring!");
-        }
+        const accounts = await fileCache.AccountsProcessor.readAccounts();
+        fileCache.indexedAccounts = indexAccs(accounts);
 
-        Logger.debug("Reading accounts list");
-        const acclist = await utils.readJSON("acclist.json");
-        fileCache.acclist = acclist;
+        fileCache.acclist = Object.keys(fileCache.indexedAccounts);
 
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
