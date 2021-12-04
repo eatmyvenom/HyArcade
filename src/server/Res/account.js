@@ -53,7 +53,7 @@ module.exports = async (req, res, fileCache) => {
       }
 
       acc = nacc;
-      fileCache.accounts[acc.uuid] = acc;
+      fileCache.indexedAccounts[acc.uuid] = acc;
     }
 
     res.write(JSON.stringify(acc));
