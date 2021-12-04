@@ -14,19 +14,17 @@ module.exports = async (req, res, fileCache) => {
     const ign = url.searchParams.get("q");
 
     const { accounts } = fileCache;
+    const list = [];
 
-    let list = accounts.filter((a) => {
+    accounts.forEach((a) => {
       if(a.nameHist && a.nameHist.length > 0) {
         for(const name of a.nameHist) {
           if(name.toLowerCase().startsWith(ign)) {
-            return true;
+            list.push(name);
           }
         }
       }
-      return false;
     });
-
-    list = list.map((a) => a.name);
 
     res.write(JSON.stringify(list.slice(0, Math.min(list.length, 20))));
     res.end();
