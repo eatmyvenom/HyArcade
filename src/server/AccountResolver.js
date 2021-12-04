@@ -73,7 +73,6 @@ async function AccountResolver (fileCache, url) {
         Logger.err(e.stack);
       }
       fileCache.indexedAccounts[acc.uuid] = acc;
-      await fileCache.AccountsProcessor.writeAccount(acc.uuid, acc);
     }
   }
 

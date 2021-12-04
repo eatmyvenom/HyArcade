@@ -41,7 +41,11 @@ module.exports = async (req, res, fileCache) => {
       const nacc = new Account(acc.name, 0, acc.uuid);
       Object.assign(nacc, acc);
 
-      await nacc.updateHypixel();
+      try {
+        await nacc.updateHypixel();
+      } catch (e) {
+        Logger.err(e.stack);
+      }
 
       if(Object.keys(fakeFile).includes(nacc.uuid)) {
         Logger.log(`Overwriting data for ${nacc.name}`);
