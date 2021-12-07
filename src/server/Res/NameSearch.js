@@ -20,7 +20,7 @@ module.exports = async (req, res, fileCache) => {
       if(a.nameHist && a.nameHist.length > 0) {
         for(const name of a.nameHist) {
           if(name.toLowerCase().startsWith(ign)) {
-            list.push(name);
+            list.push(a.name);
           }
         }
       }
