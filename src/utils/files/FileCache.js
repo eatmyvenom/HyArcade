@@ -61,19 +61,19 @@ class FileCache {
     }
 
     get accounts () {
-      return AccountArray(Object.values(this.indexedAccounts));
+      return AccountArray([...Object.values(this.indexedAccounts)], false);
     }
 
     get dailyAccounts () {
-      return AccountArray(Object.values(this.indexedDaily));
+      return AccountArray([...Object.values(this.indexedDaily)], false);
     }
 
     get weeklyAccounts () {
-      return AccountArray(Object.values(this.indexedWeekly));
+      return AccountArray([...Object.values(this.indexedWeekly)], false);
     }
 
     get monthlyAccounts () {
-      return AccountArray(Object.values(this.indexedMonthly));
+      return AccountArray([...Object.values(this.indexedMonthly)], false);
     }
 
     destroy () {

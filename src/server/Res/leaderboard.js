@@ -1,5 +1,4 @@
 const Account = require("hyarcade-requests/types/Account");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 const { Readable, pipeline } = require("stream");
@@ -67,19 +66,18 @@ module.exports = async (req, res, fileCache) => {
 
     res.setHeader("Content-Type", "application/json");
 
-    // Full copy to prevent accounts list from being messed up
-    Logger.verbose("Copying leaderboard");
-    let accounts = AccountArray([...fileCache.accounts]);
+    Logger.verbose("Copying accs");
+    let accs = fileCache.accounts;
 
     Logger.verbose("Sorting accounts");
     if(timePeriod == undefined) {
-      TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
+      TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
       const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
 
-      for(const a of accounts) {
+      for(const a of accs) {
         const o = old[a.uuid];
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
@@ -104,20 +102,20 @@ module.exports = async (req, res, fileCache) => {
         newAccs.push(a);
       }
 
-      accounts = newAccs;
+      accs = newAccs;
       if(reverse) {
-        TimSort.sort(accounts, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+        TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
       } else {
-        TimSort.sort(accounts, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+        TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
       }
     }
 
-    accounts = accounts.slice(0, Math.min(accounts.length, max));
+    accs = accs.slice(0, Math.min(accs.length, max));
 
     Logger.verbose("Minifying data");
     if(min) {
       if(category == null) {
-        accounts.forEach((a) => {
+        accs.forEach((a) => {
           for(const key in a) {
             if(key != lbprop && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
               delete a[key];
@@ -125,7 +123,7 @@ module.exports = async (req, res, fileCache) => {
           }
         });
       } else {
-        accounts.forEach((a) => {
+        accs.forEach((a) => {
           for(const key in a) {
             if(key != category && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
               delete a[key];
@@ -151,7 +149,7 @@ module.exports = async (req, res, fileCache) => {
 
     s._read = () => {};
 
-    s.push(JSON.stringify(accounts));
+    s.push(JSON.stringify(accs));
     s.push(null);
 
     Logger.verbose("Sending data");
