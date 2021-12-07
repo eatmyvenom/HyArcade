@@ -4,6 +4,7 @@ const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
+const Logger = require("hyarcade-logger");
 
 /**
  * @param {string} str
@@ -53,7 +54,7 @@ module.exports = async (req, res, fileCache) => {
   const max = url.searchParams.get("max") ?? 300;
 
   if(req.method == "GET") {
-
+    Logger.verbose("Getting leaderboard");
     let getter;
     if(lbprop?.startsWith(".")) {
       category = lbprop.split(".")[1];
@@ -67,8 +68,10 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     // Full copy to prevent accounts list from being messed up
+    Logger.verbose("Copying leaderboard");
     let accounts = AccountArray([...fileCache.accounts]);
 
+    Logger.verbose("Sorting accounts");
     if(timePeriod == undefined) {
       TimSort.sort(accounts, (b, a) => numberify(getter(a)) - numberify(getter(b)));
     } else {
@@ -111,6 +114,7 @@ module.exports = async (req, res, fileCache) => {
 
     accounts = accounts.slice(0, Math.min(accounts.length, max));
 
+    Logger.verbose("Minifying data");
     if(min) {
       if(category == null) {
         accounts.forEach((a) => {
@@ -150,6 +154,7 @@ module.exports = async (req, res, fileCache) => {
     s.push(JSON.stringify(accounts));
     s.push(null);
 
+    Logger.verbose("Sending data");
     if (/\bdeflate\b/.test(acceptEncoding)) {
       res.writeHead(200, { "Content-Encoding": "deflate" });
       pipeline(s, zlib.createDeflate(), res, cb);
@@ -163,6 +168,8 @@ module.exports = async (req, res, fileCache) => {
       res.writeHead(200, {});
       pipeline(s, res, cb);
     }
+
+    Logger.verbose("Done");
 
   } else {
     res.statusCode = 404;
