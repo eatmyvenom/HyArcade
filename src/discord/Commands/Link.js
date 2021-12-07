@@ -38,29 +38,20 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
   }
 
   let uuid;
-  let acc;
 
-  const accs = await BotRuntime.getFromDB("accounts");
-  if(player.length < 17) {
-    acc = accs.find((a) => (`${a.name}`).toLowerCase() == player.toLowerCase());
-  } else {
-    acc = accs.find((a) => (`${a.uuid}`).toLowerCase() == player.toLowerCase());
+  uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
+  if((`${uuid}`).length != 32) {
+    const noexistEmbed = ERROR_IGN_UNDEFINED;
+
+    return {
+      res: "",
+      embed: noexistEmbed
+    };
   }
 
-  if(acc == undefined) {
-    uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
-    if((`${uuid}`).length != 32) {
-      const noexistEmbed = ERROR_IGN_UNDEFINED;
-
-      return {
-        res: "",
-        embed: noexistEmbed
-      };
-    }
-    acc = new Account(player, 0, uuid);
-    await acc.updateHypixel();
-    await addAccount([acc]);
-  }
+  const acc = new Account(player, 0, uuid);
+  await acc.updateHypixel();
+  await addAccount([acc]);
 
   uuid = acc.uuid;
 
