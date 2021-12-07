@@ -78,7 +78,7 @@ async function addGuildIDs (ids) {
 
   for(const id of ids) {
     const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
-    const gmembers = guild?.guild?.members;
+    const gmembers = guild?.guild?.members ?? [];
     for(const m of gmembers) {
       uuids.push(m.uuid);
     }
