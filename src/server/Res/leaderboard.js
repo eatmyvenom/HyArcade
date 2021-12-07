@@ -50,7 +50,7 @@ module.exports = async (req, res, fileCache) => {
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
-  const max = url.searchParams.get("max") ?? 300;
+  const max = url.searchParams.get("max") ?? 200;
 
   if(req.method == "GET") {
     Logger.verbose("Getting leaderboard");
