@@ -32,6 +32,7 @@ class FileCache {
     AccountsProcessor;
     DailyProcessor;
     MonthlyProcessor;
+    WeeklyProcessor;
 
     acclist = {};
     retro = {};
@@ -54,7 +55,7 @@ class FileCache {
       this.AccountsProcessor = new Accounts(`${path}/accounts`);
       this.DailyProcessor = new Accounts(`${path}/accounts.day`);
       this.MonthlyProcessor = new Accounts(`${path}/accounts.monthly`);
-      // this.WeeklyProcessor = new Accounts(`${path}/accounts.weekly`);
+      this.WeeklyProcessor = new Accounts(`${path}/accounts.weekly`);
       
       FileCache.refresh(this);
       this._interval = setInterval(FileCache.refresh, 600000, this);
@@ -144,7 +145,7 @@ class FileCache {
         fileCache.indexedDaily = indexAccs(dailyAccounts);
 
         Logger.debug("Reading weekly accounts");
-        const weeklyAccounts = await utils.readJSON("accounts.weekly.json");
+        const weeklyAccounts = await fileCache.WeeklyProcessor.readAccounts();
         fileCache.indexedWeekly = indexAccs(weeklyAccounts);
 
         Logger.debug("Reading monthly accounts");
