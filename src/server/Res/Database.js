@@ -87,11 +87,12 @@ module.exports = async (req, res, fileCache) => {
           res.end();
         }
 
-
         if(url.searchParams.get("path") == "accounts") {
           Logger.log("Saving new accounts");
           const old = fileCache[url.searchParams.get("path")];
           const newAccs = AccountArray([...json, ...old]);
+
+          json = undefined;
 
           Logger.log(`New accounts length is ${newAccs.length}`);
           fileCache.indexedAccounts = indexAccs(newAccs);

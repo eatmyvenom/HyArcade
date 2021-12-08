@@ -11,9 +11,10 @@ const { default: fetch } = require("node-fetch");
  */
 async function AccountResolver (fileCache, url) {
   const {
-    accounts,
     indexedAccounts
   } = fileCache;
+
+  const accounts = Object.values(indexedAccounts);
 
   const ign = url.searchParams.get("ign");
   let uuid = url.searchParams.get("uuid");
@@ -73,6 +74,7 @@ async function AccountResolver (fileCache, url) {
         Logger.err(e.stack);
       }
       fileCache.indexedAccounts[acc.uuid] = acc;
+      fileCache.save();
     }
   }
 
