@@ -7,6 +7,8 @@ const Logger = require("hyarcade-logger");
 
 const cache = {};
 
+let interval = undefined;
+
 /**
  * @param {string} str
  * @returns {number}
@@ -45,6 +47,15 @@ function getProp (o, s) {
  * @param {FileCache} fileCache 
  */
 module.exports = async (req, res, fileCache) => {
+
+  if(interval == undefined) {
+    interval = setInterval(() => {
+      for(const key in cache) {
+        delete cache[key];
+      }
+    }, 600000);
+  }
+
   const url = new URL(req.url, `https://${req.headers.host}`);
 
   let category = url.searchParams.get("category");
@@ -121,12 +132,8 @@ module.exports = async (req, res, fileCache) => {
       }
 
       cache[`${lbprop}/${category}/${timePeriod}/${reverse}`] = accs.slice(0, 300);
-      setInterval(() => {
-        for(const key in cache) {
-          delete cache[key];
-        }
-      }, 600000);
     }
+
     accs = accs.slice(0, Math.min(accs.length, max));
 
     Logger.verbose("Minifying data");
