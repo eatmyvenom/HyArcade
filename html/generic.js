@@ -817,7 +817,7 @@ async function getLeaderboards (element) {
   } else {
     const path = idArr[0];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&min`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
@@ -872,14 +872,14 @@ async function getDaily (element, timetype) {
     const category = idArr[0];
     const path = idArr[1];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}&min`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
   } else {
     const path = idArr[0];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}&min`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
