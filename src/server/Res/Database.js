@@ -38,8 +38,7 @@ module.exports = async (req, res, fileCache) => {
       res.statusCode = 403;
       res.end();
     } else {
-      
-      let data = fileCache[file];
+      const data = fileCache[file];
       let acceptEncoding = req.headers["accept-encoding"];
       if (!acceptEncoding) {
         acceptEncoding = "";
@@ -71,9 +70,6 @@ module.exports = async (req, res, fileCache) => {
         res.writeHead(200, {});
         pipeline(s, res, cb);
       }
-
-      s.destroy();
-      data = undefined;
     }
   } else if(req.method == "POST") {
     let data = "";
