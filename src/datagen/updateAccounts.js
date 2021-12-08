@@ -155,11 +155,12 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
 
   if(workerData.key.remaining < perSegment + 5) {
     logger.info(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
-    await sleep(workerData.key.reset * 1000);
+    await sleep(workerData.key.reset * 1005);
   }
 
+  logger.log("Setting batches data");
   for (const acc of accs) {
-    logger.log(`Setting data for ${acc.uuid}`);
+    logger.verbose(`Setting data for ${acc.uuid}`);
     const accData = workerData.data[acc.uuid];
     if(accData?.success == false || accData?.player == undefined) {
       logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
