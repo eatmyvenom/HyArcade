@@ -32,7 +32,7 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     const file = url.searchParams.get("path");
-    const data = fileCache[file];
+    let data = fileCache[file];
 
     const largeReq = false;
     if(largeReq && req.headers.authorization != cfg.dbPass) {
@@ -71,6 +71,9 @@ module.exports = async (req, res, fileCache) => {
         res.writeHead(200, {});
         pipeline(s, res, cb);
       }
+
+      s.destroy();
+      data = undefined;
     }
   } else if(req.method == "POST") {
     let data = "";
