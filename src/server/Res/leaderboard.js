@@ -5,6 +5,8 @@ const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
 
+const cache = {};
+
 /**
  * @param {string} str
  * @returns {number}
@@ -65,54 +67,66 @@ module.exports = async (req, res, fileCache) => {
     }
 
     res.setHeader("Content-Type", "application/json");
+    let accs;
 
-    Logger.verbose("Copying accs");
-    let accs = fileCache.accounts;
-
-    Logger.verbose("Sorting accounts");
-    if(timePeriod == undefined) {
-      TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
-      if(reverse) {
-        accs = accs.reverse();
-      }
+    if(cache[`${lbprop}/${category}/${timePeriod}/${reverse}`] != undefined) {
+      accs = cache[`${lbprop}/${category}/${timePeriod}/${reverse}`];
     } else {
-      const newAccs = [];
-      const old = fileCache[`indexed${timePeriod}`];
-      const retro = fileCache.retro[`${timePeriod}accounts`];
 
-      for(const a of accs) {
-        const o = old[a.uuid];
-
-        if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
-          newAccs.push(new Account(a.name, 0, a.uuid));
-          continue;
+      Logger.verbose("Copying accs");
+      accs = fileCache.accounts;
+      
+      Logger.verbose("Sorting accounts");
+      if(timePeriod == undefined) {
+        TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
+        if(reverse) {
+          accs = accs.reverse();
         }
-
-        let oldval = 0;
-        if(o == undefined) {
-          const rAcc = retro?.[a.uuid];
-
-          if(rAcc == undefined) {
-            oldval = numberify(getter(a));
-          } else {
-            oldval = numberify(getter(rAcc));
-          }
-        } else {
-          oldval = numberify(getter(o));
-        }
-
-        a.lbProp = numberify(getter(a)) - (oldval);
-        newAccs.push(a);
-      }
-
-      accs = newAccs;
-      if(reverse) {
-        TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
       } else {
-        TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+        const newAccs = [];
+        const old = fileCache[`indexed${timePeriod}`];
+        const retro = fileCache.retro[`${timePeriod}accounts`];
+        
+        for(const a of accs) {
+          const o = old[a.uuid];
+          
+          if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
+            newAccs.push(new Account(a.name, 0, a.uuid));
+            continue;
+          }
+          
+          let oldval = 0;
+          if(o == undefined) {
+            const rAcc = retro?.[a.uuid];
+            
+            if(rAcc == undefined) {
+              oldval = numberify(getter(a));
+            } else {
+              oldval = numberify(getter(rAcc));
+            }
+          } else {
+            oldval = numberify(getter(o));
+          }
+          
+          a.lbProp = numberify(getter(a)) - (oldval);
+          newAccs.push(a);
+        }
+        
+        accs = newAccs;
+        if(reverse) {
+          TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+        } else {
+          TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
+        }
       }
-    }
 
+      cache[`${lbprop}/${category}/${timePeriod}/${reverse}`] = accs.slice(0, 300);
+      setInterval(() => {
+        for(const key in cache) {
+          delete cache[key];
+        }
+      }, 600000);
+    }
     accs = accs.slice(0, Math.min(accs.length, max));
 
     Logger.verbose("Minifying data");
@@ -170,6 +184,8 @@ module.exports = async (req, res, fileCache) => {
       pipeline(s, res, cb);
     }
 
+    accs = undefined;
+    s.destroy();
     Logger.verbose("Done");
 
   } else {
