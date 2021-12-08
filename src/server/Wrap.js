@@ -4,6 +4,7 @@ const {
 const {
   URL
 } = require("url");
+const process = require("process");
 const FileCache = require("../utils/files/FileCache");
 const urlModules = {
   account: require("./Res/account"),
@@ -46,7 +47,13 @@ async function callback (request, response) {
 
 module.exports = function start (port) {
   fileCache = new FileCache("data/");
+
+  process.on("beforeExit", (code) => {
+    logger.log(`Exiting process with code : ${code}`);
+  });
+
   return require("http")
     .createServer(callback)
     .listen(port);
+
 };
