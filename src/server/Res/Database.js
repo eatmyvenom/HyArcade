@@ -102,7 +102,6 @@ module.exports = async (req, res, fileCache) => {
 
         await fileCache.save();
         res.end();
-        await fileCache.AccountsProcessor.writeAccounts(fileCache.indexedAccounts);
       });
     } else {
       Logger.warn("Someone tried to post without correct AUTH");
