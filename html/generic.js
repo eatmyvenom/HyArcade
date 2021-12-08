@@ -782,8 +782,12 @@ async function refresh () {
   servertime = await servertime.text();
   const formatted = new Date(servertime);
   time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
-  await handleLifetimes();
-  await handleTimed("day");
+  handleLifetimes()
+    .then(console.log)
+    .catch(console.error);
+  handleTimed("day")
+    .then(console.log)
+    .catch(console.error);
 }
 
 /**
