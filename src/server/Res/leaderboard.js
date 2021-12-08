@@ -72,7 +72,9 @@ module.exports = async (req, res, fileCache) => {
     Logger.verbose("Sorting accounts");
     if(timePeriod == undefined) {
       TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
-      accs = accs.reverse();
+      if(reverse) {
+        accs = accs.reverse();
+      }
     } else {
       const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
