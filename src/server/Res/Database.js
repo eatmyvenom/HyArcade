@@ -32,14 +32,14 @@ module.exports = async (req, res, fileCache) => {
     res.setHeader("Content-Type", "application/json");
 
     const file = url.searchParams.get("path");
-    let data = fileCache[file];
-
-    const largeReq = false;
+    
+    const largeReq = file.toLowerCase().includes("accounts") || file.toLowerCase().includes("indexed");
     if(largeReq && req.headers.authorization != cfg.dbPass) {
       res.statusCode = 403;
       res.end();
     } else {
-
+      
+      let data = fileCache[file];
       let acceptEncoding = req.headers["accept-encoding"];
       if (!acceptEncoding) {
         acceptEncoding = "";
