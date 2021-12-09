@@ -237,7 +237,7 @@ input {
     display: block;
   }
 
-  div {
+  div, main div {
     display: block;
     width: 91%;
     font-size: 12px;
