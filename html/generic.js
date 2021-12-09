@@ -619,18 +619,6 @@ async function load () {
     mw1D.id = "miniWalls.kills";
     main.appendChild(mw1D);
 
-    const mw2L = document.createElement("div");
-    mw2L.setAttribute("class", "life");
-    mw2L.title = "Lifetime deaths";
-    mw2L.id = "miniWalls.deaths";
-    main.appendChild(mw2L);
-
-    const mw2D = document.createElement("div");
-    mw2D.setAttribute("class", "day");
-    mw2D.title = "Daily deaths";
-    mw2D.id = "miniWalls.deaths";
-    main.appendChild(mw2D);
-
     const mw3L = document.createElement("div");
     mw3L.setAttribute("class", "life");
     mw3L.title = "Lifetime final kills";
@@ -642,18 +630,6 @@ async function load () {
     mw3D.title = "Daily final kills";
     mw3D.id = "miniWalls.finalKills";
     main.appendChild(mw3D);
-
-    const mw4L = document.createElement("div");
-    mw4L.setAttribute("class", "life");
-    mw4L.title = "Lifetime wither kills";
-    mw4L.id = "miniWalls.witherKills";
-    main.appendChild(mw4L);
-
-    const mw4D = document.createElement("div");
-    mw4D.setAttribute("class", "day");
-    mw4D.title = "Daily wither kills";
-    mw4D.id = "miniWalls.witherKills";
-    main.appendChild(mw4D);
 
     const mw5L = document.createElement("div");
     mw5L.setAttribute("class", "life");
