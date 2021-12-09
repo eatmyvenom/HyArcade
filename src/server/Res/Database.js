@@ -38,7 +38,14 @@ module.exports = async (req, res, fileCache) => {
       res.statusCode = 403;
       res.end();
     } else {
-      const data = fileCache[file];
+
+      let data;
+      if(file != "accounts") {
+        data = fileCache[file];
+      } else {
+        data = Object.values(fileCache.indexedAccounts);
+      }
+
       let acceptEncoding = req.headers["accept-encoding"];
       if (!acceptEncoding) {
         acceptEncoding = "";
