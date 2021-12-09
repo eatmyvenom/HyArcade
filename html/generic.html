@@ -27,6 +27,13 @@
             <time>Loading...</time><br />
             <span>Max length: </span><input oninput="maxValChange(this.value)" type="number" value="25" />
         </aside>
+
+        <nav>
+            <button onclick="btnClick(this)" id="lifetime" selected>Lifetime</button>
+            <button onclick="btnClick(this)" id="day">Daily</button>
+            <button onclick="btnClick(this)" id="weekly">Weekly</button>
+            <button onclick="btnClick(this)" id="monthly">Monthly</button>
+        </nav>
         <main></main>
         <footer>
             <div>

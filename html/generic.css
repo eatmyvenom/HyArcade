@@ -85,8 +85,35 @@ div {
 }
 
 main {
-  display: grid;
-  grid-template-columns: 26vw auto auto 26vw;
+  padding: 8px;
+  display: flex;
+  justify-content:space-around;
+}
+
+nav {
+  display: flex;
+  justify-content:center;
+}
+
+nav button {
+  padding: 12px;
+  background: inherit;
+  border: 1px solid #8c54fe;
+  transition: all 0.25s ease-in-out;
+  margin: 1%;
+  color: white;
+}
+
+nav button[selected] {
+  border: 1px solid #44a3e7;
+}
+
+nav button:hover {
+  border: 1px solid #bb00dd;
+}
+
+main div {
+  width: 24vw;
 }
 
 .lifetime {
@@ -119,6 +146,7 @@ div {
 div {
   padding: 8px;
   position: relative;
+  width: fit-content;
 }
 
 div[vis=false] {

@@ -10,156 +10,107 @@ function maxValChange (val) {
     .catch(console.error);
 }
 
+// eslint-disable-next-line
+function btnClick (btn) {
+  document.querySelectorAll("nav button").forEach((e) => e.removeAttribute("selected"));
+
+  console.log(btn);
+  btn.setAttribute("selected", "");
+
+  refresh()
+    .then(console.log)
+    .catch(console.error);
+}
+
 /**
  *
  */
 async function load () {
   let game = window.location.pathname.slice(0, -5);
   game = game.substring(game.lastIndexOf("/") + 1);
+
   const guildpage = document.querySelector(".guildver");
   guildpage.setAttribute("href", `./guilds/${game}.html`);
+
   const main = document.querySelector("main");
   const mainTitle = document.querySelector("h1");
   const address = document.querySelector("address");
 
-  const lifetime = document.createElement("div");
-  const daily = document.createElement("div");
-  lifetime.setAttribute("class", "life");
-  daily.setAttribute("class", "day");
+  const mainStat = document.createElement("div");
 
-  main.appendChild(lifetime);
-  main.appendChild(daily);
+  main.appendChild(mainStat);
 
   switch(game) {
   case "pg": {
     mainTitle.innerHTML = "Party games";
     address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
-    lifetime.title = "Lifetime Wins";
-    lifetime.id = "partyGames.wins";
-    daily.title = "Daily Wins";
-    daily.id = "partyGames.wins";
+    mainStat.title += "Wins";
+    mainStat.id = "partyGames.wins";
 
-    const starsL = document.createElement("div");
-    starsL.setAttribute("class", "life");
-    starsL.title = "Lifetime Stars";
-    main.appendChild(starsL);
+    const stars = document.createElement("div");
+    stars.title = "Stars";
+    stars.id = "partyGames.starsEarned";
+    main.appendChild(stars);
 
-    const starsD = document.createElement("div");
-    starsD.setAttribute("class", "day");
-    starsD.title = "Daily Stars";
-    main.appendChild(starsD);
+    const rounds = document.createElement("div");
+    rounds.title = "Rounds Won";
+    rounds.id = "partyGames.roundsWon";
+    main.appendChild(rounds);
 
-    starsD.id = "partyGames.starsEarned";
-
-    starsL.id = "partyGames.starsEarned";
-
-    const roundsL = document.createElement("div");
-    roundsL.setAttribute("class", "life");
-    roundsL.title = "Lifetime Rounds Won";
-    main.appendChild(roundsL);
-
-    const roundsD = document.createElement("div");
-    roundsD.setAttribute("class", "day");
-    roundsD.title = "Daily Rounds Won";
-    main.appendChild(roundsD);
-
-    roundsD.id = "partyGames.roundsWon";
-
-    roundsL.id = "partyGames.roundsWon";
     break;
   }
 
   case "hs": {
     mainTitle.innerHTML = "Hypixel Says";
     address.innerHTML = "<a href=\"https://discord.gg/GzjN5c4zze\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "hypixelSays.wins";
-    daily.title = "Daily wins";
-    daily.id = "hypixelSays.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "hypixelSays.wins";
 
-    const roundsL = document.createElement("div");
-    roundsL.setAttribute("class", "life");
-    roundsL.title = "Lifetime rounds";
-    main.appendChild(roundsL);
+    const rounds = document.createElement("div");
+    rounds.title = "Points";
+    rounds.id = "hypixelSays.rounds";
+    main.appendChild(rounds);
 
-    const roundsD = document.createElement("div");
-    roundsD.setAttribute("class", "day");
-    roundsD.title = "Daily rounds";
-    main.appendChild(roundsD);
-
-    roundsD.id = "hypixelSays.rounds";
-
-    roundsL.id = "hypixelSays.rounds";
     break;
   }
 
   case "fh": {
     mainTitle.innerHTML = "Farm hunt";
     address.innerHTML = "<a href=\"https://discord.gg/fVgcvhtaWk\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "farmhunt.wins";
-    daily.title = "Daily wins";
-    daily.id = "farmhunt.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "farmhunt.wins";
 
-    const shitL = document.createElement("div");
-    shitL.setAttribute("class", "life");
-    shitL.title = "Lifetime poop";
-    main.appendChild(shitL);
+    const shit = document.createElement("div");
+    shit.title = "Poop";
+    shit.id = "farmhunt.poop";
+    main.appendChild(shit);
 
-    const shitD = document.createElement("div");
-    shitD.setAttribute("class", "day");
-    shitD.title = "Daily poop";
-    main.appendChild(shitD);
-
-    shitD.id = "farmhunt.poop";
-
-    shitL.id = "farmhunt.poop";
     break;
   }
 
   case "hitw": {
     mainTitle.innerHTML = "Hole in the wall";
     address.innerHTML = "<a href=\"https://discord.gg/Gh24vw5b54\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "holeInTheWall.wins";
-    daily.title = "Daily wins";
-    daily.id = "holeInTheWall.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "holeInTheWall.wins";
 
-    const roundsL = document.createElement("div");
-    roundsL.setAttribute("class", "life");
-    roundsL.title = "Lifetime walls";
-    roundsL.id = "holeInTheWall.rounds";
-    main.appendChild(roundsL);
+    const walls = document.createElement("div");
+    walls.setAttribute("class", "life");
+    walls.title = "Lifetime walls";
+    walls.id = "holeInTheWall.rounds";
+    main.appendChild(walls);
 
-    const roundsD = document.createElement("div");
-    roundsD.setAttribute("class", "day");
-    roundsD.title = "Daily walls";
-    roundsD.id = "holeInTheWall.rounds";
-    main.appendChild(roundsD);
+    const qual = document.createElement("div");
+    qual.setAttribute("class", "life");
+    qual.title = "Qualifiers PB";
+    qual.id = "holeInTheWall.qualifiers";
+    main.appendChild(qual);
 
-    const qPBL = document.createElement("div");
-    qPBL.setAttribute("class", "life");
-    qPBL.title = "Top qualifier PB";
-    qPBL.id = "holeInTheWall.qualifiers";
-    main.appendChild(qPBL);
-
-    const qPBD = document.createElement("div");
-    qPBD.setAttribute("class", "day");
-    qPBD.title = "Daily Q increase";
-    qPBD.id = "holeInTheWall.qualifiers";
-    main.appendChild(qPBD);
-
-    const fPBL = document.createElement("div");
-    fPBL.setAttribute("class", "life");
-    fPBL.title = "Top finals PB";
-    fPBL.id = "holeInTheWall.finals";
-    main.appendChild(fPBL);
-
-    const fPBD = document.createElement("div");
-    fPBD.setAttribute("class", "day");
-    fPBD.title = "Daily F increase";
-    fPBD.id = "holeInTheWall.finals";
-    main.appendChild(fPBD);
+    const final = document.createElement("div");
+    final.setAttribute("class", "life");
+    final.title = "Finals PB";
+    final.id = "holeInTheWall.finals";
+    main.appendChild(final);
 
     break;
   }
@@ -167,53 +118,15 @@ async function load () {
   case "fb": {
     mainTitle.innerHTML = "Football";
     address.innerHTML = "<a href=\"https://discord.gg/P5c5RSG2yF\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    daily.title = "Daily wins";
+    mainStat.title = "Wins";
+    mainStat.id = "football.wins";
 
-    lifetime.id = "football.wins";
-    daily.id = "football.wins";
+    const goals = document.createElement("div");
+    goals.setAttribute("class", "life");
+    goals.title = "Goals";
+    main.appendChild(goals);
 
-    const goalsL = document.createElement("div");
-    goalsL.setAttribute("class", "life");
-    goalsL.title = "Lifetime goals";
-    main.appendChild(goalsL);
-
-    const goalsD = document.createElement("div");
-    goalsD.setAttribute("class", "day");
-    goalsD.title = "Daily goals";
-    main.appendChild(goalsD);
-
-    goalsD.id = "football.goals";
-
-    goalsL.id = "football.goals";
-
-    const pkickL = document.createElement("div");
-    pkickL.setAttribute("class", "life");
-    pkickL.title = "Lifetime power kicks";
-    main.appendChild(pkickL);
-
-    const pkickD = document.createElement("div");
-    pkickD.setAttribute("class", "day");
-    pkickD.title = "Daily power kicks";
-    main.appendChild(pkickD);
-
-    pkickD.id = "football.powerkicks";
-
-    pkickL.id = "football.powerkicks";
-
-    const kickL = document.createElement("div");
-    kickL.setAttribute("class", "life");
-    kickL.title = "Lifetime kicks";
-    main.appendChild(kickL);
-
-    const kickD = document.createElement("div");
-    kickD.setAttribute("class", "day");
-    kickD.title = "Daily kicks";
-    main.appendChild(kickD);
-
-    kickD.id = "football.goals";
-
-    kickL.id = "football.goals";
+    goals.id = "football.goals";
 
     break;
   }
@@ -221,252 +134,118 @@ async function load () {
   case "es": {
     mainTitle.innerHTML = "Ender spleef";
     address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "enderSpleef.wins";
-    daily.title = "Daily wins";
-    daily.id = "enderSpleef.wins";
+    mainStat.title = "Lifetime wins";
+    mainStat.id = "enderSpleef.wins";
     break;
   }
 
   case "to": {
     mainTitle.innerHTML = "Throw out";
     address.innerHTML = "<a href=\"https://discord.gg/2sMpvqtJYh\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "throwOut.wins";
-    daily.title = "Daily wins";
-    daily.id = "throwOut.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "throwOut.wins";
 
-    const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime kills";
-    main.appendChild(killsL);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    kills.id = "throwOut.kills";
+    main.appendChild(kills);
 
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
 
-    killsD.id = "throwOut.kills";
+    const deaths = document.createElement("div");
+    deaths.title = "Deaths";
+    deaths.id = "throwOut.deaths";
+    main.appendChild(deaths);
 
-    killsL.id = "throwOut.kills";
-
-    const deathL = document.createElement("div");
-    deathL.setAttribute("class", "life");
-    deathL.title = "Lifetime deaths";
-    main.appendChild(deathL);
-
-    const deathD = document.createElement("div");
-    deathD.setAttribute("class", "day");
-    deathD.title = "Daily deaths";
-    main.appendChild(deathD);
-
-    deathD.id = "throwOut.deaths";
-
-    deathL.id = "throwOut.deaths";
     break;
   }
 
   case "gw": {
     mainTitle.innerHTML = "Galaxy Wars";
     address.innerHTML = "<a href=\"https://discord.gg/v9ZwqyZfYj\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "galaxyWars.wins";
-    daily.title = "Daily wins";
-    daily.id = "galaxyWars.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "galaxyWars.wins";
 
-    const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime kills";
-    main.appendChild(killsL);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    main.appendChild(kills);
 
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
+    kills.id = "galaxyWars.kills";
 
-    killsD.id = "galaxyWars.kills";
+    const death = document.createElement("div");
+    death.title = "Deaths";
+    main.appendChild(death);
 
-    killsL.id = "galaxyWars.kills";
-
-    const deathL = document.createElement("div");
-    deathL.setAttribute("class", "life");
-    deathL.title = "Lifetime deaths";
-    main.appendChild(deathL);
-
-    const deathD = document.createElement("div");
-    deathD.setAttribute("class", "day");
-    deathD.title = "Daily deaths";
-    main.appendChild(deathD);
-
-    deathD.id = "galaxyWars.deaths";
-
-    deathL.id = "galaxyWars.deaths";
+    death.id = "galaxyWars.deaths";
     break;
   }
 
   case "dw": {
     mainTitle.innerHTML = "Dragon Wars";
     address.innerHTML = "<a href=\"https://discord.gg/7ccREnQVuU\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "dragonWars.wins";
-    daily.title = "Daily wins";
-    daily.id = "dragonWars.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "dragonWars.wins";
 
-    const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime kills";
-    main.appendChild(killsL);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    kills.id = "dragonWars.kills";
+    main.appendChild(kills);
 
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
-
-    killsD.id = "dragonWars.kills";
-
-    killsL.id = "dragonWars.kills";
     break;
   }
 
   case "bh": {
     mainTitle.innerHTML = "Bounty Hunters";
     address.innerHTML = "";
-    lifetime.title = "Lifetime wins";
-    daily.title = "Daily wins";
+    mainStat.title = "Wins";
 
-    lifetime.id = "bountyHunters.wins";
-    daily.id = "bountyHunters.wins";
+    mainStat.id = "bountyHunters.wins";
 
     const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime kills";
-    main.appendChild(killsL);
-
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
-
-    killsD.id = "bountyHunters.kills";
-
+    killsL.title = "Kills";
     killsL.id = "bountyHunters.kills";
-
-    const hdshtL = document.createElement("div");
-    hdshtL.setAttribute("class", "life");
-    hdshtL.title = "Lifetime bounty kills";
-    main.appendChild(hdshtL);
-
-    const hdshtD = document.createElement("div");
-    hdshtD.setAttribute("class", "day");
-    hdshtD.title = "Daily bounty kills";
-    main.appendChild(hdshtD);
-
-    hdshtD.id = "bountyHunters.bountyKills";
-
-    hdshtL.id = "bountyHunters.bountyKills";
-
-    const deathL = document.createElement("div");
-    deathL.setAttribute("class", "life");
-    deathL.title = "Lifetime deaths";
-    main.appendChild(deathL);
-
-    const deathD = document.createElement("div");
-    deathD.setAttribute("class", "day");
-    deathD.title = "Daily deaths";
-    main.appendChild(deathD);
-
-    deathD.id = "bountyHunters.deaths";
-
-    deathL.id = "bountyHunters.deaths";
-
+    main.appendChild(killsL);
     break;
   }
 
   case "bd": {
     mainTitle.innerHTML = "Blocking Dead";
     address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "blockingDead.wins";
-    daily.title = "Daily wins";
-    daily.id = "blockingDead.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "blockingDead.wins";
 
-    const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime kills";
-    main.appendChild(killsL);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    kills.id = "blockingDead.kills";
+    main.appendChild(kills);
 
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
+    const headshot = document.createElement("div");
+    headshot.title = "Headshots";
+    headshot.id = "blockingDead.headshots";
+    main.appendChild(headshot);
 
-    killsD.id = "blockingDead.kills";
-
-    killsL.id = "blockingDead.kills";
-
-    const headshotL = document.createElement("div");
-    headshotL.setAttribute("class", "life");
-    headshotL.title = "Lifetime headshots";
-    main.appendChild(headshotL);
-
-    const headshotD = document.createElement("div");
-    headshotD.setAttribute("class", "day");
-    headshotD.title = "Daily headshots";
-    main.appendChild(headshotD);
-
-    headshotD.id = "blockingDead.headshots";
-
-    headshotL.id = "blockingDead.headshots";
     break;
   }
 
   case "hns": {
     mainTitle.innerHTML = "Hide and Seek";
     address.innerHTML = "<a href=\"https://discord.gg/MkGKhztYcZ\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "hideAndSeek.wins";
-    daily.title = "Daily wins";
-    daily.id = "hideAndSeek.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "hideAndSeek.wins";
 
     const seekerL = document.createElement("div");
-    seekerL.setAttribute("class", "life");
-    seekerL.title = "Lifetime seeker wins";
+    seekerL.title = "Seeker wins";
+    seekerL.id = "hideAndSeek.seekerWins";
     main.appendChild(seekerL);
 
-    const seekerD = document.createElement("div");
-    seekerD.setAttribute("class", "day");
-    seekerD.title = "Daily seeker wins";
-    main.appendChild(seekerD);
-
-    seekerD.id = "hideAndSeek.seekerWins";
-
-    seekerL.id = "hideAndSeek.seekerWins";
-
     const hiderL = document.createElement("div");
-    hiderL.setAttribute("class", "life");
-    hiderL.title = "Lifetime hider wins";
+    hiderL.id = "hideAndSeek.hiderWins";
+    hiderL.title = "Hider wins";
     main.appendChild(hiderL);
 
-    const hiderD = document.createElement("div");
-    hiderD.setAttribute("class", "day");
-    hiderD.title = "Daily hider wins";
-    main.appendChild(hiderD);
-
-    hiderD.id = "hideAndSeek.hiderWins";
-
-    hiderL.id = "hideAndSeek.hiderWins";
-
     const hiderKL = document.createElement("div");
-    hiderKL.setAttribute("class", "life");
-    hiderKL.title = "Lifetime kills";
-    main.appendChild(hiderKL);
-
-    const hiderKD = document.createElement("div");
-    hiderKD.setAttribute("class", "day");
-    hiderKD.title = "Daily kills";
-    main.appendChild(hiderKD);
-    hiderKD.id = "hideAndSeek.kills";
     hiderKL.id = "hideAndSeek.kills";
+    hiderKL.title = "Kills";
+    main.appendChild(hiderKL);
 
     break;
   }
@@ -474,36 +253,19 @@ async function load () {
   case "arc": {
     mainTitle.innerHTML = "Arcade overall";
     address.innerHTML = "<a href=\"https://discord.gg/J6UMkQrjpV\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "arcadeWins";
-    daily.title = "Daily wins";
-    daily.id = "arcadeWins";
+    mainStat.title = "Wins";
+    mainStat.id = "arcadeWins";
 
     const combinedWinsL = document.createElement("div");
-    combinedWinsL.setAttribute("class", "life");
-    combinedWinsL.title = "Lifetime combined wins";
+    combinedWinsL.title = "Combined wins";
     combinedWinsL.id = "combinedArcadeWins";
     main.appendChild(combinedWinsL);
 
-    const combinedWinsD = document.createElement("div");
-    combinedWinsD.setAttribute("class", "day");
-    combinedWinsD.title = "Daily combined wins";
-    combinedWinsD.id = "combinedArcadeWins";
-    main.appendChild(combinedWinsD);
 
-    const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime coins";
-    main.appendChild(killsL);
-
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily coins";
-    main.appendChild(killsD);
-
-    killsD.id = "arcadeCoins";
-
-    killsL.id = "arcadeCoins";
+    const coins = document.createElement("div");
+    coins.title = "Coins";
+    coins.id = "arcadeCoins";
+    main.appendChild(coins);
 
     break;
   }
@@ -511,137 +273,54 @@ async function load () {
   case "z": {
     mainTitle.innerHTML = "Zombies";
     address.innerHTML = "<a href=\"https://discord.gg/2RDCTPWqVT\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "zombies.wins_zombies";
-    daily.title = "Daily wins";
-    daily.id = "zombies.wins_zombies";
+    mainStat.title = "Wins";
+    mainStat.id = "zombies.wins_zombies";
 
     const deWinsL = document.createElement("div");
-    deWinsL.setAttribute("class", "life");
-    deWinsL.title = "Lifetime Dead End wins";
+    deWinsL.title = "Dead End wins";
     deWinsL.id = "zombies.wins_zombies_deadend";
     main.appendChild(deWinsL);
 
-    const deWinsD = document.createElement("div");
-    deWinsD.setAttribute("class", "day");
-    deWinsD.title = "Daily Dead End wins";
-    deWinsD.id = "zombies.wins_zombies_deadend";
-    main.appendChild(deWinsD);
-
     const bbWinsL = document.createElement("div");
-    bbWinsL.setAttribute("class", "life");
-    bbWinsL.title = "Lifetime Bad Blood wins";
+    bbWinsL.title = "Bad Blood wins";
     bbWinsL.id = "zombies.wins_zombies_badblood";
     main.appendChild(bbWinsL);
 
-    const bbWinsD = document.createElement("div");
-    bbWinsD.setAttribute("class", "day");
-    bbWinsD.title = "Daily Bad Blood wins";
-    bbWinsD.id = "zombies.wins_zombies_badblood";
-    main.appendChild(bbWinsD);
-
     const aaWinsL = document.createElement("div");
-    aaWinsL.setAttribute("class", "life");
-    aaWinsL.title = "Lifetime Alien wins";
+    aaWinsL.title = "Alien wins";
     aaWinsL.id = "zombies.wins_zombies_alienarcadium";
     main.appendChild(aaWinsL);
-
-    const aaWinsD = document.createElement("div");
-    aaWinsD.setAttribute("class", "day");
-    aaWinsD.title = "Daily Alien wins";
-    aaWinsD.id = "zombies.wins_zombies_alienarcadium";
-    main.appendChild(aaWinsD);
-
-    const z1L = document.createElement("div");
-    z1L.setAttribute("class", "life");
-    z1L.title = "Lifetime rounds";
-    z1L.id = "zombies.total_rounds_survived_zombies";
-    main.appendChild(z1L);
-
-    const z1D = document.createElement("div");
-    z1D.setAttribute("class", "day");
-    z1D.title = "Daily rounds";
-    z1D.id = "zombies.total_rounds_survived_zombies";
-    main.appendChild(z1D);
-
-    const z2L = document.createElement("div");
-    z2L.setAttribute("class", "life");
-    z2L.title = "Lifetime deaths";
-    z2L.id = "zombies.deaths_zombies";
-    main.appendChild(z2L);
-
-    const z2D = document.createElement("div");
-    z2D.setAttribute("class", "day");
-    z2D.title = "Daily deaths";
-    z2D.id = "zombies.deaths_zombies";
-    main.appendChild(z2D);
-
-    const z3L = document.createElement("div");
-    z3L.setAttribute("class", "life");
-    z3L.title = "Lifetime revives";
-    z3L.id = "zombies.players_revived_zombies";
-    main.appendChild(z3L);
-
-    const z3D = document.createElement("div");
-    z3D.setAttribute("class", "day");
-    z3D.title = "Daily revives";
-    z3D.id = "zombies.players_revived_zombies";
-    main.appendChild(z3D);
+    
     break;
   }
 
   case "pp": {
     mainTitle.innerHTML = "Pixel painters";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "pixelPainters.wins";
-    daily.title = "Daily wins";
-    daily.id = "pixelPainters.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "pixelPainters.wins";
     break;
   }
 
   case "mw": {
     mainTitle.innerHTML = "Mini walls";
     address.innerHTML = "<a href=\"https://discord.gg/a3mFVpMPaf\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "miniWalls.wins";
-    daily.title = "Daily wins";
-    daily.id = "miniWalls.wins";
+    mainStat.title = "Wins";
+    mainStat.id = "miniWalls.wins";
 
-    const mw1L = document.createElement("div");
-    mw1L.setAttribute("class", "life");
-    mw1L.title = "Lifetime kills";
-    mw1L.id = "miniWalls.kills";
-    main.appendChild(mw1L);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    kills.id = "miniWalls.kills";
+    main.appendChild(kills);
 
-    const mw1D = document.createElement("div");
-    mw1D.setAttribute("class", "day");
-    mw1D.title = "Daily kills";
-    mw1D.id = "miniWalls.kills";
-    main.appendChild(mw1D);
+    const finals = document.createElement("div");
+    finals.title = "Final kills";
+    finals.id = "miniWalls.finalKills";
+    main.appendChild(finals);
 
-    const mw3L = document.createElement("div");
-    mw3L.setAttribute("class", "life");
-    mw3L.title = "Lifetime final kills";
-    mw3L.id = "miniWalls.finalKills";
-    main.appendChild(mw3L);
-
-    const mw3D = document.createElement("div");
-    mw3D.setAttribute("class", "day");
-    mw3D.title = "Daily final kills";
-    mw3D.id = "miniWalls.finalKills";
-    main.appendChild(mw3D);
-
-    const mw5L = document.createElement("div");
-    mw5L.setAttribute("class", "life");
-    mw5L.title = "Lifetime wither damage";
-    mw5L.id = "miniWalls.witherDamage";
-    main.appendChild(mw5L);
-
-    const mw5D = document.createElement("div");
-    mw5D.setAttribute("class", "day");
-    mw5D.title = "Daily wither damage";
-    mw5D.id = "miniWalls.witherDamage";
-    main.appendChild(mw5D);
+    const witherDmg = document.createElement("div");
+    witherDmg.title = "Wither damage";
+    witherDmg.id = "miniWalls.witherDamage";
+    main.appendChild(witherDmg);
 
     break;
   }
@@ -649,58 +328,24 @@ async function load () {
   case "seasonal": {
     mainTitle.innerHTML = "Seasonal Arcade games";
     address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
-    lifetime.title = "Lifetime wins";
-    lifetime.id = "seasonalWins.total";
-    daily.title = "Daily wins";
-    daily.id = "seasonalWins.total";
+    mainStat.title = "Lifetime wins";
+    mainStat.id = "seasonalWins.total";
 
-    const mw1L = document.createElement("div");
-    mw1L.setAttribute("class", "life");
-    mw1L.title = "Lifetime easter wins";
-    mw1L.id = "seasonalWins.easter";
-    main.appendChild(mw1L);
+    const esim = document.createElement("div");
+    esim.title = "Easter wins";
+    esim.id = "seasonalWins.easter";
+    main.appendChild(esim);
 
-    const mw1D = document.createElement("div");
-    mw1D.setAttribute("class", "day");
-    mw1D.title = "Daily easter wins";
-    mw1D.id = "seasonalWins.easter";
-    main.appendChild(mw1D);
+    const hsim = document.createElement("div");
+    hsim.title = "Halloween wins";
+    hsim.id = "seasonalWins.halloween";
+    main.appendChild(hsim);
 
-    const mw2L = document.createElement("div");
-    mw2L.setAttribute("class", "life");
-    mw2L.title = "Lifetime scuba wins";
-    mw2L.id = "seasonalWins.scuba";
-    main.appendChild(mw2L);
-
-    const mw2D = document.createElement("div");
-    mw2D.setAttribute("class", "day");
-    mw2D.title = "Daily scuba wins";
-    mw2D.id = "seasonalWins.scuba";
-    main.appendChild(mw2D);
-
-    const mw3L = document.createElement("div");
-    mw3L.setAttribute("class", "life");
-    mw3L.title = "Lifetime halloween wins";
-    mw3L.id = "seasonalWins.halloween";
-    main.appendChild(mw3L);
-
-    const mw3D = document.createElement("div");
-    mw3D.setAttribute("class", "day");
-    mw3D.title = "Daily halloween wins";
-    mw3D.id = "seasonalWins.halloween";
-    main.appendChild(mw3D);
-
-    const mw4L = document.createElement("div");
-    mw4L.setAttribute("class", "life");
-    mw4L.title = "Lifetime grinch wins";
-    mw4L.id = "seasonalWins.grinch";
-    main.appendChild(mw4L);
-
-    const mw4D = document.createElement("div");
-    mw4D.setAttribute("class", "day");
-    mw4D.title = "Daily grinch wins";
-    mw4D.id = "seasonalWins.grinch";
-    main.appendChild(mw4D);
+    const gsim = document.createElement("div");
+    gsim.setAttribute("class", "life");
+    gsim.title = "Grinch wins";
+    gsim.id = "seasonalWins.grinch";
+    main.appendChild(gsim);
 
     break;
   }
@@ -708,24 +353,14 @@ async function load () {
   case "ctw": {
     mainTitle.innerHTML = "Capture the wool";
     address.innerHTML = "<a href=\"https://discord.gg/3B55bUcVKH\">Discord Invite</a>";
-    lifetime.title = "Lifetime Wool";
-    lifetime.id = "captureTheWool.woolCaptures";
-    daily.title = "Daily wool";
-    daily.id = "captureTheWool.woolCaptures";
+    mainStat.title = "Wool Captures";
+    mainStat.id = "captureTheWool.woolCaptures";
 
     const killsL = document.createElement("div");
-    killsL.setAttribute("class", "life");
-    killsL.title = "Lifetime Kills";
+    killsL.title = "Kills";
+    killsL.id = "captureTheWool.kills";
     main.appendChild(killsL);
 
-    const killsD = document.createElement("div");
-    killsD.setAttribute("class", "day");
-    killsD.title = "Daily kills";
-    main.appendChild(killsD);
-
-    killsD.id = "captureTheWool.kills";
-
-    killsL.id = "captureTheWool.kills";
     break;
   }
   }
@@ -758,10 +393,7 @@ async function refresh () {
   servertime = await servertime.text();
   const formatted = new Date(servertime);
   time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
-  handleLifetimes()
-    .then(console.log)
-    .catch(console.error);
-  handleTimed("day")
+  handleLbs()
     .then(console.log)
     .catch(console.error);
 }
@@ -769,8 +401,8 @@ async function refresh () {
 /**
  *
  */
-async function handleLifetimes () {
-  const elements = document.querySelectorAll(".life");
+async function handleLbs () {
+  const elements = document.querySelectorAll("main div");
   for(const e of elements) {
     await getLeaderboards(e);
   }
@@ -786,18 +418,28 @@ async function getLeaderboards (element) {
   const id = element.getAttribute("id");
   const idArr = id.split(".");
 
+  const time = document.querySelector("[selected]").id;
+
+  let formattedTime;
+
+  if(time == "lifetime") {
+    formattedTime = "";
+  } else {
+    formattedTime = `&time=${time}`;
+  }
+
   if (idArr.length > 1) {
     const category = idArr[0];
     const path = idArr[1];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&min&max=${maxLength}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}${formattedTime}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
   } else {
     const path = idArr[0];
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&min&max=${maxLength}`;
+    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}${formattedTime}&min&max=${maxLength}`;
     console.info(`fetching ${url}`);
     const raw = await fetch(url);
     lb = await raw.json();
@@ -805,83 +447,34 @@ async function getLeaderboards (element) {
 
   let text = "";
 
-  if (idArr.length > 1) {
-    console.log(idArr);
-    for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+  if(formattedTime == "") {
+    if (idArr.length > 1) {
+      console.log(idArr);
+      for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+      }
+    } else {
+      for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+      }
     }
   } else {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+      text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].rank, lb[i].plusColor);
     }
   }
 
+
+  const txtTime = document.querySelector("[selected]").innerText;
+
   element.innerHTML =
-  `<h2>${ 
+  `<h2>${txtTime} ${ 
     element.getAttribute("title").replace(/&/g, "&amp;")
       .replace(/>/g, "&gt;")
       .replace(/</g, "&lt;")
       .replace(/"/g, "&quot;") 
   }</h2><ol>${ 
     text}</ol>`;
-  element.setAttribute("vis", true);
-}
-
-/**
- * @param {string} timetype
- */
-async function handleTimed (timetype) {
-  const elements = document.querySelectorAll(`.${timetype}`);
-  for(const e of elements) {
-    await getDaily(e, timetype);
-  }
-}
-
-/**
- * 
- * @param {Element} element 
- * @param {string} timetype
- */
-async function getDaily (element, timetype) {
-  let lb = [];
-
-  const id = element.getAttribute("id");
-  const idArr = id.split(".");
-
-  if (idArr.length > 1) {
-    const category = idArr[0];
-    const path = idArr[1];
-
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}&time=${timetype}&min&max=${maxLength}`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url);
-    lb = await raw.json();
-  } else {
-    const path = idArr[0];
-
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&time=${timetype}&min&max=${maxLength}`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url);
-    lb = await raw.json();
-  }
-
-  let text = "";
-
-  console.log(idArr);
-  console.log(lb.length);
-  for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-    text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].rank, lb[i].plusColor);
-  }
-
-  element.innerHTML =
-        `<h2>${ 
-          element.getAttribute("title").replace(/&/g, "&amp;")
-            .replace(/>/g, "&gt;")
-            .replace(/</g, "&lt;")
-            .replace(/"/g, "&quot;") 
-        }</h2><ol>${ 
-          text}</ol>`;
-
   element.setAttribute("vis", true);
 }
 
