@@ -51,20 +51,24 @@ module.exports = async function VerifyChannel (msg, roleidAdd, roleidRemove) {
 
     Logger.out(`${tag} was autoverified in ${msg.guild.name} as ${acc.name}`);
 
-    if(roleidAdd != "") {
-      await msg.member.roles.add(roleidAdd);
-    }
-
-    if(roleidRemove != "") {
-      await msg.member.roles.remove(roleidRemove);
-    }
-
-    await msg.member.setNickname(acc.name);
-
     await msg.channel.send({
       embeds: [playerLink(acc.name, msg.author)]
     });
 
+    try {
+      if(roleidAdd != "") {
+        await msg.member.roles.add(roleidAdd);
+      }
+      
+      if(roleidRemove != "") {
+        await msg.member.roles.remove(roleidRemove);
+      }
+      
+      await msg.member.setNickname(acc.name);
+    } catch (e) {
+      Logger.err("Linking error!");
+      Logger.err(e);
+    }
     await BotRuntime.writeToDB("disclist", disclist);
   } else {
     await msg.channel.send({
