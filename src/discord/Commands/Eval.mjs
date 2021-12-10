@@ -11,16 +11,19 @@ import { inspect } from "util";
  * @returns {string}
  */
 function safeEval (str) {
-  return Function("c", "r", "bu", "accs", "m", `"use strict";return (${str})`);
+  return Function("c", "r", "br", "m", `"use strict";return (${str})`);
 }
 
 export default new Command("eval", ["156952208045375488"], async (args, rawMsg) => {
   const c = BotRuntime.client;
   const f = safeEval(args.join(" "));
-  let evaled = f(c, require, BotRuntime, await BotRuntime.getFromDB("accounts"), rawMsg);
+
+  let evaled = f(c, require, BotRuntime, rawMsg);
+
   if(typeof evaled != "string") {
     evaled = inspect(evaled, true);
   }
+
   const res = `\`\`\`\nResponse:\n${evaled}\n\`\`\``;
   return new CommandResponse(res);
 });
