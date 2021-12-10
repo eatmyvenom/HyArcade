@@ -13,6 +13,7 @@ import LogUtils from "./Utils/LogUtils.js";
 import CommandResponse from "./Utils/CommandResponse.js";
 import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
+import VerifyChannel from "./VerifyChannel.js";
 const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
 const { Message, Collection, Webhook } = require("discord.js");
 
@@ -209,10 +210,13 @@ async function mwMode (msg) {
 /**
  * 
  * @param {Message} msg 
+ * @returns {*}
  */
 export default async function messageHandler (msg) {
   if(msg.author.bot) return;
   if(msg.webhookID != undefined) return;
+
+  if(msg.channel.id == "918710048493039676") return await VerifyChannel(msg, "841092980931952660", "");
 
   if(BotRuntime.botMode == "mw" || BotRuntime.botMode == "test") {
     await checkMW(msg);

@@ -37,6 +37,13 @@ exports.ERROR_LINK_HYPIXEL_MISMATCH = new MessageEmbed()
   )
   .setColor(COLOR_RED);
 
+exports.ERROR_LINK_HYPIXEL_MISMATCH_AUTO = new MessageEmbed()
+  .setTitle("ERROR")
+  .setDescription(
+    "Your discord tag does not match your hypixel set discord account. In order to link you must set your discord in hypixel to be your exact tag. Read [this](https://docs.hyarcade.xyz/bots/auto-verify) to see a more detailed explanation."
+  )
+  .setColor(COLOR_RED);
+
 exports.ERROR_LINK_HYPIXEL_MISMATCH_MW = new MessageEmbed()
   .setTitle("ERROR")
   .setDescription(
