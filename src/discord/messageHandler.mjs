@@ -217,6 +217,7 @@ export default async function messageHandler (msg) {
   if(msg.webhookID != undefined) return;
 
   if(msg.channel.id == "918710048493039676") return await VerifyChannel(msg, "841092980931952660", "918716775011590194");
+  if(msg.channel.id == "779191444828323890") return await VerifyChannel(msg, "779183391764643890", "919007428157243402");
 
   if(BotRuntime.botMode == "mw" || BotRuntime.botMode == "test") {
     await checkMW(msg);
