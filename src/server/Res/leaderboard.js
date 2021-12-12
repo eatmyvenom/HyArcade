@@ -66,16 +66,18 @@ module.exports = async (req, res, fileCache) => {
 
     res.setHeader("Content-Type", "application/json");
 
-    Logger.verbose("Copying accs");
-    let accs = fileCache.accounts;
-
+    let accs;
+    
     Logger.verbose("Sorting accounts");
     if(timePeriod == undefined) {
+      accs = Object.values(fileCache.indexedAccounts);
       TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
       if(reverse) {
         accs = accs.reverse();
       }
     } else {
+      Logger.verbose("Copying accs");
+      accs = fileCache.accounts;
       const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
@@ -115,33 +117,6 @@ module.exports = async (req, res, fileCache) => {
 
     accs = accs.slice(0, Math.min(accs.length, max));
 
-    Logger.verbose("Minifying data");
-    if(min) {
-      if(category == null) {
-        accs.forEach((a) => {
-          for(const key in a) {
-            if(key != lbprop && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
-              delete a[key];
-            }
-          }
-        });
-      } else {
-        accs.forEach((a) => {
-          for(const key in a) {
-            if(key != category && key != "name" && key != "lbProp" && key != "uuid" && key != "rank" && key != "plusColor" && key != "mvpColor") {
-              delete a[key];
-            }
-          }
-
-          for(const key in a?.[category]) {
-            if(key != lbprop) {
-              delete a[key];
-            }
-          }
-        });
-      }
-    }
-
     let acceptEncoding = req.headers["accept-encoding"];
     if (!acceptEncoding) {
       acceptEncoding = "";
@@ -152,7 +127,11 @@ module.exports = async (req, res, fileCache) => {
 
     s._read = () => {};
 
-    s.push(JSON.stringify(accs));
+    if(!min) {
+      s.push(JSON.stringify(accs));
+    } else {
+      s.push(JSON.stringify(accs, [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop]));
+    }
     s.push(null);
 
     Logger.verbose("Sending data");
