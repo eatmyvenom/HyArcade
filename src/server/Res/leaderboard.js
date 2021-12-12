@@ -77,7 +77,6 @@ module.exports = async (req, res, fileCache) => {
       }
     } else {
       accs = Object.values(fileCache.indexedAccounts);
-      const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
 
