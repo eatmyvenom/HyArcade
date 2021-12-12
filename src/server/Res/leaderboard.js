@@ -76,8 +76,7 @@ module.exports = async (req, res, fileCache) => {
         accs = accs.reverse();
       }
     } else {
-      Logger.verbose("Copying accs");
-      accs = fileCache.accounts;
+      accs = Object.values(fileCache.indexedAccounts);
       const newAccs = [];
       const old = fileCache[`indexed${timePeriod}`];
       const retro = fileCache.retro[`${timePeriod}accounts`];
@@ -86,7 +85,7 @@ module.exports = async (req, res, fileCache) => {
         const o = old[a.uuid];
 
         if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
-          newAccs.push(new Account(a.name, 0, a.uuid));
+          a.lbProp = 0;
           continue;
         }
 
@@ -104,10 +103,8 @@ module.exports = async (req, res, fileCache) => {
         }
 
         a.lbProp = numberify(getter(a)) - (oldval);
-        newAccs.push(a);
       }
 
-      accs = newAccs;
       if(reverse) {
         TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
       } else {
