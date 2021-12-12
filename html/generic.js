@@ -68,7 +68,7 @@ async function load () {
 
     const rounds = document.createElement("div");
     rounds.title = "Points";
-    rounds.id = "hypixelSays.rounds";
+    rounds.id = "hypixelSays.totalPoints";
     main.appendChild(rounds);
 
     break;
