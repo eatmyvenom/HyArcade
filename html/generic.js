@@ -381,16 +381,19 @@ async function load () {
  *
  */
 async function refresh () {
-  const time = document.querySelector("time");
-  let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
-    cache: "no-store"
-  });
-  servertime = await servertime.text();
-  const formatted = new Date(servertime);
-  time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
   handleLbs()
     .then(console.log)
     .catch(console.error);
+
+  const time = document.querySelector("time");
+
+  let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
+    cache: "no-store"
+  });
+
+  servertime = await servertime.text();
+  const formatted = new Date(servertime);
+  time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
 }
 
 /**
