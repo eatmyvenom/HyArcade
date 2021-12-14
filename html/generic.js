@@ -95,19 +95,16 @@ async function load () {
     mainStat.id = "holeInTheWall.wins";
 
     const walls = document.createElement("div");
-    walls.setAttribute("class", "life");
     walls.title = "Lifetime walls";
     walls.id = "holeInTheWall.rounds";
     main.appendChild(walls);
 
     const qual = document.createElement("div");
-    qual.setAttribute("class", "life");
     qual.title = "Qualifiers PB";
     qual.id = "holeInTheWall.qualifiers";
     main.appendChild(qual);
 
     const final = document.createElement("div");
-    final.setAttribute("class", "life");
     final.title = "Finals PB";
     final.id = "holeInTheWall.finals";
     main.appendChild(final);
@@ -122,7 +119,6 @@ async function load () {
     mainStat.id = "football.wins";
 
     const goals = document.createElement("div");
-    goals.setAttribute("class", "life");
     goals.title = "Goals";
     main.appendChild(goals);
 
@@ -342,7 +338,6 @@ async function load () {
     main.appendChild(hsim);
 
     const gsim = document.createElement("div");
-    gsim.setAttribute("class", "life");
     gsim.title = "Grinch wins";
     gsim.id = "seasonalWins.grinch";
     main.appendChild(gsim);
