@@ -62,8 +62,8 @@ main {
 }
 
 #status {
-    grid-column: 1;
-    grid-row-start: 2;
+    grid-column: 4;
+    grid-row-start: 1;
 }
 
 #stats p {
@@ -74,8 +74,8 @@ main {
 
 #guild {
     grid-column: 1;
-    grid-row-start: 3;
-    grid-row-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 #stats {
@@ -149,10 +149,8 @@ button {
 #info,
 #status,
 #guild {
-    background-color: #2d3040;
-    border: 2px solid transparent;
-    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
-    border-image-slice: 1;
+    background-color: #181c30;
+    border: 1px solid #0066cc;
     margin: 4px;
     padding: 12px;
     transition-duration: 0.3s;
@@ -200,17 +198,12 @@ h6 {
     font-size: 18px;
     margin: auto;
     display: inline-block;
+    text-align: center;
 }
 
 nav {
     margin-top : 0.5vh;
     border: none;
-}
-
-#info:hover,
-#status:hover,
-#guild:hover {
-    box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
 }
 
 .pre {
@@ -236,6 +229,11 @@ article:not(:focus-within) span {
 
 
 @media only screen and (max-width: 600px) {
+
+    article {
+        width: 90%;
+    }
+
     main {
         display: block;
     }

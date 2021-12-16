@@ -370,7 +370,7 @@ function zombies (data) {
   html += "<h6 class='yellow'>Zombies</h6><br />" +
     `Wins: <span class="gray">${formatNum(data.zombies.wins_zombies)}</span><br />` + 
     `Bad blood wins: <span class="gray">${formatNum(data.zombies.wins_zombies_badblood)}</span><br />` +
-    `Dead end wins : <span class="gray">${formatNum(data.zombies.wins_zombies_deadend)}</span><br />` +
+    `Dead end wins : <span class="gray">${formatNum(data.zombies.wins_zombies_deadend)}</span><br /><br />` +
     `Alien arcadium wins: <span class="gray">${formatNum(data.zombies.wins_zombies_alienarcadium)}</span><br />` +
 
     `${formatAp(data.arcadeAchievments.zombies)}`;
@@ -435,7 +435,7 @@ function displayData (data) {
   pixelPainters(data);
   captureTheWool(data);
 
-  setHtmlByName("name", `${formatRank(data.rank, data.plusColor, data.name)}`);
+  setHtmlByName("name", `${formatRank(data.rank, data.plusColor, data.name, data.mvpColor)}`);
   setHtmlByName("xp", `<b class="aqua">Level - ${formatNum(data.level)}</b>`);
   setHtmlByName("karma", `<b class="light_purple"> Karma - ${formatNum(data.karma)}</b>`);
   setHtmlByName("aap", `<b class="green">Arcade AP - ${data.arcadeAchievments.totalEarned} / ${data.arcadeAchievments.totalAvailiable}</b>`);
@@ -447,9 +447,10 @@ function displayData (data) {
  * @param {string} rank 
  * @param {string} plusColor 
  * @param {string} name
+ * @param {string} mvpColor
  * @returns {string}
  */
-function formatRank (rank, plusColor, name = "") {
+function formatRank (rank, plusColor, name = "", mvpColor = "GOLD") {
   let betterRank = `${rank}`.replace(/_PLUS/g, "+");
 
   if(name != "") {
@@ -458,7 +459,7 @@ function formatRank (rank, plusColor, name = "") {
   }
 
   if(betterRank == "MVP++") {
-    betterRank = `<b class="gold">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="gold">]${name}</b>`;
+    betterRank = `<b class="${mvpColor.toLowerCase()}">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="${mvpColor.toLowerCase()}">]${name}</b>`;
   } else if(betterRank == "MVP+" || betterRank == "MVP") {
     betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]${name}</b>`;
   } else if(betterRank == "VIP+" || betterRank == "VIP") {
@@ -513,6 +514,7 @@ async function handleData () {
   await nameHist(playerdata.uuid);
   await accStatus(playerdata.uuid);
   await guildStats(playerdata.guildID);
+  // await recentgames(playerdata.uuid);
 }
 
 function makeTag (tag, color) {
@@ -545,6 +547,19 @@ async function accStatus (uuid) {
   setHtmlByName("stsgame", `<b class="green">Game - ${slothData.game.type}</b>`);
   setHtmlByName("stsmode", `<b class="light_purple">Mode - ${slothData.game.mode}</b>`);
   setHtmlByName("stsmap", `<b class="yellow">Map - ${slothData.game.map}</b>`);
+}
+
+async function recentgames (uuid) {
+  let slothData = await fetch(`https://api.slothpixel.me/api/players/${uuid}/recentGames`);
+  slothData = await slothData.json();
+
+  let str = "";
+
+  for(const game of slothData) {
+    str += `${game.gameType} - ${game.mode} - ${game.map}<br />`;
+  }
+
+  document.getElementById("recents").innerHTML += str;
 }
 
 async function nameHist (uuid) {
