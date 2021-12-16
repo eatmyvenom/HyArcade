@@ -19,14 +19,19 @@
         <script src="generic.js"></script>
     </head>
     <body>
-        <a href="."><span class="material-icons md-light">home</span></a>
-        <a class="guildver" href="./guilds/"><span class="material-icons md-light">groups</span></a>
-        <h1></h1>
+        <header>
+            <p>
+                <a href="."><span class="material-icons md-light">home</span> Home </a>
+                <br />
+                <a class="guildver" href="./guilds/"><span class="material-icons md-light">groups</span> Guilds </a>
+            </p>
+            <h1>Generic</h1>
+            <aside>
+                <time>Loading...</time><br />
+                <span>Max length: </span><input oninput="maxValChange(this.value)" type="number" value="25" />
+            </aside>
+        </header>
         <address></address>
-        <aside>
-            <time>Loading...</time><br />
-            <span>Max length: </span><input oninput="maxValChange(this.value)" type="number" value="25" />
-        </aside>
 
         <nav>
             <button onclick="btnClick(this)" id="lifetime" selected>Lifetime</button>
