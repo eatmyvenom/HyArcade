@@ -14,7 +14,6 @@ function maxValChange (val) {
 function btnClick (btn) {
   document.querySelectorAll("nav button").forEach((e) => e.removeAttribute("selected"));
 
-  console.log(btn);
   btn.setAttribute("selected", "");
 
   refresh()
@@ -429,25 +428,37 @@ async function getLeaderboards (element) {
   if (idArr.length > 1) {
     const category = idArr[0];
     const path = idArr[1];
+    const args = `path=${path}&category=${category}${formattedTime}&max=${maxLength}`;
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}&category=${category}${formattedTime}&min&max=${maxLength}`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url);
-    lb = await raw.json();
+    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 300000) {
+      lb = JSON.parse(localStorage.getItem(args)).lb;
+    } else {
+      const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
+      console.info(`fetching ${url}`);
+      const raw = await fetch(url);
+      lb = await raw.json();
+      localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
+    }
+
   } else {
     const path = idArr[0];
+    const args = `path=${path}${formattedTime}&max=${maxLength}`;
 
-    const url = `https://cdn.hyarcade.xyz/leaderboard?path=${path}${formattedTime}&min&max=${maxLength}`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url);
-    lb = await raw.json();
+    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 300000) {
+      lb = JSON.parse(localStorage.getItem(args)).lb;
+    } else {
+      const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
+      console.info(`fetching ${url}`);
+      const raw = await fetch(url);
+      lb = await raw.json();
+      localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
+    }
   }
 
   let text = "";
 
   if(formattedTime == "") {
     if (idArr.length > 1) {
-      console.log(idArr);
       for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
         text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
       }
