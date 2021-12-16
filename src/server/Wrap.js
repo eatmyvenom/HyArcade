@@ -17,7 +17,8 @@ const urlModules = {
   timeacc: require("./Res/TimeAcc"),
   acctimed: require("./Res/TimeAcc"),
   resolve: require("./Res/NameSearch"),
-  namesearch: require("./Res/NameSearch")
+  namesearch: require("./Res/NameSearch"),
+  info: require("./Res/info")
 };
 let fileCache;
 
