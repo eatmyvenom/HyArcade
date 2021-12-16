@@ -120,11 +120,7 @@ function farmhunt (data) {
   `Animal Kills: <span class="gray">${formatNum(data.farmhunt.animalKills)}</span><br />` + 
   `Hunter Kills: <span class="gray">${formatNum(data.farmhunt.hunterKills)}</span><br /><br />` +
 
-  `Taunts Used: <span class="gray">${formatNum(data.farmhunt.tauntsUsed)}</span><br />` +
-  `Safe Taunts Used: <span class="gray">${formatNum(data.farmhunt.safeTauntsUsed)}</span><br />` +
-  `Risky Taunts Used: <span class="gray">${formatNum(data.farmhunt.riskyTauntsUsed)}</span><br />` +
-  `Dangerous Taunts Used: <span class="gray">${formatNum(data.farmhunt.dangerousTauntsUsed)}</span><br />` +
-  `Fireworks Used: <span class="gray">${formatNum(data.farmhunt.fireworksUsed)}</span><br /><br />` +
+  `Taunts Used: <span class="gray">${formatNum(data.farmhunt.tauntsUsed)}</span><br /><br />` +
 
   `${formatAp(data.arcadeAchievments.farmHunt)}`;
 
