@@ -79,10 +79,20 @@ async function load () {
     mainStat.title = "Wins";
     mainStat.id = "farmhunt.wins";
 
-    const shit = document.createElement("div");
-    shit.title = "Poop";
-    shit.id = "farmhunt.poop";
-    main.appendChild(shit);
+    const kills = document.createElement("div");
+    kills.title = "Kills";
+    kills.id = "farmhunt.kills";
+    main.appendChild(kills);
+
+    const animalWins = document.createElement("div");
+    animalWins.title = "Animal Wins";
+    animalWins.id = "farmhunt.animalWins";
+    main.appendChild(animalWins);
+
+    const hunterWins = document.createElement("div");
+    hunterWins.title = "Hunter Wins";
+    hunterWins.id = "farmhunt.hunterWins";
+    main.appendChild(hunterWins);
 
     break;
   }
@@ -94,7 +104,7 @@ async function load () {
     mainStat.id = "holeInTheWall.wins";
 
     const walls = document.createElement("div");
-    walls.title = "Lifetime walls";
+    walls.title = "Walls";
     walls.id = "holeInTheWall.rounds";
     main.appendChild(walls);
 
@@ -129,8 +139,13 @@ async function load () {
   case "es": {
     mainTitle.innerHTML = "Ender spleef";
     address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
-    mainStat.title = "Lifetime wins";
+    mainStat.title = "Wins";
     mainStat.id = "enderSpleef.wins";
+
+    const blocks = document.createElement("div");
+    blocks.title = "Blocks Broken";
+    blocks.id = "enderSpleef.blocksBroken";
+    main.appendChild(blocks);
     break;
   }
 
@@ -228,18 +243,18 @@ async function load () {
     mainStat.id = "hideAndSeek.wins";
 
     const seekerL = document.createElement("div");
-    seekerL.title = "Seeker wins";
+    seekerL.title = "Seeker Wins";
     seekerL.id = "hideAndSeek.seekerWins";
     main.appendChild(seekerL);
 
     const hiderL = document.createElement("div");
+    hiderL.title = "Hider Wins";
     hiderL.id = "hideAndSeek.hiderWins";
-    hiderL.title = "Hider wins";
     main.appendChild(hiderL);
 
     const hiderKL = document.createElement("div");
-    hiderKL.id = "hideAndSeek.kills";
     hiderKL.title = "Kills";
+    hiderKL.id = "hideAndSeek.kills";
     main.appendChild(hiderKL);
 
     break;
@@ -323,21 +338,11 @@ async function load () {
   case "seasonal": {
     mainTitle.innerHTML = "Seasonal Arcade games";
     address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
-    mainStat.title = "Lifetime wins";
+    mainStat.title = "Total Wins";
     mainStat.id = "seasonalWins.total";
 
-    const esim = document.createElement("div");
-    esim.title = "Easter wins";
-    esim.id = "seasonalWins.easter";
-    main.appendChild(esim);
-
-    const hsim = document.createElement("div");
-    hsim.title = "Halloween wins";
-    hsim.id = "seasonalWins.halloween";
-    main.appendChild(hsim);
-
     const gsim = document.createElement("div");
-    gsim.title = "Grinch wins";
+    gsim.title = "Grinch Wins";
     gsim.id = "seasonalWins.grinch";
     main.appendChild(gsim);
 
