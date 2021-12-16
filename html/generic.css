@@ -249,6 +249,7 @@ div ol li i {
 div ol li {
   transition-delay: 0.3s;
   line-height: 2;
+  padding: 2px 0 2px 0;
   vertical-align: middle;
 }
 
