@@ -151,7 +151,7 @@ div:hover {
 
 div {
   transition: all 0.25s ease-in-out;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
   border-image-slice: 1;
 }
@@ -254,8 +254,7 @@ div ol li {
 }
 
 input {
-  border-color: #44a3e7;
-  border-style: solid;
+  border: 1px solid #44a3e7;
   background-color: #181c30;
   color: white;
 }
