@@ -3,9 +3,9 @@ const {
 } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("../../classes/Command");
-const { getFromDB } = require("../BotRuntime");
 const BotRuntime = require("../BotRuntime");
 const CommandResponse = require("../Utils/CommandResponse");
+const Database = require("../Utils/Database");
 
 module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
 
@@ -16,13 +16,16 @@ module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg,
   /**
    * @type {Account[]}
    */
-  const accs = await getFromDB("accounts");
+  const info = await Database.info();
 
   const embed = new MessageEmbed()
     .setAuthor("Hyarcade database info", BotRuntime.client.user.avatarURL(), "https://hyarcade.xyz/")
-    .setDescription(`**Accounts** : ${accs.length}\n` +
-        `**Invalid Accounts** : ${accs.filter((a) => a.name == "INVALID-NAME").length}\n` +
-        `**Linked Accounts** : ${accs.filter((a) => (a.discord ?? "") != "").length}`
+    .setDescription(`**Accounts** : \`${info.accs}\`\n` +
+        `**Invalid Accounts** : \`${info.invalid}\`\n` +
+        `**Linked Accounts** : \`${info.links}\`\n\n` +
+        `**Guilds** : \`${info.guilds}\`\n\n` + 
+        `**Memory** : \`${Math.floor(info.mem)}mb\`\n` +
+        `**Start Time** : <t:${Math.floor((Date.now() / 1000) - info.time)}:R>`
     )
     .setColor(0x8c54fe);
 

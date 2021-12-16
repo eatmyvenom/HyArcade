@@ -95,7 +95,7 @@ class Database {
 
   static async timedAccount (ign, uuid, discordID, time) {
     cacheClear = setInterval(() => Database.accCache = {}, 30000);
-    const url = new URL("timeacc");
+    const url = new URL("timeacc", cfg.dbUrl);
 
     if(ign != undefined) {
       url.searchParams.set("ign", ign);
@@ -124,6 +124,22 @@ class Database {
     }
 
     return acc;
+  }
+
+  static async info () {
+    const url = new URL("info", cfg.dbUrl);
+
+    let info;
+    try {
+      info = await (await fetch(url)).json();
+    } catch (e) {
+      Logger.err("Can't connect to database");
+      Logger.err(e.stack);
+      Logger.err(info);
+      return {};
+    }
+
+    return info;
   }
 
   static destroy () {
