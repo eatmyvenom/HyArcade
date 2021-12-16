@@ -152,7 +152,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
 
   if(title.includes("Seasonal Wins")) {
     title = title.replace(/Seasonal Wins /g, "");
-    if(!title.includes(" ")) {
+    if(!title.trim().includes(" ")) {
       title += " Simulator Wins";
     }
   }
