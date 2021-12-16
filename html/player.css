@@ -2,7 +2,27 @@
     font-size: 16px;
 }
 
+@font-face {
+  font-family: minecraf;
+  src: url(https://hyarcade.xyz/assets/mc.otf);
+}
+
+.minecraft {
+    font-family: minecraf;
+}
+
+.minecraft * {
+  font-family: minecraf;
+}
+
 h3 {
+    font-family: minecraf;
+    font-size: 24px;
+    text-shadow: 0.1em 0.1em #000000;
+}
+
+h3 * {
+    font-family: minecraf;
     font-size: 24px;
 }
 
@@ -44,6 +64,12 @@ main {
 #status {
     grid-column: 1;
     grid-row-start: 2;
+}
+
+#stats p {
+    margin: 1em;
+    padding: 12px;
+    border: 1px solid #8c54fe;
 }
 
 #guild {
@@ -120,7 +146,9 @@ button {
     vertical-align: middle;
 }
 
-body > main div {
+#info,
+#status,
+#guild {
     background-color: #2d3040;
     border: 2px solid transparent;
     border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
@@ -167,6 +195,8 @@ button {
 }
 
 h6 {
+    font-family: minecraf;
+    text-shadow: 0.1em 0.1em #000000;
     font-size: 18px;
     margin: auto;
     display: inline-block;
@@ -177,7 +207,9 @@ nav {
     border: none;
 }
 
-div:hover {
+#info:hover,
+#status:hover,
+#guild:hover {
     box-shadow: -2px -2px 5px 1px #8c54fe, 2px 2px 5px 1px #0066cc;
 }
 
