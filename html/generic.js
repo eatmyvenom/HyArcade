@@ -430,7 +430,7 @@ async function getLeaderboards (element) {
     const path = idArr[1];
     const args = `path=${path}&category=${category}${formattedTime}&max=${maxLength}`;
 
-    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 300000) {
+    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 600000) {
       lb = JSON.parse(localStorage.getItem(args)).lb;
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
@@ -444,7 +444,7 @@ async function getLeaderboards (element) {
     const path = idArr[0];
     const args = `path=${path}${formattedTime}&max=${maxLength}`;
 
-    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 300000) {
+    if(localStorage.getItem(args) != null && (Date.now() - JSON.parse(localStorage.getItem(args)).time) < 600000) {
       lb = JSON.parse(localStorage.getItem(args)).lb;
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;

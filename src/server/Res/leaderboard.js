@@ -1,4 +1,3 @@
-const Account = require("hyarcade-requests/types/Account");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 const { Readable, pipeline } = require("stream");
@@ -69,7 +68,7 @@ module.exports = async (req, res, fileCache) => {
     let accs;
     
     Logger.verbose("Sorting accounts");
-    if(timePeriod == undefined) {
+    if(timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime") {
       accs = Object.values(fileCache.indexedAccounts);
       TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
       if(reverse) {
