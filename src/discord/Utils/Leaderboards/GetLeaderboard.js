@@ -150,8 +150,21 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   title = title.replace(/Farmhunt/g, "Farm Hunt");
   title = title.replace(/Wool Wool/g, "Wool");
 
+  if(title.includes("Seasonal Wins")) {
+    title = title.replace(/Seasonal Wins /g, "");
+    if(title == "Grinch") {
+      title = "Grinch Simulator Wins";
+    } else if (title == "Halloween") {
+      title = "Halloween Simulator Wins";
+    } else if (title == "Scuba") {
+      title = "Scuba Simulator Wins";
+    } else if (title == "Easter") {
+      title = "Easter Simulator Wins";
+    }
+  }
+
   if(title.includes("Arcade Challenges")) {
-    title = title.replace(/Arcade Challenges/g, "");
+    title = title.replace(/Arcade Challenges /g, "");
     title += " Challenge Completions";
   }
 
