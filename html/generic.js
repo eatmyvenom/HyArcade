@@ -656,6 +656,8 @@ function formatRank (rank, plusColor, name = "", mvpColor = "GOLD") {
     betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]${name}</b>`;
   } else if(betterRank == "YOUTUBER") {
     betterRank = `<b class="red">[</b><b class="white">YOUTUBE</b><b class="red">]${name}</b>`;
+  } else if(betterRank == "ADMIN") {
+    betterRank = `<b class="red">[ADMIN]${name}</b>`;
   } else {
     betterRank = `<b class="gray">${name}</b>`;
   }
