@@ -230,6 +230,10 @@ article:not(:focus-within) span {
 
 @media only screen and (max-width: 600px) {
 
+    h3, h3 * {
+        font-size: 18px;
+    }
+
     article {
         width: 90%;
     }
