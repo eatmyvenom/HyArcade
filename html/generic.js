@@ -429,92 +429,92 @@ async function showCounts () {
 
   switch(game) {
   case "pg": {
-    info.innerHTML += formatNum(arcade.PARTY.players ?? 0);
+    info.innerHTML += formatNum(arcade.PARTY?.players ?? 0);
     break;
   }
 
   case "hs": {
-    info.innerHTML += formatNum(arcade.SANTA_SAYS.players ?? 0);
+    info.innerHTML += formatNum(arcade.SANTA_SAYS?.players ?? 0);
     break;
   }
 
   case "fh": {
-    info.innerHTML += formatNum(arcade.FARM_HUNT.players ?? 0);
+    info.innerHTML += formatNum(arcade.FARM_HUNT?.players ?? 0);
     break;
   }
 
   case "hitw": {
-    info.innerHTML += formatNum(arcade.HOLE_IN_THE_WALL.players ?? 0);
+    info.innerHTML += formatNum(arcade.HOLE_IN_THE_WALL?.players ?? 0);
     break;
   }
 
   case "fb": {
-    info.innerHTML += formatNum(arcade.SOCCER.players ?? 0);
+    info.innerHTML += formatNum(arcade.SOCCER?.players ?? 0);
     break;
   }
 
   case "es": {
-    info.innerHTML += formatNum(arcade.ENDER.players ?? 0);
+    info.innerHTML += formatNum(arcade.ENDER?.players ?? 0);
     break;
   }
 
   case "to": {
-    info.innerHTML += formatNum(arcade.THROW_OUT.players ?? 0);
+    info.innerHTML += formatNum(arcade.THROW_OUT?.players ?? 0);
     break;
   }
 
   case "gw": {
-    info.innerHTML += formatNum(arcade.STARWARS.players ?? 0);
+    info.innerHTML += formatNum(arcade.STARWARS?.players ?? 0);
     break;
   }
 
   case "dw": {
-    info.innerHTML += formatNum(arcade.DRAGONWARS2.players ?? 0);
+    info.innerHTML += formatNum(arcade.DRAGONWARS2?.players ?? 0);
     break;
   }
 
   case "bh": {
-    info.innerHTML += formatNum(arcade.ONEINTHEQUIVER.players ?? 0);
+    info.innerHTML += formatNum(arcade.ONEINTHEQUIVER?.players ?? 0);
     break;
   }
 
   case "bd": {
-    info.innerHTML += formatNum(arcade.DAYONE.players ?? 0);
+    info.innerHTML += formatNum(arcade.DAYONE?.players ?? 0);
     break;
   }
 
   case "hns": {
-    info.innerHTML += formatNum((arcade.HIDE_AND_SEEK_PROP_HUNT.players ?? 0) + (arcade.HIDE_AND_SEEK_PARTY_POOPER.players ?? 0));
+    info.innerHTML += formatNum((arcade.HIDE_AND_SEEK_PROP_HUNT?.players ?? 0) + (arcade.HIDE_AND_SEEK_PARTY_POOPER?.players ?? 0));
     break;
   }
 
   case "arc": {
-    info.innerHTML += formatNum(counts.games.ARCADE.players ?? 0);
+    info.innerHTML += formatNum(counts.games.ARCADE?.players ?? 0);
     break;
   }
 
   case "z": {
-    info.innerHTML += formatNum((arcade.ZOMBIES_ALIEN_ARCADIUM.players ?? 0) + (arcade.ZOMBIES_BAD_BLOOD.players ?? 0) + (arcade.ZOMBIES_DEAD_END.players ?? 0));
+    info.innerHTML += formatNum((arcade.ZOMBIES_ALIEN_ARCADIUM?.players ?? 0) + (arcade.ZOMBIES_BAD_BLOOD?.players ?? 0) + (arcade.ZOMBIES_DEAD_END?.players ?? 0));
     break;
   }
 
   case "pp": {
-    info.innerHTML += formatNum(arcade.DRAW_THEIR_THING.players ?? 0);
+    info.innerHTML += formatNum(arcade.DRAW_THEIR_THING?.players ?? 0);
     break;
   }
 
   case "mw": {
-    info.innerHTML += formatNum(arcade.MINI_WALLS.players ?? 0);
+    info.innerHTML += formatNum(arcade.MINI_WALLS?.players ?? 0);
     break;
   }
 
   case "seasonal": {
-    info.innerHTML += formatNum(arcade.GRINCH_SIMULATOR_V2.players ?? 0);
+    info.innerHTML += formatNum(arcade.GRINCH_SIMULATOR_V2?.players ?? 0);
     break;
   }
 
   case "ctw": {
-    info.innerHTML += formatNum(arcade.PVP_CTW.players ?? 0);
+    info.innerHTML += formatNum(arcade.PVP_CTW?.players ?? 0);
     break;
   }
 
