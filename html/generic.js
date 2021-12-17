@@ -391,6 +391,13 @@ async function refresh () {
 
   const time = document.querySelector("time");
 
+  if(localStorage.getItem("timeout") == null) {
+    localStorage.setItem("timeout", Date.now());
+  } else if((Date.now() - localStorage.getItem("timeout")) > 86400000) {
+    localStorage.clear();
+    localStorage.setItem("timeout", Date.now());
+  }
+
   let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
     cache: "no-store"
   });
