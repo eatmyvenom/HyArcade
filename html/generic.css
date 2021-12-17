@@ -299,6 +299,10 @@ input {
     display: block;
   }
 
+  h1 {
+    font-size: 24px;
+  }
+
   div, main div {
     display: block;
     width: 91%;
@@ -309,6 +313,10 @@ input {
     display: block;
     float: none;
     position: relative;
+  }
+
+  p {
+    font-size: 12px;
   }
 }
 
