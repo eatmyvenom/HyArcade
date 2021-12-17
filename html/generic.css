@@ -12,6 +12,10 @@
   text-shadow: 0.1em 0.1em black;
 }
 
+b {
+  font-weight: normal;
+}
+
 html,
 body {
   margin: 0;
