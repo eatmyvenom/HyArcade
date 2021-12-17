@@ -29,22 +29,85 @@ h3 * {
 
 .vnm_light_blue { color: #44a3e7; }
 
-.black { color : #000000 }
-.dark_blue { color :#0000aa }
-.dark_green { color :#00AA00 }
-.dark_aqua { color :#00aaaa }
-.dark_red { color :#aa0000 }
-.dark_purple { color :aa00aa }
-.gold { color :#ffaa00 }
-.gray { color :#aaaaaa }
-.dark_gray { color :#555555 }
-.blue { color :#5555ff }
-.green { color :#55ff55 }
-.aqua { color :#55ffff }
-.red { color :#ff5555 }
-.light_purple { color :#ff55ff }
-.yellow { color :#ffff55 }
-.white { color :#ffffff }
+.black {
+  color: #000000;
+  text-shadow: 0.1em 0.1em #000000;
+}
+
+.dark_blue {
+  color: #0000aa;
+  text-shadow: 0.1em 0.1em #00002A;
+}
+
+.dark_green {
+  color: #00AA00;
+  text-shadow: 0.1em 0.1em #002A00;
+}
+
+.dark_aqua {
+  color: #00aaaa;
+  text-shadow: 0.1em 0.1em #002A2A;
+}
+
+.dark_red {
+  color: #aa0000;
+  text-shadow: 0.1em 0.1em #2A0000;
+}
+
+.dark_purple {
+  color: #aa00aa;
+  text-shadow: 0.1em 0.1em #2A002A;
+}
+
+.gold {
+  color: #ffaa00;
+  text-shadow: 0.1em 0.1em #3F2A00;
+}
+
+.gray {
+  color: #aaaaaa;
+  text-shadow: 0.1em 0.1em #2A2A2A;
+}
+
+.dark_gray {
+  color: #555555;
+  text-shadow: 0.1em 0.1em #151515;
+}
+
+.blue {
+  color: #5555ff;
+  text-shadow: 0.1em 0.1em #15153F;
+}
+
+.green {
+  color: #55ff55;
+  text-shadow: 0.1em 0.1em #153F15;
+}
+
+.aqua {
+  color: #55ffff;
+  text-shadow: 0.1em 0.1em #153F3F;
+}
+
+.red {
+  color: #ff5555;
+  text-shadow: 0.1em 0.1em #3F1515;
+}
+
+.light_purple {
+  color: #ff55ff;
+  text-shadow: 0.1em 0.1em #3F153F;
+}
+
+.yellow {
+  color: #ffff55;
+  text-shadow: 0.1em 0.1em #3F3F15;
+}
+
+.white {
+  color: #ffffff;
+  text-shadow: 0.1em 0.1em #3F3F3F;
+}
 
 #home {
     margin-left: 14px;
