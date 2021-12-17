@@ -9,6 +9,7 @@
 
 .minecraft {
     font-family: minecraf;
+    text-shadow: 0.1em 0.1em #000000;
 }
 
 .minecraft * {

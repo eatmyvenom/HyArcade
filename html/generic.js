@@ -41,7 +41,7 @@ async function load () {
 
   switch(game) {
   case "pg": {
-    mainTitle.innerHTML = "Party games";
+    mainTitle.innerHTML = "Party Games";
     address.innerHTML = "<a href=\"https://discord.gg/kVSdPevCwm\">Discord Invite</a>";
     mainStat.title += "Wins";
     mainStat.id = "partyGames.wins";
@@ -74,7 +74,7 @@ async function load () {
   }
 
   case "fh": {
-    mainTitle.innerHTML = "Farm hunt";
+    mainTitle.innerHTML = "Farm Hunt";
     address.innerHTML = "<a href=\"https://discord.gg/fVgcvhtaWk\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "farmhunt.wins";
@@ -98,7 +98,7 @@ async function load () {
   }
 
   case "hitw": {
-    mainTitle.innerHTML = "Hole in the wall";
+    mainTitle.innerHTML = "Hole in the Wall";
     address.innerHTML = "<a href=\"https://discord.gg/Gh24vw5b54\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "holeInTheWall.wins";
@@ -137,7 +137,7 @@ async function load () {
   }
 
   case "es": {
-    mainTitle.innerHTML = "Ender spleef";
+    mainTitle.innerHTML = "Ender Spleef";
     address.innerHTML = "<a href=\"https://discord.gg/9xRhumdEyq\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "enderSpleef.wins";
@@ -150,7 +150,7 @@ async function load () {
   }
 
   case "to": {
-    mainTitle.innerHTML = "Throw out";
+    mainTitle.innerHTML = "Throw Out";
     address.innerHTML = "<a href=\"https://discord.gg/2sMpvqtJYh\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "throwOut.wins";
@@ -261,7 +261,7 @@ async function load () {
   }
 
   case "arc": {
-    mainTitle.innerHTML = "Arcade overall";
+    mainTitle.innerHTML = "Arcade Overall";
     address.innerHTML = "<a href=\"https://discord.gg/J6UMkQrjpV\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "arcadeWins";
@@ -305,14 +305,14 @@ async function load () {
   }
 
   case "pp": {
-    mainTitle.innerHTML = "Pixel painters";
+    mainTitle.innerHTML = "Pixel Painters";
     mainStat.title = "Wins";
     mainStat.id = "pixelPainters.wins";
     break;
   }
 
   case "mw": {
-    mainTitle.innerHTML = "Mini walls";
+    mainTitle.innerHTML = "Mini Walls";
     address.innerHTML = "<a href=\"https://discord.gg/a3mFVpMPaf\">Discord Invite</a>";
     mainStat.title = "Wins";
     mainStat.id = "miniWalls.wins";
@@ -336,7 +336,7 @@ async function load () {
   }
 
   case "seasonal": {
-    mainTitle.innerHTML = "Seasonal Arcade games";
+    mainTitle.innerHTML = "Seasonal Arcade Games";
     address.innerHTML = "<a href=\"https://discord.gg/Nq6ytH7sBk\">Discord Invite</a>";
     mainStat.title = "Total Wins";
     mainStat.id = "seasonalWins.total";
@@ -350,7 +350,7 @@ async function load () {
   }
 
   case "ctw": {
-    mainTitle.innerHTML = "Capture the wool";
+    mainTitle.innerHTML = "Capture the Wool";
     address.innerHTML = "<a href=\"https://discord.gg/3B55bUcVKH\">Discord Invite</a>";
     mainStat.title = "Wool Captures";
     mainStat.id = "captureTheWool.woolCaptures";
@@ -395,9 +395,124 @@ async function refresh () {
     cache: "no-store"
   });
 
+  showCounts()
+    .then(console.log)
+    .catch(console.error);
+
   servertime = await servertime.text();
   const formatted = new Date(servertime);
   time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
+}
+
+/**
+ *
+ */
+async function showCounts () {
+  let game = window.location.pathname.slice(0, -5);
+  game = game.substring(game.lastIndexOf("/") + 1);
+
+  const info = document.getElementById("info");
+
+  let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store" });
+  counts = await counts.json();
+
+  const arcade = counts.games.ARCADE.modes;
+
+  info.innerHTML = "Current Players: ";
+
+  switch(game) {
+  case "pg": {
+    info.innerHTML += formatNum(arcade.PARTY.players ?? 0);
+    break;
+  }
+
+  case "hs": {
+    info.innerHTML += formatNum(arcade.SANTA_SAYS.players ?? 0);
+    break;
+  }
+
+  case "fh": {
+    info.innerHTML += formatNum(arcade.FARM_HUNT.players ?? 0);
+    break;
+  }
+
+  case "hitw": {
+    info.innerHTML += formatNum(arcade.HOLE_IN_THE_WALL.players ?? 0);
+    break;
+  }
+
+  case "fb": {
+    info.innerHTML += formatNum(arcade.SOCCER.players ?? 0);
+    break;
+  }
+
+  case "es": {
+    info.innerHTML += formatNum(arcade.ENDER.players ?? 0);
+    break;
+  }
+
+  case "to": {
+    info.innerHTML += formatNum(arcade.THROW_OUT.players ?? 0);
+    break;
+  }
+
+  case "gw": {
+    info.innerHTML += formatNum(arcade.STARWARS.players ?? 0);
+    break;
+  }
+
+  case "dw": {
+    info.innerHTML += formatNum(arcade.DRAGONWARS2.players ?? 0);
+    break;
+  }
+
+  case "bh": {
+    info.innerHTML += formatNum(arcade.ONEINTHEQUIVER.players ?? 0);
+    break;
+  }
+
+  case "bd": {
+    info.innerHTML += formatNum(arcade.DAYONE.players ?? 0);
+    break;
+  }
+
+  case "hns": {
+    info.innerHTML += formatNum((arcade.HIDE_AND_SEEK_PROP_HUNT.players ?? 0) + (arcade.HIDE_AND_SEEK_PARTY_POOPER.players ?? 0));
+    break;
+  }
+
+  case "arc": {
+    info.innerHTML += formatNum(counts.games.ARCADE.players ?? 0);
+    break;
+  }
+
+  case "z": {
+    info.innerHTML += formatNum((arcade.ZOMBIES_ALIEN_ARCADIUM.players ?? 0) + (arcade.ZOMBIES_BAD_BLOOD.players ?? 0) + (arcade.ZOMBIES_DEAD_END.players ?? 0));
+    break;
+  }
+
+  case "pp": {
+    info.innerHTML += formatNum(arcade.DRAW_THEIR_THING.players ?? 0);
+    break;
+  }
+
+  case "mw": {
+    info.innerHTML += formatNum(arcade.MINI_WALLS.players ?? 0);
+    break;
+  }
+
+  case "seasonal": {
+    info.innerHTML += formatNum(arcade.GRINCH_SIMULATOR_V2.players ?? 0);
+    break;
+  }
+
+  case "ctw": {
+    info.innerHTML += formatNum(arcade.PVP_CTW.players ?? 0);
+    break;
+  }
+
+  }
+  info.innerHTML += `<br />Total Players: ${formatNum(counts.playerCount ?? 0)}`;
 }
 
 /**
@@ -482,7 +597,7 @@ async function getLeaderboards (element) {
   const txtTime = document.querySelector("[selected]").innerText;
 
   element.innerHTML =
-  `<h2>${txtTime} ${ 
+  `<h2 class="minecraft">${txtTime} ${ 
     element.getAttribute("title").replace(/&/g, "&amp;")
       .replace(/>/g, "&gt;")
       .replace(/</g, "&lt;")
@@ -502,10 +617,10 @@ async function getLeaderboards (element) {
  */
 function formatLine (name, value, uuid, rank, plusColor) {
   let longName = `${name}`;
-  longName = `<a href="player.html?q=${uuid}"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(rank, plusColor)}${longName}</a>`;
+  longName = `<a href="player.html?q=${uuid}" class="minecraft"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(rank, plusColor)}${longName}</a>`;
   if(value > 0) {
-    return `<li>${longName} <i>${formatNum(value)}</i></li>`;
-  } 
+    return `<li>${longName} <i class="minecraft">${formatNum(value)}</i></li>`;
+  }
   return "";
 }
 

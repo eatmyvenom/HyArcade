@@ -2,6 +2,16 @@
   font-family: "Fira Code", monospace;
 }
 
+@font-face {
+  font-family: minecraf;
+  src: url(https://hyarcade.xyz/assets/mc.otf);
+}
+
+.minecraft, .minecraft * {
+  font-family: minecraf;
+  text-shadow: 0.1em 0.1em black;
+}
+
 html,
 body {
   margin: 0;
@@ -127,10 +137,11 @@ main div {
 
 header > p {
   display: inline-block;
+  padding: 4px;
 }
 
 header > p > a {
-  margin: 0.6%;
+  margin: 4px;
   color: white;
   text-decoration: none;
   padding: 6px;
@@ -214,9 +225,13 @@ h1 {
   margin: 0.4%;
 }
 
+#info {
+  text-align: end;
+}
+
 aside {
   margin: 0.4%;
-  text-align:end;
+  text-align: center;
 }
 
 div li img {
