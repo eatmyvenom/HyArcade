@@ -580,16 +580,16 @@ async function getLeaderboards (element) {
   if(formattedTime == "") {
     if (idArr.length > 1) {
       for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].rank, lb[i].plusColor, lb[i].mvpColor);
       }
     } else {
       for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor);
+        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].rank, lb[i].plusColor, lb[i].mvpColor);
       }
     }
   } else {
     for(let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].rank, lb[i].plusColor);
+      text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].rank, lb[i].plusColor, lb[i].mvpColor);
     }
   }
 
@@ -613,11 +613,12 @@ async function getLeaderboards (element) {
  * @param {string} uuid
  * @param {string} rank
  * @param {string} plusColor
+ * @param {string} rankColor
  * @returns {string}
  */
-function formatLine (name, value, uuid, rank, plusColor) {
+function formatLine (name, value, uuid, rank, plusColor, rankColor) {
   let longName = `${name}`;
-  longName = `<a href="player.html?q=${uuid}" class="minecraft"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(rank, plusColor)} ${longName}</a>`;
+  longName = `<a href="player.html?q=${uuid}" class="minecraft"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(rank, plusColor, longName, rankColor)}</a>`;
   if(value > 0) {
     return `<li>${longName} <i class="minecraft">${formatNum(value)}</i></li>`;
   }
@@ -647,7 +648,7 @@ function formatRank (rank, plusColor, name = "", mvpColor = "GOLD") {
   } else if(betterRank == "VIP+" || betterRank == "VIP") {
     betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]${name}</b>`;
   } else {
-    betterRank = "";
+    betterRank = name;
   }
 
   return betterRank;
