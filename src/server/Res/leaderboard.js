@@ -127,9 +127,14 @@ module.exports = async (req, res, fileCache) => {
     } else {
       let requiredKeys = [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop];
 
-      if(lbprop?.startsWith(".")) {
-        requiredKeys = requiredKeys.concat(lbprop.split("."));
+      let realProp = lbprop;
+      if(realProp?.startsWith(".")) {
+        if(realProp.includes("[")) {
+          realProp = realProp.replace(/\[/g, ".").replace(/\]/g, "");
+        }
+        requiredKeys = requiredKeys.concat(realProp.split("."));
       }
+
 
       s.push(JSON.stringify(accs, requiredKeys));
     }
