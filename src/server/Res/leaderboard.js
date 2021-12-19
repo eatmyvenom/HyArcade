@@ -150,6 +150,9 @@ module.exports = async (req, res, fileCache) => {
       pipeline(s, res, cb);
     }
 
+    Logger.verbose("Removing redundant properties");
+    Object.values(fileCache.indexedAccounts).forEach((a) => {if (a.lbProp) delete a.lbProp;});
+
     Logger.verbose("Done");
 
   } else {
