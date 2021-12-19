@@ -125,7 +125,13 @@ module.exports = async (req, res, fileCache) => {
     if(!min) {
       s.push(JSON.stringify(accs));
     } else {
-      s.push(JSON.stringify(accs, [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop]));
+      let requiredKeys = [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop];
+
+      if(lbprop?.startsWith(".")) {
+        requiredKeys = requiredKeys.concat(lbprop.split("."));
+      }
+
+      s.push(JSON.stringify(accs, requiredKeys));
     }
     s.push(null);
 
