@@ -8,6 +8,7 @@ const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const { sleep } = require("../utils");
 const NormalizeAccount = require("./utils/NormalizeAccount");
+const HypixelApi = require("hyarcade-requests/HypixelApi");
 
 class Response {
   key = {};
@@ -73,6 +74,112 @@ async function discordIDs (accounts) {
   }
 
   return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts
+ * @returns {Promise<Account[]>}
+ */
+async function importance (accounts) {
+  for (const acc of accounts) {
+    acc.importance = NormalizeAccount(acc);
+  }
+
+  return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts
+ * @returns {Promise<Account[]>}
+ */
+async function coins (accounts) {
+  const leaderboards = await HypixelApi.leaderboards();
+
+  const arcade = leaderboards.leaderboards.ARCADE;
+
+  /** @type {string[]} */
+  const lifetime = arcade[0].leaders;
+
+  /** @type {string[]} */
+  const weekly = arcade[1].leaders;
+
+  /** @type {string[]} */
+  const monthly = arcade[2].leaders;
+
+  for (const acc of accounts) {
+    if(acc.positions == undefined) {
+      acc.positions = {};
+    }
+
+    const isLifetime = lifetime.includes(acc.uuidPosix);
+
+    if(acc.positions.coins < 76 && !isLifetime) {
+      acc.banned = true;
+    }
+
+    if(isLifetime) {
+      acc.positions.ingameCoins = weekly.indexOf(acc.uuidPosix) + 1;
+    }
+
+    if(weekly.includes(acc.uuidPosix)) {
+      acc.positions.weeklyCoins = weekly.indexOf(acc.uuidPosix) + 1;
+    }
+
+    if(monthly.includes(acc.uuidPosix)) {
+      acc.positions.monthlyCoins = monthly.indexOf(acc.uuidPosix) + 1;
+    }
+  }
+
+  return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts
+ * @param {Function} sorter
+ * @param {string} key
+ * @returns {Promise<Account[]>}
+ */
+async function leaderboardStat (accounts, sorter, key) {
+  accounts.sort(sorter);
+
+  for(let i = 0; i < accounts.length; i += 1) {
+    if(accounts[i].positions == undefined) {
+      accounts[i].positions = {};
+    }
+
+    accounts[i].positions[key] = i + 1;
+  }
+
+  return accounts;
+}
+
+/**
+ * 
+ * @param {Account[]} accounts
+ * @returns {Promise<Account[]>}
+ */
+async function leaderboards (accounts) {
+  let accs = await leaderboardStat(accounts, (a, b) => b.blockingDead.wins - a.blockingDead.wins, "blockingDead");
+  accs = await leaderboardStat(accounts, (a, b) => b.bountyHunters.wins - a.bountyHunters.wins, "bountyHunters");
+  accs = await leaderboardStat(accounts, (a, b) => b.dragonWars.wins - a.dragonWars.wins, "dragonWars");
+  accs = await leaderboardStat(accounts, (a, b) => b.enderSpleef.wins - a.enderSpleef.wins, "enderSpleef");
+  accs = await leaderboardStat(accounts, (a, b) => b.farmhunt.wins - a.farmhunt.wins, "farmhunt");
+  accs = await leaderboardStat(accounts, (a, b) => b.football.wins - a.football.wins, "football");
+  accs = await leaderboardStat(accounts, (a, b) => b.galaxyWars.wins - a.galaxyWars.wins, "galaxyWars");
+  accs = await leaderboardStat(accounts, (a, b) => b.holeInTheWall.wins - a.holeInTheWall.wins, "holeInTheWall");
+  accs = await leaderboardStat(accounts, (a, b) => b.hypixelSays.wins - a.hypixelSays.wins, "hypixelSays");
+  accs = await leaderboardStat(accounts, (a, b) => b.partyGames.wins - a.partyGames.wins, "partyGames");
+  accs = await leaderboardStat(accounts, (a, b) => b.pixelPainters.wins - a.pixelPainters.wins, "pixelPainters");
+  accs = await leaderboardStat(accounts, (a, b) => b.throwOut.wins - a.throwOut.wins, "throwOut");
+  accs = await leaderboardStat(accounts, (a, b) => b.miniWalls.wins - a.miniWalls.wins, "miniWalls");
+  accs = await leaderboardStat(accounts, (a, b) => b.zombies.wins_zombies - a.zombies.wins_zombies, "zombies");
+  accs = await leaderboardStat(accounts, (a, b) => b.simTotal - a.simTotal, "simTotal");
+  accs = await leaderboardStat(accounts, (a, b) => b.arcadeCoins - a.arcadeCoins, "coins");
+
+  return accs;
 }
 
 /**
@@ -252,6 +359,9 @@ async function fastUpdate (accounts) {
   updatedAccs = await discordIDs(updatedAccs);
   updatedAccs = await guilds(updatedAccs);
   updatedAccs = await hackerlist(updatedAccs);
+  updatedAccs = await leaderboards(updatedAccs);
+  updatedAccs = await coins(updatedAccs);
+  updatedAccs = await importance(updatedAccs);
 
   if(force && utils.fileExists("force")) {
     await fs.rm("force");
