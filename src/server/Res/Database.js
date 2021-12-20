@@ -31,6 +31,7 @@ module.exports = async (req, res, fileCache) => {
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
+    const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
     
     const largeReq = false;
@@ -61,7 +62,11 @@ module.exports = async (req, res, fileCache) => {
 
       s._read = () => {};
 
-      s.push(JSON.stringify(data));
+      if(fields == null) {
+        s.push(JSON.stringify(data));
+      } else {
+        s.push(JSON.stringify(data, fields.split(",")));
+      }
       s.push(null);
 
       if (/\bdeflate\b/.test(acceptEncoding)) {

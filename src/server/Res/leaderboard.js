@@ -23,11 +23,11 @@ function getProp (o, s) {
   let str = s;
   str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
-  const a = str.split(".");
-  for(let i = 0, n = a.length; i < n; i += 1) {
-    const k = a[i];
-    if(k in obj) {
-      obj = obj[k];
+  const propertyArray = str.split(".");
+  for(let i = 0, arrLength = propertyArray.length; i < arrLength; i += 1) {
+    const subObject = propertyArray[i];
+    if(subObject in obj) {
+      obj = obj[subObject];
     } else {
       return;
     }
