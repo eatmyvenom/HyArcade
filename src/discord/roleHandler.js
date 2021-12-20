@@ -1,9 +1,14 @@
 const Role = require("../classes/Role");
 const RoleUpdater = require("./RoleUpdater");
-const logger = require("hyarcade-logger");
 const fs = require("fs-extra");
 const BotRuntime = require("./BotRuntime");
+const { Client } = require("discord.js");
+const utils = require("../utils");
 
+/**
+ * 
+ * @param {Client} client 
+ */
 module.exports = async function roleHandler (client) {
   const roleSet = await fs.readJSON("config.roles.json");
   const disclist = await BotRuntime.getFromDB("disclist");
@@ -25,5 +30,15 @@ module.exports = async function roleHandler (client) {
     }
   }
 
-  logger.out("Roles updated");
+  const tags = {};
+
+  accs.forEach((acc) => {
+    const usr = client.users.cache.find((u) => u.id == acc.discid);
+
+    if(usr) {
+      tags[acc.uuid] = usr.tag;
+    }
+  });
+
+  await utils.writeJSON("tags.json", tags);
 };
