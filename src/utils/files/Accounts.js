@@ -31,8 +31,13 @@ module.exports = class Accounts {
    */
   async writeAccount (uuid, data) {
     const string = JSON.stringify(data, null, "\t");
+    const fileName = uuid ?? data.uuid;
 
-    await fs.writeFile(`${this.folderPath}/${uuid ?? data.uuid}.json`, string);
+    if(fileName.length != 32) {
+      return;
+    }
+
+    await fs.writeFile(`${this.folderPath}/${fileName}.json`, string);
   }
 
   /**
