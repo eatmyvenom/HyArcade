@@ -13,6 +13,8 @@ const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 const { MessageActionRow } = require("discord.js");
 const { MessageButton } = require("discord.js");
+const ReversedLBs = require("../Utils/Leaderboards/ReversedLBs");
+const MillisecondLBs = require("../Utils/Leaderboards/MillisecondLBs");
 
 /**
  * 
@@ -54,7 +56,7 @@ async function hander (args, rawMsg, interaction) {
 
   if(interaction != undefined && !interaction.isButton()) {
     logger.debug("Deferring interaction");
-    await interaction.defer();
+    await interaction.deferReply();
   } else if(interaction?.isButton()) {
     const row = new MessageActionRow({ components: [
       new MessageButton({ customId: "h", disabled: true, label: "    ⟵", style: "SECONDARY" }), new MessageButton({ customId: "h2", disabled: true, label: "⟶    ", style: "SECONDARY" })
@@ -68,7 +70,7 @@ async function hander (args, rawMsg, interaction) {
     return new CommandResponse("", ERROR_ARGS_LENGTH(1));
   }
 
-  const type = args[0];
+  const type = args[0] ?? "";
   const startingIndex = args[2] != undefined ? Number(args[2]) : 0;
   const timetype = args[1] ?? "lifetime";
 
@@ -1175,9 +1177,11 @@ async function hander (args, rawMsg, interaction) {
     if(type.trim().startsWith(".")) {
       
       let lb;
+      const reverse = args.includes("-r") || args.includes("--reverse");
 
       try {
-        lb = await getLB(type, timetype, undefined, startingIndex);
+        const typeArgs = type.split(".");
+        lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], MillisecondLBs?.[typeArgs[1]]?.[typeArgs[2]] ? ms2time : undefined);
       } catch (e) {
         logger.err(e.stack);
         return { res: "", embed: ERROR_NO_LEADERBOARD };
@@ -1186,10 +1190,27 @@ async function hander (args, rawMsg, interaction) {
       gid = type;
       res = lb;
     } else {
-      return {
-        res: "",
-        embed: ERROR_NO_LEADERBOARD
-      };
+      if(interaction.options.getString("category")) {
+
+        const category = interaction.options.getString("category");
+        const stat = interaction.options.getString("stat");
+
+        if(category != "others") {
+          res = await getLB(stat, timetype, category, startingIndex, ReversedLBs?.[category]?.[stat], MillisecondLBs?.[category]?.[stat] ? ms2time : undefined);
+          gid = `.${category}.${stat}`;
+        } else {
+          res = await getLB(stat, timetype, undefined, startingIndex, ReversedLBs?.[stat]);
+          gid = `.${stat}`;
+        }
+      } else {
+        logger.info(`${type} leaderboard does not exist.`);
+
+        return {
+          res: "",
+          embed: ERROR_NO_LEADERBOARD
+        };
+      }
+
     }
   }
   }

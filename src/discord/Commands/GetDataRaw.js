@@ -37,7 +37,7 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
   if(interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     acc = await InteractionUtils.resolveAccount(interaction, "player", time);
   }
 

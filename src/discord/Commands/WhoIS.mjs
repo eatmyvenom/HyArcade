@@ -119,7 +119,7 @@ export default new Command(["whois", "who", "namehist"], ["*"], async (args, raw
   if (interaction == undefined) {
     acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 1);
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);

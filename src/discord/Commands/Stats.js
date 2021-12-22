@@ -62,7 +62,7 @@ module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg,
   if(interaction == undefined) {
     res = await BotRuntime.resolveAccount(plr, rawMsg, true, time);
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     res = await InteractionUtils.resolveAccount(interaction, "player", time);
   }
 

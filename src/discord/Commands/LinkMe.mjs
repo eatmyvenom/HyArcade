@@ -11,7 +11,7 @@ export default new Command("verify", ["*"], async (args, rawMsg, interaction) =>
     const embed = ERROR_INPUT_IGN;
     return { res: "", embed };
   }
-  await interaction.defer();
+  await interaction.deferReply();
   const accs = await BotRuntime.getFromDB("accounts");
   let acc = accs.find(
     (a) =>

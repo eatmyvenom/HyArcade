@@ -204,7 +204,7 @@ async function topGamesHandler (args, rawMsg, interaction) {
       await interaction.deferUpdate();
       res = await BotRuntime.resolveAccount(plr, undefined, false, timetype);
     } else {
-      await interaction.defer();
+      await interaction.deferReply();
       res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
     }
   }

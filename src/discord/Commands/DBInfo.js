@@ -10,7 +10,7 @@ const Database = require("../Utils/Database");
 module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
 
   if(interaction != undefined) {
-    await interaction.defer();
+    await interaction.deferReply();
   }
 
   /**

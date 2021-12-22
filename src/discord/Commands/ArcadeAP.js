@@ -16,7 +16,7 @@ module.exports = new Command(["ap", "achievements"], ["*"], async (args, rawMsg,
       await interaction.deferUpdate();
       acc = await BotRuntime.resolveAccount(plr, undefined, false);
     } else {
-      await interaction.defer();
+      await interaction.deferReply();
       acc = await InteractionUtils.resolveAccount(interaction, "player");
     }
   }

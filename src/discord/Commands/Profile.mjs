@@ -58,7 +58,7 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
   if (interaction == undefined) {
     acc = await BotRuntime.resolveAccount(player, rawMsg, args.length != 1);
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     acc = await InteractionUtils.resolveAccount(interaction);
   }
 

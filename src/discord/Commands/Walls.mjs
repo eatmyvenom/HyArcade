@@ -23,7 +23,7 @@ export default new Command("walls", ["*"], async (args, rawMsg, interaction) => 
   if(uuid == undefined) {
     return new CommandResponse("", ERROR_IGN_UNDEFINED);
   }
-  await interaction.defer();
+  await interaction.deferReply();
   const acc = await HypixelApi.player(uuid);
   const data = acc.player;
   const embed = new MessageEmbed()

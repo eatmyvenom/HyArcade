@@ -73,7 +73,7 @@ export default new Command(["party-games", "pg", "partygames"], ["*"], async (ar
       await interaction.deferUpdate();
       res = await BotRuntime.resolveAccount(plr, undefined, false, time);
     } else {
-      await interaction.defer();
+      await interaction.deferReply();
       res = await InteractionUtils.resolveAccount(interaction, "player", time);
     }
   }

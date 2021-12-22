@@ -129,7 +129,7 @@ export default async (interaction) => {
   }
 
   case "arcade": {
-    switch(interaction.options.getSubCommand()) {
+    switch(interaction.options.getSubcommand()) {
     case "ez" : {
       const buttons = await ButtonGenerator.getEZ();
 
@@ -170,15 +170,15 @@ export default async (interaction) => {
     }
 
     default: {
-      return await CommandStorage.execInteraction(interaction.options.getSubCommand(), interaction);
+      return await CommandStorage.execInteraction(interaction.options.getSubcommand(), interaction);
     }
 
     }
   }
 
   case "mini-walls": {
-    await interaction.defer();
-    switch(interaction.options.getSubCommand()) {
+    await interaction.deferReply();
+    switch(interaction.options.getSubcommand()) {
     case "stats" : {
       return await commands.MiniWalls.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
     }

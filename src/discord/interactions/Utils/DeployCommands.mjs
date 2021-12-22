@@ -24,9 +24,9 @@ export default async function (client) {
   const cmdarr = Object.values(interactionObjects);
 
   const { guilds } = client;
-  guilds.cache.array();
+  guilds.cache.values();
 
-  for(const g of guilds.cache.array()) {
+  for(const g of guilds.cache.values()) {
     try {
       if(BotRuntime.botMode != "test") {
         await g.commands.set([]);

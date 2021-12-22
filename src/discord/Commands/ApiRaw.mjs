@@ -39,7 +39,7 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
   }
 
   if(interaction) {
-    await interaction.defer();
+    await interaction.deferReply();
   }
 
   const path = args[1];

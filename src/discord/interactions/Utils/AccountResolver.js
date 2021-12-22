@@ -16,7 +16,7 @@ const cfg = require("hyarcade-config").fromJSON();
  */
 async function getFromHypixel (string, interaction) {
   if(!interaction.deferred) {
-    await interaction.defer();
+    await interaction.deferReply();
   }
   logger.info("Database miss, reading uuid.");
 

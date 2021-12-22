@@ -28,7 +28,7 @@ async function compareHandler (args, rawMsg, interaction) {
     acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
     channel = rawMsg.channel;
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     acc1 = await InteractionUtils.resolveAccount(interaction, "player1");
     acc2 = await InteractionUtils.resolveAccount(interaction, "player2");
     channel = interaction.channel;

@@ -167,7 +167,7 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
       await interaction.deferUpdate();
       acc = await InteractionUtils.accFromUUID(plr);
     } else {
-      await interaction.defer();
+      await interaction.deferReply();
       acc = await InteractionUtils.resolveAccount(interaction, "player");
     }
     if(acc == undefined) {

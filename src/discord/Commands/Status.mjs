@@ -237,7 +237,7 @@ async function callback (args, rawmsg, interaction) {
   let acc;
 
   if(interaction != undefined) {
-    await interaction.defer();
+    await interaction.deferReply();
     acc = await InteractionUtils.resolveAccount(interaction);
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);

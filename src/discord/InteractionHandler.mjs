@@ -9,6 +9,7 @@ import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
 import { ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
 import registerAll from "./interactions/Utils/DeployCommands.mjs";
+import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -139,10 +140,15 @@ async function buttonHandler (interaction) {
       return;
     }
 
-    if(interaction.deferred) {
-      await interaction.editReply(updatedData.toDiscord());
-    } else {
-      await interaction.update(updatedData.toDiscord());
+    try {
+
+      if(interaction.deferred) {
+        await interaction.editReply(updatedData.toDiscord());
+      } else {
+        await interaction.update(updatedData.toDiscord());
+      }
+    } catch (e) {
+      Logger.err(e.stack);
     }
     await logBtn(interaction);
   }
@@ -183,6 +189,8 @@ async function interactionHandler (interaction) {
     await buttonHandler(interaction);
   } else if(interaction.isSelectMenu()) {
     await menuHandler(interaction);
+  } else if(interaction.isAutocomplete()) {
+    await AutoCompleter(interaction);
   }
 }
 
