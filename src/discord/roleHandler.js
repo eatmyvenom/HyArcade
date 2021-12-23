@@ -5,6 +5,35 @@ const BotRuntime = require("./BotRuntime");
 const { Client } = require("discord.js");
 const utils = require("../utils");
 
+const neededStats = ["blockingDead",
+  "name",
+  "uuid",
+  "discord",
+  "hypixelDiscord",
+  "bountyHunters",
+  "dragonWars", 
+  "enderSpleef", 
+  "farmhunt", 
+  "football", 
+  "galaxyWars", 
+  "hideAndSeek", 
+  "holeInTheWall", 
+  "hypixelSays", 
+  "partyGames", 
+  "pixelPainters", 
+  "throwOut", 
+  "miniWalls", 
+  "seasonalWins",
+  "easter",
+  "scuba",
+  "halloween",
+  "grinch",
+  "total",
+  "simTotal",
+  "wins",
+  "kills",
+];
+
 /**
  * 
  * @param {Client} client 
@@ -12,7 +41,7 @@ const utils = require("../utils");
 module.exports = async function roleHandler (client) {
   const roleSet = await fs.readJSON("config.roles.json");
   const disclist = await BotRuntime.getFromDB("disclist");
-  const accs = await BotRuntime.getFromDB("accounts");
+  const accs = await BotRuntime.getFromDB("accounts", neededStats);
 
   for(const server in roleSet) {
     const guild = await client.guilds.fetch(server);

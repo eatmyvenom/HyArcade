@@ -6,7 +6,7 @@ const { AccountArray } = require("hyarcade-requests").types;
 const {
   MessageEmbed, Client, Message
 } = require("discord.js");
-const { logger } = require("../utils");
+const { logger, readDB } = require("../utils");
 const Database = require("./Utils/Database");
 const Account = require("hyarcade-requests/types/Account");
 const { mojangRequest } = require("hyarcade-requests");
@@ -129,23 +129,11 @@ module.exports = class BotRuntime {
     /**
      * 
      * @param {string} file 
+     * @param {string[]} fields
      * @returns {object}
      */
-    static async getFromDB (file) {
-      let fileData;
-      const url = new URL("db", cfg.dbUrl);
-      const path = `${file}`;
-      url.searchParams.set("path", path);
-      Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
-
-      try {
-        fileData = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
-      } catch (e) {
-        Logger.err("Can't connect to database");
-        Logger.err(e.stack);
-        return {};
-      }
-      Logger.debug("Data fetched!");
+    static async getFromDB (file, fields) {
+      const fileData = await readDB(file, fields);
 
       if (file == "accounts" || file == "dayaccounts" || file == "monthlyaccounts" || file == "weeklyaccounts") {
         return AccountArray(fileData);
