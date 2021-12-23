@@ -1,10 +1,54 @@
 const Config = require("./Config");
 const cfg = Config.fromJSON();
 const fs = require("fs-extra");
-const {
-  default: fetch
-} = require("node-fetch");
+const { parseChunked, stringifyStream } = require("@discoveryjs/json-ext");
+
 const logger = require("hyarcade-logger");
+const http = require("http");
+const https = require("https");
+
+/**
+ * Read JSON data as a stream from a url
+ * This is used as a stream due to the the string length limitations of nodejs/v8
+ * 
+ * 
+ * @param {URL} url 
+ */
+function readJSONStream (url) {
+  let reqModule;
+  if(url.protocol == "https:") {
+    reqModule = https;
+  } else {
+    reqModule = http;
+  }
+
+  return new Promise((resolve, rejects) => {
+    reqModule.get(url, { headers: { Authorization: cfg.dbPass } }, (res) => {
+      parseChunked(res)
+        .then(resolve)
+        .catch(rejects);
+    });
+  });
+}
+
+function writeJSONStream (url, obj) {
+  let reqModule;
+  if(url.protocol == "https:") {
+    reqModule = https;
+  } else {
+    reqModule = http;
+  }
+
+  return new Promise((resolve, reject) => {
+    const req = reqModule.request(url, { headers: { Authorization: cfg.dbPass }, method: "POST" });
+    
+    stringifyStream(obj)
+      .on("error", reject)
+      .pipe(req)
+      .on("error", reject)
+      .on("finish", resolve);
+  });
+}
 
 /**
  * Halt execution for a specified amount of time
@@ -83,40 +127,32 @@ async function writeJSON (path, json) {
  * @param {object} json
  */
 async function writeDB (path, json) {
-  const data = JSON.stringify(json);
   const url = new URL("db", cfg.dbUrl);
   url.searchParams.set("path", path);
   logger.debug(`Writing to ${path} in database`);
 
-  try {
-    await fetch(url.toString(), {
-      method: "post",
-      body: data,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: cfg.dbPass
-      }
-    });
-    logger.debug("Data written!");
-  } catch (e) {
-    logger.err("Can't connect to database");
-    logger.err(e.stack);
-  }
+  await writeJSONStream(url, json);
 }
 
 /**
  * @param {string} file
+ * @param {string} fields
  * @returns {object} Object of whatever was returned by the database
  */
-async function readDB (file) {
+async function readDB (file, fields) {
   let fileData;
   const url = new URL("db", cfg.dbUrl);
   const path = `${file}`;
   url.searchParams.set("path", path);
+
+  if(fields != undefined) {
+    url.searchParams.set("fields", fields.join(","));
+  }
+
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
   try {
-    fileData = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
+    fileData = await readJSONStream(url);
   } catch (e) {
     logger.err("Can't connect to database");
     logger.err(e.stack);
