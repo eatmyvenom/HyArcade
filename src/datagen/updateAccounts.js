@@ -451,7 +451,7 @@ function isImportant (oldAcc) {
   const isLinked = !!oldAcc.discord;
 
   // Ignore people who have not played within the last 3 days
-  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < 259200000;
+  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < cfg.loginLimit;
 
   const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
 
