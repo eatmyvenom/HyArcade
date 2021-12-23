@@ -2,7 +2,7 @@ const Logger = require("hyarcade-logger");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
-const { stringifyStream } = require("@discoveryjs/json-ext");
+const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
 
@@ -82,37 +82,32 @@ module.exports = async (req, res, fileCache) => {
       }
     }
   } else if(req.method == "POST") {
-    let data = "";
     let json = {};
     if(req.headers.authorization == cfg.dbPass) {
-      req.on("data", (d) => data += d);
-      req.on("end", async () => {
-        try {
-          json = JSON.parse(data);
-        } catch (e) {
-          Logger.err("JSON parsing of new database data failed");
-          Logger.err(e.stack);
-          Logger.debug(data);
-          res.end();
-        }
-
-        if(url.searchParams.get("path") == "accounts") {
-          Logger.log("Saving new accounts");
-          const old = fileCache[url.searchParams.get("path")];
-          const newAccs = AccountArray([...json, ...old]);
-
-          json = undefined;
-
-          Logger.log(`New accounts length is ${newAccs.length}`);
-          fileCache.indexedAccounts = indexAccs(newAccs);
-
-        } else {
-          fileCache[url.searchParams.get("path")] = json;
-        }
-
-        await fileCache.save();
+      try {
+        json = await parseChunked(req);
+      } catch (e) {
+        Logger.err("JSON parsing of new database data failed");
+        Logger.err(e.stack);
         res.end();
-      });
+      }
+
+      if(url.searchParams.get("path") == "accounts") {
+        Logger.log("Saving new accounts");
+        const old = fileCache[url.searchParams.get("path")];
+        const newAccs = AccountArray([...json, ...old]);
+
+        json = undefined;
+
+        Logger.log(`New accounts length is ${newAccs.length}`);
+        fileCache.indexedAccounts = indexAccs(newAccs);
+
+      } else {
+        fileCache[url.searchParams.get("path")] = json;
+      }
+
+      await fileCache.save();
+      res.end();
     } else {
       Logger.warn("Someone tried to post without correct AUTH");
       res.statusCode = 403;
