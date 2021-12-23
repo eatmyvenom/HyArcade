@@ -2,7 +2,8 @@ const Logger = require("hyarcade-logger");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
-const { Readable, pipeline } = require("stream");
+const { stringifyStream } = require("@discoveryjs/json-ext");
+const { pipeline } = require("stream");
 const zlib = require("zlib");
 
 /**
@@ -58,29 +59,26 @@ module.exports = async (req, res, fileCache) => {
       }
 
       const cb = () => {};
-      const s = new Readable();
-
-      s._read = () => {};
+      let stream;
 
       if(fields == null) {
-        s.push(JSON.stringify(data));
+        stream = stringifyStream(data);
       } else {
-        s.push(JSON.stringify(data, fields.split(",")));
+        stream = stringifyStream(data,  fields.split(","));
       }
-      s.push(null);
 
       if (/\bdeflate\b/.test(acceptEncoding)) {
         res.writeHead(200, { "Content-Encoding": "deflate" });
-        pipeline(s, zlib.createDeflate(), res, cb);
+        pipeline(stream, zlib.createDeflate(), res, cb);
       } else if (/\bgzip\b/.test(acceptEncoding)) {
         res.writeHead(200, { "Content-Encoding": "gzip" });
-        pipeline(s, zlib.createGzip(), res, cb);
+        pipeline(stream, zlib.createGzip(), res, cb);
       } else if (/\bbr\b/.test(acceptEncoding)) {
         res.writeHead(200, { "Content-Encoding": "br" });
-        pipeline(s, zlib.createBrotliCompress(), res, cb);
+        pipeline(stream, zlib.createBrotliCompress(), res, cb);
       } else {
         res.writeHead(200, {});
-        pipeline(s, res, cb);
+        pipeline(stream, res, cb);
       }
     }
   } else if(req.method == "POST") {
