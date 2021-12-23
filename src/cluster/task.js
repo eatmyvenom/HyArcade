@@ -11,8 +11,6 @@ let accounts = [];
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 
-// const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
-
 /**
  * Generate the data for all accounts
  *

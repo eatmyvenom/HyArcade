@@ -235,6 +235,8 @@ async function requestData (uuids) {
   try {
     return await HyarcadeWorkerRequest(realUUIDs);
   } catch (e) {
+    logger.err(e.stack);
+    logger.debug("Requesting data again!");
     return await requestData(realUUIDs);
   }
 }
@@ -307,7 +309,7 @@ async function fastUpdate (accounts) {
   const perSegment = cfg.segmentSize;
 
   const oldAccs = accounts;
-  
+
   let importantAccounts = [];
   const ignoreAccounts = [];
 
@@ -379,6 +381,7 @@ async function fastUpdate (accounts) {
 module.exports = async function updateAccounts (accounts) {
 
   if(cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
+    logger.info("Using worker updating system");
     return await fastUpdate(accounts);
   }
 
