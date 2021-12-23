@@ -156,7 +156,7 @@ module.exports = class ImageGenerator {
         }
 
         case "5" : {
-          this.context.fillStyle = "#AA0000";
+          this.context.fillStyle = "#AA00AA";
           shadowColor = "#2A002A";
           break;
         }
