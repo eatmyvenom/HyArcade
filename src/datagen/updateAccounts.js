@@ -432,6 +432,15 @@ async function updateAccountsInArr (accounts, oldAccs) {
 
 /**
  * 
+ * @param {Account} account 
+ * @returns {boolean}
+ */
+function isLeaderboarder (account) {
+  return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
+}
+
+/**
+ * 
  * @param {Account} oldAcc 
  * @returns {boolean}
  */
@@ -455,5 +464,5 @@ function isImportant (oldAcc) {
 
   const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
 
-  return meetsRequirements;
+  return meetsRequirements || isLeaderboarder(oldAcc);
 }
