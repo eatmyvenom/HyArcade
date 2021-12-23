@@ -31,6 +31,15 @@ function readJSONStream (url) {
   });
 }
 
+/**
+ * Write JSON data as a stream to a url
+ * This is used as a stream due to the the string length limitations of nodejs/v8
+ * 
+ * 
+ * @param {URL} url 
+ * @param {*} obj
+ * @returns {Promise<any>}
+ */
 function writeJSONStream (url, obj) {
   let reqModule;
   if(url.protocol == "https:") {

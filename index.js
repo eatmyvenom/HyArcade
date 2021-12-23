@@ -381,6 +381,14 @@ async function main () {
   case "cluster":
     await clusterHandler();
     break;
+  
+  case "accs": 
+    await updateAllAccounts();
+    break;
+
+  case "guilds":
+    await updateAllGuilds();
+    break;
 
   case "ssweek": 
     await Webhook.sendFakeWeekLBs();

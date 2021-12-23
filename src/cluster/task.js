@@ -7,7 +7,7 @@ const utils = require("../utils");
 const dataGen = require("../dataGeneration");
 
 const lists = require("../listParser");
-let accounts = [];
+let accounts = undefined;
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 
