@@ -1198,7 +1198,16 @@ async function hander (args, rawMsg, interaction) {
 
       try {
         const typeArgs = type.split(".");
-        lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], MillisecondLBs?.[typeArgs[1]]?.[typeArgs[2]] ? ms2time : undefined);
+
+        let formatter = undefined;
+
+        if(MillisecondLBs?.[typeArgs[1]]?.[typeArgs[2]]) {
+          formatter = ms2time;
+        } else if(SecondLBs?.[typeArgs[1]]?.[typeArgs[2]]) {
+          formatter = toHHMMSS;
+        }
+
+        lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], formatter);
       } catch (e) {
         logger.err(e.stack);
         return { res: "", embed: ERROR_NO_LEADERBOARD };
