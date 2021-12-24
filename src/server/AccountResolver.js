@@ -15,6 +15,7 @@ async function AccountResolver (fileCache, url) {
   } = fileCache;
 
   const accounts = Object.values(indexedAccounts);
+  accounts.sort((b, a) => a.importance - b.importance);
 
   const ign = url.searchParams.get("ign");
   let uuid = url.searchParams.get("uuid");
@@ -61,7 +62,7 @@ async function AccountResolver (fileCache, url) {
       let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
       elecreq = await elecreq.json();
       if(elecreq != undefined) {
-        uuid = elecreq.uuid.toLowerCase().replace(/-/g, "");
+        uuid = elecreq.uuid?.toLowerCase()?.replace(/-/g, "") ?? null;
       }
     }
 
