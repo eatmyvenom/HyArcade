@@ -15,6 +15,7 @@ const { MessageActionRow } = require("discord.js");
 const { MessageButton } = require("discord.js");
 const ReversedLBs = require("../Utils/Leaderboards/ReversedLBs");
 const MillisecondLBs = require("../Utils/Leaderboards/MillisecondLBs");
+const SecondLBs = require("../Utils/Leaderboards/SecondLBs");
 
 /**
  * 
@@ -40,6 +41,22 @@ function ms2time (time) {
       .toString()
       .padStart(3, "0")
   }`;
+}
+
+/**
+ * @param {number} secs
+ * @returns {string}
+ */
+function toHHMMSS (secs) {
+  const sec_num = parseInt(secs, 10);
+  const hours   = Math.floor(sec_num / 3600);
+  const minutes = Math.floor(sec_num / 60) % 60;
+  const seconds = sec_num % 60;
+
+  return [hours, minutes, seconds]
+    .map((v) => v < 10 ? `0${v}` : v)
+    .filter((v, i) => v !== "00" || i > 0)
+    .join(":");
 }
 
 /**
@@ -1196,7 +1213,15 @@ async function hander (args, rawMsg, interaction) {
         const stat = interaction.options.getString("stat");
 
         if(category != "others") {
-          res = await getLB(stat, timetype, category, startingIndex, ReversedLBs?.[category]?.[stat], MillisecondLBs?.[category]?.[stat] ? ms2time : undefined);
+          let formatter = undefined;
+
+          if(MillisecondLBs?.[category]?.[stat]) {
+            formatter = ms2time;
+          } else if(SecondLBs?.[category]?.[stat]) {
+            formatter = toHHMMSS;
+          }
+
+          res = await getLB(stat, timetype, category, startingIndex, ReversedLBs?.[category]?.[stat], formatter);
           gid = `.${category}.${stat}`;
         } else {
           res = await getLB(stat, timetype, undefined, startingIndex, ReversedLBs?.[stat]);
