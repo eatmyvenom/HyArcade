@@ -165,6 +165,9 @@ async function leaderboards (accounts) {
   let accs = await leaderboardStat(accounts, (a, b) => b.blockingDead.wins - a.blockingDead.wins, "blockingDead");
   accs = await leaderboardStat(accounts, (a, b) => b.bountyHunters.wins - a.bountyHunters.wins, "bountyHunters");
   accs = await leaderboardStat(accounts, (a, b) => b.dragonWars.wins - a.dragonWars.wins, "dragonWars");
+  accs = await leaderboardStat(accounts, (a, b) => b.captureTheWool.kills - a.captureTheWool.kills, "ctwKills");
+  accs = await leaderboardStat(accounts, (a, b) => b.captureTheWool.woolCaptures - a.captureTheWool.woolCaptures, "ctwCaptures");
+  accs = await leaderboardStat(accounts, (a, b) => b.arcadeWins - a.arcadeWins, "arcadeWins");
   accs = await leaderboardStat(accounts, (a, b) => b.enderSpleef.wins - a.enderSpleef.wins, "enderSpleef");
   accs = await leaderboardStat(accounts, (a, b) => b.farmhunt.wins - a.farmhunt.wins, "farmhunt");
   accs = await leaderboardStat(accounts, (a, b) => b.football.wins - a.football.wins, "football");
