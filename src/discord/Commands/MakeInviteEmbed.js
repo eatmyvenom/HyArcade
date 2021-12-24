@@ -1,5 +1,5 @@
 const {
-  MessageEmbed
+  MessageEmbed, TextChannel
 } = require("discord.js");
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
@@ -20,6 +20,8 @@ function makeField (name, link) {
 module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
   const channelID = args[0];
   const msgID = args[1];
+
+  /** @type {TextChannel} */
   const channel = await BotRuntime.client.channels.fetch(channelID);
   const embed = new MessageEmbed()
     .setTitle("Arcade servers")
@@ -45,13 +47,13 @@ module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
       makeField("<:TO:779067808624672779> Throw Out", "https://discord.gg/Z4AbEvX6dM"),
       makeField("<:Zomb:779067783753105488> Zombies", "https://discord.gg/rdZKx4b"),
       makeField("<:seasonal:784954031604367400> Seasonal Games", "https://discord.gg/X28ucyys8A"),
-      makeField("Leaderboard History", "https://discord.gg/KP4hFcj4Du"),
-      makeField("HyArcade", "https://discord.gg/6kFBVDcRd5"),
+      makeField("📊 Leaderboard History", "https://discord.gg/KP4hFcj4Du"),
+      makeField("<:ArcadeBot:840086063258927115> HyArcade", "https://discord.gg/6kFBVDcRd5"),
     ]);
 
   if(msgID == undefined) {
-    await channel.send("", {
-      embed
+    await channel.send({
+      embeds: [embed]
     });
   } else {
     const message = await channel.messages.fetch(msgID);

@@ -15,7 +15,7 @@ const { MessageEmbed } = require("discord.js");
  * @param {number} n
  * @returns {string}
  */
-function percentify (n) {
+function toPercent (n) {
   return `${(n * 100).toFixed(2)} %`;
 }
 
@@ -72,8 +72,8 @@ function createDefaultEmbed (acc) {
     .addField("Ratios",
       `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies ?? 0) / (acc.zombies?.total_rounds_survived_zombies ?? 0))}\`\n` +
       `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies ?? 0) / (acc.zombies?.deaths_zombies ?? 0))}\`\n` +
-      `・**Accuracy** - \`${percentify((acc.zombies?.bullets_hit_zombies ?? 0) / (acc.zombies?.bullets_shot_zombies ?? 0))}\`\n` +
-      `・**Headshots** - \`${percentify((acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\``,
+      `・**Accuracy** - \`${toPercent((acc.zombies?.bullets_hit_zombies ?? 0) / (acc.zombies?.bullets_shot_zombies ?? 0))}\`\n` +
+      `・**Headshots** - \`${toPercent((acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\``,
       false)
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
     .setColor(0x44a3e7);
