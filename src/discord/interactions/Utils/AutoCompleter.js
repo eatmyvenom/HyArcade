@@ -21,6 +21,33 @@ async function filler (interaction) {
 let categorys = undefined;
 let genStats;
 
+const zombies = {
+  fastest_time_10_zombies_alienarcadium_normal: true,
+  fastest_time_10_zombies: true,
+  fastest_time_20_zombies_alienarcadium_normal: true,
+  fastest_time_20_zombies: true,
+  fastest_time_10_zombies_badblood_normal: true,
+  fastest_time_20_zombies_badblood_normal: true,
+  fastest_time_10_zombies_deadend_normal: true,
+  fastest_time_20_zombies_deadend_normal: true,
+  fastest_time_30_zombies: true,
+  fastest_time_30_zombies_deadend_normal: true,
+  fastest_time_30_zombies_badblood_normal: true,
+  fastest_time_10_zombies_badblood_hard: true,
+  fastest_time_20_zombies_badblood_hard: true,
+  fastest_time_30_zombies_badblood_hard: true,
+  fastest_time_10_zombies_badblood_rip: true,
+  fastest_time_20_zombies_badblood_rip: true,
+  fastest_time_10_zombies_deadend_hard: true,
+  fastest_time_20_zombies_deadend_hard: true,
+  fastest_time_30_zombies_badblood_rip: true,
+  fastest_time_10_zombies_deadend_rip: true,
+  fastest_time_20_zombies_deadend_rip: true,
+  fastest_time_30_zombies_deadend_rip: true,
+  fastest_time_30_zombies_deadend_hard: true,
+  fastest_time_30_zombies_alienarcadium_normal: true,
+};
+
 /**
  * 
  * @param {AutocompleteInteraction} interaction 
@@ -29,6 +56,7 @@ async function leaderboardFiller (interaction) {
 
   if(testStats == undefined) {
     testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
+    testStats = Object.assign(testStats.zombies, zombies);
   }
 
   const category = interaction.options.getString("category");
