@@ -15,7 +15,7 @@ const {
  * @returns {null}
  */
 module.exports = async function addAccounts (names) {
-  const accs = await utils.readDB("accounts");
+  const accs = await utils.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
 
   let res = "";
   const newAccs = [];
@@ -41,7 +41,7 @@ module.exports = async function addAccounts (names) {
     const dupeAcc = accs.find((a) => a.uuid == uuid);
 
     if(dupeAcc) {
-      res += `Refusing to add duplicate "${dupeAcc.name}"`;
+      res += `Refusing to add duplicate "${dupeAcc.name}"\n`;
       logger.warn(`Refusing to add duplicate "${dupeAcc.name}"`);
       continue;
     }
