@@ -7,7 +7,6 @@ const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
-const Account = require("hyarcade-requests/types/Account");
 const Database = require("../discord/Utils/Database");
 const FakeLB = require("../discord/images/FakeLB");
 
@@ -212,24 +211,32 @@ function generateEmbed (list) {
 
 /**
  * 
- * @param {Account[]} list 
- * @param {string} stat 
- * @param {string} category 
- * @param {number} amount 
- * @returns {string}
+ * @param {*} list 
+ * @param {*} lbprop 
+ * @param {*} category 
+ * @param {*} maxamnt 
+ * @param {*} startingIndex 
+ * @returns {*}
  */
-function stringifyList (list, stat, category, amount = 10) {
+function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
   let str = "";
-  for(let i = 0; i < Math.min(list.length, amount); i += 1) {
-    if(category != undefined) {
-      str += `${i + 1}) **${list[i].name}** (\`${formatNum(list[i]?.[category]?.[stat] ?? 0)}\`)\n`;
-    } else {
-      str += `${i + 1}) **${list[i].name}** (\`${formatNum(list[i]?.[stat] ?? 0)}\`)\n`;
-    }
-  }
+  const sizedList = list.slice(0, 10);
 
-  return str;
+  let propVal;
+  for(let i = startingIndex; i < sizedList.length; i += 1) {
+
+    propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
+    // don't print if player has 0 wins
+    if(!((propVal ?? 0) > 0)) continue;
+
+    const {
+      name
+    } = sizedList[i];
+    str += `${i + 1}) **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
+  }
+  return str.replace(/\\?_/g, "\\_");
 }
+
 
 /**
  * @returns {Promise}
@@ -392,11 +399,11 @@ async function genHSMEmbed () {
 /**
  * @param {string} prop
  * @param {string} timetype
- * @param {number} limit
  * @returns {Promise<object>}
  */
-async function getLB (prop, timetype, limit) {
+async function getLB (prop, timetype) {
   let res = [];
+  const limit = 10;
   let time;
 
   switch(timetype) {
@@ -613,7 +620,7 @@ async function genMiWLB (prop, timetype, limit) {
     .setTitle(correctedTime)
     .setColor(0xc60532)
     .setDescription(res)
-    .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://eatmyvenom.me/share/images/MWPfp3.png"});
+    .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://eatmyvenom.me/share/images/MWPfp3.png" });
 
   if(res.length > 6000) {
     return new MessageEmbed()
@@ -678,11 +685,6 @@ async function sendMW () {
   const witherkills = await genMiWLB("witherKills", 10);
   const guilds = gEmbed;
 
-  wins.setTitle("Lifetime Wins");
-  kills.setTitle("Lifetime Kills");
-  finals.setTitle("Lifetime Finals");
-  witherdmg.setTitle("Lifetime Wither Damage");
-  witherkills.setTitle("Lifetime Wither Kills");
   const hook = new Discord.WebhookClient({ id: config.otherHooks.MW.id, token: config.otherHooks.MW.token });
   try {
     await hook.deleteMessage(mwMsg);
@@ -690,6 +692,7 @@ async function sendMW () {
     logger.err(e.stack);
   }
   const newMsg = await hook.send({
+    content: `Updated <t:${Math.floor((Date.now() / 1000))}:R>`,
     embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
     username: config.otherHooks.MW.username,
     avatarURL: "https://eatmyvenom.me/share/images/MWPfp3.png",

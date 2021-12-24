@@ -44,7 +44,7 @@ exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt,
     const {
       name
     } = sizedList[i];
-    str += `${i + 1}) **${name}** (${formatNum(propVal ?? 0)})\n`;
+    str += `${i + 1}) **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
   }
   return str.replace(/\\?_/g, "\\_");
 };
