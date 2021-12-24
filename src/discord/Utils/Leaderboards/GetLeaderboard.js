@@ -149,6 +149,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
   title = title.replace(/Tiered A P\[4\]/g, "AP-5");
   title = title.replace(/Farmhunt/g, "Farm Hunt");
   title = title.replace(/Wool Wool/g, "Wool");
+  title = title.replace(/Time 30/g, "Win");
 
   if(title.includes("Seasonal Wins")) {
     title = title.replace(/Seasonal Wins /g, "");
