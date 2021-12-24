@@ -53,14 +53,17 @@ module.exports = async (req, res, fileCache) => {
 
   if(req.method == "GET") {
     Logger.verbose("Getting leaderboard");
+
     let getter;
+    const defaultValue = reverse ? Number.MAX_SAFE_INTEGER : 0;
+
     if(lbprop?.startsWith(".")) {
       category = lbprop.split(".")[1];
-      getter = (a) => getProp(a, lbprop) ?? 0;
+      getter = (a) => getProp(a, lbprop) ?? defaultValue;
     } else if(category == null) {
-      getter = (a) => a?.[lbprop] ?? 0;
+      getter = (a) => a?.[lbprop] ?? defaultValue;
     } else {
-      getter = (a) => a?.[category]?.[lbprop] ?? 0;
+      getter = (a) => a?.[category]?.[lbprop] ?? defaultValue;
     }
 
     res.setHeader("Content-Type", "application/json");
