@@ -436,7 +436,11 @@ async function updateAccountsInArr (accounts, oldAccs) {
  * @returns {boolean}
  */
 function isLeaderboarder (account) {
-  return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
+  if(account.positions) {
+    return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
+  }
+
+  return false;
 }
 
 /**
