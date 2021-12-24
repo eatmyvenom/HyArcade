@@ -56,7 +56,7 @@ async function leaderboardFiller (interaction) {
 
   if(testStats == undefined) {
     testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
-    testStats = Object.assign(testStats.zombies, zombies);
+    Object.assign(testStats.zombies, zombies);
   }
 
   const category = interaction.options.getString("category");
