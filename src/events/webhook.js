@@ -5,7 +5,6 @@ const {
 } = Discord;
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
-const fs = require("fs/promises");
 const Runtime = require("../Runtime");
 const utils = require("../utils");
 const Account = require("hyarcade-requests/types/Account");
@@ -391,194 +390,22 @@ async function genHSMEmbed () {
 }
 
 /**
- * @param {Account} b
- * @param {Account} a
- * @returns {number}
- */
-function wComp (b, a) {
-  return (a?.miniWalls.wins ?? 0) - (b?.miniWalls.wins ?? 0);
-}
-
-/**
- * @param {Account} b
- * @param {Account} a
- * @returns {number}
- */
-function kComp (b, a) {
-  return (a?.miniWalls?.kills ?? 0) - (b?.miniWalls?.kills ?? 0);
-}
-
-/**
- * @param {Account} b
- * @param {Account} a
- * @returns {number}
- */
-function dComp (b, a) {
-  return (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.deaths ?? 0);
-}
-
-/**
- * @param {Account} n
- * @param {Account} o
- * @returns {Account}
- */
-function cb (n, o) {
-  o.miniWallsWins = (n?.miniWallsWins ?? 0) - (o?.miniWallsWins ?? 0);
-  o.miniWalls.kills = (n?.miniWalls?.kills ?? 0) - (o?.miniWalls?.kills ?? 0);
-  o.miniWalls.deaths = (n?.miniWalls?.deaths ?? 0) - (o?.miniWalls?.deaths ?? 0);
-  o.miniWalls.witherDamage = (n?.miniWalls?.witherDamage ?? 0) - (o?.miniWalls?.witherDamage ?? 0);
-  o.miniWalls.witherKills = (n?.miniWalls?.witherKills ?? 0) - (o?.miniWalls?.witherKills ?? 0);
-  o.miniWalls.finalKills = (n?.miniWalls?.finalKills ?? 0) - (o.miniWalls?.finalKills ?? 0);
-  return o;
-}
-
-/**
- * @param {Account} n
- * @returns {Account}
- */
-function rcb (n) {
-  return n;
-}
-
-/**
- * @param {Account[]} list
- * @returns {Account[]}
- */
-async function hackerTransformer (list) {
-  const hackerlist = (await fs.readFile("data/hackerlist")).toString().split("\n");
-  let filteredList = list.filter((a) => !hackerlist.includes(a.uuid));
-  filteredList = filteredList.filter((a) => a != {});
-  filteredList = filteredList.filter((a) => a.name != undefined);
-  return filteredList;
-}
-
-/**
- * @param {Account[]} list
- * @returns {Account[]}
- */
-function top150Transformer (list) {
-  let filterdList = list.sort(wComp);
-  filterdList = list.slice(0, Math.min(filterdList.length, 150));
-  return filterdList;
-}
-
-/**
- * @param {Account[]} list
- * @returns {Account[]}
- */
-async function ratioTransformer (list) {
-  let filteredList = await hackerTransformer(list);
-  filteredList = await top150Transformer(filteredList);
-  return filteredList;
-}
-
-/**
  * @param {string} prop
  * @param {string} timetype
  * @param {number} limit
- * @returns {Discord.MessageEmbed}
+ * @returns {Promise<object>}
  */
 async function getLB (prop, timetype, limit) {
-  let res = "";
+  let res = [];
   let time;
-
-  let comparitor = null;
-  let callback = cb;
-  let transformer = hackerTransformer;
-  let parser = null;
-  switch(prop) {
-  case "wins": {
-    comparitor = wComp;
-    parser = (a) => a.miniWalls.wins;
-    break;
-  }
-
-  case "kills": {
-    comparitor = kComp;
-    parser = (a) => a.miniWalls.kills;
-    break;
-  }
-
-  case "deaths": {
-    comparitor = dComp;
-    parser = (a) => a.miniWalls.deaths;
-    break;
-  }
-
-  case "witherDamage": {
-    comparitor = (b, a) => (a?.miniWalls?.witherDamage ?? 0) - (b?.miniWalls?.witherDamage ?? 0);
-    parser = (a) => a?.miniWalls?.witherDamage ?? 0;
-    break;
-  }
-  case "witherKills": {
-    comparitor = (b, a) => (a?.miniWalls?.witherKills ?? 0) - (b?.miniWalls?.witherKills ?? 0);
-    parser = (a) => a?.miniWalls?.witherKills ?? 0;
-    break;
-  }
-  case "finalKills": {
-    comparitor = (b, a) => (a?.miniWalls?.finalKills ?? 0) - (b?.miniWalls?.finalKills ?? 0);
-    parser = (a) => a?.miniWalls?.finalKills ?? 0;
-    break;
-  }
-
-  case "kd": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (
-      ((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0) -
-            ((b?.miniWalls?.kills ?? 0) + (b?.miniWalls?.finalKills ?? 0)) / (b?.miniWalls?.deaths ?? 0)
-    );
-    parser = (a) => (((a?.miniWalls?.kills ?? 0) + (a?.miniWalls?.finalKills ?? 0)) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-    break;
-  }
-
-  case "kdnf": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.kills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-    parser = (a) => ((a?.miniWalls?.kills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-    break;
-  }
-
-  case "fd": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.finalKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-    parser = (a) => ((a?.miniWalls?.finalKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-    break;
-  }
-
-  case "wdd": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherDamage ?? 0) / (b?.miniWalls?.deaths ?? 0);
-    parser = (a) => ((a?.miniWalls?.witherDamage ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-    break;
-  }
-
-  case "wkd": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0) - (b?.miniWalls?.witherKills ?? 0) / (b?.miniWalls?.deaths ?? 0);
-    parser = (a) => ((a?.miniWalls?.witherKills ?? 0) / (a?.miniWalls?.deaths ?? 0)).toFixed(3);
-    break;
-  }
-
-  case "aa": {
-    callback = rcb;
-    transformer = ratioTransformer;
-    comparitor = (b, a) => (a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0) - (b?.miniWalls?.arrowsHit ?? 0) / (b?.miniWalls?.arrowsShot ?? 0);
-    parser = (a) => (((a?.miniWalls?.arrowsHit ?? 0) / (a?.miniWalls?.arrowsShot ?? 0)) * 100).toFixed(3);
-    break;
-  }
-  }
 
   switch(timetype) {
   case "d":
   case "day":
   case "daily": {
     time = "Daily";
-    res = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
+    res = await Database.getMWLeaderboard(prop, "day");
+    res = res.slice(0, Math.min(limit, res.length));
     break;
   }
 
@@ -587,7 +414,8 @@ async function getLB (prop, timetype, limit) {
   case "weak":
   case "weekly": {
     time = "Weekly";
-    res = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
+    res = await Database.getMWLeaderboard(prop, "weekly");
+    res = res.slice(0, Math.min(limit, res.length));
     break;
   }
 
@@ -596,45 +424,196 @@ async function getLB (prop, timetype, limit) {
   case "month":
   case "monthly": {
     time = "Monthly";
-    res = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
+    res = await Database.getMWLeaderboard(prop, "monthly");
+    res = res.slice(0, Math.min(limit, res.length));
     break;
-  }
-
-  case "a":
-  case "all":
-  case "*": {
-    let day = await listUtils.stringDiffAdv(comparitor, parser, limit, "day", callback, transformer);
-    let week = await listUtils.stringDiffAdv(comparitor, parser, limit, "weekly", callback, transformer);
-    let month = await listUtils.stringDiffAdv(comparitor, parser, limit, "monthly", callback, transformer);
-    const life = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
-
-    day = day == "" ? "Nobody has won" : day;
-    week = week == "" ? "Nobody has won" : week;
-    month = month == "" ? "Nobody has won" : month;
-
-    const embed = new MessageEmbed()
-      .setColor(0x984daf)
-      .addField("Daily", day, true)
-      .addField("Weekly", week, true)
-      .addField("\u200B", "\u200B", true)
-      .addField("Monthly", month, true)
-      .addField("Lifetime", life, true)
-      .addField("\u200B", "\u200B", true);
-
-    return embed;
   }
 
   default: {
     time = "Lifetime";
-    res = await listUtils.stringLBAdv(comparitor, parser, limit, transformer);
+    res = await Database.getMWLeaderboard(prop);
+    res = res.slice(0, Math.min(limit, res.length));
     break;
   }
   }
 
-  res = res != "" ? res : "Nobody has won.";
-  const embed = new MessageEmbed().setTitle(time)
+  return { res, time };
+}
+
+/**
+ * @param {string} prop
+ * @param {string} timetype
+ * @param {number} limit
+ * @returns {Discord.MessageEmbed}
+ */
+async function genMiWLB (prop, timetype, limit) {
+  const startTime = Date.now();
+  const type = prop;
+
+  let correctedTime = "";
+  let res = "";
+  let gameName = "";
+
+  switch(type.toLowerCase()) {
+  case "k":
+  case "kill":
+  case "kil":
+  case "kills": {
+    gameName = "Kills";
+    const lb = await getLB("kills", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "kills", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "d":
+  case "dead":
+  case "ded":
+  case "death":
+  case "deaths": {
+    gameName = "Deaths";
+    const lb = await getLB("deaths", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "deaths", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "wd":
+  case "witherd":
+  case "witherdamage":
+  case "witherhurted":
+  case "damagewither":
+  case "witherdmg": {
+    gameName = "Wither Damage";
+    const lb = await getLB("witherDamage", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "wk":
+  case "witherskilled":
+  case "killwither":
+  case "witherk":
+  case "witherkill":
+  case "witherkills": {
+    gameName = "Wither Kills";
+    const lb = await getLB("witherKills", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "f":
+  case "fk":
+  case "finalkill":
+  case "fkill":
+  case "final":
+  case "finals": {
+    gameName = "Final Kills";
+    const lb = await getLB("finalKills", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "tkd":
+  case "tkdr":
+  case "totalkd":
+  case "ttlkd":
+  case "totalkdr":
+  case "f+kd":
+  case "f+kdr":
+  case "k+fdr":
+  case "k+fd":
+  case "kfdr":
+  case "killdeath": {
+    gameName = "Kills+Finals/Deaths";
+    const lb = await getLB("kd", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "kd":
+  case "k/d":
+  case "k/dr":
+  case "kdr":
+  case "kdnf":
+  case "nfkd":
+  case "nfkdr":
+  case "kdrnf":
+  case "kdnofinal": {
+    gameName = "Kills/Deaths ratios";
+    const lb = await getLB("kdnf", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "fdr":
+  case "f/d":
+  case "fkd":
+  case "fkdr":
+  case "finaldeath":
+  case "fd": {
+    const lb = await getLB("fd", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "wdd":
+  case "wdr":
+  case "wddr":
+  case "witherdamagedeath": {
+    gameName = "Wither Damage/Deaths";
+    const lb = await getLB("wdd", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "wkd":
+  case "wkdr":
+  case "wk/d":
+  case "witherkilldeath":
+  case "witherkill+d":
+  case "wikdr": {
+    gameName = "Wither Kills/Deaths";
+    const lb = await getLB("wkd", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "aa":
+  case "arrowacc":
+  case "ahm":
+  case "arrowhit/miss": {
+    gameName = "Arrow accuracy";
+    const lb = await getLB("aa", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  default: {
+    gameName = "Wins";
+    const lb = await getLB("wins", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "wins", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+  }
+
+  res = res != "" ? res : "Leaderboard empty...";
+
+  const embed = new MessageEmbed()
+    .setTitle(correctedTime)
     .setColor(0xc60532)
-    .setDescription(res);
+    .setDescription(res)
+    .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://eatmyvenom.me/share/images/MWPfp3.png"});
 
   if(res.length > 6000) {
     return new MessageEmbed()
@@ -644,7 +623,7 @@ async function getLB (prop, timetype, limit) {
         "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
       );
   }
-
+  
   if(res.length > 2000) {
     let resArr = res.trim().split("\n");
     embed.setDescription("");
@@ -655,16 +634,9 @@ async function getLB (prop, timetype, limit) {
     }
   }
 
-  return embed;
-}
+  logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
-/**
- * @param {string} prop
- * @param {number} a
- * @returns {Discord.MessageEmbed}
- */
-async function getMW (prop, a) {
-  return await getLB(prop, "l", a);
+  return embed;
 }
 
 /**
@@ -691,7 +663,7 @@ async function sendMW () {
   guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
   for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
     const g = guildlist[i];
-    str += `${i + 1}) **${g.name}** (${formatNum(g.miniWallsWins)})\n`;
+    str += `${i + 1}) **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
   }
 
   const gEmbed = new MessageEmbed()
@@ -699,11 +671,11 @@ async function sendMW () {
     .setDescription(str)
     .setColor(0xc60532);
 
-  const wins = await getMW("wins", 25);
-  const kills = await getMW("kills", 10);
-  const finals = await getMW("finalKills", 10);
-  const witherdmg = await getMW("witherDamage", 10);
-  const witherkills = await getMW("witherKills", 10);
+  const wins = await genMiWLB("wins", 25);
+  const kills = await genMiWLB("kills", 10);
+  const finals = await genMiWLB("finalKills", 10);
+  const witherdmg = await genMiWLB("witherDamage", 10);
+  const witherkills = await genMiWLB("witherKills", 10);
   const guilds = gEmbed;
 
   wins.setTitle("Lifetime Wins");
@@ -720,7 +692,7 @@ async function sendMW () {
   const newMsg = await hook.send({
     embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
     username: config.otherHooks.MW.username,
-    avatarURL: config.otherHooks.MW.pfp,
+    avatarURL: "https://eatmyvenom.me/share/images/MWPfp3.png",
   });
 
   run.mwMsg = newMsg.id;
