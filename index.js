@@ -545,4 +545,4 @@ async function main () {
 
 main()
   .then(logger.log)
-  .catch(logger.err);
+  .catch((e) => logger.err(e.stack));
