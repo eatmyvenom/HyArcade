@@ -121,6 +121,7 @@ module.exports = async function GetLeaderboard (prop, timetype, category, start,
     getter = (a) => getProp(a, prop) ?? 0;
     title = `${(prop).slice(1, 2).toUpperCase()}${(prop).slice(2)}`
       .replace(/([A-Z])/g, " $1")
+      .replace(/_zombies/g, "")
       .replace(/(\.)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`)
       .replace(/(_)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`);
   } else if(category == null) {
