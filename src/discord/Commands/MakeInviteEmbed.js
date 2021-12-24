@@ -57,7 +57,9 @@ module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
     });
   } else {
     const message = await channel.messages.fetch(msgID);
-    await message.edit(embed);
+    await message.edit({
+      embeds: [embed]
+    });
   }
   return {
     res: "list created"
