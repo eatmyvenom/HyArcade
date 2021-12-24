@@ -29,7 +29,7 @@ export default async (interaction) => {
   }
 
   case "add-account": {
-    await interaction.defer({
+    await interaction.deferReply({
       ephemeral: true
     });
 
