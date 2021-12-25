@@ -6,6 +6,8 @@ const {
 } = require("url");
 const process = require("process");
 const FileCache = require("../utils/files/FileCache");
+const updateAccounts = require("../datagen/updateAccounts");
+const AccountArray = require("hyarcade-requests/types/AccountArray");
 const urlModules = {
   account: require("./Res/account"),
   acc: require("./Res/account"),
@@ -20,7 +22,13 @@ const urlModules = {
   namesearch: require("./Res/NameSearch"),
   info: require("./Res/info")
 };
+
+/**
+ * @type {FileCache}
+ */
 let fileCache;
+let lock = false;
+let force = false;
 
 /**
  * @param {Request} request
@@ -46,6 +54,51 @@ async function callback (request, response) {
   }
 }
 
+/**
+ * 
+ * @param {object[]} accounts 
+ * @returns {*}
+ */
+function indexAccs (accounts) {
+  const obj = {};
+
+  for(const acc of accounts) {
+    obj[acc.uuid] = acc;
+  }
+
+  return obj;
+}
+
+/**
+ * 
+ */
+async function autoUpdater () {
+  if(!lock) {
+    lock = true;
+    logger.info("Updating database");
+    const oldAccounts = fileCache.accounts;
+
+    let newAccounts;
+    if(force) {
+      logger.debug("Forcing full update");
+      newAccounts = await updateAccounts(oldAccounts, true);
+      force = false;
+    } else {
+      newAccounts = await updateAccounts(oldAccounts, false);
+    }
+
+    logger.debug("Merging updated account data");
+
+    const newAccs = AccountArray([...newAccounts, ...Object.values(fileCache.indexedAccounts)]);
+
+    logger.log(`New accounts length is ${newAccs.length}`);
+    fileCache.indexedAccounts = indexAccs(newAccs);
+
+    lock = false;
+    logger.info("Database updated");
+  }
+}
+
 module.exports = function start (port) {
   fileCache = new FileCache("data/");
 
@@ -53,8 +106,12 @@ module.exports = function start (port) {
     logger.log(`Exiting process with code : ${code}`);
   });
 
+  setInterval(autoUpdater, 120000);
+  setInterval(() => force = true, 14400000);
+
   return require("http")
     .createServer(callback)
     .listen(port);
+
 
 };

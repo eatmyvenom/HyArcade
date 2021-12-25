@@ -303,24 +303,20 @@ function uniqBy (a, key) {
  * Update the player data for all players in the list
  *
  * @param {Account[]} accounts
+ * @param {boolean} argForce
  * @returns {Promise<Account[]>}
  */
 // eslint-disable-next-line no-unused-vars
-async function fastUpdate (accounts) {
-  await fs.writeFile("starttime", (`${Date.now()}`));
-
+async function fastUpdate (accounts, argForce) {
   const perSegment = cfg.segmentSize;
 
   const oldAccs = accounts;
 
   let importantAccounts = [];
-  const ignoreAccounts = [];
 
   for (const acc of oldAccs) {
-    if(isImportant(acc)) {
+    if(argForce || isImportant(acc)) {
       importantAccounts.push(acc);
-    } else {
-      ignoreAccounts.push(acc);
     }
   }
 
@@ -355,10 +351,8 @@ async function fastUpdate (accounts) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  updatedAccs = updatedAccs.concat(ignoreAccounts);
-
   await updatedAccs.sort(utils.winsSorter);
-  
+
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
   updatedAccs = await fakeStats(updatedAccs);
   updatedAccs = await discordIDs(updatedAccs);
@@ -368,9 +362,7 @@ async function fastUpdate (accounts) {
   updatedAccs = await coins(updatedAccs);
   updatedAccs = await importance(updatedAccs);
 
-  if(force && utils.fileExists("force")) {
-    await fs.rm("force");
-  }
+
 
   return updatedAccs;
 }
@@ -379,13 +371,18 @@ async function fastUpdate (accounts) {
  * Update the player data for all players in the list
  *
  * @param {Account[]} accounts
+ * @param {boolean} argForce
  * @returns {Promise<Account[]>}
  */
-module.exports = async function updateAccounts (accounts) {
+module.exports = async function updateAccounts (accounts, argForce = false) {
 
   if(cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");
-    return await fastUpdate(accounts);
+    const accs = await fastUpdate(accounts, argForce);
+    if(force && utils.fileExists("force")) {
+      await fs.rm("force");
+    }
+    return accs;
   }
 
   await fs.writeFile("starttime", (`${Date.now()}`));
