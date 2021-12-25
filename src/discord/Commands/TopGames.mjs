@@ -18,66 +18,84 @@ import ImageGenerator from "../images/ImageGenerator.js";
 function getGames (acc) {
   let games = [{
     name: "Party games",
+    pos: "partyGames",
     wins: acc?.partyGames?.wins ?? 0
   },
   {
     name: "Hole in the Wall",
+    pos: "holeInTheWall",
     wins: acc?.holeInTheWall?.wins ?? 0
   },
   {
     name: "Farm hunt",
+    pos: "farmhunt",
     wins: acc?.farmhunt?.wins ?? 0
   },
   {
     name: "Hypixel says",
+    pos: "hypixelSays",
     wins: acc?.hypixelSays?.wins ?? 0
   },
   {
     name: "Mini walls",
+    pos: "miniWalls",
     wins: acc?.miniWalls?.wins ?? 0
   },
   {
     name: "Football",
+    pos: "football",
     wins: acc?.football?.wins ?? 0
   },
   {
     name: "Ender spleef",
+    pos: "enderSpleef",
     wins: acc?.enderSpleef?.wins ?? 0
   },
   {
     name: "Dragon wars",
+    pos: "dragonWars",
     wins: acc?.dragonWars?.wins ?? 0
   },
   {
     name: "Bounty hunters",
+    pos: "bountyHunters",
+
     wins: acc?.bountyHunters?.wins ?? 0
   },
   {
     name: "Blocking dead",
+    pos: "blockingDead",
     wins: acc?.blockingDead?.wins ?? 0
   },
   {
     name: "Throw out",
+    pos: "throwOut",
     wins: acc?.throwOut?.wins ?? 0
   },
   {
     name: "Hide and seek",
+    pos: "hideAndSeek",
+
     wins: acc?.hideAndSeek?.wins ?? 0
   },
   {
     name: "Zombies",
+    pos: "zombies",
     wins: acc?.zombies?.wins_zombies ?? 0
   },
   {
     name: "Galaxy wars",
+    pos: "galaxyWars",
     wins: acc?.galaxyWars?.wins ?? 0
   },
   {
     name: "Pixel painters",
+    pos: "pixelPainters",
     wins: acc?.pixelPainters?.wins ?? 0
   },
   {
     name: "Seasonal",
+    pos: "simTotal",
     wins: acc?.seasonalWins?.total ?? 0
   },
   ];
@@ -146,9 +164,10 @@ function nonDatabaseError (ign) {
 /**
  * 
  * @param {Account} acc
+ * @param {string} time
  * @returns {object}
  */
-async function generateImage (acc) {
+async function generateImage (acc, time) {
   const games = getGames(acc);
 
   const img = new ImageGenerator(3000, 1600, "'myFont'", true);
@@ -157,7 +176,7 @@ async function generateImage (acc) {
   img.drawMcText(ImageGenerator.formatAcc(acc), img.canvas.width / 2, 80, 128, "center");
 
   img.drawMcText("&f&lTotal", img.canvas.width / 2, 250, 92, "center");
-  img.drawMcText(`&b${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 350, 108, "center");
+  img.drawMcText(`&e${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 350, 108, "center");
 
   let y = 500;
   for(let i = 1; i <= games.length; i += 1) {
@@ -168,11 +187,18 @@ async function generateImage (acc) {
     case 1: x = 1133.33; break;
     case 2: x = 1866.66; break;
     case 3: x = 2600; break;
-      
     }
 
+    let pos = "";
+
+    if(time == "lifetime") {
+      if((acc.positions[games[i - 1]?.pos] ?? 101) < 101) {
+        pos = ` &7(#${acc.positions[games[i - 1]?.pos]})`;
+      }
+    }
+    
     img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 80, "center");
-    img.drawMcText(`&b${numberify(games[i - 1].wins)}`, x, y + 100, 108, "center");
+    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 100, "center");
 
     if(i % 4 == 0) {
       y += 300;
