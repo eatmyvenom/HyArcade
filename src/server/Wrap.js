@@ -108,7 +108,7 @@ module.exports = function start (port) {
     logger.log(`Exiting process with code : ${code}`);
   });
 
-  setInterval(autoUpdater, 120000);
+  setInterval(autoUpdater, 240000);
   setInterval(() => force = true, 14400000);
 
   return require("http")
