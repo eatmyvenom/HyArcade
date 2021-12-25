@@ -25,7 +25,8 @@ module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg,
         `**Linked Accounts** : \`${info.links}\`\n\n` +
         `**Guilds** : \`${info.guilds}\`\n\n` + 
         `**Memory** : \`${Math.floor(info.mem)}mb\`\n` +
-        `**Start Time** : <t:${Math.floor((Date.now() / 1000) - info.time)}:R>`
+        `**Start Time** : <t:${Math.floor((Date.now() / 1000) - info.time)}:R>\n` +
+        `**File Save** : <t:${Math.floor((info.fileSave / 1000))}:R>`
     )
     .setColor(0x8c54fe);
 

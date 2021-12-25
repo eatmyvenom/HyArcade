@@ -23,6 +23,7 @@ module.exports = async (req, res, fileCache) => {
       links: Object.keys(fileCache.disclist).length,
       mem,
       time,
+      fileSave: fileCache.modTime,
     };
 
     res.write(JSON.stringify(obj));

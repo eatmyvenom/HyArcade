@@ -114,11 +114,11 @@ class FileCache {
         if(this.ezmsgs.join("\n").trim() != "") {
           await fs.writeFile(`${this.path}ez`, this.ezmsgs.join("\n"));
         }
-        this.modTime = Date.now() - 1000;
-
+        
         Logger.debug("Saving seperate accounts");
         await this.AccountsProcessor.writeAccounts(this.accounts);
-
+        
+        this.modTime = Date.now();
         Logger.debug("Files saved...");
         this.dirty = false;
       } catch (e) {
