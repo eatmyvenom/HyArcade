@@ -17,7 +17,7 @@ import ImageGenerator from "../images/ImageGenerator.js";
  */
 function getGames (acc) {
   let games = [{
-    name: "Party games",
+    name: "Party Games",
     pos: "partyGames",
     wins: acc?.partyGames?.wins ?? 0
   },
@@ -27,17 +27,17 @@ function getGames (acc) {
     wins: acc?.holeInTheWall?.wins ?? 0
   },
   {
-    name: "Farm hunt",
+    name: "Farm Hunt",
     pos: "farmhunt",
     wins: acc?.farmhunt?.wins ?? 0
   },
   {
-    name: "Hypixel says",
+    name: "Hypixel Says",
     pos: "hypixelSays",
     wins: acc?.hypixelSays?.wins ?? 0
   },
   {
-    name: "Mini walls",
+    name: "Mini Walls",
     pos: "miniWalls",
     wins: acc?.miniWalls?.wins ?? 0
   },
@@ -47,33 +47,33 @@ function getGames (acc) {
     wins: acc?.football?.wins ?? 0
   },
   {
-    name: "Ender spleef",
+    name: "Ender Spleef",
     pos: "enderSpleef",
     wins: acc?.enderSpleef?.wins ?? 0
   },
   {
-    name: "Dragon wars",
+    name: "Dragon Wars",
     pos: "dragonWars",
     wins: acc?.dragonWars?.wins ?? 0
   },
   {
-    name: "Bounty hunters",
+    name: "Bounty Hunters",
     pos: "bountyHunters",
 
     wins: acc?.bountyHunters?.wins ?? 0
   },
   {
-    name: "Blocking dead",
+    name: "Blocking Dead",
     pos: "blockingDead",
     wins: acc?.blockingDead?.wins ?? 0
   },
   {
-    name: "Throw out",
+    name: "Throw Out",
     pos: "throwOut",
     wins: acc?.throwOut?.wins ?? 0
   },
   {
-    name: "Hide and seek",
+    name: "Hide and Seek",
     pos: "hideAndSeek",
 
     wins: acc?.hideAndSeek?.wins ?? 0
@@ -84,12 +84,12 @@ function getGames (acc) {
     wins: acc?.zombies?.wins_zombies ?? 0
   },
   {
-    name: "Galaxy wars",
+    name: "Galaxy Wars",
     pos: "galaxyWars",
     wins: acc?.galaxyWars?.wins ?? 0
   },
   {
-    name: "Pixel painters",
+    name: "Pixel Painters",
     pos: "pixelPainters",
     wins: acc?.pixelPainters?.wins ?? 0
   },
