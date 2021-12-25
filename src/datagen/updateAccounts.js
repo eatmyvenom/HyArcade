@@ -336,7 +336,7 @@ async function fastUpdate (accounts, argForce) {
   let updatedAccs = [];
 
   for(let i = 0;i < segmentedAccs.length; i += 1) {
-    logger.log(`Batching ${i} - ${i + 5}`);
+    logger.log(`Batching ${i} - ${i + 5} of ${segmentedAccs.length}`);
     await Promise.all([
       updateSegment(segmentedAccs[i], i, updatedAccs, segmentedAccs, perSegment),
       updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),

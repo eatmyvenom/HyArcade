@@ -101,6 +101,7 @@ async function autoUpdater () {
 }
 
 module.exports = function start (port) {
+  logger.name = "Database";
   fileCache = new FileCache("data/");
 
   process.on("beforeExit", (code) => {
