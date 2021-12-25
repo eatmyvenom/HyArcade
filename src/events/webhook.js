@@ -503,7 +503,7 @@ async function genMiWLB (prop, timetype, limit) {
   case "killwither":
   case "witherk":
   case "witherkill":
-  case "witherkills": {
+  case "witherki8lls": {
     gameName = "Wither Kills";
     const lb = await getLB("witherKills", timetype, limit, "miniWalls");
     res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
@@ -680,7 +680,7 @@ async function sendMW () {
 
   const wins = await genMiWLB("wins", 25);
   const kills = await genMiWLB("kills", 10);
-  const finals = await genMiWLB("finalKills", 10);
+  const finals = await genMiWLB("f", 10);
   const witherdmg = await genMiWLB("witherDamage", 10);
   const witherkills = await genMiWLB("witherKills", 10);
   const guilds = gEmbed;
