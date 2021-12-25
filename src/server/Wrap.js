@@ -95,6 +95,7 @@ async function autoUpdater () {
     fileCache.indexedAccounts = indexAccs(newAccs);
 
     lock = false;
+    fileCache.save();
     logger.info("Database updated");
   }
 }
