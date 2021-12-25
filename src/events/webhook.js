@@ -220,7 +220,7 @@ function generateEmbed (list) {
  */
 function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
   let str = "";
-  const sizedList = list.slice(0, 10);
+  const sizedList = list.slice(0, Math.min(maxamnt, list.length));
 
   let propVal;
   for(let i = startingIndex; i < sizedList.length; i += 1) {
