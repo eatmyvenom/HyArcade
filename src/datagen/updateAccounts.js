@@ -9,6 +9,7 @@ const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const { sleep } = require("../utils");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 const HypixelApi = require("hyarcade-requests/HypixelApi");
+const Util = require("util");
 
 class Response {
   key = {};
@@ -275,7 +276,8 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
     const accData = workerData.data[acc.uuid];
     if(accData?.success == false || accData?.player == undefined) {
       logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
-      logger.err(JSON.stringify(accData, null, 2));
+      logger.err(Util.inspect(accData, true));
+      acc.null = true;
     } else {
       acc.setHypixel(accData);
       updatedAccs.push(acc);
@@ -456,6 +458,10 @@ function isImportant (oldAcc) {
 
   if(force) {
     return true;
+  }
+
+  if(oldAcc.null) {
+    return false;
   }
 
   const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.importanceLimit;
