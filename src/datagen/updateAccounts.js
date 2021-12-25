@@ -262,7 +262,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
     uuidArr.push(acc.uuid);
   }
 
-  logger.debug(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
+  logger.verbose(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
   const workerData = await requestData(uuidArr);
 
   if(workerData.key.remaining < perSegment + 5) {
@@ -270,7 +270,6 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
     await sleep(workerData.key.reset * 1005);
   }
 
-  logger.log("Setting batches data");
   for (const acc of accs) {
     logger.verbose(`Setting data for ${acc.uuid}`);
     const accData = workerData.data[acc.uuid];
@@ -337,6 +336,7 @@ async function fastUpdate (accounts, argForce) {
   let updatedAccs = [];
 
   for(let i = 0;i < segmentedAccs.length; i += 1) {
+    logger.log(`Batching ${i} - ${i + 5}`);
     await Promise.all([
       updateSegment(segmentedAccs[i], i, updatedAccs, segmentedAccs, perSegment),
       updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
