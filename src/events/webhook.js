@@ -218,9 +218,10 @@ function generateEmbed (list) {
  * @param {*} startingIndex 
  * @returns {*}
  */
-function stringifyList (list, lbprop, category, maxamnt, startingIndex = 0) {
+function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0) {
   let str = "";
-  const sizedList = list.slice(0, Math.min(maxamnt, list.length));
+  const length = Math.min(maxamnt, list?.length ?? 0);
+  const sizedList = list.slice(0, length);
 
   let propVal;
   for(let i = startingIndex; i < sizedList.length; i += 1) {
