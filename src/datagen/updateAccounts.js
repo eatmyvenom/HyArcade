@@ -275,8 +275,12 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
     logger.verbose(`Setting data for ${acc.uuid}`);
     const accData = workerData.data[acc.uuid];
     if(accData?.success == false || accData?.player == undefined) {
-      logger.err(`Account data retrevial unsuccessful for ${acc.uuid}`);
-      logger.err(Util.inspect(accData, true));
+      if(cfg.logRateLimit) {
+        logger.warn(`Account data retrevial unsuccessful for ${acc.uuid}`);
+      } else {
+        logger.verbose(`Account data retrevial unsuccessful for ${acc.uuid}`);
+      }
+      logger.verbose(Util.inspect(accData, true));
       acc.null = true;
     } else {
       acc.setHypixel(accData);
