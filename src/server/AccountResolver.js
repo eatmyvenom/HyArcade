@@ -2,6 +2,7 @@ const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
 const FileCache = require("../utils/files/FileCache");
 const { default: fetch } = require("node-fetch");
+const { mojangRequest } = require("hyarcade-requests");
 
 /**
  * 
@@ -59,11 +60,7 @@ async function AccountResolver (fileCache, url) {
   if(acc == undefined) {
     Logger.debug("Fetching account data from hypixel.");
     if(uuid == null) {
-      let elecreq = await fetch(`https://api.ashcon.app/mojang/v2/user/${ign}`);
-      elecreq = await elecreq.json();
-      if(elecreq != undefined) {
-        uuid = elecreq.uuid?.toLowerCase()?.replace(/-/g, "") ?? null;
-      }
+      uuid = await mojangRequest.getUUID(ign) ?? null;
     }
 
     if (uuid != null) {
