@@ -173,6 +173,7 @@ async function leaderboards (accounts) {
   accs = await leaderboardStat(accounts, (a, b) => b.farmhunt.wins - a.farmhunt.wins, "farmhunt");
   accs = await leaderboardStat(accounts, (a, b) => b.football.wins - a.football.wins, "football");
   accs = await leaderboardStat(accounts, (a, b) => b.galaxyWars.wins - a.galaxyWars.wins, "galaxyWars");
+  accs = await leaderboardStat(accounts, (a, b) => b.hideAndSeek.wins - a.hideAndSeek.wins, "hideAndSeek");
   accs = await leaderboardStat(accounts, (a, b) => b.holeInTheWall.wins - a.holeInTheWall.wins, "holeInTheWall");
   accs = await leaderboardStat(accounts, (a, b) => b.hypixelSays.wins - a.hypixelSays.wins, "hypixelSays");
   accs = await leaderboardStat(accounts, (a, b) => b.partyGames.wins - a.partyGames.wins, "partyGames");
