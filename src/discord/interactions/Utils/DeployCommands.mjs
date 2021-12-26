@@ -3,6 +3,7 @@ import BotRuntime from "../../BotRuntime.js";
 import microInteractionObjects from "../microInteractionObjects.js";
 import fullInteractionObjects from "../interactionObjects.js";
 import MiniWallsInteractionObjects from "../MiniWallsInteractionObjects.js";
+import Dev from "../DevCommands.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -30,6 +31,9 @@ export default async function (client) {
     try {
       if(BotRuntime.botMode != "test") {
         await g.commands.set([]);
+        if(g.id == "863563983936290846") {
+          await g.commands.set(Object.values(Dev));
+        }
       } else {
         await g.commands.set(cmdarr);
       }

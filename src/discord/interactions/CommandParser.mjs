@@ -128,6 +128,10 @@ export default async (interaction) => {
     return await commands.PartyGames.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
   }
 
+  case "dev": {
+    return await CommandStorage.execInteraction(interaction.options.getSubcommand(), interaction);
+  }
+
   case "arcade": {
     switch(interaction.options.getSubcommand()) {
     case "ez" : {

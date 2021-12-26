@@ -5,7 +5,7 @@ const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 const InteractionUtils = require("../interactions/InteractionUtils");
 
-module.exports = new Command("cheatdetector", ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command("cheatdetector", ["156952208045375488"], async (args, rawMsg, interaction) => {
   let hax = 0;
   const reasons = [];
   const plr = args[0];
