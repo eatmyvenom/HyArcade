@@ -8,6 +8,8 @@ const process = require("process");
 const FileCache = require("../utils/files/FileCache");
 const updateAccounts = require("../datagen/updateAccounts");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
+const utils = require("../utils");
+const { rm } = require("fs-extra");
 const urlModules = {
   account: require("./Res/account"),
   acc: require("./Res/account"),
@@ -79,10 +81,13 @@ async function autoUpdater () {
     const oldAccounts = fileCache.accounts;
 
     let newAccounts;
-    if(force) {
+    if(force || utils.fileExists("force")) {
       logger.debug("Forcing full update");
       newAccounts = await updateAccounts(oldAccounts, true);
       force = false;
+      if(utils.fileExists("force")) {
+        await rm("force");
+      }
     } else {
       newAccounts = await updateAccounts(oldAccounts, false);
     }
