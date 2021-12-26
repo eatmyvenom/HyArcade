@@ -1,7 +1,6 @@
 const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
 const FileCache = require("../utils/files/FileCache");
-const { default: fetch } = require("node-fetch");
 const { mojangRequest } = require("hyarcade-requests");
 
 /**
