@@ -45,7 +45,12 @@ class CommandStorage {
    * @returns {CommandResponse}
    */
   static async execInteraction (name, interaction) {
-    const args = interaction.options.getSubcommand() ? interaction.options.data[0].options.map((c) => c.value) : interaction.options.data.map((c) => c.value);
+    let args = [];
+    if(interaction.options?.data[0]?.options) {
+      args = interaction.options.data[0].options?.map((c) => c.value);
+    } else {
+      args = interaction.options.data.map((c) => c.value);
+    }
 
     for(const mod in this._commands) {
       if(this._commands[mod].aliases.includes(name.toLowerCase())) {
