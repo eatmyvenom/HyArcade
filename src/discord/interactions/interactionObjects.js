@@ -15,3 +15,4 @@ exports.arena = require("./Commands/Arena");
 exports.pball = require("./Commands/PBall");
 exports.walls = require("./Commands/Walls");
 exports.zombies = require("./Commands/Zombies");
+exports.Dev = require("./Commands/Dev");

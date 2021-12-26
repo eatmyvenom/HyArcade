@@ -1,3 +1,4 @@
+import { CommandInteraction } from "discord.js";
 import fs from "fs-extra";
 import Logger from "hyarcade-logger";
 import Command from "../classes/Command.js";
@@ -40,11 +41,11 @@ class CommandStorage {
   /**
    * 
    * @param {string} name
-   * @param {*} interaction
+   * @param {CommandInteraction} interaction
    * @returns {CommandResponse}
    */
   static async execInteraction (name, interaction) {
-    const args = interaction.options.data.map((c) => c.value);
+    const args = interaction.options.getSubcommand() ? interaction.options.data[0].options.map((c) => c.value) : interaction.options.data.map((c) => c.value);
 
     for(const mod in this._commands) {
       if(this._commands[mod].aliases.includes(name.toLowerCase())) {

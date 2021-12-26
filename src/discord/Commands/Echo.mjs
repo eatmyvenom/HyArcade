@@ -15,5 +15,5 @@ export default new Command("echo", ["%trusted%"], async (args, rawMsg) => {
   }
 
   await discChannel.send(text);
-  return new CommandResponse("Message sent!", undefined, undefined, undefined, true);
+  return new CommandResponse("Message sent!", undefined, undefined, undefined, false, true);
 });

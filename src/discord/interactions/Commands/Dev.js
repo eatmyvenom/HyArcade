@@ -14,7 +14,7 @@ module.exports = {
       name: "id",
       type: "STRING",
       description: "players uuid",
-      required: false,
+      required: true,
     }],
   },
   {
@@ -25,7 +25,7 @@ module.exports = {
       name: "input",
       type: "STRING",
       description: "presence",
-      required: false,
+      required: true,
     }],
   },
   {
