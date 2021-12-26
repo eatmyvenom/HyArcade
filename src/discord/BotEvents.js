@@ -11,6 +11,7 @@ const roleHandler = require("./roleHandler");
 const fs = require("fs-extra");
 const Webhooks = require("./Utils/Webhooks");
 const SetPresence = require("./Utils/SetPresence");
+const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
 
 module.exports = class BotEvents {
 
@@ -136,6 +137,7 @@ module.exports = class BotEvents {
    * @param {Guild} guild 
    */
   static guildCreate (guild) {
+    Webhooks.logHook.send(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`);
     logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
     logger.debug(`Guild owner: ${guild.ownerID}`);
     logger.debug(`Guild ID: ${guild.id}`);
@@ -148,6 +150,7 @@ module.exports = class BotEvents {
   static error (error) {
     logger.err(`${error.name} : ${error.message}`);
     logger.err(`Current stack:\n${error.stack}`);
+    Webhooks.errHook.send(ERROR_LOG(error, "unknown"));
   }
 
   /**
@@ -191,6 +194,7 @@ module.exports = class BotEvents {
   static shardError (error, shardId) {
     logger.error(`Shard ${shardId} has encountered an error!`);
     logger.error(error.stack);
+    Webhooks.errHook.send(ERROR_LOG(error, `Shard ${shardId} has encountered an error!`));
   }
 
   static shardReady (id) {
