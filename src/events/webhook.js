@@ -5,7 +5,6 @@ const {
 } = Discord;
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
-const Runtime = require("../Runtime");
 const utils = require("../utils");
 const Database = require("../discord/Utils/Database");
 const FakeLB = require("../discord/images/FakeLB");
@@ -400,11 +399,11 @@ async function genHSMEmbed () {
 /**
  * @param {string} prop
  * @param {string} timetype
+ * @param {number} limit
  * @returns {Promise<object>}
  */
-async function getLB (prop, timetype) {
+async function getLB (prop, timetype, limit) {
   let res = [];
-  const limit = 10;
   let time;
 
   switch(timetype) {
@@ -413,7 +412,7 @@ async function getLB (prop, timetype) {
   case "daily": {
     time = "Daily";
     res = await Database.getMWLeaderboard(prop, "day");
-    res = res.slice(0, Math.min(limit, res.length));
+    res = res.slice(0, limit);
     break;
   }
 
@@ -423,7 +422,7 @@ async function getLB (prop, timetype) {
   case "weekly": {
     time = "Weekly";
     res = await Database.getMWLeaderboard(prop, "weekly");
-    res = res.slice(0, Math.min(limit, res.length));
+    res = res.slice(0, limit);
     break;
   }
 
@@ -433,14 +432,14 @@ async function getLB (prop, timetype) {
   case "monthly": {
     time = "Monthly";
     res = await Database.getMWLeaderboard(prop, "monthly");
-    res = res.slice(0, Math.min(limit, res.length));
+    res = res.slice(0, limit);
     break;
   }
 
   default: {
     time = "Lifetime";
     res = await Database.getMWLeaderboard(prop);
-    res = res.slice(0, Math.min(limit, res.length));
+    res = res.slice(0, limit);
     break;
   }
   }
@@ -659,11 +658,6 @@ function formatNum (number) {
  *
  */
 async function sendMW () {
-  const run = Runtime.fromJSON();
-  const {
-    mwMsg
-  } = run;
-
   let guildlist = await utils.readJSON("guild.json");
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
@@ -679,28 +673,22 @@ async function sendMW () {
     .setDescription(str)
     .setColor(0xc60532);
 
-  const wins = await genMiWLB("wins", 25);
-  const kills = await genMiWLB("kills", 10);
-  const finals = await genMiWLB("f", 10);
-  const witherdmg = await genMiWLB("witherDamage", 10);
-  const witherkills = await genMiWLB("witherKills", 10);
+  const wins = await genMiWLB("wins", "l", 25);
+  const kills = await genMiWLB("kills", "l", 10);
+  const finals = await genMiWLB("f", "l", 10);
+  const witherdmg = await genMiWLB("wd", "l", 10);
+  const witherkills = await genMiWLB("wk", "l", 10);
   const guilds = gEmbed;
 
   const hook = new Discord.WebhookClient({ id: config.otherHooks.MW.id, token: config.otherHooks.MW.token });
-  try {
-    await hook.deleteMessage(mwMsg);
-  } catch (e) {
-    logger.err(e.stack);
-  }
-  const newMsg = await hook.send({
+
+  await hook.editMessage(config.discord.miniWalls.lbMsg, {
     content: `Updated <t:${Math.floor((Date.now() / 1000))}:R>`,
     embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
     username: config.otherHooks.MW.username,
     avatarURL: "https://eatmyvenom.me/share/images/MWPfp3.png",
   });
 
-  run.mwMsg = newMsg.id;
-  await run.save();
 }
 
 /**
