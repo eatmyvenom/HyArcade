@@ -319,10 +319,13 @@ async function fastUpdate (accounts, argForce) {
   const oldAccs = accounts;
 
   let importantAccounts = [];
+  const otherAccs = [];
 
   for (const acc of oldAccs) {
     if(argForce || isImportant(acc)) {
       importantAccounts.push(acc);
+    } else {
+      otherAccs.push(acc);
     }
   }
 
@@ -358,16 +361,16 @@ async function fastUpdate (accounts, argForce) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  await updatedAccs.sort(utils.winsSorter);
+  updatedAccs = updatedAccs.concat(otherAccs);
 
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
   updatedAccs = await fakeStats(updatedAccs);
+  updatedAccs = await importance(updatedAccs);
   updatedAccs = await discordIDs(updatedAccs);
   updatedAccs = await guilds(updatedAccs);
   updatedAccs = await hackerlist(updatedAccs);
   updatedAccs = await leaderboards(updatedAccs);
   updatedAccs = await coins(updatedAccs);
-  updatedAccs = await importance(updatedAccs);
 
 
 
