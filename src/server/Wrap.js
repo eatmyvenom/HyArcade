@@ -22,7 +22,8 @@ const urlModules = {
   acctimed: require("./Res/TimeAcc"),
   resolve: require("./Res/NameSearch"),
   namesearch: require("./Res/NameSearch"),
-  info: require("./Res/info")
+  info: require("./Res/info"),
+  ping: require("./Res/ping")
 };
 
 /**
