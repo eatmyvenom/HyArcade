@@ -192,8 +192,8 @@ async function generateImage (acc, time) {
     let pos = "";
 
     if(time == "lifetime") {
-      if((acc.positions[games[i - 1]?.pos] ?? 101) < 101) {
-        pos = ` &7(#${acc.positions[games[i - 1]?.pos]})`;
+      if((acc.positions?.[games[i - 1]?.pos] ?? 101) < 101) {
+        pos = ` &7(#${acc?.positions?.[games[i - 1]?.pos]})`;
       }
     }
     
