@@ -1,6 +1,5 @@
 const logger = require("hyarcade-logger");
 const utils = require("../utils");
-const cfg = require("../Config").fromJSON();
 const force = utils.fileExists("force") || cfg.alwaysForce;
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
@@ -10,6 +9,7 @@ const { sleep } = require("../utils");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 const HypixelApi = require("hyarcade-requests/HypixelApi");
 const Util = require("util");
+let cfg;
 
 class Response {
   key = {};
@@ -385,6 +385,8 @@ async function fastUpdate (accounts, argForce) {
  * @returns {Promise<Account[]>}
  */
 module.exports = async function updateAccounts (accounts, argForce = false) {
+
+  cfg = require("../Config").fromJSON();
 
   if(cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");
