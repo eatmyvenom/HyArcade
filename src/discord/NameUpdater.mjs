@@ -10,6 +10,7 @@ const { Client } = require("discord.js");
  * @param {Client} client
  */
 export default async function NameUpdater (client) {
+  logger.info("Updating usernames in mini walls discord");
   const accs = await BotRuntime.getFromDB("accounts", ["uuid", "name", "discord", "hypixelDiscord"]);
 
   const mwServer = await client.guilds.fetch("789718245015289886");
@@ -25,4 +26,6 @@ export default async function NameUpdater (client) {
       }
     }
   });
+
+  logger.info("Names updated!");
 }

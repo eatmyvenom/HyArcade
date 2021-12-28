@@ -71,7 +71,11 @@ class Database {
   }
 
   static async getMWLeaderboard (stat, time) {
-    cacheClear = setInterval(() => Database.accCache = {}, 30000);
+    if(cacheClear == undefined) {
+      cacheClear = setInterval(() => Database.accCache = {}, 30000);
+    }
+    Logger.info(`Fetching miniwalls ${stat} leaderboard from ${time}`);
+
     const url = new URL("mwlb", cfg.dbUrl);
     url.searchParams.set("stat", stat);
 
