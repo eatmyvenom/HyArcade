@@ -17,9 +17,8 @@ class CommandStorage {
   static _commands = { };
 
   static async initCommands () {
-    // eslint-disable-next-line no-undef
     const dir = await fs.readdir("src/discord/Commands");
-    
+
     for(const file of dir) {
       this._commands[file.slice(0, file.indexOf("."))] = await importNew(file);
     }

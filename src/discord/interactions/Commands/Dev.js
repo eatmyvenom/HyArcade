@@ -70,11 +70,16 @@ module.exports = {
       description: "where to send",
       required: true,
     }, {
-      name: "id",
+      name: "text",
       type: "STRING",
       description: "what to say",
       required: true,
     }],
+  },
+  {
+    type: 1,
+    name: "reload",
+    description: "reload commands",
   }
   ],
 };

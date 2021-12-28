@@ -18,7 +18,7 @@ async function infoHandler () {
     .addField("Github", "[Link](https://github.com/eatmyvenom/party-games-site)", true)
     .addField("Bot invite link", "[Link](https://hyarcade.xyz/botinvite.html)", true)
     .addField("HyArcade server", "[Invite](https://discord.gg/6kFBVDcRd5)", true)
-    .addField("Developer", "<@156952208045375488>", false)
+    .addField("Developer", "**` vnmm `** - <@156952208045375488>", false)
     .setColor(0x2f3136);
 
   return new CommandResponse("", embed);
