@@ -54,6 +54,14 @@ async function miniWallsStats (args, rawMsg, interaction) {
   let plr = args[0];
   let time = args[1] ?? "lifetime";
 
+  if(args.length == 1) {
+    time = "lifetime";
+    if(plr.length == 1) {
+      time = plr;
+      plr = "!";
+    }
+  }
+
   switch (time.toLowerCase()) {
   case "d":
   case "day":
@@ -86,13 +94,6 @@ async function miniWallsStats (args, rawMsg, interaction) {
   default: {
     time = "lifetime";
   }
-  }
-
-  if(args.length == 1) {
-    time = "lifetime";
-    if(plr.length == 1) {
-      plr = "";
-    }
   }
 
   let acc;
