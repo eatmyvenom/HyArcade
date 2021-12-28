@@ -1,6 +1,6 @@
 const logger = require("hyarcade-logger");
 const utils = require("../utils");
-const force = utils.fileExists("force") || cfg.alwaysForce;
+const force = utils.fileExists("force");
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
