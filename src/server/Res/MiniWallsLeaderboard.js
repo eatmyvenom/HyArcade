@@ -21,7 +21,7 @@ async function generateLeaderboard (fileCache, stat, time) {
   if(time != undefined) {
 
     accounts.forEach((acc) => {
-      const derefed = JSON.parse(JSON.stringify(acc));
+      const derefed = acc;
       const timeAcc = fileCache[`indexed${time}`][acc.uuid];
 
       if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
