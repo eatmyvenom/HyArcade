@@ -14,6 +14,7 @@ import CommandResponse from "./Utils/CommandResponse.js";
 import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
 import VerifyChannel from "./VerifyChannel.js";
+import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
 const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
 const { Message, Collection, Webhook } = require("discord.js");
 
@@ -26,8 +27,7 @@ async function logError (msg, e) {
   Logger.err(`Error from - ${msg.content}`);
   Logger.err(e.toString());
   Logger.err(e.stack);
-  await Webhooks.logHook.send(`Error from - ${msg.content.replace(/\\?`/g, "\\`")}`);
-  await Webhooks.errHook.send(e.toString());
+  await Webhooks.errHook.send({ embeds: [ERROR_LOG(e, `Error from /${msg.content}`)] });
 }
 
 /**
