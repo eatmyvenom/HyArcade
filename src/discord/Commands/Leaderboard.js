@@ -1216,7 +1216,7 @@ async function hander (args, rawMsg, interaction) {
       gid = type;
       res = lb;
     } else {
-      if(interaction.options.getString("category")) {
+      if(interaction && interaction.options.getString("category")) {
 
         const category = interaction.options.getString("category");
         const stat = interaction.options.getString("stat");
