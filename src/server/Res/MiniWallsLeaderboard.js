@@ -16,9 +16,9 @@ async function generateLeaderboard (fileCache, stat, time) {
 
   accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
   accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
-  const newList = [];
+  let newList = [];
 
-  if(time != undefined) {
+  if(time != undefined && time != "lifetime" && time != "life" && time != "accounts") {
 
     accounts.forEach((acc) => {
       const derefed = acc;
@@ -42,9 +42,7 @@ async function generateLeaderboard (fileCache, stat, time) {
       return;
     });
   } else {
-    for(const a of accounts) {
-      newList.push(a);
-    }
+    newList = accounts;
   }
 
   accounts = newList.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
