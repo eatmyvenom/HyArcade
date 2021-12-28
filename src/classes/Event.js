@@ -69,13 +69,12 @@ class AccountEvent {
     }
 
     async getHitWEmbed () {
-      const avatar =
-            `https://crafatar.com/renders/body/${this.uuid}.png?size=512&default=MHF_Steve&scale=10&overlay`;
+      const avatar = `https://crafatar.com/renders/body/${this.uuid}.png?size=512&default=MHF_Steve&scale=10&overlay`;
 
       const thumb = `https://crafatar.com/avatars/${this.uuid}.png?size=512?default=MHF_Steve&scale=10&overlay`;
 
       const embed = new MessageEmbed()
-        .setAuthor(this.name, thumb)
+        .setAuthor({ name: this.name, iconURL: thumb })
         .setThumbnail(avatar)
         .setFooter(`UUID: ${this.uuid}`)
         .setColor(0x0066cc)

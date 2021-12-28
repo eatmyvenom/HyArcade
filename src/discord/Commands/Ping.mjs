@@ -19,7 +19,7 @@ const statusName = [
 
 export default new Command("ping", ["*"], async () => {
   const embed = new MessageEmbed()
-    .setAuthor(`${BotRuntime.client.user.username} status`, BotRuntime.client.user.avatarURL(), "https://hyarcade.xyz/")
+    .setAuthor({ name: `${BotRuntime.client.user.username} status`, iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
     .addField(
       "Status",
       `**Ping** : \`${BotRuntime.client.ws.ping}ms\`\n` +

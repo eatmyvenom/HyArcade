@@ -19,7 +19,7 @@ module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg,
   const info = await Database.info();
 
   const embed = new MessageEmbed()
-    .setAuthor("Hyarcade database info", BotRuntime.client.user.avatarURL(), "https://hyarcade.xyz/")
+    .setAuthor({ name: "Hyarcade database info", iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
     .setDescription(`**Accounts** : \`${info.accs}\`\n` +
         `**Invalid Accounts** : \`${info.invalid}\`\n` +
         `**Linked Accounts** : \`${info.links}\`\n\n` +
