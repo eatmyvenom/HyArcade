@@ -672,7 +672,7 @@ async function sendMW (fileCache) {
   guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
   for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
     const g = guildlist[i];
-    str += `${` ${i + 1}.`.padEnd(5)} **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
+    str += `${` \`${i + 1}.`.padEnd(4)}\` **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
   }
 
   const gEmbed = new MessageEmbed()
