@@ -10,6 +10,7 @@ const updateAccounts = require("../datagen/updateAccounts");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const utils = require("../utils");
 const { rm } = require("fs-extra");
+const webhook = require("../events/webhook");
 const urlModules = {
   account: require("./Res/account"),
   acc: require("./Res/account"),
@@ -114,6 +115,7 @@ module.exports = function start (port) {
     logger.log(`Exiting process with code : ${code}`);
   });
 
+  setInterval(() => webhook.sendMW(fileCache), 480000);
   setInterval(autoUpdater, 240000);
   setInterval(() => force = true, 14400000);
 

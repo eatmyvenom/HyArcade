@@ -470,7 +470,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "kil":
   case "kills": {
     gameName = "Kills";
-    const lb = await getLB("kills", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("kills", timetype, limit, fileCache);
     res = stringifyList(lb.res, "kills", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -482,7 +482,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "death":
   case "deaths": {
     gameName = "Deaths";
-    const lb = await getLB("deaths", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("deaths", timetype, limit, fileCache);
     res = stringifyList(lb.res, "deaths", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -495,7 +495,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "damagewither":
   case "witherdmg": {
     gameName = "Wither Damage";
-    const lb = await getLB("witherDamage", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("witherDamage", timetype, limit, fileCache);
     res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -508,7 +508,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "witherkill":
   case "witherki8lls": {
     gameName = "Wither Kills";
-    const lb = await getLB("witherKills", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("witherKills", timetype, limit, fileCache);
     res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -521,7 +521,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "final":
   case "finals": {
     gameName = "Final Kills";
-    const lb = await getLB("finalKills", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("finalKills", timetype, limit, fileCache);
     res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -539,7 +539,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "kfdr":
   case "killdeath": {
     gameName = "Kills+Finals/Deaths";
-    const lb = await getLB("kd", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("kd", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -555,7 +555,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "kdrnf":
   case "kdnofinal": {
     gameName = "Kills/Deaths ratios";
-    const lb = await getLB("kdnf", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("kdnf", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -567,7 +567,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "fkdr":
   case "finaldeath":
   case "fd": {
-    const lb = await getLB("fd", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("fd", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -578,7 +578,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "wddr":
   case "witherdamagedeath": {
     gameName = "Wither Damage/Deaths";
-    const lb = await getLB("wdd", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("wdd", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -591,7 +591,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "witherkill+d":
   case "wikdr": {
     gameName = "Wither Kills/Deaths";
-    const lb = await getLB("wkd", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("wkd", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -602,7 +602,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   case "ahm":
   case "arrowhit/miss": {
     gameName = "Arrow accuracy";
-    const lb = await getLB("aa", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("aa", timetype, limit, fileCache);
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
     break;
@@ -610,7 +610,7 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
 
   default: {
     gameName = "Wins";
-    const lb = await getLB("wins", timetype, limit, "miniWalls", fileCache);
+    const lb = await getLB("wins", timetype, limit, fileCache);
     res = stringifyList(lb.res, "wins", "miniWalls", limit);
     correctedTime = lb.time;
     break;
