@@ -235,7 +235,7 @@ function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0)
     } = sizedList[i];
 
     // eslint-disable-next-line prefer-template
-    const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
+    const num = `\` ${i + 1}.`.padEnd(`\` ${list[list.length - 1]}. `.length) + "`";
 
     str += `${num} **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
   }
@@ -672,7 +672,7 @@ async function sendMW (fileCache) {
   guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
   for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
     const g = guildlist[i];
-    str += `${i + 1}) **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
+    str += `${` ${i + 1}.`.padEnd(5)} **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
   }
 
   const gEmbed = new MessageEmbed()
