@@ -1,5 +1,6 @@
 const Logger = require("hyarcade-logger");
 const fetch = require("node-fetch");
+const MiniWallsLeaderboard = require("../../utils/leaderboard/MiniWallsLeaderboard");
 const cfg = require("hyarcade-config").fromJSON();
 
 let cacheClear;
@@ -70,11 +71,16 @@ class Database {
     return lb;
   }
 
-  static async getMWLeaderboard (stat, time) {
+  static async getMWLeaderboard (stat, time, fileCache) {
+
+    if(fileCache != undefined) {
+      return await MiniWallsLeaderboard(fileCache, stat, time);
+    }
+
     if(cacheClear == undefined) {
       cacheClear = setInterval(() => Database.accCache = {}, 30000);
     }
-    Logger.info(`Fetching miniwalls ${stat} leaderboard from ${time}`);
+    Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
 
     const url = new URL("mwlb", cfg.dbUrl);
     url.searchParams.set("stat", stat);
