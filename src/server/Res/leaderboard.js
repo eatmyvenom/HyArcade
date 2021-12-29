@@ -1,39 +1,8 @@
-const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
 const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
-
-/**
- * @param {string} str
- * @returns {number}
- */
-function numberify (str) {
-  const cleanStr = str ?? 0;
-  return Number(cleanStr);
-}
-
-/**
- * @param {object} o
- * @param {string} s
- * @returns {*}
- */
-function getProp (o, s) {
-  let obj = o;
-  let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-  str = str.replace(/^\./, ""); // strip a leading dot
-  const propertyArray = str.split(".");
-  for(let i = 0, arrLength = propertyArray.length; i < arrLength; i += 1) {
-    const subObject = propertyArray[i];
-    if(subObject in obj) {
-      obj = obj[subObject];
-    } else {
-      return;
-    }
-  }
-  return obj;
-}
+const GenericLeaderboard = require("../../utils/leaderboard/GenericLeaderboard");
 
 /**
  * 
@@ -44,7 +13,7 @@ function getProp (o, s) {
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
 
-  let category = url.searchParams.get("category");
+  const category = url.searchParams.get("category");
   const lbprop = url.searchParams.get("path");
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
@@ -52,68 +21,7 @@ module.exports = async (req, res, fileCache) => {
   const max = url.searchParams.get("max") ?? 200;
 
   if(req.method == "GET") {
-    Logger.verbose("Getting leaderboard");
-
-    let getter;
-    const defaultValue = reverse ? Number.MAX_SAFE_INTEGER : 0;
-
-    if(lbprop?.startsWith(".")) {
-      category = lbprop.split(".")[1];
-      getter = (a) => getProp(a, lbprop) ?? defaultValue;
-    } else if(category == null) {
-      getter = (a) => a?.[lbprop] ?? defaultValue;
-    } else {
-      getter = (a) => a?.[category]?.[lbprop] ?? defaultValue;
-    }
-
-    res.setHeader("Content-Type", "application/json");
-
-    let accs;
-    
-    Logger.verbose("Sorting accounts");
-    if(timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime") {
-      accs = Object.values(fileCache.indexedAccounts);
-      TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
-      if(reverse) {
-        accs = accs.reverse();
-      }
-    } else {
-      accs = Object.values(fileCache.indexedAccounts);
-      const old = fileCache[`indexed${timePeriod}`];
-      const retro = fileCache.retro[`${timePeriod}accounts`];
-
-      for(const a of accs) {
-        const o = old[a.uuid];
-
-        if(a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
-          a.lbProp = 0;
-          continue;
-        }
-
-        let oldval = 0;
-        if(o == undefined) {
-          const rAcc = retro?.[a.uuid];
-
-          if(rAcc == undefined) {
-            oldval = numberify(getter(a));
-          } else {
-            oldval = numberify(getter(rAcc));
-          }
-        } else {
-          oldval = numberify(getter(o));
-        }
-
-        a.lbProp = numberify(getter(a)) - (oldval);
-      }
-
-      if(reverse) {
-        TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
-      } else {
-        TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
-      }
-    }
-
-    accs = accs.slice(0, Math.min(accs.length, max));
+    const accs = await GenericLeaderboard(category, lbprop, timePeriod, min, reverse, max, fileCache);
 
     let acceptEncoding = req.headers["accept-encoding"];
     if (!acceptEncoding) {
@@ -157,12 +65,6 @@ module.exports = async (req, res, fileCache) => {
       res.writeHead(200, {});
       pipeline(s, res, cb);
     }
-
-    Logger.verbose("Removing redundant properties");
-    Object.values(fileCache.indexedAccounts).forEach((a) => {if (a.lbProp) delete a.lbProp;});
-
-    Logger.verbose("Done");
-
   } else {
     res.statusCode = 404;
     res.end();
