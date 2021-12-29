@@ -233,7 +233,11 @@ function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0)
     const {
       name
     } = sizedList[i];
-    str += `${i + 1}) **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
+
+    // eslint-disable-next-line prefer-template
+    const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
+
+    str += `${num} **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
   }
   return str.replace(/\\?_/g, "\\_");
 }
