@@ -115,7 +115,7 @@ module.exports = function start (port) {
     logger.log(`Exiting process with code : ${code}`);
   });
 
-  setInterval(() => webhook.sendMW(fileCache), 480000);
+  setInterval(() => webhook.sendMW(fileCache), 960000);
   setInterval(autoUpdater, 240000);
   setInterval(() => force = true, 14400000);
 
