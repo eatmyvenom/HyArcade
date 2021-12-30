@@ -7,6 +7,7 @@ const {
   Message
 } = require("discord.js");
 const UpdateNames = require("./Commands/UpdateNames");
+const MiniWallsInvite = require("./Commands/MiniWallsInvite");
 
 /**
  * @param {Message} msg
@@ -79,6 +80,12 @@ async function checkCommands (rawMsg, command, args, author) {
 
   case "updnames": {
     return await UpdateNames.execute(args, author, rawMsg);
+  }
+
+  case "getinvite":
+  case "geninvite":
+  case "invite": {
+    return await MiniWallsInvite.execute(args, author, rawMsg);
   }
 
   default: {

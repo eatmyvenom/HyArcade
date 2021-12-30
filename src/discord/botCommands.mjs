@@ -59,6 +59,11 @@ async function checkCommands (rawMsg, command, args, author) {
     return { res: "" };
   }
 
+  case commands.MiniWallsInvite.name.toLowerCase(): {
+    return { res: "" };
+  }
+
+
   default: {
     return await CommandStorage.execute(command.toLowerCase(), args, author, rawMsg);
   }
