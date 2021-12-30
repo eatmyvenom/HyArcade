@@ -372,8 +372,6 @@ async function fastUpdate (accounts, argForce) {
   updatedAccs = await leaderboards(updatedAccs);
   updatedAccs = await coins(updatedAccs);
 
-
-
   return updatedAccs;
 }
 
