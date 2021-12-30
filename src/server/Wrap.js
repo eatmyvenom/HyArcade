@@ -47,6 +47,12 @@ async function callback (request, response) {
     response.statusCode = 404;
     response.end();
   } else {
+
+    if(fileCache.ready == false) {
+      response.setHeader("Content-Type", "application/json");
+      response.end(JSON.stringify({ ERROR: "Reloading database!" }));
+    }
+
     try {
       logger.info(`${request.method?.toUpperCase()} ${url}`);
       await mod(request, response, fileCache);
