@@ -407,8 +407,9 @@ module.exports = async function updateAccounts (accounts, argForce = false) {
 
   const chunk = 120;
   for(i = 0, j = accounts.length; i < j; i += chunk) {
+    logger.debug(`Updating accounts ${i} - ${i + 120} of ${accounts.length}`);
     temparray = accounts.slice(i, i + chunk);
-    await updateAccountsInArr(temparray, oldAccs);
+    await updateAccountsInArr(temparray, oldAccs, argForce);
   }
 
   const runtime = Runtime.fromJSON();
@@ -432,13 +433,14 @@ module.exports = async function updateAccounts (accounts, argForce = false) {
 /**
  * @param {Account[]} accounts
  * @param {Account[]} oldAccs
+ * @param {boolean} argForce
  * @returns {Promise}
  */
-async function updateAccountsInArr (accounts, oldAccs) {
+async function updateAccountsInArr (accounts, oldAccs, argForce) {
   return await Promise.all(
     accounts.map(async (account) => {
       const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
-      if(isImportant(oldAcc)) {
+      if(argForce || isImportant(oldAcc)) {
         logger.verbose(`Updating ${oldAcc?.name}'s data`);
         await account.updateData();
       } else {
