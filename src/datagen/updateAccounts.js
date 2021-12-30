@@ -415,11 +415,18 @@ module.exports = async function updateAccounts (accounts, argForce = false) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  if(force && utils.fileExists("force")) {
-    await fs.rm("force");
-  }
+  let updatedAccs = accounts;
 
-  return accounts;
+  updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
+  updatedAccs = await fakeStats(updatedAccs);
+  updatedAccs = await importance(updatedAccs);
+  updatedAccs = await discordIDs(updatedAccs);
+  updatedAccs = await guilds(updatedAccs);
+  updatedAccs = await hackerlist(updatedAccs);
+  updatedAccs = await leaderboards(updatedAccs);
+  updatedAccs = await coins(updatedAccs);
+
+  return updatedAccs;
 };
 
 /**
@@ -432,10 +439,10 @@ async function updateAccountsInArr (accounts, oldAccs) {
     accounts.map(async (account) => {
       const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
       if(isImportant(oldAcc)) {
-        logger.out(`Updating ${oldAcc?.name}'s data`);
+        logger.verbose(`Updating ${oldAcc?.name}'s data`);
         await account.updateData();
       } else {
-        logger.info(`Ignoring ${oldAcc?.name} for this refresh`);
+        logger.verbose(`Ignoring ${oldAcc?.name} for this refresh`);
         account.setData(oldAcc);
       }
     })
