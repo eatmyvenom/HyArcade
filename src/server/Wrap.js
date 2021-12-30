@@ -85,7 +85,7 @@ async function autoUpdater () {
     let newAccounts;
     if(force || utils.fileExists("force")) {
       logger.debug("Forcing full update");
-      newAccounts = await updateAccounts(oldAccounts, true);
+      newAccounts = await updateAccounts(oldAccounts, true, true);
       force = false;
       if(utils.fileExists("force")) {
         await rm("force");
