@@ -13,7 +13,13 @@ module.exports = async (req, res, fileCache) => {
 
     const ign = url.searchParams.get("q");
 
-    const { accounts } = fileCache;
+    const {
+      indexedAccounts
+    } = fileCache;
+
+    const accounts = Object.values(indexedAccounts);
+    accounts.sort((b, a) => a.importance - b.importance);
+
     const list = [];
 
     accounts.forEach((a) => {
@@ -21,12 +27,13 @@ module.exports = async (req, res, fileCache) => {
         for(const name of a.nameHist) {
           if(name.toLowerCase().startsWith(ign)) {
             list.push(a.name);
+            break;
           }
         }
       }
     });
 
-    res.write(JSON.stringify(list.slice(0, Math.min(list.length, 20))));
+    res.write(JSON.stringify(list.slice(0, Math.min(list.length, 21))));
     res.end();
   } else {
     res.statusCode = 404;
