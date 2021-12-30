@@ -380,13 +380,14 @@ async function fastUpdate (accounts, argForce) {
  *
  * @param {Account[]} accounts
  * @param {boolean} argForce
+ * @param {boolean} fast
  * @returns {Promise<Account[]>}
  */
-module.exports = async function updateAccounts (accounts, argForce = false) {
+module.exports = async function updateAccounts (accounts, argForce = false, fast = false) {
 
   cfg = require("../Config").fromJSON();
 
-  if(cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
+  if(fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");
     const accs = await fastUpdate(accounts, argForce);
     if(force && utils.fileExists("force")) {
