@@ -401,12 +401,15 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   const oldAccs = accounts;
 
   let i;
-  let j;
   let temparray;
 
   const chunk = 120;
-  for(i = 0, j = accounts.length; i < j; i += chunk) {
-    logger.debug(`Updating accounts ${i} - ${i + 120} of ${accounts.length}`);
+  for(i = 0; i < accounts.length; i += chunk) {
+    const percent = Math.floor((i / accounts.length) * 100);
+
+    if(percent % 5 == 0) {
+      logger.debug(`${percent}% processed!`);
+    }
     temparray = accounts.slice(i, i + chunk);
     await updateAccountsInArr(temparray, oldAccs, argForce);
   }
