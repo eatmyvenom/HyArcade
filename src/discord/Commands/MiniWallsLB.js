@@ -103,7 +103,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "witherdmg": {
     gameName = "Wither Damage";
     const lb = await getLB("witherDamage", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "witherDamage" : "lbProp", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }
@@ -116,7 +116,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "witherkills": {
     gameName = "Wither Kills";
     const lb = await getLB("witherKills", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "witherKills" : "lbProp", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }
@@ -129,7 +129,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "finals": {
     gameName = "Final Kills";
     const lb = await getLB("finalKills", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "finalKills" : "lbProp", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }

@@ -16,19 +16,17 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
 
   switch(stat) {
   case "wins" : {
-    accounts = GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
   case "kills" : {
-    accounts = GenericLeaderboard("miniWalls", "kills", time, false, false, 300, "hacker", fileCache);
+    accounts = await GenericLeaderboard("miniWalls", "kills", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
   case "deaths" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.deaths ?? 0) - (a?.miniWalls?.deaths ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.deaths ?? 0) > 0);
+    accounts = await GenericLeaderboard("miniWalls", "deaths", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
@@ -54,13 +52,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "kd" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls.wins ?? 0) - (a?.miniWalls.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
@@ -76,13 +72,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "kdnf" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
@@ -99,13 +93,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "fd" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
@@ -121,13 +113,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "wdd" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
@@ -144,13 +134,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "wkd" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
@@ -167,13 +155,11 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "aa" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
+    accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {
       accounts = accounts.slice(0, 150);
     } else {
-      let top150 = accs;
-      TimSort.sort(top150, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-      top150 = top150.slice(0, 150);
+      const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
       accounts = accounts.filter((acc) => top150.find((a) => a.uuid == acc.uuid) != undefined);
     }
