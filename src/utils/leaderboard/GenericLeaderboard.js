@@ -47,7 +47,7 @@ function getProp (o, s) {
  * @param {FileCache} fileCache The file cache containing all account info
  * @returns {Promise<Account[]>} 
  */
-module.exports = async function (category, lbprop, timePeriod, min, reverse, max, filter, fileCache) {
+module.exports = async function (category, lbprop, timePeriod, min, reverse, max, filter = "", fileCache) {
 
   Logger.verbose("Getting leaderboard");
 
@@ -113,13 +113,16 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
     }
   }
 
-  accs = accs.filter((a) => {
-    for(const prop of filter.split(",")) {
-      if(a[prop]) return false;
-    }
+  if(filter != "") {
+    accs = accs.filter((a) => {
+      for(const prop of filter.split(",")) {
+        if(a[prop]) return false;
+      }
+  
+      return true;
+    });
+  }
 
-    return true;
-  });
 
   const maxSize = Math.min(accs.length, max);
   accs = accs.slice(0, maxSize);
