@@ -19,9 +19,10 @@ module.exports = async (req, res, fileCache) => {
   const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
   const max = url.searchParams.get("max") ?? 200;
+  const filter = url.searchParams.get("filter");
 
   if(req.method == "GET") {
-    const accs = await GenericLeaderboard(category, lbprop, timePeriod, min, reverse, max, fileCache);
+    const accs = await GenericLeaderboard(category, lbprop, timePeriod, min, reverse, max, filter, fileCache);
 
     let acceptEncoding = req.headers["accept-encoding"];
     if (!acceptEncoding) {

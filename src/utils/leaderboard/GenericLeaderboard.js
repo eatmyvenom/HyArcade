@@ -37,16 +37,17 @@ function getProp (o, s) {
 
 /**
  * 
- * @param {string} category
- * @param {string} lbprop
- * @param {string} timePeriod
- * @param {boolean} min
- * @param {boolean} reverse
- * @param {string} max
- * @param {FileCache} fileCache
+ * @param {string} category the object to fetch from each account
+ * @param {string} lbprop the property to fetch from each account
+ * @param {string} timePeriod the time period to get the data from
+ * @param {boolean} min whether the data should be minified before sending
+ * @param {boolean} reverse whether the leaderboard should be reversed to show lowest values
+ * @param {string} max the maximum amount of accounts to return
+ * @param {string} filter Stats that if present excludes people from the list, must be top level
+ * @param {FileCache} fileCache The file cache containing all account info
  * @returns {Promise<Account[]>} 
  */
-module.exports = async function (category, lbprop, timePeriod, min, reverse, max, fileCache) {
+module.exports = async function (category, lbprop, timePeriod, min, reverse, max, filter, fileCache) {
 
   Logger.verbose("Getting leaderboard");
 
@@ -111,6 +112,14 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
       TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
     }
   }
+
+  accs = accs.filter((a) => {
+    for(const prop of filter.split(",")) {
+      if(a[prop]) return false;
+    }
+
+    return true;
+  });
 
   const maxSize = Math.min(accs.length, max);
   accs = accs.slice(0, maxSize);
