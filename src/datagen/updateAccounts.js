@@ -230,6 +230,21 @@ async function hackerlist (accounts) {
 
 /**
  * 
+ * @param {Account[]} accounts 
+ * @returns {Promise<Account[]>}
+ */
+async function banlist (accounts) {
+  const banlist = await fs.readFile("data/banlist");
+
+  for (const acc of accounts) {
+    acc.banned = banlist.includes(acc.uuid);
+  }
+
+  return accounts;
+}
+
+/**
+ * 
  * @param {string[]} uuids 
  * @returns {Response}
  */
@@ -369,6 +384,7 @@ async function fastUpdate (accounts, argForce) {
   updatedAccs = await discordIDs(updatedAccs);
   updatedAccs = await guilds(updatedAccs);
   updatedAccs = await hackerlist(updatedAccs);
+  updatedAccs = await banlist(updatedAccs);
   updatedAccs = await leaderboards(updatedAccs);
   updatedAccs = await coins(updatedAccs);
 
@@ -426,6 +442,7 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   updatedAccs = await discordIDs(updatedAccs);
   updatedAccs = await guilds(updatedAccs);
   updatedAccs = await hackerlist(updatedAccs);
+  updatedAccs = await banlist(updatedAccs);
   updatedAccs = await leaderboards(updatedAccs);
   updatedAccs = await coins(updatedAccs);
 
