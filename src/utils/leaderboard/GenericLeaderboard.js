@@ -113,7 +113,7 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
     }
   }
 
-  if(filter != "") {
+  if(filter != "" && filter != undefined && filter != null) {
     accs = accs.filter((a) => {
       for(const prop of filter.split(",")) {
         if(a[prop]) return false;
