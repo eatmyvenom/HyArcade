@@ -1,6 +1,7 @@
 const Account = require("hyarcade-requests/types/Account");
 const TimSort = require("timsort");
 const FileCache = require("../../utils/files/FileCache");
+const GenericLeaderboard = require("./GenericLeaderboard");
 
 /**
  * 
@@ -10,57 +11,17 @@ const FileCache = require("../../utils/files/FileCache");
  * @returns {Promise<Account[]>}
  */
 module.exports = async function generateLeaderboard (fileCache, stat, time) {
-  /** @type {Account[]} */
-  const accs = [...fileCache.accounts];
-  let accounts = accs;
 
-  accounts = accounts.filter((a) => (a?.miniWalls?.kills ?? 0) > 0);
-  accounts = accounts.filter((a) => !fileCache.hackerlist.includes(a?.uuid?.toLowerCase()));
-  const newList = [];
-
-  if(time != undefined) {
-
-    accounts.forEach((acc) => {
-      const derefed = JSON.parse(JSON.stringify(acc));
-      const timeAcc = fileCache[`indexed${time}`][acc.uuid];
-
-      if(timeAcc == undefined || timeAcc.name == "INVALID-NAME" || timeAcc.nameHist.includes("INVALID-NAME")) {
-        derefed.miniWalls.kills = 0;
-        return;
-      }
-
-      derefed.miniWalls.wins -= timeAcc?.miniWalls?.wins ?? derefed.miniWalls.wins;
-      derefed.miniWalls.arrowsHit -= timeAcc?.miniWalls?.arrowsHit ?? derefed.miniWalls.arrowsHit;
-      derefed.miniWalls.arrowsShot -= timeAcc?.miniWalls?.arrowsShot ?? derefed.miniWalls.arrowsShot;
-      derefed.miniWalls.deaths -= timeAcc?.miniWalls?.deaths ?? derefed.miniWalls.deaths;
-      derefed.miniWalls.finalKills -= timeAcc?.miniWalls?.finalKills ?? derefed.miniWalls.finalKills;
-      derefed.miniWalls.kills -= timeAcc?.miniWalls?.kills ?? derefed.miniWalls.kills;
-      derefed.miniWalls.witherDamage -= timeAcc?.miniWalls?.witherDamage ?? derefed.miniWalls.witherDamage;
-      derefed.miniWalls.witherKills -= timeAcc?.miniWalls?.witherKills ?? derefed.miniWalls.witherKills;
-
-      newList.push(derefed);
-      return;
-    });
-  } else {
-    for(const a of accounts) {
-      newList.push(a);
-    }
-  }
-
-  accounts = newList.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
+  let accounts;
 
   switch(stat) {
   case "wins" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.wins ?? 0) - (a?.miniWalls?.wins ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.wins ?? 0) > 0);
+    accounts = GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
   case "kills" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.kills ?? 0) - (a?.miniWalls?.kills ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.kills ?? 0) > 0);
+    accounts = GenericLeaderboard("miniWalls", "kills", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
