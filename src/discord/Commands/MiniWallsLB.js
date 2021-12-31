@@ -78,7 +78,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "kills": {
     gameName = "Kills";
     const lb = await getLB("kills", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "kills", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "kills" : "lbprop", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }
@@ -90,7 +90,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "deaths": {
     gameName = "Deaths";
     const lb = await getLB("deaths", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "deaths", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "deaths" : "lbprop", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }
@@ -218,7 +218,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   default: {
     gameName = "Wins";
     const lb = await getLB("wins", timetype, limit, "miniWalls");
-    res = stringifyList(lb.res, "wins", "miniWalls", limit);
+    res = stringifyList(lb.res, (timetype == "lifetime") ? "wins" : "lbprop", (timetype == "lifetime") ? "miniWalls" : undefined, limit);
     correctedTime = lb.time;
     break;
   }
