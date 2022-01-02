@@ -51,6 +51,7 @@ async function callback (request, response) {
     if(fileCache.ready == false) {
       response.setHeader("Content-Type", "application/json");
       response.end(JSON.stringify({ ERROR: "Reloading database!" }));
+      logger.warn(`${url} not available when reloading!`);
       return;
     }
 
