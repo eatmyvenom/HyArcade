@@ -172,6 +172,7 @@ function transformResponse (res) {
  */
 async function handleCommand (msg, cmdResponse) {
   if(await isBlacklisted(msg.author.id)) {
+    Logger.warn(`Blacklisted user ${msg.author.tag} tried to run a command`);
     return;
   }
 
