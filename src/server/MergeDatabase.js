@@ -263,12 +263,12 @@ async function coins (accounts) {
 async function applyMetadata (accs, fileCache) {
   let updatedAccs = uniqBy(accs, (a) => a.uuid);
   updatedAccs = await fakeStats(updatedAccs);
-  updatedAccs = importance(updatedAccs);
-  updatedAccs = discordIDs(updatedAccs, fileCache);
-  updatedAccs = guilds(updatedAccs, fileCache);
-  updatedAccs = hackerlist(updatedAccs, fileCache);
-  updatedAccs = banlist(updatedAccs, fileCache);
-  updatedAccs = leaderboards(updatedAccs);
+  updatedAccs = await importance(updatedAccs);
+  updatedAccs = await discordIDs(updatedAccs, fileCache);
+  updatedAccs = await guilds(updatedAccs, fileCache);
+  updatedAccs = await hackerlist(updatedAccs, fileCache);
+  updatedAccs = await banlist(updatedAccs, fileCache);
+  updatedAccs = await leaderboards(updatedAccs);
   updatedAccs = await coins(updatedAccs);
   return updatedAccs;
 }
