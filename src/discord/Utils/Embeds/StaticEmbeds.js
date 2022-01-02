@@ -12,6 +12,11 @@ exports.ERROR_UNKNOWN = new MessageEmbed()
   .setColor(COLOR_RED)
   .setDescription("The command you tried to run caused an unknown error!");
 
+exports.ERROR_BLACKLIST = new MessageEmbed()
+  .setTitle("ERROR")
+  .setColor(COLOR_RED)
+  .setDescription("You are not allowed to use any commands since you are blacklisted from using the bot!");
+
 exports.ERROR_NEED_PLAYER = new MessageEmbed()
   .setTitle("ERROR")
   .setColor(COLOR_RED)

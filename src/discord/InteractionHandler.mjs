@@ -7,7 +7,7 @@ import CommandResponse from "./Utils/CommandResponse.js";
 import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
 import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
-import { ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
+import { ERROR_UNKNOWN, ERROR_BLACKLIST } from "./Utils/Embeds/StaticEmbeds.js";
 import registerAll from "./interactions/Utils/DeployCommands.mjs";
 import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
 
@@ -32,6 +32,7 @@ async function isBlacklisted (id) {
 async function commandHandler (interaction) {
 
   if(await isBlacklisted(interaction?.user?.id)) {
+    await interaction.reply({ embeds: [ ERROR_BLACKLIST ], ephemeral: true });
     return;
   }
 
