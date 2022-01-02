@@ -278,6 +278,9 @@ async function applyMetadata (accs, fileCache) {
   updatedAccs = await leaderboards(updatedAccs);
   Logger.debug("Applying ingame coins");
   updatedAccs = await coins(updatedAccs);
+
+  Logger.log("Metadata applied to all accounts");
+
   return updatedAccs;
 }
 

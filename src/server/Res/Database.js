@@ -81,7 +81,7 @@ module.exports = async (req, res, fileCache) => {
         Logger.log("Saving new accounts");
         const old = fileCache[url.searchParams.get("path")];
 
-        fileCache.indexedAccounts = MergeDatabase(json, old);
+        fileCache.indexedAccounts = await MergeDatabase(json, old);
       } else {
         fileCache[url.searchParams.get("path")] = json;
       }
