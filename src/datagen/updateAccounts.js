@@ -7,7 +7,6 @@ const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
 const { sleep } = require("../utils");
 const NormalizeAccount = require("./utils/NormalizeAccount");
-const HypixelApi = require("hyarcade-requests/HypixelApi");
 const Util = require("util");
 let cfg;
 
@@ -85,52 +84,6 @@ async function discordIDs (accounts) {
 async function importance (accounts) {
   for (const acc of accounts) {
     acc.importance = NormalizeAccount(acc);
-  }
-
-  return accounts;
-}
-
-/**
- * 
- * @param {Account[]} accounts
- * @returns {Promise<Account[]>}
- */
-async function coins (accounts) {
-  const leaderboards = await HypixelApi.leaderboards();
-
-  const arcade = leaderboards.leaderboards.ARCADE;
-
-  /** @type {string[]} */
-  const lifetime = arcade[0].leaders;
-
-  /** @type {string[]} */
-  const weekly = arcade[1].leaders;
-
-  /** @type {string[]} */
-  const monthly = arcade[2].leaders;
-
-  for (const acc of accounts) {
-    if(acc.positions == undefined) {
-      acc.positions = {};
-    }
-
-    const isLifetime = lifetime.includes(acc.uuidPosix);
-
-    if(acc.positions.coins < 76 && !isLifetime) {
-      acc.banned = true;
-    }
-
-    if(isLifetime) {
-      acc.positions.ingameCoins = weekly.indexOf(acc.uuidPosix) + 1;
-    }
-
-    if(weekly.includes(acc.uuidPosix)) {
-      acc.positions.weeklyCoins = weekly.indexOf(acc.uuidPosix) + 1;
-    }
-
-    if(monthly.includes(acc.uuidPosix)) {
-      acc.positions.monthlyCoins = monthly.indexOf(acc.uuidPosix) + 1;
-    }
   }
 
   return accounts;
@@ -386,7 +339,6 @@ async function fastUpdate (accounts, argForce) {
   updatedAccs = await hackerlist(updatedAccs);
   updatedAccs = await banlist(updatedAccs);
   updatedAccs = await leaderboards(updatedAccs);
-  updatedAccs = await coins(updatedAccs);
 
   return updatedAccs;
 }
@@ -444,8 +396,6 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   updatedAccs = await hackerlist(updatedAccs);
   updatedAccs = await banlist(updatedAccs);
   updatedAccs = await leaderboards(updatedAccs);
-  updatedAccs = await coins(updatedAccs);
-
   return updatedAccs;
 };
 
