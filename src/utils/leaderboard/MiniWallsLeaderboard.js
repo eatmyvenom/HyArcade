@@ -31,23 +31,17 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
   }
 
   case "witherDamage" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherDamage ?? 0) - (a?.miniWalls?.witherDamage ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.witherDamage ?? 0) > 0);
+    accounts = await GenericLeaderboard("miniWalls", "witherDamage", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
   case "witherKills" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.witherKills ?? 0) - (a?.miniWalls?.witherKills ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.witherKills ?? 0) > 0);
+    accounts = await GenericLeaderboard("miniWalls", "witherKills", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
   case "finalKills" : {
-    TimSort.sort(accounts, (a, b) => (b?.miniWalls?.finalKills ?? 0) - (a?.miniWalls?.finalKills ?? 0));
-
-    accounts = accounts.filter((acc) => (acc?.miniWalls?.finalKills ?? 0) > 0);
+    accounts = await GenericLeaderboard("miniWalls", "finalKills", time, false, false, 300, "hacker", fileCache);
     break;
   }
 
