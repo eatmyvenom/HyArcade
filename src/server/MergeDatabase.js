@@ -262,13 +262,21 @@ async function coins (accounts) {
  */
 async function applyMetadata (accs, fileCache) {
   let updatedAccs = uniqBy(accs, (a) => a.uuid);
+  Logger.debug("Applying fake stats");
   updatedAccs = await fakeStats(updatedAccs);
+  Logger.debug("Applying importance");
   updatedAccs = await importance(updatedAccs);
+  Logger.debug("Applying discord ids");
   updatedAccs = await discordIDs(updatedAccs, fileCache);
+  Logger.debug("Applying guild data");
   updatedAccs = await guilds(updatedAccs, fileCache);
+  Logger.debug("Applying hackerlist");
   updatedAccs = await hackerlist(updatedAccs, fileCache);
+  Logger.debug("Applying banlist");
   updatedAccs = await banlist(updatedAccs, fileCache);
+  Logger.debug("Applying leaderboard positions");
   updatedAccs = await leaderboards(updatedAccs);
+  Logger.debug("Applying ingame coins");
   updatedAccs = await coins(updatedAccs);
   return updatedAccs;
 }
