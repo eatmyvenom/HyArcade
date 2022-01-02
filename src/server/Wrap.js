@@ -7,10 +7,11 @@ const {
 const process = require("process");
 const FileCache = require("../utils/files/FileCache");
 const updateAccounts = require("../datagen/updateAccounts");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
 const utils = require("../utils");
 const { rm } = require("fs-extra");
 const webhook = require("../events/webhook");
+const MergeDatabase = require("./MergeDatabase");
+
 const urlModules = {
   account: require("./Res/account"),
   acc: require("./Res/account"),
@@ -68,21 +69,6 @@ async function callback (request, response) {
 
 /**
  * 
- * @param {object[]} accounts 
- * @returns {*}
- */
-function indexAccs (accounts) {
-  const obj = {};
-
-  for(const acc of accounts) {
-    obj[acc.uuid] = acc;
-  }
-
-  return obj;
-}
-
-/**
- * 
  */
 async function autoUpdater () {
   if(!lock) {
@@ -104,14 +90,11 @@ async function autoUpdater () {
 
     logger.debug("Merging updated account data");
 
-    const newAccs = AccountArray([...newAccounts, ...Object.values(fileCache.indexedAccounts)]);
-
-    logger.log(`New accounts length is ${newAccs.length}`);
-    fileCache.indexedAccounts = indexAccs(newAccs);
+    fileCache.indexedAccounts = await MergeDatabase(newAccounts, Object.values(fileCache.indexedAccounts));
 
     lock = false;
     fileCache.save();
-    logger.info("Database updated");
+    logger.log("Database updated");
   }
 }
 

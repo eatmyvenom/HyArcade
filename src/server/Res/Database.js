@@ -1,25 +1,10 @@
 const Logger = require("hyarcade-logger");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
 const FileCache = require("../../utils/files/FileCache");
 const cfg = require("../../Config").fromJSON();
 const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
-
-/**
- * 
- * @param {object[]} accounts 
- * @returns {*}
- */
-function indexAccs (accounts) {
-  const obj = {};
-
-  for(const acc of accounts) {
-    obj[acc.uuid] = acc;
-  }
-
-  return obj;
-}
+const MergeDatabase = require("../MergeDatabase");
 
 /**
  * 
@@ -95,13 +80,8 @@ module.exports = async (req, res, fileCache) => {
       if(url.searchParams.get("path") == "accounts") {
         Logger.log("Saving new accounts");
         const old = fileCache[url.searchParams.get("path")];
-        const newAccs = AccountArray([...json, ...old]);
 
-        json = undefined;
-
-        Logger.log(`New accounts length is ${newAccs.length}`);
-        fileCache.indexedAccounts = indexAccs(newAccs);
-
+        fileCache.indexedAccounts = MergeDatabase(json, old);
       } else {
         fileCache[url.searchParams.get("path")] = json;
       }
