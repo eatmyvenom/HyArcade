@@ -45,6 +45,16 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
     break;
   }
 
+  case "arrowsShot" : {
+    accounts = await GenericLeaderboard("miniWalls", "arrowsShot", time, false, false, 300, "hacker", fileCache);
+    break;
+  }
+
+  case "arrowsHit" : {
+    accounts = await GenericLeaderboard("miniWalls", "arrowsHit", time, false, false, 300, "hacker", fileCache);
+    break;
+  }
+
   case "kd" : {
     accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
     if(time == undefined || time == null) {

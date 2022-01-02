@@ -174,6 +174,7 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   case "fkdr":
   case "finaldeath":
   case "fd": {
+    gameName = "Final Kills/Deaths";
     const lb = await getLB("fd", timetype, limit, "miniWalls");
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
     correctedTime = lb.time;
@@ -211,6 +212,37 @@ module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
     gameName = "Arrow accuracy";
     const lb = await getLB("aa", timetype, limit, "miniWalls");
     res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "as":
+  case "arrows":
+  case "arrowshoot":
+  case "arrowsshot":
+  case "arrowshot":
+  case "arrshot":
+  case "ashots":
+  case "ashot": {
+    gameName = "Arrows Shot";
+    const lb = await getLB("arrowsShot", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "arrowsShot", "miniWalls", limit);
+    correctedTime = lb.time;
+    break;
+  }
+
+  case "ah":
+  case "arrowh":
+  case "arrowsh":
+  case "arrowhits":
+  case "arrowshit":
+  case "arrowhit":
+  case "arrhit":
+  case "ahits":
+  case "ahit": {
+    gameName = "Arrows Hit";
+    const lb = await getLB("arrowsHit", timetype, limit, "miniWalls");
+    res = stringifyList(lb.res, "arrowsHit", "miniWalls", limit);
     correctedTime = lb.time;
     break;
   }
