@@ -373,7 +373,7 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
 
   const chunk = 120;
   for(i = 0; i < accounts.length; i += chunk) {
-    const percent = Math.floor((i / accounts.length) * 100);
+    const percent = Math.max(Math.round((i / accounts.length) * 100), Math.floor((i / accounts.length) * 100));
 
     if(percent % 5 == 0) {
       logger.debug(`${percent}% processed!`);

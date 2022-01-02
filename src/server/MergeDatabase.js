@@ -4,7 +4,7 @@ const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const utils = require("../utils");
 const FileCache = require("../utils/files/FileCache");
-const NormalizeAccount = require("../utils/NormalizeAccount");
+const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
 
 /**
  * 
