@@ -262,7 +262,7 @@ async function coins (accounts) {
  */
 async function applyMetadata (accs, fileCache) {
   let updatedAccs = uniqBy(accs, (a) => a.uuid);
-  updatedAccs = fakeStats(updatedAccs);
+  updatedAccs = await fakeStats(updatedAccs);
   updatedAccs = importance(updatedAccs);
   updatedAccs = discordIDs(updatedAccs, fileCache);
   updatedAccs = guilds(updatedAccs, fileCache);
