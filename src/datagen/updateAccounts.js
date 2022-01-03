@@ -329,8 +329,6 @@ async function fastUpdate (accounts, argForce) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  updatedAccs = updatedAccs.concat(otherAccs);
-
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
   updatedAccs = await fakeStats(updatedAccs);
   updatedAccs = await importance(updatedAccs);
