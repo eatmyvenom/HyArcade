@@ -115,5 +115,5 @@ module.exports = function doBot () {
   }
 
   setInterval(BotEvents.cyclePresence, 7200000);
-  setInterval(BotEvents.heartBeat, 900000);
+  setInterval(BotEvents.heartBeat, 1800000);
 };
