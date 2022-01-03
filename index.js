@@ -445,6 +445,10 @@ async function main () {
     await Webhook.sendMW(args[3]);
     break;
 
+  case "discordfakemw":
+    await Webhook.sendFakeMiwLB();
+    break;
+
   case "link":
   case "ln":
     await cli.linkDiscord();

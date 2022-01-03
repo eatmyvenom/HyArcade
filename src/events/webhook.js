@@ -987,6 +987,16 @@ async function sendFakeWeekGEXP () {
   g.destroy();
 }
 
+/**
+ * 
+ */
+async function sendFakeMiwLB () {
+  const lb = await FakeLB();
+  const sb = new Discord.WebhookClient({ url: config.discord.mwFakeLB });
+
+  await sb.send({ files: [lb] });
+}
+
 module.exports = {
   send: sendToDiscord,
   sendEmbed: sendToEmbedDiscord,
@@ -1006,5 +1016,6 @@ module.exports = {
   sendHSMEmbed,
   sendTOKillEmbed,
   sendDWKillEmbed,
+  sendFakeMiwLB,
   sendMW,
 };
