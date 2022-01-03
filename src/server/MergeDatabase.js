@@ -284,9 +284,24 @@ async function applyMetadata (accs, fileCache) {
   return updatedAccs;
 }
 
+/**
+ * 
+ * @param {Account[]} accounts 
+ * @returns {*}
+ */
+function indexAccs (accounts) {
+  const obj = {};
+
+  for(const acc of accounts) {
+    obj[acc.uuid] = acc;
+  }
+
+  return obj;
+}
+
 module.exports = async function (newAccs, oldAccs, fileCache) {
   const accs = AccountArray([...newAccs, ...oldAccs]);
 
   Logger.log(`New accounts length is ${accs.length}`);
-  return await applyMetadata(accs, fileCache);
+  return indexAccs(await applyMetadata(accs, fileCache));
 };
