@@ -4,6 +4,7 @@ const fs = require("fs-extra");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
 const Account = require("hyarcade-requests/types/Account");
 const Accounts = require("./Accounts");
+const MergeDatabase = require("../../server/MergeDatabase");
 
 /**
  * 
@@ -172,7 +173,7 @@ class FileCache {
 
       try {
         const accounts = await fileCache.AccountsProcessor.readAccounts();
-        fileCache.indexedAccounts = indexAccs(accounts);
+        fileCache.indexedAccounts = MergeDatabase(accounts);
 
         fileCache.acclist = Object.keys(fileCache.indexedAccounts);
 

@@ -41,6 +41,12 @@ module.exports = {
   },
   {
     type: 1,
+    name: "unverify",
+    description: "Unverify yourself with Arcade Bot",
+    options: [],
+  },
+  {
+    type: 1,
     name: "update-time",
     description: "Get the time of the last database update",
     options: [],
