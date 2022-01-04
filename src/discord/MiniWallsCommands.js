@@ -8,6 +8,7 @@ const {
 } = require("discord.js");
 const UpdateNames = require("./Commands/UpdateNames");
 const MiniWallsInvite = require("./Commands/MiniWallsInvite");
+const MiniWallsDev = require("./Commands/MiniWalls-dev");
 
 /**
  * @param {Message} msg
@@ -36,6 +37,10 @@ async function checkCommands (rawMsg, command, args, author) {
   case "link":
   case "ln": {
     return await linkCmd.execute(args, author, rawMsg);
+  }
+
+  case "dev-s": {
+    return await MiniWallsDev.execute(args, author, rawMsg);
   }
 
   case "s":
