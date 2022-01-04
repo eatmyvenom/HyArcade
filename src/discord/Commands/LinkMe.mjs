@@ -2,69 +2,66 @@ import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
 import mojangRequest from "../../request/mojangRequest.js";
 import BotRuntime from "../BotRuntime.js";
-import { ERROR_ACCOUNT_PREVIOUSLY_LINKED, ERROR_IGN_UNDEFINED, ERROR_INPUT_IGN, ERROR_LINK_HYPIXEL_MISMATCH, ERROR_PLAYER_PREVIOUSLY_LINKED, INFO_LINK_SUCCESS } from "../Utils/Embeds/StaticEmbeds.js";
+import { ERROR_IGN_UNDEFINED,  ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
 import Database from "../Utils/Database.js";
+import Logger from "hyarcade-logger";
+import { Interaction, Message } from "discord.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 
-export default new Command("verify", ["*"], async (args, rawMsg, interaction) => {
-  const player = args[0];
-  if (player == undefined) {
-    const embed = ERROR_INPUT_IGN;
-    return { res: "", embed };
-  }
-  await interaction.deferReply();
-  const accs = await BotRuntime.getFromDB("accounts");
-  let acc = accs.find(
-    (a) =>
-      (`${a.uuid}`).toLowerCase() == player.toLowerCase() || (`${a.name}`).toLowerCase() == player.toLowerCase()
-  );
-  if (acc == undefined) {
-    const uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
-    if ((`${uuid}`).length != 32) {
-      const noexistEmbed = ERROR_IGN_UNDEFINED;
-
-      return { res: "", embed: noexistEmbed };
-    }
-    acc = new Account(player, 0, uuid);
-    await acc.updateHypixel();
-    await Database.addAccount(acc);
-  }
-
+/**
+ * 
+ * @param {string[]} args 
+ * @param {Message} rawMsg 
+ * @param {Interaction} interaction 
+ * @returns {CommandResponse}
+ */
+async function verifyCommand (args, rawMsg, interaction) {
   let tag;
-  if (interaction == undefined) {
-    tag = rawMsg.author.tag.toLowerCase();
+  let id;
+
+  if(interaction) {
+    await interaction.deferReply();
+    tag = interaction.user.tag;
+    id = interaction.user.id;
   } else {
-    tag = interaction.member.user.tag.toLowerCase();
+    tag = rawMsg.author.tag;
+    id = rawMsg.author.id;
   }
 
-  if ((`${acc.hypixelDiscord}`).toLowerCase() == tag) {
-    let uuid = player;
-    // if its not a uuid then convert to uuid
-    if (player.length < 17) {
-      uuid = acc.uuid;
-    }
-    let discord;
-    if (interaction == undefined) {
-      discord = rawMsg.author.id;
-    } else {
-      discord = interaction.member.id;
-    }
-    const disclist = await BotRuntime.getFromDB("disclist");
-    // make sure player isnt linked
-    if (disclist[discord]) {
-      const embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
-      return { res: "", embed };
-      // make sure user isnt linked
-    } else if (Object.values(disclist).find((u) => u == uuid) != undefined) {
-      const embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
-      return { res: "", embed };
-    }
+  const firstWord = args[0];
 
-    disclist[discord] = uuid;
-    await BotRuntime.writeToDB("disclist", disclist);
-    const embed = INFO_LINK_SUCCESS;
-    return { res: "", embed };
-  } 
-  const embed = ERROR_LINK_HYPIXEL_MISMATCH;
-  return { res: "", embed };
+  let uuid;
+
+  uuid = firstWord.length == 32 ? firstWord : await mojangRequest.getUUID(firstWord);
+  if((`${uuid}`).length != 32) {
+    const noexistEmbed = ERROR_IGN_UNDEFINED;
+
+    return new CommandResponse(noexistEmbed);
+  }
+
+  if(uuid == undefined) {
+    Logger.warn("Someone tried to verify as an account that doesn't exist!");
+    return new CommandResponse("", ERROR_IGN_UNDEFINED);
+  }
+
+  const acc = new Account(firstWord, 0, uuid);
+  await acc.updateData();
+  uuid = acc.uuid;
+
+  const disclist = await BotRuntime.getFromDB("disclist");
+  
+  if(acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
+    disclist[id] = uuid;
+    Logger.out(`${tag} was verified as ${acc.name}`);
     
-});
+    await Database.addAccount(acc);
+    await BotRuntime.writeToDB("disclist", disclist);
+
+    return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
+  }
+
+  return new CommandResponse(`${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`, ERROR_LINK_HYPIXEL_MISMATCH);
+}
+
+export default new Command("verify", ["*"], verifyCommand);
