@@ -172,11 +172,6 @@ class FileCache {
       Logger.info("Refreshing file cache...");
 
       try {
-        const accounts = await fileCache.AccountsProcessor.readAccounts();
-        fileCache.indexedAccounts = MergeDatabase(accounts);
-
-        fileCache.acclist = Object.keys(fileCache.indexedAccounts);
-
         const disclistStat = await fs.stat(`${fileCache.path}disclist.json`);
         if(Math.max(disclistStat.ctimeMs, disclistStat.mtimeMs) > fileCache.modTime) {
           Logger.debug("Reading discord links");
@@ -250,6 +245,12 @@ class FileCache {
         } else {
           Logger.debug("ezmsgs has not been modified, ignoring!");
         }
+
+        Logger.debug("Reading seperate accounts");
+        const accounts = await fileCache.AccountsProcessor.readAccounts();
+        fileCache.indexedAccounts = await MergeDatabase(accounts, [], fileCache);
+
+        fileCache.acclist = Object.keys(fileCache.indexedAccounts);
 
         Logger.debug("File cache updated");
 
