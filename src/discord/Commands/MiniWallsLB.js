@@ -61,7 +61,43 @@ async function getLB (prop, timetype, limit) {
 module.exports = new Command("mw-leaderboard", ["*"], async (args) => {
   const startTime = Date.now();
   const type = args[0] ?? "";
-  const timetype = args[1] != undefined ? args[1] : "lifetime";
+
+  let timetype = args[1] ?? "lifetime";
+
+  switch (timetype.toLowerCase()) {
+  case "d":
+  case "day":
+  case "dae":
+  case "daily":
+  case "today": {
+    timetype = "day";
+    break;
+  }
+
+  case "w":
+  case "week":
+  case "weak":
+  case "weekly":
+  case "weeekly": {
+    timetype = "weekly";
+    break;
+  }
+
+  case "m":
+  case "monthly":
+  case "month":
+  case "mnth":
+  case "mnthly":
+  case "mon": {
+    timetype = "monthly";
+    break;
+  }
+
+  default: {
+    timetype = "lifetime";
+  }
+  }
+
   let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
   if(new Number(limit) != limit) {
     limit = 10;
