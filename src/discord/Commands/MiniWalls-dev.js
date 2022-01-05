@@ -146,7 +146,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
 
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;
 
-  const img = new ImageGenerator(2560, 1600, "'myfont'");
+  const img = new ImageGenerator(2560, 1600, "'myfont'", true);
   await img.addBackground("resources/miwblur2.png", 0, 0, 2560, 1600, "#0000008E");
   img.context.beginPath();
   img.context.rect(0, 0, 2560, 1600);
@@ -154,33 +154,34 @@ async function miniWallsStats (args, rawMsg, interaction) {
   img.writeText("Mini Walls Stats", 1280, 100, "center", "#FFFFFF", "112px");
   img.writeAcc(acc, undefined, 220, "112px");
 
-  const fontSize = "96px";
+  const size = 96;
   const increment = 200;
+
   const leftAlign = "left";
   const rightAlign = "right";
   const leftX = 100;
   const rightX = 2460;
-  const winColor = "#FFFFFF";
-  const killColor = "#FFFF55";
-  const witherColor = "#55FF55";
-  const deathColor = "#FF5555";
-  const aaColor = "#AAAAAA";
+  const winColor = "&f";
+  const killColor = "&e";
+  const witherColor = "&a";
+  const deathColor = "&c";
+  const aaColor = "&b";
 
   let y = 250;
-  img.writeText(`Wins: ${formatN(wins ?? 0)}`, leftX, y += increment, leftAlign, winColor, fontSize);
-  img.writeText(`Kills: ${formatN(kills ?? 0)}`, leftX, y += increment, leftAlign, killColor, fontSize);
-  img.writeText(`Finals: ${formatN(finalKills ?? 0)}`, leftX, y += increment, leftAlign, killColor, fontSize);
-  img.writeText(`Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, y += increment, leftAlign, witherColor, fontSize);
-  img.writeText(`Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, y += increment, leftAlign, witherColor, fontSize);
-  img.writeText(`Deaths: ${formatN(deaths ?? 0)}`, leftX, y += increment, leftAlign, deathColor, fontSize);
+  img.drawMcText(`${winColor}Wins: ${formatN(wins ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${killColor}Kills: ${formatN(kills ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${killColor}Finals: ${formatN(finalKills ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${witherColor}Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${witherColor}Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${deathColor}Deaths: ${formatN(deaths ?? 0)}`, leftX, y += increment, size, leftAlign);
 
   y = 250;
-  img.writeText(`K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
-  img.writeText(`K/D (no finals): ${formatR((kills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
-  img.writeText(`F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, killColor, fontSize);
-  img.writeText(`WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, y += increment, rightAlign, witherColor, fontSize);
-  img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, y += increment, rightAlign, witherColor, fontSize);
-  img.writeText(`Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, y += increment, rightAlign, aaColor, fontSize);
+  img.drawMcText(`${killColor}F+K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(`${killColor}K/D: ${formatR((kills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(`${killColor}F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(`${witherColor}WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(`${witherColor}WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(`${aaColor}Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, y += increment, size, rightAlign);
 
   return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
 }
