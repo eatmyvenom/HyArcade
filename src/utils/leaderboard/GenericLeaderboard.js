@@ -123,7 +123,6 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
     });
   }
 
-
   const maxSize = Math.min(accs.length, max);
   accs = accs.slice(0, maxSize);
   Logger.verbose("Leaderboard generated!");

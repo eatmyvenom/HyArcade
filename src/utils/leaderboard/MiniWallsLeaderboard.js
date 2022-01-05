@@ -181,6 +181,6 @@ module.exports = async function generateLeaderboard (fileCache, stat, time) {
 
   }
 
-  return accounts;
+  return accounts.filter((a) => !fileCache.hackerlist.includes(a.uuid));
 
 };

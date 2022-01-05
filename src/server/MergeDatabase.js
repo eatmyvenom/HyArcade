@@ -302,6 +302,6 @@ function indexAccs (accounts) {
 module.exports = async function (newAccs, oldAccs, fileCache) {
   const accs = AccountArray([...newAccs, ...oldAccs]);
 
-  Logger.log(`New accounts length is ${accs.length}`);
+  Logger.log(`Accounts length is ${accs.length}`);
   return indexAccs(await applyMetadata(accs, fileCache));
 };
