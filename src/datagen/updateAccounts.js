@@ -287,13 +287,10 @@ async function fastUpdate (accounts, argForce) {
   const oldAccs = accounts;
 
   let importantAccounts = [];
-  const otherAccs = [];
 
   for (const acc of oldAccs) {
     if(argForce || isImportant(acc)) {
       importantAccounts.push(acc);
-    } else {
-      otherAccs.push(acc);
     }
   }
 
@@ -439,10 +436,6 @@ function isLeaderboarder (account) {
 function isImportant (oldAcc) {
 
   if(oldAcc == undefined) {
-    return true;
-  }
-
-  if(force) {
     return true;
   }
 
