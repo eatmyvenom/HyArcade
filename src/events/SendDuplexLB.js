@@ -55,7 +55,7 @@ async function genEmbed (stat, category, limit, title, time) {
   const lifeList = await Database.getLeaderboard(stat, category, undefined, true, false, limit);
   const lifeString = stringifyList(lifeList, stat, category, limit);
   const dayList = await Database.getLeaderboard(stat, category, time, true, false, limit);
-  const dayString = stringifyList(dayList, "lbprop", undefined, limit);
+  const dayString = stringifyList(dayList, "lbProp", undefined, limit);
 
   const embed = new Discord.MessageEmbed()
     .setTitle(`${title}`)
@@ -74,4 +74,5 @@ module.exports = async function SendBasicLB (webhook, stat, category, limit, tit
     avatarURL: webhook.pfp,
   });
   hook.destroy();
+  Database.destroy();
 };

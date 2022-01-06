@@ -63,6 +63,11 @@ async function genEmbed (stat, category, limit, title) {
 }
 
 module.exports = async function SendBasicLB (webhook, stat, category, limit, title) {
+
+  if(webhook?.id == undefined || webhook?.token == undefined) {
+    throw new Error(`The webhook "${webhook}" is invalid!`);
+  }
+
   const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     embeds: [await genEmbed(stat, category, limit, title)],

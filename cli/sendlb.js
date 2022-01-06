@@ -1,6 +1,6 @@
 const SendBasicLB = require("../src/events/SendBasicLB");
 const SendDuplexLB = require("../src/events/SendDuplexLB");
-const config = require("../Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 
 /**
  * 
@@ -8,10 +8,10 @@ const config = require("../Config").fromJSON();
  * @returns {*}
  */
 async function main (args) {
-  if(args[2] == "basic") {
-    return await SendBasicLB(config.otherHooks[args[3]], args[4], args[5], args[6], args[7]);
-  } else if(args[2] == "duplex") {
-    return await SendDuplexLB(config.otherHooks[args[3]], args[4], args[5], args[6], args[7], args[8]);
+  if(args[3] == "basic") {
+    return await SendBasicLB(config.otherHooks[args[4] ?? "TEST"], args[5] ?? "arcadeWins", args[6], args[7] ?? 10, args[8] ?? "title");
+  } else if(args[3] == "duplex") {
+    return await SendDuplexLB(config.otherHooks[args[4] ?? "TEST"], args[5] ?? "arcadeWins", args[6], args[7] ?? 10, args[8] ?? "title", args[9] ?? "day");
   }
 }
 

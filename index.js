@@ -536,6 +536,13 @@ async function main () {
     killable = false;
     break;
   }
+
+  default: {
+    const mod = require(`./cli/${args[2]}`);
+
+    await mod(args);
+  }
+
   }
 
   if(!(args[2] == "bot" || args[2] == "serveDB")) {
