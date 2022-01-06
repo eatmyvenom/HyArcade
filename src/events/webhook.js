@@ -298,13 +298,14 @@ async function sendPGEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genTOKillEmbed () {
-  const alltime = await listUtils.stringLB("kills", 10, "throwOut");
+  const killList = await Database.getLeaderboard("kills", "throwOut", undefined, true);
+  const alltime = stringifyList(killList, "kills", "throwOut", 10);
 
   const embed = new Discord.MessageEmbed()
-    .setTitle("Throw out leaderboards")
+    .setTitle("Throw Out leaderboards")
     .setColor(0x44a3e7)
     .setTimestamp(Date.now())
-    .addField("------------- Top lifetime kills -------------", alltime, true);
+    .addField("------------- Top lifetime Kills -------------", alltime, true);
 
   return embed;
 }
@@ -313,7 +314,8 @@ async function genTOKillEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genDWKillEmbed () {
-  const alltime = await listUtils.stringLB("kills", 10, "dragonWars");
+  const killList = await Database.getLeaderboard("kills", "dragonWars", undefined, true);
+  const alltime = stringifyList(killList, "kills", "dragonWars", 10);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Dragon Wars Leaderboard")
@@ -358,8 +360,10 @@ async function genPGMEmbed () {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSEmbed () {
-  const alltime = await listUtils.stringLB("wins", 25, "hypixelSays");
-  const day = await listUtils.stringLBDiff("wins", 25, "day", "hypixelSays");
+  const lifeList = await Database.getLeaderboard("wins", "hypixelSays", undefined, true);
+  const alltime = stringifyList(lifeList, "wins", "hypixelSays", 10);
+  const dayList = await Database.getLeaderboard("wins", "hypixelSays", "day", true);
+  const day = stringifyList(dayList, "lbprop", undefined, 10);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
