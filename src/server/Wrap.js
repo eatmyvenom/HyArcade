@@ -11,6 +11,8 @@ const utils = require("../utils");
 const { rm } = require("fs-extra");
 const webhook = require("../events/webhook");
 const MergeDatabase = require("./MergeDatabase");
+const StatusExit = require("../events/StatusExit");
+const StatusStart = require("../events/StatusStart");
 
 const urlModules = {
   account: require("./Res/account"),
@@ -98,7 +100,11 @@ async function autoUpdater () {
   }
 }
 
-module.exports = function start (port) {
+module.exports = async function start (port) {
+  StatusStart()
+    .then(() => {})
+    .catch(logger.err);
+
   logger.name = "Database";
   fileCache = new FileCache("data/");
 
@@ -110,9 +116,16 @@ module.exports = function start (port) {
   setInterval(autoUpdater, 240000);
   setInterval(() => force = true, 14400000);
 
-  return require("http")
+  const server = require("http")
     .createServer(callback)
     .listen(port);
 
+  server.on("close", logger.log);
+  server.on("error", logger.err);
+
+  process.on("SIGINT", async (signal) => {
+    await StatusExit();
+    logger.log(`Exiting process with signal : ${signal}`);
+  });
 
 };
