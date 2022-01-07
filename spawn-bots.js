@@ -57,11 +57,13 @@ async function main () {
         Logger.info("Mini walls bot spawned");
       });
       mw.on("exit", restartMW);
+
+      await sleep(5500);
+      await BotStart();
     }
 
     arcade.on("spawn", async () => {
       Logger.info("Arcade bot spawned");
-      await BotStart();
     });
     arcade.on("exit", restartArcade);
   } catch (e) {
