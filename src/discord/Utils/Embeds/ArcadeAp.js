@@ -94,12 +94,32 @@ function getGame (ap) {
   return value;
 }
 
+/**
+ * 
+ * @param {object} acc 
+ * @returns {string}
+ */
+function getTotal (acc) {
+
+  const amount = acc.arcadeAchievments.totalEarned;
+  const total = acc.arcadeAchievments.totalAvailiable;
+
+  const ratio = Math.floor((amount / total) * 20);
+
+  let value = "";
+  value += `**\`[${"".padStart(ratio, "▬").padEnd(20)}]\`**\n`;
+  value += `(\`${numberify(amount)} / ${numberify(total)}\`) points - \`${((amount / total) * 100).toFixed(2)}%\``;
+
+  return value;
+}
+
 module.exports = function (acc, game) {
 
   if(game == undefined || game == "all") {
     return new MessageEmbed()
       .setTitle(`${acc.name}'s Arcade Achievements`)
       .setColor(0x8c54fe)
+      .setDescription(`**Total Completion**\n${getTotal(acc)}\n\n`)
       .addField("General", getGame(acc.arcadeAchievments.overall), true)
       .addField("Blocking Dead", getGame(acc.arcadeAchievments.blockingDead), true)
       .addField("Bounty Hunters", getGame(acc.arcadeAchievments.bountyHunters), true)

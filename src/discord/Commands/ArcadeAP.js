@@ -5,7 +5,7 @@ const { apMenu } = require("../interactions/SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
 const ArcadeAp = require("../Utils/Embeds/ArcadeAp");
 
-module.exports = new Command(["ap", "achievements"], ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
 
   let acc;
