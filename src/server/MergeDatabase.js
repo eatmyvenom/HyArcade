@@ -92,7 +92,7 @@ async function discordIDs (accounts, fileCache) {
  */
 function getGuild (guildlist, uuid) {
   for(const guild of guildlist) {
-    if(guild.memberUUIDs.includes((`${uuid}`).toLowerCase())) {
+    if(guild.memberUUIDs.includes((`${uuid.replace(/-/g, "")}`).toLowerCase())) {
       return guild;
     }
   }
