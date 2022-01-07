@@ -126,6 +126,8 @@ module.exports = async function start (port) {
   process.on("SIGINT", async (signal) => {
     await StatusExit();
     logger.log(`Exiting process with signal : ${signal}`);
+
+    process.exit(0);
   });
 
 };
