@@ -1,8 +1,11 @@
 #!/bin/env node
+/* eslint-disable no-undef */
 
 const child_process = require("child_process");
 const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
+const BotExit = require("./src/events/BotExit");
+const BotStart = require("./src/events/BotStart");
 // eslint-disable-next-line no-undef
 const args = process.argv;
 
@@ -56,13 +59,23 @@ async function main () {
       mw.on("exit", restartMW);
     }
 
-    arcade.on("spawn", () => {
+    arcade.on("spawn", async () => {
       Logger.info("Arcade bot spawned");
+      await BotStart();
     });
     arcade.on("exit", restartArcade);
   } catch (e) {
     Logger.err(e.stack);
   }
+
+  process.on("SIGINT", async (signal) => {
+    await BotExit();
+    arcade.kill();
+    mw.kill();
+    Logger.log(`Exiting process with signal : ${signal}`);
+
+    process.exit(0);
+  });
 }
 
 /**
