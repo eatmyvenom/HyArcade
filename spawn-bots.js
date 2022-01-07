@@ -72,6 +72,9 @@ async function main () {
 
   process.on("SIGINT", async (signal) => {
     await BotExit();
+    arcade.removeAllListeners();
+    mw.removeAllListeners();
+
     arcade.kill();
     mw.kill();
     Logger.log(`Exiting process with signal : ${signal}`);
