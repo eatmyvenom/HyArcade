@@ -90,7 +90,7 @@ async function autoUpdater () {
 
     logger.debug("Merging updated account data");
 
-    fileCache.indexedAccounts = await MergeDatabase(newAccounts, Object.values(fileCache.indexedAccounts));
+    fileCache.indexedAccounts = await MergeDatabase(newAccounts, Object.values(fileCache.indexedAccounts), fileCache);
 
     lock = false;
     fileCache.save();
