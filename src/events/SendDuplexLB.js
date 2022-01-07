@@ -74,5 +74,4 @@ module.exports = async function SendBasicLB (webhook, stat, category, limit, tit
     avatarURL: webhook.pfp,
   });
   hook.destroy();
-  Database.destroy();
 };

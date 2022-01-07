@@ -40,7 +40,7 @@ async function getFromHypixel (string) {
     Database.accCache[acc.uuid] = acc;
   }
 
-  if(acc.name == "INVALID-NAME") {
+  if(acc.name == "INVALID-NAME" || acc.name == undefined) {
     return undefined;
   }
 
@@ -73,10 +73,6 @@ module.exports = class BotRuntime {
      * @returns {Promise<Account>}
      */
     static async resolveAccount (str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
-      if(BotRuntime.botMode == "mini") {
-        return await getFromHypixel(str);
-      }
-    
       let url;
       if (time != "lifetime") {
         url = new URL("timeacc", cfg.dbUrl);

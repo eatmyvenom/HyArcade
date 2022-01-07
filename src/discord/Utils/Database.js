@@ -3,14 +3,10 @@ const fetch = require("node-fetch");
 const MiniWallsLeaderboard = require("../../utils/leaderboard/MiniWallsLeaderboard");
 const cfg = require("hyarcade-config").fromJSON();
 
-let cacheClear;
 
 class Database {
 
-  static accCache = {};
-
   static async addAccount (json) {
-    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const data = JSON.stringify(json);
     const url = new URL("account", cfg.dbUrl);
     Logger.info(`Adding ${data.name} to accounts in database`);
@@ -33,7 +29,7 @@ class Database {
 
   static async getLeaderboard (path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
-    cacheClear = setInterval(() => Database.accCache = {}, 30000);
+
     const url = new URL("lb", cfg.dbUrl);
     url.searchParams.set("path", path) ;
     
@@ -59,6 +55,7 @@ class Database {
 
     let lb;
 
+    Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
     try {
       lb = await (await fetch(url)).json();
     } catch (e) {
@@ -72,14 +69,10 @@ class Database {
   }
 
   static async getMWLeaderboard (stat, time, fileCache) {
-
     if(fileCache != undefined) {
       return await MiniWallsLeaderboard(fileCache, stat, time);
     }
 
-    if(cacheClear == undefined) {
-      cacheClear = setInterval(() => Database.accCache = {}, 30000);
-    }
     Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
 
     const url = new URL("mwlb", cfg.dbUrl);
@@ -103,8 +96,31 @@ class Database {
     return lb;
   }
 
+  static async account (ign, uuid, discordID) {
+    const url = new URL("account", cfg.dbUrl);
+
+    if(ign != undefined) {
+      url.searchParams.set("ign", ign);
+    } else if (uuid != undefined) {
+      url.searchParams.set(uuid);
+    } else if (discordID != undefined) {
+      url.searchParams.set("discid", discordID);
+    }
+
+    let acc;
+    try {
+      acc = await (await fetch(url)).json();
+    } catch (e) {
+      Logger.err("Error fetching data from database");
+      Logger.err(e.stack);
+      Logger.err(acc);
+      return {};
+    }
+
+    return acc;
+  }
+
   static async timedAccount (ign, uuid, discordID, time) {
-    cacheClear = setInterval(() => Database.accCache = {}, 30000);
     const url = new URL("timeacc", cfg.dbUrl);
 
     if(ign != undefined) {
@@ -150,10 +166,6 @@ class Database {
     }
 
     return info;
-  }
-
-  static destroy () {
-    cacheClear.unref();
   }
 
 }

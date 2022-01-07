@@ -291,7 +291,6 @@ async function sendPGEmbed () {
     avatarURL: config.webhook.pfp,
   });
   hook.destroy();
-  Database.destroy();
 }
 
 /**
@@ -786,8 +785,6 @@ async function sendFakeWeekLBs () {
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.c });
   await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
-
-  Database.destroy();
 }
 
 /**
@@ -874,8 +871,6 @@ async function sendFakeMonthLBs () {
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.c });
   await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   c.destroy();
-
-  Database.destroy();
 }
 
 /**
@@ -967,8 +962,6 @@ async function sendFakeLifetimeLBs () {
   const g = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.g });
   await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
   g.destroy();
-
-  Database.destroy();
 }
 
 /**
