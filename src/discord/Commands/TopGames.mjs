@@ -170,15 +170,16 @@ function nonDatabaseError (ign) {
 async function generateImage (acc, time) {
   const games = getGames(acc);
 
-  const img = new ImageGenerator(3000, 1600, "'myFont'", true);
-  await img.addBackground("resources/arcblur.png", 0, 0, 3000, 2040, "#0000007F");
+  const img = new ImageGenerator(3000, 1800, "'myFont'", true);
+  await img.addBackground("resources/arcblur.png", 0, 0, 3000, 2040, "#0000006F");
 
-  img.drawMcText(ImageGenerator.formatAcc(acc), img.canvas.width / 2, 80, 128, "center");
+  img.drawMcText("&l&fTop Arcade Games", img.canvas.width / 2, 80, 128, "center");
+  img.drawMcText(`${ImageGenerator.formatAcc(acc)}`, img.canvas.width / 2, 220, 128, "center");
 
-  img.drawMcText("&f&lTotal", img.canvas.width / 2, 250, 92, "center");
-  img.drawMcText(`&e${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 350, 108, "center");
+  img.drawMcText("&f&lTotal Wins", img.canvas.width / 2, 400, 98, "center");
+  img.drawMcText(`&e${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 504, 112, "center");
 
-  let y = 500;
+  let y = 700;
   for(let i = 1; i <= games.length; i += 1) {
 
     let x;
@@ -197,8 +198,8 @@ async function generateImage (acc, time) {
       }
     }
     
-    img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 80, "center");
-    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 100, "center");
+    img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 76, "center");
+    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 108, "center");
 
     if(i % 4 == 0) {
       y += 300;
