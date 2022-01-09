@@ -35,7 +35,7 @@ export default async function (client) {
           await g.commands.set(Object.values(Dev));
         }
       } else {
-        await g.commands.set(cmdarr);
+        // await g.commands.set(cmdarr);
       }
     } catch (e) {
       Logger.error("Couldn't change guild slash commands!");

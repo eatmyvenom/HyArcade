@@ -176,7 +176,7 @@ async function generateImage (acc, time) {
   img.drawMcText("&l&fTop Arcade Games", img.canvas.width / 2, 80, 128, "center");
   img.drawMcText(`${ImageGenerator.formatAcc(acc)}`, img.canvas.width / 2, 220, 128, "center");
 
-  img.drawMcText("&f&lTotal Wins", img.canvas.width / 2, 400, 98, "center");
+  img.drawMcText("&f&lTotal Wins", img.canvas.width / 2, 400, 96, "center");
   img.drawMcText(`&e${numberify(acc.combinedArcadeWins)}`, img.canvas.width / 2, 504, 112, "center");
 
   let y = 700;
@@ -199,7 +199,7 @@ async function generateImage (acc, time) {
     }
     
     img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 76, "center");
-    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 108, "center");
+    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 104, "center");
 
     if(i % 4 == 0) {
       y += 300;

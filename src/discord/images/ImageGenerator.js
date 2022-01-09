@@ -4,11 +4,11 @@ const Account = require("hyarcade-requests/types/Account");
 
 const imgCache = [];
 
-Canvas.registerFont("resources/mc.otf", {
+Canvas.registerFont("resources/minecraft.ttf", {
   family: "myFont"
 });
 
-Canvas.registerFont("resources/mcbold.otf", {
+Canvas.registerFont("resources/bold.otf", {
   family: "boldmc",
 });
 
@@ -63,6 +63,8 @@ module.exports = class ImageGenerator {
     constructor (width, height, font = "Fira Code", shadow = false) {
       this.canvas = Canvas.createCanvas(width, height);
       this.context = this.canvas.getContext("2d");
+      this.context.antialias = "none";
+      this.context.textDrawingMode = "glyph";
       this.font = font;
       this.shadow = shadow;
     }
@@ -98,7 +100,7 @@ module.exports = class ImageGenerator {
     }
 
     drawMcText (txt, x, y, size = 32, align = "left", tag = false, fake = false) {
-      const offset = size * 0.1;
+      const offset = size * 0.08;
       this.context.font = `${size}px 'myfont'`;
       this.context.textAlign = align;
       this.context.textBaseline = "middle";
@@ -764,6 +766,6 @@ module.exports = class ImageGenerator {
     }
 
     toDiscord (name = "image.png") {
-      return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 5 }), name);
+      return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 3 }), name);
     }
 };
