@@ -52,19 +52,7 @@ function getMain (acc) {
   return { game: game.replace(/_/g, " "), num: numberify(max) };
 }
 
-/**
- * 
- * @param {Account} account 
- * @returns {number}
- */
-function top100s (account) {
-  if(account.positions) {
-    return Object.values(account.positions).filter((pos) => pos < 101).length;
-  }
-  return 0;
-}
-
-export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*"], async (args, rawMsg, interaction) => {
   const player = args[0];
   let acc;
   if (interaction == undefined) {
@@ -79,7 +67,7 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
   }
 
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
-  await img.addBackground("resources/arcblur2.png", 0, 0, 1280, 800, "#00000088");
+  await img.addBackground("resources/arcblur2.png", 0, 0, 1280, 800, "#0000008F");
 
   img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
   img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");
@@ -95,8 +83,8 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
 
   let y = ogY;
 
-  img.drawMcText("&eTotal Wins", 300, y += increase, 42, "center");
-  img.drawMcText(`&e${wins}`, 300, y += increase, 50, "center");
+  img.drawMcText("&eTotal Wins", 640, y += increase, 42, "center");
+  img.drawMcText(wins, 640, y += increase, 50, "center");
 
   y += spacer;
 
@@ -113,14 +101,10 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
   img.drawMcText("&aArcade Coins", 300, y += increase, 42, "center");
   img.drawMcText(`&a${numberify(acc.arcadeCoins)}`, 300, y += increase, 50, "center");
 
-  y = ogY;
-
-  img.drawMcText("&eTop 100 spots", 1280 - 300, y += increase, 42, "center");
-  img.drawMcText(`&e${top100s(acc)}`, 1280 - 300, y += increase, 50, "center");
-
-  y += spacer;
+  y = ogY + increase + increase + spacer;
 
   const main = getMain(acc);
+
   img.drawMcText(`&b${main.game} Wins`, 1280 - 300, y += increase, 42, "center");
   img.drawMcText(`&b${main.num}`, 1280 - 300, y += increase, 50, "center");
 
@@ -131,8 +115,8 @@ export default new Command(["profile", "p", "arcprofile"], ["*"], async (args, r
 
   y += spacer;
 
-  img.drawMcText("&aArcade Score", 1280 - 300, y += increase, 42, "center");
-  img.drawMcText(`&a${numberify(Math.floor(acc.importance))}`, 1280 - 300, y += increase, 50, "center");
+  img.drawMcText("&aCoins Earned", 1280 - 300, y += increase, 42, "center");
+  img.drawMcText(`&a${numberify(acc.coinsEarned)}`, 1280 - 300, y += increase, 50, "center");
 
   const attachment = img.toDiscord();
 
