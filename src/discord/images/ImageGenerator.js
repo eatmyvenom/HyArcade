@@ -509,7 +509,7 @@ module.exports = class ImageGenerator {
         } else if (acc.rank == "YOUTUBER") {
           rank = `${colorFormatters.red}[${colorFormatters.white}YOUTUBE${colorFormatters.red}] `;
         } else if (acc.rank == "GM") {
-          rank = `${colorFormatters.green}[GM] `;
+          rank = `${colorFormatters.dark_green}[GM] `;
         } else if (acc.rank == "ADMIN") {
           rank = `${colorFormatters.red}[ADMIN] `;
         } else if (acc.rank == "NONE" || acc.rank == "NORMAL" || acc.rank == undefined || acc.rank == "") {
@@ -532,7 +532,7 @@ module.exports = class ImageGenerator {
         } else if (acc.rank == "YOUTUBER") {
           rank = `${colorFormatters.red}`;
         } else if (acc.rank == "GM") {
-          rank = `${colorFormatters.green}`;
+          rank = `${colorFormatters.dark_green}`;
         } else if (acc.rank == "ADMIN") {
           rank = `${colorFormatters.red}`;
         } else if (acc.rank == "NONE" || acc.rank == "NORMAL" || acc.rank == undefined || acc.rank == "") {
