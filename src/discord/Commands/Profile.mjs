@@ -84,7 +84,7 @@ export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*
   let y = ogY;
 
   img.drawMcText("&eTotal Wins", 640, y += increase, 42, "center");
-  img.drawMcText(wins, 640, y += increase, 50, "center");
+  img.drawMcText(`&e${wins}`, 640, y += increase, 50, "center");
 
   y += spacer;
 

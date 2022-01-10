@@ -12,9 +12,6 @@ import Requests from "hyarcade-requests";
 
 const { CommandInteraction, Message } = require("discord.js");
 
-const BORDER_COLOR = "#000000FF";
-const BG_COLOR = "#444444CC";
-
 /**
  * 
  * @param {object} status 
@@ -223,8 +220,12 @@ function lastSeen (acc) {
  * @returns {string}
  */
 function loggedIn (acc) { 
-  return TimeFormatter(acc.lastLogin);
 
+  if(acc.lastLogin == 0) {
+    return "Hidden";
+  }
+
+  return TimeFormatter(acc.lastLogin);
 }
 
 /**
@@ -245,136 +246,77 @@ async function callback (args, rawmsg, interaction) {
   }
 
   const status = await Requests.HypixelApi.status(acc.uuid);
-  const counts = await Requests.HypixelApi.counts();
 
-  const modeOthers = counts?.games?.[status.session.gameType]?.modes?.[status.session.mode] ?? "Unknown";
-  const typeOthers = counts?.games?.[status.session.gameType]?.players ?? "Unknown";
+  const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
-  const img = new ImageGenerator(1280, 800, "'myFont'");
-
-  await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000002F");
-
-  img.context.beginPath();
-  img.context.rect(0, 56, 544, 56);
-  img.context.fillStyle = BG_COLOR;
-  img.context.fill();
-
-  img.context.beginPath();
-  img.context.rect(0, 56, 544, 56);
-  img.context.strokeStyle = BORDER_COLOR;
-  img.context.stroke();
-
-  await img.writeText("-", 36, 84, "center", "#FFFFFFFF", "32px");
-  await img.writeAcc(acc, 72, 84, "32px");
-
+  const startY = 200;
+  const increase = 50;
+  const spacer = 40;
+  
+  let y = startY;
   if(status.session.online) {
-    img.context.beginPath();
-    img.context.rect(0, 168, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 168, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
-    
-    await img.writeText("-", 36, 196, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Type : ${status.session.gameType}`, 72, 196, "left", "#55FF55", "32px");
-    
-    img.context.beginPath();
-    img.context.rect(0, 280, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 280, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
-    
-    await img.writeText("-", 36, 154 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Mode : ${status.session.mode}`, 72, 154 * 2, "left", "#55FFFF", "32px");
+    const counts = await Requests.HypixelApi.counts();
 
-    img.context.beginPath();
-    img.context.rect(736, 224, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(736, 224, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
+    const modeOthers = counts?.games?.[status.session.gameType]?.modes?.[status.session.mode] ?? "Unknown";
+    const typeOthers = counts?.games?.[status.session.gameType]?.players ?? "Unknown";
 
-    await img.writeText("-", 736 + (36), 252, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`${status.session.gameType} : ${typeOthers}`, 736 + (72), 252, "left", "#55FF55", "32px");
+    const type = `${status.session.gameType}`;
+    const mode = `${status.session.mode}`;
 
-    img.context.beginPath();
-    img.context.rect(736, 336, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(736, 336, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
+    const modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
+    const typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
 
-    await img.writeText("-", 736 + (36), 182 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`${status.session.mode} : ${modeOthers}`, 736 + (72), 182 * 2, "left", "#55FFFF", "32px");
+    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000008F");
 
-    img.context.beginPath();
-    img.context.rect(0, 392, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 392, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
+    await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
+    await img.drawMcText(ImageGenerator.formatAcc(acc, true), img.canvas.width / 2, 100, 56, "center");
 
-    await img.writeText("-", 36, 210 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Map : ${status.session.map ?? status.session.mode}`, 72, 210 * 2, "left", "#FFFF55", "32px");
 
-    img.context.beginPath();
-    img.context.rect(0, 504, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 504, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
+    await img.drawMcText("&aType", 300, y += increase, 42, "center");
+    await img.drawMcText(`&a${typeName}`, 300, y += increase, 50, "center");
 
-    await img.writeText("-", 36, 266 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Login : ${loggedIn(acc)}`, 72, 266 * 2, "left", "#55FF55", "32px");
+    y += spacer;
+
+    await img.drawMcText("&bMode", 300, y += increase, 42, "center");
+    await img.drawMcText(`&b${modeName}`, 300, y += increase, 50, "center");
+
+    y += spacer;
+
+    await img.drawMcText("&eMap Name", 300, y += increase, 42, "center");
+    await img.drawMcText(`&e${status.session.map ?? modeName}`, 300, y += increase, 50, "center");
+
+    y += spacer;
+
+    await img.drawMcText("&aLogin Time", 300, y += increase, 42, "center");
+    await img.drawMcText(`&a${loggedIn(acc)}`, 300, y += increase, 50, "center");
+
+    y = startY;
+
+    await img.drawMcText(`&a${typeName} players`, img.canvas.width - 300, y += increase, 42, "center");
+    await img.drawMcText(`&a${typeOthers}`, img.canvas.width - 300, y += increase, 50, "center");
+
+    y += spacer;
+
+    if(status.session.mode != undefined) {
+      await img.drawMcText(`&b${modeName} players`, img.canvas.width - 300, y += increase, 42, "center");
+      await img.drawMcText(`&b${modeOthers}`, img.canvas.width - 300, y += increase, 50, "center");
+    }
+
   } else {
-    img.context.beginPath();
-    img.context.rect(0, 168, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 168, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
-    
-    await img.writeText("-", 36, 196, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Logout : ${lastSeen(acc)}`, 72, 196, "left", "#55FF55", "32px");
+    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000008F");
+    await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
+    await img.drawMcText(ImageGenerator.formatAcc(acc, true), img.canvas.width / 2, 100, 56, "center");
 
-    img.context.beginPath();
-    img.context.rect(0, 280, 544, 56);
-    img.context.fillStyle = BG_COLOR;
-    img.context.fill();
-    
-    img.context.beginPath();
-    img.context.rect(0, 280, 544, 56);
-    img.context.strokeStyle = BORDER_COLOR;
-    img.context.stroke();
-    
+    await img.drawMcText("&aLast Logout", 300, y += increase, 42, "center");
+    await img.drawMcText(`&a${lastSeen(acc)}`, 300, y += increase, 50, "center");
+
+    y += spacer + increase + increase + spacer;
 
     let game = acc.mostRecentGameType;
     game = `${game.slice(0, 1).toUpperCase()}${game.slice(1).toLowerCase()}`.replace(/_/g, " ");
 
-    await img.writeText("-", 36, 154 * 2, "center", "#FFFFFFFF", "32px");
-    await img.writeText(`Last Mode : ${game}`, 72, 154 * 2, "left", "#55FFFF", "32px");
+    await img.drawMcText("&bLast Mode", 300, y += increase, 42, "center");
+    await img.drawMcText(`&b${game}`, 300, y += increase, 50, "center");
   }
 
 
