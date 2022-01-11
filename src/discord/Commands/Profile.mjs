@@ -67,7 +67,7 @@ export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*
   }
 
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
-  await img.addBackground("resources/arcblur2.png", 0, 0, 1280, 800, "#0000008F");
+  await img.addBackground("resources/arcblur5.png", 0, 0, 1280, 800, "#0000008F");
 
   img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
   img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");
