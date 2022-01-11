@@ -171,7 +171,7 @@ async function generateImage (acc, time) {
   const games = getGames(acc);
 
   const img = new ImageGenerator(3000, 1800, "'myFont'", true);
-  await img.addBackground("resources/arcblur.png", 0, 0, 3000, 2040, "#0000006F");
+  await img.addBackground("resources/arcblur4.png", 0, 0, 3000, 2040, "#0000006F");
 
   img.drawMcText("&l&fTop Arcade Games", img.canvas.width / 2, 80, 128, "center");
   img.drawMcText(`${ImageGenerator.formatAcc(acc)}`, img.canvas.width / 2, 220, 128, "center");

@@ -101,13 +101,14 @@ async function leaderboardFiller (interaction) {
     } catch (e) {
       Logger.err(e);
     }
+
     break;
   }
 
   case "stat" : {
 
-    if(category != "general" && category != "others") {
-      const types = Object.keys(testStats[category]).map((k) => ({ name:
+    if(category != "general" && category != "others" && testStats[category]) {
+      const types = Object.keys(testStats[category] ?? {}).map((k) => ({ name:
         k.slice(0, 1).toUpperCase() +
         k.slice(1).replace(/([A-Z])/g, " $1")
           .replace(/_zombies/g, "")
