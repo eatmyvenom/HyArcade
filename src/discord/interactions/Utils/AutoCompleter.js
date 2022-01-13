@@ -8,6 +8,13 @@ const Logger = require("hyarcade-logger");
  */
 let testStats = undefined;
 
+/**
+ * 
+ */
+async function startUp () {
+  testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
+  Object.assign(testStats.zombies, zombies);
+}
 
 /**
  * @param {AutocompleteInteraction} interaction
@@ -55,8 +62,8 @@ const zombies = {
 async function leaderboardFiller (interaction) {
 
   if(testStats == undefined) {
-    testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
-    Object.assign(testStats.zombies, zombies);
+    return;
+
   }
 
   const category = interaction.options.getString("category");
@@ -168,5 +175,9 @@ async function leaderboardFiller (interaction) {
   }
   }
 }
+
+startUp()
+  .then(() => {})
+  .catch(Logger.err);
 
 module.exports = filler;
