@@ -13,67 +13,12 @@ const {
   stringDaily
 } = require("./src/listUtils");
 const args = process.argv;
-const cluster = require("./src/cluster/cluster");
 const task = require("./src/cluster/task");
 
-const Cfg = require("./src/Config");
-const config = Cfg.fromJSON();
 const AccountEvent = require("./src/classes/Event");
-const dataGeneration = require("./src/dataGeneration");
-const Server = require("./src/server/Wrap");
-const Translator = require("./src/mongo/Translator");
 const logger = require("hyarcade-logger");
-const BSONreader = require("./src/utils/files/BSONreader");
-const AddFriends = require("./src/datagen/AddFriends");
 const Runtime = require("./src/Runtime").fromJSON();
 
-/**
- * Run the accounts task
- *
- */
-async function updateAllAccounts () {
-  await task.accounts();
-}
-
-/**
- * Run the players task
- *
- */
-async function updateAllPlayers () {
-  await task.players();
-}
-
-/**
- * Run the guilds task
- *
- */
-async function updateAllGuilds () {
-  await task.guilds();
-}
-
-/**
- * Run all three of the stats tasks
- * 
- * @see save
- * @see updateAllAccounts
- * @see updateAllPlayers
- * @see updateAllGuilds
- */
-async function updateAll () {
-  await updateAllAccounts();
-  await updateAllPlayers();
-  await updateAllGuilds();
-}
-
-/**
- * Wrapper around updateAll()
- * 
- * @see updateAll
- */
-async function save () {
-  // this was all abstracted
-  await updateAll();
-}
 /**
  * Send a list to a discord webhook as formatted text
  * 
@@ -213,15 +158,6 @@ async function writeFileD (args) {
 }
 
 /**
- * wrapper function to do all cluster tasks
- */
-async function clusterHandler () {
-  const cstr = new cluster(config.cluster);
-  await cstr.doTasks();
-  await cstr.uploadData();
-}
-
-/**
  * Run the games played task
  *
  */
@@ -266,22 +202,6 @@ async function rmPID () {
 async function sendDiscordEvent () {
   const event = new AccountEvent(args[3], args[4], args[5], args[6], args[7], args[8]);
   await event.toDiscord();
-}
-
-/**
- * Minify config file
- */
-async function miniconfig () {
-  const conf = Cfg.fromJSON();
-  await fs.writeFile("./config.min.json", JSON.stringify(conf));
-}
-
-/**
- * Log everyones game counts
- */
-async function logGames () {
-  const games = await BSONreader("gameCounts.bson");
-  console.log(JSON.stringify(games, null, 4));
 }
 
 /**
@@ -340,9 +260,6 @@ async function main () {
     await writeFileD(args);
     break;
 
-  case "save":
-    await save();
-    break;
   case "snap":
     await snap(args[3]);
     break;
@@ -365,24 +282,8 @@ async function main () {
     await gamesPlayed();
     break;
 
-  case "logGames":
-    await logGames();
-    break;
-
   case "games":
     await gameAmnt();
-    break;
-
-  case "cluster":
-    await clusterHandler();
-    break;
-  
-  case "accs": 
-    await updateAllAccounts();
-    break;
-
-  case "guilds":
-    await updateAllGuilds();
     break;
 
   case "ssweek": 
@@ -455,10 +356,6 @@ async function main () {
     await addLeaderboards();
     break;
 
-  case "names":
-    await cli.checkNames();
-    break;
-
   case "newAcc":
     await cli.newAcc();
     break;
@@ -469,10 +366,6 @@ async function main () {
     await cli.newGuild();
     break;
 
-  case "moveAcc":
-    await cli.moveAcc();
-    break;
-
   case "getUUID":
     await cli.getUUID(args);
     break;
@@ -481,12 +374,6 @@ async function main () {
   case "gmembers":
   case "addGM":
     await cli.addGuildMembers(args);
-    break;
-
-  case "addfl":
-  case "addfriends":
-  case "addf": 
-    await AddFriends(args[3]);
     break;
 
   case "addGID":
@@ -508,26 +395,10 @@ async function main () {
     await sendDiscordEvent();
     break;
 
-  case "minify":
-    await miniconfig();
-    break;
-
-  case "boosters":
-    await dataGeneration.saveBoosters();
-    break;
-
-  case "translateDb":
-    await Translator();
-    break;
-
-  case "checkStatus": {
-    console.log(await cli.getServerStatus());
-    break;
-  }
-
   case "serveDB": {
+    const Server = require("./src/server/Wrap");
     logger.out("Starting server for database and listening on port 6000");
-    Server(6000);
+    await Server(6000);
     killable = false;
     break;
   }
