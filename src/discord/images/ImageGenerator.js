@@ -100,7 +100,7 @@ module.exports = class ImageGenerator {
     }
 
     drawMcText (txt, x, y, size = 32, align = "left", tag = false, fake = false) {
-      const offset = size * 0.08;
+      const offset = size * 0.1;
       this.context.font = `${size}px 'myfont'`;
       this.context.textAlign = align;
       this.context.textBaseline = "middle";
@@ -108,7 +108,8 @@ module.exports = class ImageGenerator {
       const lineArr = txt.includes("&") ? txt.split(/&/) : [`r${txt}`];
 
       let currentX = x;
-      let shadowColor = "#00000072";
+      let shadowColor = "#3F3F3F";
+      this.context.fillStyle = "#FFFFFF";
 
       if(align == "center") {
         const totalWidth = this.drawMcText(txt, x, y, size, "left", false, true);
