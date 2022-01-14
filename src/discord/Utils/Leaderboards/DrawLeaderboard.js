@@ -1,5 +1,8 @@
 const Logger = require("hyarcade-logger");
 const ImageGenerator = require("../../images/ImageGenerator");
+const Config = require("hyarcade-config");
+
+const cfg = Config.fromJSON();
 
 /**
  * 
@@ -14,7 +17,7 @@ const ImageGenerator = require("../../images/ImageGenerator");
 async function DrawLeaderboard (res, valueGetter, time, startingIndex, formatter, title) {
   const img = new ImageGenerator(2560, 1600, "'myFont'", true);
   Logger.verbose("Adding background");
-  await img.addBackground("resources/arcblur.png", 0, 0, 2560, 1600, "#0000008F");
+  await img.addBackground(cfg.commandImages.leaderboard.file, 0, 0, 2560, 1600, cfg.commandImages.leaderboard.overlay);
 
   Logger.verbose("Drawing text");
   img.drawMcText(`&e${title}`, 1280, 80, 112, "center");

@@ -1,10 +1,13 @@
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
+import Config from "hyarcade-config";
 import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+
+const cfg = Config.fromJSON();
 
 /**
  * @param {number} n
@@ -67,7 +70,7 @@ export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*
   }
 
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
-  await img.addBackground("resources/arcblur5.png", 0, 0, 1280, 800, "#0000008F");
+  await img.addBackground(cfg.commandImages.profile.file, 0, 0, 1280, 800, cfg.commandImages.leaderboard.overlay);
 
   img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
   img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");

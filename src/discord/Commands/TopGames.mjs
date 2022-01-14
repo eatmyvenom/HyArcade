@@ -10,6 +10,9 @@ import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 import ImageGenerator from "../images/ImageGenerator.js";
+import Config from "hyarcade-config";
+
+const cfg = Config.fromJSON();
 
 /**
  * @param {Account} acc
@@ -171,7 +174,7 @@ async function generateImage (acc, time) {
   const games = getGames(acc);
 
   const img = new ImageGenerator(3000, 1800, "'myFont'", true);
-  await img.addBackground("resources/arcblur4.png", 0, 0, 3000, 2040, "#0000006F");
+  await img.addBackground(cfg.commandImages.topGames.file, 0, 0, 3000, 2040, cfg.commandImages.topGames.overlay);
 
   img.drawMcText("&l&fTop Arcade Games", img.canvas.width / 2, 80, 128, "center");
   img.drawMcText(`${ImageGenerator.formatAcc(acc)}`, img.canvas.width / 2, 220, 128, "center");
