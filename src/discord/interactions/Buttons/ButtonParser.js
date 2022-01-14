@@ -14,6 +14,7 @@ const ButtonResponse = require("./ButtonResponse");
 let zombies = undefined;
 let topGames = undefined;
 let partyGames = undefined;
+let ezmsgs = undefined;
 
 /**
  * 
@@ -118,8 +119,10 @@ async function leaderboardHandler (interaction, leaderboard, time, index) {
  * @returns {ButtonResponse}
  */
 async function ezHandler () {
-  const msgs = await BotRuntime.getFromDB("ezmsgs");
-  const msg = msgs[Math.floor(Math.random() * msgs.length)];
+  if(ezmsgs == undefined) {
+    ezmsgs = await BotRuntime.getFromDB("ezmsgs");
+  }
+  const msg = ezmsgs[Math.floor(Math.random() * ezmsgs.length)];
   const buttons = await ButtonGenerator.getEZ();
   return new ButtonResponse(msg, undefined, buttons);
 }
