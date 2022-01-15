@@ -18,7 +18,7 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg, interaction) => {
+module.exports = new Command(["old-stats"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
   const game = args[1];
   let time = args[2] ?? "lifetime";
@@ -62,8 +62,16 @@ module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg,
   if(interaction == undefined) {
     res = await BotRuntime.resolveAccount(plr, rawMsg, true, time);
   } else {
-    await interaction.deferReply();
-    res = await InteractionUtils.resolveAccount(interaction, "player", time);
+    if(interaction.isButton()) {
+      await interaction.deferUpdate();
+      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+    } else if (interaction.isSelectMenu()) {
+      await interaction.deferUpdate();
+      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+    } else {
+      await interaction.deferReply();
+      res = await InteractionUtils.resolveAccount(interaction, "player", time);
+    }
   }
 
   if(time == "lifetime") {
@@ -80,7 +88,7 @@ module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg,
 
   const cmdRes = await BotRuntime.getStats(acc, `${game}`);
   const e = cmdRes.embed;
-  const menu = await MenuGenerator.statsMenu(acc.uuid, time, cmdRes.game);
+  const menu = await MenuGenerator.statsMenu(acc.uuid, time, game ?? "undefined");
   return {
     res: "",
     embed: e,

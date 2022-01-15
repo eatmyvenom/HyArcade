@@ -37,8 +37,6 @@ module.exports = class InteractionUtils {
       await acc.updateData();
     }
 
-    Database.accCache[uuid] = acc;
-
     return acc;
   }
 

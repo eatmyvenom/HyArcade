@@ -21,7 +21,7 @@ export default async (interaction) => {
 
   switch(interaction.commandName) {
   case "stats": {
-    return commands.Stats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
+    return commands.gameStats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
   }
 
   case "leaderboard": {
@@ -77,10 +77,6 @@ export default async (interaction) => {
 
   case commands.Info.name: {
     return await commands.Info.execute([], authorID, null, interaction);
-  }
-
-  case commands.Susser.name: {
-    return await commands.Susser.execute([opts.getString("player")], authorID, null, interaction);
   }
 
   case commands.Compare.name: {

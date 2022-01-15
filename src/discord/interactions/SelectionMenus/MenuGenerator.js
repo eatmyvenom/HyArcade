@@ -216,7 +216,7 @@ module.exports = class MenuGenerator {
 
     row2.addComponents(lifetime, day, weekly, monthly);
 
-    return [row2, row];
+    return [row, row2];
   }
 
   static partyGamesMenu (uuid, game, time) {

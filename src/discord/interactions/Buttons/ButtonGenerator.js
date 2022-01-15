@@ -83,7 +83,7 @@ module.exports = class ButtonGenerator {
 
     const row = new MessageActionRow().addComponents(lifetime, day, weekly, monthly);
 
-    return row;
+    return [row];
   }
 
   static async getTopGames (currentTime, uuid) {

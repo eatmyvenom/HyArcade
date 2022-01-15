@@ -2,28 +2,12 @@ const {
   ButtonInteraction, Interaction
 } = require("discord.js");
 const BotRuntime = require("../../BotRuntime");
-const Leaderboard = require("../../Commands/Leaderboard");
-const miwCommand = require("../../Commands/MiniWalls");
-const AccountComparitor = require("../../Utils/AccountComparitor");
-const CommandResponse = require("../../Utils/CommandResponse");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../../Utils/Embeds/DynamicEmbeds");
-const MenuGenerator = require("../SelectionMenus/MenuGenerator");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 
-let zombies = undefined;
-let topGames = undefined;
-let partyGames = undefined;
-let ezmsgs = undefined;
+let commandStorage = undefined;
 
-/**
- * 
- * @param {string} ign 
- * @returns {CommandResponse}
- */
-function nonDatabaseError (ign) {
-  return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
-}
+let ezmsgs = undefined;
 
 /**
  * 
@@ -74,23 +58,15 @@ module.exports = async function ButtonParser (interaction) {
  * @returns {ButtonResponse}
  */
 async function statsHandler (accUUID, time = "lifetime", game, interaction) {
-  await interaction.deferUpdate();
-  let acc = await BotRuntime.resolveAccount(accUUID, undefined, false, time, false);
-
-  if(time != "lifetime") {
-    if(acc?.timed == undefined) {
-      return nonDatabaseError(acc?.acc?.name ?? "INVALID-NAME");
-    }
-    acc = AccountComparitor(acc?.acc, acc?.timed);
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
+  const commands = await commandStorage.default.getCommands();
 
-  const statsRes = await BotRuntime.getStats(acc, game);
-  const {
-    embed
-  } = statsRes;
+  const res = await commands.gameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  const mnu = await MenuGenerator.statsMenu(accUUID, time, game);
-  return new ButtonResponse("", [embed], mnu);
+  return new ButtonResponse("", undefined, res.components, [ res.file ]);
 }
 
 /**
@@ -101,7 +77,14 @@ async function statsHandler (accUUID, time = "lifetime", game, interaction) {
  * @returns {ButtonResponse}
  */
 async function leaderboardHandler (interaction, leaderboard, time, index) {
-  const res = await Leaderboard.execute(
+
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
+  }
+  const commands = await commandStorage.default.getCommands();
+
+  const res = await commands.Leaderboard.execute(
     [leaderboard, time, index],
     interaction.user.id,
     undefined,
@@ -135,12 +118,13 @@ async function ezHandler () {
  * @returns {ButtonResponse}
  */
 async function zombiesHandler (accUUID, map, interaction) {
-
-  if(zombies == undefined) {
-    zombies = await import("../../Commands/Zombies.mjs");
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
+  const commands = await commandStorage.default.getCommands();
 
-  const zombiesRes = await zombies.default.execute([accUUID, map], interaction.user.id, undefined, interaction);
+  const zombiesRes = await commands.Zombies.execute([accUUID, map], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", [zombiesRes.embed], zombiesRes.components);
 }
@@ -154,11 +138,13 @@ async function zombiesHandler (accUUID, map, interaction) {
  * @returns {ButtonResponse}
  */
 async function topGamesHandler (accUUID, timetype, interaction) {
-  if(topGames == undefined) {
-    topGames = await import("../../Commands/TopGames.mjs");
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
+  const commands = await commandStorage.default.getCommands();
 
-  const topGamesRes = await topGames.default.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
+  const topGamesRes = await commands.TopGames.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
   if(topGamesRes == undefined) {
     return undefined;
@@ -175,8 +161,13 @@ async function topGamesHandler (accUUID, timetype, interaction) {
  * @returns {ButtonResponse}
  */
 async function miwHandler (accUUID, timetype, interaction) {
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
+  }
+  const commands = await commandStorage.default.getCommands();
   await interaction.deferUpdate();
-  const miwRes = await miwCommand.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
+  const miwRes = await commands.MiniWalls.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", undefined, miwRes.components, [ miwRes.file ]);
 }
@@ -189,11 +180,13 @@ async function miwHandler (accUUID, timetype, interaction) {
  * @returns {ButtonResponse}
  */
 async function pgHandler (accUUID, time, game, interaction) {
-  if(partyGames == undefined) {
-    partyGames = await import("../../Commands/PartyGames.mjs");
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
+  const commands = await commandStorage.default.getCommands();
 
-  const pgRes = await partyGames.default.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
+  const pgRes = await commands.PartyGames.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
 }

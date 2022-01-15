@@ -1,6 +1,7 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
+const StackBlur = require("stackblur-canvas");
 
 const imgCache = [];
 
@@ -67,6 +68,10 @@ module.exports = class ImageGenerator {
       this.context.textDrawingMode = "glyph";
       this.font = font;
       this.shadow = shadow;
+    }
+
+    async blur (radius = 32) {
+      StackBlur.canvasRGBA(this.canvas, 0, 0, this.canvas.width, this.canvas.height, radius);
     }
 
     async addBackground (path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {

@@ -1,14 +1,10 @@
 const {
   SelectMenuInteraction
 } = require("discord.js");
-const BotRuntime = require("../../BotRuntime");
 const ButtonResponse = require("../Buttons/ButtonResponse");
-const MenuGenerator = require("./MenuGenerator");
-const Logger = require("hyarcade-logger");
-const AccountComparitor = require("../../Utils/AccountComparitor");
 const ArcadeAP = require("../../Commands/ArcadeAP");
 
-let partyGames = undefined;
+let commandStorage = undefined;
 
 /**
  * 
@@ -41,23 +37,15 @@ module.exports = async function MenuParser (interaction) {
  * @returns {ButtonResponse}
  */
 async function statsHandler (accUUID, time, game, interaction) {
-  await interaction.deferUpdate();
-  let acc = await BotRuntime.resolveAccount(accUUID, undefined, false, time, false);
-
-  if(acc.timed != undefined) {
-    Logger.info("Getting account diff");
-    const tmpAcc = AccountComparitor(acc.acc, acc.timed);
-
-    acc = tmpAcc;
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
+  const commands = await commandStorage.default.getCommands();
 
-  const statsRes = await BotRuntime.getStats(acc, game);
-  const {
-    embed
-  } = statsRes;
+  const res = await commands.gameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  const mnu = await MenuGenerator.statsMenu(accUUID, time, game);
-  return new ButtonResponse("", [embed], mnu);
+  return new ButtonResponse("", undefined, res.components, [ res.file ]);
 }
 
 /**
@@ -68,11 +56,14 @@ async function statsHandler (accUUID, time, game, interaction) {
  * @returns {ButtonResponse}
  */
 async function partyGamesHandler (accUUID, time, game, interaction) {
-  if(partyGames == undefined) {
-    partyGames = await import("../../Commands/PartyGames.mjs");
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
   }
 
-  const pgRes = await partyGames.default.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
+  const commands = await commandStorage.default.getCommands();
+
+  const pgRes = await commands.PartyGames.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
   return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
 }
