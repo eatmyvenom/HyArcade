@@ -550,7 +550,7 @@ async function genImg (account, game = "") {
 
     y += spacer;
 
-    img.drawMcText("&bBlocks Broken", x, y += lineHeight, txtSize, "left");
+    img.drawMcText("&bZombie Kills", x, y += lineHeight, txtSize, "left");
     img.drawMcText(`&b${numberify(account.blockingDead.kills)}`, x, y += lineHeight, size, "left");
 
     y += spacer;
