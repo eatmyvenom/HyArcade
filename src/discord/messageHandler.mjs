@@ -16,7 +16,7 @@ import MiniWallsVerify from "./MiniWallsVerify.mjs";
 import VerifyChannel from "./VerifyChannel.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
 const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
-const { Message, Collection, Webhook } = require("discord.js");
+const { Message } = require("discord.js");
 
 /**
  * 
@@ -108,7 +108,7 @@ async function isBlacklisted (id) {
 async function sendText (msg, cmdResponse) {
   const runtime = Runtime.fromJSON();
   if(runtime.bot != "backup") {
-    Logger.info("No webhook availiable. Sending normally");
+    Logger.info("Sending command response!");
     try {
       const msgObj = cmdResponse.toDiscord({
         messageReference: msg.id
@@ -129,27 +129,7 @@ async function sendText (msg, cmdResponse) {
  * @param {CommandResponse} cmdResponse 
  */
 async function sendNormal (msg, cmdResponse) {
-  /**
-   * @type {Collection<string, Webhook>}
-   */
-  let hooks;
-  try {
-    hooks = await msg.channel.fetchWebhooks();
-  } catch (e) {
-    await sendText(msg, cmdResponse);
-  }
-  Logger.info("Attempting to send response as webhook");
-
-  if(hooks.size > 0) {
-    const hook = hooks.first();
-    try {
-      await hook.send(cmdResponse.toDiscord(undefined, true));
-    } catch (e) {
-      await sendText(msg, cmdResponse);
-    }
-  } else {
-    await sendText(msg, cmdResponse);
-  }
+  await sendText(msg, cmdResponse);
 }
 
 /**
