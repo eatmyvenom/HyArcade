@@ -233,8 +233,8 @@ async function genImg (account, game = "") {
 
     y += spacer;
 
-    img.drawMcText("&aWither Damage", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.miniWalls.witherDamage)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aWither &7(Damage / Kills)", x, y += lineHeight, txtSize, "left");
+    img.drawMcText(`&a${numberify(account.miniWalls.witherDamage)} / ${numberify(account.miniWalls.witherKills)}`, x, y += lineHeight, size, "left");
 
     y += spacer;
 
@@ -269,7 +269,7 @@ async function genImg (account, game = "") {
     y += spacer;
 
     img.drawMcText("&bArrow Accuracy", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${((account.miniWalls.arrowsShot) / account.miniWalls.arrowsHit).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText(`&b${((account.miniWalls.arrowsHit / account.miniWalls.arrowsShot) * 100).toFixed(2)} %`, img.canvas.width - x, y += lineHeight, size, "right");
 
     return img;
   }
