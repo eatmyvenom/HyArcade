@@ -62,8 +62,8 @@ const zombies = {
 async function leaderboardFiller (interaction) {
 
   if(testStats == undefined) {
-    return;
-
+    testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
+    Object.assign(testStats.zombies, zombies);
   }
 
   const category = interaction.options.getString("category");
@@ -92,6 +92,7 @@ async function leaderboardFiller (interaction) {
       categorys["Farm Hunt"] = categorys.Farmhunt;
       categorys.Seasonal = categorys["Seasonal Wins"];
 
+      delete categorys["Action Time"];
       delete categorys["Seasonal Wins"];
       delete categorys["Arcade Achievments"];
       delete categorys.Farmhunt;
