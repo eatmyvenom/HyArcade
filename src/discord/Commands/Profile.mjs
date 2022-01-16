@@ -25,34 +25,34 @@ function numberify (n) {
  */
 function getMain (acc) {
   const games = {
-    Party_Games: acc?.partyGames?.wins ?? 0,
-    HITW: acc?.holeInTheWall?.wins ?? 0,
-    Farm_Hunt: acc?.farmhunt?.wins ?? 0,
-    Hypixel_Says: acc?.hypixelSays?.wins ?? 0,
-    Mini_Walls: acc?.miniWalls?.wins ?? 0,
-    Football: acc?.football?.wins ?? 0,
-    Ender_Spleef: acc?.enderSpleef?.wins ?? 0,
-    Dragon_Wars: acc?.dragonWars?.wins ?? 0,
-    Galaxy_Wars: acc?.galaxyWars?.wins ?? 0,
-    Bounty_Hunters: acc?.bountyHunters?.wins ?? 0,
-    Blocking_Dead: acc?.blockingDead?.wins ?? 0,
-    Throw_Out: acc?.throwOut?.wins ?? 0,
-    Hide_and_Seek: acc?.hideAndSeek?.wins ?? 0,
-    Zombies: acc?.zombies?.wins_zombies ?? 0,
-    Pixel_Painters: acc?.pixelPainters?.wins ?? 0,
-    Seasonal: acc?.seasonalWins?.total ?? 0,
+    partyGames: { name: "Party Games", wins: acc?.partyGames?.wins ?? 0 },
+    holeInTheWall: { name: "HITW", wins: acc?.holeInTheWall?.wins ?? 0 },
+    farmHunt: { name: "Farm Hunt", wins: acc?.farmhunt?.wins ?? 0 },
+    hypixelSays: { name: "Hypixel Says", wins: acc?.hypixelSays?.wins ?? 0 },
+    miniWalls: { name: "Mini Walls", wins: acc?.miniWalls?.wins ?? 0 },
+    football: { name: "Football", wins: acc?.football?.wins ?? 0 },
+    enderSpleef: { name: "Ender Spleef", wins: acc?.enderSpleef?.wins ?? 0 },
+    dragonWars: { name: "Dragon Wars", wins: acc?.dragonWars?.wins ?? 0 },
+    galaxyWars: { name: "Galaxy Wars", wins: acc?.galaxyWars?.wins ?? 0 },
+    bountyHunters: { name: "Bounty Hunters", wins: acc?.bountyHunters?.wins ?? 0 },
+    blockingDead: { name: "Blocking Dead", wins: acc?.blockingDead?.wins ?? 0 },
+    throwOut: { name: "Throw Out", wins: acc?.throwOut?.wins ?? 0 },
+    hideAndSeek: { name: "Hide and Seek", wins: acc?.hideAndSeek?.wins ?? 0 },
+    zombies: { name: "Zombies", wins: acc?.zombies?.wins_zombies ?? 0 },
+    pixelPainters: { name: "Pixel Painters", wins: acc?.pixelPainters?.wins ?? 0 },
+    seasonal: { name: "Seasonal", wins: acc?.seasonalWins?.total ?? 0 },
   };
 
   let max = 0;
   let game = "";
   for (const g in games) {
-    if (games[g] > max) {
-      max = games[g];
-      game = g;
+    if (games[g].wins > max) {
+      max = games[g].wins;
+      game = games[g].name;
     }
   }
 
-  return { game: game.replace(/_/g, " "), num: numberify(max) };
+  return { game, num: numberify(max) };
 }
 
 export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*"], async (args, rawMsg, interaction) => {
