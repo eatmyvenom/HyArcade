@@ -23,9 +23,9 @@ module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
-    let acc = await AccountResolver(fileCache, url);
+    let resolvedAccount = await AccountResolver(fileCache, url);
 
-    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
+    if(resolvedAccount?.name == "INVALID-NAME" || resolvedAccount?.name == undefined || resolvedAccount == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
       res.end(JSON.stringify({
@@ -34,29 +34,31 @@ module.exports = async (req, res, fileCache) => {
       return;
     }
 
-    if(acc.updateTime < (Date.now() - 600000)) {
-      Logger.debug(`Updating data for ${acc.name}`);
-      const nacc = new Account(acc.name, 0, acc.uuid);
-      Object.assign(nacc, acc);
+    if(resolvedAccount.updateTime < (Date.now() - 600000)) {
+      Logger.debug(`Updating data for ${resolvedAccount.name}`);
+      const newAccount = new Account(resolvedAccount.name, 0, resolvedAccount.uuid);
+      Object.assign(newAccount, resolvedAccount);
 
-      await nacc.updateHypixel();
+      await newAccount.updateHypixel();
 
-      if(Object.keys(fakeFile).includes(nacc.uuid)) {
-        Logger.log(`Overwriting data for ${nacc.name}`);
-        Object.assign(nacc, fakeFile[nacc.uuid]);
+      if(Object.keys(fakeFile).includes(newAccount.uuid)) {
+        Logger.log(`Overwriting data for ${newAccount.name}`);
+        Object.assign(newAccount, fakeFile[newAccount.uuid]);
       }
 
-      acc = nacc;
-      fileCache.indexedAccounts[acc.uuid] = acc;
+      resolvedAccount = newAccount;
+      fileCache.indexedAccounts[resolvedAccount.uuid] = resolvedAccount;
     }
 
     const time = url.searchParams.get("time");
-    const response = {};
+    let response = {};
 
     if(time != null && time != "lifetime") {
-      response.acc = acc;
-      const timedAcc = fileCache[`indexed${time}`][acc.uuid];
-      response.timed = timedAcc;
+      response.acc = resolvedAccount;
+      const snapshotAccount = fileCache[`indexed${time}`][resolvedAccount.uuid];
+      response.timed = snapshotAccount;
+    } else {
+      response = resolvedAccount;
     }
 
     res.write(JSON.stringify(response));
