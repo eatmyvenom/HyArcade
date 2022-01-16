@@ -200,6 +200,9 @@ async function interactionHandler (interaction) {
  * @param {Client} client
  */
 export default async function (client) {
-  await registerAll(client);
+  registerAll(client)
+    .then(() => {})
+    .catch(Logger.err);
+
   client.on("interactionCreate", interactionHandler);
 }
