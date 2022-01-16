@@ -53,7 +53,7 @@ module.exports = async (req, res, fileCache) => {
     const time = url.searchParams.get("time");
     const response = {};
 
-    if(time != null) {
+    if(time != null && time != "lifetime") {
       response.acc = acc;
       const timedAcc = fileCache[`indexed${time}`][acc.uuid];
       response.timed = timedAcc;
