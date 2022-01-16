@@ -1,15 +1,13 @@
-const Account = require("hyarcade-requests/types/Account");
-const Command = require("../../classes/Command");
-const BotRuntime = require("../BotRuntime");
-const ImageGenerator = require("../images/ImageGenerator");
-const InteractionUtils = require("../interactions/InteractionUtils");
-const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
-const AccountComparitor = require("../Utils/AccountComparitor");
-const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
+import Account from "hyarcade-requests/types/Account.js";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import ImageGenerator from "../images/ImageGenerator.js";
+import InteractionUtils from "../interactions/InteractionUtils.js";
+import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
+import AccountComparitor from "../Utils/AccountComparitor.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 /**
  * @param {number} n
@@ -861,7 +859,7 @@ function nonDatabaseError (ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-module.exports = new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
   const game = args[1];
   let time = args[2] ?? "lifetime";
