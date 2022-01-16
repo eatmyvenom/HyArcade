@@ -25,21 +25,21 @@ function numberify (n) {
  */
 function getMain (acc) {
   const games = {
-    Party_games: acc?.partyGames?.wins ?? 0,
+    Party_Games: acc?.partyGames?.wins ?? 0,
     HITW: acc?.holeInTheWall?.wins ?? 0,
-    Farm_hunt: acc?.farmhunt?.wins ?? 0,
-    Hypixel_says: acc?.hypixelSays?.wins ?? 0,
-    Mini_walls: acc?.miniWalls?.wins ?? 0,
+    Farm_Hunt: acc?.farmhunt?.wins ?? 0,
+    Hypixel_Says: acc?.hypixelSays?.wins ?? 0,
+    Mini_Walls: acc?.miniWalls?.wins ?? 0,
     Football: acc?.football?.wins ?? 0,
-    Ender_spleef: acc?.enderSpleef?.wins ?? 0,
-    Dragon_wars: acc?.dragonWars?.wins ?? 0,
-    Galaxy_wars: acc?.galaxyWars?.wins ?? 0,
-    Bounty_hunters: acc?.bountyHunters?.wins ?? 0,
-    Blocking_dead: acc?.blockingDead?.wins ?? 0,
-    Throw_out: acc?.throwOut?.wins ?? 0,
-    Hide_and_seek: acc?.hideAndSeek?.wins ?? 0,
+    Ender_Spleef: acc?.enderSpleef?.wins ?? 0,
+    Dragon_Wars: acc?.dragonWars?.wins ?? 0,
+    Galaxy_Wars: acc?.galaxyWars?.wins ?? 0,
+    Bounty_Hunters: acc?.bountyHunters?.wins ?? 0,
+    Blocking_Dead: acc?.blockingDead?.wins ?? 0,
+    Throw_Out: acc?.throwOut?.wins ?? 0,
+    Hide_and_Seek: acc?.hideAndSeek?.wins ?? 0,
     Zombies: acc?.zombies?.wins_zombies ?? 0,
-    Pixel_painters: acc?.pixelPainters?.wins ?? 0,
+    Pixel_Painters: acc?.pixelPainters?.wins ?? 0,
     Seasonal: acc?.seasonalWins?.total ?? 0,
   };
 

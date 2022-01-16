@@ -31,8 +31,8 @@ async function genImg (account, game = "") {
   const startY = 600;
   const lineHeight = 110;
   const spacer = 75;
-  const x = 100;
-  const txtSize = 104;
+  const x = 800;
+  const txtSize = 96;
   const size = 112;
 
   switch(`${game}`.toLowerCase()) {
@@ -48,28 +48,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.partyGames.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.partyGames.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bStars Earned", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.partyGames.starsEarned)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bStars Earned", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.partyGames.starsEarned)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eRounds Won", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.partyGames.roundsWon)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eRounds Won", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.partyGames.roundsWon)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&aAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&a${account.arcadeAchievments.partyGames.apEarned} / ${account.arcadeAchievments.partyGames.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&aAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${account.arcadeAchievments.partyGames.apEarned} / ${account.arcadeAchievments.partyGames.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.partyGames)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.partyGames)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -89,28 +89,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.farmhunt.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.farmhunt.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bTotal Kills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.farmhunt.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bTotal Kills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.farmhunt.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eTaunts Used", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.farmhunt.tauntsUsed)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eTaunts Used", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.farmhunt.tauntsUsed)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.farmHunt.apEarned} / ${account.arcadeAchievments.farmHunt.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.farmHunt.apEarned} / ${account.arcadeAchievments.farmHunt.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.farmhunt)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.farmhunt)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -130,28 +130,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.hypixelSays.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.hypixelSays.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bTotal Points", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.hypixelSays.totalPoints)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bTotal Points", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.hypixelSays.totalPoints)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eRound Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.hypixelSays.totalRoundWins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eRound Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.hypixelSays.totalRoundWins)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.hypixelSays.apEarned} / ${account.arcadeAchievments.hypixelSays.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.hypixelSays.apEarned} / ${account.arcadeAchievments.hypixelSays.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.hypixelSays)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.hypixelSays)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -170,38 +170,38 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.holeInTheWall.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.holeInTheWall.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bBest Qualifiers", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.holeInTheWall.qualifiers)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bBest Qualifiers", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.holeInTheWall.qualifiers)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bBest Finals", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.holeInTheWall.finals)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bBest Finals", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.holeInTheWall.finals)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eWalls Completed", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.holeInTheWall.rounds)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eWalls Completed", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.holeInTheWall.rounds)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.holeInTheWall.apEarned} / ${account.arcadeAchievments.holeInTheWall.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.holeInTheWall.apEarned} / ${account.arcadeAchievments.holeInTheWall.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.holeInTheWall)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.holeInTheWall)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bCombined Score", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${numberify(account.holeInTheWall.finals + account.holeInTheWall.qualifiers)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bCombined Score", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.holeInTheWall.finals + account.holeInTheWall.qualifiers)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -223,53 +223,53 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&f${numberify(account.miniWalls.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&f${numberify(account.miniWalls.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eKills &7(Kills / Finals)", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.miniWalls.kills)} / ${numberify(account.miniWalls.finalKills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eKills &7(Kills - Finals)", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.miniWalls.kills)} - ${numberify(account.miniWalls.finalKills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aWither &7(Damage / Kills)", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.miniWalls.witherDamage)} / ${numberify(account.miniWalls.witherKills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aWither &7(Damage - Kills)", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.miniWalls.witherDamage)} - ${numberify(account.miniWalls.witherKills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bArrows &7(Shot / Hit)", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.miniWalls.arrowsShot)} / ${numberify(account.miniWalls.arrowsHit)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bArrows &7(Shot - Hit)", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.miniWalls.arrowsShot)} - ${numberify(account.miniWalls.arrowsHit)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&cDeaths", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&c${numberify(account.miniWalls.deaths)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&cDeaths", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&c${numberify(account.miniWalls.deaths)}`, x, y += lineHeight, size, "center");
 
     y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&fAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&f${account.arcadeAchievments.miniWalls.apEarned} / ${account.arcadeAchievments.miniWalls.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&fAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&f${account.arcadeAchievments.miniWalls.apEarned} / ${account.arcadeAchievments.miniWalls.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.miniWalls)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eTotal Kills/Deaths", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${((account.miniWalls.kills + account.miniWalls.finalKills) / account.miniWalls.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eTotal Kills / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${((account.miniWalls.kills + account.miniWalls.finalKills) / account.miniWalls.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&aWither Damage/Deaths", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${((account.miniWalls.witherDamage) / account.miniWalls.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aWither Damage / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&a${((account.miniWalls.witherDamage) / account.miniWalls.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bArrow Accuracy", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${((account.miniWalls.arrowsHit / account.miniWalls.arrowsShot) * 100).toFixed(2)}%`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bArrow Accuracy", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${((account.miniWalls.arrowsHit / account.miniWalls.arrowsShot) * 100).toFixed(2)} %`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.miniWalls)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -290,33 +290,33 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.football.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.football.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bGoals", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.football.goals)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bGoals", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.football.goals)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKicks", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.football.kicks)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bKicks", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.football.kicks)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&ePower Kicks", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.football.powerkicks)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&ePower Kicks", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.football.powerkicks)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.football.apEarned} / ${account.arcadeAchievments.football.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.football.apEarned} / ${account.arcadeAchievments.football.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.football)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.football)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -341,28 +341,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.enderSpleef.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.enderSpleef.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bBlocks Broken", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.enderSpleef.blocksBroken)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bBlocks Broken", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.enderSpleef.blocksBroken)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&ePowerups Used", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.enderSpleef.totalPowerups)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&ePowerups Used", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.enderSpleef.totalPowerups)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.enderSpleef.apEarned} / ${account.arcadeAchievments.enderSpleef.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.enderSpleef.apEarned} / ${account.arcadeAchievments.enderSpleef.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.enderSpleef)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.enderSpleef)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -382,33 +382,33 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.throwOut.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.throwOut.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.throwOut.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.throwOut.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eDeaths", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.throwOut.deaths)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eDeaths", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.throwOut.deaths)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.throwOut.apEarned} / ${account.arcadeAchievments.throwOut.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.throwOut.apEarned} / ${account.arcadeAchievments.throwOut.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.throwOut)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.throwOut)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKills / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${(account.throwOut.kills / account.throwOut.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bKills / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${(account.throwOut.kills / account.throwOut.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -426,33 +426,33 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.galaxyWars.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.galaxyWars.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.galaxyWars.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.galaxyWars.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eDeaths", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.galaxyWars.deaths)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eDeaths", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.galaxyWars.deaths)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.galaxyWars.apEarned} / ${account.arcadeAchievments.galaxyWars.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.galaxyWars.apEarned} / ${account.arcadeAchievments.galaxyWars.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.galaxyWars)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.galaxyWars)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKills / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${(account.galaxyWars.kills / account.galaxyWars.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bKills / Deaths", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${(account.galaxyWars.kills / account.galaxyWars.deaths).toFixed(2)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -469,23 +469,23 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.dragonWars.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.dragonWars.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.dragonWars.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bKills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.dragonWars.kills)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.dragonWars.apEarned} / ${account.arcadeAchievments.dragonWars.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.dragonWars.apEarned} / ${account.arcadeAchievments.dragonWars.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.dragonWars)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.dragonWars)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -505,28 +505,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.bountyHunters.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.bountyHunters.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bTotal Kills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.bountyHunters.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bTotal Kills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.bountyHunters.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bTotal Deaths", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.bountyHunters.deaths)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bTotal Deaths", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.bountyHunters.deaths)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.bountyHunters.apEarned} / ${account.arcadeAchievments.bountyHunters.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.bountyHunters.apEarned} / ${account.arcadeAchievments.bountyHunters.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.bountyHunters)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.bountyHunters)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -545,28 +545,28 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.blockingDead.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.blockingDead.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bZombie Kills", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.blockingDead.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bZombie Kills", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.blockingDead.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eHeadshots", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.blockingDead.headshots)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eHeadshots", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.blockingDead.headshots)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.blockingDead.apEarned} / ${account.arcadeAchievments.blockingDead.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.blockingDead.apEarned} / ${account.arcadeAchievments.blockingDead.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.blockingDead)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.blockingDead)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
 
     return img;
@@ -589,38 +589,38 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.hideAndSeek.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.hideAndSeek.wins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bHider Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.hideAndSeek.hiderWins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bHider Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.hideAndSeek.hiderWins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eSeeker Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.hideAndSeek.seekerWins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eSeeker Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.hideAndSeek.seekerWins)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.hideAndSeek.apEarned} / ${account.arcadeAchievments.hideAndSeek.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.hideAndSeek.apEarned} / ${account.arcadeAchievments.hideAndSeek.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.hideAndSeek)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.hideAndSeek)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bObjectives", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${numberify(account.hideAndSeek.objectives)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bObjectives", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.hideAndSeek.objectives)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aTotal Kills", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&a${numberify(account.hideAndSeek.kills)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&aTotal Kills", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.hideAndSeek.kills)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -640,28 +640,28 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.zombies.wins_zombies ?? 0)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.zombies.wins_zombies ?? 0)}`, x, y += lineHeight, size, "center");
     y += spacer;
 
-    img.drawMcText("&bBad Blood Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.zombies.wins_zombies_badblood ?? 0)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bBad Blood Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.zombies.wins_zombies_badblood ?? 0)}`, x, y += lineHeight, size, "center");
     y += spacer;
 
-    img.drawMcText("&bDead End Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.zombies.wins_zombies_deadend ?? 0)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bDead End Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.zombies.wins_zombies_deadend ?? 0)}`, x, y += lineHeight, size, "center");
     y += spacer;
 
-    img.drawMcText("&eAlien Arcadium Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.zombies.wins_zombies_alienarcadium ?? 0)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eAlien Arcadium Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.zombies.wins_zombies_alienarcadium ?? 0)}`, x, y += lineHeight, size, "center");
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.zombies.apEarned} / ${account.arcadeAchievments.zombies.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.zombies.apEarned} / ${account.arcadeAchievments.zombies.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.zombies)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.zombies)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -682,23 +682,23 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aKills + Assists", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.captureTheWool.kills)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aKills + Assists", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.captureTheWool.kills)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bWool Captured", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.captureTheWool.woolCaptures)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bWool Captured", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.captureTheWool.woolCaptures)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.captureTheWool.apEarned} / ${account.arcadeAchievments.captureTheWool.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.captureTheWool.apEarned} / ${account.arcadeAchievments.captureTheWool.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.captureTheWool)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.captureTheWool)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -720,17 +720,17 @@ async function genImg (account, game = "") {
 
     let y = startY;
 
-    img.drawMcText("&aWins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.pixelPainters.wins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aWins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.pixelPainters.wins)}`, x, y += lineHeight, size, "center");
     y = startY;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.pixelPainters.apEarned} / ${account.arcadeAchievments.pixelPainters.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.pixelPainters.apEarned} / ${account.arcadeAchievments.pixelPainters.apAvailable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(account.arcadeChallenges.pixelPainters)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dChallenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(account.arcadeChallenges.pixelPainters)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -749,43 +749,43 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&f${numberify(account.seasonalWins.total)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&f${numberify(account.seasonalWins.total)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eEaster Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.seasonalWins.easter)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eEaster Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.seasonalWins.easter)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aGrinch Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.seasonalWins.grinch)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aGrinch Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.seasonalWins.grinch)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bHalloween Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&b${numberify(account.seasonalWins.halloween)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&bHalloween Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.seasonalWins.halloween)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eScuba Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&e${numberify(account.seasonalWins.scuba)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&eScuba Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.seasonalWins.scuba)}`, x, y += lineHeight, size, "center");
 
     y = startY;
 
-    img.drawMcText("&eEaster Found", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${numberify(account.seasonalWins.foundEaster)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eEaster Found", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.seasonalWins.foundEaster)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bHalloween Found", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${numberify(account.seasonalWins.foundHalloween)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bHalloween Found", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(account.seasonalWins.foundHalloween)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eScuba Points", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${numberify(account.seasonalWins.foundScuba)}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eScuba Points", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${numberify(account.seasonalWins.foundScuba)}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
@@ -799,53 +799,53 @@ async function genImg (account, game = "") {
 
     let y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&f${numberify(account.arcadeWins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&fTotal Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&f${numberify(account.arcadeWins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&fCombined Wins", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&f${numberify(account.combinedArcadeWins)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&fCombined Wins", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&f${numberify(account.combinedArcadeWins)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aGamer Quest", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.quests.arcadeGamer)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aGamer Quest", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.quests.arcadeGamer)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aWinner Quest", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.quests.arcadeWinner)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aWinner Quest", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.quests.arcadeWinner)}`, x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aSpecialist Quest", x, y += lineHeight, txtSize, "left");
-    img.drawMcText(`&a${numberify(account.quests.arcadeSpecialist)}`, x, y += lineHeight, size, "left");
+    img.drawMcText("&aSpecialist Quest", x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(account.quests.arcadeSpecialist)}`, x, y += lineHeight, size, "center");
 
     y = startY - lineHeight - lineHeight - spacer;
 
-    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${account.arcadeAchievments.totalEarned} / ${account.arcadeAchievments.totalAvailiable}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eAchievements", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${account.arcadeAchievments.totalEarned} / ${account.arcadeAchievments.totalAvailiable}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&dTotal Challenges", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&d${numberify(Object.values(account.arcadeChallenges).reduce((p, c) => p + c, 0))}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&dTotal Challenges", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&d${numberify(Object.values(account.arcadeChallenges).reduce((p, c) => p + c, 0))}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&aTotal Quests", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&a${numberify(Object.values(account.quests).reduce((p, c) => p + c, 0))}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&aTotal Quests", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&a${numberify(Object.values(account.quests).reduce((p, c) => p + c, 0))}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&bArcade Ranking", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&b${numberify(Math.floor(account.importance ?? 0))}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&bArcade Ranking", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&b${numberify(Math.floor(account.importance ?? 0))}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     y += spacer;
 
-    img.drawMcText("&eCoins Earned", img.canvas.width - x, y += lineHeight, txtSize, "right");
-    img.drawMcText(`&e${(numberify(account.coinsEarned))}`, img.canvas.width - x, y += lineHeight, size, "right");
+    img.drawMcText("&eCoins Earned", img.canvas.width - x, y += lineHeight, txtSize, "center");
+    img.drawMcText(`&e${(numberify(account.coinsEarned))}`, img.canvas.width - x, y += lineHeight, size, "center");
 
     return img;
   }
