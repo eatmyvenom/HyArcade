@@ -55,6 +55,7 @@ async function getFromHypixel (string) {
  * @param {Account[]} accounts
  * @param {object} disclist
  * @returns {Account}
+ * TODO: Delete this
  */
 module.exports = async function resolveAccount (string, rawMessage, canbeSelf, accounts, disclist) {
   logger.info(`Attempting to resolve ${string} from ${rawMessage.content}`);

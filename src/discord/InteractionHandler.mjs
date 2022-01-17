@@ -142,7 +142,6 @@ async function buttonHandler (interaction) {
     }
 
     try {
-
       if(interaction.deferred) {
         await interaction.editReply(updatedData.toDiscord());
       } else {
@@ -150,6 +149,13 @@ async function buttonHandler (interaction) {
       }
     } catch (e) {
       Logger.err(e.stack);
+      if(interaction.deferred) {
+        try {
+          await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+        } catch (e) {
+          Logger.err(e.stack);
+        }
+      }
     }
     await logBtn(interaction);
   }
@@ -162,17 +168,25 @@ async function buttonHandler (interaction) {
 async function menuHandler (interaction) {
   if(await ForceOGuser(interaction)) {
     const updatedData = await MenuParser(interaction);
-    if(interaction.deferred) {
-      await interaction.editReply(updatedData.toDiscord());
-    } else {
-      try {
+
+    if(updatedData == undefined) {
+      return;
+    }
+
+    try {
+      if(interaction.deferred) {
+        await interaction.editReply(updatedData.toDiscord());
+      } else {
         await interaction.update(updatedData.toDiscord());
-      } catch (e) {
-        Logger.err(`Error from /${interaction.customId}`);
-        Logger.err(e.stack);
-        Webhooks.errHook.send({
-          embeds: [ ERROR_LOG(e, `Component usage by ${interaction.user.tag}\n\`/${interaction.customId}\``) ]
-        });
+      }
+    } catch (e) {
+      Logger.err(e.stack);
+      if(interaction.deferred) {
+        try {
+          await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+        } catch (e) {
+          Logger.err(e.stack);
+        }
       }
     }
     await logBtn(interaction);

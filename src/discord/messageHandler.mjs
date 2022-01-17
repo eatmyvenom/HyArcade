@@ -1,6 +1,4 @@
 import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const cfg = require("hyarcade-config").fromJSON();
 import Runtime from "hyarcade-config/Runtime.js";
 import { addAccounts } from "../listUtils.js";
 import Logger from "hyarcade-logger";
@@ -15,6 +13,9 @@ import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
 import VerifyChannel from "./VerifyChannel.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
+
+const require = createRequire(import.meta.url);
+const cfg = require("hyarcade-config").fromJSON();
 const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
 const { Message } = require("discord.js");
 
