@@ -58,7 +58,7 @@ export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*
   const player = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = Database.account(player, rawMsg.author.id);
+    acc = await Database.account(player, rawMsg.author.id);
   } else {
     await interaction.deferReply();
     acc = await Database.account(interaction.options.getString("player"), interaction.user.id);

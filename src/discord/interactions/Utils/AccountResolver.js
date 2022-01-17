@@ -28,18 +28,10 @@ async function getFromHypixel (string, interaction) {
     uuid = await mojangRequest.getUUID(plr);
   }
 
-  let acc;
-  if(Database.accCache[uuid] != undefined) {
-    logger.info("Cache hit, returning cached version.");
-    acc = Database.accCache[uuid];
-  } else {
-    logger.info("Cache miss, querying from hypixel.");
-    acc = new Account("", 0, `${uuid}`);
-    await acc.updateData();
-    logger.debug(`${acc.uuid} cached`);
-    Database.accCache[acc.uuid] = acc;
-  }
-
+  const acc = new Account("", 0, `${uuid}`);
+  await acc.updateData();
+  logger.debug(`${acc.uuid} cached`);
+  Database.accCache[acc.uuid] = acc;
 
   if(acc.name == "INVALID-NAME") {
     return undefined;

@@ -1,5 +1,5 @@
 import { createRequire } from "module";
-import Database from "../Utils/Database";
+import Database from "../Utils/Database.js";
 const require = createRequire(import.meta.url);
 
 const Command = require("../../classes/Command");
