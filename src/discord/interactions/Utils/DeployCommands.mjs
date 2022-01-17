@@ -38,8 +38,8 @@ export default async function (client) {
         // await g.commands.set(cmdarr);
       }
     } catch (e) {
-      Logger.error("Couldn't change guild slash commands!");
-      Logger.error(e);
+      Logger.warn("Couldn't change guild slash commands!");
+      Logger.warn(e);
     }
   }
 

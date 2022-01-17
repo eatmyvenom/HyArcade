@@ -99,7 +99,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
   let acc;
   let timed;
   if(interaction == undefined || interaction.isButton()) {
-    const res = await Database.timedAccount(plr, rawMsg.author.id, time);
+    const res = await Database.timedAccount(plr, "", time);
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
