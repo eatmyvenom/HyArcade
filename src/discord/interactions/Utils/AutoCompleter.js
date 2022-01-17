@@ -1,7 +1,7 @@
 const { AutocompleteInteraction } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
-const BotRuntime = require("../../BotRuntime");
 const Logger = require("hyarcade-logger");
+const Database = require("../../Utils/Database");
 
 /**
  * @type {Account}
@@ -12,7 +12,7 @@ let testStats = undefined;
  * 
  */
 async function startUp () {
-  testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
+  testStats = await Database.account("vnmm", undefined);
   Object.assign(testStats.zombies, zombies);
 }
 
@@ -62,7 +62,7 @@ const zombies = {
 async function leaderboardFiller (interaction) {
 
   if(testStats == undefined) {
-    testStats = await BotRuntime.resolveAccount("vnmm", undefined, false, undefined, false);
+    testStats = await Database.account("vnmm", undefined);
     Object.assign(testStats.zombies, zombies);
   }
 

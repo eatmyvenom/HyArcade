@@ -96,19 +96,24 @@ class Database {
     return lb;
   }
 
-  static async account (ign, uuid, discordID) {
+  static async account (text, discordID) {
     const url = new URL("account", cfg.dbUrl);
 
-    if(ign != undefined) {
-      url.searchParams.set("ign", ign);
-    } else if (uuid != undefined) {
-      url.searchParams.set(uuid);
-    } else if (discordID != undefined) {
+    if(text != undefined && text != "" && text != "!") {
+      if(text.length < 17) {
+        url.searchParams.set("ign", text);
+      } else {
+        url.searchParams.set("uuid", text.replace(/-/g, ""));
+      }
+    }
+    
+    if (discordID != undefined && discordID != "") {
       url.searchParams.set("discid", discordID);
     }
 
     let acc;
     try {
+      Logger.debug(`Fetching ${url.searchParams} from database!`);
       acc = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Error fetching data from database");
@@ -120,27 +125,28 @@ class Database {
     return acc;
   }
 
-  static async timedAccount (ign, uuid, discordID, time) {
+  static async timedAccount (text, discordID, time) {
     const url = new URL("timeacc", cfg.dbUrl);
 
-    if(ign != undefined) {
-      url.searchParams.set("ign", ign);
-    }
+    if(text != undefined && text != "" && text != "!") {
+      if(text.length < 17) {
+        url.searchParams.set("ign", text);
+      } else {
+        url.searchParams.set("uuid", text.replace(/-/g, ""));
+      }
+    } 
 
-    if(uuid != undefined) {
-      url.searchParams.set(uuid);
-    }
-
-    if(discordID != undefined) {
+    if(discordID != undefined && discordID != "") {
       url.searchParams.set("discid", discordID);
     }
 
-    if(time != undefined) {
+    if(time != undefined && time != "lifetime" && time != "life") {
       url.searchParams.set("time", time);
     }
 
     let acc;
     try {
+      Logger.debug(`Fetching ${url.searchParams} from database!`);
       acc = await (await fetch(url)).json();
     } catch (e) {
       Logger.err("Can't connect to database");

@@ -3,14 +3,13 @@ const require = createRequire(import.meta.url);
 const { Message, Interaction } = require("discord.js");
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
-import BotRuntime from "../BotRuntime.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import Config from "hyarcade-config";
+import Database from "../Utils/Database.js";
 
 const cfg = Config.fromJSON();
 
@@ -228,14 +227,17 @@ async function topGamesHandler (args, rawMsg, interaction) {
   let acc;
   let res;
   if(interaction == undefined) {
-    res = await BotRuntime.resolveAccount(plr, rawMsg, true, timetype);
+    res = await Database.timedAccount(plr, rawMsg.author.id, timetype);
   } else {
     if(interaction.isButton()) {
       await interaction.deferUpdate();
-      res = await BotRuntime.resolveAccount(plr, undefined, false, timetype);
+      res = await Database.timedAccount(plr, "", timetype);
+    } else if (interaction.isSelectMenu()) {
+      await interaction.deferUpdate();
+      res = await Database.timedAccount(plr, "", timetype);
     } else {
       await interaction.deferReply();
-      res = await InteractionUtils.resolveAccount(interaction, "player", timetype);
+      res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, timetype);
     }
   }
 

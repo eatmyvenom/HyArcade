@@ -3,7 +3,6 @@ const {
 } = require("discord.js");
 const Command = require("../../classes/Command");
 const logger = require("hyarcade-logger");
-const InteractionUtils = require("../interactions/InteractionUtils");
 const {
   ERROR_ARGS_LENGTH
 } = require("../Utils/Embeds/DynamicEmbeds");
@@ -12,6 +11,7 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 const BotRuntime = require("../BotRuntime");
+const Database = require("../Utils/Database");
 
 /**
  * @param {number} n
@@ -94,15 +94,15 @@ module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interacti
   let acc2;
   if(interaction == undefined) {
     if(plr2 == undefined) {
-      acc1 = await BotRuntime.resolveAccount(null, rawMsg, true);
-      acc2 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
+      acc1 = await Database.account("", rawMsg.author.id);
+      acc2 = await Database.account(plr1, "");
     } else {
-      acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
-      acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
+      acc1 = await Database.account(plr1, rawMsg.author.id);
+      acc2 = await Database.account(plr2, "");
     }
   } else {
-    acc1 = await InteractionUtils.resolveAccount(interaction, 0);
-    acc2 = await InteractionUtils.resolveAccount(interaction, 1);
+    acc1 = await Database.account(interaction.options.getString("player1"), interaction.user.id);
+    acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
   }
 
   const hackers = await BotRuntime.getHackerlist();

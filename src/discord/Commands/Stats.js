@@ -1,9 +1,9 @@
 const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
-const InteractionUtils = require("../interactions/InteractionUtils");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const CommandResponse = require("../Utils/CommandResponse");
+const Database = require("../Utils/Database");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const {
   ERROR_IGN_UNDEFINED
@@ -60,17 +60,17 @@ module.exports = new Command(["old-stats"], ["*"], async (args, rawMsg, interact
   let acc;
   let res;
   if(interaction == undefined) {
-    res = await BotRuntime.resolveAccount(plr, rawMsg, true, time);
+    res = await Database.timedAccount(plr, rawMsg.author.id, time);
   } else {
     if(interaction.isButton()) {
       await interaction.deferUpdate();
-      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+      res = await Database.timedAccount(plr, "", time);
     } else if (interaction.isSelectMenu()) {
       await interaction.deferUpdate();
-      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+      res = await Database.timedAccount(plr, "", time);
     } else {
       await interaction.deferReply();
-      res = await InteractionUtils.resolveAccount(interaction, "player", time);
+      res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
     }
   }
 

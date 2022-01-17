@@ -3,7 +3,8 @@ const fetch = require("node-fetch");
 const cfg = require("hyarcade-config").fromJSON();
 const Account = require("hyarcade-requests/types/Account");
 const AccountResolver = require("./Utils/AccountResolver");
-const Database = require("../Utils/Database");
+const Logger = require("hyarcade-logger");
+const { CommandInteraction } = require("discord.js");
 
 module.exports = class InteractionUtils {
   /**
@@ -15,10 +16,6 @@ module.exports = class InteractionUtils {
    */
   static async accFromUUID (uuid) {
     let acc;
-
-    if(Database.accCache[uuid] != undefined) {
-      return Database.accCache[uuid];
-    }
 
     if(BotRuntime.botMode != "mini") {
       const url = new URL("account", cfg.dbUrl);
@@ -40,7 +37,17 @@ module.exports = class InteractionUtils {
     return acc;
   }
 
+  /**
+   * 
+   * @param {CommandInteraction} interaction 
+   * @param {string} namearg 
+   * @param {string} time 
+   * @param {boolean} force 
+   * @returns {Account}
+   * @deprecated
+   */
   static async resolveAccount (interaction, namearg = "player", time, force) {
+    Logger.warn("Using deprecated function 'resolveAccount'");
     return await AccountResolver(interaction, namearg, time, force);
   }
 };

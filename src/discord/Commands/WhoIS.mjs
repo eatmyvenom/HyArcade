@@ -3,12 +3,11 @@ const require = createRequire(import.meta.url);
 
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
-import BotRuntime from "../BotRuntime.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import fetch from "node-fetch";
+import Database from "../Utils/Database.js";
 
 const { MessageEmbed, Util } = require("discord.js");
 const { escapeItalic, escapeUnderline } = Util;
@@ -117,13 +116,14 @@ export default new Command(["whois", "who", "namehist"], ["*"], async (args, raw
   const plr = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 1);
+    acc = await Database.account(plr, rawMsg.discord.id);
   } else {
     await interaction.deferReply();
-    acc = await InteractionUtils.resolveAccount(interaction);
-    if(acc == undefined) {
-      return new CommandResponse("", ERROR_UNLINKED);
-    }
+    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
+  }
+
+  if(acc == undefined) {
+    return new CommandResponse("", ERROR_UNLINKED);
   }
   const embed = await generateWhoisEmbed(acc);
   return new CommandResponse("", embed);

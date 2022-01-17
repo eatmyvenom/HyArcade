@@ -31,14 +31,8 @@ async function getFromHypixel (string) {
     uuid = await mojangRequest.getUUID(plr);
   }
 
-  let acc;
-  if(Database.accCache[uuid] != undefined) {
-    acc = Database.accCache[uuid];
-  } else {
-    acc = new Account("", 0, `${uuid}`);
-    await acc.updateData();
-    Database.accCache[acc.uuid] = acc;
-  }
+  const acc = new Account("", 0, `${uuid}`);
+  await acc.updateData();
 
   if(acc.name == "INVALID-NAME" || acc.name == undefined) {
     return undefined;
@@ -71,8 +65,10 @@ module.exports = class BotRuntime {
      * @param {string} time
      * @param {boolean} force
      * @returns {Promise<Account>}
+     * @deprecated
      */
     static async resolveAccount (str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
+      logger.warn("Using deprecated function 'resolveAccount'");
       let url;
       if (time != "lifetime") {
         url = new URL("timeacc", cfg.dbUrl);

@@ -1,11 +1,10 @@
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
-import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
 import CommandResponse from "../Utils/CommandResponse.js";
+import Database from "../Utils/Database.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
@@ -901,17 +900,17 @@ export default new Command(["stats", "s", "stat"], ["*"], async (args, rawMsg, i
   let acc;
   let res;
   if(interaction == undefined) {
-    res = await BotRuntime.resolveAccount(plr, rawMsg, true, time);
+    res = await Database.timedAccount(plr, rawMsg.author.id, time);
   } else {
     if(interaction.isButton()) {
       await interaction.deferUpdate();
-      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+      res = await Database.timedAccount(plr, "", time);
     } else if (interaction.isSelectMenu()) {
       await interaction.deferUpdate();
-      res = await BotRuntime.resolveAccount(plr, undefined, false, time);
+      res = await Database.timedAccount(plr, "", time);
     } else {
       await interaction.deferReply();
-      res = await InteractionUtils.resolveAccount(interaction, "player", time);
+      res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
     }
   }
 

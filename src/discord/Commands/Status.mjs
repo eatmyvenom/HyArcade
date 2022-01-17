@@ -4,11 +4,11 @@ const require = createRequire(import.meta.url);
 import Command from "../../classes/Command.js";
 import Account from "hyarcade-requests/types/Account.js";
 import ImageGenerator from "../images/ImageGenerator.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 import Requests from "hyarcade-requests";
+import Database from "../Utils/Database.js";
 
 const { CommandInteraction, Message } = require("discord.js");
 
@@ -239,10 +239,12 @@ async function callback (args, rawmsg, interaction) {
 
   if(interaction != undefined) {
     await interaction.deferReply();
-    acc = await InteractionUtils.resolveAccount(interaction);
+    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
     if(acc == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);
     }
+  } else {
+    acc = await Database.account(args[0], rawmsg.author.id);
   }
 
   const status = await Requests.HypixelApi.status(acc.uuid);

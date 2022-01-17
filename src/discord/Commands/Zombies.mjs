@@ -3,11 +3,10 @@ const require = createRequire(import.meta.url);
 
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
-import BotRuntime from "../BotRuntime.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
+import Database from "../Utils/Database.js";
 
 const { MessageEmbed } = require("discord.js");
 
@@ -173,18 +172,22 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
 
   let acc;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await Database.account(plr, rawMsg.author.id);
   } else {
     if(interaction.isButton()) {
       await interaction.deferUpdate();
-      acc = await InteractionUtils.accFromUUID(plr);
+      acc = await Database.account(plr, "");
+    } else if (interaction.isSelectMenu()) {
+      await interaction.deferUpdate();
+      acc = await Database.account(plr, "");
     } else {
       await interaction.deferReply();
-      acc = await InteractionUtils.resolveAccount(interaction, "player");
+      acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
     }
-    if(acc == undefined) {
-      return new CommandResponse("", ERROR_UNLINKED);
-    }
+  }
+
+  if(acc == undefined) {
+    return new CommandResponse("", ERROR_UNLINKED);
   }
 
   let embed;

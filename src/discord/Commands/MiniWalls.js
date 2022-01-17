@@ -3,8 +3,8 @@ const Command = require("../../classes/Command");
 const BotRuntime = require("../BotRuntime");
 const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
-const InteractionUtils = require("../interactions/InteractionUtils");
 const CommandResponse = require("../Utils/CommandResponse");
+const Database = require("../Utils/Database");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const {
   ERROR_IGN_UNDEFINED
@@ -99,7 +99,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
   let acc;
   let timed;
   if(interaction == undefined || interaction.isButton()) {
-    const res = await BotRuntime.resolveAccount(plr, rawMsg, args.length == 0 || plr == "!", time, false);
+    const res = await Database.timedAccount(plr, rawMsg.author.id, time);
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
@@ -110,7 +110,7 @@ async function miniWallsStats (args, rawMsg, interaction) {
       acc = res;
     }
   } else {
-    const res = await InteractionUtils.resolveAccount(interaction, "player", time);
+    const res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
     if(time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;

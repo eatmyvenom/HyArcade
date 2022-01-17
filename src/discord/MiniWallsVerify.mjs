@@ -8,6 +8,7 @@ import Runtime from "../Runtime.js";
 import BotRuntime from "./BotRuntime.js";
 const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
 import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds.js";
+import Database from "./Utils/Database.js";
 
 /**
  * @param {string} id
@@ -50,7 +51,7 @@ export default async function MiniWallsVerify (msg) {
 
   const acc = new Account(ign, 0, uuid);
   await acc.updateData();
-  const dbAcc = await BotRuntime.resolveAccount(uuid, msg, false);
+  const dbAcc = await Database.account(uuid, id);
   const hackers = await BotRuntime.getHackerlist();
   const disclist = await BotRuntime.getFromDB("disclist");
   if(dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {

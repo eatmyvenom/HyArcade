@@ -1,8 +1,7 @@
 import Command from "../../classes/Command.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
-import BotRuntime from "../BotRuntime.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
+import Database from "../Utils/Database.js";
 
 /**
  * 
@@ -24,13 +23,13 @@ async function compareHandler (args, rawMsg, interaction) {
 
   let channel;
   if (interaction == undefined) {
-    acc1 = await BotRuntime.resolveAccount(plr1, rawMsg, false);
-    acc2 = await BotRuntime.resolveAccount(plr2, rawMsg, false);
+    acc1 = await Database.account(plr1, rawMsg.author.id);
+    acc2 = await Database.account(plr2, rawMsg.author.id);
     channel = rawMsg.channel;
   } else {
     await interaction.deferReply();
-    acc1 = await InteractionUtils.resolveAccount(interaction, "player1");
-    acc2 = await InteractionUtils.resolveAccount(interaction, "player2");
+    acc1 = await Database.account(interaction.options.getString("player1"), interaction.user.id);
+    acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
     channel = interaction.channel;
   }
 

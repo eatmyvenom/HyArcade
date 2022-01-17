@@ -56,8 +56,10 @@ async function getFromHypixel (string, interaction) {
  * @param {string} time
  * @param {boolean} force
  * @returns {Promise<Account>}
+ * @deprecated
  */
 module.exports = async function resolveAccount (interaction, namearg = "player", time = "lifetime", force = false) {
+  logger.warn("Using deprecated function 'resolveAccount'");
   const str = interaction.options.getString(namearg, false);
 
   if(BotRuntime.botMode == "mini") {

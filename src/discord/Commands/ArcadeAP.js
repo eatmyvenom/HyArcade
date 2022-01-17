@@ -1,8 +1,7 @@
 const Command = require("../../classes/Command");
-const BotRuntime = require("../BotRuntime");
-const InteractionUtils = require("../interactions/InteractionUtils");
 const { apMenu } = require("../interactions/SelectionMenus/MenuGenerator");
 const CommandResponse = require("../Utils/CommandResponse");
+const Database = require("../Utils/Database");
 const ArcadeAp = require("../Utils/Embeds/ArcadeAp");
 
 module.exports = new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
@@ -10,14 +9,14 @@ module.exports = new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], 
 
   let acc;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await Database.account(plr, rawMsg.author.id);
   } else {
     if(interaction.isButton() || interaction.isSelectMenu()) {
       await interaction.deferUpdate();
-      acc = await BotRuntime.resolveAccount(plr, undefined, false);
+      acc = await Database.account(plr);
     } else {
       await interaction.deferReply();
-      acc = await InteractionUtils.resolveAccount(interaction, "player");
+      acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
     }
   }
 

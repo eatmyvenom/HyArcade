@@ -2,11 +2,10 @@ const {
   MessageEmbed
 } = require("discord.js");
 const Command = require("../../classes/Command");
-const BotRuntime = require("../BotRuntime");
-const InteractionUtils = require("../interactions/InteractionUtils");
 const Util = require("util");
 const Logger = require("hyarcade-logger");
 const AccountComparitor = require("../Utils/AccountComparitor");
+const Database = require("../Utils/Database");
 
 /**
  * @param {object} o
@@ -35,13 +34,13 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
   const time = args[2];
   let acc;
   if(interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(plr, rawMsg, args.length != 2);
+    acc = await Database.account(plr, rawMsg.author.id);
   } else {
     await interaction.deferReply();
-    acc = await InteractionUtils.resolveAccount(interaction, "player", time);
+    acc = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
   }
 
-  if(acc.timed != undefined) {
+  if(acc.timed != undefined && acc.timed != {}) {
     Logger.info("Getting account diff");
     const tmpAcc = AccountComparitor(acc.acc, acc.timed);
 

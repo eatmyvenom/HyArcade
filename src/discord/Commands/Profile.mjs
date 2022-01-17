@@ -1,11 +1,10 @@
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import Config from "hyarcade-config";
-import BotRuntime from "../BotRuntime.js";
 import ImageGenerator from "../images/ImageGenerator.js";
-import InteractionUtils from "../interactions/InteractionUtils.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import Database from "../Utils/Database.js";
 
 const cfg = Config.fromJSON();
 
@@ -59,10 +58,10 @@ export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*
   const player = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await BotRuntime.resolveAccount(player, rawMsg, args.length != 1);
+    acc = Database.account(player, rawMsg.author.id);
   } else {
     await interaction.deferReply();
-    acc = await InteractionUtils.resolveAccount(interaction);
+    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
   }
 
   if(acc == undefined) {
