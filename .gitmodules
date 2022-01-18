@@ -2,7 +2,7 @@
 	path = packages/request
 	url = git@github.com:eatmyvenom/hyarcade-requests.git
 [submodule "src/Config"]
-	path = src/Config
+	path = packages/Config
 	url = git@github.com:eatmyvenom/hyarcade-config.git
 [submodule "src/utils/Logger"]
 	path = src/utils/Logger
