@@ -41,7 +41,7 @@ async function AccountResolver (fileCache, url) {
 
   if(acc == undefined && ign != null) {
     acc = accounts.find((a) => {
-      if(a.nameHist && a.nameHist.length > 0) {
+      if(a.nameHist && a.nameHist.length > 0 && (a?.importance ?? 0) > 9500) {
         for(const name of a.nameHist) {
           if(name.toLowerCase().startsWith(ign.toLowerCase())) {
             return true;
