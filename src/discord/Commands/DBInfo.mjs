@@ -1,14 +1,11 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
-const Command = require("../../classes/Command");
-const BotRuntime = require("../BotRuntime");
-const CommandResponse = require("../Utils/CommandResponse");
-const Database = require("../Utils/Database");
+import { MessageEmbed } from "discord.js";
+import Account from "hyarcade-requests/types/Account.js";
+import Command from "../../classes/Command.js";
+import BotRuntime from "../BotRuntime.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import Database from "../Utils/Database.js";
 
-module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
-
+export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
   if(interaction != undefined) {
     await interaction.deferReply();
   }
@@ -19,7 +16,7 @@ module.exports = new Command(["dbinfo", "database"], ["*"], async (args, rawMsg,
   const info = await Database.info();
 
   const embed = new MessageEmbed()
-    .setAuthor({ name: "Hyarcade database info", iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
+    .setAuthor({ name: "Hyarcade Database info", iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
     .setDescription(`**Accounts** : \`${info.accs}\`\n` +
         `**Invalid Accounts** : \`${info.invalid}\`\n` +
         `**Linked Accounts** : \`${info.links}\`\n\n` +

@@ -2,7 +2,6 @@ const {
   SelectMenuInteraction
 } = require("discord.js");
 const ButtonResponse = require("../Buttons/ButtonResponse");
-const ArcadeAP = require("../../Commands/ArcadeAP");
 
 let commandStorage = undefined;
 
@@ -75,6 +74,13 @@ async function partyGamesHandler (accUUID, time, game, interaction) {
  * @returns {ButtonResponse}
  */
 async function apHandler (accUUID, game, interaction) {
-  const apRes = await ArcadeAP.execute([accUUID, game], interaction.user.id, undefined, interaction);
+  if(commandStorage == undefined) {
+    commandStorage = await import("../../CommandStorage.mjs");
+    await commandStorage.default.initCommands();
+  }
+
+  const commands = await commandStorage.default.getCommands();
+
+  const apRes = await commands.ArcadeAP.execute([accUUID, game], interaction.user.id, undefined, interaction);
   return new ButtonResponse("", [ apRes.embed ], apRes.components);
 }

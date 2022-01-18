@@ -7,7 +7,6 @@ import CommandStorage from "../CommandStorage.mjs";
  * @returns {object}
  */
 async function reloadHander () {
-
   await CommandStorage.initCommands();
 
   return new CommandResponse("Commands reloaded");

@@ -1,10 +1,10 @@
-const Command = require("../../classes/Command");
-const { apMenu } = require("../interactions/SelectionMenus/MenuGenerator");
-const CommandResponse = require("../Utils/CommandResponse");
-const Database = require("../Utils/Database");
-const ArcadeAp = require("../Utils/Embeds/ArcadeAp");
+import Command from "../../classes/Command.js";
+import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import Database from "../Utils/Database.js";
+import ArcadeAp from "../Utils/Embeds/ArcadeAp.js";
 
-module.exports = new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
 
   let acc;
@@ -21,7 +21,7 @@ module.exports = new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], 
   }
 
   const embed = ArcadeAp(acc, args[1]);
-  const menu = apMenu(acc.uuid, args[1]);
+  const menu = MenuGenerator.apMenu(acc.uuid, args[1]);
 
   return new CommandResponse("", embed, undefined, menu);
 });
