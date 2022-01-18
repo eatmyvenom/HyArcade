@@ -1,9 +1,11 @@
-const leaderboard = require("./Leaderboard");
+const leaderboard = require("./Leaderboard-v3");
 leaderboard.type = 1;
 const profile = require("./Profile");
 profile.type = 1;
 const compare = require("./Compare");
 compare.type = 1;
+const stats = require("./Stats");
+stats.type = 1;
 const ap = require("./Achievements");
 ap.type = 1;
 const info = require("./Info");
@@ -12,6 +14,8 @@ const gc = require("./GameCounts");
 gc.type = 1;
 const raw = require("./GetDataRaw");
 raw.type = 1;
+const verify = require("./Verify");
+verify.type = 1;
 
 module.exports = {
   name: "arcade",
@@ -45,13 +49,9 @@ module.exports = {
     description: "Unverify yourself with Arcade Bot",
     options: [],
   },
-  {
-    type: 1,
-    name: "update-time",
-    description: "Get the time of the last database update",
-    options: [],
-  },
+  verify,
   leaderboard,
+  stats,
   profile,
   ap,
   info,

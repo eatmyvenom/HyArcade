@@ -5,7 +5,7 @@ import Account from "hyarcade-requests/types/Account.js";
 import Command from "../../classes/Command.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
-import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import Config from "hyarcade-config";
@@ -250,7 +250,7 @@ async function topGamesHandler (args, rawMsg, interaction) {
     acc = getTimedAccount(res?.acc, res?.timed);
   }
 
-  if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
+  if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_UNLINKED);
 
   const img = await generateImage(acc, timetype);
 
