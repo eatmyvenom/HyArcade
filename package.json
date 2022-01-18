@@ -6,7 +6,9 @@
     "scripts": {
         "buildconfig": "cd packages/Config; git push; cd ../..;npm i eatmyvenom/hyarcade-config",
         "buildrequest": "cd packages/request; git push; cd ../..;npm i eatmyvenom/hyarcade-requests",
-        "buildpkgs": "npm run buildconfig; npm run buildrequest",
+        "buildlogger": "cd packages/Logger; git push; cd ../..;npm i eatmyvenom/hyarcade-logger",
+        "buildstruct": "cd packages/Structures; git push; cd ../..;npm i eatmyvenom/hyarcade-structures",
+        "buildpkgs": "npm run buildconfig; npm run buildrequest; npm run buildlogger; npm run buildstruct",
         "testbot": "node index.js bot test",
         "bot": "node spawn-bots.js",
         "lint": "eslint ./src --fix",
@@ -28,6 +30,7 @@
         "hyarcade-config": "github:eatmyvenom/hyarcade-config",
         "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
         "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
+        "hyarcade-structures": "github:eatmyvenom/hyarcade-structures",
         "javascript-time-ago": "^2.3.6",
         "js-beautify": "^1.14.0",
         "node-fetch": "^2.6.1",

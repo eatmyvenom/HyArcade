@@ -1,9 +1,7 @@
 const {
-  getUUIDStatus
-} = require("./hypixelApi");
-const {
   accounts
 } = require("./listParser").accounts;
+const HypixelApi = require("hyarcade-requests/HypixelApi");
 const rawstatus = {};
 
 /**
@@ -126,7 +124,7 @@ async function genStatus (name, status) {
  */
 async function txtStatus (uuid) {
   // unfortunately this cant be shortcut
-  const status = await getUUIDStatus(uuid);
+  const status = await HypixelApi.status(uuid);
   // store this in a json file in case i need it later
   rawstatus[uuid] = status;
   const oldver = accounts.find((acc) => acc.uuid == uuid);

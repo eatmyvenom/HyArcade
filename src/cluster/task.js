@@ -70,16 +70,6 @@ async function stats () {
 }
 
 /**
- * Calculate how many games have been played per player
- *
- * @returns {*}
- */
-async function gamesPlayed () {
-  await dataGen.gamesPlayed();
-  return ["gamesPlayed.json"];
-}
-
-/**
  * @returns {string[]}
  */
 async function addLeaderboards () {
@@ -131,7 +121,6 @@ async function discord () {
 module.exports = {
   accounts: accs,
   guilds: glds,
-  gamesPlayed,
   addLeaderboards,
   stats,
   statusTxtSorted,

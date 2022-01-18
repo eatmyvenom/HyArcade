@@ -1,8 +1,6 @@
-const {
-  getGameCounts
-} = require("./hypixelApi");
 const utils = require("./utils");
 const Logger = require("hyarcade-logger");
+const { HypixelApi } = require("hyarcade-requests");
 
 /**
  * Get a formatted string of game counts
@@ -11,7 +9,7 @@ const Logger = require("hyarcade-logger");
  */
 async function formatCounts () {
   let str = "";
-  const all = await getGameCounts();
+  const all =  HypixelApi.counts();
   const counts = all.games;
 
   str += `Arcade Total        : ${counts.ARCADE.players}\n`;

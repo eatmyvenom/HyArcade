@@ -1,7 +1,4 @@
 const {
-  getGuildFromPlayer
-} = require("./hypixelApi");
-const {
   stringNormal,
   stringDaily,
   addAccounts
@@ -14,6 +11,7 @@ const AccountCreator = require("./mongo/AccountCreator");
 const webRequest = require("hyarcade-requests/webRequest");
 const Runtime = require("./Runtime");
 const process = require("process");
+const { HypixelApi } = require("hyarcade-requests");
 const args = process.argv;
 const {
   logger
@@ -89,7 +87,7 @@ async function newGuild () {
   const playerUUID = args[3];
 
   // get data from hypixel
-  const gldInfo = JSON.parse(await getGuildFromPlayer(playerUUID));
+  const gldInfo = await HypixelApi.guild(playerUUID);
 
   // create the actual guild object
   const id = gldInfo.guild._id;

@@ -158,14 +158,6 @@ async function writeFileD (args) {
 }
 
 /**
- * Run the games played task
- *
- */
-async function gamesPlayed () {
-  await task.gamesPlayed();
-}
-
-/**
  * Run status text sorted tast
  */
 async function statusSort () {
@@ -276,10 +268,6 @@ async function main () {
 
   case "statusSort":
     await statusSort();
-    break;
-
-  case "gamesPlayed":
-    await gamesPlayed();
     break;
 
   case "games":

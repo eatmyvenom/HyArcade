@@ -1,17 +1,17 @@
 const utils = require("./utils");
 const lists = require("./listParser");
-const hypixelAPI = require("./hypixelApi");
 const updateAccounts = require("./datagen/updateAccounts");
 const {
   addAccounts
 } = require("./listUtils");
 const Account = require("hyarcade-requests/types/Account");
+const { HypixelApi } = require("hyarcade-requests");
 
 /**
  *
  */
 async function saveBoosters () {
-  const boosters = await hypixelAPI.getBoosters();
+  const boosters = await HypixelApi.boosters();
   await utils.writeJSON("boosters.json", boosters);
 }
 
@@ -29,7 +29,7 @@ async function updateAllAccounts () {
  *
  */
 async function addLeaderboards () {
-  const leaders = await hypixelAPI.getLeaderboards();
+  const leaders = await HypixelApi.leaderboards();
   const arcade = leaders.leaderboards.ARCADE;
   const lifetimeCoins = arcade[0].leaders;
   const monthlyCoins = arcade[2].leaders;
@@ -42,7 +42,7 @@ async function addLeaderboards () {
  * @param {string} uuid
  */
 async function addGuild (uuid) {
-  const guild = JSON.parse(await hypixelAPI.getGuildFromPlayer(uuid));
+  const guild = await HypixelApi.guild(uuid);
   const {
     members
   } = guild.guild;
@@ -58,7 +58,7 @@ async function addGuild (uuid) {
  * @param {string} id
  */
 async function addGuildID (id) {
-  const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
+  const guild = await HypixelApi.guild(id);
   const {
     members
   } = guild.guild;
@@ -77,7 +77,7 @@ async function addGuildIDs (ids) {
   const uuids = [];
 
   for(const id of ids) {
-    const guild = JSON.parse(await hypixelAPI.getGuildRaw(id));
+    const guild = await HypixelApi.guild(id);
     const gmembers = guild?.guild?.members ?? [];
     for(const m of gmembers) {
       uuids.push(m.uuid);
