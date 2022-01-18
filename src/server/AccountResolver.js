@@ -24,7 +24,7 @@ async function AccountResolver (fileCache, url) {
 
   if(ign != null) {
     Logger.debug(`Using ign "${ign}"`);
-    acc = accounts.find((a) => a.name?.toLowerCase() == ign?.toLowerCase());
+    acc = accounts.find((a) => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
   } else if(uuid != null) {
     Logger.debug(`Using uuid ${uuid}`);
     acc = indexedAccounts[uuid?.toLowerCase()];
@@ -35,9 +35,6 @@ async function AccountResolver (fileCache, url) {
     acc = indexedAccounts[uuid?.toLowerCase()];
   }
 
-  if(acc?.name == "null") {
-    acc = undefined;
-  }
 
   if(acc == undefined && ign != null) {
     acc = accounts.find((a) => {
@@ -50,10 +47,6 @@ async function AccountResolver (fileCache, url) {
       }
       return false;
     });
-  }
-
-  if(acc?.name == "null") {
-    acc = undefined;
   }
 
   if(acc == undefined) {
@@ -75,7 +68,7 @@ async function AccountResolver (fileCache, url) {
     }
   }
 
-  if(acc?.name == "null") {
+  if(acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {
     acc = undefined;
   }
 
