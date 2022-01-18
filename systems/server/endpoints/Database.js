@@ -1,10 +1,10 @@
 const Logger = require("hyarcade-logger");
-const FileCache = require("../../utils/files/FileCache");
-const cfg = require("../../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
 const MergeDatabase = require("../MergeDatabase");
+const FileCache = require("../../../src/utils/files/FileCache");
 
 /**
  * 
@@ -15,8 +15,6 @@ const MergeDatabase = require("../MergeDatabase");
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   if(req.method == "GET") {
-    res.setHeader("Content-Type", "application/json");
-
     const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
     

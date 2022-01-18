@@ -1,12 +1,8 @@
 const utils = require("../utils");
-const {
-  logger
-} = utils;
+const { logger } = require("hyarcade-logger");
 const isValidIGN = require("./utils/ignValidator");
 const Account = require("../classes/account");
-const {
-  getUUID
-} = require("../request/mojangRequest");
+const { getUUID } = require("hyarcade-requests/mojangRequest");
 
 /**
  * Add a list of accounts to another list

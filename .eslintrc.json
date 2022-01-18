@@ -3,6 +3,7 @@
     "plugins": [
         "jsdoc"
     ],
+    "root": true,
     "env": {
         "browser": true,
         "commonjs": true,

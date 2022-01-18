@@ -1,8 +1,9 @@
-const FileCache = require("../../utils/files/FileCache");
 const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
-const GenericLeaderboard = require("../../utils/leaderboard/GenericLeaderboard");
+
+const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
+const FileCache = require("../../../src/utils/files/FileCache");
 
 /**
  * 
@@ -18,7 +19,7 @@ module.exports = async (req, res, fileCache) => {
   const timePeriod = url.searchParams.get("time");
   const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
-  const max = url.searchParams.get("max") ?? 200;
+  const max = Math.min(url.searchParams.get("max") ?? 200, 1000);
   const filter = url.searchParams.get("filter");
 
   if(req.method == "GET") {

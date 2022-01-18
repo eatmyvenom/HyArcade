@@ -2,9 +2,9 @@ const Logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
-const utils = require("../utils");
-const FileCache = require("../utils/files/FileCache");
-const NormalizeAccount = require("../datagen/utils/NormalizeAccount");
+const utils = require("../../src/utils");
+const FileCache = require("../../src/utils/files/FileCache");
+const NormalizeAccount = require("../../src/datagen/utils/NormalizeAccount");
 
 /**
  * 

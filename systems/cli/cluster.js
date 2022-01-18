@@ -1,5 +1,5 @@
 const config = require("hyarcade-config").fromJSON();
-const cluster = require("../src/cluster/cluster");
+const cluster = require("../../src/cluster/cluster");
 
 /**
  * 

@@ -3,8 +3,8 @@ const Account = require("hyarcade-requests/types/Account");
 const {
   URL
 } = require("url");
-const utils = require("../../utils");
-const FileCache = require("../../utils/files/FileCache");
+const utils = require("../../../src/utils");
+const FileCache = require("../../../src/utils/files/FileCache");
 const AccountResolver = require("../AccountResolver");
 let fakeFile;
 

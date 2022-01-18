@@ -4,7 +4,7 @@ const force = utils.fileExists("force");
 const Runtime = require("../Runtime");
 const fs = require("fs-extra");
 const Account = require("hyarcade-requests/types/Account");
-const HyarcadeWorkerRequest = require("../request/HyarcadeWorkerRequest");
+const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
 const { sleep } = require("../utils");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 const Util = require("util");
@@ -160,7 +160,7 @@ async function fastUpdate (accounts, argForce) {
  */
 module.exports = async function updateAccounts (accounts, argForce = false, fast = false) {
 
-  cfg = require("../Config").fromJSON();
+  cfg = require("hyarcade-config").fromJSON();
 
   if(fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");

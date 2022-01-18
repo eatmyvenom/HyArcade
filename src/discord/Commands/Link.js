@@ -1,6 +1,6 @@
 const Account = require("../../classes/account");
 const Command = require("../../classes/Command");
-const mojangRequest = require("../../request/mojangRequest");
+const mojangRequest = require("hyarcade-requests/mojangRequest");
 const BotRuntime = require("../BotRuntime");
 const {
   addAccount

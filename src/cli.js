@@ -7,11 +7,11 @@ const {
   addAccounts
 } = require("./listUtils");
 const utils = require("./utils");
-const mojangRequest = require("./request/mojangRequest");
+const mojangRequest = require("hyarcade-requests/mojangRequest");
 const dataGeneration = require("./dataGeneration");
 const Account = require("./classes/account");
 const AccountCreator = require("./mongo/AccountCreator");
-const webRequest = require("./request/webRequest");
+const webRequest = require("hyarcade-requests/webRequest");
 const Runtime = require("./Runtime");
 const process = require("process");
 const args = process.argv;

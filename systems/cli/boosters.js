@@ -1,4 +1,4 @@
-const dataGeneration = require("../src/dataGeneration");
+const dataGeneration = require("../../src/dataGeneration");
 
 /**
  * 

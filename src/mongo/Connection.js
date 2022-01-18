@@ -1,7 +1,7 @@
 const {
   MongoClient
 } = require("mongodb");
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const url = cfg.dbURL;
 const MongoUtils = require("./MongoUtils");
 

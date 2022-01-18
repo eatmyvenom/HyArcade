@@ -396,7 +396,7 @@ async function main () {
     break;
 
   case "serveDB": {
-    const Server = require("./src/server/Wrap");
+    const Server = require("./systems/server/Server");
     logger.out("Starting server for database and listening on port 6000");
     await Server(6000);
     killable = false;
@@ -404,7 +404,7 @@ async function main () {
   }
 
   default: {
-    const mod = require(`./cli/${args[2]}`);
+    const mod = require(`./systems/cli/${args[2]}`);
 
     await mod(args);
   }

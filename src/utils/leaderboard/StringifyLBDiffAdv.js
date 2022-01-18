@@ -1,5 +1,5 @@
 const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
-const config = require("../../Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 const TimSort = require("timsort");
 
 /**

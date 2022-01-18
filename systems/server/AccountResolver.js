@@ -1,7 +1,8 @@
 const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
-const FileCache = require("../utils/files/FileCache");
 const { mojangRequest } = require("hyarcade-requests");
+
+const FileCache = require("../../src/utils/files/FileCache");
 
 /**
  * 

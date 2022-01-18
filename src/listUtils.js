@@ -1,5 +1,5 @@
 const utils = require("./utils");
-const config = require("./Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 const listDiffByProp = require("./utils/leaderboard/LBFromProp");
 const {
   stringifyList

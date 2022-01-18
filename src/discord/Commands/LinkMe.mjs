@@ -1,6 +1,6 @@
 import Account from "../../classes/account.js";
 import Command from "../../classes/Command.js";
-import mojangRequest from "../../request/mojangRequest.js";
+import mojangRequest from "hyarcade-requests/mojangRequest.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_IGN_UNDEFINED,  ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
 import Database from "../Utils/Database.js";

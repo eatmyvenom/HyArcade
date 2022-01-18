@@ -1,4 +1,4 @@
-const config = require("../Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 const Discord = require("discord.js");
 const {
   MessageEmbed

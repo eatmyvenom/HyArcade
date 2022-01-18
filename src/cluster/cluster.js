@@ -1,4 +1,4 @@
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config/Config").fromJSON();
 const task = require("./task");
 const logger = require("hyarcade-logger");
 const {

@@ -1,5 +1,5 @@
-const FileCache = require("../../utils/files/FileCache");
-const MiniWallsLeaderboard = require("../../utils/leaderboard/MiniWallsLeaderboard");
+const FileCache = require("../../../src/utils/files/FileCache");
+const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
 
 
 

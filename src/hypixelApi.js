@@ -1,10 +1,10 @@
 const process = require("process");
-const hypixelReq = require("./request/hypixelReq");
+const hypixelReq = require("hyarcade-requests/hypixelReq");
 const {
   sleep,
   logger
 } = require("./utils");
-const config = require("./Config").fromJSON();
+const config = require("hyarcade-config").fromJSON();
 
 /**
  * Function to get the key to use

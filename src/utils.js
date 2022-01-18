@@ -1,4 +1,4 @@
-const Config = require("./Config");
+const Config = require("hyarcade-config");
 const cfg = Config.fromJSON();
 const fs = require("fs-extra");
 const { parseChunked, stringifyStream } = require("@discoveryjs/json-ext");

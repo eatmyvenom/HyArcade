@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const logger = require("hyarcade-logger");
-const mojangRequest = require("../../../request/mojangRequest");
+const mojangRequest = require("hyarcade-requests/mojangRequest");
 const BotRuntime = require("../../BotRuntime");
 const {
   CommandInteraction

@@ -1,4 +1,4 @@
-const FileCache = require("../../utils/files/FileCache");
+const FileCache = require("../../../src/utils/files/FileCache");
 const process = require("process");
 
 /**

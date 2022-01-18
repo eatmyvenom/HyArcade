@@ -1,5 +1,5 @@
-const SendBasicLB = require("../src/events/SendBasicLB");
-const SendDuplexLB = require("../src/events/SendDuplexLB");
+const SendBasicLB = require("../../src/events/SendBasicLB");
+const SendDuplexLB = require("../../src/events/SendDuplexLB");
 const config = require("hyarcade-config").fromJSON();
 
 /**

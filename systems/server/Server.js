@@ -1,38 +1,34 @@
-const {
-  logger
-} = require("../utils");
-const {
-  URL
-} = require("url");
-const process = require("process");
-const FileCache = require("../utils/files/FileCache");
-const updateAccounts = require("../datagen/updateAccounts");
-const utils = require("../utils");
+const logger = require("hyarcade-logger");
+
+const { URL } = require("url");
 const { rm } = require("fs-extra");
-const webhook = require("../events/webhook");
+const process = require("process");
+
+const FileCache = require("../../src/utils/files/FileCache");
+const updateAccounts = require("../../src/datagen/updateAccounts");
+const utils = require("../../src/utils");
+const webhook = require("../../src/events/webhook");
+const StatusExit = require("../../src/events/StatusExit");
+const StatusStart = require("../../src/events/StatusStart");
+
 const MergeDatabase = require("./MergeDatabase");
-const StatusExit = require("../events/StatusExit");
-const StatusStart = require("../events/StatusStart");
 
 const urlModules = {
-  account: require("./Res/account"),
-  acc: require("./Res/account"),
-  leaderboard: require("./Res/leaderboard"),
-  lb: require("./Res/leaderboard"),
-  db: require("./Res/Database"),
-  mwlb: require("./Res/MiniWallsLeaderboard"),
-  miniwalls: require("./Res/MiniWallsLeaderboard"),
-  timeacc: require("./Res/TimeAcc"),
-  acctimed: require("./Res/TimeAcc"),
-  resolve: require("./Res/NameSearch"),
-  namesearch: require("./Res/NameSearch"),
-  info: require("./Res/info"),
-  ping: require("./Res/ping")
+  account: require("./endpoints/account"),
+  acc: require("./endpoints/account"),
+  leaderboard: require("./endpoints/leaderboard"),
+  lb: require("./endpoints/leaderboard"),
+  db: require("./endpoints/Database"),
+  mwlb: require("./endpoints/MiniWallsLeaderboard"),
+  miniwalls: require("./endpoints/MiniWallsLeaderboard"),
+  timeacc: require("./endpoints/TimeAcc"),
+  acctimed: require("./endpoints/TimeAcc"),
+  resolve: require("./endpoints/NameSearch"),
+  namesearch: require("./endpoints/NameSearch"),
+  info: require("./endpoints/info"),
+  ping: require("./endpoints/ping")
 };
 
-/**
- * @type {FileCache}
- */
 let fileCache;
 let lock = false;
 let force = false;
@@ -101,15 +97,20 @@ async function autoUpdater () {
 }
 
 module.exports = async function start (port) {
-  StatusStart()
+
+  if(!process.argv.includes("--test")) {
+    StatusStart()
     .then(() => {})
     .catch(logger.err);
+  }
 
   logger.name = "Database";
   fileCache = new FileCache("data/");
 
   process.on("beforeExit", (code) => {
-    logger.log(`Exiting process with code : ${code}`);
+    if(!process.argv.includes("--test")) {
+      logger.log(`Exiting process with code : ${code}`);
+    }
   });
 
   setInterval(() => webhook.sendMW(fileCache), 960000);
@@ -124,8 +125,10 @@ module.exports = async function start (port) {
   server.on("error", logger.err);
 
   process.on("SIGINT", async (signal) => {
-    await StatusExit();
-    logger.log(`Exiting process with signal : ${signal}`);
+    if(!process.argv.includes("--test")) {
+      await StatusExit();
+      logger.log(`Exiting process with signal : ${signal}`);
+    }
 
     process.exit(0);
   });

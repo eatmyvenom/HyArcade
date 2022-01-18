@@ -3,7 +3,7 @@ const utils = require("../utils");
 const {
   logger
 } = utils;
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const force = utils.fileExists("force") || cfg.alwaysForce;
 
 module.exports = async function (database) {

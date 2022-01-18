@@ -1,7 +1,7 @@
 const AccountEvent = require("../classes/Event");
 const utils = require("../utils");
 const logger = require("hyarcade-logger");
-const cfg = require("../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 
 class EventDetector {
     OldAccounts = {};

@@ -1,11 +1,11 @@
 const {
   URL
 } = require("url");
-const cfg = require("../../Config").fromJSON();
+const cfg = require("hyarcade-config").fromJSON();
 const Logger = require("hyarcade-logger");
-const FileCache = require("../../utils/files/FileCache");
+const FileCache = require("../../../src/utils/files/FileCache");
 const Account = require("hyarcade-requests/types/Account");
-const utils = require("../../utils");
+const utils = require("../../../src/utils");
 const AccountResolver = require("../AccountResolver");
 let fakeFile;
 
