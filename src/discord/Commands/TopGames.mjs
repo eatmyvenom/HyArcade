@@ -2,14 +2,14 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { Message, Interaction } = require("discord.js");
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import Config from "hyarcade-config";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 
 const cfg = Config.fromJSON();
 

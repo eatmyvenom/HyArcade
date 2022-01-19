@@ -3,8 +3,8 @@ const cfg = require("hyarcade-config").fromJSON();
 const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
-const MergeDatabase = require("../MergeDatabase");
-const FileCache = require("../../../src/utils/files/FileCache");
+const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
  * 

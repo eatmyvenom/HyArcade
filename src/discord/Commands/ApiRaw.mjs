@@ -1,8 +1,8 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-import Command from "../../classes/Command.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");

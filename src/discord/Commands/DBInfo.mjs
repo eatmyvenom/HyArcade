@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import BotRuntime from "../BotRuntime.js";
-import CommandResponse from "../Utils/CommandResponse.js";
-import Database from "../Utils/Database.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "hyarcade-requests/Database.js";
 
 export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
   if(interaction != undefined) {

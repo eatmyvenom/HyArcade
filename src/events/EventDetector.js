@@ -1,7 +1,7 @@
-const AccountEvent = require("../classes/Event");
-const utils = require("../utils");
+const AccountEvent = require("hyarcade-structures/Event");
 const logger = require("hyarcade-logger");
 const cfg = require("hyarcade-config").fromJSON();
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 class EventDetector {
     OldAccounts = {};
@@ -63,13 +63,13 @@ class EventDetector {
     }
 
     async saveEvents () {
-      let oldEvents = await utils.readJSON("events.json");
+      let oldEvents = await Json.read("events.json");
       for(const event of this.Events) {
         oldEvents.unshift([event, event.toString()]);
       }
 
       oldEvents = oldEvents.slice(0, Math.min(oldEvents.length, 100));
-      await utils.writeJSON("events.json", oldEvents);
+      await Json.write("events.json", oldEvents);
     }
 
     logEvents () {

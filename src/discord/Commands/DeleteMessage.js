@@ -1,4 +1,4 @@
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command.js");
 const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("delmsg", ["156952208045375488"], async (args) => {

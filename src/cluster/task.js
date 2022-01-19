@@ -3,13 +3,14 @@ const {
   stringNormal,
   stringDaily
 } = require("../listUtils");
-const utils = require("../utils");
 const dataGen = require("../dataGeneration");
 
 const lists = require("../listParser");
 let accounts = undefined;
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
+const Database = require("hyarcade-requests/Database");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Generate the data for all accounts
@@ -24,7 +25,7 @@ async function accs () {
 
   accounts = await dataGen.updateAllAccounts();
 
-  await utils.writeDB("accounts", accounts);
+  await Database.writeDB("accounts", accounts);
   return ["accounts.json"];
 }
 
@@ -54,9 +55,9 @@ async function glds () {
     );
   }
 
-  guilds.sort(utils.winsSorter);
+  guilds.sort((a, b) => {return b.wins - a.wins;});
   logger.info(`Saving guild data for ${guilds.length} guilds`);
-  await utils.writeJSON("guild.json", guilds);
+  await Json.write("guild.json", guilds);
   return ["guild.json"];
 }
 

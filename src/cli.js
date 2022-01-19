@@ -3,19 +3,15 @@ const {
   stringDaily,
   addAccounts
 } = require("./listUtils");
-const utils = require("./utils");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
 const dataGeneration = require("./dataGeneration");
-const Account = require("./classes/account");
-const AccountCreator = require("./mongo/AccountCreator");
 const webRequest = require("hyarcade-requests/webRequest");
-const Runtime = require("./Runtime");
+const Runtime = require("hyarcade-config/Runtime");
 const process = require("process");
 const { HypixelApi } = require("hyarcade-requests");
 const args = process.argv;
-const {
-  logger
-} = utils;
+const logger = require("hyarcade-logger");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Add a new account to the database
@@ -24,21 +20,6 @@ const {
 async function newAcc () {
   const nameArr = args.slice(2, -1);
   await addAccounts(nameArr);
-}
-
-/**
- * @param {object} database
- */
-async function mNewAcc (database) {
-  const player = args[3];
-  let uuid = player;
-  if(player.length < 16) {
-    uuid = await mojangRequest.getUUID(player);
-  }
-
-  const acc = new Account(player, 0, uuid);
-  await acc.updateData();
-  await AccountCreator(database, acc);
 }
 
 /**
@@ -51,9 +32,9 @@ async function linkDiscord () {
   if(player.length < 16) {
     uuid = await mojangRequest.getUUID(player);
   }
-  const disclist = await utils.readJSON("./disclist.json");
+  const disclist = await Json("./disclist.json");
   disclist[discord] = uuid;
-  await utils.writeJSON("./disclist.json", disclist);
+  await Json.write("./disclist.json", disclist);
 }
 
 /**
@@ -71,11 +52,11 @@ async function newPlayer () {
   };
 
   // add object to list
-  const plrlist = await utils.readJSON("../playerlist.json");
+  const plrlist = await Json.read("../playerlist.json");
   plrlist.push(playerObj);
 
   // write new list
-  await utils.writeJSON("./playerlist.json", plrlist);
+  await Json.write("./playerlist.json", plrlist);
   logger.out(`Player "${name}" has been added with ${alts.length} alts.`);
 }
 
@@ -100,11 +81,11 @@ async function newGuild () {
   };
 
   // add object to list
-  const gldLst = await utils.readJSON("../guildlist.json");
+  const gldLst = await Json.read("../guildlist.json");
   gldLst.push(gldObj);
 
   // write new list
-  await utils.writeJSON("./guildlist.json", gldLst);
+  await Json.write("./guildlist.json", gldLst);
   logger.out(`Guild "${name}" has been added successfully.`);
 }
 
@@ -211,7 +192,7 @@ async function getServerStatus () {
     slash: Date.now() - interactions < 900000,
     database: !database,
   };
-  await utils.writeJSON("serverStatus.json", obj);
+  await Json.write("serverStatus.json", obj);
   return obj;
 }
 
@@ -228,6 +209,5 @@ module.exports = {
   addGIDsMembers,
   getUUID: getUUIDCli,
   linkDiscord,
-  mNewAcc,
   getServerStatus,
 };

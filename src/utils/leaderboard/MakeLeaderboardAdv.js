@@ -1,7 +1,5 @@
-const utils = require("../../utils");
-const {
-  getList
-} = require("./ListUtils");
+const { getList } = require("./ListUtils");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  *
@@ -18,8 +16,8 @@ module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
     newlist = await getList();
     oldlist = await getList(timetype);
   } else {
-    newlist = await utils.readJSON(`${name}.json`);
-    oldlist = await utils.readJSON(`${name}.${timetype}.json`);
+    newlist = await Json.read(`${name}.json`);
+    oldlist = await Json.read(`${name}.${timetype}.json`);
   }
 
   for(let i = 0; i < oldlist.length; i += 1) {

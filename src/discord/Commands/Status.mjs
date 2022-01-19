@@ -1,10 +1,10 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import Account from "hyarcade-requests/types/Account.js";
 import ImageGenerator from "../images/ImageGenerator.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 import Requests from "hyarcade-requests";

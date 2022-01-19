@@ -1,7 +1,7 @@
 const {
   MessageEmbed
 } = require("discord.js");
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command");
 const logger = require("hyarcade-logger");
 const {
   ERROR_ARGS_LENGTH
@@ -11,7 +11,7 @@ const {
 } = require("../Utils/Embeds/StaticEmbeds");
 const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 const BotRuntime = require("../BotRuntime");
-const Database = require("../Utils/Database");
+const Database = require("hyarcade-requests/Database");
 
 /**
  * @param {number} n

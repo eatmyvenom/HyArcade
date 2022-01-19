@@ -1,7 +1,7 @@
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 
 /**
  * 

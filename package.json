@@ -19,17 +19,17 @@
     "author": "EatMyVenom",
     "license": "MPL-2.0",
     "dependencies": {
-        "hyarcade-config": "github:eatmyvenom/hyarcade-config",
-        "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
-        "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
-        "hyarcade-structures": "github:eatmyvenom/hyarcade-structures",
-        "hyarcade-utils": "github:eatmyvenom/hyarcade-utils",
         "@discoveryjs/json-ext": "^0.5.6",
         "bson": "^4.4.1",
         "bson-ext": "^4.0.0",
         "canvas": "^2.8.0",
         "discord.js": "github:discordjs/discord.js",
         "fs-extra": "^10.0.0",
+        "hyarcade-config": "github:eatmyvenom/hyarcade-config",
+        "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
+        "hyarcade-requests": "github:eatmyvenom/hyarcade-requests",
+        "hyarcade-structures": "github:eatmyvenom/hyarcade-structures",
+        "hyarcade-utils": "github:eatmyvenom/hyarcade-utils",
         "javascript-time-ago": "^2.3.6",
         "node-fetch": "^2.6.1",
         "nodejs": "^0.0.0",
@@ -37,8 +37,8 @@
         "timsort": "^0.3.0"
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.14.7",
         "@babel/core": "^7.14.8",
+        "@babel/eslint-parser": "^7.14.7",
         "@babel/preset-env": "^7.14.8",
         "eslint": "^7.32.0",
         "eslint-plugin-jsdoc": "^36.0.6"

@@ -1,10 +1,10 @@
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
-import CommandResponse from "../Utils/CommandResponse.js";
-import Database from "../Utils/Database.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "hyarcade-requests/Database.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 

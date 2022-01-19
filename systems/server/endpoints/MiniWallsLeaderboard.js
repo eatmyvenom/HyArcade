@@ -1,4 +1,4 @@
-const FileCache = require("../../../src/utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
 
 

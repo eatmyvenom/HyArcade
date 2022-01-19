@@ -1,10 +1,8 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Command = require("../../classes/Command");
+const { MessageEmbed } = require("discord.js");
+const Command = require("hyarcade-structures/Discord/Command");
 const logger = require("hyarcade-logger");
-const Database = require("../Utils/Database");
-const CommandResponse = require("../Utils/CommandResponse");
+const Database = require("hyarcade-requests/Database");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const { stringifyList } = require("../../utils/leaderboard/ListUtils");
 
 /**

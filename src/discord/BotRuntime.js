@@ -1,13 +1,10 @@
 const cfg = require("hyarcade-config").fromJSON();
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fetch = require("node-fetch");
-const Logger = require("hyarcade-logger");
 const { AccountArray } = require("hyarcade-requests").types;
-const {
-  MessageEmbed, Client, Message
-} = require("discord.js");
-const { logger, readDB } = require("../utils");
-const Database = require("./Utils/Database");
+const { MessageEmbed, Client, Message } = require("discord.js");
+const logger = require("hyarcade-logger");
+const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const { mojangRequest } = require("hyarcade-requests");
 
@@ -125,7 +122,7 @@ module.exports = class BotRuntime {
      * @returns {object}
      */
     static async getFromDB (file, fields) {
-      const fileData = await readDB(file, fields);
+      const fileData = await Database.readDB(file, fields);
 
       if (file == "accounts" || file == "dayaccounts" || file == "monthlyaccounts" || file == "weeklyaccounts") {
         return AccountArray(fileData);
@@ -134,25 +131,7 @@ module.exports = class BotRuntime {
     }
 
     static async writeToDB (path, json) {
-      const data = JSON.stringify(json);
-      const url = new URL("db", cfg.dbUrl);
-      url.searchParams.set("path", path);
-      Logger.debug(`Writing to ${path} in database`);
-
-      try {
-        await fetch(url.toString(), {
-          method: "post",
-          body: data,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: cfg.dbPass
-          }
-        });
-      } catch (e) {
-        Logger.err("Can't connect to database");
-        Logger.err(e.stack);
-        return {};
-      }
+      await Database.writeDB(path, json);
     }
 
     static getWebhookObj (embed) {

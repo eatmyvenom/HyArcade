@@ -1,13 +1,11 @@
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Database = require("hyarcade-requests/Database");
 const BotRuntime = require("../BotRuntime");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const AccountComparitor = require("../Utils/AccountComparitor");
-const CommandResponse = require("../Utils/CommandResponse");
-const Database = require("../Utils/Database");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * 

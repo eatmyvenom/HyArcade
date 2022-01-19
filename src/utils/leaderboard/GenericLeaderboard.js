@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 const TimSort = require("timsort");
-const FileCache = require("../../utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
 

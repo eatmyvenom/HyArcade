@@ -1,7 +1,8 @@
+const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const AccountArray = require("hyarcade-requests/types/AccountArray");
-const guild = require("./classes/guild");
-const utils = require("./utils");
+const guild = require("hyarcade-structures/Guild");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Gets a list of account object from the json account list
@@ -9,7 +10,7 @@ const utils = require("./utils");
  * @returns {Promise<Account[]>} All of the accounts in the database
  */
 exports.accounts = async function accounts () {
-  return AccountArray(await utils.readDB("accounts"));
+  return AccountArray(await Database.readDB("accounts"));
 };
 
 /**
@@ -20,8 +21,8 @@ exports.accounts = async function accounts () {
  */
 exports.guilds = async function gld (accs) {
   const accounts = accs ? accs : await exports.accounts();
-  const Guild = require("./classes/guild")(accounts);
-  const guildlistjson = await utils.readJSON("guildlist.json");
+  const Guild = require("hyarcade-structures/Guild")(accounts);
+  const guildlistjson = await Json.read("guildlist.json");
   const realList = [];
 
   for(const guild of guildlistjson) {

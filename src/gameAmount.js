@@ -1,6 +1,6 @@
-const utils = require("./utils");
 const Logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Get a formatted string of game counts
@@ -24,7 +24,7 @@ async function formatCounts () {
   str += `Queue Total         : ${counts.QUEUE.players}\n`;
   str += `Total               : ${all.playerCount}`;
 
-  await utils.writeJSON("gameCounts.json", counts.ARCADE);
+  await Json.write("gameCounts.json", counts.ARCADE);
   return str.replace(/undefined/g, "0");
 }
 

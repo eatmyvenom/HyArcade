@@ -1,9 +1,6 @@
-const Command = require("../../classes/Command");
-const fs = require("fs/promises");
-const {
-  MessageEmbed
-} = require("discord.js");
-const utils = require("../../utils");
+const Command = require("hyarcade-structures/Discord/Command");
+const fs = require("fs-extra");
+const { MessageEmbed } = require("discord.js");
 
 /**
  * 
@@ -11,7 +8,7 @@ const utils = require("../../utils");
  */
 async function lastUpdateHandler () {
   let time;
-  if(utils.fileExists("timeupdate")) {
+  if(fs.existsSync("timeupdate")) {
     time = Date.parse(await (await fs.readFile("timeupdate")).toString());
   } else {
     time = Date.now();

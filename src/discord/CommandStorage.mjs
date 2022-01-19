@@ -1,8 +1,8 @@
 import { CommandInteraction } from "discord.js";
 import fs from "fs-extra";
 import Logger from "hyarcade-logger";
-import Command from "../classes/Command.js";
-import CommandResponse from "./Utils/CommandResponse.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 
 /**
  * @param {string} mod

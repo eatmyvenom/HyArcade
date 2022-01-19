@@ -1,9 +1,9 @@
-const Role = require("../classes/Role");
+const Role = require("hyarcade-structures/Discord/Role");
 const RoleUpdater = require("./RoleUpdater");
 const fs = require("fs-extra");
 const BotRuntime = require("./BotRuntime");
 const { Client } = require("discord.js");
-const utils = require("../utils");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 const neededStats = ["blockingDead",
   "name",
@@ -69,5 +69,5 @@ module.exports = async function roleHandler (client) {
     }
   });
 
-  await utils.writeJSON("tags.json", tags);
+  await Json.write("tags.json", tags);
 };

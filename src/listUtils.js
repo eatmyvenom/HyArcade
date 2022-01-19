@@ -1,4 +1,3 @@
-const utils = require("./utils");
 const config = require("hyarcade-config").fromJSON();
 const listDiffByProp = require("./utils/leaderboard/LBFromProp");
 const {
@@ -8,6 +7,7 @@ const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
 const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
 const stringLB = require("./utils/leaderboard/StringifyLB");
 const TimSort = require("timsort");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -45,8 +45,7 @@ async function txtPlayerList (list, maxamnt) {
  * @returns {object[]} Final list
  */
 async function listNormal (name, maxamnt) {
-  let thelist = await utils.readJSON(`${name}.json`);
-  TimSort.sort(thelist, utils.winsSorter);
+  let thelist = await Json.read(`${name}.json`);
   thelist = thelist.slice(0, maxamnt);
   return thelist;
 }

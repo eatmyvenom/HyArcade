@@ -6,7 +6,7 @@ const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
 const { Message } = require("discord.js");
 const { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } = require("./Utils/Embeds/StaticEmbeds.js");
 const isValidIGN = require("../datagen/utils/ignValidator.js");
-const Database = require("./Utils/Database.js");
+const Database = require("hyarcade-requests/Database");
 
 /**
  * @param {string} id

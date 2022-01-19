@@ -3,7 +3,7 @@ const {
   CommandInteraction,
   ButtonInteraction
 } = require("discord.js");
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command");
 const logger = require("hyarcade-logger");
 const getLB = require("../Utils/Leaderboards/GetLeaderboard");
 const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");

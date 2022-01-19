@@ -1,5 +1,5 @@
 const { getFromDB, getBanlist } = require("../BotRuntime");
-const Database = require("../Utils/Database");
+const Database = require("hyarcade-requests/Database");
 const Arc3 = require("./FakeLBs/Arc3");
 const ArcLeft = require("./FakeLBs/ArcLeft");
 const Guild = require("./FakeLBs/Guild");

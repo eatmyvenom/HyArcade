@@ -1,6 +1,6 @@
 const mojangRequest = require("hyarcade-requests/mojangRequest");
 const logger = require("hyarcade-logger");
-const Database = require("./Database");
+const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const { Message } = require("discord.js");
 

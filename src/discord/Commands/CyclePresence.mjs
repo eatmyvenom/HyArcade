@@ -1,4 +1,4 @@
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import SetPresence from "../Utils/SetPresence.js";
 

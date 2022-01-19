@@ -1,17 +1,16 @@
 const logger = require("hyarcade-logger");
 
 const { URL } = require("url");
-const { rm } = require("fs-extra");
+const { rm, existsSync } = require("fs-extra");
 const process = require("process");
 
-const FileCache = require("../../src/utils/files/FileCache");
+const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+
 const updateAccounts = require("../../src/datagen/updateAccounts");
-const utils = require("../../src/utils");
 const webhook = require("../../src/events/webhook");
 const StatusExit = require("../../src/events/StatusExit");
 const StatusStart = require("../../src/events/StatusStart");
-
-const MergeDatabase = require("./MergeDatabase");
 
 const urlModules = {
   account: require("./endpoints/account"),
@@ -75,11 +74,11 @@ async function autoUpdater () {
     const oldAccounts = fileCache.accounts;
 
     let newAccounts;
-    if(force || utils.fileExists("force")) {
+    if(force || existsSync("force")) {
       logger.debug("Forcing full update");
       newAccounts = await updateAccounts(oldAccounts, true, true);
       force = false;
-      if(utils.fileExists("force")) {
+      if(existsSync("force")) {
         await rm("force");
       }
     } else {

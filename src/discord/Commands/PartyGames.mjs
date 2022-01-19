@@ -2,15 +2,13 @@ import { createRequire } from "module";
 import Database from "../Utils/Database.js";
 const require = createRequire(import.meta.url);
 
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
-const CommandResponse = require("../Utils/CommandResponse");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const PartyGamesImg = require("../images/PartyGamesImg");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 
 /**
  * 

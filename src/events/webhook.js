@@ -6,10 +6,11 @@ const {
 } = Discord;
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
-const utils = require("../utils");
-const Database = require("../discord/Utils/Database");
+const Database = require("hyarcade-requests/Database");
 const FakeLB = require("../discord/images/FakeLB");
-const FileCache = require("../utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+const Json = require("hyarcade-utils/FileHandling/Json");
+const MiniWallsLeaderboard = require("../utils/leaderboard/MiniWallsLeaderboard");
 
 /**
  * Send text to a discord webhook
@@ -421,7 +422,11 @@ async function getLB (prop, timetype, limit, fileCache) {
   case "day":
   case "daily": {
     time = "Daily";
-    res = await Database.getMWLeaderboard(prop, "day", fileCache);
+    if(fileCache != undefined) {
+      res = await MiniWallsLeaderboard(fileCache, prop, "day");
+    } else {
+      res = await Database.getMWLeaderboard(prop, "day", fileCache);
+    }
     res = res.slice(0, limit);
     break;
   }
@@ -431,7 +436,11 @@ async function getLB (prop, timetype, limit, fileCache) {
   case "weak":
   case "weekly": {
     time = "Weekly";
-    res = await Database.getMWLeaderboard(prop, "weekly", fileCache);
+    if(fileCache != undefined) {
+      res = await MiniWallsLeaderboard(fileCache, prop, "weekly");
+    } else {
+      res = await Database.getMWLeaderboard(prop, "weekly", fileCache);
+    }
     res = res.slice(0, limit);
     break;
   }
@@ -441,14 +450,22 @@ async function getLB (prop, timetype, limit, fileCache) {
   case "month":
   case "monthly": {
     time = "Monthly";
-    res = await Database.getMWLeaderboard(prop, "monthly", fileCache);
+    if(fileCache != undefined) {
+      res = await MiniWallsLeaderboard(fileCache, prop, "monthly");
+    } else {
+      res = await Database.getMWLeaderboard(prop, "monthly", fileCache);
+    }
     res = res.slice(0, limit);
     break;
   }
 
   default: {
     time = "Lifetime";
-    res = await Database.getMWLeaderboard(prop, undefined, fileCache);
+    if(fileCache != undefined) {
+      res = await MiniWallsLeaderboard(fileCache, prop, undefined);
+    } else {
+      res = await Database.getMWLeaderboard(prop, undefined, fileCache);
+    }
     res = res.slice(0, limit);
     break;
   }
@@ -669,7 +686,7 @@ function formatNum (number) {
  * @param {FileCache} fileCache
  */
 async function sendMW (fileCache) {
-  let guildlist = fileCache ? [...fileCache.guilds] : await utils.readJSON("guild.json");
+  let guildlist = fileCache ? [...fileCache.guilds] : await Json.read("guild.json");
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
   let str = "";

@@ -1,10 +1,10 @@
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import Config from "hyarcade-config";
 import ImageGenerator from "../images/ImageGenerator.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 
 const cfg = Config.fromJSON();
 

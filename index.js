@@ -1,10 +1,9 @@
 #!/bin/env node
 const os = require("os");
-const fs = require("fs/promises");
+const fs = require("fs-extra");
 const process = require("process");
 const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/events/webhook");
-const utils = require("./src/utils");
 const cli = require("./src/cli");
 const {
   listNormal,
@@ -15,9 +14,9 @@ const {
 const args = process.argv;
 const task = require("./src/cluster/task");
 
-const AccountEvent = require("./src/classes/Event");
+const AccountEvent = require("hyarcade-structures/Event");
 const logger = require("hyarcade-logger");
-const Runtime = require("./src/Runtime").fromJSON();
+const Runtime = require("hyarcade-config/Runtime").fromJSON();
 
 /**
  * Send a list to a discord webhook as formatted text
@@ -119,15 +118,38 @@ async function gameAmnt () {
 }
 
 /**
+ * Copy a json file to another location with a timestamp or type
+ *
+ * @param {string} oldfile path of the source file
+ * @param {string} path path of the target file
+ * @param {string} timetype the way of specifying this file
+ */
+async function archiveJson (oldfile, path, timetype) {
+  logger.info(`Snapshotting: data/${oldfile}.json -> ${path}${oldfile}.${timetype}.json`);
+
+  await fs.copy(`data/${oldfile}.json`, `data/${path}${oldfile}.${timetype}.json`, { overwrite: true });
+  logger.info(`Snapshot of "data/${oldfile}.json" complete!`);
+}
+
+/**
  * Archive the various json files storing current data for later
  *
  * @param {string} [path="./archive/"] the path to place the archived files at
- * @param {string} [timetype=utils.day()] the varied part of the file to distinguish it
+ * @param {string} [timetype] the varied part of the file to distinguish it
  */
-async function archive (path = "./archive/", timetype = utils.day()) {
+async function archive (path = "./archive/", timetype) {
+
+  if(!timetype) {
+    // eslint-disable-next-line no-param-reassign
+    timetype = Date()
+      .replace(/[0-9].:[0-9].:[0-9].*/, "")
+      .trim()
+      .replace(/ /g, "_");
+  }
+
   await Promise.all([
-    utils.archiveJson("players", path, timetype),
-    utils.archiveJson("accounts", path, timetype),
+    archiveJson("players", path, timetype),
+    archiveJson("accounts", path, timetype),
   ]);
 }
 
@@ -175,7 +197,7 @@ async function addLeaderboards () {
  * Write the current PID to a tmp file
  */
 async function writePID () {
-  if(!utils.fileExists(`${os.tmpdir()}/pgapi`)) {
+  if(!fs.existsSync(`${os.tmpdir()}/pgapi`)) {
     await fs.mkdir(`${os.tmpdir()}/pgapi`);
   }
   await fs.writeFile(`${os.tmpdir()}/pgapi/${args[2]}.pid`, `${process.pid}`);

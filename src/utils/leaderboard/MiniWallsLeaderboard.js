@@ -1,6 +1,6 @@
 const Account = require("hyarcade-requests/types/Account");
 const TimSort = require("timsort");
-const FileCache = require("../../utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const GenericLeaderboard = require("./GenericLeaderboard");
 
 /**

@@ -3,7 +3,7 @@ const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
 
 const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
-const FileCache = require("../../../src/utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
  * 

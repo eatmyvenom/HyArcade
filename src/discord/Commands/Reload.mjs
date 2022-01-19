@@ -1,5 +1,5 @@
-import Command from "../../classes/Command.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import CommandStorage from "../CommandStorage.mjs";
 
 /**

@@ -2,12 +2,12 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import fetch from "node-fetch";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 
 const { MessageEmbed, Util } = require("discord.js");
 const { escapeItalic, escapeUnderline } = Util;

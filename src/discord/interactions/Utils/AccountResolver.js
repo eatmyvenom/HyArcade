@@ -6,7 +6,7 @@ const {
   CommandInteraction
 } = require("discord.js");
 const Account = require("hyarcade-requests/types/Account");
-const Database = require("../../Utils/Database");
+const Database = require("hyarcade-requests/Database");
 const cfg = require("hyarcade-config").fromJSON();
 
 /**

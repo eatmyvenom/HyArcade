@@ -1,6 +1,6 @@
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import BotRuntime from "../BotRuntime.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 
 let msgs = undefined;
 

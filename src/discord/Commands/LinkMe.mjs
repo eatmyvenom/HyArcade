@@ -1,9 +1,9 @@
-import Account from "../../classes/account.js";
-import Command from "../../classes/Command.js";
+import Account from "hyarcade-requests/types/Account.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import mojangRequest from "hyarcade-requests/mojangRequest.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_IGN_UNDEFINED,  ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 import Logger from "hyarcade-logger";
 import { Interaction, Message } from "discord.js";
 import CommandResponse from "../Utils/CommandResponse.js";

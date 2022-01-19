@@ -1,11 +1,11 @@
 const {
   MessageEmbed
 } = require("discord.js");
-const Command = require("../../classes/Command");
+const Command = require("hyarcade-structures/Discord/Command");
 const Util = require("util");
 const Logger = require("hyarcade-logger");
 const AccountComparitor = require("../Utils/AccountComparitor");
-const Database = require("../Utils/Database");
+const Database = require("hyarcade-requests/Database");
 
 /**
  * @param {object} o

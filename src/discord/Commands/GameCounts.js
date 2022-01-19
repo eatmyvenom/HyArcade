@@ -2,8 +2,8 @@ const {
   MessageEmbed
 } = require("discord.js");
 const { default: fetch } = require("node-fetch");
-const Command = require("../../classes/Command");
-const CommandResponse = require("../Utils/CommandResponse");
+const Command = require("hyarcade-structures/Discord/Command");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 
 /**
  * @param {number} n

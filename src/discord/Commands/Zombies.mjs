@@ -2,11 +2,11 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 import Account from "hyarcade-requests/types/Account.js";
-import Command from "../../classes/Command.js";
-import CommandResponse from "../Utils/CommandResponse.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
-import Database from "../Utils/Database.js";
+import Database from "hyarcade-requests/Database.js";
 
 const { MessageEmbed } = require("discord.js");
 

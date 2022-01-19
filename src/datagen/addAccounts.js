@@ -1,8 +1,8 @@
-const utils = require("../utils");
 const logger = require("hyarcade-logger");
 const isValidIGN = require("./utils/ignValidator");
-const Account = require("../classes/account");
+const Account = require("hyarcade-requests/types/Account");
 const { getUUID } = require("hyarcade-requests/mojangRequest");
+const Database = require("hyarcade-requests/Database");
 
 /**
  * Add a list of accounts to another list
@@ -11,7 +11,7 @@ const { getUUID } = require("hyarcade-requests/mojangRequest");
  * @returns {null}
  */
 module.exports = async function addAccounts (names) {
-  const accs = await utils.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
+  const accs = await Database.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
 
   let res = "";
   const newAccs = [];
@@ -54,7 +54,7 @@ module.exports = async function addAccounts (names) {
   newAccs.filter((a) => a.uuid != undefined);
 
   if(newAccs.length > 0) {
-    await utils.writeDB("accounts", newAccs);
+    await Database.writeDB("accounts", newAccs);
   }
 
   return res;

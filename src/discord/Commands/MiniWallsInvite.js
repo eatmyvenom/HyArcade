@@ -1,6 +1,6 @@
 const { Message } = require("discord.js");
-const Command = require("../../classes/Command.js");
-const CommandResponse = require("../Utils/CommandResponse.js");
+const Command = require("hyarcade-structures/Discord/Command");
+const CommandResponse = require("../Utils/CommandResponse");
 
 /**
  * 

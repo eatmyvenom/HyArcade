@@ -1,8 +1,8 @@
-const { readDB } = require("../src/utils");
 const Accounts = require("../src/utils/files/Accounts");
+const Database = require("hyarcade-requests/Database");
 
 async function main () {
-  const accounts = await readDB("weeklyaccounts");
+  const accounts = await Database.readDB("weeklyaccounts");
 
   const h = new Accounts("data/accounts.weekly");
 

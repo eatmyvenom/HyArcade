@@ -1,7 +1,7 @@
-import Command from "../../classes/Command.js";
+import Command from "hyarcade-structures/Discord/Command.js";
 import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
-import CommandResponse from "../Utils/CommandResponse.js";
-import Database from "../Utils/Database.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "hyarcade-requests/Database.js";
 import ArcadeAp from "../Utils/Embeds/ArcadeAp.js";
 
 export default new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {

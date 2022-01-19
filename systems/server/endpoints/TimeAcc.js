@@ -3,9 +3,9 @@ const Account = require("hyarcade-requests/types/Account");
 const {
   URL
 } = require("url");
-const utils = require("../../../src/utils");
-const FileCache = require("../../../src/utils/files/FileCache");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const AccountResolver = require("../AccountResolver");
+const Json = require("hyarcade-utils/FileHandling/Json");
 let fakeFile;
 
 /**
@@ -17,7 +17,7 @@ let fakeFile;
 module.exports = async (req, res, fileCache) => {
 
   if(fakeFile == undefined) {
-    fakeFile = await utils.readJSON("fakeStats.json");
+    fakeFile = await Json.read("fakeStats.json");
   }
 
   const url = new URL(req.url, `https://${req.headers.host}`);

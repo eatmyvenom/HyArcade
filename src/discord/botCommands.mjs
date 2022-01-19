@@ -13,24 +13,6 @@ import CommandResponse from "./Utils/CommandResponse.js";
 const { Message } = require("discord.js");
 
 /**
- * @param {Message} msg
- * @param {string} senderID
- * @returns {CommandResponse | object}
- */
-async function execute (msg, senderID) {
-  if(msg.content.startsWith(cfg.commandCharacter)) {
-    const cmdArr = msg.content.slice(cfg.commandCharacter.length).split(/\s/g);
-    const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
-    if(res instanceof CommandResponse) {
-      return res;
-    }
-    return new CommandResponse(res);
-
-  }
-  return;
-}
-
-/**
  * @param {Message} rawMsg
  * @param {string} command
  * @param {string[]} args
@@ -68,6 +50,25 @@ async function checkCommands (rawMsg, command, args, author) {
     return await CommandStorage.execute(command.toLowerCase(), args, author, rawMsg);
   }
   }
+}
+
+
+/**
+ * @param {Message} msg
+ * @param {string} senderID
+ * @returns {CommandResponse | object}
+ */
+async function execute (msg, senderID) {
+  if(msg.content.startsWith(cfg.commandCharacter)) {
+    const cmdArr = msg.content.slice(cfg.commandCharacter.length).split(/\s/g);
+    const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
+    if(res instanceof CommandResponse) {
+      return res;
+    }
+    return new CommandResponse(res);
+
+  }
+  return;
 }
 
 export default {

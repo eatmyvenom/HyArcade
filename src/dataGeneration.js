@@ -1,4 +1,3 @@
-const utils = require("./utils");
 const lists = require("./listParser");
 const updateAccounts = require("./datagen/updateAccounts");
 const {
@@ -6,13 +5,14 @@ const {
 } = require("./listUtils");
 const Account = require("hyarcade-requests/types/Account");
 const { HypixelApi } = require("hyarcade-requests");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  *
  */
 async function saveBoosters () {
   const boosters = await HypixelApi.boosters();
-  await utils.writeJSON("boosters.json", boosters);
+  await Json.write("boosters.json", boosters);
 }
 
 /**

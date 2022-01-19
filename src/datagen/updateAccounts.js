@@ -1,13 +1,13 @@
 const logger = require("hyarcade-logger");
-const utils = require("../utils");
-const force = utils.fileExists("force");
-const Runtime = require("../Runtime");
 const fs = require("fs-extra");
+const Runtime = require("hyarcade-config/Runtime");
 const Account = require("hyarcade-requests/types/Account");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
-const { sleep } = require("../utils");
+const sleep = require("hyarcade-utils/Sleep");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 const Util = require("util");
+
+const force = fs.existsSync("force");
 let cfg;
 
 class Response {
@@ -228,7 +228,7 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   if(fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");
     const accs = await fastUpdate(accounts, argForce);
-    if(force && utils.fileExists("force")) {
+    if(force && fs.existsSync("force")) {
       await fs.rm("force");
     }
     return accs;

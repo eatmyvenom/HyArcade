@@ -1,9 +1,7 @@
 const process = require("process");
 const hypixelReq = require("hyarcade-requests/hypixelReq");
-const {
-  sleep,
-  logger
-} = require("./utils");
+const sleep = require("hyarcade-utils/Sleep");
+const logger = require("hyarcade-logger");
 const config = require("hyarcade-config").fromJSON();
 
 /**
