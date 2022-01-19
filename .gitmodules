@@ -10,3 +10,6 @@
 [submodule "src/Worker"]
 	path = packages/Worker
 	url = git@github.com:eatmyvenom/Hyarcade-Worker.git
+[submodule "packages/Utils"]
+	path = packages/Utils
+	url = git@github.com:eatmyvenom/hyarcade-utils.git
