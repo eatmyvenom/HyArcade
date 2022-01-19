@@ -1,6 +1,6 @@
 const Role = require("hyarcade-structures/Discord/Role");
-const RoleUpdater = require("./RoleUpdater");
 const fs = require("fs-extra");
+const RoleUpdater = require("./RoleUpdater");
 const BotRuntime = require("./BotRuntime");
 const { Client } = require("discord.js");
 const Json = require("hyarcade-utils/FileHandling/Json");
