@@ -9,46 +9,6 @@ let commandStorage = undefined;
 
 let ezmsgs = undefined;
 
-/**
- * 
- * @param {ButtonInteraction} interaction 
- * @returns {ButtonResponse}
- */
-module.exports = async function ButtonParser (interaction) {
-  const data = interaction.customId.split(":");
-  const commandType = data[0];
-  switch(commandType) {
-  case "lb": {
-    return await leaderboardHandler(interaction, data[1], data[2], data[3]);
-  }
-
-  case "s": {
-    return await statsHandler(data[1], data[2], data[3], interaction);
-  }
-
-  case "pg": {
-    return pgHandler(data[1], data[2], data[3], interaction);
-  }
-
-  case "ez": {
-    return await ezHandler();
-  }
-
-  case "z": {
-    return await zombiesHandler(data[1], data[2], interaction);
-  }
-
-  case "t": {
-    return await topGamesHandler(data[1], data[2], interaction);
-  }
-
-  case "mw" : {
-    return await miwHandler(data[1], data[2], interaction);
-  }
-  }
-};
-
-
 
 /**
  * @param {string} accUUID
@@ -190,3 +150,42 @@ async function pgHandler (accUUID, time, game, interaction) {
 
   return new ButtonResponse("", undefined, pgRes.components, [ pgRes.file ]);
 }
+
+/**
+ * 
+ * @param {ButtonInteraction} interaction 
+ * @returns {ButtonResponse}
+ */
+module.exports = async function ButtonParser (interaction) {
+  const data = interaction.customId.split(":");
+  const commandType = data[0];
+  switch(commandType) {
+  case "lb": {
+    return await leaderboardHandler(interaction, data[1], data[2], data[3]);
+  }
+
+  case "s": {
+    return await statsHandler(data[1], data[2], data[3], interaction);
+  }
+
+  case "pg": {
+    return pgHandler(data[1], data[2], data[3], interaction);
+  }
+
+  case "ez": {
+    return await ezHandler();
+  }
+
+  case "z": {
+    return await zombiesHandler(data[1], data[2], interaction);
+  }
+
+  case "t": {
+    return await topGamesHandler(data[1], data[2], interaction);
+  }
+
+  case "mw" : {
+    return await miwHandler(data[1], data[2], interaction);
+  }
+  }
+};

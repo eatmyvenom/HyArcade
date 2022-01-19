@@ -33,6 +33,48 @@ async function requestData (uuids) {
   }
 }
 
+
+/**
+ * 
+ * @param {Account} account 
+ * @returns {boolean}
+ */
+function isLeaderboarder (account) {
+  if(account.positions) {
+    return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
+  }
+
+  return false;
+}
+
+/**
+ * 
+ * @param {Account} oldAcc 
+ * @returns {boolean}
+ */
+function isImportant (oldAcc) {
+
+  if(oldAcc == undefined) {
+    return true;
+  }
+
+  if(oldAcc.null) {
+    return false;
+  }
+
+  const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.importanceLimit;
+
+  // Linked players should update more often since they will check their own stats
+  const isLinked = !!oldAcc.discord;
+
+  // Ignore people who have not played within the last 3 days
+  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < cfg.loginLimit;
+
+  const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
+
+  return meetsRequirements || isLeaderboarder(oldAcc);
+}
+
 /**
  * 
  * @param {*} accs 
@@ -151,6 +193,27 @@ async function fastUpdate (accounts, argForce) {
 }
 
 /**
+ * @param {Account[]} accounts
+ * @param {Account[]} oldAccs
+ * @param {boolean} argForce
+ * @returns {Promise}
+ */
+async function updateAccountsInArr (accounts, oldAccs, argForce) {
+  return await Promise.all(
+    accounts.map(async (account) => {
+      const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
+      if(argForce || isImportant(oldAcc)) {
+        logger.verbose(`Updating ${oldAcc?.name}'s data`);
+        await account.updateData();
+      } else {
+        logger.verbose(`Ignoring ${oldAcc?.name} for this refresh`);
+        account.setData(oldAcc);
+      }
+    })
+  );
+}
+
+/**
  * Update the player data for all players in the list
  *
  * @param {Account[]} accounts
@@ -198,65 +261,3 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
   return updatedAccs;
 };
-
-/**
- * @param {Account[]} accounts
- * @param {Account[]} oldAccs
- * @param {boolean} argForce
- * @returns {Promise}
- */
-async function updateAccountsInArr (accounts, oldAccs, argForce) {
-  return await Promise.all(
-    accounts.map(async (account) => {
-      const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
-      if(argForce || isImportant(oldAcc)) {
-        logger.verbose(`Updating ${oldAcc?.name}'s data`);
-        await account.updateData();
-      } else {
-        logger.verbose(`Ignoring ${oldAcc?.name} for this refresh`);
-        account.setData(oldAcc);
-      }
-    })
-  );
-}
-
-/**
- * 
- * @param {Account} account 
- * @returns {boolean}
- */
-function isLeaderboarder (account) {
-  if(account.positions) {
-    return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
-  }
-
-  return false;
-}
-
-/**
- * 
- * @param {Account} oldAcc 
- * @returns {boolean}
- */
-function isImportant (oldAcc) {
-
-  if(oldAcc == undefined) {
-    return true;
-  }
-
-  if(oldAcc.null) {
-    return false;
-  }
-
-  const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.importanceLimit;
-
-  // Linked players should update more often since they will check their own stats
-  const isLinked = !!oldAcc.discord;
-
-  // Ignore people who have not played within the last 3 days
-  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < cfg.loginLimit;
-
-  const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
-
-  return meetsRequirements || isLeaderboarder(oldAcc);
-}

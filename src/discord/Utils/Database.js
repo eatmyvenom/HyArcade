@@ -1,177 +1,87 @@
-const Logger = require("hyarcade-logger");
-const fetch = require("node-fetch");
 const MiniWallsLeaderboard = require("../../utils/leaderboard/MiniWallsLeaderboard");
-const cfg = require("hyarcade-config").fromJSON();
+const DBConnector = require("hyarcade-requests/Database");
+const Logger = require("hyarcade-logger");
 
 
 class Database {
-
+  
+  /**
+   * 
+   * @param {*} json 
+   * @returns {*}
+   * @deprecated
+   */
   static async addAccount (json) {
-    const data = JSON.stringify(json);
-    const url = new URL("account", cfg.dbUrl);
-    Logger.info(`Adding ${data.name} to accounts in database`);
-
-    try {
-      await fetch(url.toString(), {
-        method: "post",
-        body: data,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: cfg.dbPass
-        }
-      });
-    } catch (e) {
-      Logger.err("Can't connect to database");
-      Logger.err(e.stack);
-      return {};
-    }
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
+    return await DBConnector.addAccount(json);
   }
 
+  /**
+   * 
+   * @param {*} path
+   * @param {*} category
+   * @param {*} time
+   * @param {*} min
+   * @param {*} reverse
+   * @param {*} max
+   * @returns {*}
+   * @deprecated
+   */
   static async getLeaderboard (path, category, time, min, reverse, max) {
-    Logger.verbose("Reading database");
-
-    const url = new URL("lb", cfg.dbUrl);
-    url.searchParams.set("path", path) ;
-    
-    if(category != undefined && category != "undefined") {
-      url.searchParams.set("category", category);
-    }
-
-    if(time != undefined) {
-      url.searchParams.set("time", time);
-    }
-
-    if(max != undefined) {
-      url.searchParams.set("max", max);
-    }
-
-    if(min) {
-      url.searchParams.set("min", "");
-    }
-
-    if(reverse) {
-      url.searchParams.set("reverse", "");
-    }
-
-    let lb;
-
-    Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
-    try {
-      lb = await (await fetch(url)).json();
-    } catch (e) {
-      Logger.err("Can't connect to database");
-      Logger.err(e.stack);
-      Logger.err(lb);
-      return {};
-    }
-
-    return lb;
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
+    return await DBConnector.getLeaderboard(path, category, time, min, reverse, max);
   }
 
+  /**
+   * 
+   * @param {*} stat
+   * @param {*} time
+   * @param {*} fileCache 
+   * @returns {*}
+   * @deprecated
+   */
   static async getMWLeaderboard (stat, time, fileCache) {
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     if(fileCache != undefined) {
       return await MiniWallsLeaderboard(fileCache, stat, time);
     }
 
-    Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
-
-    const url = new URL("mwlb", cfg.dbUrl);
-    url.searchParams.set("stat", stat);
-
-    if(time != undefined) {
-      url.searchParams.set("time", time);
-    }
-
-    let lb;
-
-    try {
-      lb = await (await fetch(url)).json();
-    } catch (e) {
-      Logger.err("Can't connect to database");
-      Logger.err(e.stack);
-      Logger.err(lb);
-      return {};
-    }
-
-    return lb;
+    return await DBConnector.getMWLeaderboard(stat, time);
   }
 
+  /**
+   * 
+   * @param {*} text
+   * @param {*} discordID
+   * @returns {*}
+   * @deprecated
+   */
   static async account (text, discordID) {
-    const url = new URL("account", cfg.dbUrl);
-
-    if(text != undefined && text != "" && text != "!") {
-      if(text.length < 17) {
-        url.searchParams.set("ign", text);
-      } else {
-        url.searchParams.set("uuid", text.replace(/-/g, ""));
-      }
-    }
-    
-    if (discordID != undefined && discordID != "") {
-      url.searchParams.set("discid", discordID);
-    }
-
-    let acc;
-    try {
-      Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await (await fetch(url)).json();
-    } catch (e) {
-      Logger.err("Error fetching data from database");
-      Logger.err(e.stack);
-      Logger.err(acc);
-      return {};
-    }
-
-    return acc;
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
+    return await DBConnector.account(text, discordID);
   }
 
+  /**
+   * 
+   * @param {*} text
+   * @param {*} discordID
+   * @param {*} time
+   * @returns {*}
+   * @deprecated
+   */
   static async timedAccount (text, discordID, time) {
-    const url = new URL("timeacc", cfg.dbUrl);
-
-    if(text != undefined && text != "" && text != "!") {
-      if(text.length < 17) {
-        url.searchParams.set("ign", text);
-      } else {
-        url.searchParams.set("uuid", text.replace(/-/g, ""));
-      }
-    } 
-
-    if(discordID != undefined && discordID != "") {
-      url.searchParams.set("discid", discordID);
-    }
-
-    if(time != undefined && time != "lifetime" && time != "life") {
-      url.searchParams.set("time", time);
-    }
-
-    let acc;
-    try {
-      Logger.debug(`Fetching ${url.searchParams} from database!`);
-      acc = await (await fetch(url)).json();
-    } catch (e) {
-      Logger.err("Can't connect to database");
-      Logger.err(e.stack);
-      Logger.err(acc);
-      return {};
-    }
-
-    return acc;
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
+    return await DBConnector.timedAccount(text, discordID, time);
   }
 
+  /**
+   * 
+   * @returns {*}
+   * @deprecated
+   */
   static async info () {
-    const url = new URL("info", cfg.dbUrl);
-
-    let info;
-    try {
-      info = await (await fetch(url)).json();
-    } catch (e) {
-      Logger.err("Can't connect to database");
-      Logger.err(e.stack);
-      Logger.err(info);
-      return {};
-    }
-
-    return info;
+    Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
+    return await DBConnector.info();
   }
 
 }

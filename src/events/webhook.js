@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const config = require("hyarcade-config").fromJSON();
 const Discord = require("discord.js");
 const {

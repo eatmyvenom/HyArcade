@@ -100,8 +100,8 @@ module.exports = async function start (port) {
 
   if(!process.argv.includes("--test")) {
     StatusStart()
-    .then(() => {})
-    .catch(logger.err);
+      .then(() => {})
+      .catch(logger.err);
   }
 
   logger.name = "Database";

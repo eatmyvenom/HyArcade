@@ -11,21 +11,6 @@ const MiniWallsInvite = require("./Commands/MiniWallsInvite");
 const MiniWallsDev = require("./Commands/MiniWalls-dev");
 
 /**
- * @param {Message} msg
- * @param {string} senderID
- * @returns {object}
- */
-async function execute (msg, senderID) {
-  if(msg.content.startsWith(".") && msg.content.length > 1) {
-    const cmdArr = msg.content.slice(1).split(" ");
-    return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
-  }
-  return {
-    res: ""
-  };
-}
-
-/**
  * @param {Message} rawMsg
  * @param {string} command
  * @param {string[]} args
@@ -100,6 +85,19 @@ async function checkCommands (rawMsg, command, args, author) {
   }
 }
 
-module.exports = {
-  execute
-};
+/**
+ * @param {Message} msg
+ * @param {string} senderID
+ * @returns {object}
+ */
+async function execute (msg, senderID) {
+  if(msg.content.startsWith(".") && msg.content.length > 1) {
+    const cmdArr = msg.content.slice(1).split(" ");
+    return await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
+  }
+  return {
+    res: ""
+  };
+}
+
+module.exports = { execute };

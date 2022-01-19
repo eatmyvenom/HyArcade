@@ -6,29 +6,6 @@ const ButtonResponse = require("../Buttons/ButtonResponse");
 let commandStorage = undefined;
 
 /**
- * 
- * @param {SelectMenuInteraction} interaction 
- * @returns {Promise<ButtonResponse>}
- */
-module.exports = async function MenuParser (interaction) {
-  const data = interaction.customId.split(":");
-  const commandType = data[0];
-  switch(commandType) {
-  case "s": {
-    return await statsHandler(data[1], data[2], interaction.values[0], interaction);
-  }
-
-  case "ap": {
-    return await apHandler(data[1], interaction.values[0], interaction);
-  }
-
-  case "pg" : {
-    return await partyGamesHandler(data[1], data[2], interaction.values[0], interaction);
-  }
-  }
-};
-
-/**
  * @param {string} accUUID
  * @param {string} time
  * @param {string} game
@@ -84,3 +61,27 @@ async function apHandler (accUUID, game, interaction) {
   const apRes = await commands.ArcadeAP.execute([accUUID, game], interaction.user.id, undefined, interaction);
   return new ButtonResponse("", [ apRes.embed ], apRes.components);
 }
+
+
+/**
+ * 
+ * @param {SelectMenuInteraction} interaction 
+ * @returns {Promise<ButtonResponse>}
+ */
+module.exports = async function MenuParser (interaction) {
+  const data = interaction.customId.split(":");
+  const commandType = data[0];
+  switch(commandType) {
+  case "s": {
+    return await statsHandler(data[1], data[2], interaction.values[0], interaction);
+  }
+
+  case "ap": {
+    return await apHandler(data[1], interaction.values[0], interaction);
+  }
+
+  case "pg" : {
+    return await partyGamesHandler(data[1], data[2], interaction.values[0], interaction);
+  }
+  }
+};

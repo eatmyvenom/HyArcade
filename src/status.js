@@ -4,6 +4,18 @@ const {
 const HypixelApi = require("hyarcade-requests/HypixelApi");
 const rawstatus = {};
 
+
+/**
+ * Format text for game mods
+ *
+ * @param {string} txt raw text
+ * @returns {string} formatted text
+ */
+function modeFormatter (txt) {
+  return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase()
+    .replace(/_/g, " ");
+}
+
 /**
  * Format status for arcade games
  *
@@ -37,17 +49,6 @@ function arcadeFormatter (status) {
  */
 function mapFormatter (txt) {
   return txt.slice(0, 1).toUpperCase() + txt.slice(1).replace(/ the /gi, "")
-    .replace(/_/g, " ");
-}
-
-/**
- * Format text for game mods
- *
- * @param {string} txt raw text
- * @returns {string} formatted text
- */
-function modeFormatter (txt) {
-  return txt.slice(0, 1).toUpperCase() + txt.slice(1).toLowerCase()
     .replace(/_/g, " ");
 }
 

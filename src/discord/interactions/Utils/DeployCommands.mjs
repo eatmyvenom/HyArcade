@@ -1,9 +1,8 @@
 import Logger from "hyarcade-logger";
 import BotRuntime from "../../BotRuntime.js";
-import microInteractionObjects from "../microInteractionObjects.js";
-import fullInteractionObjects from "../interactionObjects.js";
-import MiniWallsInteractionObjects from "../MiniWallsInteractionObjects.js";
-import Dev from "../DevCommands.js";
+import fullInteractionObjects from "./AvailableCommands/General.js";
+import MiniWallsInteractionObjects from "./AvailableCommands/MiniWalls.js";
+import Dev from "./AvailableCommands/Dev.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -16,9 +15,7 @@ const { Client } = require("discord.js");
 export default async function (client) {
   let interactionObjects = fullInteractionObjects;
   Logger.info("Registering global commands with discord");
-  if(BotRuntime.botMode == "mini") {
-    interactionObjects = microInteractionObjects;
-  } else if(BotRuntime.botMode == "mw") {
+  if(BotRuntime.botMode == "mw") {
     interactionObjects = MiniWallsInteractionObjects;
   }
 

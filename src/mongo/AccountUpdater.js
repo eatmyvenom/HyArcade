@@ -6,28 +6,6 @@ const {
 const cfg = require("hyarcade-config").fromJSON();
 const force = utils.fileExists("force") || cfg.alwaysForce;
 
-module.exports = async function (database) {
-  const accs = await database.collection("accounts");
-  const allAccs = await accs.find({});
-  const rawAccs = await allAccs.toArray();
-  const list = [];
-  for(const acc of rawAccs) {
-    const newAcc = new Account(acc.name, acc.wins, acc.uuid);
-    newAcc.setData(acc);
-    list.push(newAcc);
-  }
-
-  let i;
-  let j;
-  let temparray;
-
-  const chunk = 120;
-  for(i = 0, j = list.length; i < j; i += chunk) {
-    temparray = list.slice(i, i + chunk);
-    await updateAccountsInArr(temparray, list, accs);
-  }
-};
-
 /**
  * @param {Account[]} accounts
  * @param {Account[]} oldAccs
@@ -71,3 +49,25 @@ async function updateAccountsInArr (accounts, oldAccs, collection) {
     })
   );
 }
+
+module.exports = async function (database) {
+  const accs = await database.collection("accounts");
+  const allAccs = await accs.find({});
+  const rawAccs = await allAccs.toArray();
+  const list = [];
+  for(const acc of rawAccs) {
+    const newAcc = new Account(acc.name, acc.wins, acc.uuid);
+    newAcc.setData(acc);
+    list.push(newAcc);
+  }
+
+  let i;
+  let j;
+  let temparray;
+
+  const chunk = 120;
+  for(i = 0, j = list.length; i < j; i += chunk) {
+    temparray = list.slice(i, i + chunk);
+    await updateAccountsInArr(temparray, list, accs);
+  }
+};
