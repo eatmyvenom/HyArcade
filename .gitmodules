@@ -13,3 +13,6 @@
 [submodule "packages/Utils"]
 	path = packages/Utils
 	url = git@github.com:eatmyvenom/hyarcade-utils.git
+[submodule "packages/Structures"]
+	path = packages/Structures
+	url = git@github.com:eatmyvenom/hyarcade-structures.git
