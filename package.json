@@ -12,7 +12,7 @@
         "buildpkgs": "npm run buildconfig; npm run buildrequest; npm run buildlogger; npm run buildstruct; npm run buildutils",
         "testbot": "node index.js bot test",
         "bot": "node spawn-bots.js",
-        "lint": "eslint ./src ./systems ./packages --fix",
+        "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "cluster": "node index.js cluster",
         "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },
@@ -20,10 +20,8 @@
     "license": "MPL-2.0",
     "dependencies": {
         "@discoveryjs/json-ext": "^0.5.6",
-        "bson": "^4.4.1",
-        "bson-ext": "^4.0.0",
-        "canvas": "^2.8.0",
-        "discord.js": "github:discordjs/discord.js",
+        "canvas": "^2.9.0",
+        "discord.js": "^13.6.0",
         "fs-extra": "^10.0.0",
         "hyarcade-config": "github:eatmyvenom/hyarcade-config",
         "hyarcade-logger": "github:eatmyvenom/hyarcade-logger",
@@ -31,7 +29,7 @@
         "hyarcade-structures": "github:eatmyvenom/hyarcade-structures",
         "hyarcade-utils": "github:eatmyvenom/hyarcade-utils",
         "javascript-time-ago": "^2.3.6",
-        "node-fetch": "^3.1.1",
+        "node-fetch": "^2.6.7",
         "nodejs": "^0.0.0",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"
