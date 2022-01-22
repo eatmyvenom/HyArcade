@@ -7,7 +7,7 @@ const {
 const listUtils = require("../listUtils");
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
-const FakeLB = require("../discord/images/FakeLB");
+const FakeLB = require("../../systems/discord/images/FakeLB");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const MiniWallsLeaderboard = require("../utils/leaderboard/MiniWallsLeaderboard");

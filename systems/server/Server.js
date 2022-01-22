@@ -7,7 +7,7 @@ const process = require("process");
 const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
-const updateAccounts = require("../../src/datagen/updateAccounts");
+const updateAccounts = require("../datagen/updateAccounts");
 const webhook = require("../../src/events/webhook");
 const StatusExit = require("../../src/events/StatusExit");
 const StatusStart = require("../../src/events/StatusStart");

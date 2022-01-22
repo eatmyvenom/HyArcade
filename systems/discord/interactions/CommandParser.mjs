@@ -1,9 +1,8 @@
 import { createRequire } from "module";
-import { addAccounts } from "../../listUtils.js";
+import { addAccounts } from "../../../src/listUtils.js";
 import CommandStorage from "../CommandStorage.mjs";
 import CommandResponse from "../Utils/CommandResponse.js";
 import ButtonGenerator from "./Buttons/ButtonGenerator.js";
-
 
 const require = createRequire(import.meta.url);
 const { MessageEmbed, CommandInteraction } = require("discord.js");

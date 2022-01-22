@@ -1,5 +1,5 @@
 const lists = require("./listParser");
-const updateAccounts = require("./datagen/updateAccounts");
+const updateAccounts = require("../systems/datagen/updateAccounts")
 const {
   addAccounts
 } = require("./listUtils");

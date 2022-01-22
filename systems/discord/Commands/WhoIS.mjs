@@ -1,13 +1,13 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
+import { createRequire } from "module";
+import fetch from "node-fetch";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import fetch from "node-fetch";
-import Database from "hyarcade-requests/Database.js";
+const require = createRequire(import.meta.url);
+
 
 const { MessageEmbed, Util } = require("discord.js");
 const { escapeItalic, escapeUnderline } = Util;
@@ -116,7 +116,7 @@ export default new Command(["whois", "who", "namehist"], ["*"], async (args, raw
   const plr = args[0];
   let acc;
   if (interaction == undefined) {
-    acc = await Database.account(plr, rawMsg.discord.id);
+    acc = await Database.account(plr, rawMsg.author.id);
   } else {
     await interaction.deferReply();
     acc = await Database.account(interaction.options.getString("player"), interaction.user.id);

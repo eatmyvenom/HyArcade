@@ -1,8 +1,8 @@
 import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import { createRequire } from "module";
+import addAccounts from "../datagen/addAccounts.js";
 import isValidIGN from "../datagen/utils/ignValidator.js";
-import { addAccounts } from "../listUtils.js";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";

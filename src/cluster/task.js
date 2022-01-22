@@ -115,7 +115,7 @@ async function webhook (type, maxamnt) {
  *
  */
 async function discord () {
-  const DiscordBot = require("../discord/bot");
+  const DiscordBot = require("../../systems/discord/bot");
   await DiscordBot();
 }
 

@@ -17,7 +17,7 @@ class CommandStorage {
   static _commands = { };
 
   static async initCommands () {
-    const dir = await fs.readdir("src/discord/Commands");
+    const dir = await fs.readdir("systems/discord/Commands");
 
     for(const file of dir) {
       this._commands[file.slice(0, file.indexOf("."))] = await importNew(file);

@@ -135,7 +135,7 @@ module.exports = {
   stringNormal,
   stringDiff,
   stringDaily,
-  addAccounts: require("./datagen/addAccounts"),
+  addAccounts: require("../systems/datagen/addAccounts"),
   stringLB,
   stringLBDaily,
   stringLBDiff,

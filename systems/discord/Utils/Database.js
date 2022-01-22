@@ -1,4 +1,4 @@
-const MiniWallsLeaderboard = require("../../utils/leaderboard/MiniWallsLeaderboard");
+const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
 const DBConnector = require("hyarcade-requests/Database");
 const Logger = require("hyarcade-logger");
 
