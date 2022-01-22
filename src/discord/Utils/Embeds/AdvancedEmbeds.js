@@ -299,7 +299,7 @@ module.exports = class AdvancedEmbeds {
       .setTitle("Success")
       .setColor(0x00cc66)
       .setDescription(`<@${user.id}> was linked as ${ign}`)
-      .setFooter(`${user.id}`);
+      .setFooter({ text : `${user.id}` });
 
     return embed;
   }

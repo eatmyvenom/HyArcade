@@ -1,10 +1,10 @@
-import { addAccounts } from "../../listUtils.js";
-
-import CommandResponse from "../Utils/CommandResponse.js";
-import CommandStorage from "../CommandStorage.mjs";
-
 import { createRequire } from "module";
+import { addAccounts } from "../../listUtils.js";
+import CommandStorage from "../CommandStorage.mjs";
+import CommandResponse from "../Utils/CommandResponse.js";
 import ButtonGenerator from "./Buttons/ButtonGenerator.js";
+
+
 const require = createRequire(import.meta.url);
 const { MessageEmbed, CommandInteraction } = require("discord.js");
 
@@ -39,9 +39,7 @@ export default async (interaction) => {
     const embed = new MessageEmbed()
       .setTitle("Accounts added")
       .setDescription(res)
-      .setFooter(
-        "It will take a little while for these accounts to be fully added to the database, please be patient."
-      )
+      .setFooter({ text: "It will take a little while for these accounts to be fully added to the database, please be patient." })
       .setTimestamp(Date.now())
       .setColor(0x44a3e7);
 

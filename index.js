@@ -73,6 +73,43 @@ async function sendToKill () {
 }
 
 /**
+ * Copy a json file to another location with a timestamp or type
+ *
+ * @param {string} oldfile path of the source file
+ * @param {string} path path of the target file
+ * @param {string} timetype the way of specifying this file
+ */
+async function archiveJson (oldfile, path, timetype) {
+  logger.info(`Snapshotting: data/${oldfile}.json -> ${path}${oldfile}.${timetype}.json`);
+
+  await fs.copy(`data/${oldfile}.json`, `data/${path}${oldfile}.${timetype}.json`, { overwrite: true });
+  logger.info(`Snapshot of "data/${oldfile}.json" complete!`);
+}
+
+
+/**
+ * Archive the various json files storing current data for later
+ *
+ * @param {string} [path="./archive/"] the path to place the archived files at
+ * @param {string} [timetype] the varied part of the file to distinguish it
+ */
+async function archive (path = "./archive/", timetype) {
+
+  if(!timetype) {
+    // eslint-disable-next-line no-param-reassign
+    timetype = Date()
+      .replace(/[0-9].:[0-9].:[0-9].*/, "")
+      .trim()
+      .replace(/ /g, "_");
+  }
+
+  await Promise.all([
+    archiveJson("players", path, timetype),
+    archiveJson("accounts", path, timetype),
+  ]);
+}
+
+/**
  * Snapshot the amount of wins into another json file
  * 
  * @param {string} timeType the inbetween of the file
@@ -115,42 +152,6 @@ async function discordBot () {
 async function gameAmnt () {
   // write to file so that there isnt blank files in website at any point
   await fs.writeFile("games.txt", await gameAmount.formatCounts());
-}
-
-/**
- * Copy a json file to another location with a timestamp or type
- *
- * @param {string} oldfile path of the source file
- * @param {string} path path of the target file
- * @param {string} timetype the way of specifying this file
- */
-async function archiveJson (oldfile, path, timetype) {
-  logger.info(`Snapshotting: data/${oldfile}.json -> ${path}${oldfile}.${timetype}.json`);
-
-  await fs.copy(`data/${oldfile}.json`, `data/${path}${oldfile}.${timetype}.json`, { overwrite: true });
-  logger.info(`Snapshot of "data/${oldfile}.json" complete!`);
-}
-
-/**
- * Archive the various json files storing current data for later
- *
- * @param {string} [path="./archive/"] the path to place the archived files at
- * @param {string} [timetype] the varied part of the file to distinguish it
- */
-async function archive (path = "./archive/", timetype) {
-
-  if(!timetype) {
-    // eslint-disable-next-line no-param-reassign
-    timetype = Date()
-      .replace(/[0-9].:[0-9].:[0-9].*/, "")
-      .trim()
-      .replace(/ /g, "_");
-  }
-
-  await Promise.all([
-    archiveJson("players", path, timetype),
-    archiveJson("accounts", path, timetype),
-  ]);
 }
 
 /**

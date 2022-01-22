@@ -1,18 +1,18 @@
-import { createRequire } from "module";
 import Runtime from "hyarcade-config/Runtime.js";
-import { addAccounts } from "../listUtils.js";
 import Logger from "hyarcade-logger";
+import { createRequire } from "module";
 import isValidIGN from "../datagen/utils/ignValidator.js";
+import { addAccounts } from "../listUtils.js";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";
-import Webhooks from "./Utils/Webhooks.js";
-import LogUtils from "./Utils/LogUtils.js";
-import CommandResponse from "./Utils/CommandResponse.js";
-import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
-import VerifyChannel from "./VerifyChannel.js";
+import CommandResponse from "./Utils/CommandResponse.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
+import LogUtils from "./Utils/LogUtils.js";
+import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
+import Webhooks from "./Utils/Webhooks.js";
+import VerifyChannel from "./VerifyChannel.js";
 
 const require = createRequire(import.meta.url);
 const cfg = require("hyarcade-config").fromJSON();
@@ -167,19 +167,6 @@ async function handleCommand (msg, cmdResponse) {
 /**
  * @param {Message} msg
  */
-async function checkMW (msg) {
-  if(msg.channel.id == "791122377333407784") await MiniWallsVerify(msg);
-  if(cfg.discord.miniWalls.guilds.includes(msg.guild.id) || cfg.discord.miniWalls.channels.includes(msg.channel.id)) {
-    await mwMode(msg);
-    return;
-  }
-  return;
-
-}
-
-/**
- * @param {Message} msg
- */
 async function mwMode (msg) {
   const cmdResponse = transformResponse(await getMWCmdRes(msg));
   const isValidResponse = cmdResponse.isValid();
@@ -187,6 +174,18 @@ async function mwMode (msg) {
   if(isValidResponse) {
     await handleCommand(msg, cmdResponse);
   }
+}
+
+/**
+ * @param {Message} msg
+ */
+async function checkMW (msg) {
+  if(msg.channel.id == "791122377333407784") await MiniWallsVerify(msg);
+  if(cfg.discord.miniWalls.guilds.includes(msg.guild.id) || cfg.discord.miniWalls.channels.includes(msg.channel.id)) {
+    await mwMode(msg);
+    return;
+  }
+  return;
 }
 
 /**

@@ -107,9 +107,9 @@ exports.WARN_WAITING = new MessageEmbed()
   )
   .setThumbnail("https://i.imgur.com/GLdqYB2.gif")
   .setColor(COLOR_YELLOW)
-  .setFooter(
+  .setFooter({ text:
     "Please avoid using this unless they should actually be in the database, too many people slows down the overall system."
-  );
+  });
 
 exports.INFO_HOW_TO_SLASH = new MessageEmbed()
   .setTitle("Incorrect usage...")

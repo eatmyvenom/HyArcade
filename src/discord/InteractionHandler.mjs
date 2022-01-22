@@ -1,17 +1,17 @@
 import Logger from "hyarcade-logger";
+import { createRequire } from "module";
 import BotRuntime from "./BotRuntime.js";
 import ButtonParser from "./interactions/Buttons/ButtonParser.js";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser.js";
-import Webhooks from "./Utils/Webhooks.js";
-import CommandResponse from "./Utils/CommandResponse.js";
-import { LOG_SLASH_COMMAND_USAGE, LOG_MESSAGE_COMPONENT_USAGE, ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
-import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
-import { ERROR_UNKNOWN, ERROR_BLACKLIST } from "./Utils/Embeds/StaticEmbeds.js";
-import registerAll from "./interactions/Utils/DeployCommands.mjs";
+import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
+import registerAll from "./interactions/Utils/DeployCommands.mjs";
+import CommandResponse from "./Utils/CommandResponse.js";
+import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_BLACKLIST, ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
+import Webhooks from "./Utils/Webhooks.js";
 
-import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } = require("discord.js");
 
@@ -23,6 +23,25 @@ const { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interactio
 async function isBlacklisted (id) {
   const blacklist = await BotRuntime.getBlacklist();
   return blacklist.includes(id);
+}
+
+/**
+ *
+ * @param {CommandInteraction} interaction
+ */
+async function logCmd (interaction) {
+  await Webhooks.commandHook.send({
+    embeds: [
+      LOG_SLASH_COMMAND_USAGE(
+        interaction.user?.id,
+        interaction.user?.tag,
+        interaction.commandName,
+        interaction.guild?.name,
+        interaction.channel?.id,
+        interaction.options?.data
+      ),
+    ],
+  });
 }
 
 /**
@@ -89,25 +108,6 @@ async function commandHandler (interaction) {
   }
 
   await logCmd(interaction);
-}
-
-/**
- *
- * @param {CommandInteraction} interaction
- */
-async function logCmd (interaction) {
-  await Webhooks.commandHook.send({
-    embeds: [
-      LOG_SLASH_COMMAND_USAGE(
-        interaction.user?.id,
-        interaction.user?.tag,
-        interaction.commandName,
-        interaction.guild?.name,
-        interaction.channel?.id,
-        interaction.options?.data
-      ),
-    ],
-  });
 }
 
 /**
