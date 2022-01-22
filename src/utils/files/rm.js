@@ -11,10 +11,6 @@ module.exports = async function rm (path) {
     await fs.rm(`data/${path}.1`);
     await fs.rm(`data/${path}.2`);
     return true;
-  } else if(fs.existsSync(`data/${path}.bson.1`)) {
-    await fs.rm(`data/${path}.1`);
-    await fs.rm(`data/${path}.2`);
-    return true;
   } else if(fs.existsSync(`data/${path}.json.1`)) {
     await fs.rm(`data/${path}.1`);
     await fs.rm(`data/${path}.2`);
