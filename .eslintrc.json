@@ -17,6 +17,7 @@
         "jsdoc/require-param-description": 0,
         "jsdoc/require-returns-description": 0,
         "template-curly-spacing": ["error", "never"],
+        "object-curly-spacing": ["warn", "always"],
         "space-before-blocks": ["error", "always"],
         "prefer-arrow-callback": "error",
         "arrow-spacing": "error",
