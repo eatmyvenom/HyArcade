@@ -400,7 +400,7 @@ async function refresh () {
 
   let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
     cache: "no-store",
-    mode: "no-cors"
+    mode: "cors"
   });
 
   showCounts()
@@ -421,8 +421,15 @@ async function showCounts () {
 
   const info = document.getElementById("info");
 
-  let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store", mode: "no-cors" });
-  counts = await counts.json();
+  let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store", mode: "cors" });
+  let rawData = await counts.text();
+
+  try {
+    counts = JSON.parse(rawData);
+  } catch(e) {
+    console.error(e);
+    console.log(rawData);
+  }
 
   const arcade = counts.games.ARCADE.modes;
 
@@ -563,7 +570,7 @@ async function getLeaderboards (element) {
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
       console.info(`fetching ${url}`);
-      const raw = await fetch(url, { mode: "no-cors" });
+      const raw = await fetch(url, { mode: "cors" });
       lb = await raw.json();
       localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
     }
@@ -577,7 +584,7 @@ async function getLeaderboards (element) {
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
       console.info(`fetching ${url}`);
-      const raw = await fetch(url, { mode: "no-cors" });
+      const raw = await fetch(url, { mode: "cors" });
       lb = await raw.json();
       localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
     }
