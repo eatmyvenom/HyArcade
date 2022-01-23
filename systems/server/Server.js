@@ -1,16 +1,14 @@
 const logger = require("hyarcade-logger");
 
 const { URL } = require("url");
-const { rm, existsSync } = require("fs-extra");
 const process = require("process");
 
-const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
-const updateAccounts = require("../datagen/updateAccounts");
 const webhook = require("../../src/events/webhook");
 const StatusExit = require("../../src/events/StatusExit");
 const StatusStart = require("../../src/events/StatusStart");
+const autoUpdater = require("./AutoUpdater");
 
 const urlModules = {
   account: require("./endpoints/account"),
@@ -29,8 +27,6 @@ const urlModules = {
 };
 
 let fileCache;
-let lock = false;
-let force = false;
 
 /**
  * @param {Request} request
@@ -45,65 +41,21 @@ async function callback (request, response) {
     response.statusCode = 404;
     response.end();
   } else {
-
     if(fileCache.ready == false) {
       response.setHeader("Content-Type", "application/json");
       response.end(JSON.stringify({ ERROR: "Reloading database!" }));
-      logger.warn(`${url} not available when reloading!`);
+      logger.warn(`${request.method?.toUpperCase()} ${url.pathname}?${url.searchParams} not available when reloading!`);
       return;
     }
 
     try {
-      logger.info(`${request.method?.toUpperCase()} ${url}`);
+      logger.info(`${request.method?.toUpperCase()} ${url.pathname}?${url.searchParams}`);
       await mod(request, response, fileCache);
     } catch (e) {
       logger.err(e.stack);
       response.statusCode = 404;
       response.end();
     }
-  }
-}
-
-/**
- * 
- */
-async function autoUpdater () {
-  if(!lock) {
-    lock = true;
-    logger.info("Updating database");
-    const oldAccounts = fileCache.accounts;
-
-    let newAccounts;
-    if(force || existsSync("force")) {
-      logger.debug("Forcing full update");
-      try {
-        newAccounts = await updateAccounts(oldAccounts, true, true);
-      } catch (e) {
-        logger.err(e);
-        lock = false;
-        return;
-      }
-      force = false;
-      if(existsSync("force")) {
-        await rm("force");
-      }
-    } else {
-      try {
-        newAccounts = await updateAccounts(oldAccounts, false);
-      } catch (e) {
-        logger.err(e);
-        lock = false;
-        return;
-      }
-    }
-
-    logger.debug("Merging updated account data");
-
-    fileCache.indexedAccounts = await MergeDatabase(newAccounts, Object.values(fileCache.indexedAccounts), fileCache);
-
-    lock = false;
-    fileCache.save();
-    logger.log("Database updated");
   }
 }
 
@@ -126,8 +78,7 @@ module.exports = async function start (port) {
 
   if(!process.argv.includes("--test")) {
     setInterval(() => webhook.sendMW(fileCache), 960000);
-    setInterval(autoUpdater, 240000);
-    setInterval(() => force = true, 14400000);
+    setInterval(() => autoUpdater(fileCache), 240000);
   }
 
   const server = require("http")
@@ -135,7 +86,7 @@ module.exports = async function start (port) {
     .listen(port);
 
   server.on("close", logger.log);
-  server.on("error", logger.err);
+  server.on("error", (e) => {logger.err(e.stack);});
 
   process.on("SIGINT", async (signal) => {
     if(!process.argv.includes("--test")) {
