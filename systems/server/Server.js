@@ -76,13 +76,25 @@ async function autoUpdater () {
     let newAccounts;
     if(force || existsSync("force")) {
       logger.debug("Forcing full update");
-      newAccounts = await updateAccounts(oldAccounts, true, true);
+      try {
+        newAccounts = await updateAccounts(oldAccounts, true, true);
+      } catch (e) {
+        logger.err(e);
+        lock = false;
+        return;
+      }
       force = false;
       if(existsSync("force")) {
         await rm("force");
       }
     } else {
-      newAccounts = await updateAccounts(oldAccounts, false);
+      try {
+        newAccounts = await updateAccounts(oldAccounts, false);
+      } catch (e) {
+        logger.err(e);
+        lock = false;
+        return;
+      }
     }
 
     logger.debug("Merging updated account data");

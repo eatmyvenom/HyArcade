@@ -150,12 +150,16 @@ async function fastUpdate (accounts, argForce) {
   let importantAccounts = [];
 
   for (const acc of oldAccs) {
-    if(argForce || isImportant(acc)) {
+    if(argForce) {
+      if(NormalizeAccount(acc) > 1000) {
+        importantAccounts.push(acc);
+      }
+    } else if (isImportant(acc)) {
       importantAccounts.push(acc);
     }
   }
 
-  importantAccounts = importantAccounts.concat(oldAccs.sort((a, b) => a.updateTime - b.updateTime).slice(0, perSegment));
+  importantAccounts = importantAccounts.concat(oldAccs.filter((a) => (a?.importance ?? 0) > 1000).sort((a, b) => a.updateTime - b.updateTime).slice(0, perSegment * 4));
 
   const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => { 
     const segmentIndex = Math.floor(index / perSegment);
