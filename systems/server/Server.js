@@ -112,9 +112,11 @@ module.exports = async function start (port) {
     }
   });
 
-  setInterval(() => webhook.sendMW(fileCache), 960000);
-  setInterval(autoUpdater, 240000);
-  setInterval(() => force = true, 14400000);
+  if(!process.argv.includes("--test")) {
+    setInterval(() => webhook.sendMW(fileCache), 960000);
+    setInterval(autoUpdater, 240000);
+    setInterval(() => force = true, 14400000);
+  }
 
   const server = require("http")
     .createServer(callback)
