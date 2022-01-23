@@ -399,8 +399,7 @@ async function refresh () {
   }
 
   let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
-    cache: "no-store",
-    mode: "no-cors"
+    cache: "no-store"
   });
 
   showCounts()
@@ -421,7 +420,7 @@ async function showCounts () {
 
   const info = document.getElementById("info");
 
-  let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store", mode: "no-cors" });
+  let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store" });
   counts = await counts.json();
 
   const arcade = counts.games.ARCADE.modes;
@@ -577,7 +576,7 @@ async function getLeaderboards (element) {
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
       console.info(`fetching ${url}`);
-      const raw = await fetch(url, { mode: "no-cors" });
+      const raw = await fetch(url);
       lb = await raw.json();
       localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
     }
