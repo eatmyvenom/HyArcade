@@ -562,7 +562,7 @@ async function getLeaderboards (element) {
     } else {
       const url = `https://cdn.hyarcade.xyz/leaderboard?${args}&min`;
       console.info(`fetching ${url}`);
-      const raw = await fetch(url);
+      const raw = await fetch(url, { mode: "no-cors" });
       lb = await raw.json();
       localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
     }
