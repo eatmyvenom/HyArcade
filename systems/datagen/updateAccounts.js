@@ -21,7 +21,6 @@ class Response {
  * @returns {Response}
  */
 async function requestData (uuids) {
-
   const realUUIDs = uuids.filter((u) => u != "");
 
   try {
