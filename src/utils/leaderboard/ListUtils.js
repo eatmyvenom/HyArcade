@@ -46,7 +46,7 @@ exports.stringifyList = function stringifyList (list, lbprop, category, maxamnt,
     } = sizedList[i];
 
     // eslint-disable-next-line prefer-template
-    const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
+    const num = `\` ${i + 1}`.padEnd(`\` ${list[list.length - 1]} `.length) + "`";
 
     str += `${num} **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
   }
