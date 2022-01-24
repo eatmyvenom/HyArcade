@@ -18,4 +18,4 @@ jobs:
     - name: Install modules
       run: npm i
     - name: Run ESLint
-      run: npx eslint eslint './{src,packages,systems}/**/*.{js,mjs}'
+      run: npx eslint './{src,packages,systems}/**/*.{js,mjs}'
