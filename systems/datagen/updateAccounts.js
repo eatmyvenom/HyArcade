@@ -97,7 +97,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   const workerData = await requestData(uuidArr);
 
   if(workerData.key.remaining < perSegment + 5) {
-    logger.info(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
+    logger.debug(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
     await sleep(workerData.key.reset * 1005);
   }
 
