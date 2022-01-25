@@ -52,7 +52,7 @@ async function requestData (uuids) {
  */
 function isLeaderboarder (account) {
   if(account.positions) {
-    return Object.values(account.positions).some((pos) => pos < cfg.leaderboardLimit);
+    return Object.values(account.positions).some((pos) => pos < cfg.hypixel.leaderboardLimit);
   }
 
   return false;
@@ -73,13 +73,13 @@ function isImportant (oldAcc) {
     return false;
   }
 
-  const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.importanceLimit;
+  const hasImportantStats = NormalizeAccount(oldAcc) >= cfg.hypixel.importanceLimit;
 
   // Linked players should update more often since they will check their own stats
   const isLinked = !!oldAcc.discord;
 
-  // Ignore people who have not played within the last 3 days
-  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < cfg.loginLimit;
+  // Ignore people who have not played within a tolerance value
+  const hasPlayedRecently = Date.now() - oldAcc.lastLogout < cfg.hypixel.loginLimit;
 
   const meetsRequirements = (isLinked || hasImportantStats) && hasPlayedRecently;
 
@@ -160,7 +160,7 @@ function uniqBy (a, key) {
  */
 // eslint-disable-next-line no-unused-vars
 async function fastUpdate (accounts, argForce) {
-  const perSegment = cfg.segmentSize;
+  const perSegment = cfg.hypixel.segmentSize;
 
   const oldAccs = accounts;
 
@@ -168,7 +168,7 @@ async function fastUpdate (accounts, argForce) {
 
   for (const acc of oldAccs) {
     if(argForce) {
-      if(NormalizeAccount(acc) > 1000) {
+      if(NormalizeAccount(acc) > cfg.hypixel.minImportance) {
         importantAccounts.push(acc);
       }
     } else if (isImportant(acc)) {
