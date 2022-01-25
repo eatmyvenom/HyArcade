@@ -3,7 +3,6 @@ const os = require("os");
 const fs = require("fs-extra");
 const process = require("process");
 const Webhook = require("./src/events/webhook");
-const cli = require("./src/cli");
 const {
   listNormal,
   listDiff,
@@ -13,7 +12,6 @@ const {
 const args = process.argv;
 const task = require("./src/cluster/task");
 
-const AccountEvent = require("hyarcade-structures/Event");
 const logger = require("hyarcade-logger");
 const Runtime = require("hyarcade-config/Runtime").fromJSON();
 
@@ -65,25 +63,11 @@ async function sendPGMonth () {
 }
 
 /**
- * Send throw out kills embed
- */
-async function sendToKill () {
-  await Webhook.sendTOKillEmbed();
-}
-
-/**
  * Run the discord task
  *
  */
 async function discordBot () {
   await task.discord();
-}
-
-/**
- * Run task to add players from coin leaderboards
- */
-async function addLeaderboards () {
-  await task.addLeaderboards();
 }
 
 /**
@@ -104,19 +88,10 @@ async function rmPID () {
 }
 
 /**
- * Send a custom discord event based on process args
- */
-async function sendDiscordEvent () {
-  const event = new AccountEvent(args[3], args[4], args[5], args[6], args[7], args[8]);
-  await event.toDiscord();
-}
-
-/**
  * Main function in a async wrapper to use other async functions
  *
  */
 async function main () {
-
   let killable = true;
 
   if(Runtime.apiDown) {
@@ -168,42 +143,9 @@ async function main () {
     await Webhook.sendDWKillEmbed();
     break;
 
-  case "discordTOK":
-    await sendToKill();
-    break;
-
-  case "discordMW":
-    await Webhook.sendMW(args[3]);
-    break;
-
-  case "discordfakemw":
-    await Webhook.sendFakeMiwLB();
-    break;
-
-  case "link":
-  case "ln":
-    await cli.linkDiscord();
-    break;
-
-  case "lbs":
-  case "addLb":
-  case "addLeaderboards":
-    await addLeaderboards();
-    break;
-
-  case "newGuild":
-    await cli.newGuild();
-    break;
-
   case "bot":
     killable = false;
     await discordBot();
-    break;
-
-  case "sendDiscordEvent":
-  case "discordEvent":
-  case "discEvt":
-    await sendDiscordEvent();
     break;
 
   case "serveDB": {
