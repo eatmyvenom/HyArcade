@@ -6,6 +6,7 @@ const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest")
 const sleep = require("hyarcade-utils/Sleep");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 const Util = require("util");
+const Sleep = require("hyarcade-utils/Sleep");
 
 const force = fs.existsSync("force");
 let cfg;
@@ -16,19 +17,30 @@ class Response {
 }
 
 /**
+ *
+ */
+function timeout() {
+  return new Promise((resolve, reject) => {
+    Sleep(30000)
+      .then(reject)
+      .catch(reject);
+  });
+}
+
+/**
  * 
  * @param {string[]} uuids 
- * @returns {Response}
+ * @returns {Promise<Response>}
  */
-async function requestData (uuids) {
+function requestData (uuids) {
   const realUUIDs = uuids.filter((u) => u != "");
 
   try {
-    return await HyarcadeWorkerRequest(realUUIDs);
+    return Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
   } catch (e) {
     logger.err(e.stack);
     logger.debug("Requesting data again!");
-    return await requestData(realUUIDs);
+    return requestData(realUUIDs);
   }
 }
 
