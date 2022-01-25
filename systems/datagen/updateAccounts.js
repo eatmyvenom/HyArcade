@@ -32,11 +32,11 @@ function timeout() {
  * @param {string[]} uuids 
  * @returns {Promise<Response>}
  */
-function requestData (uuids) {
+async function requestData (uuids) {
   const realUUIDs = uuids.filter((u) => u != "");
 
   try {
-    return Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
+    return await Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
   } catch (e) {
     logger.err(e.stack);
     logger.debug("Requesting data again!");
@@ -105,7 +105,13 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   }
 
   logger.verbose(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
-  const workerData = await requestData(uuidArr);
+  let workerData;
+  try {
+    workerData = await requestData(uuidArr);
+  } catch(e) {
+    logger.err(e.stack);
+    return;
+  }
 
   if(workerData.key.remaining < perSegment + 5) {
     logger.debug(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
