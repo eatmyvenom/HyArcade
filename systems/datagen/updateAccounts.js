@@ -38,7 +38,7 @@ async function requestData (uuids) {
   try {
     return await Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
   } catch (e) {
-    logger.err(e.stack);
+    logger.err(e);
     logger.debug("Requesting data again!");
     return requestData(realUUIDs);
   }
@@ -109,7 +109,7 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   try {
     workerData = await requestData(uuidArr);
   } catch(e) {
-    logger.err(e.stack);
+    logger.err(e);
     return;
   }
 
