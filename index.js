@@ -2,7 +2,6 @@
 const os = require("os");
 const fs = require("fs-extra");
 const process = require("process");
-const gameAmount = require("./src/gameAmount");
 const Webhook = require("./src/events/webhook");
 const cli = require("./src/cli");
 const {
@@ -73,118 +72,11 @@ async function sendToKill () {
 }
 
 /**
- * Copy a json file to another location with a timestamp or type
- *
- * @param {string} oldfile path of the source file
- * @param {string} path path of the target file
- * @param {string} timetype the way of specifying this file
- */
-async function archiveJson (oldfile, path, timetype) {
-  logger.info(`Snapshotting: data/${oldfile}.json -> ${path}${oldfile}.${timetype}.json`);
-
-  await fs.copy(`data/${oldfile}.json`, `data/${path}${oldfile}.${timetype}.json`, { overwrite: true });
-  logger.info(`Snapshot of "data/${oldfile}.json" complete!`);
-}
-
-
-/**
- * Archive the various json files storing current data for later
- *
- * @param {string} [path="./archive/"] the path to place the archived files at
- * @param {string} [timetype] the varied part of the file to distinguish it
- */
-async function archive (path = "./archive/", timetype) {
-
-  if(!timetype) {
-    // eslint-disable-next-line no-param-reassign
-    timetype = Date()
-      .replace(/[0-9].:[0-9].:[0-9].*/, "")
-      .trim()
-      .replace(/ /g, "_");
-  }
-
-  await Promise.all([
-    archiveJson("players", path, timetype),
-    archiveJson("accounts", path, timetype),
-  ]);
-}
-
-/**
- * Snapshot the amount of wins into another json file
- * 
- * @param {string} timeType the inbetween of the file
- */
-async function snap (timeType = "day") {
-  // move all the current stats files to be the daily files
-  await archive("./", timeType);
-}
-
-/**
- * Snapshot the amount of wins into another json file
- * 
- * @param {string} timeType the inbetween of the file
- */
-async function snapGuild (timeType = "day") {
-  // move all the current stats files to be the daily files
-  await archive("./", timeType);
-}
-
-/**
- * Run the status task
- *
- */
-async function genStatus () {
-  await task.status();
-}
-
-/**
  * Run the discord task
  *
  */
 async function discordBot () {
   await task.discord();
-}
-
-/**
- * Write a file with all the amounts of players currrently in games
- *
- */
-async function gameAmnt () {
-  // write to file so that there isnt blank files in website at any point
-  await fs.writeFile("games.txt", await gameAmount.formatCounts());
-}
-
-/**
- * Write a logger output as a file
- *
- * @param {string[]} args the process arguments
- */
-async function writeFile (args) {
-  const logName = args[3];
-  const location = args[4];
-  const str = await stringNormal(logName);
-
-  await fs.writeFile(location, str);
-}
-
-/**
- * Write a daily wins logger output as a file
- *
- * @param {string[]} args the process arguments
- */
-async function writeFileD (args) {
-  const logName = args[3];
-  const location = args[4];
-  const str = await stringDaily(logName);
-
-  await fs.writeFile(location, str);
-}
-
-/**
- * Run status text sorted tast
- */
-async function statusSort () {
-  await task.statusTxtSorted();
 }
 
 /**
@@ -241,74 +133,6 @@ async function main () {
 
   logger.debug(`Args are [${args}] - executing`);
   switch(args[2]) {
-  case "logG":
-    await cli.logNormal("guild");
-    break;
-  case "logA":
-    await cli.logNormal("accounts");
-    break;
-  case "logP":
-    await cli.logNormal("players");
-    break;
-
-  case "logGD":
-    await cli.logDaily("guild");
-    break;
-  case "logAD":
-    await cli.logDaily("accounts");
-    break;
-  case "logPD":
-    await cli.logDaily("players");
-    break;
-
-  case "log":
-    await cli.log(args);
-    break;
-  case "logD":
-    await cli.logD(args);
-    break;
-
-  case "write":
-    await writeFile(args);
-    break;
-  case "writeD":
-    await writeFileD(args);
-    break;
-
-  case "snap":
-    await snap(args[3]);
-    break;
-  case "snapg":
-    await snapGuild(args[3]);
-    break;
-  case "archive":
-    await archive();
-    break;
-
-  case "status":
-    await genStatus();
-    break;
-
-  case "statusSort":
-    await statusSort();
-    break;
-
-  case "games":
-    await gameAmnt();
-    break;
-
-  case "ssweek": 
-    await Webhook.sendFakeWeekLBs();
-    break;
-
-  case "ssmonth": 
-    await Webhook.sendFakeMonthLBs();
-    break;
-
-  case "sslife": 
-    await Webhook.sendFakeLifetimeLBs();
-    break;
-
   case "discord":
     await webhookLog(args[3], args[4]);
     break;
@@ -367,32 +191,8 @@ async function main () {
     await addLeaderboards();
     break;
 
-  case "newAcc":
-    await cli.newAcc();
-    break;
-  case "newPlr":
-    await cli.newPlayer();
-    break;
   case "newGuild":
     await cli.newGuild();
-    break;
-
-  case "getUUID":
-    await cli.getUUID(args);
-    break;
-
-  case "addGuildMembers":
-  case "gmembers":
-  case "addGM":
-    await cli.addGuildMembers(args);
-    break;
-
-  case "addGID":
-    await cli.addGIDMembers(args);
-    break;
-
-  case "addGIDs":
-    await cli.addGIDsMembers(args);
     break;
 
   case "bot":
@@ -416,10 +216,8 @@ async function main () {
 
   default: {
     const mod = require(`./systems/cli/${args[2]}`);
-
     await mod(args);
   }
-
   }
 
   if(!(args[2] == "bot" || args[2] == "serveDB")) {
