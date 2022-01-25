@@ -21,7 +21,7 @@ async function autoUpdater (fileCache) {
       try {
         newAccounts = await updateAccounts(oldAccounts, true, true);
       } catch (e) {
-        Logger.err(e.stack);
+        Logger.err(e);
         lock = false;
         return;
       }
@@ -33,7 +33,7 @@ async function autoUpdater (fileCache) {
       try {
         newAccounts = await updateAccounts(oldAccounts, false);
       } catch (e) {
-        Logger.err(e.stack);
+        Logger.err(e);
         lock = false;
         return;
       }
@@ -44,7 +44,7 @@ async function autoUpdater (fileCache) {
     try {
       fileCache.indexedAccounts = await MergeDatabase(newAccounts, Object.values(fileCache.indexedAccounts), fileCache);
     } catch (e) {
-      Logger.err(e.stack);
+      Logger.err(e);
       lock = false;
       return;
     }
