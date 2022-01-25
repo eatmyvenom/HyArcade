@@ -10,7 +10,7 @@ let lock = false;
  * @param {FileCache} fileCache
  */
 async function autoUpdater (fileCache) {
-  if(!lock) {
+  if(!lock && fileCache.ready) {
     lock = true;
     Logger.info("Updating database");
     const oldAccounts = fileCache.accounts;

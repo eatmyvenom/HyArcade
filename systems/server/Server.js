@@ -78,7 +78,7 @@ module.exports = async function start (port) {
 
   if(!process.argv.includes("--test")) {
     setInterval(() => webhook.sendMW(fileCache), 960000);
-    setInterval(() => autoUpdater(fileCache), 240000);
+    setInterval(() => autoUpdater(fileCache), 60000);
   }
 
   const server = require("http")
