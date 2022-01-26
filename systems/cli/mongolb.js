@@ -32,7 +32,7 @@ async function main(args) {
 
   const lb = await c.getLeaderboard(args[3], true, false, 25, false);
 
-  const vals = lb.map((acc, i) => `${i + 1}) ${acc.rank.replace(/_PLUS/g, "+")} ${acc.name} - ${getProp(args[3])}`);
+  const vals = lb.map((acc, i) => `${i + 1}) ${acc.rank.replace(/_PLUS/g, "+")} ${acc.name} - ${getProp(acc, args[3])}`);
   Logger.out(vals.join("\n"));
 
   await c.destroy();
