@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const connector = require("hyarcade-requests/MongoConnector");
 
 /**
@@ -29,9 +30,10 @@ async function main(args) {
   const c = new connector("mongodb://127.0.0.1:27017");
   await c.connect();
 
-  const lb = await c.getLeaderboard(args[3], args[4], args[5], args[6], args[7]);
+  const lb = await c.getLeaderboard(args[3], true, false, 25, false);
 
-  lb.map((acc, i) => `${i + 1}) ${acc.rank.replace(/_PLUS/g, "+")} ${acc.name} - ${getProp(args[4])}`);
+  const vals = lb.map((acc, i) => `${i + 1}) ${acc.rank.replace(/_PLUS/g, "+")} ${acc.name} - ${getProp(args[3])}`);
+  Logger.out(vals.join("\n"));
 
   await c.destroy();
 }
