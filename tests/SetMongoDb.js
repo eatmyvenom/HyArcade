@@ -12,6 +12,6 @@ async function main() {
   await c.setAccounts(accs);
 }
 
-main
+main()
   .then(Logger.log)
   .catch(Logger.err);
