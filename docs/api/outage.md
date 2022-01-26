@@ -1,0 +1,2 @@
+# Outage
+Hi there! If you are reading this that means that one or more of HyArcade services are down and you are being redirected to this page. This should only last a couple of hours at max. Please check back at a later time! Apologies for any inconvience.
