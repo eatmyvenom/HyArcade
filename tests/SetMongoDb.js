@@ -7,6 +7,7 @@ const connector = require("hyarcade-requests/MongoConnector");
  */
 async function main() {
   const c = new connector("mongodb://127.0.0.1:27017");
+  await c.connect();
 
   const accs = Database.readDB("accounts");
   await c.setAccounts(accs);
