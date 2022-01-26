@@ -11,6 +11,8 @@ async function main() {
 
   const accs = await Database.readDB("accounts");
   await c.setAccounts(accs);
+
+  await c.destroy();
 }
 
 main()
