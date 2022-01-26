@@ -12,8 +12,8 @@ async function main() {
   const accs = await Database.readDB("accounts");
   await c.setAccounts(accs);
 
-  const res = await c.accounts.deleteMany();
-  Logger.log("Deleted " + res.deletedCount + " documents");
+  const lb = await c.getLeaderboard("partyGames.wins", false, false, 10, false);
+  console.dir(lb);
 
   await c.destroy();
 }
