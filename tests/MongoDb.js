@@ -10,7 +10,7 @@ async function main() {
   await c.connect();
 
   const accs = await Database.readDB("accounts");
-  await c.setAccounts(accs);
+  await c.updateAccounts(accs);
 
   const lb = await c.getLeaderboard("partyGames.wins", false, false, 10, false);
   console.dir(lb);
