@@ -6,6 +6,7 @@ const {
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const AccountResolver = require("../AccountResolver");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const cfg = require("hyarcade-config").fromJSON();
 let fakeFile;
 
 /**
@@ -63,6 +64,24 @@ module.exports = async (req, res, fileCache) => {
 
     res.write(JSON.stringify(response));
     res.end();
+  } else if(req.method == "POST") {
+    let data = "";
+    let json = {};
+    if(req.headers.authorization == cfg.dbPass) {
+      req.on("data", (d) => data += d);
+      req.on("end", async () => {
+        json = JSON.parse(data);
+
+        const newAcc = Account.from(json);
+        fileCache.indexedAccounts[json.uuid] = newAcc;
+        fileCache.save();
+        res.end();
+      });
+    } else {
+      Logger.warn("Someone tried to post without correct AUTH");
+      res.statusCode = 403;
+      res.end();
+    }
   } else {
     res.statusCode = 404;
     res.end();
