@@ -8,7 +8,7 @@ async function main() {
   const c = new connector("mongodb://127.0.0.1:27017");
   await c.connect();
 
-  console.dir(await c.getHistoricalLeaderboard("partyGames.starsEarned", "weekly", false, 10));
+  Logger.out(JSON.stringify(await c.getHistoricalLeaderboard("partyGames.starsEarned", "weekly", false, 10), null, 2));
 
   await c.destroy();
 }
