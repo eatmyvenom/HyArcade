@@ -1,15 +1,15 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const { Message, Interaction } = require("discord.js");
+import Config from "hyarcade-config";
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { createRequire } from "module";
+import ImageGenerator from "../images/ImageGenerator.js";
+import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
-import ImageGenerator from "../images/ImageGenerator.js";
-import Config from "hyarcade-config";
-import Database from "hyarcade-requests/Database.js";
+const require = createRequire(import.meta.url);
+const { Message, Interaction } = require("discord.js");
 
 const cfg = Config.fromJSON();
 
@@ -166,10 +166,9 @@ function nonDatabaseError (ign) {
 /**
  * 
  * @param {Account} acc
- * @param {string} time
  * @returns {object}
  */
-async function generateImage (acc, time) {
+async function generateImage (acc) {
   const games = getGames(acc);
 
   const img = new ImageGenerator(3000, 1800, "'myFont'", true);
@@ -192,16 +191,8 @@ async function generateImage (acc, time) {
     case 3: x = 2600; break;
     }
 
-    let pos = "";
-
-    if(time == "lifetime") {
-      if((acc.positions?.[games[i - 1]?.pos] ?? 101) < 101) {
-        pos = ` &7(#${acc?.positions?.[games[i - 1]?.pos]})`;
-      }
-    }
-    
     img.drawMcText(`&f&l${games[i - 1].name}`, x, y, 76, "center");
-    img.drawMcText(`&e${numberify(games[i - 1].wins)}${pos}`, x, y + 100, 104, "center");
+    img.drawMcText(`&e${numberify(games[i - 1].wins)}`, x, y + 100, 104, "center");
 
     if(i % 4 == 0) {
       y += 300;
