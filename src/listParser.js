@@ -16,18 +16,15 @@ exports.accounts = async function accounts () {
 /**
  * Gets a list of guild objects from the json guild list
  *
- * @param {Account[]} accs Accounts that can be used in these guilds
  * @returns {Promise<guild[]>} Array of guilds with combined player data
  */
-exports.guilds = async function gld (accs) {
-  const accounts = accs ? accs : await exports.accounts();
-  const Guild = require("hyarcade-structures/Guild")(accounts);
+exports.guilds = async function gld () {
   const guildlistjson = await Json.read("guildlist.json");
   const realList = [];
 
   for(const guild of guildlistjson) {
     if(realList.find((g) => g.uuid == guild) == undefined) {
-      realList.push(new Guild(guild));
+      realList.push(guild);
     }
   }
   return realList;
