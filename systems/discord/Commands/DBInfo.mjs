@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import BotRuntime from "../BotRuntime.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import Database from "hyarcade-requests/Database.js";
+import BotRuntime from "../BotRuntime.js";
 
 export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
   if(interaction != undefined) {
@@ -18,12 +18,9 @@ export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, i
   const embed = new MessageEmbed()
     .setAuthor({ name: "Hyarcade Database info", iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
     .setDescription(`**Accounts** : \`${info.accs}\`\n` +
-        `**Invalid Accounts** : \`${info.invalid}\`\n` +
         `**Linked Accounts** : \`${info.links}\`\n\n` +
         `**Guilds** : \`${info.guilds}\`\n\n` + 
-        `**Memory** : \`${Math.floor(info.mem)}mb\`\n` +
-        `**Start Time** : <t:${Math.floor((Date.now() / 1000) - info.time)}:R>\n` +
-        `**File Save** : <t:${Math.floor((info.fileSave / 1000))}:R>`
+        `**Memory** : \`${Math.floor(info.mem)}mb\`\n`
     )
     .setColor(0x8c54fe);
 
