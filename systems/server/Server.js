@@ -16,9 +16,11 @@ const urlModules = {
   leaderboard: require("./endpoints/leaderboard"),
   lb: require("./endpoints/leaderboard"),
   db: require("./endpoints/Database"),
+  database: require("./endpoints/Database"),
   mwlb: require("./endpoints/MiniWallsLeaderboard"),
   miniwalls: require("./endpoints/MiniWallsLeaderboard"),
   timeacc: require("./endpoints/TimeAcc"),
+  timeaccount: require("./endpoints/TimeAcc"),
   acctimed: require("./endpoints/TimeAcc"),
   resolve: require("./endpoints/NameSearch"),
   namesearch: require("./endpoints/NameSearch"),
@@ -34,8 +36,9 @@ let fileCache;
  */
 async function callback (request, response) {
   const url = new URL(request.url, `https://${request.headers.host}`);
-  const endpoint = url.pathname.slice(1);
+  const endpoint = url.pathname.slice(1).toLowerCase();
   const mod = urlModules[endpoint];
+
   if(mod == undefined) {
     logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
     response.statusCode = 404;
