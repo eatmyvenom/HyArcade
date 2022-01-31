@@ -24,13 +24,13 @@ async function AccountResolver (fileCache, url) {
   let acc;
 
   if(ign != null) {
-    Logger.debug(`Using ign "${ign}"`);
+    Logger.verbose(`Using ign "${ign}"`);
     acc = accounts.find((a) => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
   } else if(uuid != null) {
-    Logger.debug(`Using uuid ${uuid}`);
+    Logger.verbose(`Using uuid ${uuid}`);
     acc = indexedAccounts[uuid?.toLowerCase()];
   } else if(discid != null) {
-    Logger.debug(`Using discord id ${discid}`);
+    Logger.verbose(`Using discord id ${discid}`);
     uuid = fileCache.disclist[discid];
 
     acc = indexedAccounts[uuid?.toLowerCase()];
@@ -51,7 +51,7 @@ async function AccountResolver (fileCache, url) {
   }
 
   if(acc == undefined) {
-    Logger.debug("Fetching account data from hypixel.");
+    Logger.verbose("Fetching account data from hypixel.");
     if(uuid == null) {
       uuid = await mojangRequest.getUUID(ign) ?? null;
     }

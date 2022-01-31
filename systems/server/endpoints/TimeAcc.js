@@ -36,7 +36,7 @@ module.exports = async (req, res, fileCache) => {
     }
 
     if(resolvedAccount.updateTime < (Date.now() - 600000)) {
-      Logger.debug(`Updating data for ${resolvedAccount.name}`);
+      Logger.verbose(`Updating data for ${resolvedAccount.name}`);
       const newAccount = new Account(resolvedAccount.name, 0, resolvedAccount.uuid);
       Object.assign(newAccount, resolvedAccount);
 
