@@ -53,8 +53,8 @@ module.exports = class BotEvents {
     Webhooks.errHook = errHook;
     Webhooks.logHook = logHook;
     logger.info("Creating message copy hook");
-    const cmdChannel = BotRuntime.client.channels.fetch(cfg.discord.cmdChannel);
-    const cmdHooks = cmdChannel.fetchWebhooks();
+    const cmdChannel = await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel);
+    const cmdHooks = await cmdChannel.fetchWebhooks();
     Webhooks.commandHook = await cmdHooks.first();
 
     logger.info("Reading trusted users");
