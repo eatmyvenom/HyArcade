@@ -2,8 +2,8 @@ import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-
 import { createRequire } from "node:module";
+
 const require = createRequire(import.meta.url);
 
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";

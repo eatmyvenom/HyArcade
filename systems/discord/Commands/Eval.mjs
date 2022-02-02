@@ -1,7 +1,7 @@
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-
 import { createRequire } from "node:module";
+
 const require = createRequire(import.meta.url);
 
 import { inspect } from "node:util";

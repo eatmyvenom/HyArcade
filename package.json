@@ -46,7 +46,6 @@
         "commitlint": "^16.1.0",
         "eslint": "^8.8.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-import": "^2.25.4",
         "eslint-plugin-jsdoc": "^36.0.6",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-unicorn": "^40.1.0",

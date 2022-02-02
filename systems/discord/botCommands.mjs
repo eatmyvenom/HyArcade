@@ -1,7 +1,7 @@
 import config from "hyarcade-config";
 import Logger from "hyarcade-logger";
-
 import { createRequire } from "node:module";
+
 const require = createRequire(import.meta.url);
 
 const owner = 156952208045375488;

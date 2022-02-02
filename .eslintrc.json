@@ -1,5 +1,5 @@
 {
-  "plugins": ["jsdoc", "import"],
+  "plugins": ["jsdoc"],
   "root": true,
   "env": {
     "browser": true,
@@ -33,15 +33,6 @@
     "semi": ["error", "always"],
     "no-use-before-define": "warn",
     "max-depth": ["error", { "max": 4 }],
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", "index", "sibling", "parent"],
-        "alphabetize": {
-          "order": "asc"
-        }
-      }
-    ],
     "prettier/prettier": [
       2,
       {
