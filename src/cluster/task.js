@@ -41,7 +41,7 @@ async function glds() {
   let j;
   let temparray;
 
-  const chunk = 120;
+  const chunk = 1;
   for (i = 0, j = guilds.length; i < j; i += chunk) {
     temparray = guilds.slice(i, i + chunk);
     await Promise.all(
