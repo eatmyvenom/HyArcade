@@ -1,6 +1,7 @@
 import Requests from "hyarcade-requests";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
+import webRequest from "hyarcade-requests/webRequest.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
@@ -360,12 +361,40 @@ function classicGamesTransformer(status) {
 }
 
 /**
+ * @param {Account} account
+ * @returns {string}
+ */
+function getLastAction(account) {
+  const time = Math.max(account.actionTime.quest.time, account.actionTime.pets, account.actionTime.dailyReward);
+  return TimeFormatter(time);
+}
+
+/**
+ * @param {Account} account
+ * @returns {object}
+ */
+async function getGEXP(account) {
+  const guildRequest = await webRequest(`https://api.slothpixel.me/api/guilds/${account.uuid}`);
+  const guildData = JSON.parse(guildRequest.data);
+
+  if (!guildData.guild) {
+    return { daily: "N/A", weekly: "N/A" };
+  }
+
+  const accountData = guildData.members.find(acc => acc.uuid == account.uuid);
+  return { daily: Object.values(accountData.exp_history)[0], weekly: Object.values(accountData.exp_history).reduce((p, i) => p + i) };
+}
+
+/**
  * @param {string[]} args
  * @param {Message} rawmsg
  * @param {CommandInteraction} interaction
  * @returns {CommandResponse}
  */
 async function callback(args, rawmsg, interaction) {
+  /**
+   * @type {Account}
+   */
   let acc;
 
   if (interaction != undefined) {
@@ -450,6 +479,24 @@ async function callback(args, rawmsg, interaction) {
 
     await img.drawMcText("&bLast Mode", 300, (y += increase), 42, "center");
     await img.drawMcText(`&b${game}`, 300, (y += increase), 50, "center");
+
+    if (acc.apiHidden) {
+      y = startY;
+
+      await img.drawMcText(`&aLast Known Action`, img.canvas.width - 300, (y += increase), 42, "center");
+      await img.drawMcText(`&a${getLastAction(acc)}`, img.canvas.width - 300, (y += increase), 50, "center");
+      y += spacer;
+
+      const gexp = await getGEXP(acc);
+
+      await img.drawMcText(`&bDaily GEXP`, img.canvas.width - 300, (y += increase), 42, "center");
+      await img.drawMcText(`&b${gexp.daily}`, img.canvas.width - 300, (y += increase), 50, "center");
+
+      y += spacer;
+
+      await img.drawMcText("&eWeekly GEXP", img.canvas.width - 300, (y += increase), 42, "center");
+      await img.drawMcText(`&e${gexp.weekly}`, img.canvas.width - 300, (y += increase), 50, "center");
+    }
   }
 
   return new CommandResponse("", undefined, img.toDiscord());
