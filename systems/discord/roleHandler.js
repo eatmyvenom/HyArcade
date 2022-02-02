@@ -62,13 +62,13 @@ module.exports = async function roleHandler(client) {
 
   const tags = {};
 
-  accs.forEach(acc => {
+  for (const acc of accs) {
     const usr = client.users.cache.find(u => u.id == acc.discid);
 
     if (usr) {
       tags[acc.uuid] = usr.tag;
     }
-  });
+  }
 
   await Json.write("tags.json", tags);
 };

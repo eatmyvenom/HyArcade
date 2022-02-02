@@ -56,16 +56,15 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "kd": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
-        acc.miniWalls.ratio =
-          ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
+        acc.miniWalls.ratio = ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
         return acc;
       });
 
@@ -77,12 +76,12 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "kdnf": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
         acc.miniWalls.ratio = acc.miniWalls.kills / acc.miniWalls.deaths;
@@ -98,12 +97,12 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "fd": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
         acc.miniWalls.ratio = acc.miniWalls.finalKills / acc.miniWalls.deaths;
@@ -118,12 +117,12 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "wdd": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
         acc.miniWalls.ratio = acc.miniWalls.witherDamage / acc.miniWalls.deaths;
@@ -139,12 +138,12 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "wkd": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
         acc.miniWalls.ratio = acc.miniWalls.witherKills / acc.miniWalls.deaths;
@@ -160,12 +159,12 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
 
     case "aa": {
       accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
-      if (time == undefined || time == null) {
+      if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
         const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
 
-        accounts = accounts.filter(acc => top150.find(a => a.uuid == acc.uuid) != undefined);
+        accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
       accounts.map(acc => {
         acc.miniWalls.ratio = (acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot) * 100;

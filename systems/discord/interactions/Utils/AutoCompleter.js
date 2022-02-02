@@ -8,7 +8,7 @@ const LeaderboardStats = require("./AutoComplete/LeaderboardStats");
 /**
  * @type {Account}
  */
-let testStats = undefined;
+let testStats;
 
 const zombies = {
   fastest_time_10_zombies_alienarcadium_normal: true,
@@ -44,7 +44,7 @@ const zombies = {
  */
 async function leaderboardFiller(interaction) {
   if (testStats == undefined) {
-    testStats = await Database.account("vnmm", undefined);
+    testStats = await Database.account("vnmm");
     Object.assign(testStats.zombies, zombies);
   }
 
@@ -66,7 +66,7 @@ async function leaderboardFiller(interaction) {
  *
  */
 async function startUp() {
-  testStats = await Database.account("vnmm", undefined);
+  testStats = await Database.account("vnmm");
   Object.assign(testStats.zombies, zombies);
 }
 

@@ -1,5 +1,4 @@
 {
-  "parser": "@babel/eslint-parser",
   "plugins": ["jsdoc", "import"],
   "root": true,
   "env": {
@@ -7,13 +6,22 @@
     "commonjs": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:jsdoc/recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended", "plugin:jsdoc/recommended", "plugin:prettier/recommended", "plugin:unicorn/recommended"],
   "parserOptions": {
-    "ecmaVersion": 12
+    "ecmaVersion": "latest"
   },
   "rules": {
     "jsdoc/require-param-description": 0,
     "jsdoc/require-returns-description": 0,
+    "jsdoc/require-param-type": 0,
+    "unicorn/prefer-module": 0,
+    "unicorn/filename-case": 0,
+    "unicorn/no-process-exit": 0,
+    "unicorn/no-static-only-class": 0,
+    "unicorn/number-literal-case": 0,
+    "unicorn/numeric-separators-style": 0,
+    "unicorn/no-nested-ternary": 0,
+    "unicorn/prevent-abbreviations" : 0,
     "template-curly-spacing": ["error", "never"],
     "object-curly-spacing": ["warn", "always"],
     "space-before-blocks": ["error", "always"],
@@ -37,7 +45,7 @@
     "prettier/prettier": [
       2,
       {
-        "printWidth": 120,
+        "printWidth": 180,
         "singleQuote": false,
         "quoteProps": "as-needed",
         "trailingComma": "all",

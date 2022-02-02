@@ -30,13 +30,9 @@ module.exports = function MiniWalls(acc, embed) {
 
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.miniWalls.apEarned)} / ${f(
-      acc.arcadeAchievments.miniWalls.apAvailable,
-    )}\`)\n` +
+    `**- AP** (\`${f(acc.arcadeAchievments.miniWalls.apEarned)} / ${f(acc.arcadeAchievments.miniWalls.apAvailable)}\`)\n` +
       `**- Challenges** (\`${f(acc.arcadeChallenges.miniWalls)}\`)\n` +
-      `**- Kills/Deaths** (\`${f(
-        ((acc.miniWalls.finalKills + acc.miniWalls.kills) / acc.miniWalls.deaths).toFixed(2),
-      )}\`)\n` +
+      `**- Kills/Deaths** (\`${f(((acc.miniWalls.finalKills + acc.miniWalls.kills) / acc.miniWalls.deaths).toFixed(2))}\`)\n` +
       `**- Wither Dmg/Deaths** (\`${f((acc.miniWalls.witherDamage / acc.miniWalls.deaths).toFixed(2))}\`)\n` +
       `**- Wither Kills/Deaths** (\`${f((acc.miniWalls.witherKills / acc.miniWalls.deaths).toFixed(2))}\`)`,
   );

@@ -14,7 +14,7 @@ function f(number) {
  * @returns {string}
  */
 function toHHMMSS(secs) {
-  const sec_num = parseInt(secs, 10);
+  const sec_num = Number.parseInt(secs, 10);
   const hours = Math.floor(sec_num / 3600);
   const minutes = Math.floor(sec_num / 60) % 60;
   const seconds = sec_num % 60;
@@ -34,17 +34,15 @@ function toHHMMSS(secs) {
 module.exports = function Zombies(acc, embed) {
   embed.addField(
     "Stats",
-    `**- Total Wins** (\`${f(acc?.zombies?.wins_zombies ?? 0)}\`)\n**- Bad Blood Wins** (\`${f(
-      acc?.zombies?.wins_zombies_badblood ?? 0,
-    )}\`)\n**- Dead End Wins** (\`${f(acc?.zombies?.wins_zombies_deadend ?? 0)}\`)\n**- Alien Arcadium Wins** (\`${f(
-      acc?.zombies?.wins_zombies_alienarcadium ?? 0,
-    )}\`)`,
+    `**- Total Wins** (\`${f(acc?.zombies?.wins_zombies ?? 0)}\`)\n**- Bad Blood Wins** (\`${f(acc?.zombies?.wins_zombies_badblood ?? 0)}\`)\n**- Dead End Wins** (\`${f(
+      acc?.zombies?.wins_zombies_deadend ?? 0,
+    )}\`)\n**- Alien Arcadium Wins** (\`${f(acc?.zombies?.wins_zombies_alienarcadium ?? 0)}\`)`,
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.zombies.apEarned)} / ${f(
-      acc.arcadeAchievments.zombies.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.zombies)}\`)\n**- Fastest win** (\`${toHHMMSS(
+    `**- AP** (\`${f(acc.arcadeAchievments.zombies.apEarned)} / ${f(acc.arcadeAchievments.zombies.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.zombies,
+    )}\`)\n**- Fastest win** (\`${toHHMMSS(
       Math.min(
         acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999,
         acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999,

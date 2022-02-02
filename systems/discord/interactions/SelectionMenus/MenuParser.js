@@ -1,7 +1,7 @@
 const { SelectMenuInteraction } = require("discord.js");
 const ButtonResponse = require("../Buttons/ButtonResponse");
 
-let commandStorage = undefined;
+let commandStorage;
 
 /**
  * @param {string} accUUID

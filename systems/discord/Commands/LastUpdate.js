@@ -8,18 +8,11 @@ const Command = require("hyarcade-structures/Discord/Command");
  */
 async function lastUpdateHandler() {
   let time;
-  if (fs.existsSync("timeupdate")) {
-    time = Date.parse(await (await fs.readFile("timeupdate")).toString());
-  } else {
-    time = Date.now();
-  }
+  time = fs.existsSync("timeupdate") ? Date.parse(await fs.readFile("timeupdate")) : Date.now();
 
   time = Math.floor(time / 1000);
 
-  const embed = new MessageEmbed()
-    .setTitle("Update time")
-    .setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`)
-    .setColor(0x00b37b);
+  const embed = new MessageEmbed().setTitle("Update time").setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`).setColor(0x00b37b);
 
   return {
     res: "",
@@ -27,9 +20,4 @@ async function lastUpdateHandler() {
   };
 }
 
-module.exports = new Command(
-  ["lastupdate", "catlock", "timeupdate", "updatetime", "update-time"],
-  ["*"],
-  lastUpdateHandler,
-  2500,
-);
+module.exports = new Command(["lastupdate", "catlock", "timeupdate", "updatetime", "update-time"], ["*"], lastUpdateHandler, 2500);

@@ -19,9 +19,9 @@ module.exports = function DragonWars(acc, embed) {
   embed.addField("Stats", `**- Wins** (\`${f(acc.dragonWars.wins)}\`)\n**- Kills** (\`${f(acc.dragonWars.kills)}\`)`);
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.dragonWars.apEarned)} / ${f(
-      acc.arcadeAchievments.dragonWars.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.dragonWars)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.dragonWars.apEarned)} / ${f(acc.arcadeAchievments.dragonWars.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.dragonWars,
+    )}\`)`,
   );
 
   return embed;

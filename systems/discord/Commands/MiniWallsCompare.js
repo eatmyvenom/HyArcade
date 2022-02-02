@@ -77,7 +77,7 @@ module.exports = new Command(
   "mw-compare",
   ["*"],
   async (args, rawMsg, interaction) => {
-    if (args.length < 1) {
+    if (args.length === 0) {
       return {
         res: "",
         embed: ERROR_ARGS_LENGTH(1),
@@ -152,13 +152,9 @@ module.exports = new Command(
           true,
         );
 
-      embed
-        .setTitle(`${acc1.name} VS ${acc2.name}`)
-        .setColor(0x7873f5)
-        .addField("━━━━━━ Stats: ━━━━━", stats, true)
-        .addField("━━━━━ Ratios: ━━━━━", ratios, true);
-    } catch (e) {
-      logger.err(e.stack);
+      embed.setTitle(`${acc1.name} VS ${acc2.name}`).setColor(0x7873f5).addField("━━━━━━ Stats: ━━━━━", stats, true).addField("━━━━━ Ratios: ━━━━━", ratios, true);
+    } catch (error) {
+      logger.err(error.stack);
       return {
         res: "",
         embed: ERROR_IGN_UNDEFINED,

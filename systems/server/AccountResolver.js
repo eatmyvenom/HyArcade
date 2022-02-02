@@ -11,7 +11,7 @@ const FileCache = require("hyarcade-utils/FileHandling/FileCache");
  * @returns {Account}
  */
 async function AccountResolver(fileCache, url) {
-  const { indexedAccounts } = fileCache;
+  const { indexedAccounts, disclist } = fileCache;
 
   const accounts = Object.values(indexedAccounts);
   accounts.sort((b, a) => a.importance - b.importance);
@@ -21,20 +21,20 @@ async function AccountResolver(fileCache, url) {
   const discid = url.searchParams.get("discid");
   let acc;
 
-  if (ign != null) {
+  if (ign != undefined) {
     Logger.verbose(`Using ign "${ign}"`);
     acc = accounts.find(a => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
-  } else if (uuid != null) {
+  } else if (uuid != undefined) {
     Logger.verbose(`Using uuid ${uuid}`);
     acc = indexedAccounts[uuid?.toLowerCase()];
-  } else if (discid != null) {
+  } else if (discid != undefined) {
     Logger.verbose(`Using discord id ${discid}`);
-    uuid = fileCache.disclist[discid];
+    uuid = disclist[discid];
 
     acc = indexedAccounts[uuid?.toLowerCase()];
   }
 
-  if (acc == undefined && ign != null) {
+  if (acc == undefined && ign != undefined) {
     acc = accounts.find(a => {
       if (a.nameHist && a.nameHist.length > 0 && (a?.importance ?? 0) > 9500) {
         for (const name of a.nameHist) {
@@ -49,18 +49,19 @@ async function AccountResolver(fileCache, url) {
 
   if (acc == undefined) {
     Logger.verbose("Fetching account data from hypixel.");
-    if (uuid == null) {
-      uuid = (await mojangRequest.getUUID(ign)) ?? null;
+    if (uuid == undefined) {
+      uuid = await mojangRequest.getUUID(ign);
     }
 
-    if (uuid != null) {
+    if (uuid != undefined) {
       acc = new Account(ign, 0, uuid);
       try {
         await acc.updateHypixel();
-      } catch (e) {
+      } catch (error) {
         Logger.err("ERROR FETCHING ACCOUNT DATA FROM HYPIXEL...");
-        Logger.err(e.stack);
+        Logger.err(error.stack);
       }
+      // eslint-disable-next-line unicorn/consistent-destructuring
       fileCache.indexedAccounts[acc.uuid] = acc;
       fileCache.save();
     }

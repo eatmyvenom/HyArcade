@@ -1,8 +1,8 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const { MessageEmbed } = require("discord.js");
@@ -40,25 +40,18 @@ export default new Command("walls", ["*"], async (args, rawMsg, interaction) => 
     .addField(
       "---------Info----------",
       `**Diamonds Mined** - ${numberify(data?.achievements?.walls_diamond_miner ?? 0)}\n` +
-        `**Days played** - ${numberify(Array.from(data?.quests?.walls_daily_play?.completions ?? []))}\n` +
+        `**Days played** - ${numberify([...(data?.quests?.walls_daily_play?.completions ?? [])])}\n` +
         `**Coins** - ${numberify(data?.stats?.Walls?.coins ?? 0)}`,
       true,
     )
     .addField(
       "---------Ratios--------",
       `**K/D** - ${numberify((data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.deaths ?? 0))}\n` +
-        `**K+A/D** - ${numberify(
-          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0),
-        )}\n` +
-        `**D/Games** - ${numberify(
-          (data?.stats?.Walls?.deaths ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
-        )}\n` +
-        `**K/Games** - ${numberify(
-          (data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
-        )}\n` +
+        `**K+A/D** - ${numberify(((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0))}\n` +
+        `**D/Games** - ${numberify((data?.stats?.Walls?.deaths ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0))}\n` +
+        `**K/Games** - ${numberify((data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0))}\n` +
         `**K+A/Games** - ${numberify(
-          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0) +
-            (data?.stats?.Walls?.losses ?? 0),
+          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
         )}\n`,
       true,
     )

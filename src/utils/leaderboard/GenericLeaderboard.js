@@ -5,11 +5,10 @@ const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const TimSort = require("timsort");
 
 /**
- * @param {string} str
+ * @param {string} cleanStr
  * @returns {number}
  */
-function numberify(str) {
-  const cleanStr = str ?? 0;
+function numberify(cleanStr = 0) {
   return Number(cleanStr);
 }
 
@@ -21,7 +20,7 @@ function numberify(str) {
 function getProp(o, s) {
   let obj = o;
   let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/\[(\w+)]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
   const propertyArray = str.split(".");
   for (let i = 0, arrLength = propertyArray.length; i < arrLength; i += 1) {
@@ -56,7 +55,7 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
   if (lbprop?.startsWith(".")) {
     category = lbprop.split(".")[1];
     getter = a => getProp(a, lbprop) ?? defaultValue;
-  } else if (category == null) {
+  } else if (category == undefined) {
     getter = a => a?.[lbprop] ?? defaultValue;
   } else {
     getter = a => a?.[category]?.[lbprop] ?? defaultValue;
@@ -65,13 +64,7 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
   let accs;
 
   Logger.verbose("Getting accounts");
-  if (
-    timePeriod == undefined ||
-    timePeriod == "life" ||
-    timePeriod == "lifetime" ||
-    timePeriod == null ||
-    timePeriod == ""
-  ) {
+  if (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == "") {
     Logger.verbose("Using normal leaderboard");
     accs = Object.values(fileCache.indexedAccounts);
 
@@ -99,11 +92,7 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
       if (o == undefined) {
         const rAcc = retro?.[a.uuid];
 
-        if (rAcc == undefined) {
-          oldval = numberify(getter(a));
-        } else {
-          oldval = numberify(getter(rAcc));
-        }
+        oldval = rAcc == undefined ? numberify(getter(a)) : numberify(getter(rAcc));
       } else {
         oldval = numberify(getter(o));
       }
@@ -118,7 +107,7 @@ module.exports = async function (category, lbprop, timePeriod, min, reverse, max
     }
   }
 
-  if (filter != "" && filter != undefined && filter != null) {
+  if (filter != "" && filter != undefined && filter != undefined) {
     accs = accs.filter(a => {
       for (const prop of filter.split(",")) {
         if (a[prop]) return false;

@@ -16,7 +16,6 @@ async function unverify(args, rawMsg, interaction) {
   if (Object.keys(disclist).includes(interaction.user.id)) {
     disclist[interaction.user.id] = undefined;
     await BotRuntime.writeToDB("disclist", disclist);
-    disclist = null;
 
     return new CommandResponse("You were successfully unverified!");
   }

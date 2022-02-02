@@ -49,11 +49,7 @@ module.exports = async function FakeLb(path, category, time) {
         default: {
           let random = chooseRandom(0, 1);
 
-          if (random == 0) {
-            return await Arc4(path, category, realTime, topTen);
-          } else {
-            return await Arc3(path, category, realTime, topTen);
-          }
+          return await (random == 0 ? Arc4(path, category, realTime, topTen) : Arc3(path, category, realTime, topTen));
         }
       }
     }

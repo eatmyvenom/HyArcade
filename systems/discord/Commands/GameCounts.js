@@ -16,7 +16,8 @@ function numberify(n) {
  * @returns {string}
  */
 async function getGames() {
-  const apiRes = await (await fetch("https://api.slothpixel.me/api/counts")).json();
+  const countFetch = await fetch("https://api.slothpixel.me/api/counts");
+  const apiRes = await countFetch.json();
 
   const arcade = apiRes.games.ARCADE;
 

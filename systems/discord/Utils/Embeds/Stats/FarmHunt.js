@@ -26,9 +26,7 @@ module.exports = function FarmHunt(acc, embed) {
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.farmHunt.apEarned)} / ${f(
-      acc.arcadeAchievments.farmHunt.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.farmhunt)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.farmHunt.apEarned)} / ${f(acc.arcadeAchievments.farmHunt.apAvailable)}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.farmhunt)}\`)`,
   );
 
   return embed;

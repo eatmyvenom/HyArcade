@@ -1,8 +1,8 @@
-import { createRequire } from "module";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import fetch from "node-fetch";
+import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
@@ -18,7 +18,7 @@ const { escapeItalic, escapeUnderline } = Util;
  */
 function numberify(n) {
   let r = Intl.NumberFormat("en").format(Number(`${n}`.replace(/undefined/g, 0).replace(/null/g, 0)));
-  r = isNaN(n) ? (r = "N/A") : r;
+  r = Number.isNaN(n) ? (r = "N/A") : r;
   return r;
 }
 
@@ -76,10 +76,7 @@ function getNameDate(time) {
  * @returns {Promise<MessageEmbed>}
  */
 async function generateWhoisEmbed(acc) {
-  const rank =
-    acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined
-      ? `[${acc.rank.replace(/_PLUS/g, "+")}] `
-      : "";
+  const rank = acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined ? `[${acc.rank.replace(/_PLUS/g, "+")}] ` : "";
 
   const embed = new MessageEmbed()
     .setTitle(`Who is ${rank}${acc.name}`)
@@ -87,11 +84,10 @@ async function generateWhoisEmbed(acc) {
     .setColor(COLOR_PURPLE);
 
   let discord = "";
-  const moj = await (await fetch(`https://api.ashcon.app/mojang/v2/user/${acc.uuid}`)).json();
+  const ashconFetch = await fetch(`https://api.ashcon.app/mojang/v2/user/${acc.uuid}`);
+  const moj = await ashconFetch.json();
 
-  let nameHist = moj.username_history
-    .reverse()
-    .map(n => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
+  let nameHist = moj.username_history.reverse().map(n => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
 
   if (nameHist.length > 25) {
     nameHist = nameHist.slice(0, 25);
@@ -99,11 +95,7 @@ async function generateWhoisEmbed(acc) {
 
   nameHist = nameHist.join("\n");
 
-  if (acc.discord != undefined && acc.discord != "") {
-    discord = `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}`;
-  } else {
-    discord = "Unknown!";
-  }
+  discord = acc.discord != undefined && acc.discord != "" ? `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}` : "Unknown!";
 
   embed.addField("--------- Names ---------", nameHist, true);
   embed.addField("-------- Discord --------", discord, true);

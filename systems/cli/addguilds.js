@@ -21,9 +21,9 @@ async function main(args) {
   let guildList = await readFile("data/guildlist.json");
   guildList = JSON.parse(guildList.toString());
 
-  const realGuilds = [...new Set(guildList.concat(newList))];
+  const realGuilds = [...new Set([...guildList, ...newList])];
 
-  await writeFile("data/guildlist.json", JSON.stringify(realGuilds, null, "\t"));
+  await writeFile("data/guildlist.json", JSON.stringify(realGuilds, undefined, "\t"));
 }
 
 module.exports = main;

@@ -1,6 +1,6 @@
 const Logger = require("hyarcade-logger");
 
-let genStats = undefined;
+let genStats;
 
 module.exports = async function LeaderboardStats(category, stat, interaction, testStats) {
   if (category != "general" && category != "others" && testStats[category]) {
@@ -21,8 +21,8 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
 
     try {
       interaction.respond(res.slice(0, Math.min(24, res.length)));
-    } catch (e) {
-      Logger.err(e);
+    } catch (error) {
+      Logger.err(error);
     }
   } else if (category == "others") {
     if (genStats == undefined) {
@@ -60,8 +60,8 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
 
     try {
       interaction.respond(res.slice(0, Math.min(24, res.length)));
-    } catch (e) {
-      Logger.err(e);
+    } catch (error) {
+      Logger.err(error);
     }
   }
 };

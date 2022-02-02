@@ -1,7 +1,7 @@
-import { createRequire } from "module";
+import logger from "hyarcade-logger";
+import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 
-import logger from "hyarcade-logger";
 import BotRuntime from "./BotRuntime.js";
 
 const { Client } = require("discord.js");
@@ -16,16 +16,16 @@ export default async function NameUpdater(client) {
   const mwServer = await client.guilds.fetch("789718245015289886");
   const mwMembers = await mwServer.members.fetch();
 
-  mwMembers.forEach(async m => {
+  for (const m of mwMembers) {
     const acc = accs.find(a => a.discord == m.id);
     if (acc != undefined && acc.name != undefined && acc.name != "INVALID-NAME" && acc.name != m.displayName) {
       try {
         await m.setNickname(acc.name);
-      } catch (e) {
-        logger.err(e.stack);
+      } catch (error) {
+        logger.err(error.stack);
       }
     }
-  });
+  }
 
   logger.info("Names updated!");
 }

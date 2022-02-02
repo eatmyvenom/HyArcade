@@ -18,19 +18,15 @@ function f(number) {
 module.exports = function HoleInTheWall(acc, embed) {
   embed.addField(
     "Stats",
-    `**- Wins** (\`${f(acc.holeInTheWall.wins)}\`)\n**- Qualifiers** (\`${f(
-      acc.holeInTheWall.qualifiers,
-    )}\`)\n**- Finals** (\`${f(acc.holeInTheWall.finals)}\`)\n**- Walls Completed** (\`${f(
-      acc.holeInTheWall.rounds,
-    )}\`)`,
+    `**- Wins** (\`${f(acc.holeInTheWall.wins)}\`)\n**- Qualifiers** (\`${f(acc.holeInTheWall.qualifiers)}\`)\n**- Finals** (\`${f(
+      acc.holeInTheWall.finals,
+    )}\`)\n**- Walls Completed** (\`${f(acc.holeInTheWall.rounds)}\`)`,
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.holeInTheWall.apEarned)} / ${f(
-      acc.arcadeAchievments.holeInTheWall.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.holeInTheWall)}\`)\n**- Qualifiers+Finals** (\`${f(
-      acc.holeInTheWall.finals + acc.holeInTheWall.qualifiers,
-    )}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.holeInTheWall.apEarned)} / ${f(acc.arcadeAchievments.holeInTheWall.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.holeInTheWall,
+    )}\`)\n**- Qualifiers+Finals** (\`${f(acc.holeInTheWall.finals + acc.holeInTheWall.qualifiers)}\`)`,
   );
 
   return embed;

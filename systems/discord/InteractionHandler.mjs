@@ -1,5 +1,5 @@
-import { createRequire } from "module";
 import Logger from "hyarcade-logger";
+import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
 import CommandResponse from "./Utils/CommandResponse.js";
 import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
@@ -31,14 +31,7 @@ async function isBlacklisted(id) {
 async function logCmd(interaction) {
   await Webhooks.commandHook.send({
     embeds: [
-      LOG_SLASH_COMMAND_USAGE(
-        interaction.user?.id,
-        interaction.user?.tag,
-        interaction.commandName,
-        interaction.guild?.name,
-        interaction.channel?.id,
-        interaction.options?.data,
-      ),
+      LOG_SLASH_COMMAND_USAGE(interaction.user?.id, interaction.user?.tag, interaction.commandName, interaction.guild?.name, interaction.channel?.id, interaction.options?.data),
     ],
   });
 }
@@ -56,66 +49,40 @@ async function commandHandler(interaction) {
   let responseObj;
   try {
     responseObj = await CommandParser(interaction);
-  } catch (e) {
+  } catch (error) {
     try {
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       await Webhooks.errHook.send({
-        embeds: [
-          ERROR_LOG(
-            e,
-            `Error from /${interaction.commandName} ${JSON.stringify(
-              interaction.options.data.map(a => `${a.name} : ${a.value}`),
-            )}`,
-          ),
-        ],
+        embeds: [ERROR_LOG(error, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map(a => `${a.name} : ${a.value}`))}`)],
       });
-      if (!interaction.deferred && !interaction.replied) {
-        await interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-      } else {
-        await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-      }
+      await (!interaction.deferred && !interaction.replied
+        ? interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true })
+        : interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true }));
       return;
-    } catch (e) {
+    } catch {
       Logger.err("Unable to give error response");
       await Webhooks.errHook.send({ content: `Unable to send error response in <#${interaction.channelId}>` });
     }
   }
 
   let res;
-  if (responseObj instanceof CommandResponse) {
-    res = responseObj;
-  } else {
-    res = new CommandResponse(responseObj);
-  }
+  res = responseObj instanceof CommandResponse ? responseObj : new CommandResponse(responseObj);
 
   try {
-    if (!interaction.deferred && !interaction.replied) {
-      await interaction.reply(res.toDiscord());
-    } else {
-      await interaction.followUp(res.toDiscord());
-    }
-  } catch (e) {
+    await (!interaction.deferred && !interaction.replied ? interaction.reply(res.toDiscord()) : interaction.followUp(res.toDiscord()));
+  } catch (error) {
     try {
       Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
-      Logger.err(e.stack);
+      Logger.err(error.stack);
       Webhooks.errHook.send({
-        embeds: [
-          ERROR_LOG(
-            e,
-            `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(
-              interaction.options.data,
-            )}\``,
-          ),
-        ],
+        embeds: [ERROR_LOG(error, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``)],
       });
 
-      if (!interaction.deferred && !interaction.replied) {
-        await interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-      } else {
-        await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-      }
+      await (!interaction.deferred && !interaction.replied
+        ? interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true })
+        : interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true }));
       return;
-    } catch (e) {
+    } catch {
       Logger.err("Unable to give error response");
       await Webhooks.errHook.send({ content: `Unable to send error response in <#${interaction.channelId}>` });
     }
@@ -130,16 +97,7 @@ async function commandHandler(interaction) {
  */
 async function logBtn(interaction) {
   await Webhooks.commandHook.send({
-    embeds: [
-      LOG_MESSAGE_COMPONENT_USAGE(
-        interaction.user?.id,
-        interaction.user?.tag,
-        interaction.customId,
-        interaction.values,
-        interaction.guild?.name,
-        interaction.channel?.id,
-      ),
-    ],
+    embeds: [LOG_MESSAGE_COMPONENT_USAGE(interaction.user?.id, interaction.user?.tag, interaction.customId, interaction.values, interaction.guild?.name, interaction.channel?.id)],
   });
 }
 
@@ -156,18 +114,14 @@ async function buttonHandler(interaction) {
     }
 
     try {
-      if (interaction.deferred) {
-        await interaction.editReply(updatedData.toDiscord());
-      } else {
-        await interaction.update(updatedData.toDiscord());
-      }
-    } catch (e) {
-      Logger.err(e.stack);
+      await (interaction.deferred ? interaction.editReply(updatedData.toDiscord()) : interaction.update(updatedData.toDiscord()));
+    } catch (error) {
+      Logger.err(error.stack);
       if (interaction.deferred) {
         try {
           await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-        } catch (e) {
-          Logger.err(e.stack);
+        } catch (error) {
+          Logger.err(error.stack);
         }
       }
     }
@@ -188,18 +142,14 @@ async function menuHandler(interaction) {
     }
 
     try {
-      if (interaction.deferred) {
-        await interaction.editReply(updatedData.toDiscord());
-      } else {
-        await interaction.update(updatedData.toDiscord());
-      }
-    } catch (e) {
-      Logger.err(e.stack);
+      await (interaction.deferred ? interaction.editReply(updatedData.toDiscord()) : interaction.update(updatedData.toDiscord()));
+    } catch (error) {
+      Logger.err(error.stack);
       if (interaction.deferred) {
         try {
           await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
-        } catch (e) {
-          Logger.err(e.stack);
+        } catch (error) {
+          Logger.err(error.stack);
         }
       }
     }

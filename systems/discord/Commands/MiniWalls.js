@@ -24,11 +24,7 @@ async function isHacker(acc) {
  */
 function formatR(n) {
   let r = Math.round(n * 1000) / 1000;
-  if (isNaN(r)) {
-    r = "N/A";
-  } else {
-    r = r.toFixed(3);
-  }
+  r = Number.isNaN(r) ? "N/A" : r.toFixed(3);
   return r;
 }
 
@@ -142,7 +138,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
     acc.miniWalls.arrowsShot -= timed?.miniWalls?.arrowsShot ?? 0;
   }
 
-  const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc?.miniWalls;
+  const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc.miniWalls;
 
   const img = new ImageGenerator(2560, 1600, "'Fira Code Bold'");
   img.context.beginPath();
@@ -181,73 +177,17 @@ async function miniWallsStats(args, rawMsg, interaction) {
   img.writeText(`Wins: ${formatN(wins ?? 0)}`, leftX, (y += increment), leftAlign, winColor, fontSize);
   img.writeText(`Kills: ${formatN(kills ?? 0)}`, leftX, (y += increment), leftAlign, killColor, fontSize);
   img.writeText(`Finals: ${formatN(finalKills ?? 0)}`, leftX, (y += increment), leftAlign, killColor, fontSize);
-  img.writeText(
-    `Wither Damage: ${formatN(witherDamage ?? 0)}`,
-    leftX,
-    (y += increment),
-    leftAlign,
-    witherColor,
-    fontSize,
-  );
-  img.writeText(
-    `Wither Kills: ${formatN(witherKills ?? 0)}`,
-    leftX,
-    (y += increment),
-    leftAlign,
-    witherColor,
-    fontSize,
-  );
+  img.writeText(`Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, (y += increment), leftAlign, witherColor, fontSize);
+  img.writeText(`Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, (y += increment), leftAlign, witherColor, fontSize);
   img.writeText(`Deaths: ${formatN(deaths ?? 0)}`, leftX, (y += increment), leftAlign, deathColor, fontSize);
 
   y = 250;
-  img.writeText(
-    `K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    killColor,
-    fontSize,
-  );
-  img.writeText(
-    `K/D (no finals): ${formatR((kills ?? 0) / deaths)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    killColor,
-    fontSize,
-  );
-  img.writeText(
-    `F/D: ${formatR((finalKills ?? 0) / deaths)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    killColor,
-    fontSize,
-  );
-  img.writeText(
-    `WD/D: ${formatR((witherDamage ?? 0) / deaths)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    witherColor,
-    fontSize,
-  );
-  img.writeText(
-    `WK/D: ${formatR((witherKills ?? 0) / deaths)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    witherColor,
-    fontSize,
-  );
-  img.writeText(
-    `Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`,
-    rightX,
-    (y += increment),
-    rightAlign,
-    aaColor,
-    fontSize,
-  );
+  img.writeText(`K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`K/D (no finals): ${formatR((kills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
+  img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
+  img.writeText(`Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, (y += increment), rightAlign, aaColor, fontSize);
 
   return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
 }

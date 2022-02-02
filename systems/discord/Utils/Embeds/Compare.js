@@ -43,9 +43,7 @@ function renderColor(stat1, stat2, hasPerms) {
  * @returns {string}
  */
 function lineNumber(stat1, stat2, name, hasPerms) {
-  return `${renderColor(stat1, stat2, hasPerms)} **${name}** - (\`${formatNumber(stat1)}\`) | (\`${formatNumber(
-    stat2,
-  )}\`)\n`;
+  return `${renderColor(stat1, stat2, hasPerms)} **${name}** - (\`${formatNumber(stat1)}\`) | (\`${formatNumber(stat2)}\`)\n`;
 }
 
 /**
@@ -56,9 +54,7 @@ function lineNumber(stat1, stat2, name, hasPerms) {
  * @returns {string}
  */
 function lineNumberInverse(stat1, stat2, name, hasPerms) {
-  return `${renderColor(stat2, stat1, hasPerms)} **${name}** - (\`${formatNumber(stat1)}\`) | (\`${formatNumber(
-    stat2,
-  )}\`)\n`;
+  return `${renderColor(stat2, stat1, hasPerms)} **${name}** - (\`${formatNumber(stat1)}\`) | (\`${formatNumber(stat2)}\`)\n`;
 }
 
 /**
@@ -285,12 +281,7 @@ function renderComparator(acc1, acc2, game, hasPerms) {
     case "ctwkills": {
       gameName = "Capture the Wool";
       str += lineNumber(acc1?.captureTheWool?.kills, acc2?.captureTheWool?.kills, "Kills", hasPerms);
-      str += lineNumber(
-        acc1?.captureTheWool?.woolCaptures,
-        acc2?.captureTheWool?.woolCaptures,
-        "Wool Captured",
-        hasPerms,
-      );
+      str += lineNumber(acc1?.captureTheWool?.woolCaptures, acc2?.captureTheWool?.woolCaptures, "Wool Captured", hasPerms);
       break;
     }
 
@@ -333,12 +324,7 @@ function renderComparator(acc1, acc2, game, hasPerms) {
       gameName = "Overall";
       str += lineNumber(acc1?.arcadeWins, acc2?.arcadeWins, "Arcade Wins", hasPerms);
       str += lineNumber(acc1?.combinedArcadeWins, acc2?.combinedArcadeWins, "Combined Arcade Wins", hasPerms);
-      str += lineNumber(
-        acc1?.arcadeAchievments?.totalEarned,
-        acc2?.arcadeAchievments?.totalEarned,
-        "Arcade AP",
-        hasPerms,
-      );
+      str += lineNumber(acc1?.arcadeAchievments?.totalEarned, acc2?.arcadeAchievments?.totalEarned, "Arcade AP", hasPerms);
       str += lineNumber(acc1?.achievementPoints, acc2?.achievementPoints, "AP", hasPerms);
       str += lineNumber(acc1?.karma, acc2?.karma, "Karma", hasPerms);
     }

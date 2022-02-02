@@ -7,7 +7,16 @@ const Webhook = require("../events/webhook");
 const lists = require("../listParser");
 const { stringNormal, stringDaily } = require("../listUtils");
 
-let accounts = undefined;
+let accounts;
+
+/**
+ * @returns {Promise<boolean>}
+ */
+async function keyFailure() {
+  const request = await HypixelApi.key();
+
+  return !request.success;
+}
 
 /**
  * Generate the data for all accounts
@@ -15,7 +24,7 @@ let accounts = undefined;
  * @returns {string[]} files changed by this task
  */
 async function accs() {
-  if (!(await HypixelApi.key()).success) {
+  if (await keyFailure()) {
     return [];
   }
 
@@ -31,7 +40,7 @@ async function accs() {
  * @returns {string[]} files changed by this task
  */
 async function glds() {
-  if (!(await HypixelApi.key()).success) {
+  if (await keyFailure()) {
     return [];
   }
 
@@ -65,7 +74,7 @@ async function glds() {
  * @returns {string[]} files changed by this task
  */
 async function stats() {
-  return await [].concat(await accs(), await glds());
+  return await [...(await accs()), ...(await glds())];
 }
 
 /**

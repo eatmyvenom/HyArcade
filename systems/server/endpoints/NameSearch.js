@@ -1,6 +1,25 @@
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
+ * @param ign
+ * @param accounts
+ */
+function getNameList(ign, accounts) {
+  const list = [];
+
+  for (const a of accounts) {
+    if (a.nameHist && a.nameHist.length > 0) {
+      for (const name of a.nameHist) {
+        if (name.toLowerCase().startsWith(ign)) {
+          list.push(a.name);
+          break;
+        }
+      }
+    }
+  }
+}
+
+/**
  *
  * @param {*} req
  * @param {*} res
@@ -17,19 +36,7 @@ module.exports = async (req, res, fileCache) => {
 
     const accounts = Object.values(indexedAccounts);
     accounts.sort((b, a) => a.importance - b.importance);
-
-    const list = [];
-
-    accounts.forEach(a => {
-      if (a.nameHist && a.nameHist.length > 0) {
-        for (const name of a.nameHist) {
-          if (name.toLowerCase().startsWith(ign)) {
-            list.push(a.name);
-            break;
-          }
-        }
-      }
-    });
+    const list = getNameList(ign, accounts);
 
     res.write(JSON.stringify(list.slice(0, Math.min(list.length, 21))));
     res.end();

@@ -5,11 +5,7 @@ module.exports = class ButtonResponse {
   img = undefined;
 
   constructor(content, embeds, newButtons, img) {
-    if (content != "") {
-      this.content = content;
-    } else {
-      this.content = undefined;
-    }
+    this.content = content != "" ? content : undefined;
 
     this.img = img;
     this.embeds = embeds;

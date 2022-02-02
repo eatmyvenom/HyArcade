@@ -1,9 +1,9 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 import BotRuntime from "./BotRuntime.js";
 import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds.js";
 import addAccounts from "../datagen/addAccounts.js";

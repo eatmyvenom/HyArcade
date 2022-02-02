@@ -22,11 +22,7 @@ async function getFromHypixel(string) {
 
   const plr = string;
   let uuid;
-  if (plr?.length > 17) {
-    uuid = plr;
-  } else {
-    uuid = await mojangRequest.getUUID(plr);
-  }
+  uuid = plr?.length > 17 ? plr : await mojangRequest.getUUID(plr);
 
   let acc;
   if (Database.accCache[uuid] != undefined) {
@@ -38,7 +34,7 @@ async function getFromHypixel(string) {
   }
 
   if (acc.name == "INVALID-NAME") {
-    return undefined;
+    return;
   }
 
   await Database.addAccount(acc);
@@ -64,19 +60,17 @@ module.exports = async function resolveAccount(string, rawMessage, canbeSelf, ac
     acc = accounts.find(a => a.discord == queryString);
   }
 
-  if (acc == undefined && queryString.length != 0 && queryString.length > 16) {
+  if (acc == undefined && queryString.length > 0 && queryString.length > 16) {
     acc = accounts.find(a => a.uuid?.toLowerCase() == queryString);
-  } else if (acc == undefined && queryString.length != 0 && queryString != "undefined" && queryString.length <= 16) {
+  } else if (acc == undefined && queryString.length > 0 && queryString != "undefined" && queryString.length <= 16) {
     acc = accounts.find(a => a.name?.toLowerCase() == queryString);
   }
 
-  if (acc == undefined) {
-    if (rawMessage.mentions.users.size > 0) {
-      const discid = `${rawMessage.mentions.users.first()}`;
-      const uuid = disclist[discid];
-      if (uuid != undefined) {
-        acc = accounts.find(a => a.uuid?.toLowerCase() == uuid.toLowerCase());
-      }
+  if (acc == undefined && rawMessage.mentions.users.size > 0) {
+    const discid = `${rawMessage.mentions.users.first()}`;
+    const uuid = disclist[discid];
+    if (uuid != undefined) {
+      acc = accounts.find(a => a.uuid?.toLowerCase() == uuid.toLowerCase());
     }
   }
 

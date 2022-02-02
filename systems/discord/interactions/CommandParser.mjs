@@ -1,4 +1,5 @@
-import { createRequire } from "module";
+/* eslint-disable unicorn/no-null */
+import { createRequire } from "node:module";
 import ButtonGenerator from "./Buttons/ButtonGenerator.js";
 import { addAccounts } from "../../../src/listUtils.js";
 import CommandStorage from "../CommandStorage.mjs";
@@ -19,21 +20,11 @@ export default async interaction => {
 
   switch (interaction.commandName) {
     case "stats": {
-      return commands.gameStats.execute(
-        [opts.getString("player"), opts.getString("game"), opts.getString("time")],
-        authorID,
-        null,
-        interaction,
-      );
+      return commands.gameStats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
     }
 
     case "leaderboard": {
-      return await commands.Leaderboard.execute(
-        [opts.getString("game"), opts.getString("type"), opts.getInteger("start")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start")], authorID, null, interaction);
     }
 
     case "add-account": {
@@ -70,12 +61,7 @@ export default async interaction => {
     }
 
     case commands.GetDataRaw.name: {
-      return await commands.GetDataRaw.execute(
-        [opts.getString("player"), opts.getString("path"), opts.getString("time")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.GetDataRaw.execute([opts.getString("player"), opts.getString("path"), opts.getString("time")], authorID, null, interaction);
     }
 
     case commands.LinkMe.name: {
@@ -91,12 +77,7 @@ export default async interaction => {
     }
 
     case commands.Compare.name: {
-      return await commands.Compare.execute(
-        [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.Compare.execute([opts.getString("player1"), opts.getString("player2"), opts.getString("game")], authorID, null, interaction);
     }
 
     case commands.Profile.name: {
@@ -104,12 +85,7 @@ export default async interaction => {
     }
 
     case commands.TopGames.name: {
-      return await commands.TopGames.execute(
-        [opts.getString("player"), opts.getString("time")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.TopGames.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
     }
 
     case commands.Quake.name: {
@@ -117,12 +93,7 @@ export default async interaction => {
     }
 
     case commands.Zombies.name: {
-      return await commands.Zombies.execute(
-        [opts.getString("player"), opts.getString("map")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.Zombies.execute([opts.getString("player"), opts.getString("map")], authorID, null, interaction);
     }
 
     case commands.Arena.name: {
@@ -142,12 +113,7 @@ export default async interaction => {
     }
 
     case commands.PartyGames.name: {
-      return await commands.PartyGames.execute(
-        [opts.getString("player"), opts.getString("game")],
-        authorID,
-        null,
-        interaction,
-      );
+      return await commands.PartyGames.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
     }
 
     case "dev": {
@@ -171,12 +137,7 @@ export default async interaction => {
         }
 
         case commands.Compare.name: {
-          return await commands.Compare.execute(
-            [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
-            authorID,
-            null,
-            interaction,
-          );
+          return await commands.Compare.execute([opts.getString("player1"), opts.getString("player2"), opts.getString("game")], authorID, null, interaction);
         }
 
         case "help": {
@@ -184,12 +145,7 @@ export default async interaction => {
         }
 
         case "leaderboard": {
-          return await commands.Leaderboard.execute(
-            [opts.getString("game"), opts.getString("type"), opts.getInteger("start")],
-            authorID,
-            null,
-            interaction,
-          );
+          return await commands.Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start")], authorID, null, interaction);
         }
 
         case "profile": {
@@ -197,12 +153,7 @@ export default async interaction => {
         }
 
         case "achievements": {
-          return await commands.ArcadeAP.execute(
-            [opts.getString("player"), opts.getString("game")],
-            authorID,
-            null,
-            interaction,
-          );
+          return await commands.ArcadeAP.execute([opts.getString("player"), opts.getString("game")], authorID, null, interaction);
         }
 
         default: {
@@ -215,21 +166,11 @@ export default async interaction => {
       await interaction.deferReply();
       switch (interaction.options.getSubcommand()) {
         case "stats": {
-          return await commands.MiniWalls.execute(
-            [opts.getString("player"), opts.getString("time")],
-            authorID,
-            null,
-            interaction,
-          );
+          return await commands.MiniWalls.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
         }
 
         case "leaderboard": {
-          return await commands.MiniWallsLB.execute(
-            [opts.getString("type"), opts.getString("time"), opts.getString("amount")],
-            authorID,
-            null,
-            interaction,
-          );
+          return await commands.MiniWallsLB.execute([opts.getString("type"), opts.getString("time"), opts.getString("amount")], authorID, null, interaction);
         }
       }
     }

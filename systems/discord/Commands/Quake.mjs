@@ -1,12 +1,13 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
+import { HypixelApi, mojangRequest } from "hyarcade-requests";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const { MessageEmbed } = require("discord.js");
-const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 
 /**
  * @param {string} t
@@ -71,9 +72,7 @@ export default new Command("quake", ["*"], async (args, rawMsg, interaction) => 
       `**Kills/Deaths** - ${numberify((data?.stats?.Quake?.kills ?? 0) / (data?.stats?.Quake?.deaths ?? 0))}\n` +
         `**Kills/Wins** - ${numberify((data?.stats?.Quake?.kills ?? 0) / (data?.stats?.Quake?.wins ?? 0))}\n` +
         `**Deaths/Wins** - ${numberify((data?.stats?.Quake?.deaths ?? 0) / (data?.stats?.Quake?.wins ?? 0))}\n` +
-        `**Headshot/Shots** - ${numberify(
-          (data?.stats?.Quake?.headshots ?? 0) / (data?.stats?.Quake?.shots_fired ?? 0),
-        )}\n` +
+        `**Headshot/Shots** - ${numberify((data?.stats?.Quake?.headshots ?? 0) / (data?.stats?.Quake?.shots_fired ?? 0))}\n` +
         `**Shots/Kills** - ${numberify((data?.stats?.Quake?.shots_fired ?? 0) / (data?.stats?.Quake?.kills ?? 0))}\n`,
       true,
     )

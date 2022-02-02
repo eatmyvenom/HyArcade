@@ -14,7 +14,7 @@ const cfg = Config.fromJSON();
  */
 function numberify(n) {
   let r = Intl.NumberFormat("en").format(Number(`${n}`.replace(/undefined/g, 0).replace(/null/g, 0)));
-  r = isNaN(n) ? (r = "N/A") : r;
+  r = Number.isNaN(n) ? (r = "N/A") : r;
   return r;
 }
 

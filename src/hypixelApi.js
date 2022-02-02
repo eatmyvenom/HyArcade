@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-destructuring */
 const process = require("process");
 const config = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
@@ -62,8 +63,8 @@ module.exports = class hypixelAPI {
     // this is my handling of adding other args that work
     // in urls, its not perfect but it works well here
     if (extraArgs != []) {
-      for (let i = 0; i < extraArgs.length; i += 1) {
-        url += `&${extraArgs[i].key}=${extraArgs[i].val}`;
+      for (const extraArg of extraArgs) {
+        url += `&${extraArg.key}=${extraArg.val}`;
       }
     }
 
@@ -115,7 +116,7 @@ module.exports = class hypixelAPI {
     try {
       const json = JSON.parse(data);
       return json;
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json");
       logger.err(data);
       return await hypixelAPI.getAccountData(uuid);
@@ -127,7 +128,7 @@ module.exports = class hypixelAPI {
     try {
       const json = JSON.parse(data);
       return json;
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json");
       logger.err(data);
       return await hypixelAPI.getStatusRAW(uuid);
@@ -139,7 +140,7 @@ module.exports = class hypixelAPI {
     try {
       const json = JSON.parse(data);
       return json;
-    } catch (e) {
+    } catch {
       logger.err("Hypixel sent malformed json");
       logger.err(data);
       return await hypixelAPI.getBoosters();

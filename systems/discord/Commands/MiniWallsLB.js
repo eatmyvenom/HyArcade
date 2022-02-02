@@ -100,7 +100,7 @@ module.exports = new Command(
     }
 
     let limit = args[args.length - 1] != undefined ? args[args.length - 1] : 10;
-    if (new Number(limit) != limit) {
+    if (Number(limit) != limit) {
       limit = 10;
     }
 
@@ -115,12 +115,7 @@ module.exports = new Command(
       case "kills": {
         gameName = "Kills";
         const lb = await getLB("kills", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "kills" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "kills" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -132,12 +127,7 @@ module.exports = new Command(
       case "deaths": {
         gameName = "Deaths";
         const lb = await getLB("deaths", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "deaths" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "deaths" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -150,12 +140,7 @@ module.exports = new Command(
       case "witherdmg": {
         gameName = "Wither Damage";
         const lb = await getLB("witherDamage", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "witherDamage" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "witherDamage" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -168,12 +153,7 @@ module.exports = new Command(
       case "witherkills": {
         gameName = "Wither Kills";
         const lb = await getLB("witherKills", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "witherKills" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "witherKills" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -186,12 +166,7 @@ module.exports = new Command(
       case "finals": {
         gameName = "Final Kills";
         const lb = await getLB("finalKills", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "finalKills" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "finalKills" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -312,12 +287,7 @@ module.exports = new Command(
       default: {
         gameName = "Wins";
         const lb = await getLB("wins", timetype, limit, "miniWalls");
-        res = stringifyList(
-          lb.res,
-          timetype == "lifetime" ? "wins" : "lbProp",
-          timetype == "lifetime" ? "miniWalls" : undefined,
-          limit,
-        );
+        res = stringifyList(lb.res, timetype == "lifetime" ? "wins" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
         correctedTime = lb.time;
         break;
       }
@@ -335,9 +305,7 @@ module.exports = new Command(
       return new MessageEmbed()
         .setTitle("ERROR")
         .setColor(0xff0000)
-        .setDescription(
-          "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!",
-        );
+        .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
     }
 
     if (res.length > 2000) {
@@ -345,7 +313,7 @@ module.exports = new Command(
       embed.setDescription("");
       while (resArr.length > 0) {
         const end = Math.min(25, resArr.length);
-        embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
+        embed.addField("\u200B", resArr.slice(0, end).join("\n"), false);
         resArr = resArr.slice(end);
       }
     }

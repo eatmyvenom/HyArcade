@@ -20,11 +20,7 @@ async function getFromHypixel(string, interaction) {
 
   const plr = string;
   let uuid;
-  if (plr?.length > 17) {
-    uuid = plr;
-  } else {
-    uuid = await mojangRequest.getUUID(plr);
-  }
+  uuid = plr?.length > 17 ? plr : await mojangRequest.getUUID(plr);
 
   const acc = new Account("", 0, `${uuid}`);
   await acc.updateData();
@@ -32,7 +28,7 @@ async function getFromHypixel(string, interaction) {
   Database.accCache[acc.uuid] = acc;
 
   if (acc.name == "INVALID-NAME") {
-    return undefined;
+    return;
   }
 
   await Database.addAccount(acc);
@@ -73,10 +69,10 @@ module.exports = async function resolveAccount(interaction, namearg = "player", 
     if (force && time == "lifetime") return await getFromHypixel(str, interaction);
     urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
   } else if (str.startsWith("<@") || str.startsWith("<!@")) {
-    urlArgs.set("discid", str.replace(/<|@|!|>/g, ""));
+    urlArgs.set("discid", str.replace(/[!<>@]/g, ""));
   } else if (str?.length == 18) {
     urlArgs.set("discid", str);
-  } else if (str != null && str != "null" && str != undefined && str != "!") {
+  } else if (str != undefined && str != "null" && str != undefined && str != "!") {
     if (force && time == "lifetime") return await getFromHypixel(str, interaction);
     urlArgs.set("ign", str.toLowerCase());
   } else {
@@ -87,20 +83,17 @@ module.exports = async function resolveAccount(interaction, namearg = "player", 
   let accdata = await fetch(url.toString());
   if (accdata.status == 200) {
     accdata = await accdata.json();
-    if (
-      time == "lifetime" &&
-      (str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined)
-    ) {
-      return undefined;
+    if (time == "lifetime" && (str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined)) {
+      return;
     } else if (time != "lifetime" && (accdata?.acc?.name == undefined || accdata?.timed?.name == undefined)) {
-      return undefined;
+      return;
     }
     return accdata;
   }
 
-  if (str != null && str != undefined && str != "") {
+  if (str != undefined && str != undefined && str != "") {
     return await getFromHypixel(str, interaction);
   }
 
-  return undefined;
+  return;
 };

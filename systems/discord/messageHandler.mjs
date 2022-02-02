@@ -1,6 +1,6 @@
-import { createRequire } from "module";
 import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
+import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
@@ -64,8 +64,8 @@ async function getCmdRes(msg) {
   let cmdResponse;
   try {
     cmdResponse = await botCommands.execute(msg, msg.author.id);
-  } catch (e) {
-    await logError(msg, e);
+  } catch (error) {
+    await logError(msg, error);
     cmdResponse = {
       res: "",
       embed: [ERROR_UNKNOWN],
@@ -84,8 +84,8 @@ async function getMWCmdRes(msg) {
   let cmdResponse;
   try {
     cmdResponse = await mwCommands.execute(msg, msg.author.id);
-  } catch (e) {
-    await logError(msg, e);
+  } catch (error) {
+    await logError(msg, error);
     cmdResponse = new CommandResponse("", ERROR_UNKNOWN);
   }
 
@@ -115,8 +115,8 @@ async function sendText(msg, cmdResponse) {
         messageReference: msg.id,
       });
       await msg.channel.send(msgObj);
-    } catch (e) {
-      logError(msg, e);
+    } catch (error) {
+      logError(msg, error);
       await msg.channel.send({
         embeds: [ERROR_UNKNOWN],
       });
@@ -197,10 +197,8 @@ export default async function messageHandler(msg) {
   if (msg.author.bot) return;
   if (msg.webhookID != undefined) return;
 
-  if (msg.channel.id == "918710048493039676")
-    return await VerifyChannel(msg, "841092980931952660", "918716775011590194");
-  if (msg.channel.id == "779191444828323890")
-    return await VerifyChannel(msg, "779183391764643890", "919007428157243402");
+  if (msg.channel.id == "918710048493039676") return await VerifyChannel(msg, "841092980931952660", "918716775011590194");
+  if (msg.channel.id == "779191444828323890") return await VerifyChannel(msg, "779183391764643890", "919007428157243402");
 
   if (BotRuntime.botMode == "mw" || BotRuntime.botMode == "test") {
     await checkMW(msg);

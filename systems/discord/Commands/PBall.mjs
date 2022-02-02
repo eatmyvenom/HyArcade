@@ -1,8 +1,9 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const { MessageEmbed } = require("discord.js");
@@ -51,19 +52,11 @@ export default new Command("paintball", ["*"], async (args, rawMsg, interaction)
     )
     .addField(
       "---------Ratios--------",
-      `**Kills/Deaths** - ${numberify(
-        (data?.stats?.Paintball?.kills ?? 0) / (data?.stats?.Paintball?.deaths ?? 0),
-      )}\n` +
+      `**Kills/Deaths** - ${numberify((data?.stats?.Paintball?.kills ?? 0) / (data?.stats?.Paintball?.deaths ?? 0))}\n` +
         `**Kills/Wins** - ${numberify((data?.stats?.Paintball?.kills ?? 0) / (data?.stats?.Paintball?.wins ?? 0))}\n` +
-        `**Deaths/Wins** - ${numberify(
-          (data?.stats?.Paintball?.deaths ?? 0) / (data?.stats?.Paintball?.wins ?? 0),
-        )}\n` +
-        `**Shots/Wins** - ${numberify(
-          (data?.stats?.Paintball?.shots_fired ?? 0) / (data?.stats?.Paintball?.wins ?? 0),
-        )}\n` +
-        `**Shots/Kills** - ${numberify(
-          (data?.stats?.Paintball?.shots_fired ?? 0) / (data?.stats?.Paintball?.kills ?? 0),
-        )}\n`,
+        `**Deaths/Wins** - ${numberify((data?.stats?.Paintball?.deaths ?? 0) / (data?.stats?.Paintball?.wins ?? 0))}\n` +
+        `**Shots/Wins** - ${numberify((data?.stats?.Paintball?.shots_fired ?? 0) / (data?.stats?.Paintball?.wins ?? 0))}\n` +
+        `**Shots/Kills** - ${numberify((data?.stats?.Paintball?.shots_fired ?? 0) / (data?.stats?.Paintball?.kills ?? 0))}\n`,
       true,
     )
     .setThumbnail(`https://crafatar.com/renders/head/${uuid}?overlay`)

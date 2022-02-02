@@ -10,7 +10,7 @@ const StringifyLBDiffAdv = require("../../../utils/leaderboard/StringifyLBDiffAd
 function getProp(o, s) {
   let obj = o;
   let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/\[(\w+)]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
   const a = str.split(".");
   for (let i = 0, n = a.length; i < n; i += 1) {

@@ -18,21 +18,21 @@ module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, ca
   }
 
   let acc;
-  for (let i = 0; i < oldlist.length; i += 1) {
-    acc = newlist.find(g => g?.uuid == oldlist[i]?.uuid);
+  for (const oldAcc of oldlist) {
+    acc = newlist.find(g => g?.uuid == oldAcc?.uuid);
     // make sure acc isnt null/undefined
-    if (acc == undefined || acc == null) {
+    if (acc == undefined || acc == undefined) {
       continue;
     }
 
     if (category == undefined) {
-      oldlist[i][prop] = (acc[prop] ?? 0) - (oldlist[i][prop] ?? 0);
+      oldAcc[prop] = (acc[prop] ?? 0) - (oldAcc[prop] ?? 0);
     } else {
-      if (oldlist[i][category] != undefined) {
-        oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
+      if (oldAcc[category] != undefined) {
+        oldAcc[category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldAcc?.[category]?.[prop] ?? 0);
       } else {
-        oldlist[i][category] = {};
-        oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
+        oldAcc[category] = {};
+        oldAcc[category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldAcc?.[category]?.[prop] ?? 0);
       }
     }
   }

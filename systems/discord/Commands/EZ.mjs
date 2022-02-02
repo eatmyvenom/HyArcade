@@ -2,7 +2,7 @@ import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import BotRuntime from "../BotRuntime.js";
 
-let msgs = undefined;
+let msgs;
 
 export default new Command("ez", ["*"], async () => {
   if (msgs == undefined) {

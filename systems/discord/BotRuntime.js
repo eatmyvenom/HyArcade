@@ -8,9 +8,9 @@ const Account = require("hyarcade-requests/types/Account");
 const fetch = require("node-fetch");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 
-let hackerlist = null;
-let blacklist = null;
-let banlist = null;
+let hackerlist;
+let blacklist;
+let banlist;
 
 /**
  *
@@ -22,17 +22,13 @@ async function getFromHypixel(string) {
 
   const plr = string;
   let uuid;
-  if (plr?.length > 17) {
-    uuid = plr;
-  } else {
-    uuid = await mojangRequest.getUUID(plr);
-  }
+  uuid = plr?.length > 17 ? plr : await mojangRequest.getUUID(plr);
 
   const acc = new Account("", 0, `${uuid}`);
   await acc.updateData();
 
   if (acc.name == "INVALID-NAME" || acc.name == undefined) {
-    return undefined;
+    return;
   }
 
   await Database.addAccount(acc);
@@ -67,11 +63,7 @@ module.exports = class BotRuntime {
   static async resolveAccount(str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
     logger.warn("Using deprecated function 'resolveAccount'");
     let url;
-    if (time != "lifetime") {
-      url = new URL("timeacc", cfg.dbUrl);
-    } else {
-      url = new URL("account", cfg.dbUrl);
-    }
+    url = time != "lifetime" ? new URL("timeacc", cfg.dbUrl) : new URL("account", cfg.dbUrl);
 
     const urlArgs = url.searchParams;
 
@@ -87,7 +79,7 @@ module.exports = class BotRuntime {
       urlArgs.set("discid", str.slice(3, -1));
     } else if (str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
       urlArgs.set("discid", str);
-    } else if (str != null && str != "null" && str != "" && str != undefined && str != "!") {
+    } else if (str != undefined && str != "null" && str != "" && str != undefined && str != "!") {
       if (force && time == "lifetime") return await getFromHypixel(str);
       urlArgs.set("ign", str.toLowerCase());
     } else if (canbeSelf) {
@@ -103,16 +95,16 @@ module.exports = class BotRuntime {
     if (accdata.status == 200) {
       accdata = await accdata.json();
       if (accdata.name == "INVALID-NAME" || accdata.name == "null") {
-        return undefined;
+        return;
       }
       return accdata;
     }
 
-    if (str != null) {
+    if (str != undefined) {
       return await getFromHypixel(str);
     }
 
-    return undefined;
+    return;
   }
 
   /**
@@ -136,11 +128,7 @@ module.exports = class BotRuntime {
 
   static getWebhookObj(embed) {
     let embeds;
-    if (embed == undefined) {
-      embeds = [];
-    } else {
-      embeds = [embed];
-    }
+    embeds = embed == undefined ? [] : [embed];
     return {
       username: BotRuntime.client.user.username,
       avatarURL: BotRuntime.client.user.avatarURL({ format: "png" }),
@@ -157,21 +145,21 @@ module.exports = class BotRuntime {
   }
 
   static async getHackerlist() {
-    if (hackerlist == null) {
+    if (hackerlist == undefined) {
       hackerlist = await BotRuntime.getFromDB("hackerlist");
-      setTimeout(() => (hackerlist = null), 3600000);
+      setTimeout(() => (hackerlist = undefined), 3600000);
     }
 
     return hackerlist;
   }
 
   static async getBlacklist() {
-    if (blacklist == null) {
+    if (blacklist == undefined) {
       BotRuntime.getFromDB("blacklist")
         .then(bl => (blacklist = bl))
         .catch(logger.err);
 
-      setTimeout(() => (blacklist = null), 3600000);
+      setTimeout(() => (blacklist = undefined), 3600000);
       return [];
     }
 
@@ -179,9 +167,9 @@ module.exports = class BotRuntime {
   }
 
   static async getBanlist() {
-    if (banlist == null) {
+    if (banlist == undefined) {
       banlist = await BotRuntime.getFromDB("banlist");
-      setTimeout(() => (banlist = null), 3600000);
+      setTimeout(() => (banlist = undefined), 3600000);
     }
 
     return banlist;

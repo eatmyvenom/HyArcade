@@ -1,4 +1,4 @@
-import { createRequire } from "module";
+import { createRequire } from "node:module";
 import Database from "../Utils/Database.js";
 const require = createRequire(import.meta.url);
 
@@ -87,8 +87,7 @@ export default new Command(
       acc = AccountComparitor(res?.acc, res?.timed);
     }
 
-    if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME")
-      return new CommandResponse("", ERROR_IGN_UNDEFINED);
+    if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
     const img = await PartyGamesImg(acc, game);
     const menu = await MenuGenerator.partyGamesMenu(acc.uuid, game, time);

@@ -26,36 +26,15 @@ module.exports = async function ArcLeft(path, category, time, topTen) {
   await img.drawMcText(`&l&b${timeTitle}`, x, (y += dy), fontSize, "center", true);
   y += 18;
 
-  for (let i = 0; i < topTen.length; i += 1) {
+  for (const [i, account] of topTen.entries()) {
     if (time == undefined) {
       if (category == undefined) {
-        img.drawLBPlayer(
-          topTen[i],
-          `${i + 1}`,
-          formatNum(topTen[i]?.arcadeCoins ?? topTen[i]?.miniWalls?.wins),
-          x,
-          (y += dy),
-          fontSize,
-        );
+        img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.arcadeCoins ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
       } else {
-        img.drawLBPlayer(
-          topTen[i],
-          `${i + 1}`,
-          formatNum(topTen[i]?.[category]?.[path] ?? topTen[i]?.miniWalls?.wins),
-          x,
-          (y += dy),
-          fontSize,
-        );
+        img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.[category]?.[path] ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
       }
     } else {
-      img.drawLBPlayer(
-        topTen[i],
-        `${i + 1}`,
-        formatNum(topTen[i]?.lbProp ?? topTen[i]?.miniWalls?.wins),
-        x,
-        (y += dy),
-        fontSize,
-      );
+      img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.lbProp ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
     }
   }
 

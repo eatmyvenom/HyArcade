@@ -49,11 +49,9 @@ module.exports = async function Guild(path, category, time, topTen) {
   await img.drawMcText(`&a${timeTitle}`, x, (y += dy), fontSize, "center", true);
   y += 10;
 
-  for (let i = 0; i < topTen.length; i += 1) {
+  for (const [i, account] of topTen.entries()) {
     await img.drawMcText(
-      `&e${i + 1}. &6${topTen[i].name} ${colorFormatters[topTen[i].color.toLowerCase()]}[${
-        topTen[i].tag
-      }] &7-&e ${formatNum(topTen[i]?.[path])}`,
+      `&e${i + 1}. &6${account.name} ${colorFormatters[account.color.toLowerCase()]}[${account.tag}] &7-&e ${formatNum(account?.[path])}`,
       x,
       (y += dy),
       fontSize,

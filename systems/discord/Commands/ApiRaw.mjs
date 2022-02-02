@@ -1,13 +1,14 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
-const Util = require("util");
 const { MessageEmbed } = require("discord.js");
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");
+const Util = require("node:util");
 
 /**
  * @param {object} o
@@ -17,7 +18,7 @@ const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 function getProp(o, s) {
   let obj = o;
   let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/\[(\w+)]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
   const a = str.split(".");
   for (let i = 0, n = a.length; i < n; i += 1) {
@@ -50,7 +51,7 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     acc = await HypixelApi.player(uuid);
     data = acc.player;
     val = getProp(data, path);
-  } catch (e) {
+  } catch {
     val = acc;
   }
 
@@ -66,9 +67,6 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     val = "No response!";
   }
 
-  const embed = new MessageEmbed()
-    .setTitle(`${data.displayname}.${path}`)
-    .setDescription(`\`\`\`${val}\`\`\``)
-    .setColor(0xc60532);
+  const embed = new MessageEmbed().setTitle(`${data.displayname}.${path}`).setDescription(`\`\`\`${val}\`\`\``).setColor(0xc60532);
   return new CommandResponse("", embed);
 });

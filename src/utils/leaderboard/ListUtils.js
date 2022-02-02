@@ -23,14 +23,15 @@ exports.getList = async function getList(type = "") {
   url.searchParams.set("path", path);
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
-  const list = await (await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } })).json();
+  const listFetch = await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } });
+  const list = await listFetch.json();
   logger.debug("Data fetched!");
   return AccountArray(list);
 };
 
 exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
   let str = "";
-  let size = maxamnt + (startingIndex | 0);
+  let size = maxamnt + startingIndex;
   size = size > list.length ? list.length : size;
   const sizedList = list.slice(0, size);
 

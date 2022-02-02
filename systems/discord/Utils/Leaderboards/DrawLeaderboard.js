@@ -36,10 +36,10 @@ async function DrawLeaderboard(res, valueGetter, time, startingIndex, formatter,
   let longestName = 0;
   let longestVal = 0;
 
-  for (let i = 0; i < res.length; i += 1) {
-    const name = img.context.measureText(`${res[i]?.rank?.replace(/_PLUS/g, "+") ?? ""} ${res[i].name} `);
+  for (const re of res) {
+    const name = img.context.measureText(`${re?.rank?.replace(/_PLUS/g, "+") ?? ""} ${re.name} `);
 
-    const val = valueGetter(res[i]) ?? 0;
+    const val = valueGetter(re) ?? 0;
 
     const valM = img.context.measureText(`${formatter(val)}`);
 
@@ -52,9 +52,9 @@ async function DrawLeaderboard(res, valueGetter, time, startingIndex, formatter,
     }
   }
 
-  for (let i = 0; i < res.length; i += 1) {
+  for (const [i, re] of res.entries()) {
     const y = 320 + i * 130;
-    const val = valueGetter(res[i]) ?? 0;
+    const val = valueGetter(re) ?? 0;
 
     if (!(val > 0)) {
       continue;
@@ -70,20 +70,8 @@ async function DrawLeaderboard(res, valueGetter, time, startingIndex, formatter,
       placeFormat = "&e&l#";
     }
 
-    img.drawMcText(
-      `${placeFormat}${startingIndex + i + 1}`,
-      1280 - longestName / 2 - longestVal,
-      y,
-      size.replace(/px/g, ""),
-      "right",
-    );
-    img.drawMcText(
-      ImageGenerator.formatAcc(res[i], true, false, false),
-      50 + 1280 - longestName / 2 - longestVal,
-      y,
-      size.replace(/px/g, ""),
-      "left",
-    );
+    img.drawMcText(`${placeFormat}${startingIndex + i + 1}`, 1280 - longestName / 2 - longestVal, y, size.replace(/px/g, ""), "right");
+    img.drawMcText(ImageGenerator.formatAcc(re, true, false, false), 50 + 1280 - longestName / 2 - longestVal, y, size.replace(/px/g, ""), "left");
 
     img.drawMcText(`&e${formatter(val)}`.trim(), 1280 + longestName / 1.5 + 50, y, size.replace(/px/g, ""), "right");
   }

@@ -1,4 +1,3 @@
-const Util = require("util");
 const fs = require("fs-extra");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
@@ -6,6 +5,7 @@ const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest")
 const Account = require("hyarcade-requests/types/Account");
 const sleep = require("hyarcade-utils/Sleep");
 const Sleep = require("hyarcade-utils/Sleep");
+const Util = require("node:util");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 
 const force = fs.existsSync("force");
@@ -35,8 +35,8 @@ async function requestData(uuids) {
 
   try {
     return await Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
-  } catch (e) {
-    logger.err(e);
+  } catch (error) {
+    logger.err(error);
     logger.debug("Requesting data again!");
     return requestData(realUUIDs);
   }
@@ -104,8 +104,8 @@ async function updateSegment(accs, currentBatch, updatedAccs, segmentedAccs, per
   let workerData;
   try {
     workerData = await requestData(uuidArr);
-  } catch (e) {
-    logger.err(e);
+  } catch (error) {
+    logger.err(error);
     return;
   }
 
@@ -172,13 +172,15 @@ async function fastUpdate(accounts, argForce) {
     }
   }
 
-  importantAccounts = importantAccounts.concat(
-    oldAccs
+  importantAccounts = [
+    ...importantAccounts,
+    ...oldAccs
       .filter(a => (a?.importance ?? 0) > 1000)
       .sort((a, b) => a.updateTime - b.updateTime)
       .slice(0, perSegment * 4),
-  );
+  ];
 
+  // eslint-disable-next-line unicorn/no-array-reduce
   const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => {
     const segmentIndex = Math.floor(index / perSegment);
 

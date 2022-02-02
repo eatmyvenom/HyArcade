@@ -22,10 +22,7 @@ export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, i
       url: "https://hyarcade.xyz/",
     })
     .setDescription(
-      `**Accounts** : \`${info.accs}\`\n` +
-        `**Linked Accounts** : \`${info.links}\`\n\n` +
-        `**Guilds** : \`${info.guilds}\`\n\n` +
-        `**Memory** : \`${Math.floor(info.mem)}mb\`\n`,
+      `**Accounts** : \`${info.accs}\`\n` + `**Linked Accounts** : \`${info.links}\`\n\n` + `**Guilds** : \`${info.guilds}\`\n\n` + `**Memory** : \`${Math.floor(info.mem)}mb\`\n`,
     )
     .setColor(0x8c54fe);
 

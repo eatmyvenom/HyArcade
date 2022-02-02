@@ -53,7 +53,7 @@ module.exports = async (req, res, fileCache) => {
     const time = url.searchParams.get("time");
     let response = {};
 
-    if (time != null && time != "lifetime") {
+    if (time != undefined && time != "lifetime") {
       response.acc = resolvedAccount;
       const snapshotAccount = fileCache[`indexed${time}`][resolvedAccount.uuid];
       response.timed = snapshotAccount;

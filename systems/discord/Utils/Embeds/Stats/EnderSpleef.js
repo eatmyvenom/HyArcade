@@ -18,15 +18,13 @@ function f(number) {
 module.exports = function EnderSpleef(acc, embed) {
   embed.addField(
     "Stats",
-    `**- Wins** (\`${f(acc.enderSpleef.wins)}\`)\n**- Blocks Broken** (\`${f(
-      acc.enderSpleef.blocksBroken,
-    )}\`)\n**- Powerups** (\`${f(acc.enderSpleef.totalPowerups)}\`)`,
+    `**- Wins** (\`${f(acc.enderSpleef.wins)}\`)\n**- Blocks Broken** (\`${f(acc.enderSpleef.blocksBroken)}\`)\n**- Powerups** (\`${f(acc.enderSpleef.totalPowerups)}\`)`,
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.enderSpleef.apEarned)} / ${f(
-      acc.arcadeAchievments.enderSpleef.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.enderSpleef)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.enderSpleef.apEarned)} / ${f(acc.arcadeAchievments.enderSpleef.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.enderSpleef,
+    )}\`)`,
   );
 
   return embed;

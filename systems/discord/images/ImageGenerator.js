@@ -282,7 +282,7 @@ module.exports = class ImageGenerator {
     return currentX - x;
   }
 
-  writeText(txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36, font = undefined) {
+  writeText(txt, x, y, align = "center", color = "#ffffff", size = "32px", spacing = 36, font) {
     const offset = Number(size.replace(/px/g, "")) * 0.1;
     this.context.font = `${size} ${font ?? this.font}`;
     this.context.fillStyle = color;
@@ -419,14 +419,7 @@ module.exports = class ImageGenerator {
     const mbold = type == "monthly";
     const wbold = type == "weekly";
 
-    this.drawMcText(
-      `${lbold ? "&l&a" : "&r&7"}Lifetime ${mbold ? "&l&a" : "&r&7"}Monthly ${wbold ? "&l&a" : "&r&7"}Weekly`,
-      x,
-      y,
-      size,
-      "center",
-      true,
-    );
+    this.drawMcText(`${lbold ? "&l&a" : "&r&7"}Lifetime ${mbold ? "&l&a" : "&r&7"}Monthly ${wbold ? "&l&a" : "&r&7"}Weekly`, x, y, size, "center", true);
   }
 
   /**
@@ -439,14 +432,7 @@ module.exports = class ImageGenerator {
    * @param {*} size
    */
   drawLBPlayer(acc, pos, count, x, y, size) {
-    this.drawMcText(
-      `&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true, true)}&r &7-&r &e${count}`,
-      x,
-      y,
-      size,
-      "center",
-      true,
-    );
+    this.drawMcText(`&e${pos}. &r${ImageGenerator.formatAcc(acc, false, true, true)}&r &7-&r &e${count}`, x, y, size, "center", true);
   }
 
   drawLBPos(pos, rank, plusColor, name, guild, guildColor, count, x, y, size) {
@@ -467,11 +453,7 @@ module.exports = class ImageGenerator {
     const ignWidth = title.w;
 
     let guildWidth;
-    if (guild != undefined) {
-      guildWidth = this.context.measureText(` [${guild}]`).width;
-    } else {
-      guildWidth = 0;
-    }
+    guildWidth = guild != undefined ? this.context.measureText(` [${guild}]`).width : 0;
 
     const dashWidth = this.context.measureText(" - ").width;
     const winsWidth = this.context.measureText(`${count}`).width;
@@ -700,7 +682,7 @@ module.exports = class ImageGenerator {
     };
   }
 
-  writeAccTitle(rank, plusColor, name, x = undefined, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
+  writeAccTitle(rank, plusColor, name, x, y = 32, fontSize = "36px", rankEnabled = true, fake = false) {
     const txtRank = rank == "" ? "" : `[${rank}`;
 
     let plus = "";

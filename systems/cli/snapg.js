@@ -24,8 +24,8 @@ async function archiveJson(oldfile, path, timetype) {
 async function archive(path = "./archive/", timetype) {
   if (!timetype) {
     // eslint-disable-next-line no-param-reassign
-    timetype = Date()
-      .replace(/[0-9].:[0-9].:[0-9].*/, "")
+    timetype = new Date()
+      .replace(/\d.:\d.:\d.*/, "")
       .trim()
       .replace(/ /g, "_");
   }

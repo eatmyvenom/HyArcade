@@ -62,8 +62,8 @@ async function sendBasicEmbed(content, embed, webhook) {
       avatarURL: webhook.pfp,
     });
     await hook.destroy();
-  } catch (e) {
-    logger.err(e.stack);
+  } catch (error) {
+    logger.err(error.stack);
   }
 }
 
@@ -413,11 +413,7 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "day":
     case "daily": {
       time = "Daily";
-      if (fileCache != undefined) {
-        res = await MiniWallsLeaderboard(fileCache, prop, "day");
-      } else {
-        res = await Database.getMWLeaderboard(prop, "day", fileCache);
-      }
+      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "day") : Database.getMWLeaderboard(prop, "day", fileCache));
       res = res.slice(0, limit);
       break;
     }
@@ -427,11 +423,7 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "weak":
     case "weekly": {
       time = "Weekly";
-      if (fileCache != undefined) {
-        res = await MiniWallsLeaderboard(fileCache, prop, "weekly");
-      } else {
-        res = await Database.getMWLeaderboard(prop, "weekly", fileCache);
-      }
+      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "weekly") : Database.getMWLeaderboard(prop, "weekly", fileCache));
       res = res.slice(0, limit);
       break;
     }
@@ -441,22 +433,14 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "month":
     case "monthly": {
       time = "Monthly";
-      if (fileCache != undefined) {
-        res = await MiniWallsLeaderboard(fileCache, prop, "monthly");
-      } else {
-        res = await Database.getMWLeaderboard(prop, "monthly", fileCache);
-      }
+      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "monthly") : Database.getMWLeaderboard(prop, "monthly", fileCache));
       res = res.slice(0, limit);
       break;
     }
 
     default: {
       time = "Lifetime";
-      if (fileCache != undefined) {
-        res = await MiniWallsLeaderboard(fileCache, prop, undefined);
-      } else {
-        res = await Database.getMWLeaderboard(prop, undefined, fileCache);
-      }
+      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop) : Database.getMWLeaderboard(prop, undefined, fileCache));
       res = res.slice(0, limit);
       break;
     }
@@ -645,9 +629,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     return new MessageEmbed()
       .setTitle("ERROR")
       .setColor(0xff0000)
-      .setDescription(
-        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!",
-      );
+      .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
   }
 
   if (res.length > 2000) {
@@ -655,7 +637,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     embed.setDescription("");
     while (resArr.length > 0) {
       const end = Math.min(25, resArr.length);
-      embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
+      embed.addField("\u200B", resArr.slice(0, end).join("\n"), false);
       resArr = resArr.slice(end);
     }
   }

@@ -18,15 +18,13 @@ function f(number) {
 module.exports = function PartyGames(acc, embed) {
   embed.addField(
     "Stats",
-    `**- Wins** (\`${f(acc.partyGames.wins)}\`)\n**- Rounds Won** (\`${f(
-      acc.partyGames.roundsWon,
-    )}\`)\n**- Stars Earned** (\`${f(acc.partyGames.starsEarned)}\`)`,
+    `**- Wins** (\`${f(acc.partyGames.wins)}\`)\n**- Rounds Won** (\`${f(acc.partyGames.roundsWon)}\`)\n**- Stars Earned** (\`${f(acc.partyGames.starsEarned)}\`)`,
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.partyGames.apEarned)} / ${f(
-      acc.arcadeAchievments.partyGames.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.partyGames)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.partyGames.apEarned)} / ${f(acc.arcadeAchievments.partyGames.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.partyGames,
+    )}\`)`,
   );
 
   embed.setFooter({ text: "Tip! For more detailed info use the /party-games command." });

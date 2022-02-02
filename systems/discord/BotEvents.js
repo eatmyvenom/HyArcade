@@ -11,13 +11,13 @@ const roleHandler = require("./roleHandler");
 
 module.exports = class BotEvents {
   static async rateLimit(rlInfo) {
-    const { timeout } = rlInfo;
-    const str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
+    const { timeout, method, path } = rlInfo;
+    const str = `Rate limit event triggered\nTime : ${timeout}\nCause : ${method.toUpperCase()} - ${path}\n`;
     logger.err(str);
     try {
       await Webhooks.errHook.send(str);
-    } catch (e) {
-      logger.err("Can't log to error hook");
+    } catch {
+      logger.err("Can't log previous message to error hook");
     }
   }
 
@@ -53,9 +53,9 @@ module.exports = class BotEvents {
     Webhooks.errHook = errHook;
     Webhooks.logHook = logHook;
     logger.info("Creating message copy hook");
-    Webhooks.commandHook = await (
-      await (await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel)).fetchWebhooks()
-    ).first();
+    const cmdChannel = BotRuntime.client.channels.fetch(cfg.discord.cmdChannel);
+    const cmdHooks = cmdChannel.fetchWebhooks();
+    Webhooks.commandHook = await cmdHooks.first();
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");
@@ -126,9 +126,7 @@ module.exports = class BotEvents {
    * @param {Guild} guild
    */
   static guildCreate(guild) {
-    Webhooks.logHook.send(
-      `Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`,
-    );
+    Webhooks.logHook.send(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`);
     logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
     logger.debug(`Guild owner: ${guild.ownerID}`);
     logger.debug(`Guild ID: ${guild.id}`);

@@ -24,11 +24,7 @@ module.exports = async (req, res, fileCache) => {
       res.end();
     } else {
       let data;
-      if (file != "accounts") {
-        data = fileCache[file];
-      } else {
-        data = Object.values(fileCache.indexedAccounts);
-      }
+      data = file != "accounts" ? fileCache[file] : Object.values(fileCache.indexedAccounts);
 
       let acceptEncoding = req.headers["accept-encoding"];
       if (!acceptEncoding) {
@@ -43,11 +39,7 @@ module.exports = async (req, res, fileCache) => {
       const cb = () => {};
       let stream;
 
-      if (fields == null) {
-        stream = stringifyStream(data);
-      } else {
-        stream = stringifyStream(data, fields.split(","));
-      }
+      stream = fields == undefined ? stringifyStream(data) : stringifyStream(data, fields.split(","));
 
       if (/\bdeflate\b/.test(acceptEncoding)) {
         res.writeHead(200, { "Content-Encoding": "deflate" });
@@ -68,9 +60,9 @@ module.exports = async (req, res, fileCache) => {
     if (req.headers.authorization == cfg.dbPass) {
       try {
         json = await parseChunked(req);
-      } catch (e) {
+      } catch (error) {
         Logger.err("JSON parsing of new database data failed");
-        Logger.err(e.stack);
+        Logger.err(error.stack);
         res.end();
       }
 

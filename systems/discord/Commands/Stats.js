@@ -84,8 +84,7 @@ module.exports = new Command(
       acc = AccountComparitor(res?.acc, res?.timed);
     }
 
-    if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME")
-      return new CommandResponse("", ERROR_IGN_UNDEFINED);
+    if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
     const cmdRes = await BotRuntime.getStats(acc, `${game}`);
     const e = cmdRes.embed;

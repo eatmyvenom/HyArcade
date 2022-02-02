@@ -21,10 +21,7 @@ const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 function ms2time(time) {
   const date = new Date(time);
 
-  return `${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}.${date
-    .getMilliseconds()
-    .toString()
-    .padStart(3, "0")}`;
+  return `${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}.${date.getMilliseconds().toString().padStart(3, "0")}`;
 }
 
 /**
@@ -32,7 +29,7 @@ function ms2time(time) {
  * @returns {string}
  */
 function toHHMMSS(secs) {
-  const sec_num = parseInt(secs, 10);
+  const sec_num = Number.parseInt(secs, 10);
   const hours = Math.floor(sec_num / 3600);
   const minutes = Math.floor(sec_num / 60) % 60;
   const seconds = sec_num % 60;
@@ -70,7 +67,7 @@ async function hander(args, rawMsg, interaction) {
   }
   logger.verbose("Parsing");
 
-  if (args.length < 1) {
+  if (args.length === 0) {
     return new CommandResponse("", ERROR_ARGS_LENGTH(1));
   }
 
@@ -1181,7 +1178,7 @@ async function hander(args, rawMsg, interaction) {
         try {
           const typeArgs = type.split(".");
 
-          let formatter = undefined;
+          let formatter;
 
           if (MillisecondLBs?.[typeArgs[1]]?.[typeArgs[2]]) {
             formatter = ms2time;
@@ -1189,16 +1186,9 @@ async function hander(args, rawMsg, interaction) {
             formatter = toHHMMSS;
           }
 
-          lb = await getLB(
-            type,
-            timetype,
-            undefined,
-            startingIndex,
-            reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]],
-            formatter,
-          );
-        } catch (e) {
-          logger.err(e.stack);
+          lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], formatter);
+        } catch (error) {
+          logger.err(error.stack);
           return { res: "", embed: ERROR_NO_LEADERBOARD };
         }
 
@@ -1210,7 +1200,7 @@ async function hander(args, rawMsg, interaction) {
           const stat = interaction.options.getString("stat");
 
           if (category != "others") {
-            let formatter = undefined;
+            let formatter;
 
             if (MillisecondLBs?.[category]?.[stat]) {
               formatter = ms2time;

@@ -25,9 +25,9 @@ module.exports = function HypixelSays(acc, embed) {
   );
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.hypixelSays.apEarned)} / ${f(
-      acc.arcadeAchievments.hypixelSays.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.hypixelSays)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.hypixelSays.apEarned)} / ${f(acc.arcadeAchievments.hypixelSays.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.hypixelSays,
+    )}\`)`,
   );
 
   return embed;

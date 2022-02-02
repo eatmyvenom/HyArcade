@@ -15,7 +15,7 @@ setInterval(() => (lbCache = {}), 600000);
 function getProp(o, s) {
   let obj = o;
   let str = s;
-  str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  str = str.replace(/\[(\w+)]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
   const a = str.split(".");
   for (let i = 0, n = a.length; i < n; i += 1) {
@@ -46,14 +46,7 @@ function formatNum(number) {
  * @param {Function} formatter
  * @returns {Promise<ImageGenerator>}
  */
-module.exports = async function GetLeaderboard(
-  prop,
-  timetype,
-  category,
-  start,
-  reverse = false,
-  formatter = formatNum,
-) {
+module.exports = async function GetLeaderboard(prop, timetype, category, start, reverse = false, formatter = formatNum) {
   let res = "";
   let time;
   const startingIndex = start ?? 0;
@@ -131,7 +124,7 @@ module.exports = async function GetLeaderboard(
       .replace(/_zombies/g, "")
       .replace(/(\.)(\S)/g, s => ` ${s.slice(1).toUpperCase()}`)
       .replace(/(_)(\S)/g, s => ` ${s.slice(1).toUpperCase()}`);
-  } else if (category == null) {
+  } else if (category == undefined) {
     title = `${prop.slice(0, 1).toUpperCase()}${prop.slice(1)}`.replace(/([A-Z])/g, " $1");
     getter = a => a?.[prop] ?? 0;
   } else {
@@ -150,11 +143,11 @@ module.exports = async function GetLeaderboard(
 
   title = title.replace(/P B/g, "PB");
   title = title.replace(/Arcade Achievments /g, "");
-  title = title.replace(/Tiered A P\[0\]/g, "AP-1");
-  title = title.replace(/Tiered A P\[1\]/g, "AP-2");
-  title = title.replace(/Tiered A P\[2\]/g, "AP-3");
-  title = title.replace(/Tiered A P\[3\]/g, "AP-4");
-  title = title.replace(/Tiered A P\[4\]/g, "AP-5");
+  title = title.replace(/Tiered A P\[0]/g, "AP-1");
+  title = title.replace(/Tiered A P\[1]/g, "AP-2");
+  title = title.replace(/Tiered A P\[2]/g, "AP-3");
+  title = title.replace(/Tiered A P\[3]/g, "AP-4");
+  title = title.replace(/Tiered A P\[4]/g, "AP-5");
   title = title.replace(/Farmhunt/g, "Farm Hunt");
   title = title.replace(/Wool Wool/g, "Wool");
   title = title.replace(/Time 30/g, "Win");

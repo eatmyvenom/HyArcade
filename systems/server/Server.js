@@ -46,17 +46,15 @@ async function callback(request, response) {
     if (fileCache.ready == false) {
       response.setHeader("Content-Type", "application/json");
       response.end(JSON.stringify({ ERROR: "Reloading database!" }));
-      logger.warn(
-        `${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams}) not available when reloading!`,
-      );
+      logger.warn(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams}) not available when reloading!`);
       return;
     }
 
     try {
       logger.info(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       await mod(request, response, fileCache);
-    } catch (e) {
-      logger.err(e.stack);
+    } catch (error) {
+      logger.err(error.stack);
       response.statusCode = 404;
       response.end();
     }

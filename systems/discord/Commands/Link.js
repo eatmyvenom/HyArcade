@@ -4,15 +4,10 @@ const Account = require("hyarcade-requests/types/Account");
 const Command = require("hyarcade-structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_IGN_UNDEFINED,
-  INFO_LINK_SUCCESS,
-  ERROR_PLAYER_PREVIOUSLY_LINKED,
-  ERROR_ACCOUNT_PREVIOUSLY_LINKED,
-} = require("../Utils/Embeds/StaticEmbeds");
+const { ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_PLAYER_PREVIOUSLY_LINKED, ERROR_ACCOUNT_PREVIOUSLY_LINKED } = require("../Utils/Embeds/StaticEmbeds");
 
 module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
-  if (args.length < 1) {
+  if (args.length === 0) {
     return {
       res: "",
       embed: ERROR_ARGS_LENGTH(1),
@@ -54,7 +49,6 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
   if (args.includes("-f")) {
     disclist[discord] = uuid;
     await BotRuntime.writeToDB("disclist", disclist);
-    disclist = null;
     const embed = INFO_LINK_SUCCESS;
     return {
       res: "",
@@ -68,7 +62,7 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
       res: "",
       embed,
     };
-  } else if (Object.values(disclist).find(u => u == uuid) != undefined) {
+  } else if (Object.values(disclist).some(u => u == uuid)) {
     const embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
     return {
       res: "",
@@ -78,7 +72,6 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
 
   disclist[discord] = uuid;
   await BotRuntime.writeToDB("disclist", disclist);
-  disclist = null;
   const embed = INFO_LINK_SUCCESS;
   return {
     res: "",

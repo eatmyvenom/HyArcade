@@ -23,7 +23,7 @@ exports.guilds = async function gld() {
   const realList = [];
 
   for (const guuid of guildlistjson) {
-    if (realList.find(g => g.uuid == guuid) == undefined) {
+    if (!realList.some(g => g.uuid == guuid)) {
       realList.push(new Guild(guuid));
     }
   }

@@ -1,9 +1,9 @@
-import { createRequire } from "module";
 import Config from "hyarcade-config";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { createRequire } from "node:module";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ImageGenerator from "../images/ImageGenerator.js";
@@ -248,8 +248,7 @@ async function topGamesHandler(args, rawMsg, interaction) {
     acc = getTimedAccount(res?.acc, res?.timed);
   }
 
-  if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME")
-    return new CommandResponse("", ERROR_UNLINKED);
+  if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_UNLINKED);
 
   const img = await generateImage(acc, timetype);
 

@@ -19,12 +19,7 @@ module.exports = async function Arc3(path, category, time, topTen) {
   const x = 915;
   const fontSize = 32;
 
-  let timeTitle =
-    path == undefined
-      ? "Monthly"
-      : time == undefined
-      ? "Lifetime"
-      : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
+  let timeTitle = path == undefined ? "Monthly" : time == undefined ? "Lifetime" : `${time.slice(0, 1).toUpperCase()}${time.slice(1)}`;
   let gameTitle = "";
 
   timeTitle += `${(path ?? "wins").slice(0, 1).toUpperCase()}${(path ?? "wins").slice(1)}`.replace(/([A-Z])/g, " $1");
@@ -86,25 +81,11 @@ module.exports = async function Arc3(path, category, time, topTen) {
   await img.drawMcText(`&7${gameTitle}`, x, (y += dy), fontSize, "center", true);
   y += 10;
 
-  for (let i = 0; i < topTen.length; i += 1) {
+  for (const [i, account] of topTen.entries()) {
     if (time == undefined) {
-      img.drawLBPlayer(
-        topTen[i],
-        `${i + 1}`,
-        formatNum(topTen[i]?.[category]?.[path] ?? topTen[i]?.miniWalls?.wins),
-        x,
-        (y += dy),
-        fontSize,
-      );
+      img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.[category]?.[path] ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
     } else {
-      img.drawLBPlayer(
-        topTen[i],
-        `${i + 1}`,
-        formatNum(topTen[i]?.lbProp ?? topTen[i]?.miniWalls?.wins),
-        x,
-        (y += dy),
-        fontSize,
-      );
+      img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.lbProp ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
     }
   }
 

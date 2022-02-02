@@ -3,9 +3,9 @@ const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 const BotRuntime = require("../../BotRuntime");
 
-let commandStorage = undefined;
+let commandStorage;
 
-let ezmsgs = undefined;
+let ezmsgs;
 
 /**
  * @param {string} accUUID
@@ -40,15 +40,10 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
   }
   const commands = await commandStorage.default.getCommands();
 
-  const res = await commands.Leaderboard.execute(
-    [leaderboard, time, index],
-    interaction.user.id,
-    undefined,
-    interaction,
-  );
+  const res = await commands.Leaderboard.execute([leaderboard, time, index], interaction.user.id, undefined, interaction);
 
   if (res == undefined) {
-    return undefined;
+    return;
   }
 
   return new ButtonResponse("", undefined, res?.components, [res?.file]);
@@ -102,7 +97,7 @@ async function topGamesHandler(accUUID, timetype, interaction) {
   const topGamesRes = await commands.TopGames.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
 
   if (topGamesRes == undefined) {
-    return undefined;
+    return;
   }
 
   return new ButtonResponse("", undefined, topGamesRes?.components, [topGamesRes?.file]);

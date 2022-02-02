@@ -19,9 +19,9 @@ module.exports = function PixelPainters(acc, embed) {
   embed.addField("Stats", `**- Wins** (\`${f(acc.pixelPainters.wins)}\`)`);
   embed.addField(
     "Info",
-    `**- AP** (\`${f(acc.arcadeAchievments.pixelPainters.apEarned)} / ${f(
-      acc.arcadeAchievments.pixelPainters.apAvailable,
-    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.pixelPainters)}\`)`,
+    `**- AP** (\`${f(acc.arcadeAchievments.pixelPainters.apEarned)} / ${f(acc.arcadeAchievments.pixelPainters.apAvailable)}\`)\n**- Challenges** (\`${f(
+      acc.arcadeChallenges.pixelPainters,
+    )}\`)`,
   );
 
   return embed;

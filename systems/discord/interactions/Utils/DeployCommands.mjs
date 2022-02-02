@@ -1,5 +1,5 @@
-import { createRequire } from "module";
 import Logger from "hyarcade-logger";
+import { createRequire } from "node:module";
 import Dev from "./AvailableCommands/Dev.js";
 import fullInteractionObjects from "./AvailableCommands/General.js";
 import MiniWallsInteractionObjects from "./AvailableCommands/MiniWalls.js";
@@ -21,7 +21,7 @@ export default async function (client) {
 
   const cmdarr = Object.values(interactionObjects);
 
-  const { guilds } = client;
+  const { guilds, application } = client;
   guilds.cache.values();
 
   for (const g of guilds.cache.values()) {
@@ -34,13 +34,13 @@ export default async function (client) {
       } else {
         // await g.commands.set(cmdarr);
       }
-    } catch (e) {
+    } catch (error) {
       Logger.warn("Couldn't change guild slash commands!");
-      Logger.warn(e);
+      Logger.warn(error);
     }
   }
 
   if (BotRuntime.botMode != "test") {
-    await client.application.commands.set(cmdarr);
+    await application.commands.set(cmdarr);
   }
 }

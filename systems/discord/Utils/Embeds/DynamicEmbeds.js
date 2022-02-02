@@ -40,16 +40,11 @@ exports.ERROR_USE_SLASH_COMMAND = function (cmd, slashver) {
   return new MessageEmbed()
     .setTitle(`The command ${cmd} is only available as "/${slashver}"!`)
     .setColor(COLOR_RED)
-    .setDescription(
-      "This command has been retired and will no longer function using the usual method. Please use the slash command variation instead.",
-    );
+    .setDescription("This command has been retired and will no longer function using the usual method. Please use the slash command variation instead.");
 };
 
 exports.ERROR_ARGS_LENGTH = function (len) {
-  return new MessageEmbed()
-    .setTitle("ERROR")
-    .setColor(COLOR_RED)
-    .setDescription(`This command requires ${len} arguments`);
+  return new MessageEmbed().setTitle("ERROR").setColor(COLOR_RED).setDescription(`This command requires ${len} arguments`);
 };
 
 exports.LOG_SLASH_COMMAND_USAGE = function (userid, usertag, command, server, channel, options) {
@@ -75,17 +70,11 @@ exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, va
 };
 
 exports.INFO_WHOIS = function (acc) {
-  return new MessageEmbed()
-    .setTitle(`${acc.name} discord`)
-    .setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`)
-    .setColor(COLOR_PRIMARY);
+  return new MessageEmbed().setTitle(`${acc.name} discord`).setDescription(`Discord ID: ${acc.discord}\n<@${acc.discord}>`).setColor(COLOR_PRIMARY);
 };
 
 exports.ERROR_WAS_NOT_IN_DATABASE = function (ign) {
-  return new MessageEmbed()
-    .setTitle("ERROR")
-    .setDescription(`${ign} was not in the database at the time period you requested!`)
-    .setColor(COLOR_RED);
+  return new MessageEmbed().setTitle("ERROR").setDescription(`${ign} was not in the database at the time period you requested!`).setColor(COLOR_RED);
 };
 
 /**

@@ -25,10 +25,7 @@ async function txtPlayerList(list, maxamnt) {
     // not worth it to use wasm or node native for this
     const num = `000${i + 1}`.slice(-3);
 
-    const name = `${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `.slice(
-      0,
-      17,
-    );
+    const name = `${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `.slice(0, 17);
     //         001) MonkeyCity17     : 5900
     str += `${num}) ${name}: ${list[i].wins}\n`;
   }

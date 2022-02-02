@@ -70,7 +70,7 @@ class clusterClient {
   async doTasks() {
     for (const t of this.tasks) {
       logger.out(`Executing task ${t}`);
-      this.files.concat(await task[t]());
+      this.files = [...this.files, ...(await task[t]())];
     }
   }
 

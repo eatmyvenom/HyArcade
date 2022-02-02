@@ -23,12 +23,12 @@ async function isBlacklisted(id) {
  * @param {string} roleidRemove
  */
 module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
-  const { tag, id } = msg.author;
+  const { tag, id, bot: isBot } = msg.author;
 
   if (await isBlacklisted(id)) return;
 
   const firstWord = msg.content.split(" ")[0];
-  if (msg.author.bot || !isValidIGN(firstWord)) {
+  if (isBot || !isValidIGN(firstWord)) {
     return;
   }
 
@@ -65,9 +65,9 @@ module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
       }
 
       await msg.member.setNickname(acc.name);
-    } catch (e) {
+    } catch (error) {
       Logger.err("Linking error!");
-      Logger.err(e);
+      Logger.err(error);
     }
     await BotRuntime.writeToDB("disclist", disclist);
     await Database.addAccount(acc);

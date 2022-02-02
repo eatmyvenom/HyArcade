@@ -61,10 +61,7 @@ async function verifyCommand(args, rawMsg, interaction) {
     return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
   }
 
-  return new CommandResponse(
-    `${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`,
-    ERROR_LINK_HYPIXEL_MISMATCH,
-  );
+  return new CommandResponse(`${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`, ERROR_LINK_HYPIXEL_MISMATCH);
 }
 
 export default new Command("verify", ["*"], verifyCommand);

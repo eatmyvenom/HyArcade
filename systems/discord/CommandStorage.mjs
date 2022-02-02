@@ -9,7 +9,8 @@ import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
  * @returns {Promise<Command>}
  */
 async function importNew(mod) {
-  return (await import(`./Commands/${mod}?time=${Date.now()}`)).default;
+  const importedMod = await import(`./Commands/${mod}?time=${Date.now()}`);
+  return importedMod.default;
 }
 
 class CommandStorage {
@@ -45,14 +46,11 @@ class CommandStorage {
    */
   static async execInteraction(name, interaction) {
     let args = [];
-    if (interaction.options?.data[0]?.options) {
-      args = interaction.options.data[0].options?.map(c => c.value);
-    } else {
-      args = interaction.options.data.map(c => c.value);
-    }
+    args = interaction.options?.data[0]?.options ? interaction.options.data[0].options?.map(c => c.value) : interaction.options.data.map(c => c.value);
 
     for (const mod in this._commands) {
       if (this._commands[mod].aliases.includes(name.toLowerCase())) {
+        // eslint-disable-next-line unicorn/no-null
         return await this._commands[mod].execute(args, interaction.member.id, null, interaction);
       }
     }

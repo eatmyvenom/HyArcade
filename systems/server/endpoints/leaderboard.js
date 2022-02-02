@@ -43,13 +43,14 @@ module.exports = async (req, res, fileCache) => {
       let realProp = lbprop;
       if (realProp?.startsWith(".")) {
         if (realProp.includes("[")) {
-          realProp = realProp.replace(/\[/g, ".").replace(/\]/g, "");
+          realProp = realProp.replace(/\[/g, ".").replace(/]/g, "");
         }
-        requiredKeys = requiredKeys.concat(realProp.split("."));
+        requiredKeys = [...requiredKeys, ...realProp.split(".")];
       }
 
       s.push(JSON.stringify(accs, requiredKeys));
     }
+    // eslint-disable-next-line unicorn/no-null
     s.push(null);
 
     Logger.verbose("Sending data");

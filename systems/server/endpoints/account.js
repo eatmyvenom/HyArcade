@@ -41,8 +41,8 @@ module.exports = async (req, res, fileCache) => {
 
       try {
         await nacc.updateHypixel();
-      } catch (e) {
-        Logger.err(e.stack);
+      } catch (error) {
+        Logger.err(error.stack);
       }
 
       if (Object.keys(fakeFile).includes(nacc.uuid)) {
