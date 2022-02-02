@@ -1,15 +1,14 @@
-import { createRequire } from "node:module";
 import Requests from "hyarcade-requests";
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-
-const require = createRequire(import.meta.url);
-
-import Database from "../Utils/Database.js";
+import { createRequire } from "node:module";
+import ImageGenerator from "../images/ImageGenerator.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
-import ImageGenerator from "../images/ImageGenerator.js";
+
+const require = createRequire(import.meta.url);
 
 const { CommandInteraction, Message } = require("discord.js");
 
@@ -188,6 +187,101 @@ function getImage(status) {
           }
         }
       }
+      return "resources/status/Arcade-lobby-1.png";
+    }
+
+    case "BEDWARS": {
+      return "resources/status/Bedwars-lobby.png";
+    }
+
+    case "MCGO": {
+      status.session.gameType = "Cops and Crims";
+      return "resources/status/Cops-lobby.png";
+    }
+
+    case "LEGACY": {
+      status.session.gameType = "Classic Games";
+
+      switch (status.session.mode) {
+        case "VAMPIREZ": {
+          switch (status.session.map) {
+            case "Plundered": {
+              return "resources/status/Classic-vampirez-plundered.png";
+            }
+            case "Kudong": {
+              return "resources/status/Classic-vampirez-kudong.png";
+            }
+            case "Village": {
+              return "resources/status/Classic-vampirez-village.png";
+            }
+            case "Church": {
+              return "resources/status/Classic-vampirez-village.png";
+            }
+          }
+
+          return "resources/status/Classic-vampirez-kudong.png";
+        }
+
+        case "WALLS": {
+          return "resources/status/Classic-walls-Aztec.png";
+        }
+
+        case "GINGERBREAD": {
+          status.session.mode = "Turbo Kart Racers";
+          return "resources/status/Classic-tkr.png";
+        }
+
+        case "PAINTBALL": {
+          switch (status.session.map) {
+            case "LaMente": {
+              return "resources/status/Classic-paintball-LaMente.png";
+            }
+            case "Boletus": {
+              return "resources/status/Classic-paintball-Boletus.png";
+            }
+            case "Market": {
+              return "resources/status/Classic-paintball-Market.png";
+            }
+          }
+          return "resources/status/Classic-paintball-LaMente.png";
+        }
+      }
+
+      return "resources/status/Classic-lobby.png";
+    }
+
+    case "SKYWARS": {
+      return "resources/status/Skywars-lobby.png";
+    }
+
+    case "MURDER_MYSTERY": {
+      return "resources/status/Murder-mystery-lobby.png";
+    }
+
+    case "HOUSING": {
+      return "resources/status/Housing-lobby.png";
+    }
+
+    case "PIT": {
+      return "resources/status/Pit.png";
+    }
+
+    case "BUILD_BATTLE": {
+      return "resources/status/Build-battle-lobby.png";
+    }
+
+    case "DUELS": {
+      return "resources/status/Duels-lobby-new.png";
+    }
+
+    case "SPEED_UHC":
+    case "UHC": {
+      return "resources/status/UHC-lobby.png";
+    }
+
+    case "TNTGAMES": {
+      status.session.gameType = "Tnt Games";
+      return "resources/status/Tnt-lobby.png";
     }
   }
 
@@ -223,6 +317,49 @@ function loggedIn(acc) {
 }
 
 /**
+ * @param status
+ */
+function classicGamesTransformer(status) {
+  switch (status.session.gameType) {
+    case "VAMPIREZ": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "VAMPIREZ";
+      break;
+    }
+
+    case "WALLS": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "WALLS";
+      break;
+    }
+
+    case "GINGERBREAD": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "GINGERBREAD";
+      break;
+    }
+
+    case "PAINTBALL": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "PAINTBALL";
+      break;
+    }
+
+    case "ARENA": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "ARENA";
+      break;
+    }
+
+    case "QUAKECRAFT": {
+      status.session.gameType = "LEGACY";
+      status.session.mode = "QUAKECRAFT";
+      break;
+    }
+  }
+}
+
+/**
  * @param {string[]} args
  * @param {Message} rawmsg
  * @param {CommandInteraction} interaction
@@ -253,16 +390,18 @@ async function callback(args, rawmsg, interaction) {
   if (status.session.online) {
     const counts = await Requests.HypixelApi.counts();
 
+    classicGamesTransformer(status);
+
     const modeOthers = counts?.games?.[status.session.gameType]?.modes?.[status.session.mode] ?? "Unknown";
     const typeOthers = counts?.games?.[status.session.gameType]?.players ?? "Unknown";
 
-    const type = `${status.session.gameType}`;
-    const mode = `${status.session.mode}`;
+    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000004F");
 
-    const modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
-    const typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
+    const type = `${status.session.gameType}`.replace(/_/g, " ").trim();
+    const mode = `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();
 
-    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000008F");
+    let modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
+    let typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
 
     await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
     await img.drawMcText(ImageGenerator.formatAcc(acc, true), img.canvas.width / 2, 100, 56, "center");
@@ -292,7 +431,7 @@ async function callback(args, rawmsg, interaction) {
 
     y += spacer;
 
-    if (status.session.mode != undefined) {
+    if (status.session.mode != undefined && status.session.mode != "LOBBY") {
       await img.drawMcText(`&b${modeName} players`, img.canvas.width - 300, (y += increase), 42, "center");
       await img.drawMcText(`&b${modeOthers}`, img.canvas.width - 300, (y += increase), 50, "center");
     }
