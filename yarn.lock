@@ -912,6 +912,18 @@
     resolve-global "1.0.0"
     yargs "^17.0.0"
 
+"@commitlint/config-angular-type-enum@^16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-angular-type-enum/-/config-angular-type-enum-16.0.0.tgz#a1e136fa380499fb39ca64be138fc41d6e54dbbd"
+  integrity sha512-6Gn/Wh7tFiVHUK+bxiVMUZg6X7N6ArJLgaH39/23qK3/PkC0Y4FSJZf63YIS+EA/n5USHaBgBV88iduSTJU9rQ==
+
+"@commitlint/config-angular@^16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-angular/-/config-angular-16.0.0.tgz#a66a90e3b80778e50de39e8a2623129cc7274da3"
+  integrity sha512-UmH3D/BjqhIueM29w9G8mR8wHI0ncUrNFqX6OgDhsIgLS1Sgf6L3ad+oasTWfJ+KjKl544cjoayyWY0eX3wrIg==
+  dependencies:
+    "@commitlint/config-angular-type-enum" "^16.0.0"
+
 "@commitlint/config-validator@^16.1.0":
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/@commitlint/config-validator/-/config-validator-16.1.0.tgz#410979f713ed55cbb85504d46295c1fd2419dc4d"
@@ -1536,6 +1548,14 @@ comment-parser@1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.2.4.tgz#489f3ee55dfd184a6e4bffb31baba284453cb760"
   integrity sha512-pm0b+qv+CkWNriSTMsfnjChF9kH0kxz55y44Wo5le9qLxMj5xDQAaEd9ZN1ovSuk9CsrncWaFwgpOMg7ClJwkw==
+
+commitlint@^16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/commitlint/-/commitlint-16.1.0.tgz#4a5361574f41de107e380095972da472540cb94d"
+  integrity sha512-Rqm1dcsVf6Wkn0yBMHMFGcMdqHfaGra4pu314INydD9vMLRkgvLL9BRCUz+2NXN5JmOtKq3bA6+VYi2vKdc9MQ==
+  dependencies:
+    "@commitlint/cli" "^16.1.0"
+    "@commitlint/types" "^16.0.0"
 
 compare-func@^2.0.0:
   version "2.0.0"
