@@ -3,7 +3,18 @@ const Database = require("hyarcade-requests/Database");
 const Arc3 = require("./FakeLBs/Arc3");
 const ArcLeft = require("./FakeLBs/ArcLeft");
 const Guild = require("./FakeLBs/Guild");
+const Arc4 = require("./FakeLBs/Arc4");
 
+/**
+ * @param {number} lowerBound
+ * @param {number} upperBound
+ * @returns {number}
+ */
+function chooseRandom(lowerBound, upperBound) {
+  const num = Math.floor(Math.random() * ((upperBound  + 1) - lowerBound));
+
+  return num + lowerBound;
+}
 
 module.exports = async function FakeLb (path, category, time) {
 
@@ -37,7 +48,13 @@ module.exports = async function FakeLb (path, category, time) {
     }
 
     default: {
-      return await Arc3(path, category, realTime, topTen);
+      let random = chooseRandom(0, 1);
+
+      if(random == 0) {
+        return await Arc4(path, category, realTime, topTen);
+      } else {
+        return await Arc3(path, category, realTime, topTen);
+      }
     }
     }
   }
