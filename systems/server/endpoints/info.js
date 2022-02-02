@@ -1,14 +1,14 @@
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const process = require("process");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {FileCache} fileCache 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
-  if(req.method == "GET") {
+  if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
     const accs = Object.values(fileCache.indexedAccounts);

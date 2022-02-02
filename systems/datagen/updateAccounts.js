@@ -1,12 +1,12 @@
-const logger = require("hyarcade-logger");
+const Util = require("util");
 const fs = require("fs-extra");
 const Runtime = require("hyarcade-config/Runtime");
-const Account = require("hyarcade-requests/types/Account");
+const logger = require("hyarcade-logger");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
+const Account = require("hyarcade-requests/types/Account");
 const sleep = require("hyarcade-utils/Sleep");
-const NormalizeAccount = require("./utils/NormalizeAccount");
-const Util = require("util");
 const Sleep = require("hyarcade-utils/Sleep");
+const NormalizeAccount = require("./utils/NormalizeAccount");
 
 const force = fs.existsSync("force");
 let cfg;
@@ -21,19 +21,17 @@ class Response {
  */
 function timeout() {
   return new Promise((resolve, reject) => {
-    Sleep(30000)
-      .then(reject)
-      .catch(reject);
+    Sleep(30000).then(reject).catch(reject);
   });
 }
 
 /**
- * 
- * @param {string[]} uuids 
+ *
+ * @param {string[]} uuids
  * @returns {Promise<Response>}
  */
-async function requestData (uuids) {
-  const realUUIDs = uuids.filter((u) => u != "");
+async function requestData(uuids) {
+  const realUUIDs = uuids.filter(u => u != "");
 
   try {
     return await Promise.race([HyarcadeWorkerRequest(realUUIDs), timeout()]);
@@ -44,32 +42,30 @@ async function requestData (uuids) {
   }
 }
 
-
 /**
- * 
- * @param {Account} account 
+ *
+ * @param {Account} account
  * @returns {boolean}
  */
-function isLeaderboarder (account) {
-  if(account.positions) {
-    return Object.values(account.positions).some((pos) => pos < cfg.hypixel.leaderboardLimit);
+function isLeaderboarder(account) {
+  if (account.positions) {
+    return Object.values(account.positions).some(pos => pos < cfg.hypixel.leaderboardLimit);
   }
 
   return false;
 }
 
 /**
- * 
- * @param {Account} oldAcc 
+ *
+ * @param {Account} oldAcc
  * @returns {boolean}
  */
-function isImportant (oldAcc) {
-
-  if(oldAcc == undefined) {
+function isImportant(oldAcc) {
+  if (oldAcc == undefined) {
     return true;
   }
 
-  if(oldAcc.null) {
+  if (oldAcc.null) {
     return false;
   }
 
@@ -87,15 +83,15 @@ function isImportant (oldAcc) {
 }
 
 /**
- * 
- * @param {*} accs 
- * @param {*} currentBatch 
- * @param {*} updatedAccs 
- * @param {*} segmentedAccs 
- * @param {*} perSegment 
+ *
+ * @param {*} accs
+ * @param {*} currentBatch
+ * @param {*} updatedAccs
+ * @param {*} segmentedAccs
+ * @param {*} perSegment
  */
-async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, perSegment) {
-  if(accs == undefined) {
+async function updateSegment(accs, currentBatch, updatedAccs, segmentedAccs, perSegment) {
+  if (accs == undefined) {
     return;
   }
   const uuidArr = [];
@@ -108,12 +104,12 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   let workerData;
   try {
     workerData = await requestData(uuidArr);
-  } catch(e) {
+  } catch (e) {
     logger.err(e);
     return;
   }
 
-  if(workerData.key.remaining < perSegment + 5) {
+  if (workerData.key.remaining < perSegment + 5) {
     logger.debug(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
     await sleep(workerData.key.reset * 1005);
   }
@@ -121,8 +117,8 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
   for (const acc of accs) {
     logger.verbose(`Setting data for ${acc.uuid}`);
     const accData = workerData.data[acc.uuid];
-    if(accData?.success == false || accData?.player == undefined) {
-      if(cfg.logRateLimit) {
+    if (accData?.success == false || accData?.player == undefined) {
+      if (cfg.logRateLimit) {
         logger.warn(`Account data retrevial unsuccessful for ${acc.uuid}`);
       } else {
         logger.verbose(`Account data retrevial unsuccessful for ${acc.uuid}`);
@@ -137,14 +133,14 @@ async function updateSegment (accs, currentBatch, updatedAccs, segmentedAccs, pe
 }
 
 /**
- * 
- * @param {Array} a 
- * @param {Function} key 
+ *
+ * @param {Array} a
+ * @param {Function} key
  * @returns {Array}
  */
-function uniqBy (a, key) {
+function uniqBy(a, key) {
   const seen = {};
-  return a.filter((item) => {
+  return a.filter(item => {
     const k = key(item);
     // eslint-disable-next-line no-prototype-builtins
     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
@@ -159,7 +155,7 @@ function uniqBy (a, key) {
  * @returns {Promise<Account[]>}
  */
 // eslint-disable-next-line no-unused-vars
-async function fastUpdate (accounts, argForce) {
+async function fastUpdate(accounts, argForce) {
   const perSegment = cfg.hypixel.segmentSize;
 
   const oldAccs = accounts;
@@ -167,8 +163,8 @@ async function fastUpdate (accounts, argForce) {
   let importantAccounts = [];
 
   for (const acc of oldAccs) {
-    if(argForce) {
-      if(NormalizeAccount(acc) > cfg.hypixel.minImportance) {
+    if (argForce) {
+      if (NormalizeAccount(acc) > cfg.hypixel.minImportance) {
         importantAccounts.push(acc);
       }
     } else if (isImportant(acc)) {
@@ -176,12 +172,17 @@ async function fastUpdate (accounts, argForce) {
     }
   }
 
-  importantAccounts = importantAccounts.concat(oldAccs.filter((a) => (a?.importance ?? 0) > 1000).sort((a, b) => a.updateTime - b.updateTime).slice(0, perSegment * 4));
+  importantAccounts = importantAccounts.concat(
+    oldAccs
+      .filter(a => (a?.importance ?? 0) > 1000)
+      .sort((a, b) => a.updateTime - b.updateTime)
+      .slice(0, perSegment * 4),
+  );
 
-  const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => { 
+  const segmentedAccs = importantAccounts.reduce((resultArray, item, index) => {
     const segmentIndex = Math.floor(index / perSegment);
 
-    if(!resultArray[segmentIndex]) {
+    if (!resultArray[segmentIndex]) {
       resultArray[segmentIndex] = [];
     }
 
@@ -192,15 +193,15 @@ async function fastUpdate (accounts, argForce) {
 
   let updatedAccs = [];
 
-  for(let i = 0;i < segmentedAccs.length; i += 1) {
+  for (let i = 0; i < segmentedAccs.length; i += 1) {
     logger.log(`Batching ${i} - ${i + 5} of ${segmentedAccs.length}`);
     await Promise.all([
       updateSegment(segmentedAccs[i], i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[i += 1], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[(i += 1)], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[(i += 1)], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[(i += 1)], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[(i += 1)], i, updatedAccs, segmentedAccs, perSegment),
+      updateSegment(segmentedAccs[(i += 1)], i, updatedAccs, segmentedAccs, perSegment),
     ]);
   }
 
@@ -208,7 +209,7 @@ async function fastUpdate (accounts, argForce) {
   runtime.needRoleupdate = true;
   await runtime.save();
 
-  updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
+  updatedAccs = uniqBy(updatedAccs, a => a.uuid);
 
   return updatedAccs;
 }
@@ -219,18 +220,18 @@ async function fastUpdate (accounts, argForce) {
  * @param {boolean} argForce
  * @returns {Promise}
  */
-async function updateAccountsInArr (accounts, oldAccs, argForce) {
+async function updateAccountsInArr(accounts, oldAccs, argForce) {
   return await Promise.all(
-    accounts.map(async (account) => {
-      const oldAcc = oldAccs.find((a) => a.uuid == account.uuid);
-      if(argForce || isImportant(oldAcc)) {
+    accounts.map(async account => {
+      const oldAcc = oldAccs.find(a => a.uuid == account.uuid);
+      if (argForce || isImportant(oldAcc)) {
         logger.verbose(`Updating ${oldAcc?.name}'s data`);
         await account.updateData();
       } else {
         logger.verbose(`Ignoring ${oldAcc?.name} for this refresh`);
         account.setData(oldAcc);
       }
-    })
+    }),
   );
 }
 
@@ -242,20 +243,19 @@ async function updateAccountsInArr (accounts, oldAccs, argForce) {
  * @param {boolean} fast
  * @returns {Promise<Account[]>}
  */
-module.exports = async function updateAccounts (accounts, argForce = false, fast = false) {
-
+module.exports = async function updateAccounts(accounts, argForce = false, fast = false) {
   cfg = require("hyarcade-config").fromJSON();
 
-  if(fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
+  if (fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");
     const accs = await fastUpdate(accounts, argForce);
-    if(force && fs.existsSync("force")) {
+    if (force && fs.existsSync("force")) {
       await fs.rm("force");
     }
     return accs;
   }
 
-  await fs.writeFile("starttime", (`${Date.now()}`));
+  await fs.writeFile("starttime", `${Date.now()}`);
 
   const oldAccs = accounts;
 
@@ -263,10 +263,10 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
   let temparray;
 
   const chunk = 120;
-  for(i = 0; i < accounts.length; i += chunk) {
+  for (i = 0; i < accounts.length; i += chunk) {
     const percent = Math.max(Math.round((i / accounts.length) * 100), Math.floor((i / accounts.length) * 100));
 
-    if(percent % 5 == 0) {
+    if (percent % 5 == 0) {
       logger.debug(`${percent}% processed!`);
     }
     temparray = accounts.slice(i, i + chunk);
@@ -279,6 +279,6 @@ module.exports = async function updateAccounts (accounts, argForce = false, fast
 
   let updatedAccs = accounts;
 
-  updatedAccs = uniqBy(updatedAccs, (a) => a.uuid);
+  updatedAccs = uniqBy(updatedAccs, a => a.uuid);
   return updatedAccs;
 };

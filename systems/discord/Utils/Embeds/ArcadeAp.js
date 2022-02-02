@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js");
  * @param {number} n
  * @returns {string}
  */
-function numberify (n) {
+function numberify(n) {
   return Intl.NumberFormat("en").format(n);
 }
 
@@ -12,7 +12,7 @@ function numberify (n) {
  * @param {object} ap
  * @returns {string}
  */
-function getTiered (ap) {
+function getTiered(ap) {
   let value = "";
 
   value += `**${ap.name}**\n`;
@@ -35,14 +35,14 @@ function getTiered (ap) {
  * @param {object} gameAp
  * @returns {string}
  */
-function getAllTiered (gameAp) {
+function getAllTiered(gameAp) {
   let value = "";
 
-  for(const ap of gameAp.tieredAP) {
+  for (const ap of gameAp.tieredAP) {
     value += `${getTiered(ap)}\n`;
   }
 
-  if(value == "") {
+  if (value == "") {
     value = "No Tiered availiable";
   }
 
@@ -50,26 +50,26 @@ function getAllTiered (gameAp) {
 }
 
 /**
- * 
+ *
  * @param {object} gameAp
- * @returns {string} 
+ * @returns {string}
  */
-function getAllChallenge (gameAp) {
+function getAllChallenge(gameAp) {
   let value = "";
 
-  for(const ap of gameAp.achievementsEarned) {
-    if(ap.name != undefined) {
+  for (const ap of gameAp.achievementsEarned) {
+    if (ap.name != undefined) {
       value += `\` +${ap.points.toString().padEnd(3)}\` ${ap.name}\n`;
     }
   }
 
-  for(const ap of gameAp.achievementsMissing) {
-    if(ap.name != undefined) {
+  for (const ap of gameAp.achievementsMissing) {
+    if (ap.name != undefined) {
       value += `\n\` -${ap.points.toString().padEnd(3)}\` ~~${ap.name}~~`;
     }
   }
 
-  if(value == "") {
+  if (value == "") {
     value = "None";
   }
 
@@ -80,7 +80,7 @@ function getAllChallenge (gameAp) {
  * @param {object} ap
  * @returns {string}
  */
-function getGame (ap) {
+function getGame(ap) {
   let value = "";
 
   const total = ap.apAvailable;
@@ -95,12 +95,11 @@ function getGame (ap) {
 }
 
 /**
- * 
- * @param {object} acc 
+ *
+ * @param {object} acc
  * @returns {string}
  */
-function getTotal (acc) {
-
+function getTotal(acc) {
   const amount = acc.arcadeAchievments.totalEarned;
   const total = acc.arcadeAchievments.totalAvailiable;
 
@@ -114,8 +113,7 @@ function getTotal (acc) {
 }
 
 module.exports = function (acc, game) {
-
-  if(game == undefined || game == "all") {
+  if (game == undefined || game == "all") {
     return new MessageEmbed()
       .setTitle(`${acc.name}'s Arcade Achievements`)
       .setColor(0x8c54fe)

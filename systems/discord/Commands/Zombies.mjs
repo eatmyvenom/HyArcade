@@ -1,12 +1,12 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
-import Database from "hyarcade-requests/Database.js";
 
 const { MessageEmbed } = require("discord.js");
 
@@ -14,7 +14,7 @@ const { MessageEmbed } = require("discord.js");
  * @param {number} n
  * @returns {string}
  */
-function toPercent (n) {
+function toPercent(n) {
   return `${(n * 100).toFixed(2)} %`;
 }
 
@@ -22,7 +22,7 @@ function toPercent (n) {
  * @param {number} n
  * @returns {string}
  */
-function numberify (n) {
+function numberify(n) {
   const r = Intl.NumberFormat("en").format(Number(n));
   return r;
 }
@@ -31,150 +31,199 @@ function numberify (n) {
  * @param {number} secs
  * @returns {string}
  */
-function toHHMMSS (secs) {
-
-  if(secs == 99999) {
+function toHHMMSS(secs) {
+  if (secs == 99999) {
     return "N/A";
   }
 
   const sec_num = parseInt(secs, 10);
-  const hours   = Math.floor(sec_num / 3600);
+  const hours = Math.floor(sec_num / 3600);
   const minutes = Math.floor(sec_num / 60) % 60;
   const seconds = sec_num % 60;
 
   return [hours, minutes, seconds]
-    .map((v) => v < 10 ? `0${v}` : v)
+    .map(v => (v < 10 ? `0${v}` : v))
     .filter((v, i) => v !== "00" || i > 0)
     .join(":");
 }
 
 /**
- * 
+ *
  * @param {Account} acc
  * @returns {MessageEmbed}
  */
-function createDefaultEmbed (acc) {
+function createDefaultEmbed(acc) {
   return new MessageEmbed()
     .setTitle(`${acc.name} Zombies stats`)
-    .addField("Stats",
+    .addField(
+      "Stats",
       `・**Wins** - \`${numberify(acc.zombies?.wins_zombies ?? 0)}\`\n` +
-      `・**Rounds** - \`${numberify(acc.zombies?.total_rounds_survived_zombies ?? 0)}\`\n` +
-      `・**Kills** - \`${numberify(acc.zombies?.zombie_kills_zombies ?? 0)}\`\n` +
-      `・**Knocks** - \`${numberify(acc.zombies?.times_knocked_down_zombies ?? 0)}\`\n` +
-      `・**Deaths** - \`${numberify(acc.zombies?.deaths_zombies ?? 0)}\`\n`,
-      true)
-    .addField("Info",
-      `・**Fastest win** - \`${toHHMMSS(Math.min(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999, acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999))}\`\n` +
-      `・**Doors opened** - \`${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\`\n` +
-      `・**Revives** - \`${numberify(acc.zombies?.players_revived_zombies ?? 0)}\`\n`,
-      true)
-    .addField("Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies ?? 0) / (acc.zombies?.total_rounds_survived_zombies ?? 0))}\`\n` +
-      `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies ?? 0) / (acc.zombies?.deaths_zombies ?? 0))}\`\n` +
-      `・**Accuracy** - \`${toPercent((acc.zombies?.bullets_hit_zombies ?? 0) / (acc.zombies?.bullets_shot_zombies ?? 0))}\`\n` +
-      `・**Headshots** - \`${toPercent((acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\``,
-      false)
+        `・**Rounds** - \`${numberify(acc.zombies?.total_rounds_survived_zombies ?? 0)}\`\n` +
+        `・**Kills** - \`${numberify(acc.zombies?.zombie_kills_zombies ?? 0)}\`\n` +
+        `・**Knocks** - \`${numberify(acc.zombies?.times_knocked_down_zombies ?? 0)}\`\n` +
+        `・**Deaths** - \`${numberify(acc.zombies?.deaths_zombies ?? 0)}\`\n`,
+      true,
+    )
+    .addField(
+      "Info",
+      `・**Fastest win** - \`${toHHMMSS(
+        Math.min(
+          acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999,
+          acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999,
+          acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999,
+        ),
+      )}\`\n` +
+        `・**Doors opened** - \`${numberify(acc.zombies?.doors_opened_zombies ?? 0)}\`\n` +
+        `・**Revives** - \`${numberify(acc.zombies?.players_revived_zombies ?? 0)}\`\n`,
+      true,
+    )
+    .addField(
+      "Ratios",
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies ?? 0) / (acc.zombies?.total_rounds_survived_zombies ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies ?? 0) / (acc.zombies?.deaths_zombies ?? 0),
+        )}\`\n` +
+        `・**Accuracy** - \`${toPercent(
+          (acc.zombies?.bullets_hit_zombies ?? 0) / (acc.zombies?.bullets_shot_zombies ?? 0),
+        )}\`\n` +
+        `・**Headshots** - \`${toPercent(
+          (acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0),
+        )}\``,
+      false,
+    )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
     .setColor(0x44a3e7);
 }
 
 /**
- * 
+ *
  * @param {Account} acc
  * @returns {MessageEmbed}
  */
-function createBadBloodEmbed (acc) {
+function createBadBloodEmbed(acc) {
   return new MessageEmbed()
     .setTitle(`${acc.name} Bad Blood stats`)
-    .addField("Stats",
+    .addField(
+      "Stats",
       `・**Wins** - \`${numberify(acc.zombies?.wins_zombies_badblood ?? 0)}\`\n` +
         `・**Rounds** - \`${numberify(acc.zombies?.total_rounds_survived_zombies_badblood ?? 0)}\`\n` +
         `・**Kills** - \`${numberify(acc.zombies?.zombie_kills_zombies_badblood ?? 0)}\`\n` +
         `・**Knocks** - \`${numberify(acc.zombies?.times_knocked_down_zombies_badblood ?? 0)}\`\n` +
         `・**Deaths** - \`${numberify(acc.zombies?.deaths_zombies_badblood ?? 0)}\`\n`,
-      true)
-    .addField("Info",
+      true,
+    )
+    .addField(
+      "Info",
       `・**Doors opened** - \`${numberify(acc.zombies?.doors_opened_zombies_badblood ?? 0)}\`\n` +
         `・**Fastest win** - \`${toHHMMSS(acc.zombies?.fastest_time_30_zombies_badblood_normal ?? 99999)}\`\n` +
         `・**Best round** - \`${numberify(acc.zombies?.best_round_zombies_badblood ?? 0)}\`\n` +
         `・**Revives** - \`${numberify(acc.zombies?.players_revived_zombies_badblood ?? 0)}\`\n`,
-      true)
-    .addField("Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_badblood ?? 0) / (acc.zombies?.total_rounds_survived_zombies_badblood ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_badblood ?? 0) / (acc.zombies?.deaths_zombies_badblood ?? 0))}\``,
-      false)
+      true,
+    )
+    .addField(
+      "Ratios",
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_badblood ?? 0) / (acc.zombies?.total_rounds_survived_zombies_badblood ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_badblood ?? 0) / (acc.zombies?.deaths_zombies_badblood ?? 0),
+        )}\``,
+      false,
+    )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
     .setColor(0x44a3e7);
 }
 
 /**
- * 
+ *
  * @param {Account} acc
  * @returns {MessageEmbed}
  */
-function createDeadEndEmbed (acc) {
+function createDeadEndEmbed(acc) {
   return new MessageEmbed()
     .setTitle(`${acc.name} Dead End stats`)
-    .addField("Stats",
+    .addField(
+      "Stats",
       `・**Wins** - \`${numberify(acc.zombies?.wins_zombies_deadend ?? 0)}\`\n` +
         `・**Rounds** - \`${numberify(acc.zombies?.total_rounds_survived_zombies_deadend ?? 0)}\`\n` +
         `・**Kills** - \`${numberify(acc.zombies?.zombie_kills_zombies_deadend ?? 0)}\`\n` +
         `・**Knocks** - \`${numberify(acc.zombies?.times_knocked_down_zombies_deadend ?? 0)}\`\n` +
         `・**Deaths** - \`${numberify(acc.zombies?.deaths_zombies_deadend ?? 0)}\`\n`,
-      true)
-    .addField("Info",
+      true,
+    )
+    .addField(
+      "Info",
       `・**Doors opened** - \`${numberify(acc.zombies?.doors_opened_zombies_deadend ?? 0)}\`\n` +
         `・**Fastest win** - \`${toHHMMSS(acc.zombies?.fastest_time_30_zombies_deadend_normal ?? 99999)}\`\n` +
         `・**Best round** - \`${numberify(acc.zombies?.best_round_zombies_deadend ?? 0)}\`\n` +
         `・**Revives** - \`${numberify(acc.zombies?.players_revived_zombies_deadend ?? 0)}\`\n`,
-      true)
-    .addField("Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_deadend ?? 0) / (acc.zombies?.total_rounds_survived_zombies_deadend ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_deadend ?? 0) / (acc.zombies?.deaths_zombies_deadend ?? 0))}\``,
-      false)
+      true,
+    )
+    .addField(
+      "Ratios",
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_deadend ?? 0) / (acc.zombies?.total_rounds_survived_zombies_deadend ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_deadend ?? 0) / (acc.zombies?.deaths_zombies_deadend ?? 0),
+        )}\``,
+      false,
+    )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
     .setColor(0x44a3e7);
 }
 
 /**
- * 
+ *
  * @param {Account} acc
  * @returns {MessageEmbed}
  */
-function createAlienArcadiumEmbed (acc) {
+function createAlienArcadiumEmbed(acc) {
   return new MessageEmbed()
     .setTitle(`${acc.name} Alien Arcadium stats`)
-    .addField("Stats",
+    .addField(
+      "Stats",
       `・**Wins** - \`${numberify(acc.zombies?.wins_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Rounds** - \`${numberify(acc.zombies?.total_rounds_survived_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Kills** - \`${numberify(acc.zombies?.zombie_kills_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Knocks** - \`${numberify(acc.zombies?.times_knocked_down_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Deaths** - \`${numberify(acc.zombies?.deaths_zombies_alienarcadium ?? 0)}\`\n`,
-      true)
-    .addField("Info",
+      true,
+    )
+    .addField(
+      "Info",
       `・**Doors opened** - \`${numberify(acc.zombies?.doors_opened_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Fastest win** - \`${toHHMMSS(acc.zombies?.fastest_time_30_zombies_alienarcadium_normal ?? 99999)}\`\n` +
         `・**Best round** - \`${numberify(acc.zombies?.best_round_zombies_alienarcadium ?? 0)}\`\n` +
         `・**Revives** - \`${numberify(acc.zombies?.players_revived_zombies_alienarcadium ?? 0)}\`\n`,
-      true)
-    .addField("Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_alienarcadium ?? 0) / (acc.zombies?.total_rounds_survived_zombies_alienarcadium ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_alienarcadium ?? 0) / (acc.zombies?.deaths_zombies_alienarcadium ?? 0))}\``,
-      false)
+      true,
+    )
+    .addField(
+      "Ratios",
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_alienarcadium ?? 0) /
+          (acc.zombies?.total_rounds_survived_zombies_alienarcadium ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_alienarcadium ?? 0) / (acc.zombies?.deaths_zombies_alienarcadium ?? 0),
+        )}\``,
+      false,
+    )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
     .setColor(0x44a3e7);
 }
-
 
 export default new Command("zombies", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const map = args[1] ?? "";
 
   let acc;
-  if(interaction == undefined) {
+  if (interaction == undefined) {
     acc = await Database.account(plr, rawMsg.author.id);
   } else {
-    if(interaction.isButton()) {
+    if (interaction.isButton()) {
       await interaction.deferUpdate();
       acc = await Database.account(plr, "");
     } else if (interaction.isSelectMenu()) {
@@ -186,37 +235,37 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
     }
   }
 
-  if(acc == undefined) {
+  if (acc == undefined) {
     return new CommandResponse("", ERROR_UNLINKED);
   }
 
   let embed;
   let buttons;
 
-  switch(map.toLowerCase()) {
-  case "bb" : {
-    embed = createBadBloodEmbed(acc);
-    buttons = await ButtonGenerator.getZombies("bb", acc.uuid);
-    break;
-  }
+  switch (map.toLowerCase()) {
+    case "bb": {
+      embed = createBadBloodEmbed(acc);
+      buttons = await ButtonGenerator.getZombies("bb", acc.uuid);
+      break;
+    }
 
-  case "de" : {
-    embed = createDeadEndEmbed(acc);
-    buttons = await ButtonGenerator.getZombies("de", acc.uuid);
-    break;
-  }
+    case "de": {
+      embed = createDeadEndEmbed(acc);
+      buttons = await ButtonGenerator.getZombies("de", acc.uuid);
+      break;
+    }
 
-  case "aa" : {
-    embed = createAlienArcadiumEmbed(acc);
-    buttons = await ButtonGenerator.getZombies("aa", acc.uuid);
-    break;
-  }
+    case "aa": {
+      embed = createAlienArcadiumEmbed(acc);
+      buttons = await ButtonGenerator.getZombies("aa", acc.uuid);
+      break;
+    }
 
-  default : {
-    embed = createDefaultEmbed(acc);
-    buttons = await ButtonGenerator.getZombies("o", acc.uuid);
-    break;
-  }
+    default: {
+      embed = createDefaultEmbed(acc);
+      buttons = await ButtonGenerator.getZombies("o", acc.uuid);
+      break;
+    }
   }
 
   return new CommandResponse("", embed, undefined, buttons);

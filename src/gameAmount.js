@@ -7,9 +7,9 @@ const Json = require("hyarcade-utils/FileHandling/Json");
  *
  * @returns {string}
  */
-async function formatCounts () {
+async function formatCounts() {
   let str = "";
-  const all =  HypixelApi.counts();
+  const all = HypixelApi.counts();
   const counts = all.games;
 
   str += `Arcade Total        : ${counts.ARCADE.players}\n`;
@@ -32,11 +32,11 @@ async function formatCounts () {
  * Print the game counts to stdout
  *
  */
-async function logCounts () {
+async function logCounts() {
   Logger.out(await formatCounts());
 }
 
 module.exports = {
   formatCounts,
-  logCounts
+  logCounts,
 };

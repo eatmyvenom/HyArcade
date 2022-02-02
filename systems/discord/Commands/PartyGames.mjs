@@ -3,90 +3,96 @@ import Database from "../Utils/Database.js";
 const require = createRequire(import.meta.url);
 
 const Command = require("hyarcade-structures/Discord/Command");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const AccountComparitor = require("../Utils/AccountComparitor");
-const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const PartyGamesImg = require("../images/PartyGamesImg");
+const AccountComparitor = require("../Utils/AccountComparitor");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const PartyGamesImg = require("../images/PartyGamesImg");
+const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 
 /**
- * 
- * @param {string} ign 
+ *
+ * @param {string} ign
  * @returns {CommandResponse}
  */
-function nonDatabaseError (ign) {
+function nonDatabaseError(ign) {
   return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(ign));
 }
 
-export default new Command(["party-games", "pg", "partygames"], ["*"], async (args, rawMsg, interaction) => {
-  const plr = args[0];
-  const game = args[1] ?? "Party Games";
-  let time = args[2] ?? "lifetime";
+export default new Command(
+  ["party-games", "pg", "partygames"],
+  ["*"],
+  async (args, rawMsg, interaction) => {
+    const plr = args[0];
+    const game = args[1] ?? "Party Games";
+    let time = args[2] ?? "lifetime";
 
-  switch (time.toLowerCase()) {
-  case "d":
-  case "day":
-  case "dae":
-  case "daily":
-  case "today": {
-    time = "day";
-    break;
-  }
+    switch (time.toLowerCase()) {
+      case "d":
+      case "day":
+      case "dae":
+      case "daily":
+      case "today": {
+        time = "day";
+        break;
+      }
 
-  case "w":
-  case "week":
-  case "weak":
-  case "weekly":
-  case "weeekly": {
-    time = "weekly";
-    break;
-  }
+      case "w":
+      case "week":
+      case "weak":
+      case "weekly":
+      case "weeekly": {
+        time = "weekly";
+        break;
+      }
 
-  case "m":
-  case "monthly":
-  case "month":
-  case "mnth":
-  case "mnthly":
-  case "mon": {
-    time = "monthly";
-    break;
-  }
+      case "m":
+      case "monthly":
+      case "month":
+      case "mnth":
+      case "mnthly":
+      case "mon": {
+        time = "monthly";
+        break;
+      }
 
-  default: {
-    time = "lifetime";
-  }
-  }
+      default: {
+        time = "lifetime";
+      }
+    }
 
-  let acc;
-  let res;
-  if(interaction == undefined) {
-    res = await Database.timedAccount(plr, rawMsg.author.id, time);
-  } else {
-    if(interaction.isButton()) {
-      await interaction.deferUpdate();
-      res = await Database.timedAccount(plr, "", time);
-    } else if (interaction.isSelectMenu()) {
-      await interaction.deferUpdate();
-      res = await Database.timedAccount(plr, "", time);
+    let acc;
+    let res;
+    if (interaction == undefined) {
+      res = await Database.timedAccount(plr, rawMsg.author.id, time);
     } else {
-      await interaction.deferReply();
-      res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
+      if (interaction.isButton()) {
+        await interaction.deferUpdate();
+        res = await Database.timedAccount(plr, "", time);
+      } else if (interaction.isSelectMenu()) {
+        await interaction.deferUpdate();
+        res = await Database.timedAccount(plr, "", time);
+      } else {
+        await interaction.deferReply();
+        res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
+      }
     }
-  }
 
-  if(time == "lifetime") {
-    acc = res;
-  } else {
-    if(res?.timed == undefined) {
-      return nonDatabaseError(res?.acc?.name);
+    if (time == "lifetime") {
+      acc = res;
+    } else {
+      if (res?.timed == undefined) {
+        return nonDatabaseError(res?.acc?.name);
+      }
+      acc = AccountComparitor(res?.acc, res?.timed);
     }
-    acc = AccountComparitor(res?.acc, res?.timed);
-  }
 
-  if(acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
-  
-  const img = await PartyGamesImg(acc, game);
-  const menu = await MenuGenerator.partyGamesMenu(acc.uuid, game, time);
-  return new CommandResponse("", undefined, img, menu);
-}, 2500);
+    if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME")
+      return new CommandResponse("", ERROR_IGN_UNDEFINED);
+
+    const img = await PartyGamesImg(acc, game);
+    const menu = await MenuGenerator.partyGamesMenu(acc.uuid, game, time);
+    return new CommandResponse("", undefined, img, menu);
+  },
+  2500,
+);

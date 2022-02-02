@@ -1,24 +1,17 @@
+const { Guild, TextChannel, InvalidRequestWarningData } = require("discord.js");
+const fs = require("fs-extra");
 const cfg = require("hyarcade-config").fromJSON();
-const {
-  Guild,
-  TextChannel,
-  InvalidRequestWarningData
-} = require("discord.js");
 const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const BotRuntime = require("./BotRuntime");
-const roleHandler = require("./roleHandler");
-const fs = require("fs-extra");
-const Webhooks = require("./Utils/Webhooks");
-const SetPresence = require("./Utils/SetPresence");
 const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
+const SetPresence = require("./Utils/SetPresence");
+const Webhooks = require("./Utils/Webhooks");
+const roleHandler = require("./roleHandler");
 
 module.exports = class BotEvents {
-
-  static async rateLimit (rlInfo) {
-    const {
-      timeout
-    } = rlInfo;
+  static async rateLimit(rlInfo) {
+    const { timeout } = rlInfo;
     const str = `Bot rate limited\nTime : ${timeout}\nCause : ${rlInfo.method.toUpperCase()} - ${rlInfo.path}\n`;
     logger.err(str);
     try {
@@ -28,15 +21,15 @@ module.exports = class BotEvents {
     }
   }
 
-  static async messageDelete (msg) {
-    if(BotRuntime.botMode == "mw") {
-      if(msg.content.charAt(0) == ".") {
+  static async messageDelete(msg) {
+    if (BotRuntime.botMode == "mw") {
+      if (msg.content.charAt(0) == ".") {
         const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
         logger.warn(str);
         await Webhooks.logHook.send(str);
       }
     } else {
-      if(msg.content.charAt(0) == cfg.commandCharacter) {
+      if (msg.content.charAt(0) == cfg.commandCharacter) {
         const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
         logger.warn(str);
         await Webhooks.logHook.send(str);
@@ -44,7 +37,7 @@ module.exports = class BotEvents {
     }
   }
 
-  static async ready (mode) {
+  static async ready(mode) {
     BotRuntime.isBotInstance = true;
     BotRuntime.botMode = mode;
 
@@ -60,34 +53,35 @@ module.exports = class BotEvents {
     Webhooks.errHook = errHook;
     Webhooks.logHook = logHook;
     logger.info("Creating message copy hook");
-    Webhooks.commandHook = await (await (await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel)).fetchWebhooks()).first();
+    Webhooks.commandHook = await (
+      await (await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel)).fetchWebhooks()
+    ).first();
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");
-    const tus = trustedFile.toString().trim()
-      .split("\n");
+    const tus = trustedFile.toString().trim().split("\n");
     BotRuntime.tus = tus;
 
     logger.info("Selecting mode");
-    if(mode == "role") {
+    if (mode == "role") {
       await roleHandler(BotRuntime.client);
       BotRuntime.client.destroy();
 
       // eslint-disable-next-line no-undef
       process.exit(0);
-    } else if(BotRuntime.botMode == "slash") {
+    } else if (BotRuntime.botMode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
-    } else if(BotRuntime.botMode == "mini") {
+    } else if (BotRuntime.botMode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
-    } else if(BotRuntime.botMode == "mw") {
+    } else if (BotRuntime.botMode == "mw") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
-    } else if(BotRuntime.botMode == "test") {
+    } else if (BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
@@ -100,107 +94,109 @@ module.exports = class BotEvents {
     await SetPresence(BotRuntime.client, mode);
   }
 
-  static async heartBeat () {
+  static async heartBeat() {
     const runtime = Runtime.fromJSON();
     runtime[`${BotRuntime.botMode}HeartBeat`] = Date.now();
     await runtime.save();
     logger.info("Heart beat - I'm alive!");
 
-    if(runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
+    if (runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
       await roleHandler(BotRuntime.client);
       logger.out("Roles updated!");
       runtime.needRoleupdate = false;
       await runtime.save();
     }
 
-    if(BotRuntime.botMode == "mw") {
+    if (BotRuntime.botMode == "mw") {
       const NameUpdater = await import("./NameUpdater.mjs");
       await NameUpdater.default(BotRuntime.client);
     }
   }
 
-  static warn (info) {
+  static warn(info) {
     logger.warn(info);
   }
 
-  static invalidated () {
+  static invalidated() {
     logger.error("Discord session invalidated! Bot will most likely stop soon.");
   }
 
   /**
-   * 
-   * @param {Guild} guild 
+   *
+   * @param {Guild} guild
    */
-  static guildCreate (guild) {
-    Webhooks.logHook.send(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`);
+  static guildCreate(guild) {
+    Webhooks.logHook.send(
+      `Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`,
+    );
     logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
     logger.debug(`Guild owner: ${guild.ownerID}`);
     logger.debug(`Guild ID: ${guild.id}`);
   }
 
   /**
-   * 
-   * @param {Error} error 
+   *
+   * @param {Error} error
    */
-  static error (error) {
+  static error(error) {
     logger.err(`${error.name} : ${error.message}`);
     logger.err(`Current stack:\n${error.stack}`);
     Webhooks.errHook.send(ERROR_LOG(error, "unknown"));
   }
 
   /**
-   * 
-   * @param {TextChannel} channel 
+   *
+   * @param {TextChannel} channel
    */
-  static webhookUpdate (channel) {
+  static webhookUpdate(channel) {
     logger.debug(`${channel.guild.name}#${channel.name} had a webhook change`);
   }
 
   /**
-   * 
-   * @param {Guild} guild 
+   *
+   * @param {Guild} guild
    */
-  static guildUnavailable (guild) {
+  static guildUnavailable(guild) {
     logger.warn(`Guild ${guild.name} has become unavailable! Bot will no longer respond there.`);
   }
 
   /**
-   * 
-   * @param {InvalidRequestWarningData} warning 
+   *
+   * @param {InvalidRequestWarningData} warning
    */
-  static invalidRequestWarning (warning) {
+  static invalidRequestWarning(warning) {
     logger.warn(`An invalid request was made, this is number ${warning.count}!`);
   }
 
-  static async cyclePresence () {
+  static async cyclePresence() {
     logger.info("Cycling presence...");
     await SetPresence(BotRuntime.client, BotRuntime.botMode);
   }
 
-  static guildIntegrationsUpdate (guild) {
+  static guildIntegrationsUpdate(guild) {
     logger.debug(`${guild.name}'s integrations updated`);
   }
 
-  static shardDisconnect (event, id) {
+  static shardDisconnect(event, id) {
     logger.warn(`Shard ${id} has disconnected and will no longer reconnect!`);
     logger.warn(`Code : ${event.code} - ${event.reason}`);
   }
 
-  static shardError (error, shardId) {
+  static shardError(error, shardId) {
     logger.error(`Shard ${shardId} has encountered an error!`);
     logger.error(error.stack);
     Webhooks.errHook.send(ERROR_LOG(error, `Shard ${shardId} has encountered an error!`));
   }
 
-  static shardReady (id) {
+  static shardReady(id) {
     logger.info(`Shard ${id} is ready!`);
   }
 
-  static shardReconnecting (id) {
+  static shardReconnecting(id) {
     logger.out(`Shard ${id} is reconnecting, bot is unable to respond during this time`);
   }
 
-  static shardResume (id, replayedEvents) {
+  static shardResume(id, replayedEvents) {
     logger.out(`Shard ${id} has resumed succesfully with ${replayedEvents} replayed events.`);
   }
 };

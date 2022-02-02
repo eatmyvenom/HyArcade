@@ -1,13 +1,11 @@
 const config = require("hyarcade-config").fromJSON();
+const Json = require("hyarcade-utils/FileHandling/Json");
+const TimSort = require("timsort");
 const listDiffByProp = require("./utils/leaderboard/LBFromProp");
-const {
-  stringifyList
-} = require("./utils/leaderboard/ListUtils");
+const { stringifyList } = require("./utils/leaderboard/ListUtils");
+const stringLB = require("./utils/leaderboard/StringifyLB");
 const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
 const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
-const stringLB = require("./utils/leaderboard/StringifyLB");
-const TimSort = require("timsort");
-const Json = require("hyarcade-utils/FileHandling/Json");
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -16,20 +14,20 @@ const Json = require("hyarcade-utils/FileHandling/Json");
  * @param {number} maxamnt the maximum index to reach
  * @returns {string} Formatted list
  */
-async function txtPlayerList (list, maxamnt) {
+async function txtPlayerList(list, maxamnt) {
   let str = "";
   const len = maxamnt != undefined ? maxamnt : list.length;
-  for(let i = 0; i < len; i += 1) {
+  for (let i = 0; i < len; i += 1) {
     // don't print if player has 0 wins
-    if(list[i].wins < 1 && !config.printAllWins) continue;
+    if (list[i].wins < 1 && !config.printAllWins) continue;
 
     // this hack is because js has no real string formatting and its
     // not worth it to use wasm or node native for this
-    const num = (`000${i + 1}`).slice(-3);
+    const num = `000${i + 1}`.slice(-3);
 
-    const name = (`${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `).slice(
+    const name = `${list[i].name.slice(0, 1).toUpperCase() + list[i].name.slice(1)}                       `.slice(
       0,
-      17
+      17,
     );
     //         001) MonkeyCity17     : 5900
     str += `${num}) ${name}: ${list[i].wins}\n`;
@@ -44,7 +42,7 @@ async function txtPlayerList (list, maxamnt) {
  * @param {number} maxamnt Max amount of players
  * @returns {object[]} Final list
  */
-async function listNormal (name, maxamnt) {
+async function listNormal(name, maxamnt) {
   let thelist = await Json.read(`${name}.json`);
   thelist = thelist.slice(0, maxamnt);
   return thelist;
@@ -58,7 +56,7 @@ async function listNormal (name, maxamnt) {
  * @param {number} maxamnt Maximum accounts
  * @returns {object[]} Final list
  */
-async function listDiff (name, timetype, maxamnt) {
+async function listDiff(name, timetype, maxamnt) {
   return await listDiffByProp(name, "wins", timetype, maxamnt);
 }
 
@@ -69,7 +67,7 @@ async function listDiff (name, timetype, maxamnt) {
  * @param {number} maxamnt Maximum accounts
  * @returns {string} Stringified list
  */
-async function stringNormal (name, maxamnt) {
+async function stringNormal(name, maxamnt) {
   const list = await listNormal(name, maxamnt);
   return await txtPlayerList(list);
 }
@@ -82,7 +80,7 @@ async function stringNormal (name, maxamnt) {
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringDiff (name, timetype, maxamnt) {
+async function stringDiff(name, timetype, maxamnt) {
   const list = await listDiff(name, timetype, maxamnt);
   return await txtPlayerList(list, maxamnt);
 }
@@ -94,12 +92,12 @@ async function stringDiff (name, timetype, maxamnt) {
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringDaily (name, maxamnt) {
+async function stringDaily(name, maxamnt) {
   return await stringDiff(name, "day", maxamnt);
 }
 
 /**
- * 
+ *
  * @param {string} lbprop
  * @param {number} maxamnt
  * @param {string} timetype
@@ -107,9 +105,9 @@ async function stringDaily (name, maxamnt) {
  * @param {number} startingIndex
  * @returns {string} Stringified list
  */
-async function stringLBDiff (lbprop, maxamnt, timetype, category, startingIndex = 0) {
+async function stringLBDiff(lbprop, maxamnt, timetype, category, startingIndex = 0) {
   const list = await listDiffByProp("accounts", lbprop, timetype, 9999, category);
-  if(category == undefined) {
+  if (category == undefined) {
     TimSort.sort(list, (b, a) => (a[lbprop] ?? 0) - (b[lbprop] ?? 0));
   } else {
     TimSort.sort(list, (b, a) => (a[category]?.[lbprop] ?? 0) - (b[category]?.[lbprop] ?? 0));
@@ -123,7 +121,7 @@ async function stringLBDiff (lbprop, maxamnt, timetype, category, startingIndex 
  * @param {number} maxamnt
  * @returns {string} Stringified list
  */
-async function stringLBDaily (lbprop, maxamnt) {
+async function stringLBDaily(lbprop, maxamnt) {
   return await stringLBDiff(lbprop, maxamnt, "day");
 }
 

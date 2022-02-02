@@ -19,58 +19,55 @@ const { Message } = require("discord.js");
  * @param {string} author
  * @returns {CommandResponse | object}
  */
-async function checkCommands (rawMsg, command, args, author) {
+async function checkCommands(rawMsg, command, args, author) {
   const commands = await CommandStorage.getCommands();
   Logger.debug(`Parsing command ${rawMsg.content}`);
-  switch(command.toLowerCase()) {
-  case commands.MiniWalls.name.toLowerCase():
-  case "mw" : {
-    if (author == owner) {
-      return await commands.MiniWalls.execute(args, author, rawMsg);
+  switch (command.toLowerCase()) {
+    case commands.MiniWalls.name.toLowerCase():
+    case "mw": {
+      if (author == owner) {
+        return await commands.MiniWalls.execute(args, author, rawMsg);
+      }
+
+      return { res: "" };
     }
 
-    return { res: "" };
-  }
+    case commands.MiniWallsLB.name.toLowerCase():
+    case "mwlb": {
+      if (author == owner) {
+        return await commands.MiniWallsLB.execute(args, author, rawMsg);
+      }
 
-  case commands.MiniWallsLB.name.toLowerCase():
-  case "mwlb" : {
-    if (author == owner) {
-      return await commands.MiniWallsLB.execute(args, author, rawMsg);
+      return { res: "" };
     }
 
-    return { res: "" };
-  }
+    case commands.MiniWallsInvite.name.toLowerCase(): {
+      return { res: "" };
+    }
 
-  case commands.MiniWallsInvite.name.toLowerCase(): {
-    return { res: "" };
-  }
-
-
-  default: {
-    return await CommandStorage.execute(command.toLowerCase(), args, author, rawMsg);
-  }
+    default: {
+      return await CommandStorage.execute(command.toLowerCase(), args, author, rawMsg);
+    }
   }
 }
-
 
 /**
  * @param {Message} msg
  * @param {string} senderID
  * @returns {CommandResponse | object}
  */
-async function execute (msg, senderID) {
-  if(msg.content.startsWith(cfg.commandCharacter)) {
+async function execute(msg, senderID) {
+  if (msg.content.startsWith(cfg.commandCharacter)) {
     const cmdArr = msg.content.slice(cfg.commandCharacter.length).split(/\s/g);
     const res = await checkCommands(msg, cmdArr[0], cmdArr.slice(1), senderID);
-    if(res instanceof CommandResponse) {
+    if (res instanceof CommandResponse) {
       return res;
     }
     return new CommandResponse(res);
-
   }
   return;
 }
 
 export default {
-  execute
+  execute,
 };

@@ -2,8 +2,8 @@
 /* eslint-disable no-undef */
 
 const child_process = require("child_process");
-const Logger = require("hyarcade-logger");
 const fs = require("fs-extra");
+const Logger = require("hyarcade-logger");
 const BotExit = require("./src/events/BotExit");
 const BotStart = require("./src/events/BotStart");
 // eslint-disable-next-line no-undef
@@ -13,8 +13,8 @@ const args = process.argv;
  * @param {number} time
  * @returns {Promise}
  */
-function sleep (time) {
-  return new Promise((resolve) => {
+function sleep(time) {
+  return new Promise(resolve => {
     setTimeout(resolve, time);
   });
 }
@@ -32,25 +32,25 @@ let mw;
 /**
  *
  */
-async function main () {
+async function main() {
   try {
     Logger.info("Bots starting...");
     const ascii = (await fs.readFile("resources/hyarcade.ascii")).toString();
     Logger.info(ascii);
-    if(args[2] == "test") {
+    if (args[2] == "test") {
       Logger.info("Starting test arcade bot...");
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot", "test"], {
-        silent: false
+        silent: false,
       });
     } else {
       Logger.info("Starting arcade bot...");
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot"], {
-        silent: false
+        silent: false,
       });
       await sleep(5500);
       Logger.info("Mini walls bot starting...");
       mw = child_process.fork("./systems/discord/ShardManager.js", ["bot", "mw"], {
-        silent: false
+        silent: false,
       });
 
       mw.on("spawn", () => {
@@ -70,7 +70,7 @@ async function main () {
     Logger.err(e.stack);
   }
 
-  process.on("SIGINT", async (signal) => {
+  process.on("SIGINT", async signal => {
     await BotExit();
     arcade.removeAllListeners();
     mw.removeAllListeners();
@@ -86,10 +86,10 @@ async function main () {
 /**
  *
  */
-function restartMW () {
+function restartMW() {
   Logger.error("Mini walls bot crashed!");
   mw = child_process.fork("index.js", ["bot", "mw"], {
-    silent: false
+    silent: false,
   });
   mw.on("exit", restartMW);
 }
@@ -97,10 +97,10 @@ function restartMW () {
 /**
  *
  */
-function restartArcade () {
+function restartArcade() {
   Logger.error("Arcade bot crashed!");
   arcade = child_process.fork("index.js", ["bot"], {
-    silent: false
+    silent: false,
   });
   arcade.on("exit", restartArcade);
 }

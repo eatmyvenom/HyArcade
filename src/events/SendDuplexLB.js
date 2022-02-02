@@ -5,35 +5,31 @@ const Database = require("hyarcade-requests/Database");
  * @param {number} number
  * @returns {string}
  */
-function formatNum (number) {
+function formatNum(number) {
   return Intl.NumberFormat("en").format(number);
 }
 
-
 /**
- * 
- * @param {*} list 
- * @param {*} lbprop 
- * @param {*} category 
- * @param {*} maxamnt 
- * @param {*} startingIndex 
+ *
+ * @param {*} list
+ * @param {*} lbprop
+ * @param {*} category
+ * @param {*} maxamnt
+ * @param {*} startingIndex
  * @returns {*}
  */
-function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0) {
+function stringifyList(list, lbprop, category, maxamnt = 10, startingIndex = 0) {
   let str = "";
   const length = Math.min(maxamnt, list?.length ?? 0);
   const sizedList = list.slice(0, length);
 
   let propVal;
-  for(let i = startingIndex; i < sizedList.length; i += 1) {
-
+  for (let i = startingIndex; i < sizedList.length; i += 1) {
     propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
     // don't print if player has 0
-    if(!((propVal ?? 0) > 0)) continue;
+    if (!((propVal ?? 0) > 0)) continue;
 
-    const {
-      name
-    } = sizedList[i];
+    const { name } = sizedList[i];
 
     // eslint-disable-next-line prefer-template
     const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
@@ -51,7 +47,7 @@ function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0)
  * @param {string} time
  * @returns {Discord.MessageEmbed}
  */
-async function genEmbed (stat, category, limit, title, time) {
+async function genEmbed(stat, category, limit, title, time) {
   const lifeList = await Database.getLeaderboard(stat, category, undefined, true, false, limit);
   const lifeString = stringifyList(lifeList, stat, category, limit);
   const dayList = await Database.getLeaderboard(stat, category, time, true, false, limit);
@@ -66,7 +62,7 @@ async function genEmbed (stat, category, limit, title, time) {
   return embed;
 }
 
-module.exports = async function SendBasicLB (webhook, stat, category, limit, title, time) {
+module.exports = async function SendBasicLB(webhook, stat, category, limit, title, time) {
   const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     embeds: [await genEmbed(stat, category, limit, title, time)],

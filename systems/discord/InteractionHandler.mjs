@@ -1,26 +1,25 @@
-import Logger from "hyarcade-logger";
 import { createRequire } from "module";
+import Logger from "hyarcade-logger";
 import BotRuntime from "./BotRuntime.js";
+import CommandResponse from "./Utils/CommandResponse.js";
+import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_BLACKLIST, ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
+import Webhooks from "./Utils/Webhooks.js";
 import ButtonParser from "./interactions/Buttons/ButtonParser.js";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
 import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
 import registerAll from "./interactions/Utils/DeployCommands.mjs";
-import CommandResponse from "./Utils/CommandResponse.js";
-import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
-import { ERROR_BLACKLIST, ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
-import Webhooks from "./Utils/Webhooks.js";
 
 const require = createRequire(import.meta.url);
 const { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } = require("discord.js");
-
 
 /**
  * @param {string} id
  * @returns {Promise<boolean>}
  */
-async function isBlacklisted (id) {
+async function isBlacklisted(id) {
   const blacklist = await BotRuntime.getBlacklist();
   return blacklist.includes(id);
 }
@@ -29,7 +28,7 @@ async function isBlacklisted (id) {
  *
  * @param {CommandInteraction} interaction
  */
-async function logCmd (interaction) {
+async function logCmd(interaction) {
   await Webhooks.commandHook.send({
     embeds: [
       LOG_SLASH_COMMAND_USAGE(
@@ -38,7 +37,7 @@ async function logCmd (interaction) {
         interaction.commandName,
         interaction.guild?.name,
         interaction.channel?.id,
-        interaction.options?.data
+        interaction.options?.data,
       ),
     ],
   });
@@ -48,10 +47,9 @@ async function logCmd (interaction) {
  *
  * @param {CommandInteraction} interaction
  */
-async function commandHandler (interaction) {
-
-  if(await isBlacklisted(interaction?.user?.id)) {
-    await interaction.reply({ embeds: [ ERROR_BLACKLIST ], ephemeral: true });
+async function commandHandler(interaction) {
+  if (await isBlacklisted(interaction?.user?.id)) {
+    await interaction.reply({ embeds: [ERROR_BLACKLIST], ephemeral: true });
     return;
   }
 
@@ -61,11 +59,20 @@ async function commandHandler (interaction) {
   } catch (e) {
     try {
       Logger.err(e.stack);
-      await Webhooks.errHook.send({ embeds: [ERROR_LOG(e, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map((a) => `${a.name} : ${a.value}`))}`)] });
-      if(!interaction.deferred && !interaction.replied) {
-        await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      await Webhooks.errHook.send({
+        embeds: [
+          ERROR_LOG(
+            e,
+            `Error from /${interaction.commandName} ${JSON.stringify(
+              interaction.options.data.map(a => `${a.name} : ${a.value}`),
+            )}`,
+          ),
+        ],
+      });
+      if (!interaction.deferred && !interaction.replied) {
+        await interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true });
       } else {
-        await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+        await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
       }
       return;
     } catch (e) {
@@ -75,14 +82,14 @@ async function commandHandler (interaction) {
   }
 
   let res;
-  if(responseObj instanceof CommandResponse) {
+  if (responseObj instanceof CommandResponse) {
     res = responseObj;
   } else {
     res = new CommandResponse(responseObj);
   }
 
   try {
-    if(!interaction.deferred && !interaction.replied) {
+    if (!interaction.deferred && !interaction.replied) {
       await interaction.reply(res.toDiscord());
     } else {
       await interaction.followUp(res.toDiscord());
@@ -92,13 +99,20 @@ async function commandHandler (interaction) {
       Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
       Logger.err(e.stack);
       Webhooks.errHook.send({
-        embeds: [ ERROR_LOG(e, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``) ]
+        embeds: [
+          ERROR_LOG(
+            e,
+            `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(
+              interaction.options.data,
+            )}\``,
+          ),
+        ],
       });
 
-      if(!interaction.deferred && !interaction.replied) {
-        await interaction.reply({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+      if (!interaction.deferred && !interaction.replied) {
+        await interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true });
       } else {
-        await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+        await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
       }
       return;
     } catch (e) {
@@ -114,7 +128,7 @@ async function commandHandler (interaction) {
  *
  * @param {ButtonInteraction} interaction
  */
-async function logBtn (interaction) {
+async function logBtn(interaction) {
   await Webhooks.commandHook.send({
     embeds: [
       LOG_MESSAGE_COMPONENT_USAGE(
@@ -123,7 +137,7 @@ async function logBtn (interaction) {
         interaction.customId,
         interaction.values,
         interaction.guild?.name,
-        interaction.channel?.id
+        interaction.channel?.id,
       ),
     ],
   });
@@ -133,25 +147,25 @@ async function logBtn (interaction) {
  *
  * @param {ButtonInteraction} interaction
  */
-async function buttonHandler (interaction) {
-  if(await ForceOGuser(interaction)) {
+async function buttonHandler(interaction) {
+  if (await ForceOGuser(interaction)) {
     const updatedData = await ButtonParser(interaction);
 
-    if(updatedData == undefined) {
+    if (updatedData == undefined) {
       return;
     }
 
     try {
-      if(interaction.deferred) {
+      if (interaction.deferred) {
         await interaction.editReply(updatedData.toDiscord());
       } else {
         await interaction.update(updatedData.toDiscord());
       }
     } catch (e) {
       Logger.err(e.stack);
-      if(interaction.deferred) {
+      if (interaction.deferred) {
         try {
-          await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+          await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
         } catch (e) {
           Logger.err(e.stack);
         }
@@ -165,25 +179,25 @@ async function buttonHandler (interaction) {
  *
  * @param {SelectMenuInteraction} interaction
  */
-async function menuHandler (interaction) {
-  if(await ForceOGuser(interaction)) {
+async function menuHandler(interaction) {
+  if (await ForceOGuser(interaction)) {
     const updatedData = await MenuParser(interaction);
 
-    if(updatedData == undefined) {
+    if (updatedData == undefined) {
       return;
     }
 
     try {
-      if(interaction.deferred) {
+      if (interaction.deferred) {
         await interaction.editReply(updatedData.toDiscord());
       } else {
         await interaction.update(updatedData.toDiscord());
       }
     } catch (e) {
       Logger.err(e.stack);
-      if(interaction.deferred) {
+      if (interaction.deferred) {
         try {
-          await interaction.followUp({ embeds: [ ERROR_UNKNOWN ], ephemeral: true });
+          await interaction.followUp({ embeds: [ERROR_UNKNOWN], ephemeral: true });
         } catch (e) {
           Logger.err(e.stack);
         }
@@ -197,14 +211,14 @@ async function menuHandler (interaction) {
  *
  * @param {Interaction} interaction
  */
-async function interactionHandler (interaction) {
-  if(interaction.isCommand()) {
+async function interactionHandler(interaction) {
+  if (interaction.isCommand()) {
     await commandHandler(interaction);
-  } else if(interaction.isButton()) {
+  } else if (interaction.isButton()) {
     await buttonHandler(interaction);
-  } else if(interaction.isSelectMenu()) {
+  } else if (interaction.isSelectMenu()) {
     await menuHandler(interaction);
-  } else if(interaction.isAutocomplete()) {
+  } else if (interaction.isAutocomplete()) {
     await AutoCompleter(interaction);
   }
 }

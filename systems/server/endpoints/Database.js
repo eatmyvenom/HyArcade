@@ -1,31 +1,30 @@
-const Logger = require("hyarcade-logger");
-const cfg = require("hyarcade-config").fromJSON();
-const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
+const { stringifyStream, parseChunked } = require("@discoveryjs/json-ext");
+const cfg = require("hyarcade-config").fromJSON();
+const Logger = require("hyarcade-logger");
 const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {FileCache} fileCache 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
-  if(req.method == "GET") {
+  if (req.method == "GET") {
     const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
-    
+
     const largeReq = false;
-    if(largeReq && req.headers.authorization != cfg.dbPass) {
+    if (largeReq && req.headers.authorization != cfg.dbPass) {
       res.statusCode = 403;
       res.end();
     } else {
-
       let data;
-      if(file != "accounts") {
+      if (file != "accounts") {
         data = fileCache[file];
       } else {
         data = Object.values(fileCache.indexedAccounts);
@@ -35,8 +34,8 @@ module.exports = async (req, res, fileCache) => {
       if (!acceptEncoding) {
         acceptEncoding = "";
       }
-      
-      if(data == undefined) {
+
+      if (data == undefined) {
         res.statusCode = 404;
         res.end();
       }
@@ -44,10 +43,10 @@ module.exports = async (req, res, fileCache) => {
       const cb = () => {};
       let stream;
 
-      if(fields == null) {
+      if (fields == null) {
         stream = stringifyStream(data);
       } else {
-        stream = stringifyStream(data,  fields.split(","));
+        stream = stringifyStream(data, fields.split(","));
       }
 
       if (/\bdeflate\b/.test(acceptEncoding)) {
@@ -64,9 +63,9 @@ module.exports = async (req, res, fileCache) => {
         pipeline(stream, res, cb);
       }
     }
-  } else if(req.method == "POST") {
+  } else if (req.method == "POST") {
     let json = {};
-    if(req.headers.authorization == cfg.dbPass) {
+    if (req.headers.authorization == cfg.dbPass) {
       try {
         json = await parseChunked(req);
       } catch (e) {
@@ -75,7 +74,7 @@ module.exports = async (req, res, fileCache) => {
         res.end();
       }
 
-      if(url.searchParams.get("path") == "accounts") {
+      if (url.searchParams.get("path") == "accounts") {
         Logger.log("Saving new accounts");
         const old = fileCache[url.searchParams.get("path")];
 

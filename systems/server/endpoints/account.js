@@ -1,42 +1,40 @@
-const {
-  URL
-} = require("url");
+const { URL } = require("url");
 const cfg = require("hyarcade-config").fromJSON();
 const Logger = require("hyarcade-logger");
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Account = require("hyarcade-requests/types/Account");
-const AccountResolver = require("../AccountResolver");
+const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const AccountResolver = require("../AccountResolver");
 let fakeFile;
 
-
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
-
-  if(fakeFile == undefined) {
+  if (fakeFile == undefined) {
     fakeFile = await Json.read("fakeStats.json");
   }
 
   const url = new URL(req.url, `https://${req.headers.host}`);
-  if(req.method == "GET") {
+  if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
     let acc = await AccountResolver(fileCache, url);
 
-    if(acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
+    if (acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
-      res.end(JSON.stringify({
-        error: "ACC_UNDEFINED"
-      }));
+      res.end(
+        JSON.stringify({
+          error: "ACC_UNDEFINED",
+        }),
+      );
       return;
     }
 
-    if(acc.updateTime < (Date.now() - 600000)) {
+    if (acc.updateTime < Date.now() - 600000) {
       Logger.verbose(`Updating data for ${acc.name}`);
       const nacc = new Account(acc.name, 0, acc.uuid);
       Object.assign(nacc, acc);
@@ -47,7 +45,7 @@ module.exports = async (req, res, fileCache) => {
         Logger.err(e.stack);
       }
 
-      if(Object.keys(fakeFile).includes(nacc.uuid)) {
+      if (Object.keys(fakeFile).includes(nacc.uuid)) {
         Logger.log(`Overwriting data for ${nacc.name}`);
         Object.assign(nacc, fakeFile[nacc.uuid]);
       }
@@ -59,11 +57,11 @@ module.exports = async (req, res, fileCache) => {
 
     res.write(JSON.stringify(acc));
     res.end();
-  } else if(req.method == "POST") {
+  } else if (req.method == "POST") {
     let data = "";
     let json = {};
-    if(req.headers.authorization == cfg.dbPass) {
-      req.on("data", (d) => data += d);
+    if (req.headers.authorization == cfg.dbPass) {
+      req.on("data", d => (data += d));
       req.on("end", async () => {
         json = JSON.parse(data);
 

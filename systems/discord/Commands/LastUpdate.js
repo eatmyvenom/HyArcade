@@ -1,14 +1,14 @@
-const Command = require("hyarcade-structures/Discord/Command");
-const fs = require("fs-extra");
 const { MessageEmbed } = require("discord.js");
+const fs = require("fs-extra");
+const Command = require("hyarcade-structures/Discord/Command");
 
 /**
- * 
+ *
  * @returns {object}
  */
-async function lastUpdateHandler () {
+async function lastUpdateHandler() {
   let time;
-  if(fs.existsSync("timeupdate")) {
+  if (fs.existsSync("timeupdate")) {
     time = Date.parse(await (await fs.readFile("timeupdate")).toString());
   } else {
     time = Date.now();
@@ -16,14 +16,20 @@ async function lastUpdateHandler () {
 
   time = Math.floor(time / 1000);
 
-  const embed = new MessageEmbed().setTitle("Update time")
+  const embed = new MessageEmbed()
+    .setTitle("Update time")
     .setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`)
     .setColor(0x00b37b);
 
   return {
     res: "",
-    embed
+    embed,
   };
 }
 
-module.exports = new Command(["lastupdate", "catlock", "timeupdate", "updatetime", "update-time"], ["*"], lastUpdateHandler, 2500);
+module.exports = new Command(
+  ["lastupdate", "catlock", "timeupdate", "updatetime", "update-time"],
+  ["*"],
+  lastUpdateHandler,
+  2500,
+);

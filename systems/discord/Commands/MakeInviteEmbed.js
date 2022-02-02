@@ -1,6 +1,4 @@
-const {
-  MessageEmbed, TextChannel
-} = require("discord.js");
+const { MessageEmbed, TextChannel } = require("discord.js");
 const Command = require("hyarcade-structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 
@@ -9,7 +7,7 @@ const BotRuntime = require("../BotRuntime");
  * @param {string} link
  * @returns {object}
  */
-function makeField (name, link) {
+function makeField(name, link) {
   return {
     name,
     value: `[Server Invite](${link})`,
@@ -17,7 +15,7 @@ function makeField (name, link) {
   };
 }
 
-module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
+module.exports = new Command("mkinv", ["%trusted%"], async args => {
   const channelID = args[0];
   const msgID = args[1];
 
@@ -51,17 +49,17 @@ module.exports = new Command("mkinv", ["%trusted%"], async (args) => {
       makeField("<:ArcadeBot:840086063258927115> HyArcade", "https://discord.gg/6kFBVDcRd5"),
     ]);
 
-  if(msgID == undefined) {
+  if (msgID == undefined) {
     await channel.send({
-      embeds: [embed]
+      embeds: [embed],
     });
   } else {
     const message = await channel.messages.fetch(msgID);
     await message.edit({
-      embeds: [embed]
+      embeds: [embed],
     });
   }
   return {
-    res: "list created"
+    res: "list created",
   };
 });

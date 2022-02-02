@@ -5,19 +5,27 @@ const Account = require("hyarcade-requests/types/Account");
  * @param {number} number
  * @returns {string}
  */
-function f (number) {
+function f(number) {
   return Intl.NumberFormat("en").format(number);
 }
 
 /**
- * 
- * @param {Account} acc 
+ *
+ * @param {Account} acc
  * @param {MessageEmbed} embed
  * @returns {MessageEmbed}
  */
-module.exports = function CaptureTheWool (acc, embed) {
-  embed.addField("Stats", `**- Kills** (\`${f(acc.captureTheWool.kills)}\`)\n**- Captures** (\`${f(acc.captureTheWool.woolCaptures)}\`)`);
-  embed.addField("Info", `**- AP** (\`${f(acc.arcadeAchievments.captureTheWool.apEarned)} / ${f(acc.arcadeAchievments.captureTheWool.apAvailable)}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.captureTheWool)}\`)`);
+module.exports = function CaptureTheWool(acc, embed) {
+  embed.addField(
+    "Stats",
+    `**- Kills** (\`${f(acc.captureTheWool.kills)}\`)\n**- Captures** (\`${f(acc.captureTheWool.woolCaptures)}\`)`,
+  );
+  embed.addField(
+    "Info",
+    `**- AP** (\`${f(acc.arcadeAchievments.captureTheWool.apEarned)} / ${f(
+      acc.arcadeAchievments.captureTheWool.apAvailable,
+    )}\`)\n**- Challenges** (\`${f(acc.arcadeChallenges.captureTheWool)}\`)`,
+  );
 
   return embed;
 };

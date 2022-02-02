@@ -1,19 +1,17 @@
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
 const { mojangRequest } = require("hyarcade-requests");
+const Account = require("hyarcade-requests/types/Account");
 
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 
 /**
- * 
- * @param {FileCache} fileCache 
- * @param {URL} url 
+ *
+ * @param {FileCache} fileCache
+ * @param {URL} url
  * @returns {Account}
  */
-async function AccountResolver (fileCache, url) {
-  const {
-    indexedAccounts
-  } = fileCache;
+async function AccountResolver(fileCache, url) {
+  const { indexedAccounts } = fileCache;
 
   const accounts = Object.values(indexedAccounts);
   accounts.sort((b, a) => a.importance - b.importance);
@@ -23,25 +21,24 @@ async function AccountResolver (fileCache, url) {
   const discid = url.searchParams.get("discid");
   let acc;
 
-  if(ign != null) {
+  if (ign != null) {
     Logger.verbose(`Using ign "${ign}"`);
-    acc = accounts.find((a) => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
-  } else if(uuid != null) {
+    acc = accounts.find(a => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
+  } else if (uuid != null) {
     Logger.verbose(`Using uuid ${uuid}`);
     acc = indexedAccounts[uuid?.toLowerCase()];
-  } else if(discid != null) {
+  } else if (discid != null) {
     Logger.verbose(`Using discord id ${discid}`);
     uuid = fileCache.disclist[discid];
 
     acc = indexedAccounts[uuid?.toLowerCase()];
   }
 
-
-  if(acc == undefined && ign != null) {
-    acc = accounts.find((a) => {
-      if(a.nameHist && a.nameHist.length > 0 && (a?.importance ?? 0) > 9500) {
-        for(const name of a.nameHist) {
-          if(name.toLowerCase().startsWith(ign.toLowerCase())) {
+  if (acc == undefined && ign != null) {
+    acc = accounts.find(a => {
+      if (a.nameHist && a.nameHist.length > 0 && (a?.importance ?? 0) > 9500) {
+        for (const name of a.nameHist) {
+          if (name.toLowerCase().startsWith(ign.toLowerCase())) {
             return true;
           }
         }
@@ -50,10 +47,10 @@ async function AccountResolver (fileCache, url) {
     });
   }
 
-  if(acc == undefined) {
+  if (acc == undefined) {
     Logger.verbose("Fetching account data from hypixel.");
-    if(uuid == null) {
-      uuid = await mojangRequest.getUUID(ign) ?? null;
+    if (uuid == null) {
+      uuid = (await mojangRequest.getUUID(ign)) ?? null;
     }
 
     if (uuid != null) {
@@ -69,7 +66,7 @@ async function AccountResolver (fileCache, url) {
     }
   }
 
-  if(acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {
+  if (acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {
     acc = undefined;
   }
 

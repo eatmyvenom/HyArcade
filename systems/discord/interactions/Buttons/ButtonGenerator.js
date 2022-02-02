@@ -1,10 +1,7 @@
-const {
-  MessageButton,
-  MessageActionRow
-} = require("discord.js");
+const { MessageButton, MessageActionRow } = require("discord.js");
 
 module.exports = class ButtonGenerator {
-  static async getLBButtons (currentIndex, lb, time) {
+  static async getLBButtons(currentIndex, lb, time) {
     const left = new MessageButton()
       .setCustomId(`lb:${lb}:${time}:${currentIndex - 10}`)
       .setLabel("    ⟵")
@@ -15,7 +12,7 @@ module.exports = class ButtonGenerator {
       .setLabel("⟶    ")
       .setStyle("SECONDARY");
 
-    if(currentIndex - 10 < 0) {
+    if (currentIndex - 10 < 0) {
       left.setDisabled(true);
     }
 
@@ -24,33 +21,35 @@ module.exports = class ButtonGenerator {
     return row;
   }
 
-  static async getEZ () {
-    const ez = new MessageButton().setCustomId("ez:null")
-      .setLabel("EZ")
-      .setStyle("SECONDARY");
+  static async getEZ() {
+    const ez = new MessageButton().setCustomId("ez:null").setLabel("EZ").setStyle("SECONDARY");
 
     const row = new MessageActionRow().addComponents(ez);
 
     return row;
   }
 
-  static async getZombies (currentGame, uuid) {
-    const o = new MessageButton().setCustomId(`z:${uuid}:o`)
+  static async getZombies(currentGame, uuid) {
+    const o = new MessageButton()
+      .setCustomId(`z:${uuid}:o`)
       .setLabel("Overall")
       .setStyle("PRIMARY")
       .setDisabled(currentGame == "o");
 
-    const aa = new MessageButton().setCustomId(`z:${uuid}:aa`)
+    const aa = new MessageButton()
+      .setCustomId(`z:${uuid}:aa`)
       .setLabel("Alien Arcadium")
       .setStyle("SECONDARY")
       .setDisabled(currentGame == "aa");
 
-    const bb = new MessageButton().setCustomId(`z:${uuid}:bb`)
+    const bb = new MessageButton()
+      .setCustomId(`z:${uuid}:bb`)
       .setLabel("Bad Blood")
       .setStyle("SECONDARY")
       .setDisabled(currentGame == "bb");
 
-    const de = new MessageButton().setCustomId(`z:${uuid}:de`)
+    const de = new MessageButton()
+      .setCustomId(`z:${uuid}:de`)
       .setLabel("Dead End")
       .setStyle("SECONDARY")
       .setDisabled(currentGame == "de");
@@ -60,23 +59,27 @@ module.exports = class ButtonGenerator {
     return row;
   }
 
-  static async getMiw (currentTime, uuid) {
-    const lifetime = new MessageButton().setCustomId(`mw:${uuid}:l`)
+  static async getMiw(currentTime, uuid) {
+    const lifetime = new MessageButton()
+      .setCustomId(`mw:${uuid}:l`)
       .setLabel("Lifetime")
       .setStyle("PRIMARY")
       .setDisabled(currentTime == "lifetime");
 
-    const day = new MessageButton().setCustomId(`mw:${uuid}:d`)
+    const day = new MessageButton()
+      .setCustomId(`mw:${uuid}:d`)
       .setLabel("Daily")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "day");
 
-    const weekly = new MessageButton().setCustomId(`mw:${uuid}:w`)
+    const weekly = new MessageButton()
+      .setCustomId(`mw:${uuid}:w`)
       .setLabel("Weekly")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "weekly");
 
-    const monthly = new MessageButton().setCustomId(`mw:${uuid}:m`)
+    const monthly = new MessageButton()
+      .setCustomId(`mw:${uuid}:m`)
       .setLabel("Monthly")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "monthly");
@@ -86,23 +89,27 @@ module.exports = class ButtonGenerator {
     return [row];
   }
 
-  static async getTopGames (currentTime, uuid) {
-    const lifetime = new MessageButton().setCustomId(`t:${uuid}:l`)
+  static async getTopGames(currentTime, uuid) {
+    const lifetime = new MessageButton()
+      .setCustomId(`t:${uuid}:l`)
       .setLabel("Lifetime")
       .setStyle("SUCCESS")
       .setDisabled(currentTime == "lifetime");
 
-    const day = new MessageButton().setCustomId(`t:${uuid}:d`)
+    const day = new MessageButton()
+      .setCustomId(`t:${uuid}:d`)
       .setLabel("Daily")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "day");
 
-    const weekly = new MessageButton().setCustomId(`t:${uuid}:w`)
+    const weekly = new MessageButton()
+      .setCustomId(`t:${uuid}:w`)
       .setLabel("Weekly")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "weekly");
 
-    const monthly = new MessageButton().setCustomId(`t:${uuid}:m`)
+    const monthly = new MessageButton()
+      .setCustomId(`t:${uuid}:m`)
       .setLabel("Monthly")
       .setStyle("SECONDARY")
       .setDisabled(currentTime == "monthly");

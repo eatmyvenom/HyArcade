@@ -1,10 +1,10 @@
 const process = require("process");
 const Discord = require("discord.js");
-const BotRuntime = require("./BotRuntime");
 const config = require("hyarcade-config").fromJSON();
 const Runtime = require("hyarcade-config/Runtime").fromJSON();
-const BotEvents = require("./BotEvents");
 const logger = require("hyarcade-logger");
+const BotEvents = require("./BotEvents");
+const BotRuntime = require("./BotRuntime");
 
 const fullIntents = [
   Discord.Intents.FLAGS.GUILDS,
@@ -27,23 +27,23 @@ const mwIntents = [
  * Execute the discord bot
  *
  */
-module.exports = function doBot () {
+module.exports = function doBot() {
   const mode = process.argv[3];
   let client;
-  if(mode == "mini") {
+  if (mode == "mini") {
     client = new Discord.Client({
       intents: lesserIntents,
       allowedMentions: {
         parse: [],
-        repliedUser: false
+        repliedUser: false,
       },
     });
-  } else if(mode == "mw") {
+  } else if (mode == "mw") {
     client = new Discord.Client({
       intents: mwIntents,
       allowedMentions: {
         parse: [],
-        repliedUser: false
+        repliedUser: false,
       },
     });
   } else if (mode == "slash") {
@@ -51,7 +51,7 @@ module.exports = function doBot () {
       intents: lesserIntents,
       allowedMentions: {
         parse: [],
-        repliedUser: false
+        repliedUser: false,
       },
     });
   } else {
@@ -59,7 +59,7 @@ module.exports = function doBot () {
       intents: fullIntents,
       allowedMentions: {
         parse: [],
-        repliedUser: false
+        repliedUser: false,
       },
     });
   }
@@ -68,17 +68,15 @@ module.exports = function doBot () {
     BotRuntime.client = client;
     await BotEvents.ready(mode);
 
-    if(mode == undefined || mode == "mw" || mode == "test") {
+    if (mode == undefined || mode == "mw" || mode == "test") {
       client.on("messageDelete", BotEvents.messageDelete);
-      
+
       logger.debug("Registering message event");
       const messageHandler = await import("./messageHandler.mjs");
-      client.on("messageCreate", (msg) => {
-        messageHandler.default(msg)
-          .catch(logger.err);
+      client.on("messageCreate", msg => {
+        messageHandler.default(msg).catch(logger.err);
       });
     }
-
   });
 
   client.on("rateLimit", BotEvents.rateLimit);
@@ -95,14 +93,14 @@ module.exports = function doBot () {
   client.on("shardReconnecting", BotEvents.shardReconnecting);
   client.on("shardResume", BotEvents.shardResume);
 
-  if(Runtime.bot != "backup") {
-    if(mode == "mini") {
+  if (Runtime.bot != "backup") {
+    if (mode == "mini") {
       logger.info("Logging in to micro arcade module");
       client.login(config.discord.miniToken);
-    } else if(mode == "mw") {
+    } else if (mode == "mw") {
       logger.info("Logging in to mini walls module");
       client.login(config.discord.mwToken);
-    } else if(mode == "test") {
+    } else if (mode == "test") {
       logger.info("Logging in to testing bot");
       client.login(config.discord.testToken);
     } else {

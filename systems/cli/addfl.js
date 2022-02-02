@@ -1,11 +1,11 @@
 const AddFriends = require("../datagen/AddFriends");
 
 /**
- * 
- * @param {string[]} args 
+ *
+ * @param {string[]} args
  * @returns {*}
  */
-async function main (args) {
+async function main(args) {
   await AddFriends(args[3]);
 }
 

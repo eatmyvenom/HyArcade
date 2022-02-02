@@ -1,10 +1,10 @@
 const dataGeneration = require("../../src/dataGeneration");
 
 /**
- * 
+ *
  * @returns {*}
  */
-async function main () {
+async function main() {
   await dataGeneration.saveBoosters();
 }
 

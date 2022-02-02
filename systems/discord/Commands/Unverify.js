@@ -1,19 +1,19 @@
 const { Interaction } = require("discord.js");
 const Command = require("hyarcade-structures/Discord/Command");
-const BotRuntime = require("../BotRuntime");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const BotRuntime = require("../BotRuntime");
 
 /**
- * 
- * @param {*} args 
- * @param {*} rawMsg 
- * @param {Interaction} interaction 
+ *
+ * @param {*} args
+ * @param {*} rawMsg
+ * @param {Interaction} interaction
  * @returns {CommandResponse}
  */
-async function unverify (args, rawMsg, interaction) {
+async function unverify(args, rawMsg, interaction) {
   let disclist = await BotRuntime.getFromDB("disclist");
 
-  if(Object.keys(disclist).includes(interaction.user.id)) {
+  if (Object.keys(disclist).includes(interaction.user.id)) {
     disclist[interaction.user.id] = undefined;
     await BotRuntime.writeToDB("disclist", disclist);
     disclist = null;

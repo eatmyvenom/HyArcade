@@ -2,14 +2,14 @@ const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
 
-const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {FileCache} fileCache 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {FileCache} fileCache
  */
 module.exports = async (req, res, fileCache) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
@@ -22,7 +22,7 @@ module.exports = async (req, res, fileCache) => {
   const max = Math.min(url.searchParams.get("max") ?? 200, 1000);
   const filter = url.searchParams.get("filter");
 
-  if(req.method == "GET") {
+  if (req.method == "GET") {
     const accs = await GenericLeaderboard(category, lbprop, timePeriod, min, reverse, max, filter, fileCache);
 
     let acceptEncoding = req.headers["accept-encoding"];
@@ -35,19 +35,18 @@ module.exports = async (req, res, fileCache) => {
 
     s._read = () => {};
 
-    if(!min) {
+    if (!min) {
       s.push(JSON.stringify(accs));
     } else {
       let requiredKeys = [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop];
 
       let realProp = lbprop;
-      if(realProp?.startsWith(".")) {
-        if(realProp.includes("[")) {
+      if (realProp?.startsWith(".")) {
+        if (realProp.includes("[")) {
           realProp = realProp.replace(/\[/g, ".").replace(/\]/g, "");
         }
         requiredKeys = requiredKeys.concat(realProp.split("."));
       }
-
 
       s.push(JSON.stringify(accs, requiredKeys));
     }

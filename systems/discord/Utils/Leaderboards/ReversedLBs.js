@@ -33,5 +33,5 @@ module.exports = {
     fastest_time_30_zombies_deadend_rip: true,
     fastest_time_30_zombies_deadend_hard: true,
     fastest_time_30_zombies_alienarcadium_normal: true,
-  }
+  },
 };

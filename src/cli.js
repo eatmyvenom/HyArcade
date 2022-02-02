@@ -1,23 +1,19 @@
-const {
-  stringNormal,
-  stringDaily,
-  addAccounts
-} = require("./listUtils");
-const mojangRequest = require("hyarcade-requests/mojangRequest");
-const dataGeneration = require("./dataGeneration");
-const webRequest = require("hyarcade-requests/webRequest");
-const Runtime = require("hyarcade-config/Runtime");
 const process = require("process");
-const { HypixelApi } = require("hyarcade-requests");
-const args = process.argv;
+const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
+const { HypixelApi } = require("hyarcade-requests");
+const mojangRequest = require("hyarcade-requests/mojangRequest");
+const webRequest = require("hyarcade-requests/webRequest");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const dataGeneration = require("./dataGeneration");
+const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
+const args = process.argv;
 
 /**
  * Add a new account to the database
  *
  */
-async function newAcc () {
+async function newAcc() {
   const nameArr = args.slice(2, -1);
   await addAccounts(nameArr);
 }
@@ -25,11 +21,11 @@ async function newAcc () {
 /**
  *
  */
-async function linkDiscord () {
+async function linkDiscord() {
   const player = args[3];
   const discord = args[4];
   let uuid = player;
-  if(player.length < 16) {
+  if (player.length < 16) {
     uuid = await mojangRequest.getUUID(player);
   }
   const disclist = await Json("./disclist.json");
@@ -41,14 +37,14 @@ async function linkDiscord () {
  * Create a new player with the specified accounts
  *
  */
-async function newPlayer () {
+async function newPlayer() {
   const name = args[3];
   const alts = args.slice(4);
 
   // construct object
   const playerObj = {
     name,
-    accs: alts
+    accs: alts,
   };
 
   // add object to list
@@ -64,7 +60,7 @@ async function newPlayer () {
  * Create a new guild from the guild a player is in
  *
  */
-async function newGuild () {
+async function newGuild() {
   const playerUUID = args[3];
 
   // get data from hypixel
@@ -72,12 +68,10 @@ async function newGuild () {
 
   // create the actual guild object
   const id = gldInfo.guild._id;
-  const {
-    name
-  } = gldInfo.guild;
+  const { name } = gldInfo.guild;
   const gldObj = {
     id,
-    name
+    name,
   };
 
   // add object to list
@@ -94,7 +88,7 @@ async function newGuild () {
  *
  * @param {string} name
  */
-async function logNormal (name) {
+async function logNormal(name) {
   logger.out(await stringNormal(name));
 }
 
@@ -103,7 +97,7 @@ async function logNormal (name) {
  *
  * @param {string} name
  */
-async function logDaily (name) {
+async function logDaily(name) {
   logger.out(await stringDaily(name));
 }
 
@@ -112,7 +106,7 @@ async function logDaily (name) {
  *
  * @param {string[]} args
  */
-async function log (args) {
+async function log(args) {
   const logName = args[3];
   const str = await stringNormal(logName);
 
@@ -124,7 +118,7 @@ async function log (args) {
  *
  * @param {string[]} args
  */
-async function logD (args) {
+async function logD(args) {
   const logName = args[3];
   const str = await stringDaily(logName);
 
@@ -136,7 +130,7 @@ async function logD (args) {
  *
  * @param {string[]} args
  */
-async function getUUIDCli (args) {
+async function getUUIDCli(args) {
   const name = args[3];
   const uuid = await mojangRequest.getUUIDRaw(name);
   logger.out(`${name}'s uuid is ${uuid}`);
@@ -145,7 +139,7 @@ async function getUUIDCli (args) {
 /**
  * @param {string[]} args
  */
-async function addGuildMembers (args) {
+async function addGuildMembers(args) {
   const uuid = args[3];
   await dataGeneration.addGuild(uuid);
 }
@@ -153,7 +147,7 @@ async function addGuildMembers (args) {
 /**
  * @param {string[]} args
  */
-async function addGIDMembers (args) {
+async function addGIDMembers(args) {
   const uuid = args[3];
   await dataGeneration.addGuildID(uuid);
 }
@@ -161,7 +155,7 @@ async function addGIDMembers (args) {
 /**
  * @param {string[]} args
  */
-async function addGIDsMembers (args) {
+async function addGIDsMembers(args) {
   const uuid = args.slice(3);
   await dataGeneration.addGuildIDs(uuid);
 }
@@ -169,7 +163,7 @@ async function addGIDsMembers (args) {
 /**
  * @returns {object}
  */
-async function getServerStatus () {
+async function getServerStatus() {
   const hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
   const hyStatus = JSON.parse(hyStatusRaw.data);
   const mojangStatusRaw = await webRequest("https://status.mojang.com/check");

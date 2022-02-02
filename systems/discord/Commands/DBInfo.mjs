@@ -6,7 +6,7 @@ import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import BotRuntime from "../BotRuntime.js";
 
 export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {
-  if(interaction != undefined) {
+  if (interaction != undefined) {
     await interaction.deferReply();
   }
 
@@ -16,11 +16,16 @@ export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, i
   const info = await Database.info();
 
   const embed = new MessageEmbed()
-    .setAuthor({ name: "Hyarcade Database info", iconURL: BotRuntime.client.user.avatarURL(), url: "https://hyarcade.xyz/" })
-    .setDescription(`**Accounts** : \`${info.accs}\`\n` +
+    .setAuthor({
+      name: "Hyarcade Database info",
+      iconURL: BotRuntime.client.user.avatarURL(),
+      url: "https://hyarcade.xyz/",
+    })
+    .setDescription(
+      `**Accounts** : \`${info.accs}\`\n` +
         `**Linked Accounts** : \`${info.links}\`\n\n` +
-        `**Guilds** : \`${info.guilds}\`\n\n` + 
-        `**Memory** : \`${Math.floor(info.mem)}mb\`\n`
+        `**Guilds** : \`${info.guilds}\`\n\n` +
+        `**Memory** : \`${Math.floor(info.mem)}mb\`\n`,
     )
     .setColor(0x8c54fe);
 

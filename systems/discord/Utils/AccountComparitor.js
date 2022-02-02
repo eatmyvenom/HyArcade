@@ -1,16 +1,16 @@
 const Account = require("hyarcade-requests/types/Account");
 
 /**
- * 
- * @param {*} oldObj 
- * @param {*} newObj 
+ *
+ * @param {*} oldObj
+ * @param {*} newObj
  * @returns {*}
  */
-function subtractNumbers (oldObj, newObj) {
-  for(const val in oldObj) {
-    if(typeof oldObj[val] == "number") {
+function subtractNumbers(oldObj, newObj) {
+  for (const val in oldObj) {
+    if (typeof oldObj[val] == "number") {
       oldObj[val] -= newObj?.[val] ?? 0;
-    } else if(typeof oldObj?.[val] == "object") {
+    } else if (typeof oldObj?.[val] == "object") {
       oldObj[val] = subtractNumbers(oldObj?.[val] ?? 0, newObj?.[val] ?? 0);
     }
   }
@@ -19,12 +19,12 @@ function subtractNumbers (oldObj, newObj) {
 }
 
 /**
- * 
- * @param {Account} oldAcc 
- * @param {Account} newAcc 
+ *
+ * @param {Account} oldAcc
+ * @param {Account} newAcc
  * @returns {Account}
  */
-function AccountComparitor (oldAcc, newAcc) {
+function AccountComparitor(oldAcc, newAcc) {
   return subtractNumbers(oldAcc, newAcc);
 }
 

@@ -5,6 +5,6 @@ const roleHandler = require("../roleHandler");
 module.exports = new Command("updroles", ["%trusted%"], async () => {
   await roleHandler(BotRuntime.client);
   return {
-    res: "Roles updated successfully"
+    res: "Roles updated successfully",
   };
 });

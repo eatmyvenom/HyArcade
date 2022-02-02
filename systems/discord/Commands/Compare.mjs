@@ -1,16 +1,16 @@
+import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
-import Database from "hyarcade-requests/Database.js";
 
 /**
- * 
- * @param {string[]} args 
- * @param {object} rawMsg 
- * @param {object} interaction 
+ *
+ * @param {string[]} args
+ * @param {object} rawMsg
+ * @param {object} interaction
  * @returns {object}
  */
-async function compareHandler (args, rawMsg, interaction) {
+async function compareHandler(args, rawMsg, interaction) {
   if (args.length < 3) {
     return { res: "", embed: ERROR_ARGS_LENGTH(3) };
   }
@@ -35,7 +35,7 @@ async function compareHandler (args, rawMsg, interaction) {
 
   let hasEmojiPerms = false;
 
-  if(channel.permissionsFor(channel.guild.roles.everyone).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
+  if (channel.permissionsFor(channel.guild.roles.everyone).has("USE_EXTERNAL_EMOJIS")) hasEmojiPerms = true;
 
   const embed = AdvancedEmbeds.compareStats(acc1, acc2, game, hasEmojiPerms);
   return { res: "", embed };

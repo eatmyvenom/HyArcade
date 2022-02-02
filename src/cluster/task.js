@@ -1,25 +1,21 @@
-const Webhook = require("../events/webhook");
-const {
-  stringNormal,
-  stringDaily
-} = require("../listUtils");
-const dataGen = require("../dataGeneration");
-
-const lists = require("../listParser");
-let accounts = undefined;
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const dataGen = require("../dataGeneration");
+const Webhook = require("../events/webhook");
+const lists = require("../listParser");
+const { stringNormal, stringDaily } = require("../listUtils");
+
+let accounts = undefined;
 
 /**
  * Generate the data for all accounts
  *
  * @returns {string[]} files changed by this task
  */
-async function accs () {
-
-  if(!(await HypixelApi.key()).success) {
+async function accs() {
+  if (!(await HypixelApi.key()).success) {
     return [];
   }
 
@@ -34,8 +30,8 @@ async function accs () {
  *
  * @returns {string[]} files changed by this task
  */
-async function glds () {
-  if(!(await HypixelApi.key()).success) {
+async function glds() {
+  if (!(await HypixelApi.key()).success) {
     return [];
   }
 
@@ -46,16 +42,18 @@ async function glds () {
   let temparray;
 
   const chunk = 120;
-  for(i = 0, j = guilds.length; i < j; i += chunk) {
+  for (i = 0, j = guilds.length; i < j; i += chunk) {
     temparray = guilds.slice(i, i + chunk);
     await Promise.all(
-      temparray.map(async (guild) => {
+      temparray.map(async guild => {
         await guild.updateWins();
-      })
+      }),
     );
   }
 
-  guilds.sort((a, b) => {return b.wins - a.wins;});
+  guilds.sort((a, b) => {
+    return b.wins - a.wins;
+  });
   logger.info(`Saving guild data for ${guilds.length} guilds`);
   await Json.write("guild.json", guilds);
   return ["guild.json"];
@@ -66,14 +64,14 @@ async function glds () {
  *
  * @returns {string[]} files changed by this task
  */
-async function stats () {
+async function stats() {
   return await [].concat(await accs(), await glds());
 }
 
 /**
  * @returns {string[]}
  */
-async function addLeaderboards () {
+async function addLeaderboards() {
   await dataGen.addLeaderboards();
   return ["accounts.json"];
 }
@@ -83,7 +81,7 @@ async function addLeaderboards () {
  *
  * @returns {string[]} files changed by this task
  */
-async function status () {
+async function status() {
   await dataGen.genStatus();
   return await ["status.json", "status.txt"];
 }
@@ -91,7 +89,7 @@ async function status () {
 /**
  * @returns {string[]}
  */
-async function statusTxtSorted () {
+async function statusTxtSorted() {
   await dataGen.statusTxtSorted();
   return await ["status.txt"];
 }
@@ -103,7 +101,7 @@ async function statusTxtSorted () {
  * @param {number} maxamnt
  * @returns {string[]} files changed by this task
  */
-async function webhook (type, maxamnt) {
+async function webhook(type, maxamnt) {
   await Webhook.send(await stringNormal(type, maxamnt));
   await Webhook.send(await stringDaily(type, maxamnt));
 
@@ -114,7 +112,7 @@ async function webhook (type, maxamnt) {
  * Run the discord bot
  *
  */
-async function discord () {
+async function discord() {
   const DiscordBot = require("../../systems/discord/bot");
   await DiscordBot();
 }

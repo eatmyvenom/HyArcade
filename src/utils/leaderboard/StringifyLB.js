@@ -1,20 +1,17 @@
-const {
-  stringifyList,
-  getList
-} = require("./ListUtils");
 const TimSort = require("timsort");
+const { stringifyList, getList } = require("./ListUtils");
 
 /**
  * @param {string} str
  * @returns {number} The number primitive
  */
-function numberify (str) {
+function numberify(str) {
   return Number(str);
 }
 
-module.exports = async function stringLB (lbprop, maxamnt, category, startingIndex = 0) {
+module.exports = async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
   const list = await getList();
-  if(category == undefined) {
+  if (category == undefined) {
     TimSort.sort(list, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
   } else {
     TimSort.sort(list, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));

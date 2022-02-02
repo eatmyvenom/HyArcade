@@ -1,11 +1,11 @@
 const cli = require("../../src/cli");
 
 /**
- * 
- * @param {string[]} args 
+ *
+ * @param {string[]} args
  * @returns {*}
  */
-async function main (args) {
+async function main(args) {
   await cli.addGIDsMembers(args);
 }
 

@@ -1,8 +1,8 @@
 const logger = require("hyarcade-logger");
-const isValidIGN = require("./utils/ignValidator");
-const Account = require("hyarcade-requests/types/Account");
-const { getUUID } = require("hyarcade-requests/mojangRequest");
 const Database = require("hyarcade-requests/Database");
+const { getUUID } = require("hyarcade-requests/mojangRequest");
+const Account = require("hyarcade-requests/types/Account");
+const isValidIGN = require("./utils/ignValidator");
 
 /**
  * Add a list of accounts to another list
@@ -10,18 +10,18 @@ const Database = require("hyarcade-requests/Database");
  * @param {string[]} names
  * @returns {null}
  */
-module.exports = async function addAccounts (names) {
+module.exports = async function addAccounts(names) {
   const accs = await Database.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
 
   let res = "";
   const newAccs = [];
   const nameArr = names;
-  for(let name of nameArr) {
+  for (let name of nameArr) {
     let uuid;
-    if(name.length == 32 || name.length == 36) {
+    if (name.length == 32 || name.length == 36) {
       uuid = name.replace(/-/g, "").toLowerCase();
     } else {
-      if(!isValidIGN(name)) {
+      if (!isValidIGN(name)) {
         logger.warn(`${name} is not a valid IGN and is being ignored!`);
         res += `${name} is not a valid IGN!\n`;
         continue;
@@ -29,14 +29,14 @@ module.exports = async function addAccounts (names) {
       uuid = await getUUID(name);
     }
 
-    if(uuid == undefined) {
+    if (uuid == undefined) {
       res += `${name} does not exist!\n`;
       continue;
     }
 
-    const dupeAcc = accs.find((a) => a.uuid == uuid);
+    const dupeAcc = accs.find(a => a.uuid == uuid);
 
-    if(dupeAcc) {
+    if (dupeAcc) {
       res += `Refusing to add duplicate "${dupeAcc.name}"\n`;
       logger.warn(`Refusing to add duplicate "${dupeAcc.name}"`);
       continue;
@@ -51,9 +51,9 @@ module.exports = async function addAccounts (names) {
     res += `${name} with ${acc.arcadeWins} wins added.\n`;
   }
 
-  newAccs.filter((a) => a.uuid != undefined);
+  newAccs.filter(a => a.uuid != undefined);
 
-  if(newAccs.length > 0) {
+  if (newAccs.length > 0) {
     await Database.writeDB("accounts", newAccs);
   }
 

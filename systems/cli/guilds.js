@@ -1,10 +1,10 @@
 const task = require("../../src/cluster/task");
 
 /**
- * 
+ *
  * @returns {*}
  */
-async function main () {
+async function main() {
   await task.guilds();
 }
 

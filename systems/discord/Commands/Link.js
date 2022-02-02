@@ -1,28 +1,28 @@
+const { addAccount } = require("hyarcade-requests/Database");
+const mojangRequest = require("hyarcade-requests/mojangRequest");
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("hyarcade-structures/Discord/Command");
-const mojangRequest = require("hyarcade-requests/mojangRequest");
 const BotRuntime = require("../BotRuntime");
-const { addAccount } = require("hyarcade-requests/Database");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const {
   ERROR_IGN_UNDEFINED,
   INFO_LINK_SUCCESS,
   ERROR_PLAYER_PREVIOUSLY_LINKED,
-  ERROR_ACCOUNT_PREVIOUSLY_LINKED
+  ERROR_ACCOUNT_PREVIOUSLY_LINKED,
 } = require("../Utils/Embeds/StaticEmbeds");
 
-module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
-  if(args.length < 1) {
+module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
+  if (args.length < 1) {
     return {
       res: "",
-      embed: ERROR_ARGS_LENGTH(1)
+      embed: ERROR_ARGS_LENGTH(1),
     };
   }
   let player = args[0];
   let discord = args[1];
   let disclist = await BotRuntime.getFromDB("disclist");
 
-  if((`${player}`).startsWith("https://")) {
+  if (`${player}`.startsWith("https://")) {
     const channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
     const msgID = player.slice(player.lastIndexOf("/") + 1);
 
@@ -36,12 +36,12 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
   let uuid;
 
   uuid = player.length == 32 ? player : await mojangRequest.getUUID(player);
-  if((`${uuid}`).length != 32) {
+  if (`${uuid}`.length != 32) {
     const noexistEmbed = ERROR_IGN_UNDEFINED;
 
     return {
       res: "",
-      embed: noexistEmbed
+      embed: noexistEmbed,
     };
   }
 
@@ -51,28 +51,28 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
 
   uuid = acc.uuid;
 
-  if(args.includes("-f")) {
+  if (args.includes("-f")) {
     disclist[discord] = uuid;
     await BotRuntime.writeToDB("disclist", disclist);
     disclist = null;
     const embed = INFO_LINK_SUCCESS;
     return {
       res: "",
-      embed
+      embed,
     };
   }
 
-  if(disclist[discord]) {
+  if (disclist[discord]) {
     const embed = ERROR_PLAYER_PREVIOUSLY_LINKED;
     return {
       res: "",
-      embed
+      embed,
     };
-  } else if(Object.values(disclist).find((u) => u == uuid) != undefined) {
+  } else if (Object.values(disclist).find(u => u == uuid) != undefined) {
     const embed = ERROR_ACCOUNT_PREVIOUSLY_LINKED;
     return {
       res: "",
-      embed
+      embed,
     };
   }
 
@@ -82,6 +82,6 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async (args) => {
   const embed = INFO_LINK_SUCCESS;
   return {
     res: "",
-    embed
+    embed,
   };
 });

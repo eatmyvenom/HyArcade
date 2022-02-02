@@ -1,21 +1,19 @@
+const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const Command = require("hyarcade-structures/Discord/Command");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
+const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
+const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const Database = require("hyarcade-requests/Database");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
 
 /**
- * 
- * @param {Account} acc 
+ *
+ * @param {Account} acc
  * @returns {boolean}
  */
-async function isHacker (acc) {
+async function isHacker(acc) {
   const hackers = await BotRuntime.getHackerlist();
   return hackers.includes(acc?.uuid?.toLowerCase());
 }
@@ -24,9 +22,9 @@ async function isHacker (acc) {
  * @param {number} n
  * @returns {string}
  */
-function formatR (n) {
+function formatR(n) {
   let r = Math.round(n * 1000) / 1000;
-  if(isNaN(r)) {
+  if (isNaN(r)) {
     r = "N/A";
   } else {
     r = r.toFixed(3);
@@ -38,72 +36,72 @@ function formatR (n) {
  * @param {string} str
  * @returns {string}
  */
-function formatN (str) {
+function formatN(str) {
   const r = Intl.NumberFormat("en").format(Number(str));
   return r;
 }
 
 /**
- * 
- * @param {string[]} args 
- * @param {object} rawMsg 
- * @param {object} interaction 
+ *
+ * @param {string[]} args
+ * @param {object} rawMsg
+ * @param {object} interaction
  * @returns {object}
  */
-async function miniWallsStats (args, rawMsg, interaction) {
+async function miniWallsStats(args, rawMsg, interaction) {
   let plr = args[0];
   let time = args[1] ?? "lifetime";
 
-  if(args.length == 1) {
+  if (args.length == 1) {
     time = "lifetime";
-    if(plr.length == 1) {
+    if (plr.length == 1) {
       time = plr;
       plr = "!";
     }
   }
 
   switch (time.toLowerCase()) {
-  case "d":
-  case "day":
-  case "dae":
-  case "daily":
-  case "today": {
-    time = "day";
-    break;
-  }
+    case "d":
+    case "day":
+    case "dae":
+    case "daily":
+    case "today": {
+      time = "day";
+      break;
+    }
 
-  case "w":
-  case "week":
-  case "weak":
-  case "weekly":
-  case "weeekly": {
-    time = "weekly";
-    break;
-  }
+    case "w":
+    case "week":
+    case "weak":
+    case "weekly":
+    case "weeekly": {
+      time = "weekly";
+      break;
+    }
 
-  case "m":
-  case "monthly":
-  case "month":
-  case "mnth":
-  case "mnthly":
-  case "mon": {
-    time = "monthly";
-    break;
-  }
+    case "m":
+    case "monthly":
+    case "month":
+    case "mnth":
+    case "mnthly":
+    case "mon": {
+      time = "monthly";
+      break;
+    }
 
-  default: {
-    time = "lifetime";
-  }
+    default: {
+      time = "lifetime";
+    }
   }
 
   let acc;
   let timed;
-  if(interaction == undefined || interaction.isButton()) {
+  if (interaction == undefined || interaction.isButton()) {
     const res = await Database.timedAccount(plr, rawMsg?.author?.id ?? "", time);
-    if(time != "lifetime") {
+    if (time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
-      if(timed == undefined) {
+      if (timed == undefined) {
         return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr));
       }
     } else {
@@ -111,10 +109,10 @@ async function miniWallsStats (args, rawMsg, interaction) {
     }
   } else {
     const res = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
-    if(time != "lifetime") {
+    if (time != "lifetime") {
       acc = res?.acc;
       timed = res?.timed;
-      if(timed == undefined) {
+      if (timed == undefined) {
         return new CommandResponse("", ERROR_WAS_NOT_IN_DATABASE(acc?.name ?? plr));
       }
     } else {
@@ -122,18 +120,18 @@ async function miniWallsStats (args, rawMsg, interaction) {
     }
   }
 
-  if(await isHacker(acc)) {
+  if (await isHacker(acc)) {
     return {};
   }
 
-  if(acc?.uuid == undefined || acc?.name == "INVALID-NAME" || acc?.miniWalls == undefined) {
+  if (acc?.uuid == undefined || acc?.name == "INVALID-NAME" || acc?.miniWalls == undefined) {
     return {
       res: "",
-      embed: ERROR_IGN_UNDEFINED
+      embed: ERROR_IGN_UNDEFINED,
     };
   }
 
-  if(timed != undefined) {
+  if (timed != undefined) {
     acc.miniWalls.wins -= timed?.miniWalls?.wins ?? 0;
     acc.miniWalls.kills -= timed?.miniWalls?.kills ?? 0;
     acc.miniWalls.finalKills -= timed?.miniWalls?.finalKills ?? 0;
@@ -168,20 +166,50 @@ async function miniWallsStats (args, rawMsg, interaction) {
   const aaColor = "&b";
 
   let y = 250;
-  img.drawMcText(`${winColor}Wins: ${formatN(wins ?? 0)}`, leftX, y += increment, size, leftAlign);
-  img.drawMcText(`${killColor}Kills: ${formatN(kills ?? 0)}`, leftX, y += increment, size, leftAlign);
-  img.drawMcText(`${killColor}Finals: ${formatN(finalKills ?? 0)}`, leftX, y += increment, size, leftAlign);
-  img.drawMcText(`${witherColor}Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, y += increment, size, leftAlign);
-  img.drawMcText(`${witherColor}Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, y += increment, size, leftAlign);
-  img.drawMcText(`${deathColor}Deaths: ${formatN(deaths ?? 0)}`, leftX, y += increment, size, leftAlign);
+  img.drawMcText(`${winColor}Wins: ${formatN(wins ?? 0)}`, leftX, (y += increment), size, leftAlign);
+  img.drawMcText(`${killColor}Kills: ${formatN(kills ?? 0)}`, leftX, (y += increment), size, leftAlign);
+  img.drawMcText(`${killColor}Finals: ${formatN(finalKills ?? 0)}`, leftX, (y += increment), size, leftAlign);
+  img.drawMcText(
+    `${witherColor}Wither Damage: ${formatN(witherDamage ?? 0)}`,
+    leftX,
+    (y += increment),
+    size,
+    leftAlign,
+  );
+  img.drawMcText(`${witherColor}Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, (y += increment), size, leftAlign);
+  img.drawMcText(`${deathColor}Deaths: ${formatN(deaths ?? 0)}`, leftX, (y += increment), size, leftAlign);
 
   y = 250;
-  img.drawMcText(`${killColor}F+K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, y += increment, size, rightAlign);
-  img.drawMcText(`${killColor}K/D: ${formatR((kills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
-  img.drawMcText(`${killColor}F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
-  img.drawMcText(`${witherColor}WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
-  img.drawMcText(`${witherColor}WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, y += increment, size, rightAlign);
-  img.drawMcText(`${aaColor}Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, y += increment, size, rightAlign);
+  img.drawMcText(
+    `${killColor}F+K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`,
+    rightX,
+    (y += increment),
+    size,
+    rightAlign,
+  );
+  img.drawMcText(`${killColor}K/D: ${formatR((kills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
+  img.drawMcText(`${killColor}F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
+  img.drawMcText(
+    `${witherColor}WD/D: ${formatR((witherDamage ?? 0) / deaths)}`,
+    rightX,
+    (y += increment),
+    size,
+    rightAlign,
+  );
+  img.drawMcText(
+    `${witherColor}WK/D: ${formatR((witherKills ?? 0) / deaths)}`,
+    rightX,
+    (y += increment),
+    size,
+    rightAlign,
+  );
+  img.drawMcText(
+    `${aaColor}Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`,
+    rightX,
+    (y += increment),
+    size,
+    rightAlign,
+  );
 
   return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
 }

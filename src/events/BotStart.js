@@ -2,9 +2,9 @@ const Discord = require("discord.js");
 const config = require("hyarcade-config").fromJSON();
 
 /**
- * 
+ *
  */
-module.exports = async function StatusStart () {
+module.exports = async function StatusStart() {
   const hook = new Discord.WebhookClient({ url: config.discord.statusHook });
 
   const embed = new Discord.MessageEmbed()

@@ -1,22 +1,22 @@
+const fs = require("fs-extra");
 const Logger = require("hyarcade-logger");
 const MergeDatabase = require("hyarcade-utils/Database/MergeDatabase");
-const updateAccounts = require("../datagen/updateAccounts");
-const fs = require("fs-extra");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+const updateAccounts = require("../datagen/updateAccounts");
 
 let lock = false;
 
 /**
  * @param {FileCache} fileCache
  */
-async function autoUpdater (fileCache) {
-  if(!lock && fileCache.ready) {
+async function autoUpdater(fileCache) {
+  if (!lock && fileCache.ready) {
     lock = true;
     Logger.info("Updating database");
     const oldAccounts = fileCache.accounts;
 
     let newAccounts;
-    if(fs.existsSync("force")) {
+    if (fs.existsSync("force")) {
       Logger.debug("Forcing full update");
       try {
         newAccounts = await updateAccounts(oldAccounts, true, true);
@@ -26,7 +26,7 @@ async function autoUpdater (fileCache) {
         return;
       }
 
-      if(fs.existsSync("force")) {
+      if (fs.existsSync("force")) {
         await fs.rm("force");
       }
     } else {

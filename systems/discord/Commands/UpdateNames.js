@@ -5,6 +5,6 @@ module.exports = new Command("updatenames", ["%trusted%"], async () => {
   const NameUpdater = await import("../NameUpdater.mjs");
   await NameUpdater.default(BotRuntime.client);
   return {
-    res: "Names updated successfully"
+    res: "Names updated successfully",
   };
 });

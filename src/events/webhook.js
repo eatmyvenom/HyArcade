@@ -1,15 +1,13 @@
 /* eslint-disable no-use-before-define */
-const config = require("hyarcade-config").fromJSON();
 const Discord = require("discord.js");
-const {
-  MessageEmbed
-} = Discord;
-const listUtils = require("../listUtils");
+const config = require("hyarcade-config").fromJSON();
+const { MessageEmbed } = Discord;
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
-const FakeLB = require("../../systems/discord/images/FakeLB");
 const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const FakeLB = require("../../systems/discord/images/FakeLB");
+const listUtils = require("../listUtils");
 const MiniWallsLeaderboard = require("../utils/leaderboard/MiniWallsLeaderboard");
 
 /**
@@ -20,8 +18,8 @@ const MiniWallsLeaderboard = require("../utils/leaderboard/MiniWallsLeaderboard"
  * @param {string} [webhookToken=config.webhook.token]
  * @returns {null}
  */
-async function sendToDiscord (content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
-  if(content == "") {
+async function sendToDiscord(content = "", webhookID = config.webhook.id, webhookToken = config.webhook.token) {
+  if (content == "") {
     logger.err("Refusing to send empty message to webhook!");
     return;
   }
@@ -40,7 +38,7 @@ async function sendToDiscord (content = "", webhookID = config.webhook.id, webho
  * @param {string} content
  * @param {object} webhook
  */
-async function sendBasic (content, webhook) {
+async function sendBasic(content, webhook) {
   const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     content,
@@ -55,7 +53,7 @@ async function sendBasic (content, webhook) {
  * @param {Discord.MessageEmbed} embed
  * @param {object} webhook
  */
-async function sendBasicEmbed (content, embed, webhook) {
+async function sendBasicEmbed(content, embed, webhook) {
   try {
     const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
     await hook.send({
@@ -77,7 +75,7 @@ async function sendBasicEmbed (content, embed, webhook) {
  * @param {string} [webhookID=config.webhook.id]
  * @param {string} [webhookToken=config.webhook.token]
  */
-async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
+async function sendToEmbedDiscord(txt, list, webhookID = config.webhook.id, webhookToken = config.webhook.token) {
   const hook = new Discord.WebhookClient({ id: webhookID, token: webhookToken });
   await hook.send({
     embeds: [generateEmbed(list)],
@@ -93,7 +91,7 @@ async function sendToEmbedDiscord (txt, list, webhookID = config.webhook.id, web
  * @param {MessageEmbed} embed
  * @param {object} webhook
  */
-async function sendEmbed (embed, webhook) {
+async function sendEmbed(embed, webhook) {
   const hook = new Discord.WebhookClient({ id: webhook.id, token: webhook.token });
   await hook.send({
     embeds: [embed],
@@ -108,28 +106,28 @@ async function sendEmbed (embed, webhook) {
 /**
  *
  */
-async function sendHSEmbed () {
+async function sendHSEmbed() {
   await sendEmbed(await genHSEmbed(), config.otherHooks.HS);
 }
 
 /**
  *
  */
-async function sendHSWEmbed () {
+async function sendHSWEmbed() {
   await sendEmbed(await genHSWEmbed(), config.otherHooks.HS);
 }
 
 /**
  *
  */
-async function sendHSMEmbed () {
+async function sendHSMEmbed() {
   await sendEmbed(await genHSMEmbed(), config.otherHooks.HS);
 }
 
 /**
  *
  */
-async function sendPGWEmbed () {
+async function sendPGWEmbed() {
   const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
   await hook.send({
     embeds: [await genPGWEmbed()],
@@ -144,7 +142,7 @@ async function sendPGWEmbed () {
 /**
  *
  */
-async function sendPGMEmbed () {
+async function sendPGMEmbed() {
   const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
   await hook.send({
     embeds: [await genPGMEmbed()],
@@ -159,7 +157,7 @@ async function sendPGMEmbed () {
 /**
  *
  */
-async function sendTOKillEmbed () {
+async function sendTOKillEmbed() {
   const hook = new Discord.WebhookClient({ id: config.otherHooks.TO.id, token: config.otherHooks.TO.token });
   await hook.send({
     embeds: [await genTOKillEmbed()],
@@ -174,7 +172,7 @@ async function sendTOKillEmbed () {
 /**
  *
  */
-async function sendDWKillEmbed () {
+async function sendDWKillEmbed() {
   const hook = new Discord.WebhookClient({ id: config.otherHooks.DW.id, token: config.otherHooks.DW.token });
   await hook.send({
     embeds: [await genDWKillEmbed()],
@@ -193,17 +191,15 @@ async function sendDWKillEmbed () {
  * @param {*} list
  * @returns {*}
  */
-function generateEmbed (list) {
-  const filteredList = list.filter((item) => item.wins > 0);
+function generateEmbed(list) {
+  const filteredList = list.filter(item => item.wins > 0);
 
-  const embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard")
-    .setColor(0x44a3e7)
-    .setTimestamp(Date.now());
+  const embed = new Discord.MessageEmbed().setTitle("Daily Leaderboard").setColor(0x44a3e7).setTimestamp(Date.now());
 
   let str = "";
 
   const len = Math.min(filteredList.length, 24);
-  for(let i = 0; i < len; i += 1) {
+  for (let i = 0; i < len; i += 1) {
     str += `${i + 1}) ${filteredList[i].name} - ${filteredList[i].wins}\n`;
   }
   embed.setDescription(str);
@@ -212,29 +208,26 @@ function generateEmbed (list) {
 }
 
 /**
- * 
- * @param {*} list 
- * @param {*} lbprop 
- * @param {*} category 
- * @param {*} maxamnt 
- * @param {*} startingIndex 
+ *
+ * @param {*} list
+ * @param {*} lbprop
+ * @param {*} category
+ * @param {*} maxamnt
+ * @param {*} startingIndex
  * @returns {*}
  */
-function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0) {
+function stringifyList(list, lbprop, category, maxamnt = 10, startingIndex = 0) {
   let str = "";
   const length = Math.min(maxamnt, list?.length ?? 0);
   const sizedList = list.slice(0, length);
 
   let propVal;
-  for(let i = startingIndex; i < sizedList.length; i += 1) {
-
+  for (let i = startingIndex; i < sizedList.length; i += 1) {
     propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
     // don't print if player has 0 wins
-    if(!((propVal ?? 0) > 0)) continue;
+    if (!((propVal ?? 0) > 0)) continue;
 
-    const {
-      name
-    } = sizedList[i];
+    const { name } = sizedList[i];
 
     // eslint-disable-next-line prefer-template
     const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
@@ -244,11 +237,10 @@ function stringifyList (list, lbprop, category, maxamnt = 10, startingIndex = 0)
   return str.replace(/\\?_/g, "\\_");
 }
 
-
 /**
  * @returns {Promise}
  */
-async function sendPGEmbed () {
+async function sendPGEmbed() {
   const lifeWinsList = await Database.getLeaderboard("wins", "partyGames", undefined, true);
   const dayWinsList = await Database.getLeaderboard("wins", "partyGames", "day", true);
   const lifeWins = stringifyList(lifeWinsList, "wins", "partyGames", 25);
@@ -284,7 +276,6 @@ async function sendPGEmbed () {
     .setTimestamp(Date.now())
     .addField("------------- Lifetime -------------", lifeS, true)
     .addField("--------------- Daily --------------", dayS, true);
-  
 
   const hook = new Discord.WebhookClient({ id: config.webhook.id, token: config.webhook.token });
   await hook.send({
@@ -298,7 +289,7 @@ async function sendPGEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genTOKillEmbed () {
+async function genTOKillEmbed() {
   const killList = await Database.getLeaderboard("kills", "throwOut", undefined, true);
   const alltime = stringifyList(killList, "kills", "throwOut", 10);
 
@@ -314,7 +305,7 @@ async function genTOKillEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genDWKillEmbed () {
+async function genDWKillEmbed() {
   const killList = await Database.getLeaderboard("kills", "dragonWars", undefined, true);
   const alltime = stringifyList(killList, "kills", "dragonWars", 10);
 
@@ -330,7 +321,7 @@ async function genDWKillEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genPGWEmbed () {
+async function genPGWEmbed() {
   const week = await listUtils.stringLBDiff("wins", 25, "weekly", "partyGames");
 
   const embed = new Discord.MessageEmbed()
@@ -345,7 +336,7 @@ async function genPGWEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genPGMEmbed () {
+async function genPGMEmbed() {
   const month = await listUtils.stringLBDiff("wins", 25, "monthly", "partyGames");
 
   const embed = new Discord.MessageEmbed()
@@ -360,7 +351,7 @@ async function genPGMEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genHSEmbed () {
+async function genHSEmbed() {
   const lifeList = await Database.getLeaderboard("wins", "hypixelSays", undefined, true);
   const alltime = stringifyList(lifeList, "wins", "hypixelSays", 10);
   const dayList = await Database.getLeaderboard("wins", "hypixelSays", "day", true);
@@ -379,7 +370,7 @@ async function genHSEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genHSWEmbed () {
+async function genHSWEmbed() {
   const week = await listUtils.stringLBDiff("wins", 25, "weekly", "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
@@ -394,7 +385,7 @@ async function genHSWEmbed () {
 /**
  * @returns {Discord.MessageEmbed}
  */
-async function genHSMEmbed () {
+async function genHSMEmbed() {
   const month = await listUtils.stringLBDiff("wins", 25, "monthly", "hypixelSays");
 
   const embed = new Discord.MessageEmbed()
@@ -413,62 +404,62 @@ async function genHSMEmbed () {
  * @param {FileCache} fileCache
  * @returns {Promise<object>}
  */
-async function getLB (prop, timetype, limit, fileCache) {
+async function getLB(prop, timetype, limit, fileCache) {
   let res = [];
   let time;
 
-  switch(timetype) {
-  case "d":
-  case "day":
-  case "daily": {
-    time = "Daily";
-    if(fileCache != undefined) {
-      res = await MiniWallsLeaderboard(fileCache, prop, "day");
-    } else {
-      res = await Database.getMWLeaderboard(prop, "day", fileCache);
+  switch (timetype) {
+    case "d":
+    case "day":
+    case "daily": {
+      time = "Daily";
+      if (fileCache != undefined) {
+        res = await MiniWallsLeaderboard(fileCache, prop, "day");
+      } else {
+        res = await Database.getMWLeaderboard(prop, "day", fileCache);
+      }
+      res = res.slice(0, limit);
+      break;
     }
-    res = res.slice(0, limit);
-    break;
-  }
 
-  case "w":
-  case "week":
-  case "weak":
-  case "weekly": {
-    time = "Weekly";
-    if(fileCache != undefined) {
-      res = await MiniWallsLeaderboard(fileCache, prop, "weekly");
-    } else {
-      res = await Database.getMWLeaderboard(prop, "weekly", fileCache);
+    case "w":
+    case "week":
+    case "weak":
+    case "weekly": {
+      time = "Weekly";
+      if (fileCache != undefined) {
+        res = await MiniWallsLeaderboard(fileCache, prop, "weekly");
+      } else {
+        res = await Database.getMWLeaderboard(prop, "weekly", fileCache);
+      }
+      res = res.slice(0, limit);
+      break;
     }
-    res = res.slice(0, limit);
-    break;
-  }
 
-  case "m":
-  case "mon":
-  case "month":
-  case "monthly": {
-    time = "Monthly";
-    if(fileCache != undefined) {
-      res = await MiniWallsLeaderboard(fileCache, prop, "monthly");
-    } else {
-      res = await Database.getMWLeaderboard(prop, "monthly", fileCache);
+    case "m":
+    case "mon":
+    case "month":
+    case "monthly": {
+      time = "Monthly";
+      if (fileCache != undefined) {
+        res = await MiniWallsLeaderboard(fileCache, prop, "monthly");
+      } else {
+        res = await Database.getMWLeaderboard(prop, "monthly", fileCache);
+      }
+      res = res.slice(0, limit);
+      break;
     }
-    res = res.slice(0, limit);
-    break;
-  }
 
-  default: {
-    time = "Lifetime";
-    if(fileCache != undefined) {
-      res = await MiniWallsLeaderboard(fileCache, prop, undefined);
-    } else {
-      res = await Database.getMWLeaderboard(prop, undefined, fileCache);
+    default: {
+      time = "Lifetime";
+      if (fileCache != undefined) {
+        res = await MiniWallsLeaderboard(fileCache, prop, undefined);
+      } else {
+        res = await Database.getMWLeaderboard(prop, undefined, fileCache);
+      }
+      res = res.slice(0, limit);
+      break;
     }
-    res = res.slice(0, limit);
-    break;
-  }
   }
 
   return { res, time };
@@ -481,7 +472,7 @@ async function getLB (prop, timetype, limit, fileCache) {
  * @param {FileCache} fileCache
  * @returns {Discord.MessageEmbed}
  */
-async function genMiWLB (prop, timetype, limit, fileCache) {
+async function genMiWLB(prop, timetype, limit, fileCache) {
   const startTime = Date.now();
   const type = prop;
 
@@ -489,157 +480,157 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
   let res = "";
   let gameName = "";
 
-  switch(type.toLowerCase()) {
-  case "k":
-  case "kill":
-  case "kil":
-  case "kills": {
-    gameName = "Kills";
-    const lb = await getLB("kills", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "kills", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+  switch (type.toLowerCase()) {
+    case "k":
+    case "kill":
+    case "kil":
+    case "kills": {
+      gameName = "Kills";
+      const lb = await getLB("kills", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "kills", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "d":
-  case "dead":
-  case "ded":
-  case "death":
-  case "deaths": {
-    gameName = "Deaths";
-    const lb = await getLB("deaths", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "deaths", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "d":
+    case "dead":
+    case "ded":
+    case "death":
+    case "deaths": {
+      gameName = "Deaths";
+      const lb = await getLB("deaths", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "deaths", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "wd":
-  case "witherd":
-  case "witherdamage":
-  case "witherhurted":
-  case "damagewither":
-  case "witherdmg": {
-    gameName = "Wither Damage";
-    const lb = await getLB("witherDamage", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "wd":
+    case "witherd":
+    case "witherdamage":
+    case "witherhurted":
+    case "damagewither":
+    case "witherdmg": {
+      gameName = "Wither Damage";
+      const lb = await getLB("witherDamage", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "wk":
-  case "witherskilled":
-  case "killwither":
-  case "witherk":
-  case "witherkill":
-  case "witherki8lls": {
-    gameName = "Wither Kills";
-    const lb = await getLB("witherKills", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "wk":
+    case "witherskilled":
+    case "killwither":
+    case "witherk":
+    case "witherkill":
+    case "witherki8lls": {
+      gameName = "Wither Kills";
+      const lb = await getLB("witherKills", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "f":
-  case "fk":
-  case "finalkill":
-  case "fkill":
-  case "final":
-  case "finals": {
-    gameName = "Final Kills";
-    const lb = await getLB("finalKills", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "f":
+    case "fk":
+    case "finalkill":
+    case "fkill":
+    case "final":
+    case "finals": {
+      gameName = "Final Kills";
+      const lb = await getLB("finalKills", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "tkd":
-  case "tkdr":
-  case "totalkd":
-  case "ttlkd":
-  case "totalkdr":
-  case "f+kd":
-  case "f+kdr":
-  case "k+fdr":
-  case "k+fd":
-  case "kfdr":
-  case "killdeath": {
-    gameName = "Kills+Finals/Deaths";
-    const lb = await getLB("kd", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "tkd":
+    case "tkdr":
+    case "totalkd":
+    case "ttlkd":
+    case "totalkdr":
+    case "f+kd":
+    case "f+kdr":
+    case "k+fdr":
+    case "k+fd":
+    case "kfdr":
+    case "killdeath": {
+      gameName = "Kills+Finals/Deaths";
+      const lb = await getLB("kd", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "kd":
-  case "k/d":
-  case "k/dr":
-  case "kdr":
-  case "kdnf":
-  case "nfkd":
-  case "nfkdr":
-  case "kdrnf":
-  case "kdnofinal": {
-    gameName = "Kills/Deaths ratios";
-    const lb = await getLB("kdnf", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "kd":
+    case "k/d":
+    case "k/dr":
+    case "kdr":
+    case "kdnf":
+    case "nfkd":
+    case "nfkdr":
+    case "kdrnf":
+    case "kdnofinal": {
+      gameName = "Kills/Deaths ratios";
+      const lb = await getLB("kdnf", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "fdr":
-  case "f/d":
-  case "fkd":
-  case "fkdr":
-  case "finaldeath":
-  case "fd": {
-    const lb = await getLB("fd", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "fdr":
+    case "f/d":
+    case "fkd":
+    case "fkdr":
+    case "finaldeath":
+    case "fd": {
+      const lb = await getLB("fd", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "wdd":
-  case "wdr":
-  case "wddr":
-  case "witherdamagedeath": {
-    gameName = "Wither Damage/Deaths";
-    const lb = await getLB("wdd", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "wdd":
+    case "wdr":
+    case "wddr":
+    case "witherdamagedeath": {
+      gameName = "Wither Damage/Deaths";
+      const lb = await getLB("wdd", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "wkd":
-  case "wkdr":
-  case "wk/d":
-  case "witherkilldeath":
-  case "witherkill+d":
-  case "wikdr": {
-    gameName = "Wither Kills/Deaths";
-    const lb = await getLB("wkd", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "wkd":
+    case "wkdr":
+    case "wk/d":
+    case "witherkilldeath":
+    case "witherkill+d":
+    case "wikdr": {
+      gameName = "Wither Kills/Deaths";
+      const lb = await getLB("wkd", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  case "aa":
-  case "arrowacc":
-  case "ahm":
-  case "arrowhit/miss": {
-    gameName = "Arrow accuracy";
-    const lb = await getLB("aa", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "ratio", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    case "aa":
+    case "arrowacc":
+    case "ahm":
+    case "arrowhit/miss": {
+      gameName = "Arrow accuracy";
+      const lb = await getLB("aa", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
 
-  default: {
-    gameName = "Wins";
-    const lb = await getLB("wins", timetype, limit, fileCache);
-    res = stringifyList(lb.res, "wins", "miniWalls", limit);
-    correctedTime = lb.time;
-    break;
-  }
+    default: {
+      gameName = "Wins";
+      const lb = await getLB("wins", timetype, limit, fileCache);
+      res = stringifyList(lb.res, "wins", "miniWalls", limit);
+      correctedTime = lb.time;
+      break;
+    }
   }
 
   res = res != "" ? res : "Leaderboard empty...";
@@ -650,19 +641,19 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
     .setDescription(res)
     .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://eatmyvenom.me/share/images/MWPfp3.png" });
 
-  if(res.length > 6000) {
+  if (res.length > 6000) {
     return new MessageEmbed()
       .setTitle("ERROR")
       .setColor(0xff0000)
       .setDescription(
-        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!"
+        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!",
       );
   }
-  
-  if(res.length > 2000) {
+
+  if (res.length > 2000) {
     let resArr = res.trim().split("\n");
     embed.setDescription("");
-    while(resArr.length > 0) {
+    while (resArr.length > 0) {
       const end = Math.min(25, resArr.length);
       embed.addField("\u200b", resArr.slice(0, end).join("\n"), false);
       resArr = resArr.slice(end);
@@ -678,28 +669,25 @@ async function genMiWLB (prop, timetype, limit, fileCache) {
  * @param {number} number
  * @returns {string}
  */
-function formatNum (number) {
+function formatNum(number) {
   return Intl.NumberFormat("en").format(number);
 }
 
 /**
  * @param {FileCache} fileCache
  */
-async function sendMW (fileCache) {
+async function sendMW(fileCache) {
   let guildlist = fileCache ? [...fileCache.guilds] : await Json.read("guild.json");
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
   let str = "";
-  guildlist = guildlist.filter((g) => g.uuid != "5cf6ddfb77ce842c855426b0");
-  for(let i = 0; i < Math.min(10, guildlist.length); i += 1) {
+  guildlist = guildlist.filter(g => g.uuid != "5cf6ddfb77ce842c855426b0");
+  for (let i = 0; i < Math.min(10, guildlist.length); i += 1) {
     const g = guildlist[i];
     str += `${` \`${i + 1}.`.padEnd(4)}\` **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
   }
 
-  const gEmbed = new MessageEmbed()
-    .setTitle("Lifetime Guild Wins")
-    .setDescription(str)
-    .setColor(0xc60532);
+  const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
 
   const wins = await genMiWLB("wins", "l", 25, fileCache);
   const kills = await genMiWLB("kills", "l", 10, fileCache);
@@ -711,18 +699,17 @@ async function sendMW (fileCache) {
   const hook = new Discord.WebhookClient({ id: config.otherHooks.MW.id, token: config.otherHooks.MW.token });
 
   await hook.editMessage(config.discord.miniWalls.lbMsg, {
-    content: `Updated <t:${Math.floor((Date.now() / 1000))}:R>`,
+    content: `Updated <t:${Math.floor(Date.now() / 1000)}:R>`,
     embeds: [wins, kills, finals, witherdmg, witherkills, guilds],
     username: config.otherHooks.MW.username,
     avatarURL: "https://eatmyvenom.me/share/images/MWPfp3.png",
   });
-
 }
 
 /**
  * Generate and send fake weekly lb sses
  */
-async function sendFakeWeekLBs () {
+async function sendFakeWeekLBs() {
   const blockingDead = await FakeLB("wins", "blockingDead", "weekly");
   const bountyHunters = await FakeLB("wins", "bountyHunters", "weekly");
   const dragonWars = await FakeLB("wins", "dragonWars", "weekly");
@@ -741,74 +728,154 @@ async function sendFakeWeekLBs () {
   const coins = await FakeLB("arcadeCoins", undefined, "weekly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bd.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [blockingDead],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bd.destroy();
 
   const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [bountyHunters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bh.destroy();
 
   const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await dw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [dragonWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   dw.destroy();
 
   const es = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await es.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [enderSpleef],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   es.destroy();
 
   const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [farmhunt],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fh.destroy();
 
   const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fb.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [football],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fb.destroy();
 
   const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await gw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [galaxyWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   gw.destroy();
 
   const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hns.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hideAndSeek],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hns.destroy();
 
   const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hitw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [holeInTheWall],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hitw.destroy();
 
   const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hs.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hypixelSays],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hs.destroy();
 
   const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await miw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [miniWalls],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   miw.destroy();
 
   const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pg.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [partyGames],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pg.destroy();
 
   const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pp.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [pixelPainters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pp.destroy();
 
   const to = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await to.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [throwOut],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   to.destroy();
 
   const z = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await z.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [zombies],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   z.destroy();
 
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await c.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [coins],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   c.destroy();
 }
 
 /**
  * Generate and send fake monthly lb sses
  */
-async function sendFakeMonthLBs () {
+async function sendFakeMonthLBs() {
   const blockingDead = await FakeLB("wins", "blockingDead", "monthly");
   const bountyHunters = await FakeLB("wins", "bountyHunters", "monthly");
   const dragonWars = await FakeLB("wins", "dragonWars", "monthly");
@@ -827,74 +894,154 @@ async function sendFakeMonthLBs () {
   const coins = await FakeLB("arcadeCoins", undefined, "monthly");
 
   const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bd.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [blockingDead],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bd.destroy();
 
   const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [bountyHunters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bh.destroy();
 
   const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await dw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [dragonWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   dw.destroy();
 
   const es = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await es.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [enderSpleef],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   es.destroy();
 
   const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [farmhunt],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fh.destroy();
 
   const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fb.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [football],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fb.destroy();
 
   const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await gw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [galaxyWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   gw.destroy();
 
   const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hns.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hideAndSeek],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hns.destroy();
 
   const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hitw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [holeInTheWall],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hitw.destroy();
 
   const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hs.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hypixelSays],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hs.destroy();
 
   const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await miw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [miniWalls],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   miw.destroy();
 
   const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pg.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [partyGames],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pg.destroy();
 
   const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pp.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [pixelPainters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pp.destroy();
 
   const to = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await to.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [throwOut],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   to.destroy();
 
   const z = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await z.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [zombies],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   z.destroy();
 
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await c.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [coins],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   c.destroy();
 }
 
 /**
  * Generate and send fake weekly lb sses
  */
-async function sendFakeLifetimeLBs () {
+async function sendFakeLifetimeLBs() {
   const blockingDead = await FakeLB("wins", "blockingDead");
   const bountyHunters = await FakeLB("wins", "bountyHunters");
   const dragonWars = await FakeLB("wins", "dragonWars");
@@ -914,98 +1061,193 @@ async function sendFakeLifetimeLBs () {
   const gexp = await FakeLB("arcadeEXP", "guild");
 
   const bd = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.bd });
-  await bd.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [blockingDead], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bd.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [blockingDead],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bd.destroy();
 
   const bh = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.bh });
-  await bh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [bountyHunters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await bh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [bountyHunters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   bh.destroy();
 
   const dw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.dw });
-  await dw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [dragonWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await dw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [dragonWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   dw.destroy();
 
   const es = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.es });
-  await es.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [enderSpleef], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await es.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [enderSpleef],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   es.destroy();
 
   const fh = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.fh });
-  await fh.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [farmhunt], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fh.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [farmhunt],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fh.destroy();
 
   const fb = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.fb });
-  await fb.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [football], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await fb.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [football],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   fb.destroy();
 
   const gw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.gw });
-  await gw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [galaxyWars], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await gw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [galaxyWars],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   gw.destroy();
 
   const hns = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hns });
-  await hns.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hideAndSeek], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hns.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hideAndSeek],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hns.destroy();
 
   const hitw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hitw });
-  await hitw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [holeInTheWall], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hitw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [holeInTheWall],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hitw.destroy();
 
   const hs = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.hs });
-  await hs.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [hypixelSays], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await hs.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [hypixelSays],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   hs.destroy();
 
   const miw = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.miw });
-  await miw.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [miniWalls], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await miw.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [miniWalls],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   miw.destroy();
 
   const pg = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.pg });
-  await pg.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [partyGames], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pg.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [partyGames],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pg.destroy();
 
   const pp = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.pp });
-  await pp.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [pixelPainters], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await pp.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [pixelPainters],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   pp.destroy();
 
   const to = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.to });
-  await to.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [throwOut], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await to.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [throwOut],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   to.destroy();
 
   const z = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.z });
-  await z.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [zombies], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await z.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [zombies],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   z.destroy();
 
   const c = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.c });
-  await c.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [coins], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await c.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [coins],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   c.destroy();
 
   const g = new Discord.WebhookClient({ url: config.discord.lbarchive.lifetime.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await g.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [gexp],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   g.destroy();
 }
 
 /**
- * 
+ *
  */
-async function sendFakeMonthGEXP () {
+async function sendFakeMonthGEXP() {
   const gexp = await FakeLB("arcadeEXP", "guild", "monthly");
   const g = new Discord.WebhookClient({ url: config.discord.lbarchive.monthly.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await g.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [gexp],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   g.destroy();
 }
 
 /**
- * 
+ *
  */
-async function sendFakeWeekGEXP () {
+async function sendFakeWeekGEXP() {
   const gexp = await FakeLB("arcadeEXP", "guild", "weekly");
   const g = new Discord.WebhookClient({ url: config.discord.lbarchive.weekly.g });
-  await g.send({ content: `<t:${Math.floor(Date.now() / 1000)}:F>`, files: [gexp], username: "Leaderboard Screenshotter", avatarURL: "https://i.vnmm.dev/arcadedisc.png" });
+  await g.send({
+    content: `<t:${Math.floor(Date.now() / 1000)}:F>`,
+    files: [gexp],
+    username: "Leaderboard Screenshotter",
+    avatarURL: "https://i.vnmm.dev/arcadedisc.png",
+  });
   g.destroy();
 }
 
 /**
- * 
+ *
  */
-async function sendFakeMiwLB () {
+async function sendFakeMiwLB() {
   const lb = await FakeLB();
   const sb = new Discord.WebhookClient({ url: config.discord.mwFakeLB });
 

@@ -1,23 +1,21 @@
-const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
-const DBConnector = require("hyarcade-requests/Database");
 const Logger = require("hyarcade-logger");
-
+const DBConnector = require("hyarcade-requests/Database");
+const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
 
 class Database {
-  
   /**
-   * 
-   * @param {*} json 
+   *
+   * @param {*} json
    * @returns {*}
    * @deprecated
    */
-  static async addAccount (json) {
+  static async addAccount(json) {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     return await DBConnector.addAccount(json);
   }
 
   /**
-   * 
+   *
    * @param {*} path
    * @param {*} category
    * @param {*} time
@@ -27,22 +25,22 @@ class Database {
    * @returns {*}
    * @deprecated
    */
-  static async getLeaderboard (path, category, time, min, reverse, max) {
+  static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     return await DBConnector.getLeaderboard(path, category, time, min, reverse, max);
   }
 
   /**
-   * 
+   *
    * @param {*} stat
    * @param {*} time
-   * @param {*} fileCache 
+   * @param {*} fileCache
    * @returns {*}
    * @deprecated
    */
-  static async getMWLeaderboard (stat, time, fileCache) {
+  static async getMWLeaderboard(stat, time, fileCache) {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
-    if(fileCache != undefined) {
+    if (fileCache != undefined) {
       return await MiniWallsLeaderboard(fileCache, stat, time);
     }
 
@@ -50,40 +48,39 @@ class Database {
   }
 
   /**
-   * 
+   *
    * @param {*} text
    * @param {*} discordID
    * @returns {*}
    * @deprecated
    */
-  static async account (text, discordID) {
+  static async account(text, discordID) {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     return await DBConnector.account(text, discordID);
   }
 
   /**
-   * 
+   *
    * @param {*} text
    * @param {*} discordID
    * @param {*} time
    * @returns {*}
    * @deprecated
    */
-  static async timedAccount (text, discordID, time) {
+  static async timedAccount(text, discordID, time) {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     return await DBConnector.timedAccount(text, discordID, time);
   }
 
   /**
-   * 
+   *
    * @returns {*}
    * @deprecated
    */
-  static async info () {
+  static async info() {
     Logger.warn("Using deprecated database connector, use hyarcade-requests instead");
     return await DBConnector.info();
   }
-
 }
 
 module.exports = Database;

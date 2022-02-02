@@ -5,6 +5,6 @@ import SetPresence from "../Utils/SetPresence.js";
 export default new Command("cyclepresence", ["*"], async () => {
   await SetPresence(BotRuntime.client, BotRuntime.botMode);
   return {
-    res: "Presence cycled"
+    res: "Presence cycled",
   };
 });

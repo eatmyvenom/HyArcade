@@ -1,23 +1,17 @@
-const {
-  MessageEmbed
-} = require("discord.js");
-const Command = require("hyarcade-structures/Discord/Command");
+const { MessageEmbed } = require("discord.js");
 const logger = require("hyarcade-logger");
-const {
-  ERROR_ARGS_LENGTH
-} = require("../Utils/Embeds/DynamicEmbeds");
-const {
-  ERROR_IGN_UNDEFINED
-} = require("../Utils/Embeds/StaticEmbeds");
-const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
-const BotRuntime = require("../BotRuntime");
 const Database = require("hyarcade-requests/Database");
+const Command = require("hyarcade-structures/Discord/Command");
+const BotRuntime = require("../BotRuntime");
+const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 
 /**
  * @param {number} n
  * @returns {number}
  */
-function formatR (n) {
+function formatR(n) {
   const r = Math.round(n * 1000) / 1000;
   return r;
 }
@@ -26,7 +20,7 @@ function formatR (n) {
  * @param {string} str
  * @returns {string}
  */
-function formatN (str) {
+function formatN(str) {
   const r = Intl.NumberFormat("en").format(Number(str));
   return r;
 }
@@ -37,14 +31,13 @@ function formatN (str) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function clr (stat1, stat2, hasPerms) {
-  if(stat1 > stat2) {
+function clr(stat1, stat2, hasPerms) {
+  if (stat1 > stat2) {
     return EmojiGetter(hasPerms, "better");
-  } else if(stat1 == stat2) {
+  } else if (stat1 == stat2) {
     return EmojiGetter(hasPerms, "neutral");
   }
   return EmojiGetter(hasPerms, "worse");
-
 }
 
 /**
@@ -54,7 +47,7 @@ function clr (stat1, stat2, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineN (stat1, stat2, name, hasPerms) {
+function lineN(stat1, stat2, name, hasPerms) {
   return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
@@ -65,7 +58,7 @@ function lineN (stat1, stat2, name, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineNS (stat1, stat2, name, hasPerms) {
+function lineNS(stat1, stat2, name, hasPerms) {
   return `${clr(stat2, stat1, hasPerms)} **${name}**:\n${formatN(stat1)} | ${formatN(stat2)}\n`;
 }
 
@@ -76,103 +69,106 @@ function lineNS (stat1, stat2, name, hasPerms) {
  * @param {boolean} hasPerms
  * @returns {string}
  */
-function lineR (stat1, stat2, name, hasPerms) {
+function lineR(stat1, stat2, name, hasPerms) {
   return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatR(stat1)} | ${formatR(stat2)}\n`;
 }
 
-module.exports = new Command("mw-compare", ["*"], async (args, rawMsg, interaction) => {
-  if(args.length < 1) {
-    return {
-      res: "",
-      embed: ERROR_ARGS_LENGTH(1)
-    };
-  }
-
-  const plr1 = args[0];
-  const plr2 = args[1];
-  let acc1;
-  let acc2;
-  if(interaction == undefined) {
-    if(plr2 == undefined) {
-      acc1 = await Database.account("", rawMsg.author.id);
-      acc2 = await Database.account(plr1, "");
-    } else {
-      acc1 = await Database.account(plr1, rawMsg.author.id);
-      acc2 = await Database.account(plr2, "");
+module.exports = new Command(
+  "mw-compare",
+  ["*"],
+  async (args, rawMsg, interaction) => {
+    if (args.length < 1) {
+      return {
+        res: "",
+        embed: ERROR_ARGS_LENGTH(1),
+      };
     }
-  } else {
-    acc1 = await Database.account(interaction.options.getString("player1"), interaction.user.id);
-    acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
-  }
 
-  const hackers = await BotRuntime.getHackerlist();
+    const plr1 = args[0];
+    const plr2 = args[1];
+    let acc1;
+    let acc2;
+    if (interaction == undefined) {
+      if (plr2 == undefined) {
+        acc1 = await Database.account("", rawMsg.author.id);
+        acc2 = await Database.account(plr1, "");
+      } else {
+        acc1 = await Database.account(plr1, rawMsg.author.id);
+        acc2 = await Database.account(plr2, "");
+      }
+    } else {
+      acc1 = await Database.account(interaction.options.getString("player1"), interaction.user.id);
+      acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
+    }
 
-  if(hackers.includes(acc1.uuid)) {
+    const hackers = await BotRuntime.getHackerlist();
+
+    if (hackers.includes(acc1.uuid)) {
+      return {
+        res: "",
+        embed: ERROR_IGN_UNDEFINED,
+      };
+    }
+
+    if (hackers.includes(acc2.uuid)) {
+      return {
+        res: "",
+        embed: ERROR_IGN_UNDEFINED,
+      };
+    }
+
+    const embed = new MessageEmbed();
+
+    try {
+      const deaths1 = acc1?.miniWalls?.deaths ?? 0;
+      const deaths2 = acc2?.miniWalls?.deaths ?? 0;
+      const kills1 = acc1?.miniWalls?.kills ?? 0;
+      const kills2 = acc2?.miniWalls?.kills ?? 0;
+      const fk1 = acc1?.miniWalls?.finalKills ?? 0;
+      const fk2 = acc2?.miniWalls?.finalKills ?? 0;
+      const wd1 = acc1?.miniWalls?.witherDamage ?? 0;
+      const wd2 = acc2?.miniWalls?.witherDamage ?? 0;
+      const wk1 = acc1?.miniWalls?.witherKills ?? 0;
+      const wk2 = acc2?.miniWalls?.witherKills ?? 0;
+
+      const stats =
+        lineN(acc1?.miniWalls?.wins ?? 0, acc2?.miniWalls?.wins ?? 0, "Wins", true) +
+        lineN(kills1, kills2, "Kills", true) +
+        lineN(fk1, fk2, "Finals", true) +
+        lineN(wd1, wd2, "Wither Damage", true) +
+        lineN(wk1, wk2, "Wither Kills", true) +
+        lineNS(deaths1, deaths2, "Deaths", true);
+
+      const ratios =
+        lineR((kills1 + fk1) / deaths1, (kills2 + fk2) / deaths2, "K/D", true) +
+        lineR(kills1 / deaths1, kills2 / deaths2, "K/D (no finals)", true) +
+        lineR(fk1 / deaths1, fk2 / deaths2, "F/D", true) +
+        lineR(wd1 / deaths1, wd2 / deaths2, "WD/D", true) +
+        lineR(wk1 / deaths1, wk2 / deaths2, "WK/D", true) +
+        lineR(
+          ((acc1?.miniWalls?.arrowsHit ?? 0) / (acc1?.miniWalls?.arrowsShot ?? 0)) * 100,
+          ((acc2?.miniWalls?.arrowsHit ?? 0) / (acc2?.miniWalls?.arrowsShot ?? 0)) * 100,
+          "Arrow Accuracy",
+          true,
+        );
+
+      embed
+        .setTitle(`${acc1.name} VS ${acc2.name}`)
+        .setColor(0x7873f5)
+        .addField("━━━━━━ Stats: ━━━━━", stats, true)
+        .addField("━━━━━ Ratios: ━━━━━", ratios, true);
+    } catch (e) {
+      logger.err(e.stack);
+      return {
+        res: "",
+        embed: ERROR_IGN_UNDEFINED,
+      };
+    }
+
     return {
       res: "",
-      embed: ERROR_IGN_UNDEFINED
+      embed,
     };
-  }
-
-  if(hackers.includes(acc2.uuid)) {
-    return {
-      res: "",
-      embed: ERROR_IGN_UNDEFINED
-    };
-  }
-
-  const embed = new MessageEmbed();
-
-  try {
-    const deaths1 = acc1?.miniWalls?.deaths ?? 0;
-    const deaths2 = acc2?.miniWalls?.deaths ?? 0;
-    const kills1 = acc1?.miniWalls?.kills ?? 0;
-    const kills2 = acc2?.miniWalls?.kills ?? 0;
-    const fk1 = acc1?.miniWalls?.finalKills ?? 0;
-    const fk2 = acc2?.miniWalls?.finalKills ?? 0;
-    const wd1 = acc1?.miniWalls?.witherDamage ?? 0;
-    const wd2 = acc2?.miniWalls?.witherDamage ?? 0;
-    const wk1 = acc1?.miniWalls?.witherKills ?? 0;
-    const wk2 = acc2?.miniWalls?.witherKills ?? 0;
-
-    const stats =
-            lineN(acc1?.miniWalls?.wins ?? 0, acc2?.miniWalls?.wins ?? 0, "Wins", true) +
-            lineN(kills1, kills2, "Kills", true) +
-            lineN(fk1, fk2, "Finals", true) +
-            lineN(wd1, wd2, "Wither Damage", true) +
-            lineN(wk1, wk2, "Wither Kills", true) +
-            lineNS(deaths1, deaths2, "Deaths", true);
-
-    const ratios =
-      lineR((kills1 + fk1) / deaths1, (kills2 + fk2) / deaths2, "K/D", true) +
-      lineR(kills1 / deaths1, kills2 / deaths2, "K/D (no finals)", true) +
-      lineR(fk1 / deaths1, fk2 / deaths2, "F/D", true) +
-      lineR(wd1 / deaths1, wd2 / deaths2, "WD/D", true) +
-      lineR(wk1 / deaths1, wk2 / deaths2, "WK/D", true) +
-      lineR(
-        ((acc1?.miniWalls?.arrowsHit ?? 0) / (acc1?.miniWalls?.arrowsShot ?? 0)) * 100,
-        ((acc2?.miniWalls?.arrowsHit ?? 0) / (acc2?.miniWalls?.arrowsShot ?? 0)) * 100,
-        "Arrow Accuracy", true
-      );
-
-
-    embed
-      .setTitle(`${acc1.name} VS ${acc2.name}`)
-      .setColor(0x7873f5)
-      .addField("━━━━━━ Stats: ━━━━━", stats, true)
-      .addField("━━━━━ Ratios: ━━━━━", ratios, true);
-
-  } catch (e) {
-    logger.err(e.stack);
-    return {
-      res: "",
-      embed: ERROR_IGN_UNDEFINED
-    };
-  }
-
-
-  return {
-    res: "",
-    embed
-  };
-}, 10000);
+  },
+  10000,
+);

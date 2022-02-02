@@ -1,10 +1,10 @@
+import Config from "hyarcade-config";
+import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import Config from "hyarcade-config";
-import ImageGenerator from "../images/ImageGenerator.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import Database from "hyarcade-requests/Database.js";
+import ImageGenerator from "../images/ImageGenerator.js";
 
 const cfg = Config.fromJSON();
 
@@ -12,8 +12,8 @@ const cfg = Config.fromJSON();
  * @param {number} n
  * @returns {string}
  */
-function numberify (n) {
-  let r = Intl.NumberFormat("en").format(Number((`${n}`).replace(/undefined/g, 0).replace(/null/g, 0)));
+function numberify(n) {
+  let r = Intl.NumberFormat("en").format(Number(`${n}`.replace(/undefined/g, 0).replace(/null/g, 0)));
   r = isNaN(n) ? (r = "N/A") : r;
   return r;
 }
@@ -22,7 +22,7 @@ function numberify (n) {
  * @param {Account} acc
  * @returns {string}
  */
-function getMain (acc) {
+function getMain(acc) {
   const games = {
     partyGames: { name: "Party Games", wins: acc?.partyGames?.wins ?? 0 },
     holeInTheWall: { name: "HITW", wins: acc?.holeInTheWall?.wins ?? 0 },
@@ -54,73 +54,78 @@ function getMain (acc) {
   return { game, num: numberify(max) };
 }
 
-export default new Command(["profile", "p", "arcprofile", "arcade-profile"], ["*"], async (args, rawMsg, interaction) => {
-  const player = args[0];
-  let acc;
-  if (interaction == undefined) {
-    acc = await Database.account(player, rawMsg.author.id);
-  } else {
-    await interaction.deferReply();
-    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
-  }
+export default new Command(
+  ["profile", "p", "arcprofile", "arcade-profile"],
+  ["*"],
+  async (args, rawMsg, interaction) => {
+    const player = args[0];
+    let acc;
+    if (interaction == undefined) {
+      acc = await Database.account(player, rawMsg.author.id);
+    } else {
+      await interaction.deferReply();
+      acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
+    }
 
-  if(acc == undefined) {
-    return new CommandResponse("", ERROR_UNLINKED);
-  }
+    if (acc == undefined) {
+      return new CommandResponse("", ERROR_UNLINKED);
+    }
 
-  const img = new ImageGenerator(1280, 800, "'myFont'", true);
-  await img.addBackground(cfg.commandImages.profile.file, 0, 0, 1280, 800, cfg.commandImages.leaderboard.overlay);
+    const img = new ImageGenerator(1280, 800, "'myFont'", true);
+    await img.addBackground(cfg.commandImages.profile.file, 0, 0, 1280, 800, cfg.commandImages.leaderboard.overlay);
 
-  img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
-  img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");
+    img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
+    img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");
 
-  const wins = `${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`;
-  const ap = `${numberify(acc.arcadeAchievments.totalEarned)} / ${numberify(acc.arcadeAchievments.totalAvailiable)}`;
-  const quests = `${Object.values(acc.quests).reduce((p, c) => p + c, 0)}`;
-  const challenges = `${numberify(Object.values(acc.arcadeChallenges).reduce((p, c) => p + c, 0))}`;
+    const wins = `${numberify(Math.max(acc.arcadeWins, acc.combinedArcadeWins))}`;
+    const ap = `${numberify(acc.arcadeAchievments.totalEarned)} / ${numberify(acc.arcadeAchievments.totalAvailiable)}`;
+    const quests = `${Object.values(acc.quests).reduce((p, c) => p + c, 0)}`;
+    const challenges = `${numberify(Object.values(acc.arcadeChallenges).reduce((p, c) => p + c, 0))}`;
 
-  const ogY = 175;
-  const increase = 50;
-  const spacer = 40;
+    const ogY = 175;
+    const increase = 50;
+    const spacer = 40;
 
-  let y = ogY;
+    let y = ogY;
 
-  img.drawMcText("&eTotal Wins", 640, y += increase, 42, "center");
-  img.drawMcText(`&e${wins}`, 640, y += increase, 50, "center");
+    img.drawMcText("&eTotal Wins", 640, (y += increase), 42, "center");
+    img.drawMcText(`&e${wins}`, 640, (y += increase), 50, "center");
 
-  y += spacer;
+    y += spacer;
 
-  img.drawMcText("&bAchievements", 300, y += increase, 42, "center");
-  img.drawMcText(`&b${ap}`, 300, y += increase, 50, "center");
+    img.drawMcText("&bAchievements", 300, (y += increase), 42, "center");
+    img.drawMcText(`&b${ap}`, 300, (y += increase), 50, "center");
 
-  y += spacer;
+    y += spacer;
 
-  img.drawMcText("&6Arcade Quests", 300, y += increase, 42, "center");
-  img.drawMcText(`&6${numberify(quests)}`, 300, y += increase, 50, "center");
+    img.drawMcText("&6Arcade Quests", 300, (y += increase), 42, "center");
+    img.drawMcText(`&6${numberify(quests)}`, 300, (y += increase), 50, "center");
 
-  y += spacer;
+    y += spacer;
 
-  img.drawMcText("&aArcade Coins", 300, y += increase, 42, "center");
-  img.drawMcText(`&a${numberify(acc.arcadeCoins)}`, 300, y += increase, 50, "center");
+    img.drawMcText("&aArcade Coins", 300, (y += increase), 42, "center");
+    img.drawMcText(`&a${numberify(acc.arcadeCoins)}`, 300, (y += increase), 50, "center");
 
-  y = ogY + increase + increase + spacer;
+    y = ogY + increase + increase + spacer;
 
-  const main = getMain(acc);
+    const main = getMain(acc);
 
-  img.drawMcText(`&b${main.game} Wins`, 1280 - 300, y += increase, 42, "center");
-  img.drawMcText(`&b${main.num}`, 1280 - 300, y += increase, 50, "center");
+    img.drawMcText(`&b${main.game} Wins`, 1280 - 300, (y += increase), 42, "center");
+    img.drawMcText(`&b${main.num}`, 1280 - 300, (y += increase), 50, "center");
 
-  y += spacer;
+    y += spacer;
 
-  img.drawMcText("&6Arcade Challenges", 1280 - 300, y += increase, 42, "center");
-  img.drawMcText(`&6${(challenges)}`, 1280 - 300, y += increase, 50, "center");
+    img.drawMcText("&6Arcade Challenges", 1280 - 300, (y += increase), 42, "center");
+    img.drawMcText(`&6${challenges}`, 1280 - 300, (y += increase), 50, "center");
 
-  y += spacer;
+    y += spacer;
 
-  img.drawMcText("&aCoins Earned", 1280 - 300, y += increase, 42, "center");
-  img.drawMcText(`&a${numberify(acc.coinsEarned)}`, 1280 - 300, y += increase, 50, "center");
+    img.drawMcText("&aCoins Earned", 1280 - 300, (y += increase), 42, "center");
+    img.drawMcText(`&a${numberify(acc.coinsEarned)}`, 1280 - 300, (y += increase), 50, "center");
 
-  const attachment = img.toDiscord();
+    const attachment = img.toDiscord();
 
-  return { res: "", img: attachment };
-}, 7500);
+    return { res: "", img: attachment };
+  },
+  7500,
+);

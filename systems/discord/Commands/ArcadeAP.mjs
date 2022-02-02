@@ -1,17 +1,17 @@
-import Command from "hyarcade-structures/Discord/Command.js";
-import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import Database from "hyarcade-requests/Database.js";
+import Command from "hyarcade-structures/Discord/Command.js";
+import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import ArcadeAp from "../Utils/Embeds/ArcadeAp.js";
+import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 
 export default new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
 
   let acc;
-  if(interaction == undefined) {
+  if (interaction == undefined) {
     acc = await Database.account(plr, rawMsg.author.id);
   } else {
-    if(interaction.isButton() || interaction.isSelectMenu()) {
+    if (interaction.isButton() || interaction.isSelectMenu()) {
       await interaction.deferUpdate();
       acc = await Database.account(plr);
     } else {

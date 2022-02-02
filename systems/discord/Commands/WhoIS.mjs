@@ -1,33 +1,32 @@
+import { createRequire } from "module";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import { createRequire } from "module";
 import fetch from "node-fetch";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 const require = createRequire(import.meta.url);
 
-
 const { MessageEmbed, Util } = require("discord.js");
 const { escapeItalic, escapeUnderline } = Util;
 
 /**
- * 
- * @param {number} n 
+ *
+ * @param {number} n
  * @returns {string}
  */
-function numberify (n) {
-  let r = Intl.NumberFormat("en").format(Number((`${n}`).replace(/undefined/g, 0).replace(/null/g, 0)));
+function numberify(n) {
+  let r = Intl.NumberFormat("en").format(Number(`${n}`.replace(/undefined/g, 0).replace(/null/g, 0)));
   r = isNaN(n) ? (r = "N/A") : r;
-  return r; 
+  return r;
 }
 
 /**
  * @param {Account} acc
  * @returns {string}
  */
-function getMain (acc) {
+function getMain(acc) {
   const games = {
     Party_games: acc?.partyGames?.wins ?? 0,
     HITW: acc?.holeInTheWall?.wins ?? 0,
@@ -60,12 +59,12 @@ function getMain (acc) {
 }
 
 /**
- * 
- * @param {Date} time 
+ *
+ * @param {Date} time
  * @returns {string}
  */
-function getNameDate (time) {
-  if(time == undefined) {
+function getNameDate(time) {
+  if (time == undefined) {
     return "";
   }
 
@@ -76,9 +75,11 @@ function getNameDate (time) {
  * @param {Account} acc
  * @returns {Promise<MessageEmbed>}
  */
-async function generateWhoisEmbed (acc) {
-
-  const rank = acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined ? `[${acc.rank.replace(/_PLUS/g, "+")}] ` : "";
+async function generateWhoisEmbed(acc) {
+  const rank =
+    acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined
+      ? `[${acc.rank.replace(/_PLUS/g, "+")}] `
+      : "";
 
   const embed = new MessageEmbed()
     .setTitle(`Who is ${rank}${acc.name}`)
@@ -90,16 +91,15 @@ async function generateWhoisEmbed (acc) {
 
   let nameHist = moj.username_history
     .reverse()
-    .map((n) => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
+    .map(n => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
 
-  if(nameHist.length > 25) {
+  if (nameHist.length > 25) {
     nameHist = nameHist.slice(0, 25);
   }
 
   nameHist = nameHist.join("\n");
 
-
-  if(acc.discord != undefined && acc.discord != "") {
+  if (acc.discord != undefined && acc.discord != "") {
     discord = `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}`;
   } else {
     discord = "Unknown!";
@@ -112,19 +112,24 @@ async function generateWhoisEmbed (acc) {
   return embed;
 }
 
-export default new Command(["whois", "who", "namehist"], ["*"], async (args, rawMsg, interaction) => {
-  const plr = args[0];
-  let acc;
-  if (interaction == undefined) {
-    acc = await Database.account(plr, rawMsg.author.id);
-  } else {
-    await interaction.deferReply();
-    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
-  }
+export default new Command(
+  ["whois", "who", "namehist"],
+  ["*"],
+  async (args, rawMsg, interaction) => {
+    const plr = args[0];
+    let acc;
+    if (interaction == undefined) {
+      acc = await Database.account(plr, rawMsg.author.id);
+    } else {
+      await interaction.deferReply();
+      acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
+    }
 
-  if(acc == undefined) {
-    return new CommandResponse("", ERROR_UNLINKED);
-  }
-  const embed = await generateWhoisEmbed(acc);
-  return new CommandResponse("", embed);
-}, 10000);
+    if (acc == undefined) {
+      return new CommandResponse("", ERROR_UNLINKED);
+    }
+    const embed = await generateWhoisEmbed(acc);
+    return new CommandResponse("", embed);
+  },
+  10000,
+);

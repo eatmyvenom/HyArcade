@@ -1,16 +1,14 @@
-const lists = require("./listParser");
-const updateAccounts = require("../systems/datagen/updateAccounts");
-const {
-  addAccounts
-} = require("./listUtils");
-const Account = require("hyarcade-requests/types/Account");
 const { HypixelApi } = require("hyarcade-requests");
+const Account = require("hyarcade-requests/types/Account");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const lists = require("./listParser");
+const { addAccounts } = require("./listUtils");
+const updateAccounts = require("../systems/datagen/updateAccounts");
 
 /**
  *
  */
-async function saveBoosters () {
+async function saveBoosters() {
   const boosters = await HypixelApi.boosters();
   await Json.write("boosters.json", boosters);
 }
@@ -20,7 +18,7 @@ async function saveBoosters () {
  *
  * @returns {Account[]}
  */
-async function updateAllAccounts () {
+async function updateAllAccounts() {
   const accounts = await lists.accounts();
   return await updateAccounts(accounts);
 }
@@ -28,7 +26,7 @@ async function updateAllAccounts () {
 /**
  *
  */
-async function addLeaderboards () {
+async function addLeaderboards() {
   const leaders = await HypixelApi.leaderboards();
   const arcade = leaders.leaderboards.ARCADE;
   const lifetimeCoins = arcade[0].leaders;
@@ -41,13 +39,11 @@ async function addLeaderboards () {
 /**
  * @param {string} uuid
  */
-async function addGuild (uuid) {
+async function addGuild(uuid) {
   const guild = await HypixelApi.guild(uuid);
-  const {
-    members
-  } = guild.guild;
+  const { members } = guild.guild;
   const uuids = [];
-  for(const m of members) {
+  for (const m of members) {
     uuids.push(m.uuid);
   }
 
@@ -57,13 +53,11 @@ async function addGuild (uuid) {
 /**
  * @param {string} id
  */
-async function addGuildID (id) {
+async function addGuildID(id) {
   const guild = await HypixelApi.guild(id);
-  const {
-    members
-  } = guild.guild;
+  const { members } = guild.guild;
   const uuids = [];
-  for(const m of members) {
+  for (const m of members) {
     uuids.push(m.uuid);
   }
 
@@ -73,13 +67,13 @@ async function addGuildID (id) {
 /**
  * @param {string[]} ids
  */
-async function addGuildIDs (ids) {
+async function addGuildIDs(ids) {
   const uuids = [];
 
-  for(const id of ids) {
+  for (const id of ids) {
     const guild = await HypixelApi.guild(id);
     const gmembers = guild?.guild?.members ?? [];
-    for(const m of gmembers) {
+    for (const m of gmembers) {
       uuids.push(m.uuid);
     }
   }

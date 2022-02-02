@@ -1,15 +1,15 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { MessageEmbed } = require("discord.js");
 import Command from "hyarcade-structures/Discord/Command.js";
-import BotRuntime from "../BotRuntime.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import BotRuntime from "../BotRuntime.js";
+const { MessageEmbed } = require("discord.js");
 
 /**
- * 
+ *
  * @returns {object}
  */
-async function infoHandler () {
+async function infoHandler() {
   const embed = new MessageEmbed()
     .setTitle(`${BotRuntime.client.user.username} info`)
     .setDescription("A discord bot to allow you to get the stats and info from arcade games and arcade players!")

@@ -5,12 +5,12 @@ const { default: fetch } = require("node-fetch");
 /**
  * @param {string[]} args
  */
-async function main (args) {
+async function main(args) {
   Logger.name = "AddGuilds";
   const plrList = args.slice(2);
   const newList = [];
 
-  for(const plr of plrList) {
+  for (const plr of plrList) {
     const req = await fetch(`https://api.slothpixel.me/api/guilds/${plr}`);
     const guild = await req.json();
 

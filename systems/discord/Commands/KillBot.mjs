@@ -1,5 +1,5 @@
-import Command from "hyarcade-structures/Discord/Command.js";
 import { exit } from "process";
+import Command from "hyarcade-structures/Discord/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import Webhooks from "../Utils/Webhooks.js";
 

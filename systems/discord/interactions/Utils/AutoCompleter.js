@@ -1,7 +1,7 @@
 const { AutocompleteInteraction } = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
 const Logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
+const Account = require("hyarcade-requests/types/Account");
 const LeaderboardCategorys = require("./AutoComplete/LeaderboardCategorys");
 const LeaderboardStats = require("./AutoComplete/LeaderboardStats");
 
@@ -38,13 +38,12 @@ const zombies = {
 };
 
 /**
- * 
- * @param {AutocompleteInteraction} interaction 
+ *
+ * @param {AutocompleteInteraction} interaction
  * @returns {*}
  */
-async function leaderboardFiller (interaction) {
-
-  if(testStats == undefined) {
+async function leaderboardFiller(interaction) {
+  if (testStats == undefined) {
     testStats = await Database.account("vnmm", undefined);
     Object.assign(testStats.zombies, zombies);
   }
@@ -52,21 +51,21 @@ async function leaderboardFiller (interaction) {
   const category = interaction.options.getString("category");
   const stat = interaction.options.getString("stat");
 
-  switch(interaction.options.getFocused(true).name) {
-  case "category" : {
-    return LeaderboardCategorys(category, interaction, testStats);
-  }
+  switch (interaction.options.getFocused(true).name) {
+    case "category": {
+      return LeaderboardCategorys(category, interaction, testStats);
+    }
 
-  case "stat" : {
-    return LeaderboardStats(category, stat, interaction, testStats);
-  }
+    case "stat": {
+      return LeaderboardStats(category, stat, interaction, testStats);
+    }
   }
 }
 
 /**
- * 
+ *
  */
-async function startUp () {
+async function startUp() {
   testStats = await Database.account("vnmm", undefined);
   Object.assign(testStats.zombies, zombies);
 }
@@ -74,8 +73,8 @@ async function startUp () {
 /**
  * @param {AutocompleteInteraction} interaction
  */
-async function filler (interaction) {
-  if(interaction.commandName == "leaderboard") {
+async function filler(interaction) {
+  if (interaction.commandName == "leaderboard") {
     await leaderboardFiller(interaction);
   }
 }

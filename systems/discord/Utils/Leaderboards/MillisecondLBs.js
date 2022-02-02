@@ -9,5 +9,5 @@ module.exports = {
     minecartRacingPB: true,
     spiderMazePB: true,
     theFloorIsLavaPB: true,
-  }
+  },
 };

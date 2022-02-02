@@ -1,14 +1,14 @@
-const { getList } = require("./ListUtils");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const { getList } = require("./ListUtils");
 
-module.exports = async function listDiffByProp (name, prop, timetype, maxamnt, category, fileCache) {
+module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
   let newlist;
   let oldlist;
-  if(fileCache != undefined) {
+  if (fileCache != undefined) {
     newlist = JSON.parse(JSON.stringify(fileCache[`${name}`]));
     oldlist = JSON.parse(JSON.stringify(fileCache[`${timetype}${name}`]));
   } else {
-    if(name == "accounts") {
+    if (name == "accounts") {
       newlist = await getList();
       oldlist = await getList(timetype);
     } else {
@@ -18,17 +18,17 @@ module.exports = async function listDiffByProp (name, prop, timetype, maxamnt, c
   }
 
   let acc;
-  for(let i = 0; i < oldlist.length; i += 1) {
-    acc = newlist.find((g) => g?.uuid == oldlist[i]?.uuid);
+  for (let i = 0; i < oldlist.length; i += 1) {
+    acc = newlist.find(g => g?.uuid == oldlist[i]?.uuid);
     // make sure acc isnt null/undefined
-    if(acc == undefined || acc == null) {
+    if (acc == undefined || acc == null) {
       continue;
     }
 
-    if(category == undefined) {
+    if (category == undefined) {
       oldlist[i][prop] = (acc[prop] ?? 0) - (oldlist[i][prop] ?? 0);
     } else {
-      if(oldlist[i][category] != undefined) {
+      if (oldlist[i][category] != undefined) {
         oldlist[i][category][prop] = (acc?.[category]?.[prop] ?? 0) - (oldlist[i]?.[category]?.[prop] ?? 0);
       } else {
         oldlist[i][category] = {};

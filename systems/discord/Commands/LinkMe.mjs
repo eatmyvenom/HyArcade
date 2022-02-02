@@ -1,26 +1,26 @@
+import { Interaction, Message } from "discord.js";
+import Logger from "hyarcade-logger";
+import Database from "hyarcade-requests/Database.js";
+import mojangRequest from "hyarcade-requests/mojangRequest.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import mojangRequest from "hyarcade-requests/mojangRequest.js";
 import BotRuntime from "../BotRuntime.js";
-import { ERROR_IGN_UNDEFINED,  ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
-import Database from "hyarcade-requests/Database.js";
-import Logger from "hyarcade-logger";
-import { Interaction, Message } from "discord.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
+import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
 
 /**
- * 
- * @param {string[]} args 
- * @param {Message} rawMsg 
- * @param {Interaction} interaction 
+ *
+ * @param {string[]} args
+ * @param {Message} rawMsg
+ * @param {Interaction} interaction
  * @returns {CommandResponse}
  */
-async function verifyCommand (args, rawMsg, interaction) {
+async function verifyCommand(args, rawMsg, interaction) {
   let tag;
   let id;
 
-  if(interaction) {
+  if (interaction) {
     await interaction.deferReply();
     tag = interaction.user.tag;
     id = interaction.user.id;
@@ -34,13 +34,13 @@ async function verifyCommand (args, rawMsg, interaction) {
   let uuid;
 
   uuid = firstWord.length == 32 ? firstWord : await mojangRequest.getUUID(firstWord);
-  if((`${uuid}`).length != 32) {
+  if (`${uuid}`.length != 32) {
     const noexistEmbed = ERROR_IGN_UNDEFINED;
 
     return new CommandResponse(noexistEmbed);
   }
 
-  if(uuid == undefined) {
+  if (uuid == undefined) {
     Logger.warn("Someone tried to verify as an account that doesn't exist!");
     return new CommandResponse("", ERROR_IGN_UNDEFINED);
   }
@@ -50,18 +50,21 @@ async function verifyCommand (args, rawMsg, interaction) {
   uuid = acc.uuid;
 
   const disclist = await BotRuntime.getFromDB("disclist");
-  
-  if(acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
+
+  if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     disclist[id] = uuid;
     Logger.out(`${tag} was verified as ${acc.name}`);
-    
+
     await Database.addAccount(acc);
     await BotRuntime.writeToDB("disclist", disclist);
 
     return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
   }
 
-  return new CommandResponse(`${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`, ERROR_LINK_HYPIXEL_MISMATCH);
+  return new CommandResponse(
+    `${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`,
+    ERROR_LINK_HYPIXEL_MISMATCH,
+  );
 }
 
 export default new Command("verify", ["*"], verifyCommand);

@@ -3,10 +3,10 @@ import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import CommandStorage from "../CommandStorage.mjs";
 
 /**
- * 
+ *
  * @returns {object}
  */
-async function reloadHander () {
+async function reloadHander() {
   await CommandStorage.initCommands();
 
   return new CommandResponse("Commands reloaded");

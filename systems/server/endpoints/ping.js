@@ -1,10 +1,10 @@
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 module.exports = async (req, res) => {
-  if(req.method == "GET") {
+  if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
     res.write(JSON.stringify({ response: "pong" }));

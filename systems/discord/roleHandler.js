@@ -1,28 +1,29 @@
-const Role = require("hyarcade-structures/Discord/Role");
-const fs = require("fs-extra");
-const RoleUpdater = require("./RoleUpdater");
-const BotRuntime = require("./BotRuntime");
 const { Client } = require("discord.js");
+const fs = require("fs-extra");
+const Role = require("hyarcade-structures/Discord/Role");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const BotRuntime = require("./BotRuntime");
+const RoleUpdater = require("./RoleUpdater");
 
-const neededStats = ["blockingDead",
+const neededStats = [
+  "blockingDead",
   "name",
   "uuid",
   "discord",
   "hypixelDiscord",
   "bountyHunters",
-  "dragonWars", 
-  "enderSpleef", 
-  "farmhunt", 
-  "football", 
-  "galaxyWars", 
-  "hideAndSeek", 
-  "holeInTheWall", 
-  "hypixelSays", 
-  "partyGames", 
-  "pixelPainters", 
-  "throwOut", 
-  "miniWalls", 
+  "dragonWars",
+  "enderSpleef",
+  "farmhunt",
+  "football",
+  "galaxyWars",
+  "hideAndSeek",
+  "holeInTheWall",
+  "hypixelSays",
+  "partyGames",
+  "pixelPainters",
+  "throwOut",
+  "miniWalls",
   "seasonalWins",
   "easter",
   "scuba",
@@ -35,21 +36,21 @@ const neededStats = ["blockingDead",
 ];
 
 /**
- * 
- * @param {Client} client 
+ *
+ * @param {Client} client
  */
-module.exports = async function roleHandler (client) {
+module.exports = async function roleHandler(client) {
   const roleSet = await fs.readJSON("config.roles.json");
   const disclist = await BotRuntime.getFromDB("disclist");
   const accs = await BotRuntime.getFromDB("accounts", neededStats);
 
-  for(const server in roleSet) {
+  for (const server in roleSet) {
     const guild = await client.guilds.fetch(server);
 
-    for(const path in roleSet[server]) {
+    for (const path in roleSet[server]) {
       const roleList = roleSet[server][path];
       const roles = [];
-      for(const id in roleList) {
+      for (const id in roleList) {
         roles.push(new Role(roleList[id], id));
       }
       const category = path.split(".")[0];
@@ -61,10 +62,10 @@ module.exports = async function roleHandler (client) {
 
   const tags = {};
 
-  accs.forEach((acc) => {
-    const usr = client.users.cache.find((u) => u.id == acc.discid);
+  accs.forEach(acc => {
+    const usr = client.users.cache.find(u => u.id == acc.discid);
 
-    if(usr) {
+    if (usr) {
       tags[acc.uuid] = usr.tag;
     }
   });

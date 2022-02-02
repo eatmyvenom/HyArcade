@@ -5,24 +5,24 @@ import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
-const { HypixelApi, mojangRequest } = require("hyarcade-requests");
-const { MessageEmbed } = require("discord.js");
 const Util = require("util");
+const { MessageEmbed } = require("discord.js");
+const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 
 /**
  * @param {object} o
  * @param {string} s
  * @returns {*}
  */
-function getProp (o, s) {
+function getProp(o, s) {
   let obj = o;
   let str = s;
   str = str.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
   str = str.replace(/^\./, ""); // strip a leading dot
   const a = str.split(".");
-  for(let i = 0, n = a.length; i < n; i += 1) {
+  for (let i = 0, n = a.length; i < n; i += 1) {
     const k = a[i];
-    if(k in obj) {
+    if (k in obj) {
       obj = obj[k];
     } else {
       return;
@@ -34,11 +34,11 @@ function getProp (o, s) {
 export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const uuid = plr.length > 31 ? plr : await mojangRequest.getUUID(plr);
-  if(uuid == undefined) {
+  if (uuid == undefined) {
     return new CommandResponse("", ERROR_IGN_UNDEFINED);
   }
 
-  if(interaction) {
+  if (interaction) {
     await interaction.deferReply();
   }
 
@@ -54,15 +54,15 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     val = acc;
   }
 
-  if(typeof val == "number" || typeof val == "boolean") {
+  if (typeof val == "number" || typeof val == "boolean") {
     val = `${val}`;
   }
 
-  if(typeof val != "string") {
+  if (typeof val != "string") {
     val = Util.inspect(val, true);
   }
 
-  if(val == "") {
+  if (val == "") {
     val = "No response!";
   }
 

@@ -1,5 +1,5 @@
-const { getList } = require("./ListUtils");
 const Json = require("hyarcade-utils/FileHandling/Json");
+const { getList } = require("./ListUtils");
 
 /**
  *
@@ -9,10 +9,10 @@ const Json = require("hyarcade-utils/FileHandling/Json");
  * @param {Function} callback Callback used to get the stats out of each account
  * @returns {object} The sorted list
  */
-module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
+module.exports = async function mklistAdv(name, timetype, maxamnt, callback) {
   let newlist;
   let oldlist;
-  if(name == "accounts") {
+  if (name == "accounts") {
     newlist = await getList();
     oldlist = await getList(timetype);
   } else {
@@ -20,12 +20,12 @@ module.exports = async function mklistAdv (name, timetype, maxamnt, callback) {
     oldlist = await Json.read(`${name}.${timetype}.json`);
   }
 
-  for(let i = 0; i < oldlist.length; i += 1) {
+  for (let i = 0; i < oldlist.length; i += 1) {
     const oldacc = oldlist[i];
-    const newacc = newlist.find((g) => (`${g.uuid}`).toLowerCase() == (`${oldacc.uuid}`).toLowerCase());
+    const newacc = newlist.find(g => `${g.uuid}`.toLowerCase() == `${oldacc.uuid}`.toLowerCase());
 
     // make sure acc isnt null/undefined
-    if(newacc) {
+    if (newacc) {
       oldlist[i] = callback(newacc, oldacc);
     }
   }

@@ -2,18 +2,18 @@ const Logger = require("hyarcade-logger");
 
 let categorys;
 
-module.exports = async function LeaderboardCategorys (category, interaction, testStats) {
-  if(categorys == undefined) {
+module.exports = async function LeaderboardCategorys(category, interaction, testStats) {
+  if (categorys == undefined) {
     categorys = {};
     categorys.General = "others";
 
-    for(const key in testStats) {
-      if(typeof testStats[key] == "object" && !Array.isArray(testStats[key])) {
+    for (const key in testStats) {
+      if (typeof testStats[key] == "object" && !Array.isArray(testStats[key])) {
         let formatted = key
           .replace(/([A-Z])/g, " $1")
           .replace(/_zombies/g, "")
-          .replace(/(\.)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`)
-          .replace(/(_)(\S)/g, (s) => ` ${s.slice(1).toUpperCase()}`);
+          .replace(/(\.)(\S)/g, s => ` ${s.slice(1).toUpperCase()}`)
+          .replace(/(_)(\S)/g, s => ` ${s.slice(1).toUpperCase()}`);
 
         formatted = `${formatted.slice(0, 1).toUpperCase()}${formatted.slice(1)}`;
         categorys[formatted] = key;
@@ -31,9 +31,12 @@ module.exports = async function LeaderboardCategorys (category, interaction, tes
   }
 
   const allKeys = Object.keys(categorys);
-  const keys = allKeys.filter((k) => k.toLowerCase().startsWith(category.toLowerCase())).sort();
+  const keys = allKeys.filter(k => k.toLowerCase().startsWith(category.toLowerCase())).sort();
 
-  const types = keys.length > 0 ? keys.map((k) => ({ name: k, value: categorys[k] })) : allKeys.map((k) => ({ name: k, value: categorys[k] }));
+  const types =
+    keys.length > 0
+      ? keys.map(k => ({ name: k, value: categorys[k] }))
+      : allKeys.map(k => ({ name: k, value: categorys[k] }));
 
   try {
     interaction.respond(types.sort());
