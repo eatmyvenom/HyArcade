@@ -9,10 +9,6 @@ async function main() {
   const connector = new MongoConnector("mongodb://127.0.0.1:27017");
   await connector.connect(false);
 
-  const monthlyAccounts = await Database.readDB("monthlyaccounts");
-  await connector.updateMonthly(monthlyAccounts);
-  Logger.out("Updated monthly");
-
   const disclist = await Database.readDB("disclist");
   for (const link in disclist) {
     await connector.linkDiscord(link, disclist[link]);
