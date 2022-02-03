@@ -1,20 +1,21 @@
 const Logger = require("hyarcade-logger");
 const { mojangRequest } = require("hyarcade-requests");
 const Account = require("hyarcade-requests/types/Account");
+const MongoConnector = require("hyarcade-requests/MongoConnector");
+const Json = require("hyarcade-utils/FileHandling/Json");
 
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+let fakeFile;
 
 /**
  *
- * @param {FileCache} fileCache
+ * @param {MongoConnector} connector
  * @param {URL} url
- * @returns {Account}
+ * @returns {Promise<Account>}
  */
-async function AccountResolver(fileCache, url) {
-  const { indexedAccounts, disclist } = fileCache;
-
-  const accounts = Object.values(indexedAccounts);
-  accounts.sort((b, a) => a.importance - b.importance);
+async function AccountResolver(connector, url) {
+  if (fakeFile == undefined) {
+    fakeFile = await Json.read("fakeStats.json");
+  }
 
   const ign = url.searchParams.get("ign");
   let uuid = url.searchParams.get("uuid");
@@ -23,28 +24,13 @@ async function AccountResolver(fileCache, url) {
 
   if (ign != undefined) {
     Logger.verbose(`Using ign "${ign}"`);
-    acc = accounts.find(a => a.name?.toLowerCase() == ign?.trim()?.toLowerCase());
+    acc = await connector.getAccount(ign);
   } else if (uuid != undefined) {
     Logger.verbose(`Using uuid ${uuid}`);
-    acc = indexedAccounts[uuid?.toLowerCase()];
+    acc = await connector.getAccount(uuid);
   } else if (discid != undefined) {
     Logger.verbose(`Using discord id ${discid}`);
-    uuid = disclist[discid];
-
-    acc = indexedAccounts[uuid?.toLowerCase()];
-  }
-
-  if (acc == undefined && ign != undefined) {
-    acc = accounts.find(a => {
-      if (a.nameHist && a.nameHist.length > 0 && (a?.importance ?? 0) > 9500) {
-        for (const name of a.nameHist) {
-          if (name.toLowerCase().startsWith(ign.toLowerCase())) {
-            return true;
-          }
-        }
-      }
-      return false;
-    });
+    acc = await connector.getAccount(discid);
   }
 
   if (acc == undefined) {
@@ -61,10 +47,34 @@ async function AccountResolver(fileCache, url) {
         Logger.err("ERROR FETCHING ACCOUNT DATA FROM HYPIXEL...");
         Logger.err(error.stack);
       }
-      // eslint-disable-next-line unicorn/consistent-destructuring
-      fileCache.indexedAccounts[acc.uuid] = acc;
-      fileCache.save();
+
+      if (acc?.name != "INVLAID-NAME" && acc?.name != undefined) {
+        connector
+          .updateAccount(acc)
+          .then(() => {})
+          .catch(Logger.err);
+      }
     }
+  }
+
+  if (acc.updateTime < Date.now() - 600000) {
+    Logger.verbose(`Updating data for ${acc.name}`);
+    const newAccount = new Account(acc.name, 0, acc.uuid);
+    Object.assign(newAccount, acc);
+
+    await newAccount.updateHypixel();
+
+    if (Object.keys(fakeFile).includes(newAccount.uuid)) {
+      Logger.log(`Overwriting data for ${newAccount.name}`);
+      Object.assign(newAccount, fakeFile[newAccount.uuid]);
+    }
+
+    acc = newAccount;
+
+    connector
+      .updateAccount(acc)
+      .then(() => {})
+      .catch(Logger.err);
   }
 
   if (acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {

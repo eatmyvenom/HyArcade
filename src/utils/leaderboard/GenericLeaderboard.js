@@ -1,125 +1,30 @@
-/* eslint-disable no-param-reassign */
 const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
-const TimSort = require("timsort");
-
-/**
- * @param {string} cleanStr
- * @returns {number}
- */
-function numberify(cleanStr = 0) {
-  return Number(cleanStr);
-}
-
-/**
- * @param {object} o
- * @param {string} s
- * @returns {*}
- */
-function getProp(o, s) {
-  let obj = o;
-  let str = s;
-  str = str.replace(/\[(\w+)]/g, ".$1"); // convert indexes to properties
-  str = str.replace(/^\./, ""); // strip a leading dot
-  const propertyArray = str.split(".");
-  for (let i = 0, arrLength = propertyArray.length; i < arrLength; i += 1) {
-    const subObject = propertyArray[i];
-    if (subObject in obj) {
-      obj = obj[subObject];
-    } else {
-      return;
-    }
-  }
-  return obj;
-}
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 
 /**
  *
  * @param {string} category the object to fetch from each account
  * @param {string} lbprop the property to fetch from each account
  * @param {string} timePeriod the time period to get the data from
- * @param {boolean} min whether the data should be minified before sending
  * @param {boolean} reverse whether the leaderboard should be reversed to show lowest values
  * @param {string} max the maximum amount of accounts to return
  * @param {string} filter Stats that if present excludes people from the list, must be top level
- * @param {FileCache} fileCache The file cache containing all account info
+ * @param {MongoConnector} connector The mongodb connection
  * @returns {Promise<Account[]>}
  */
-module.exports = async function (category, lbprop, timePeriod, min, reverse, max, filter = "", fileCache) {
+module.exports = async function (category, lbprop, timePeriod, reverse, max, filter = false, connector) {
   Logger.verbose("Getting leaderboard");
+  const dotNotated = `${category}.${lbprop}`.replace(/^\./g, "").replace(/\.*/g, ".");
 
-  let getter;
-  const defaultValue = reverse ? Number.MAX_SAFE_INTEGER : 0;
-
-  if (lbprop?.startsWith(".")) {
-    category = lbprop.split(".")[1];
-    getter = a => getProp(a, lbprop) ?? defaultValue;
-  } else if (category == undefined) {
-    getter = a => a?.[lbprop] ?? defaultValue;
-  } else {
-    getter = a => a?.[category]?.[lbprop] ?? defaultValue;
+  let realFilter = false;
+  if (filter && !Array.isArray(filter)) {
+    realFilter = [filter];
   }
 
-  let accs;
-
-  Logger.verbose("Getting accounts");
-  if (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == "") {
-    Logger.verbose("Using normal leaderboard");
-    accs = Object.values(fileCache.indexedAccounts);
-
-    Logger.verbose("Sorting accounts");
-    TimSort.sort(accs, (b, a) => numberify(getter(a)) - numberify(getter(b)));
-
-    if (reverse) {
-      Logger.verbose("reversing");
-      accs = accs.reverse();
-    }
-  } else {
-    accs = Object.values(fileCache.indexedAccounts);
-    const old = fileCache[`indexed${timePeriod}`];
-    const retro = fileCache.retro[`${timePeriod}accounts`];
-
-    for (const a of accs) {
-      const o = old[a.uuid];
-
-      if (a.name == "INVALID-NAME" || a.nameHist.includes("INVALID-NAME")) {
-        a.lbProp = 0;
-        continue;
-      }
-
-      let oldval = 0;
-      if (o == undefined) {
-        const rAcc = retro?.[a.uuid];
-
-        oldval = rAcc == undefined ? numberify(getter(a)) : numberify(getter(rAcc));
-      } else {
-        oldval = numberify(getter(o));
-      }
-
-      a.lbProp = numberify(getter(a)) - oldval;
-    }
-
-    if (reverse) {
-      TimSort.sort(accs, (a, b) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
-    } else {
-      TimSort.sort(accs, (b, a) => (a.lbProp ?? 0) - (b.lbProp ?? 0));
-    }
-  }
-
-  if (filter != "" && filter != undefined && filter != undefined) {
-    accs = accs.filter(a => {
-      for (const prop of filter.split(",")) {
-        if (a[prop]) return false;
-      }
-
-      return true;
-    });
-  }
-
-  const maxSize = Math.min(accs.length, max);
-  accs = accs.slice(0, maxSize);
-  Logger.verbose("Leaderboard generated!");
+  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
+    ? connector.getLeaderboard(dotNotated, reverse, max, realFilter)
+    : connector.getHistoricalLeaderboard(dotNotated, timePeriod, reverse, max, realFilter));
 
   return accs;
 };

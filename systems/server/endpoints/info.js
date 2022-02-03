@@ -1,25 +1,16 @@
-const process = require("process");
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {FileCache} fileCache
+ * @param {MongoConnector} connector
  */
-module.exports = async (req, res, fileCache) => {
+module.exports = async (req, res, connector) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
-    const accs = Object.values(fileCache.indexedAccounts);
-    const mem = process.memoryUsage.rss() / 1000000;
-
-    const obj = {
-      accs: accs.length,
-      guilds: fileCache.guilds.length,
-      links: Object.keys(fileCache.disclist).length,
-      mem,
-    };
+    const obj = await connector.getInfo();
 
     res.write(JSON.stringify(obj));
     res.end();

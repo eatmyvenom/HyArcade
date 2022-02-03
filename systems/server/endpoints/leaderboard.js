@@ -2,28 +2,27 @@ const { Readable, pipeline } = require("stream");
 const zlib = require("zlib");
 const Logger = require("hyarcade-logger");
 
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {FileCache} fileCache
+ * @param {MongoConnector} connector
  */
-module.exports = async (req, res, fileCache) => {
+module.exports = async (req, res, connector) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
 
   const category = url.searchParams.get("category");
   const lbprop = url.searchParams.get("path");
   const timePeriod = url.searchParams.get("time");
-  const min = url.searchParams.has("min");
   const reverse = url.searchParams.has("reverse");
   const max = Math.min(url.searchParams.get("max") ?? 200, 1000);
   const filter = url.searchParams.get("filter");
 
   if (req.method == "GET") {
-    const accs = await GenericLeaderboard(category, lbprop, timePeriod, min, reverse, max, filter, fileCache);
+    const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, filter ?? false, connector);
 
     let acceptEncoding = req.headers["accept-encoding"];
     if (!acceptEncoding) {
@@ -35,23 +34,8 @@ module.exports = async (req, res, fileCache) => {
 
     s._read = () => {};
 
-    if (!min) {
-      s.push(JSON.stringify(accs));
-    } else {
-      let requiredKeys = [category, "name", "lbProp", "uuid", "rank", "plusColor", "mvpColor", lbprop];
-
-      let realProp = lbprop;
-      if (realProp?.startsWith(".")) {
-        if (realProp.includes("[")) {
-          realProp = realProp.replace(/\[/g, ".").replace(/]/g, "");
-        }
-        requiredKeys = [...requiredKeys, ...realProp.split(".")];
-      }
-
-      s.push(JSON.stringify(accs, requiredKeys));
-    }
     // eslint-disable-next-line unicorn/no-null
-    s.push(null);
+    s.push(JSON.stringify(accs), null);
 
     Logger.verbose("Sending data");
     if (/\bdeflate\b/.test(acceptEncoding)) {

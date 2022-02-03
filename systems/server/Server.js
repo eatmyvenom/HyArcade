@@ -2,12 +2,9 @@ const process = require("process");
 const { URL } = require("url");
 const logger = require("hyarcade-logger");
 
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
-
-const autoUpdater = require("./AutoUpdater");
 const StatusExit = require("../../src/events/StatusExit");
 const StatusStart = require("../../src/events/StatusStart");
-const webhook = require("../../src/events/webhook");
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 
 const urlModules = {
   account: require("./endpoints/account"),
@@ -21,13 +18,14 @@ const urlModules = {
   timeacc: require("./endpoints/TimeAcc"),
   timeaccount: require("./endpoints/TimeAcc"),
   acctimed: require("./endpoints/TimeAcc"),
-  resolve: require("./endpoints/NameSearch"),
-  namesearch: require("./endpoints/NameSearch"),
   info: require("./endpoints/info"),
   ping: require("./endpoints/ping"),
 };
 
-let fileCache;
+/**
+ * @type {MongoConnector}
+ */
+let connector;
 
 /**
  * @param {Request} request
@@ -43,16 +41,9 @@ async function callback(request, response) {
     response.statusCode = 404;
     response.end();
   } else {
-    if (fileCache.ready == false) {
-      response.setHeader("Content-Type", "application/json");
-      response.end(JSON.stringify({ ERROR: "Reloading database!" }));
-      logger.warn(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams}) not available when reloading!`);
-      return;
-    }
-
     try {
       logger.info(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
-      await mod(request, response, fileCache);
+      await mod(request, response, connector);
     } catch (error) {
       logger.err(error.stack);
       response.statusCode = 404;
@@ -69,18 +60,14 @@ module.exports = async function start(port) {
   }
 
   logger.name = "Database";
-  fileCache = new FileCache("data/");
+  connector = new MongoConnector("mongodb://127.0.0.1:27017");
+  await connector.connect();
 
   process.on("beforeExit", code => {
     if (!process.argv.includes("--test")) {
       logger.log(`Exiting process with code : ${code}`);
     }
   });
-
-  if (!process.argv.includes("--test")) {
-    setInterval(() => webhook.sendMW(fileCache), 960000);
-    setInterval(() => autoUpdater(fileCache), 60000);
-  }
 
   const server = require("http").createServer(callback).listen(port);
 

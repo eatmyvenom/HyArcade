@@ -1,65 +1,65 @@
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const TimSort = require("timsort");
 const GenericLeaderboard = require("./GenericLeaderboard");
 
 /**
  *
- * @param {FileCache} fileCache
+ * @param {MongoConnector} connector
  * @param {string} stat
  * @param {string} time
  * @returns {Promise<Account[]>}
  */
-module.exports = async function generateLeaderboard(fileCache, stat, time) {
+module.exports = async function generateLeaderboard(connector, stat, time) {
   let accounts;
 
   switch (stat) {
     case "wins": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       break;
     }
 
     case "kills": {
-      accounts = await GenericLeaderboard("miniWalls", "kills", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "kills", time, false, 300, "hacker", connector);
       break;
     }
 
     case "deaths": {
-      accounts = await GenericLeaderboard("miniWalls", "deaths", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "deaths", time, false, 300, "hacker", connector);
       break;
     }
 
     case "witherDamage": {
-      accounts = await GenericLeaderboard("miniWalls", "witherDamage", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "witherDamage", time, false, 300, "hacker", connector);
       break;
     }
 
     case "witherKills": {
-      accounts = await GenericLeaderboard("miniWalls", "witherKills", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "witherKills", time, false, 300, "hacker", connector);
       break;
     }
 
     case "finalKills": {
-      accounts = await GenericLeaderboard("miniWalls", "finalKills", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "finalKills", time, false, 300, "hacker", connector);
       break;
     }
 
     case "arrowsShot": {
-      accounts = await GenericLeaderboard("miniWalls", "arrowsShot", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "arrowsShot", time, false, 300, "hacker", connector);
       break;
     }
 
     case "arrowsHit": {
-      accounts = await GenericLeaderboard("miniWalls", "arrowsHit", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "arrowsHit", time, false, 300, "hacker", connector);
       break;
     }
 
     case "kd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -75,11 +75,11 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
 
     case "kdnf": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -96,11 +96,11 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
 
     case "fd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -116,11 +116,11 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
 
     case "wdd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -137,11 +137,11 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
 
     case "wkd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -158,11 +158,11 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
 
     case "aa": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, false, 300, "hacker", fileCache);
+      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, false, 150, "hacker", fileCache);
+        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -179,5 +179,5 @@ module.exports = async function generateLeaderboard(fileCache, stat, time) {
     }
   }
 
-  return accounts.filter(a => !fileCache.hackerlist.includes(a.uuid));
+  return accounts.filter(a => !connector.hackerlist.includes(a.uuid));
 };

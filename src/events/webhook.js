@@ -4,11 +4,9 @@ const config = require("hyarcade-config").fromJSON();
 const { MessageEmbed } = Discord;
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
-const FileCache = require("hyarcade-utils/FileHandling/FileCache");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const FakeLB = require("../../systems/discord/images/FakeLB");
 const listUtils = require("../listUtils");
-const MiniWallsLeaderboard = require("../utils/leaderboard/MiniWallsLeaderboard");
 
 /**
  * Send text to a discord webhook
@@ -401,10 +399,9 @@ async function genHSMEmbed() {
  * @param {string} prop
  * @param {string} timetype
  * @param {number} limit
- * @param {FileCache} fileCache
  * @returns {Promise<object>}
  */
-async function getLB(prop, timetype, limit, fileCache) {
+async function getLB(prop, timetype, limit) {
   let res = [];
   let time;
 
@@ -413,7 +410,7 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "day":
     case "daily": {
       time = "Daily";
-      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "day") : Database.getMWLeaderboard(prop, "day", fileCache));
+      res = await Database.getMWLeaderboard(prop, "day");
       res = res.slice(0, limit);
       break;
     }
@@ -423,7 +420,7 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "weak":
     case "weekly": {
       time = "Weekly";
-      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "weekly") : Database.getMWLeaderboard(prop, "weekly", fileCache));
+      res = await Database.getMWLeaderboard(prop, "weekly");
       res = res.slice(0, limit);
       break;
     }
@@ -433,14 +430,14 @@ async function getLB(prop, timetype, limit, fileCache) {
     case "month":
     case "monthly": {
       time = "Monthly";
-      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop, "monthly") : Database.getMWLeaderboard(prop, "monthly", fileCache));
+      res = await Database.getMWLeaderboard(prop, "monthly");
       res = res.slice(0, limit);
       break;
     }
 
     default: {
       time = "Lifetime";
-      res = await (fileCache != undefined ? MiniWallsLeaderboard(fileCache, prop) : Database.getMWLeaderboard(prop, undefined, fileCache));
+      res = await Database.getMWLeaderboard(prop);
       res = res.slice(0, limit);
       break;
     }
@@ -453,10 +450,9 @@ async function getLB(prop, timetype, limit, fileCache) {
  * @param {string} prop
  * @param {string} timetype
  * @param {number} limit
- * @param {FileCache} fileCache
  * @returns {Discord.MessageEmbed}
  */
-async function genMiWLB(prop, timetype, limit, fileCache) {
+async function genMiWLB(prop, timetype, limit) {
   const startTime = Date.now();
   const type = prop;
 
@@ -470,7 +466,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "kil":
     case "kills": {
       gameName = "Kills";
-      const lb = await getLB("kills", timetype, limit, fileCache);
+      const lb = await getLB("kills", timetype, limit);
       res = stringifyList(lb.res, "kills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -482,7 +478,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "death":
     case "deaths": {
       gameName = "Deaths";
-      const lb = await getLB("deaths", timetype, limit, fileCache);
+      const lb = await getLB("deaths", timetype, limit);
       res = stringifyList(lb.res, "deaths", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -495,7 +491,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "damagewither":
     case "witherdmg": {
       gameName = "Wither Damage";
-      const lb = await getLB("witherDamage", timetype, limit, fileCache);
+      const lb = await getLB("witherDamage", timetype, limit);
       res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -508,7 +504,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "witherkill":
     case "witherki8lls": {
       gameName = "Wither Kills";
-      const lb = await getLB("witherKills", timetype, limit, fileCache);
+      const lb = await getLB("witherKills", timetype, limit);
       res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -521,7 +517,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "final":
     case "finals": {
       gameName = "Final Kills";
-      const lb = await getLB("finalKills", timetype, limit, fileCache);
+      const lb = await getLB("finalKills", timetype, limit);
       res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -539,7 +535,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "kfdr":
     case "killdeath": {
       gameName = "Kills+Finals/Deaths";
-      const lb = await getLB("kd", timetype, limit, fileCache);
+      const lb = await getLB("kd", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -555,7 +551,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "kdrnf":
     case "kdnofinal": {
       gameName = "Kills/Deaths ratios";
-      const lb = await getLB("kdnf", timetype, limit, fileCache);
+      const lb = await getLB("kdnf", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -567,7 +563,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "fkdr":
     case "finaldeath":
     case "fd": {
-      const lb = await getLB("fd", timetype, limit, fileCache);
+      const lb = await getLB("fd", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -578,7 +574,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "wddr":
     case "witherdamagedeath": {
       gameName = "Wither Damage/Deaths";
-      const lb = await getLB("wdd", timetype, limit, fileCache);
+      const lb = await getLB("wdd", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -591,7 +587,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "witherkill+d":
     case "wikdr": {
       gameName = "Wither Kills/Deaths";
-      const lb = await getLB("wkd", timetype, limit, fileCache);
+      const lb = await getLB("wkd", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -602,7 +598,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
     case "ahm":
     case "arrowhit/miss": {
       gameName = "Arrow accuracy";
-      const lb = await getLB("aa", timetype, limit, fileCache);
+      const lb = await getLB("aa", timetype, limit);
       res = stringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -610,7 +606,7 @@ async function genMiWLB(prop, timetype, limit, fileCache) {
 
     default: {
       gameName = "Wins";
-      const lb = await getLB("wins", timetype, limit, fileCache);
+      const lb = await getLB("wins", timetype, limit);
       res = stringifyList(lb.res, "wins", "miniWalls", limit);
       correctedTime = lb.time;
       break;
@@ -656,10 +652,9 @@ function formatNum(number) {
 }
 
 /**
- * @param {FileCache} fileCache
  */
-async function sendMW(fileCache) {
-  let guildlist = fileCache ? [...fileCache.guilds] : await Json.read("guild.json");
+async function sendMW() {
+  let guildlist = await Json.read("guild.json");
   guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
 
   let str = "";
@@ -671,11 +666,11 @@ async function sendMW(fileCache) {
 
   const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
 
-  const wins = await genMiWLB("wins", "l", 25, fileCache);
-  const kills = await genMiWLB("kills", "l", 10, fileCache);
-  const finals = await genMiWLB("f", "l", 10, fileCache);
-  const witherdmg = await genMiWLB("wd", "l", 10, fileCache);
-  const witherkills = await genMiWLB("wk", "l", 10, fileCache);
+  const wins = await genMiWLB("wins", "l", 25);
+  const kills = await genMiWLB("kills", "l", 10);
+  const finals = await genMiWLB("f", "l", 10);
+  const witherdmg = await genMiWLB("wd", "l", 10);
+  const witherkills = await genMiWLB("wk", "l", 10);
   const guilds = gEmbed;
 
   const hook = new Discord.WebhookClient({ id: config.otherHooks.MW.id, token: config.otherHooks.MW.token });
