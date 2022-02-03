@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-null */
 const Logger = require("hyarcade-logger");
 const Account = require("hyarcade-requests/types/Account");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
@@ -22,7 +23,7 @@ module.exports = async function (category, lbprop, timePeriod, reverse, max, fil
     realFilter = [filter];
   }
 
-  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
+  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == null || timePeriod == ""
     ? connector.getLeaderboard(dotNotated, reverse, max, realFilter)
     : connector.getHistoricalLeaderboard(dotNotated, timePeriod, reverse, max, realFilter));
 
