@@ -1,7 +1,26 @@
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
 const TimSort = require("timsort");
-const GenericLeaderboard = require("./GenericLeaderboard");
+
+/**
+ * @param category
+ * @param stat
+ * @param timePeriod
+ * @param max
+ * @param {MongoConnector} connector
+ * @returns {Promise<Account>}
+ */
+async function getLb(category, stat, timePeriod, max, connector) {
+  Logger.verbose("Getting leaderboard");
+  const dotNotated = `${category ?? ""}.${stat}`.replace(/^\./, "").replace(/\.\./g, ".");
+
+  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
+    ? connector.getMiniWallsLeaderboard(dotNotated, max)
+    : connector.getHistoricalMiniWallsLeaderboard(dotNotated, timePeriod, max));
+
+  return accs;
+}
 
 /**
  *
@@ -15,51 +34,51 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
 
   switch (stat) {
     case "wins": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       break;
     }
 
     case "kills": {
-      accounts = await GenericLeaderboard("miniWalls", "kills", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "kills", time, 300, connector);
       break;
     }
 
     case "deaths": {
-      accounts = await GenericLeaderboard("miniWalls", "deaths", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "deaths", time, 300, connector);
       break;
     }
 
     case "witherDamage": {
-      accounts = await GenericLeaderboard("miniWalls", "witherDamage", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "witherDamage", time, 300, connector);
       break;
     }
 
     case "witherKills": {
-      accounts = await GenericLeaderboard("miniWalls", "witherKills", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "witherKills", time, 300, connector);
       break;
     }
 
     case "finalKills": {
-      accounts = await GenericLeaderboard("miniWalls", "finalKills", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "finalKills", time, 300, connector);
       break;
     }
 
     case "arrowsShot": {
-      accounts = await GenericLeaderboard("miniWalls", "arrowsShot", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "arrowsShot", time, 300, connector);
       break;
     }
 
     case "arrowsHit": {
-      accounts = await GenericLeaderboard("miniWalls", "arrowsHit", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "arrowsHit", time, 300, connector);
       break;
     }
 
     case "kd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -75,11 +94,11 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "kdnf": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -96,11 +115,11 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "fd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -116,11 +135,11 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "wdd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -137,11 +156,11 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "wkd": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
@@ -158,11 +177,11 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "aa": {
-      accounts = await GenericLeaderboard("miniWalls", "wins", time, false, 300, "hacker", connector);
+      accounts = await getLb("miniWalls", "wins", time, 300, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
       } else {
-        const top150 = await GenericLeaderboard("miniWalls", "wins", time, false, 150, "hacker", connector);
+        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
       }
