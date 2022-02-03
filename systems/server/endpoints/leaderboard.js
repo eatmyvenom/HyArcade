@@ -1,7 +1,3 @@
-const { Readable, pipeline } = require("stream");
-const zlib = require("zlib");
-const Logger = require("hyarcade-logger");
-
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
 
@@ -29,28 +25,9 @@ module.exports = async (req, res, connector) => {
       acceptEncoding = "";
     }
 
-    const cb = () => {};
-    const s = new Readable();
-
-    s._read = () => {};
-
-    // eslint-disable-next-line unicorn/no-null
-    s.push(JSON.stringify(accs), null);
-
-    Logger.verbose("Sending data");
-    if (/\bdeflate\b/.test(acceptEncoding)) {
-      res.writeHead(200, { "Content-Encoding": "deflate" });
-      pipeline(s, zlib.createDeflate(), res, cb);
-    } else if (/\bgzip\b/.test(acceptEncoding)) {
-      res.writeHead(200, { "Content-Encoding": "gzip" });
-      pipeline(s, zlib.createGzip(), res, cb);
-    } else if (/\bbr\b/.test(acceptEncoding)) {
-      res.writeHead(200, { "Content-Encoding": "br" });
-      pipeline(s, zlib.createBrotliCompress(), res, cb);
-    } else {
-      res.writeHead(200, {});
-      pipeline(s, res, cb);
-    }
+    res.setHeader("Content-Type", "application/json");
+    res.write(JSON.stringify(accs));
+    res.end();
   } else {
     res.statusCode = 404;
     res.end();
