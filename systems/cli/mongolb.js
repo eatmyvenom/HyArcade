@@ -30,7 +30,7 @@ async function main(args) {
   const c = new connector("mongodb://127.0.0.1:27017");
   await c.connect();
 
-  const lb = await c.getLeaderboard(args[3], true, false, 25, false);
+  const lb = await c.getLeaderboard(args[3], false, 25, false);
 
   const vals = lb.map((acc, i) => `${i + 1}) ${acc.rank.replace(/_PLUS/g, "+")} ${acc.name} - ${getProp(acc, args[3])}`);
   Logger.out(vals.join("\n"));
