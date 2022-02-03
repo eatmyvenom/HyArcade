@@ -1,5 +1,5 @@
 const Runtime = require("hyarcade-config/Runtime");
-const Logger = require("hyarcade-Logger");
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
