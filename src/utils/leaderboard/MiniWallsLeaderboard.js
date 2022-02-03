@@ -198,7 +198,7 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
   }
 
-  const hackerArr = await this.hackerList.find().toArray();
+  const hackerArr = await connector.hackerList.find().toArray();
   let hackers = new Set(hackerArr.map(h => h.uuid));
 
   return accounts.filter(a => !hackers.has(a.uuid));
