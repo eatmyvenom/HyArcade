@@ -299,7 +299,7 @@ module.exports = new Command(
       .setTitle(correctedTime)
       .setColor(0xc60532)
       .setDescription(res)
-      .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://eatmyvenom.me/share/images/MWPfp3.png" });
+      .setAuthor({ name: `${gameName} Leaderboard`, iconURL: "https://vnmm.dev/share/images/MWPfp3.png" });
 
     if (res.length > 6000) {
       return new MessageEmbed()
