@@ -15,7 +15,13 @@ module.exports = async (req, res, connector) => {
     const data = await connector.readCollection(file);
 
     res.setHeader("Content-Type", "application/json");
-    res.write(JSON.stringify(data, fields));
+
+    // eslint-disable-next-line unicorn/no-null
+    if (fields == null) {
+      res.write(JSON.stringify(data));
+    } else {
+      res.write(JSON.stringify(data, fields.split(",")));
+    }
     res.end();
   } else {
     res.statusCode = 404;
