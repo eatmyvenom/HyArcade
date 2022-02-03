@@ -7,11 +7,11 @@ const miniUpdater = require("../datagen/miniUpdater");
  *
  */
 async function main() {
-  let forceLevel = 2;
+  let forceLevel = 1;
 
   try {
     const fileData = await fs.readFile("force");
-    forceLevel = fileData.toString() == "" ? 2 : Number(fileData.toString());
+    forceLevel = fileData.toString() == "" ? 1 : Number(fileData.toString());
   } catch {
     forceLevel = 0;
   }
