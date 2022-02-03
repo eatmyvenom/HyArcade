@@ -42,6 +42,7 @@ async function requestData(uuids) {
  * @param {*} perSegment
  */
 async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, perSegment) {
+  if (!uuidArr) return;
   Logger.verbose(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
   let workerData;
   try {
