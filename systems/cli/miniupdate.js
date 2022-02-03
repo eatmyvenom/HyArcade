@@ -8,11 +8,11 @@ const miniUpdater = require("../datagen/miniUpdater");
  */
 async function main() {
   Logger.name = "Data Generator";
-  let forceLevel = 1;
+  let forceLevel = 2;
 
   try {
     const fileData = await fs.readFile("force");
-    forceLevel = fileData.toString() == "" ? 1 : Number(fileData.toString());
+    forceLevel = fileData.toString() == "" ? 2 : Number(fileData.toString());
   } catch {
     forceLevel = 0;
   }
