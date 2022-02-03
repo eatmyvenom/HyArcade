@@ -364,8 +364,13 @@ function classicGamesTransformer(status) {
  * @param {Account} account
  * @returns {string}
  */
-function getLastAction(account) {
-  const time = Math.max(account.actionTime.quest.time, account.actionTime.pets, account.actionTime.dailyReward);
+async function getLastAction(account) {
+  const friendDataReq = await webRequest(`https://api.slothpixel.me/api/players/${account.uuid}/friends`);
+  const friendData = JSON.parse(friendDataReq.data);
+
+  let friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
+
+  const time = Math.max(account.actionTime.quest.time, account.actionTime.pets, account.actionTime.dailyReward, account.actionTime.otherActions, ...friendTimestamps);
   return TimeFormatter(time);
 }
 
@@ -484,7 +489,7 @@ async function callback(args, rawmsg, interaction) {
       y = startY;
 
       await img.drawMcText(`&aLast Known Action`, img.canvas.width - 300, (y += increase), 42, "center");
-      await img.drawMcText(`&a${getLastAction(acc)}`, img.canvas.width - 300, (y += increase), 50, "center");
+      await img.drawMcText(`&a${await getLastAction(acc)}`, img.canvas.width - 300, (y += increase), 50, "center");
       y += spacer;
 
       const gexp = await getGEXP(acc);
