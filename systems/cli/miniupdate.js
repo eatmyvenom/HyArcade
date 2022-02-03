@@ -7,7 +7,7 @@ const miniUpdater = require("../datagen/miniUpdater");
  *
  */
 async function main() {
-  let forceLevel = 0;
+  let forceLevel = 2;
 
   try {
     const fileData = await fs.readFile("force");
