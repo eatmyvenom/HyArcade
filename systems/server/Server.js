@@ -20,6 +20,7 @@ const urlModules = {
   acctimed: require("./endpoints/TimeAcc"),
   info: require("./endpoints/info"),
   ping: require("./endpoints/ping"),
+  disc: require("./endpoints/disc"),
 };
 
 /**

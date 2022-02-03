@@ -49,19 +49,23 @@ async function verifyCommand(args, rawMsg, interaction) {
   await acc.updateData();
   uuid = acc.uuid;
 
-  const disclist = await BotRuntime.getFromDB("disclist");
+  const list = await BotRuntime.getFromDB("discordList");
+  const disclist = {};
+
+  for (const link of list) {
+    disclist[link.discordID] = link.uuid;
+  }
 
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
-    disclist[id] = uuid;
+    await Database.linkDiscord(id, uuid);
     Logger.out(`${tag} was verified as ${acc.name}`);
 
     await Database.addAccount(acc);
-    await BotRuntime.writeToDB("disclist", disclist);
 
     return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
   }
 
-  return new CommandResponse(`${firstWord} - ${uuid} - ${acc.hypixelDiscord} - ${acc.level} - ${tag}`, ERROR_LINK_HYPIXEL_MISMATCH);
+  return new CommandResponse(ERROR_LINK_HYPIXEL_MISMATCH);
 }
 
 export default new Command("verify", ["*"], verifyCommand);

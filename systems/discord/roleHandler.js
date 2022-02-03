@@ -41,7 +41,13 @@ const neededStats = [
  */
 module.exports = async function roleHandler(client) {
   const roleSet = await fs.readJSON("config.roles.json");
-  const disclist = await BotRuntime.getFromDB("disclist");
+  const list = await BotRuntime.getFromDB("discordList");
+  const disclist = {};
+
+  for (const link of list) {
+    disclist[link.discordID] = link.uuid;
+  }
+
   const accs = await BotRuntime.getFromDB("accounts", neededStats);
 
   for (const server in roleSet) {

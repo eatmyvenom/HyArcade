@@ -1,4 +1,5 @@
 const { Interaction } = require("discord.js");
+const Database = require("hyarcade-requests/Database");
 const Command = require("hyarcade-structures/Discord/Command");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
@@ -11,11 +12,15 @@ const BotRuntime = require("../BotRuntime");
  * @returns {CommandResponse}
  */
 async function unverify(args, rawMsg, interaction) {
-  let disclist = await BotRuntime.getFromDB("disclist");
+  const list = await BotRuntime.getFromDB("discordList");
+  const disclist = {};
+
+  for (const link of list) {
+    disclist[link.discordID] = link.uuid;
+  }
 
   if (Object.keys(disclist).includes(interaction.user.id)) {
-    disclist[interaction.user.id] = undefined;
-    await BotRuntime.writeToDB("disclist", disclist);
+    await Database.unlinkDiscord(interaction.user.id, interaction.user.id);
 
     return new CommandResponse("You were successfully unverified!");
   }

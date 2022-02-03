@@ -3,10 +3,10 @@ import Logger from "hyarcade-logger";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
+import addAccounts from "../datagen/addAccounts.js";
 import BotRuntime from "./BotRuntime.js";
 import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds.js";
-import addAccounts from "../datagen/addAccounts.js";
+const require = createRequire(import.meta.url);
 const { mojangRequest } = require("hyarcade-requests");
 const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
 
@@ -48,15 +48,13 @@ export default async function MiniWallsVerify(msg) {
   await acc.updateData();
   const dbAcc = await Database.account(uuid, id);
   const hackers = await BotRuntime.getHackerlist();
-  const disclist = await BotRuntime.getFromDB("disclist");
   if (dbAcc.guildID == "608066958ea8c9abb0610f4d" || hackers.includes(uuid)) {
     Logger.warn("Hacker tried to verify!");
     return;
   }
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     await addAccounts([uuid]);
-    disclist[id] = uuid;
-    await BotRuntime.writeToDB("disclist", disclist);
+    await Database.linkDiscord(id, uuid);
     Logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
     await msg.member.roles.remove("850033543425949736");
     await msg.member.roles.add("789721304722178069");

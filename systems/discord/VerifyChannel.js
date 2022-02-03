@@ -44,10 +44,9 @@ module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
 
   const acc = new Account(firstWord, 0, uuid);
   await acc.updateData();
-  const disclist = await BotRuntime.getFromDB("disclist");
 
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
-    disclist[id] = uuid;
+    await Database.linkDiscord(id, uuid);
 
     Logger.out(`${tag} was autoverified in ${msg.guild.name} as ${acc.name}`);
 
@@ -69,7 +68,6 @@ module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
       Logger.err("Linking error!");
       Logger.err(error);
     }
-    await BotRuntime.writeToDB("disclist", disclist);
     await Database.addAccount(acc);
   } else {
     await msg.channel.send({
