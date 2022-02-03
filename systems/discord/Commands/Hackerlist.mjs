@@ -13,7 +13,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
   }
 
   /** @type {string[]} */
-  let hackers = await BotRuntime.getFromDB("hackerlist");
+  let hackers = await BotRuntime.getFromDB("hackerList");
 
   let res;
   let hasChange = false;
@@ -53,7 +53,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
   }
 
   if (hasChange) {
-    await BotRuntime.writeToDB("hackerlist", hackers);
+    await BotRuntime.writeToDB("hackerList", hackers);
   }
 
   return res;

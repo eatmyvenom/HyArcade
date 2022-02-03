@@ -7,6 +7,7 @@ const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const fetch = require("node-fetch");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
+const fs = require("fs-extra");
 
 let hackerlist;
 let blacklist;
@@ -146,7 +147,8 @@ module.exports = class BotRuntime {
 
   static async getHackerlist() {
     if (hackerlist == undefined) {
-      hackerlist = await BotRuntime.getFromDB("hackerlist");
+      let list = await BotRuntime.getFromDB("hackerList");
+      hackerlist = list.map(h => h.uuid);
       setTimeout(() => (hackerlist = undefined), 3600000);
     }
 
@@ -155,8 +157,8 @@ module.exports = class BotRuntime {
 
   static async getBlacklist() {
     if (blacklist == undefined) {
-      BotRuntime.getFromDB("blacklist")
-        .then(bl => (blacklist = bl))
+      fs.readFile("data/blacklist")
+        .then(bl => (blacklist = bl.toString().split("\n")))
         .catch(logger.err);
 
       setTimeout(() => (blacklist = undefined), 3600000);
@@ -168,7 +170,8 @@ module.exports = class BotRuntime {
 
   static async getBanlist() {
     if (banlist == undefined) {
-      banlist = await BotRuntime.getFromDB("banlist");
+      let list = await BotRuntime.getFromDB("bannedList");
+      banlist = list.map(h => h.uuid);
       setTimeout(() => (banlist = undefined), 3600000);
     }
 
