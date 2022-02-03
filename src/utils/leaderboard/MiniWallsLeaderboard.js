@@ -74,18 +74,27 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "kd": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.kills -= acc.historicalData[0]?.miniWalls?.kills ?? 0;
+          acc.miniWalls.finalKills -= acc.historicalData[0]?.miniWalls?.finalKills ?? 0;
+          acc.miniWalls.deaths -= acc.historicalData[0]?.miniWalls?.deaths ?? 0;
+
+          acc.miniWalls.ratio = ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = ((acc?.miniWalls?.kills ?? 0) + (acc?.miniWalls?.finalKills ?? 0)) / (acc?.miniWalls?.deaths ?? 0);
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
@@ -94,104 +103,140 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
     }
 
     case "kdnf": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = (acc?.miniWalls?.kills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.kills -= acc.historicalData[0]?.miniWalls?.kills ?? 0;
+          acc.miniWalls.deaths -= acc.historicalData[0]?.miniWalls?.deaths ?? 0;
+
+          acc.miniWalls.ratio = (acc?.miniWalls?.kills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = acc.miniWalls.kills / acc.miniWalls.deaths;
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
-
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
       break;
     }
 
     case "fd": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = (acc?.miniWalls?.finalKills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.finalKills -= acc.historicalData[0]?.miniWalls?.finalKills ?? 0;
+          acc.miniWalls.deaths -= acc.historicalData[0]?.miniWalls?.deaths ?? 0;
+
+          acc.miniWalls.ratio = (acc?.miniWalls?.finalKills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = acc.miniWalls.finalKills / acc.miniWalls.deaths;
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
-
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
+
       break;
     }
 
     case "wdd": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = (acc?.miniWalls?.witherDamage ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.witherDamage -= acc.historicalData[0]?.miniWalls?.witherDamage ?? 0;
+          acc.miniWalls.deaths -= acc.historicalData[0]?.miniWalls?.deaths ?? 0;
+
+          acc.miniWalls.ratio = (acc?.miniWalls?.witherDamage ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = acc.miniWalls.witherDamage / acc.miniWalls.deaths;
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
-
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
       break;
     }
 
     case "wkd": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = (acc?.miniWalls?.witherKills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.witherKills -= acc.historicalData[0]?.miniWalls?.witherKills ?? 0;
+          acc.miniWalls.deaths -= acc.historicalData[0]?.miniWalls?.deaths ?? 0;
+
+          acc.miniWalls.ratio = (acc?.miniWalls?.witherKills ?? 0) / (acc?.miniWalls?.deaths ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = acc.miniWalls.witherKills / acc.miniWalls.deaths;
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
-
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
       break;
     }
 
     case "aa": {
-      accounts = await getLb("miniWalls", "wins", time, 300, connector);
+      accounts = await getLb("miniWalls", "wins", time, 1500, connector);
       if (time == undefined || time == undefined) {
         accounts = accounts.slice(0, 150);
+        accounts.map(acc => {
+          acc.miniWalls.ratio = (acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0);
+          return acc;
+        });
       } else {
-        const top150 = await getLb("miniWalls", "wins", time, 150, connector);
+        const top150 = await getLb("miniWalls", "wins", undefined, 150, connector);
 
         accounts = accounts.filter(acc => top150.some(a => a.uuid == acc.uuid));
+
+        accounts.map(acc => {
+          acc.miniWalls.arrowsShot -= acc.historicalData[0]?.miniWalls?.arrowsShot ?? 0;
+          acc.miniWalls.arrowsHit -= acc.historicalData[0]?.miniWalls?.arrowsHit ?? 0;
+
+          acc.miniWalls.ratio = (acc?.miniWalls?.arrowsShot ?? 0) / (acc?.miniWalls?.arrowsHit ?? 0);
+          return acc;
+        });
       }
-      accounts.map(acc => {
-        acc.miniWalls.ratio = (acc.miniWalls.arrowsHit / acc.miniWalls.arrowsShot) * 100;
-        return acc;
-      });
 
       accounts = accounts.filter(acc => (acc?.miniWalls?.ratio ?? 0) > 0);
-
       TimSort.sort(accounts, (a, b) => (b?.miniWalls?.ratio ?? 0) - (a?.miniWalls?.ratio ?? 0));
 
       break;
