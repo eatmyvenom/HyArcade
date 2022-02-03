@@ -231,7 +231,7 @@ module.exports = async function generateLeaderboard(connector, stat, time) {
           acc.miniWalls.arrowsShot -= acc.historicalData[0]?.miniWalls?.arrowsShot ?? 0;
           acc.miniWalls.arrowsHit -= acc.historicalData[0]?.miniWalls?.arrowsHit ?? 0;
 
-          acc.miniWalls.ratio = (acc?.miniWalls?.arrowsShot ?? 0) / (acc?.miniWalls?.arrowsHit ?? 0);
+          acc.miniWalls.ratio = (acc?.miniWalls?.arrowsHit ?? 0) / (acc?.miniWalls?.arrowsShot ?? 0);
           return acc;
         });
       }
