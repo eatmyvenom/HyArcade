@@ -21,6 +21,7 @@ const urlModules = {
   info: require("./endpoints/info"),
   ping: require("./endpoints/ping"),
   disc: require("./endpoints/disc"),
+  guild: require("./endpoints/guild"),
 };
 
 /**
