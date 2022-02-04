@@ -9,7 +9,7 @@ async function main(args) {
   const c = new MongoConnector("mongodb://127.0.0.1:27017");
 
   await c.connect(false);
-  c.snapshotAccounts(args[3]);
+  await c.snapshotAccounts(args[3]);
 }
 
 module.exports = main;
