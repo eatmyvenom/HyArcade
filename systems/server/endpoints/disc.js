@@ -28,6 +28,7 @@ module.exports = async (req, res, connector) => {
       res.setHeader("Content-Type", "application/json");
       res.statusCode = 403;
       res.write(JSON.stringify({ error: "MISSING AUTH" }));
+      res.end();
     }
   } else {
     res.statusCode = 404;
