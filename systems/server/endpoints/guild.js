@@ -25,7 +25,10 @@ module.exports = async (req, res, connector) => {
     if (guild == undefined) {
       guild = new Guild(uuid ?? memberUUID);
       await guild.updateWins();
-      await connector.updateGuild(guild);
+
+      if (guild.uuid != undefined || guild.uuid != "") {
+        await connector.updateGuild(guild);
+      }
     }
 
     res.setHeader("Content-Type", "application/json");
