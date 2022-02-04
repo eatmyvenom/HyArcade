@@ -46,15 +46,11 @@ module.exports = async function addAccounts(names) {
     await acc.updateHypixel();
     name = acc.name;
 
+    await Database.addAccount(acc);
+
     newAccs.push(acc);
     logger.out(`${name} with ${acc.arcadeWins} wins added.`);
     res += `${name} with ${acc.arcadeWins} wins added.\n`;
-  }
-
-  newAccs.filter(a => a.uuid != undefined);
-
-  if (newAccs.length > 0) {
-    await Database.writeDB("accounts", newAccs);
   }
 
   return res;
