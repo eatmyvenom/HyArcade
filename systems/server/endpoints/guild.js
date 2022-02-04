@@ -1,4 +1,7 @@
+const cfg = require("hyarcade-config").fromJSON();
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
+const Guild = require("hyarcade-structures/Guild");
 
 /**
  *
@@ -19,10 +22,37 @@ module.exports = async (req, res, connector) => {
       guild = await connector.getGuildByMember(memberUUID);
     }
 
+    if (guild == undefined) {
+      guild = new Guild(uuid ?? memberUUID);
+      await guild.updateWins();
+      await connector.updateGuild(guild);
+    }
+
     res.setHeader("Content-Type", "application/json");
 
     res.write(JSON.stringify(guild));
     res.end();
+  } else if (req.method == "POST") {
+    let data = "";
+    let json = {};
+    if (req.headers.authorization == cfg.dbPass) {
+      req.on("data", d => (data += d));
+      req.on("end", async () => {
+        json = JSON.parse(data);
+        const newGuild = json;
+
+        connector
+          .updateGuild(newGuild)
+          .then(() => {})
+          .catch(Logger.err);
+
+        res.end();
+      });
+    } else {
+      Logger.warn("Someone tried to post without correct AUTH");
+      res.statusCode = 403;
+      res.end();
+    }
   } else {
     res.statusCode = 404;
     res.end();

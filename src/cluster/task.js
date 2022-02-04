@@ -56,6 +56,7 @@ async function glds() {
     await Promise.all(
       temparray.map(async guild => {
         await guild.updateWins();
+        await Database.addGuild(guild);
       }),
     );
   }
