@@ -7,7 +7,7 @@ const miniUpdater = require("../datagen/miniUpdater");
  *
  */
 async function main() {
-  Logger.name = "Data Generator";
+  Logger.name = "Data-Generator";
   let forceLevel = 2;
 
   try {

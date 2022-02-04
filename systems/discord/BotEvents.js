@@ -73,6 +73,7 @@ module.exports = class BotEvents {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
+      logger.name = "Interactions";
     } else if (BotRuntime.botMode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
@@ -81,15 +82,18 @@ module.exports = class BotEvents {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
+      logger.name = "Mini-Walls-Bot";
     } else if (BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
+      logger.name = "Test-Bot";
     } else {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
 
       logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
+      logger.name = "Arcade-Bot";
     }
     await SetPresence(BotRuntime.client, mode);
   }
