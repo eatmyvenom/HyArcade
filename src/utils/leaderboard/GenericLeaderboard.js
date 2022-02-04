@@ -16,7 +16,7 @@ const MongoConnector = require("hyarcade-requests/MongoConnector");
  */
 module.exports = async function (category, lbprop, timePeriod, reverse, max, filter = false, connector) {
   Logger.verbose("Getting leaderboard");
-  const dotNotated = `${category ?? ""}.${lbprop}`.replace(/^\./, "").replace(/\.\./g, ".");
+  const dotNotated = `${category ?? ""}.${lbprop}`.replace(/\.+/g, ".").replace(/^\./, "");
 
   let realFilter = false;
   if (filter && !Array.isArray(filter)) {
