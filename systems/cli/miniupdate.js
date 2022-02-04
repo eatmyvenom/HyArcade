@@ -13,6 +13,7 @@ async function main() {
   try {
     const fileData = await fs.readFile("force");
     forceLevel = fileData.toString() == "" ? 2 : Number(fileData.toString());
+    await fs.rm("force");
   } catch {
     forceLevel = 0;
   }
@@ -26,12 +27,7 @@ async function main() {
   Logger.info(`Preparing to update ${uuids.length} accounts`);
 
   await miniUpdater(uuids, connector);
-
-  try {
-    await fs.rm("force");
-  } catch {
-    Logger.info("Was not forced, not removing file");
-  }
+  Logger.info("Update completed!");
 }
 
 module.exports = main;
