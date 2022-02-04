@@ -2,8 +2,6 @@ const process = require("process");
 const { URL } = require("url");
 const logger = require("hyarcade-logger");
 
-const StatusExit = require("../../src/events/StatusExit");
-const StatusStart = require("../../src/events/StatusStart");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 
 const urlModules = {
@@ -55,12 +53,6 @@ async function callback(request, response) {
 }
 
 module.exports = async function start(port) {
-  if (!process.argv.includes("--test")) {
-    StatusStart()
-      .then(() => {})
-      .catch(logger.err);
-  }
-
   logger.name = "Database";
   connector = new MongoConnector("mongodb://127.0.0.1:27017");
   await connector.connect();
@@ -79,10 +71,7 @@ module.exports = async function start(port) {
   });
 
   process.on("SIGINT", async signal => {
-    if (!process.argv.includes("--test")) {
-      await StatusExit();
-      logger.log(`Exiting process with signal : ${signal}`);
-    }
+    logger.log(`Exiting process with signal : ${signal}`);
 
     process.exit(0);
   });
