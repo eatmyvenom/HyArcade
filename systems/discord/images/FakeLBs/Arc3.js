@@ -81,6 +81,24 @@ module.exports = async function Arc3(path, category, time, topTen) {
   await img.drawMcText(`&7${gameTitle}`, x, (y += dy), fontSize, "center", true);
   y += 10;
 
+  const custom = false;
+
+  if (custom) {
+    // eslint-disable-next-line no-param-reassign
+    topTen = [
+      { name: "Slakshads", rank: "MVP_PLUS", lbProp: 1291, guildTag: "SWAG", guildTagColor: "YELLOW" },
+      { name: "Voizion", rank: "MVP_PLUS_PLUS", lbProp: 959, guildTag: "SWAG", guildTagColor: "YELLOW" },
+      { name: "chuey", rank: "MVP_PLUS_PLUS", lbProp: 917, guildTag: "SWAG", guildTagColor: "YELLOW" },
+      { name: "AZZU_", rank: "VIP_PLUS", lbProp: 895, guildTag: "✌︎LG❤", guildTagColor: "YELLOW" },
+      { name: "tinykorean", rank: "MVP_PLUS_PLUS", lbProp: 875, guildTag: "SWAG", guildTagColor: "YELLOW" },
+      { name: "xdragons", rank: "MVP_PLUS_PLUS", lbProp: 799, guildTag: "AP", guildTagColor: "GREY" },
+      { name: "Woalfy", rank: "MVP_PLUS_PLUS", lbProp: 741, guildTag: "VAIL", guildTagColor: "YELLOW" },
+      { name: "Virtud", rank: "MVP_PLUS", lbProp: 740, guildTag: "", guildTagColor: "" },
+      { name: "feithy", rank: "MVP_PLUS_PLUS", lbProp: 732, guildTag: "MEXICO", guildTagColor: "DARK_AQUA" },
+      { name: "_Osirus", rank: "MVP_PLUS_PLUS", lbProp: 680, guildTag: "EATBEE", guildTagColor: "GREY" },
+    ];
+  }
+
   for (const [i, account] of topTen.entries()) {
     if (time == undefined) {
       img.drawLBPlayer(account, `${i + 1}`, formatNum(account?.[category]?.[path] ?? account?.miniWalls?.wins), x, (y += dy), fontSize);
