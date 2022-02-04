@@ -22,13 +22,16 @@ module.exports = async (req, res, connector) => {
       guild = await connector.getGuildByMember(memberUUID);
     }
 
-    if (guild == undefined) {
+    // eslint-disable-next-line unicorn/no-null
+    if (guild == undefined || guild == null) {
       guild = new Guild(uuid ?? memberUUID);
       await guild.updateWins();
 
       if (guild.name != "INVALID-NAME") {
         Logger.log("Adding guild to mongo");
         await connector.updateGuild(guild);
+      } else {
+        guild = { ERROR: "NO-GUILD" };
       }
     }
 
