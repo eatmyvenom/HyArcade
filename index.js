@@ -3,12 +3,7 @@ const os = require("os");
 const fs = require("fs-extra");
 const process = require("process");
 const Webhook = require("./src/events/webhook");
-const {
-  listNormal,
-  listDiff,
-  stringNormal,
-  stringDaily
-} = require("./src/listUtils");
+const { listNormal, listDiff, stringNormal, stringDaily } = require("./src/listUtils");
 const args = process.argv;
 const task = require("./src/cluster/task");
 
@@ -17,11 +12,11 @@ const Runtime = require("hyarcade-config/Runtime").fromJSON();
 
 /**
  * Send a list to a discord webhook as formatted text
- * 
+ *
  * @param {string} [type="players"] the type of list to log
  * @param {number} [maxamnt=undefined] the maximum index to reach in the list
  */
-async function webhookLog (type = "players", maxamnt) {
+async function webhookLog(type = "players", maxamnt) {
   await Webhook.send(`\`\`\`\n${await stringNormal(type, maxamnt)}\n\`\`\``);
   await Webhook.send(`\`\`\`\n${await stringDaily(type, maxamnt)}\n\`\`\``);
 }
@@ -33,7 +28,7 @@ async function webhookLog (type = "players", maxamnt) {
  * @param {number} [maxamnt=undefined] the maximum index to reach in the list
  * @see webhookLog
  */
-async function webhookEmbed (type = "accounts", maxamnt) {
+async function webhookEmbed(type = "accounts", maxamnt) {
   const normal = await listNormal(type, maxamnt);
   const day = await listDiff(type, "day", maxamnt);
 
@@ -44,21 +39,21 @@ async function webhookEmbed (type = "accounts", maxamnt) {
 /**
  * Send party games daily embed
  */
-async function sendPGDay () {
+async function sendPGDay() {
   await Webhook.sendPGEmbed();
 }
 
 /**
  * Send party games weekly embed
  */
-async function sendPGWeek () {
+async function sendPGWeek() {
   await Webhook.sendPGWEmbed();
 }
 
 /**
  * Send party games monthly embed
  */
-async function sendPGMonth () {
+async function sendPGMonth() {
   await Webhook.sendPGMEmbed();
 }
 
@@ -66,15 +61,15 @@ async function sendPGMonth () {
  * Run the discord task
  *
  */
-async function discordBot () {
+async function discordBot() {
   await task.discord();
 }
 
 /**
  * Write the current PID to a tmp file
  */
-async function writePID () {
-  if(!fs.existsSync(`${os.tmpdir()}/pgapi`)) {
+async function writePID() {
+  if (!fs.existsSync(`${os.tmpdir()}/pgapi`)) {
     await fs.mkdir(`${os.tmpdir()}/pgapi`);
   }
   await fs.writeFile(`${os.tmpdir()}/pgapi/${args[2]}.pid`, `${process.pid}`);
@@ -83,7 +78,7 @@ async function writePID () {
 /**
  * Remove the tmp PID file
  */
-async function rmPID () {
+async function rmPID() {
   await fs.rm(`${os.tmpdir()}/pgapi/${args[2]}.pid`);
 }
 
@@ -91,86 +86,87 @@ async function rmPID () {
  * Main function in a async wrapper to use other async functions
  *
  */
-async function main () {
+async function main() {
+  logger.debug("----- NEW PROCESS STARTED -----");
   let killable = true;
 
-  if(Runtime.apiDown) {
-    if(!(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB")) {
-      logger.err("Refusing to run while api is down");
-      process.exit(1);
-    }
+  if (Runtime.apiDown && !(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB")) {
+    logger.err("Refusing to run while api is down");
+    process.exit(1);
   }
 
-  if(!(args[2] == "bot" || args[2] == "serveDB")) {
+  if (!(args[2] == "bot" || args[2] == "serveDB")) {
     logger.verbose("Writing pid file");
     await writePID();
   }
 
   logger.debug(`Args are [${args}] - executing`);
-  switch(args[2]) {
-  case "discord":
-    await webhookLog(args[3], args[4]);
-    break;
-  case "discordE":
-    await webhookEmbed(args[3], args[4]);
-    break;
+  logger.debug("----- Process info -----");
+  logger.debug(`PID - ${process.pid}\nCWD - ${process.cwd()}\nNODE VERSION - ${process.versions.node}\nV8 VERSION - ${process.versions.v8}`);
+  switch (args[2]) {
+    case "discord":
+      await webhookLog(args[3], args[4]);
+      break;
+    case "discordE":
+      await webhookEmbed(args[3], args[4]);
+      break;
 
-  case "discordPG":
-    await sendPGDay();
-    break;
+    case "discordPG":
+      await sendPGDay();
+      break;
 
-  case "discordPGW":
-    await sendPGWeek();
-    break;
+    case "discordPGW":
+      await sendPGWeek();
+      break;
 
-  case "discordPGM":
-    await sendPGMonth();
-    break;
+    case "discordPGM":
+      await sendPGMonth();
+      break;
 
-  case "discordHS":
-    await Webhook.sendHSEmbed();
-    break;
+    case "discordHS":
+      await Webhook.sendHSEmbed();
+      break;
 
-  case "discordHSW":
-    await Webhook.sendHSWEmbed();
-    break;
+    case "discordHSW":
+      await Webhook.sendHSWEmbed();
+      break;
 
-  case "discordHSM":
-    await Webhook.sendHSMEmbed();
-    break;
+    case "discordHSM":
+      await Webhook.sendHSMEmbed();
+      break;
 
-  case "discordDWK":
-    await Webhook.sendDWKillEmbed();
-    break;
+    case "discordDWK":
+      await Webhook.sendDWKillEmbed();
+      break;
 
-  case "bot":
-    killable = false;
-    await discordBot();
-    break;
+    case "bot":
+      killable = false;
+      await discordBot();
+      break;
 
-  case "serveDB": {
-    const Server = require("./systems/server/Server");
-    logger.out("Starting server for database and listening on port 6000");
-    await Server(6000);
-    killable = false;
-    break;
+    case "serveDB": {
+      const Server = require("./systems/server/Server");
+      logger.out("Starting server for database and listening on port 6000");
+      await Server(6000);
+      killable = false;
+      break;
+    }
+
+    default: {
+      const mod = require(`./systems/cli/${args[2]}`);
+      await mod(args);
+    }
   }
 
-  default: {
-    const mod = require(`./systems/cli/${args[2]}`);
-    await mod(args);
-  }
-  }
-
-  if(!(args[2] == "bot" || args[2] == "serveDB")) {
+  if (!(args[2] == "bot" || args[2] == "serveDB")) {
     await rmPID();
   }
 
-  if(killable) {
+  if (killable) {
     process.exit(0);
   }
 }
 
 main()
   .then(logger.log)
-  .catch((e) => logger.err(e.stack));
+  .catch(error => logger.err(error.stack));
