@@ -26,7 +26,7 @@ module.exports = async (req, res, connector) => {
       guild = new Guild(uuid ?? memberUUID);
       await guild.updateWins();
 
-      if (guild.uuid != undefined && guild.uuid != "") {
+      if (guild.name != "INVALID-NAME") {
         await connector.updateGuild(guild);
       }
     }
