@@ -27,6 +27,7 @@ module.exports = async (req, res, connector) => {
       await guild.updateWins();
 
       if (guild.name != "INVALID-NAME") {
+        Logger.log("Adding guild to mongo");
         await connector.updateGuild(guild);
       }
     }
