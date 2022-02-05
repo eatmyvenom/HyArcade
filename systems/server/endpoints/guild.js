@@ -1,5 +1,6 @@
 const cfg = require("hyarcade-config").fromJSON();
 const Logger = require("hyarcade-logger");
+const { mojangRequest } = require("hyarcade-requests");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Guild = require("hyarcade-structures/Guild");
 
@@ -13,12 +14,15 @@ module.exports = async (req, res, connector) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   if (req.method == "GET") {
     const uuid = url.searchParams.get("uuid");
-    const memberUUID = url.searchParams.get("member");
+    let memberUUID = url.searchParams.get("member");
 
     let guild;
     if (uuid) {
       guild = await connector.getGuild(uuid);
     } else if (memberUUID) {
+      if (memberUUID.length < 32) {
+        memberUUID = await mojangRequest.getUUID(memberUUID);
+      }
       guild = await connector.getGuildByMember(memberUUID);
     }
 

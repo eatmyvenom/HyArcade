@@ -32,7 +32,7 @@
         "hyarcade-utils": "eatmyvenom/hyarcade-utils",
         "javascript-time-ago": "^2.3.6",
         "mongodb": "^4.3.1",
-        "node-fetch": "^2.6.7",
+        "node-fetch": "2",
         "nodejs": "^0.0.0",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"
@@ -46,7 +46,7 @@
         "commitlint": "^16.1.0",
         "eslint": "^8.8.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-jsdoc": "^36.0.6",
+        "eslint-plugin-jsdoc": "^37.7.1",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-unicorn": "^40.1.0",
         "husky": "^7.0.4",
