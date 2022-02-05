@@ -3,7 +3,7 @@ import Command from "hyarcade-structures/Discord/Command.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
-export default new Command("hackerlist", ["%trusted%"], async args => {
+export default new Command("banlist", ["%trusted%"], async args => {
   const operation = args[0] ?? "ls";
 
   if (operation == undefined) {
@@ -19,7 +19,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
     case "+":
     case "add":
     case "plus": {
-      await Database.addHacker(args[1]);
+      await Database.addBanned(args[1]);
       res = {
         res: "UUID added!",
       };
@@ -29,7 +29,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
     case "-":
     case "rm":
     case "remove": {
-      await Database.delHacker(args[1]);
+      await Database.delBanned(args[1]);
       res = {
         res: "UUID removed!",
       };
@@ -41,9 +41,9 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
     case "list":
     case "show": {
       /** @type {string[]} */
-      let hackers = await BotRuntime.getFromDB("hackerList");
+      let banned = await BotRuntime.getFromDB("bannedList");
       res = {
-        res: `\`\`\`\n${hackers.join("\n")}\`\`\``,
+        res: `\`\`\`\n${banned.join("\n")}\`\`\``,
       };
       break;
     }
