@@ -10,8 +10,7 @@ async function main() {
 
   Logger.debug(c.guilds.collectionName);
   Logger.debug(await c.guilds.countDocuments());
-  Logger.debug(c.guilds.isCapped);
-  Logger.debug(JSON.stringify(await c.guilds.stats()));
+  Logger.debug(await c.guilds.isCapped());
 }
 
 main().then(Logger.log).catch(Logger.err);
