@@ -20,6 +20,8 @@ const urlModules = {
   ping: require("./endpoints/ping"),
   disc: require("./endpoints/disc"),
   guild: require("./endpoints/guild"),
+  hacker: require("./endpoints/hacker"),
+  banned: require("./endpoints/banned"),
 };
 
 /**
