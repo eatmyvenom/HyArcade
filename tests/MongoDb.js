@@ -11,6 +11,7 @@ async function main() {
   Logger.debug(c.guilds.collectionName);
   Logger.debug(await c.guilds.countDocuments());
   Logger.debug(await c.guilds.isCapped());
+  Logger.debug(c.guilds.writeConcern);
 }
 
 main().then(Logger.log).catch(Logger.err);
