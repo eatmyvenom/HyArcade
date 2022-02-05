@@ -34,11 +34,13 @@ module.exports = async function FakeLb(path, category, time) {
   topTen = topTen.filter(a => !banlist.includes(a.uuid));
   topTen = topTen.slice(0, 10);
 
-  for (const acc of topTen) {
-    const guild = await Database.guild(acc.uuid);
+  if (category != "guild") {
+    for (const acc of topTen) {
+      const guild = await Database.guild(acc.uuid);
 
-    acc.guildTag = guild?.tag ?? "";
-    acc.guildTagColor = guild?.color;
+      acc.guildTag = guild?.tag ?? "";
+      acc.guildTagColor = guild?.color;
+    }
   }
 
   switch (path) {

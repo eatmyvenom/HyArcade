@@ -549,7 +549,7 @@ module.exports = class ImageGenerator {
 
     let guild = "";
     if (acc.guildTag != "NONE" && acc.guildTag != "" && showGuild) {
-      guild = ` ${colorFormatters[acc.guildTagColor?.toLowerCase()]}[${acc.guildTag}]`;
+      guild = ` ${colorFormatters[acc.guildTagColor?.toLowerCase()]}[${acc.guildTag}${colorFormatters[acc.guildTagColor?.toLowerCase()]}]`.replace(/§/g, "&");
     }
 
     return `${rank}${acc.name}${guild}`;
