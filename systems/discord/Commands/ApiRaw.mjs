@@ -1,12 +1,10 @@
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const require = createRequire(import.meta.url);
 
-import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
-
-const { MessageEmbed } = require("discord.js");
 const { HypixelApi, mojangRequest } = require("hyarcade-requests");
 const Util = require("node:util");
 
@@ -64,9 +62,9 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
   }
 
   if (val == "") {
-    val = "No response!";
+    val = '{ data: "No response!" }';
   }
 
-  const embed = new MessageEmbed().setTitle(`${data.displayname}.${path}`).setDescription(`\`\`\`${val}\`\`\``).setColor(0xc60532);
-  return new CommandResponse("", embed);
+  const txt = `\`\`\`hypixel.${data.displayname}.${path}:\n ${val}\`\`\``;
+  return new CommandResponse(txt);
 });
