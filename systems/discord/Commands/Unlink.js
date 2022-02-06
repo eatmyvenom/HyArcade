@@ -4,7 +4,7 @@ const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
-module.exports = new Command(["unlink", "uln"], ["%trusted%"], async args => {
+module.exports = new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], async args => {
   if (args.length === 0) {
     return {
       res: "",
