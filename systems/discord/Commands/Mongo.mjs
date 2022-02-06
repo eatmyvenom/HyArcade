@@ -1,4 +1,4 @@
-import MongoConnector from "hyarcade-requests/MongoConnector";
+import MongoConnector from "hyarcade-requests/MongoConnector.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { inspect } from "node:util";
