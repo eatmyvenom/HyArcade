@@ -11,7 +11,7 @@ function safeEval(str) {
   return new Function("c", `"use strict";return (${str})`);
 }
 
-export default new Command("eval", ["156952208045375488"], async args => {
+export default new Command("mongoeval", ["156952208045375488"], async args => {
   const f = safeEval(args.join(" "));
 
   const connector = new MongoConnector("mongodb://127.0.0.1:27017");
