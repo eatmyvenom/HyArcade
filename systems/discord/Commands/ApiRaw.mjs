@@ -65,6 +65,6 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     val = '{ data: "No response!" }';
   }
 
-  const txt = `\`\`\`hypixel.${data.displayname}.${path}:\n ${val}\`\`\``;
+  const txt = `\`\`\`hypixel.${data.displayname}.${path}:\n${val}\`\`\``;
   return new CommandResponse(txt);
 });

@@ -1,7 +1,7 @@
-const { MessageEmbed } = require("discord.js");
 const Logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const Command = require("hyarcade-structures/Discord/Command");
+const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const Util = require("node:util");
 const AccountComparitor = require("../Utils/AccountComparitor");
 
@@ -60,9 +60,10 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
     val = "No response.";
   }
 
-  const embed = new MessageEmbed().setTitle(`${acc.name}.${path}`).setDescription(`\`\`\`${val}\`\`\``).setColor(0x44a3e7);
-  return {
-    res: "",
-    embed,
-  };
+  if (val == "") {
+    val = '{ data: "No response!" }';
+  }
+
+  const txt = `\`\`\`hyarcade.${acc.name}.${path}:\n${val}\`\`\``;
+  return new CommandResponse(txt);
 });
