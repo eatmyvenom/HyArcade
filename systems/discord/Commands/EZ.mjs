@@ -1,4 +1,4 @@
-import { readFile } from "fs-extra";
+import fs from "fs-extra";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 
@@ -6,7 +6,7 @@ let msgs;
 
 export default new Command("ez", ["*"], async () => {
   if (msgs == undefined) {
-    const file = await readFile("data/ezmsgs");
+    const file = await fs.readFile("data/ezmsgs");
     msgs = file.toString().split("\n");
   }
 
