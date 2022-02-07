@@ -20,6 +20,7 @@ async function AccountResolver(connector, url) {
   const ign = url.searchParams.get("ign");
   let uuid = url.searchParams.get("uuid");
   const discid = url.searchParams.get("discid");
+  const cacheOnly = url.searchParams.has("cache");
   let acc;
 
   if (ign != undefined) {
@@ -57,7 +58,7 @@ async function AccountResolver(connector, url) {
     }
   }
 
-  if (acc.updateTime < Date.now() - 600000) {
+  if (!cacheOnly && acc.updateTime < Date.now() - 600000) {
     Logger.verbose(`Updating data for ${acc.name}`);
     const newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);
