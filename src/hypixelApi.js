@@ -19,7 +19,7 @@ function getKey() {
     key = config.clusters.serverbot.key;
   }
   if (config.mode == "test") {
-    key = config.altkeys[Math.floor(Math.random() * config.altkeys.length)];
+    key = config.hypixel.batchKeys[Math.floor(Math.random() * config.hypixel.batchKeys.length)];
   }
   return key;
 }

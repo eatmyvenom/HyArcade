@@ -11,7 +11,7 @@ I have personally implemnted this a little bit in my code. Its for testing purpo
 ```js
 let key = config.key;
 if (config.mode == "test") {
-    key = config.keys[Math.floor(Math.random() * config.keys.length)];
+    key = config.hypixel.batchKeys[Math.floor(Math.random() * config.hypixel.batchKeys.length)];
 }
 ```
 
@@ -37,6 +37,3 @@ Proxies are quite self explanatory, simply do all of your code execution from on
 
 This approach requires either a bit of trust or good security knowledge and extreme flexability. With this you can in theory make a mod that simply uses someone elses keys while they are in game. So you go through this process: `join server -> get new key -> use key -> disable on server disconnect`. With this you can have alot of people constantly pulling your data for you. However you need a cluster broker which tells each client what to do and can handle unexpected disconnects. I highly advise telling people if your mod does this!
 
-# Concluding
-
-This is obviously abusive and not a great thing to do, however given that I am the only one operating what I am doing and causing a lower amount of requests to go through other sources, I feel not too bad about it.
