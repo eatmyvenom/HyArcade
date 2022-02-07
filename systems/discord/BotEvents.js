@@ -72,28 +72,28 @@ module.exports = class BotEvents {
     } else if (BotRuntime.botMode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
-      logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
       logger.name = "Interactions";
+      logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
     } else if (BotRuntime.botMode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
-      await InteractionHandler.default(BotRuntime.client);
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - Micro module`);
+      await InteractionHandler.default(BotRuntime.client);
     } else if (BotRuntime.botMode == "mw") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
-      logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
       logger.name = "Mini-Walls-Bot";
+      logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
     } else if (BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
-      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
       logger.name = "Test-Bot";
+      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
     } else {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
 
-      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
       logger.name = "Arcade-Bot";
+      logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
     }
     await SetPresence(BotRuntime.client, mode);
   }
