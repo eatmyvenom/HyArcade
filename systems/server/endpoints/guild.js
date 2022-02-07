@@ -27,7 +27,7 @@ module.exports = async (req, res, connector) => {
     }
 
     // eslint-disable-next-line unicorn/no-null
-    if (guild == undefined || guild == null) {
+    if (guild == undefined || guild == null || (guild.updateTime ?? 0) < Date.now() - 14400000) {
       guild = new Guild(uuid ?? memberUUID);
       await guild.updateWins();
 
