@@ -18,7 +18,7 @@ module.exports = class InteractionUtils {
     let acc;
 
     if (BotRuntime.botMode != "mini") {
-      const url = new URL("account", cfg.dbUrl);
+      const url = new URL("account", cfg.database.url);
       const urlArgs = url.searchParams;
 
       urlArgs.set("uuid", uuid.toLowerCase());

@@ -64,7 +64,7 @@ module.exports = class BotRuntime {
   static async resolveAccount(str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
     logger.warn("Using deprecated function 'resolveAccount'");
     let url;
-    url = time != "lifetime" ? new URL("timeacc", cfg.dbUrl) : new URL("account", cfg.dbUrl);
+    url = time != "lifetime" ? new URL("timeacc", cfg.database.url) : new URL("account", cfg.database.url);
 
     const urlArgs = url.searchParams;
 

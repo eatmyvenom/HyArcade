@@ -46,7 +46,7 @@ module.exports = async (req, res, connector) => {
   } else if (req.method == "POST") {
     let data = "";
     let json = {};
-    if (req.headers.authorization == cfg.dbPass) {
+    if (req.headers.authorization == cfg.database.pass) {
       req.on("data", d => (data += d));
       req.on("end", async () => {
         json = JSON.parse(data);

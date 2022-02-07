@@ -13,7 +13,7 @@ module.exports = async (req, res, connector) => {
     const action = url.searchParams.get("action");
     const uuid = url.searchParams.get("uuid");
 
-    if (req.headers.authorization == cfg.dbPass) {
+    if (req.headers.authorization == cfg.database.pass) {
       await (action == "add" ? connector.addHacker(uuid) : connector.deleteHacker(uuid));
       res.setHeader("Content-Type", "application/json");
       res.write(JSON.stringify({ success: true }));

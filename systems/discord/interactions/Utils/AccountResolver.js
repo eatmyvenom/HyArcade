@@ -55,12 +55,12 @@ module.exports = async function resolveAccount(interaction, namearg = "player", 
   let url;
   let urlArgs;
   if (time != "lifetime") {
-    url = new URL("timeacc", cfg.dbUrl);
+    url = new URL("timeacc", cfg.database.url);
 
     urlArgs = url.searchParams;
     urlArgs.set("time", time);
   } else {
-    url = new URL("account", cfg.dbUrl);
+    url = new URL("account", cfg.database.url);
 
     urlArgs = url.searchParams;
   }

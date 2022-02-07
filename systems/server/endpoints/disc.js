@@ -14,7 +14,7 @@ module.exports = async (req, res, connector) => {
     const uuid = url.searchParams.get("uuid");
     const id = url.searchParams.get("id");
 
-    if (req.headers.authorization == cfg.dbPass) {
+    if (req.headers.authorization == cfg.database.pass) {
       if (action == "ln") {
         await connector.linkDiscord(id, uuid);
       } else {

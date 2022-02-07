@@ -18,12 +18,12 @@ function formatNum(number) {
  * @returns {Promise<Account>} Account list
  */
 exports.getList = async function getList(type = "") {
-  const url = new URL("db", cfg.dbUrl);
+  const url = new URL("db", cfg.database.url);
   const path = `${type}accounts`;
   url.searchParams.set("path", path);
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
-  const listFetch = await fetch(url, { method: "get", headers: { Authorization: cfg.dbPass } });
+  const listFetch = await fetch(url, { method: "get", headers: { Authorization: cfg.database.pass } });
   const list = await listFetch.json();
   logger.debug("Data fetched!");
   return AccountArray(list);
