@@ -8,7 +8,7 @@ module.exports = async function LeaderboardCategorys(category, interaction, test
     categorys.General = "others";
 
     for (const key in testStats) {
-      if (typeof testStats[key] == "object" && !Array.isArray(testStats[key])) {
+      if (typeof testStats[key] == "object" && typeof testStats[key] != "string" && !Array.isArray(testStats[key])) {
         let formatted = key
           .replace(/([A-Z])/g, " $1")
           .replace(/_zombies/g, "")
