@@ -22,10 +22,12 @@ module.exports = async function LeaderboardCategorys(category, interaction, test
 
     categorys["Farm Hunt"] = categorys.Farmhunt;
     categorys.Seasonal = categorys["Seasonal Wins"];
+    categorys["Arcade Quests"] = categorys.Quests;
 
     delete categorys["Action Time"];
     delete categorys["Seasonal Wins"];
     delete categorys["Arcade Achievments"];
+    delete categorys.Quests;
     delete categorys.Farmhunt;
     delete categorys.Positions;
   }

@@ -50,6 +50,13 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
       delete genStats["Weekly Coins"];
       delete genStats["Time Playing"];
       delete genStats["Update Time"];
+      delete genStats["Importance"];
+      delete genStats["Monthly Coins"];
+      delete genStats["Update Time"];
+      delete genStats["Quests Completed"];
+      delete genStats["Ranks Gifted"];
+      delete genStats["Unknown Wins"];
+      delete genStats["Xp"];
     }
     const types = Object.keys(genStats)
       .map(k => ({ name: k, value: genStats[k] }))
@@ -59,7 +66,7 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
     const res = filtered.length > 0 ? filtered : types;
 
     try {
-      interaction.respond(res.slice(0, Math.min(24, res.length)));
+      interaction.respond(res.slice(0, Math.min(24, res.length)).sort());
     } catch (error) {
       Logger.err(error);
     }
