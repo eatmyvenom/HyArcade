@@ -2,11 +2,11 @@ import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import ImageGenerator from "../images/ImageGenerator.js";
+import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
-import ImageGenerator from "../images/ImageGenerator.js";
-import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 
 /**
  * @param {number} n
@@ -925,8 +925,8 @@ async function genImg(account, game = "") {
 
       y += spacer;
 
-      img.drawMcText("&bArcade Ranking", img.canvas.width - x, (y += lineHeight), txtSize, "center");
-      img.drawMcText(`&b${numberify(Math.floor(account.importance ?? 0))}`, img.canvas.width - x, (y += lineHeight), size, "center");
+      img.drawMcText("&eArcade Coins", img.canvas.width - x, (y += lineHeight), txtSize, "center");
+      img.drawMcText(`&e${numberify(Math.floor(account.arcadeCoins ?? 0))}`, img.canvas.width - x, (y += lineHeight), size, "center");
 
       y += spacer;
 
