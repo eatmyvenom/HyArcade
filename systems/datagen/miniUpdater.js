@@ -4,8 +4,38 @@ const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
+const { readFile, writeJSON } = require("fs-extra");
 
 let cfg;
+let rawAccs = [];
+
+/**
+ * @param item
+ * @returns {boolean}
+ */
+function isObject(item) {
+  return item && typeof item === "object" && !Array.isArray(item);
+}
+
+/**
+ * @param target
+ * @param source
+ * @returns {object}
+ */
+function mergeDeep(target, source) {
+  let output = Object.assign({}, target);
+  if (isObject(target) && isObject(source)) {
+    for (const key of Object.keys(source)) {
+      if (isObject(source[key])) {
+        if (!(key in target)) Object.assign(output, { [key]: source[key] });
+        else output[key] = mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    }
+  }
+  return output;
+}
 
 /**
  *
@@ -68,6 +98,7 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, pe
       }
     } else {
       const acc = new Account(uuid, 0, uuid);
+      rawAccs.push(accData);
       acc.setHypixel(accData);
 
       connector
@@ -129,6 +160,15 @@ async function miniUpdater(uuidArr, connector) {
     Logger.info("Using worker updating system");
     await fastUpdate(uuidArr, connector);
   }
+
+  const masterFile = await readFile("data/fullplayer.json");
+  let masterDoc = masterFile.toJSON();
+
+  for (const acc of rawAccs) {
+    masterDoc = mergeDeep(masterDoc, acc);
+  }
+
+  await writeJSON("data/fullplayer.json", masterDoc, { spaces: 2 });
 }
 
 module.exports = miniUpdater;
