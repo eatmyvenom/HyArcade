@@ -4,7 +4,7 @@ const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
-const { readFile, writeJSON } = require("fs-extra");
+const { readFile, writeFile } = require("fs-extra");
 
 let cfg;
 let rawAccs = [];
@@ -168,7 +168,9 @@ async function miniUpdater(uuidArr, connector) {
     masterDoc = mergeDeep(masterDoc, acc);
   }
 
-  await writeJSON("data/fullplayer.json", masterDoc, { spaces: 2 });
+  delete masterDoc.data;
+
+  await writeFile("data/fullplayer.json", JSON.stringify(masterDoc, undefined, 2));
 }
 
 module.exports = miniUpdater;
