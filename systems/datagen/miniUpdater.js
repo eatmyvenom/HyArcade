@@ -167,8 +167,9 @@ async function miniUpdater(uuidArr, connector) {
   }
 
   delete masterDoc.data;
-  masterDoc.name = "playerName";
-  masterDoc.name_lower = "playername";
+  masterDoc.player.name = "playerName";
+  masterDoc.player.name_lower = "playername";
+  masterDoc.player.uuid = "25c3d5ef349c4604b70f823c8ecea1a1";
 
   const orderedDoc = Object.keys(masterDoc)
     .sort()
