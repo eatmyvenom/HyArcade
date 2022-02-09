@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-array-reduce */
+/* eslint-disable unicorn/prefer-object-from-entries */
 const Runtime = require("hyarcade-config/Runtime");
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
@@ -169,8 +171,17 @@ async function miniUpdater(uuidArr, connector) {
   }
 
   delete masterDoc.data;
+  masterDoc.name = "playerName";
+  masterDoc.name_lower = "playername";
 
-  await writeFile("data/fullplayer.json", JSON.stringify(masterDoc, undefined, 2));
+  const orderedDoc = Object.keys(masterDoc)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = masterDoc[key];
+      return obj;
+    }, {});
+
+  await writeFile("data/fullplayer.json", JSON.stringify(orderedDoc, undefined, 2));
 }
 
 module.exports = miniUpdater;
