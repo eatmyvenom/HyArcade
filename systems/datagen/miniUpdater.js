@@ -167,14 +167,21 @@ async function miniUpdater(uuidArr, connector) {
   }
 
   delete masterDoc.data;
-  masterDoc.player.name = "playerName";
-  masterDoc.player.name_lower = "playername";
+  masterDoc.player.displayname = "playerName";
+  masterDoc.player.playername = "playername";
   masterDoc.player.uuid = "25c3d5ef349c4604b70f823c8ecea1a1";
 
   const orderedDoc = Object.keys(masterDoc)
     .sort()
     .reduce((obj, key) => {
       obj[key] = masterDoc[key];
+      return obj;
+    }, {});
+
+  orderedDoc.player = Object.keys(orderedDoc.player)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = orderedDoc.player[key];
       return obj;
     }, {});
 
