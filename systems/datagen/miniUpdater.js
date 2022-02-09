@@ -9,7 +9,7 @@ const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest")
 const { readFile, writeFile } = require("fs-extra");
 
 let cfg;
-let rawAccs = [];
+let masterDoc;
 
 /**
  * @param item
@@ -100,7 +100,7 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, pe
       }
     } else {
       const acc = new Account(uuid, 0, uuid);
-      rawAccs.push(accData);
+      masterDoc = mergeDeep(masterDoc, accData);
       acc.setHypixel(accData);
 
       connector
@@ -158,16 +158,12 @@ async function fastUpdate(uuids, connector) {
 async function miniUpdater(uuidArr, connector) {
   cfg = require("hyarcade-config").fromJSON();
 
+  const masterFile = await readFile("data/fullplayer.json");
+  masterDoc = masterFile.toJSON();
+
   if (cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     Logger.info("Using worker updating system");
     await fastUpdate(uuidArr, connector);
-  }
-
-  const masterFile = await readFile("data/fullplayer.json");
-  let masterDoc = masterFile.toJSON();
-
-  for (const acc of rawAccs) {
-    masterDoc = mergeDeep(masterDoc, acc);
   }
 
   delete masterDoc.data;
