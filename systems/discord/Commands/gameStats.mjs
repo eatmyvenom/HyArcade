@@ -146,6 +146,11 @@ async function genImg(account, game = "") {
 
       y += spacer;
 
+      img.drawMcText("&bMax Score", x, (y += lineHeight), txtSize, "center");
+      img.drawMcText(`&b${numberify(account.hypixelSays.maxScore)}`, x, (y += lineHeight), size, "center");
+
+      y += spacer;
+
       img.drawMcText("&eRound Wins", x, (y += lineHeight), txtSize, "center");
       img.drawMcText(`&e${numberify(account.hypixelSays.totalRoundWins)}`, x, (y += lineHeight), size, "center");
 
