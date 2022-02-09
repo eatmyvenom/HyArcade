@@ -14,6 +14,7 @@
         "postinstall": "is-ci || husky install",
         "testbot": "node index.js bot test",
         "bot": "node spawn-bots.js",
+        "start": "node --max-old-space-size=4000 server.js",
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },
