@@ -44,7 +44,11 @@ function mergeDeep(target, source) {
  */
 function timeout() {
   return new Promise((resolve, reject) => {
-    Sleep(30000).then(reject).catch(reject);
+    Sleep(30000)
+      .then(() => {
+        reject(new Error("Request timed out!"));
+      })
+      .catch(reject);
   });
 }
 
