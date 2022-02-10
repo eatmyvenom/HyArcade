@@ -15,14 +15,20 @@ module.exports = async (req, res, connector) => {
     const id = url.searchParams.get("id");
 
     if (req.headers.authorization == cfg.database.pass) {
-      if (action == "ln") {
+      if (action == "ls") {
+        res.setHeader("Content-Type", "application/json");
+        res.write(JSON.stringify(await connector.getDiscordAccounts()));
+      } else if (action == "ln") {
+        res.setHeader("Content-Type", "application/json");
+        res.write(JSON.stringify({ success: true }));
         await connector.linkDiscord(id, uuid);
       } else {
+        res.setHeader("Content-Type", "application/json");
+        res.write(JSON.stringify({ success: true }));
         await connector.unlinkDiscord(uuid);
         await connector.unlinkDiscord(id);
       }
-      res.setHeader("Content-Type", "application/json");
-      res.write(JSON.stringify({ success: true }));
+
       res.end();
     } else {
       res.setHeader("Content-Type", "application/json");

@@ -1,39 +1,9 @@
 const { Client } = require("discord.js");
 const fs = require("fs-extra");
+const Database = require("hyarcade-requests/Database");
 const Role = require("hyarcade-structures/Discord/Role");
-const Json = require("hyarcade-utils/FileHandling/Json");
 const BotRuntime = require("./BotRuntime");
 const RoleUpdater = require("./RoleUpdater");
-
-const neededStats = [
-  "blockingDead",
-  "name",
-  "uuid",
-  "discord",
-  "hypixelDiscord",
-  "bountyHunters",
-  "dragonWars",
-  "enderSpleef",
-  "farmhunt",
-  "football",
-  "galaxyWars",
-  "hideAndSeek",
-  "holeInTheWall",
-  "hypixelSays",
-  "partyGames",
-  "pixelPainters",
-  "throwOut",
-  "miniWalls",
-  "seasonalWins",
-  "easter",
-  "scuba",
-  "halloween",
-  "grinch",
-  "total",
-  "simTotal",
-  "wins",
-  "kills",
-];
 
 /**
  *
@@ -48,7 +18,7 @@ module.exports = async function roleHandler(client) {
     disclist[link.discordID] = link.uuid;
   }
 
-  const accs = await BotRuntime.getFromDB("accounts", neededStats);
+  const accs = await Database.getLinkedAccounts();
 
   for (const server in roleSet) {
     const guild = await client.guilds.fetch(server);
@@ -56,25 +26,15 @@ module.exports = async function roleHandler(client) {
     for (const path in roleSet[server]) {
       const roleList = roleSet[server][path];
       const roles = [];
+
       for (const id in roleList) {
         roles.push(new Role(roleList[id], id));
       }
+
       const category = path.split(".")[0];
       const stat = path.split(".")[1];
       const updater = new RoleUpdater(guild, roles, category, stat);
       await updater.updateAll(disclist, accs);
     }
   }
-
-  const tags = {};
-
-  for (const acc of accs) {
-    const usr = client.users.cache.find(u => u.id == acc.discid);
-
-    if (usr) {
-      tags[acc.uuid] = usr.tag;
-    }
-  }
-
-  await Json.write("tags.json", tags);
 };

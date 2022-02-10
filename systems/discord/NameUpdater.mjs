@@ -1,6 +1,6 @@
 import logger from "hyarcade-logger";
+import Database from "hyarcade-requests/Database";
 import { createRequire } from "node:module";
-import BotRuntime from "./BotRuntime.js";
 const require = createRequire(import.meta.url);
 
 const { Client } = require("discord.js");
@@ -10,8 +10,8 @@ const { Client } = require("discord.js");
  */
 export default async function NameUpdater(client) {
   logger.info("Updating usernames in mini walls discord");
-  const accs = await BotRuntime.getFromDB("accounts", ["uuid", "name", "hypixelDiscord"]);
-  const list = await BotRuntime.getFromDB("discordList");
+  const accs = await Database.getLinkedAccounts();
+  const list = await Database.readDB("discordList");
   const disclist = {};
 
   for (const link of list) {
