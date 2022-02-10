@@ -35,7 +35,7 @@ async function AccountResolver(connector, url) {
   }
 
   if (acc == undefined) {
-    Logger.info(`Account - ${ign ?? uuid} missed cache. Fetching!`);
+    Logger.info(`Account: ${ign ?? uuid} missed cache. Fetching!`);
     if (uuid == undefined) {
       Logger.verbose("Fetching uuid from mojang");
       uuid = await mojangRequest.getUUID(ign);
