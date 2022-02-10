@@ -18,10 +18,10 @@ export default async function NameUpdater(client) {
     disclist[link.discordID] = link.uuid;
   }
 
-  const mwServer = await client.guilds.fetch("789718245015289886");
-  const mwMembers = await mwServer.members.fetch();
+  const miwServer = await client.guilds.fetch("789718245015289886");
+  const miwMembers = await miwServer.members.fetch();
 
-  for (const m of mwMembers) {
+  for (const m of miwMembers) {
     const uuid = disclist[m.id];
     if (uuid != undefined) {
       const acc = accs.find(a => a.uuid == uuid);
