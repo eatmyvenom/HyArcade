@@ -1,7 +1,6 @@
 exports.statsCommand = require("../../Commands/Stats");
 exports.compare = require("../../Commands/Compare");
 exports.whois = require("../../Commands/Whois");
-exports.addaccount = require("../../Commands/AddAccount");
 exports.verify = require("../../Commands/Verify");
 exports.profile = require("../../Commands/Profile");
 exports.leaderboard = require("../../Commands/Leaderboard-v3");
