@@ -10,7 +10,7 @@ const isValidIGN = require("./utils/ignValidator");
  * @returns {null}
  */
 module.exports = async function addAccounts(names) {
-  const accs = await Database.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
+  const infoPre = await Database.info();
 
   let res = "";
   const nameArr = names;
@@ -29,14 +29,7 @@ module.exports = async function addAccounts(names) {
 
     if (uuid == undefined) {
       res += `${name} does not exist!\n`;
-      continue;
-    }
-
-    const dupeAcc = accs.find(a => a.uuid == uuid);
-
-    if (dupeAcc) {
-      res += `Refusing to add duplicate "${dupeAcc.name}"\n`;
-      logger.warn(`Refusing to add duplicate "${dupeAcc.name}"`);
+      logger.warn(`${name} does not exist!`);
       continue;
     }
 
@@ -45,6 +38,11 @@ module.exports = async function addAccounts(names) {
     logger.out(`${name} with ${acc.arcadeWins} wins added.`);
     res += `${name} with ${acc.arcadeWins} wins added.\n`;
   }
+
+  const info = await Database.info();
+
+  logger.out(`Accounts delta: ${info.accs - infoPre.accs}`);
+  res += `Accounts delta: ${info.accs - infoPre.accs}\n`;
 
   return res;
 };
