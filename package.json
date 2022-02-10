@@ -1,6 +1,6 @@
 {
     "name": "hyarcade",
-    "version": "2.3.7",
+    "version": "2.3.8",
     "description": "A full system for gathering and displaying peoples hypixel arcade games stats",
     "main": "index.js",
     "scripts": {
@@ -14,7 +14,8 @@
         "postinstall": "is-ci || husky install",
         "testbot": "node index.js bot test",
         "bot": "node spawn-bots.js",
-        "start": "node --max-old-space-size=4000 server.js",
+        "update": "node --max-old-space-size=4000 . miniupdate",
+        "start": "node --max-old-space-size=6000 server.js",
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "setworker": "cd src/Worker;wrangler publish;cd ../.."
     },

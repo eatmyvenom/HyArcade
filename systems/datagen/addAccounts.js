@@ -1,7 +1,6 @@
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const { getUUID } = require("hyarcade-requests/mojangRequest");
-const Account = require("hyarcade-requests/types/Account");
 const isValidIGN = require("./utils/ignValidator");
 
 /**
@@ -14,7 +13,6 @@ module.exports = async function addAccounts(names) {
   const accs = await Database.readDB("accounts", ["name", "uuid", "uuidPosix", "internalId"]);
 
   let res = "";
-  const newAccs = [];
   const nameArr = names;
   for (let name of nameArr) {
     let uuid;
@@ -42,13 +40,8 @@ module.exports = async function addAccounts(names) {
       continue;
     }
 
-    const acc = new Account("", 0, uuid);
-    await acc.updateHypixel();
-    name = acc.name;
+    const acc = await Database.account(uuid, "", true);
 
-    await Database.addAccount(acc);
-
-    newAccs.push(acc);
     logger.out(`${name} with ${acc.arcadeWins} wins added.`);
     res += `${name} with ${acc.arcadeWins} wins added.\n`;
   }
