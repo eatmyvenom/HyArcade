@@ -284,6 +284,29 @@ function getImage(status) {
       status.session.gameType = "Tnt Games";
       return "resources/status/Tnt-lobby.png";
     }
+
+    case "WALLS3": {
+      status.session.gameType = "Mega walls";
+      return "resources/status/Mega-walls-lobby.png";
+    }
+
+    case "SUPER_SMASH": {
+      status.session.gameType = "Smash heros";
+      return "resources/status/Smash-heros-lobby.png";
+    }
+
+    case "BATTLEGROUND": {
+      status.session.gameType = "Warlords";
+      return "resources/status/Warloads-lobby.png";
+    }
+
+    case "MAIN": {
+      return "resources/status/Normal-lobby.png";
+    }
+
+    case "TOURNAMENT": {
+      return "resources/status/Tourney-lobby.png";
+    }
   }
 
   return "resources/status/Main-lobby.png";
