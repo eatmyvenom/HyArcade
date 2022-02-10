@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const cfg = require("hyarcade-config").fromJSON();
 
@@ -16,13 +17,16 @@ module.exports = async (req, res, connector) => {
 
     if (req.headers.authorization == cfg.database.pass) {
       if (action == "ls") {
+        Logger.log("Sending all linked accounts");
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(await connector.getDiscordAccounts()));
       } else if (action == "ln") {
+        Logger.log("Linking new account");
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify({ success: true }));
         await connector.linkDiscord(id, uuid);
       } else {
+        Logger.log("Unlinking account");
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify({ success: true }));
         await connector.unlinkDiscord(uuid);

@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
 
@@ -12,6 +13,7 @@ module.exports = async (req, res, connector) => {
   const stat = url.searchParams.get("stat");
   const time = url.searchParams.get("time");
   if (req.method == "GET") {
+    Logger.log(`Fetching ${stat} ${time} miniwalls leaderboard`);
     res.setHeader("Content-Type", "application/json");
 
     const leaderboard = JSON.stringify(await MiniWallsLeaderboard(connector, stat, time));

@@ -44,9 +44,11 @@ async function callback(request, response) {
     response.end();
   } else {
     try {
-      logger.info(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+      logger.verbose(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       await mod(request, response, connector);
+      logger.verbose("request completed");
     } catch (error) {
+      logger.err(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       logger.err(error.stack);
       response.statusCode = 404;
       response.end();

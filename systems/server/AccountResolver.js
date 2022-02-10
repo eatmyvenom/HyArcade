@@ -35,7 +35,7 @@ async function AccountResolver(connector, url) {
   }
 
   if (acc == undefined) {
-    Logger.verbose("Fetching account data from hypixel.");
+    Logger.log("Fetching account data from hypixel.");
     if (uuid == undefined) {
       uuid = await mojangRequest.getUUID(ign);
     }
@@ -59,14 +59,14 @@ async function AccountResolver(connector, url) {
   }
 
   if (!cacheOnly && acc.updateTime < Date.now() - 600000) {
-    Logger.verbose(`Updating data for ${acc.name}`);
+    Logger.log(`Updating data for ${acc.name}`);
     const newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);
 
     await newAccount.updateHypixel();
 
     if (Object.keys(fakeFile).includes(newAccount.uuid)) {
-      Logger.log(`Overwriting data for ${newAccount.name}`);
+      Logger.info(`Overwriting data for ${newAccount.name}`);
       Object.assign(newAccount, fakeFile[newAccount.uuid]);
     }
 
