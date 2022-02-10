@@ -18,7 +18,7 @@ module.exports = async (req, res, connector) => {
     let acc = await AccountResolver(connector, url);
 
     if (acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
-      Logger.warn(`${url.searchParams} could not resolve to anything`);
+      Logger.warn(`Acc query "${url.searchParams}" could not resolve.`);
       res.statusCode = 404;
       res.end(
         JSON.stringify({
@@ -38,6 +38,7 @@ module.exports = async (req, res, connector) => {
       req.on("end", async () => {
         json = JSON.parse(data);
         const newAcc = Account.from(json);
+        Logger.info(`${newAcc.name} posted to database`);
 
         connector
           .updateAccount(newAcc)

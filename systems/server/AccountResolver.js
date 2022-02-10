@@ -35,7 +35,7 @@ async function AccountResolver(connector, url) {
   }
 
   if (acc == undefined) {
-    Logger.log("Fetching account data from hypixel.");
+    Logger.log(`Fetching ${ign ?? uuid} data from hypixel.`);
     if (uuid == undefined) {
       uuid = await mojangRequest.getUUID(ign);
     }
