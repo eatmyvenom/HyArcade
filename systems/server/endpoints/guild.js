@@ -29,10 +29,11 @@ module.exports = async (req, res, connector) => {
     // eslint-disable-next-line unicorn/no-null
     if (guild == undefined || guild == null || (guild.updateTime ?? 0) < Date.now() - 14400000) {
       guild = new Guild(uuid ?? memberUUID);
+      Logger.log(`Guild - ${uuid ?? memberUUID} missed cache. Fetching!`);
       await guild.updateWins();
 
       if (guild.name != "INVALID-NAME") {
-        Logger.log("Adding guild to mongo");
+        Logger.info("Adding guild to mongo");
         await connector.updateGuild(guild);
       } else {
         guild = { ERROR: "NO-GUILD" };

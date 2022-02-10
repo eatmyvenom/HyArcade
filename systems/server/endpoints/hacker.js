@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const cfg = require("hyarcade-config").fromJSON();
 
@@ -14,6 +15,7 @@ module.exports = async (req, res, connector) => {
     const uuid = url.searchParams.get("uuid");
 
     if (req.headers.authorization == cfg.database.pass) {
+      Logger.out(`Hacker - ${action} => ${uuid}`);
       await (action == "add" ? connector.addHacker(uuid) : connector.deleteHacker(uuid));
       res.setHeader("Content-Type", "application/json");
       res.write(JSON.stringify({ success: true }));

@@ -35,14 +35,16 @@ async function AccountResolver(connector, url) {
   }
 
   if (acc == undefined) {
-    Logger.log(`Fetching ${ign ?? uuid} data from hypixel.`);
+    Logger.info(`Account - ${ign ?? uuid} missed cache. Fetching!`);
     if (uuid == undefined) {
+      Logger.verbose("Fetching uuid from mojang");
       uuid = await mojangRequest.getUUID(ign);
     }
 
     if (uuid != undefined) {
       acc = new Account(ign, 0, uuid);
       try {
+        Logger.verbose("Fetching hypixel data");
         await acc.updateHypixel();
       } catch (error) {
         Logger.err("ERROR FETCHING ACCOUNT DATA FROM HYPIXEL...");
@@ -50,6 +52,7 @@ async function AccountResolver(connector, url) {
       }
 
       if (acc?.name != "INVLAID-NAME" && acc?.name != undefined) {
+        Logger.verbose("Pushing to mongodb");
         connector
           .updateAccount(acc)
           .then(() => {})

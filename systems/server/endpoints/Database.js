@@ -13,7 +13,7 @@ module.exports = async (req, res, connector) => {
     const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
 
-    Logger.log(`Sending full ${file} collection with ${fields}`);
+    Logger.log(`Sending ${fields ?? "full"} ${file} collection`);
     const data = await connector.readCollection(file);
 
     res.setHeader("Content-Type", "application/json");
