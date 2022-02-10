@@ -33,10 +33,7 @@ module.exports = async function addAccounts(names) {
       continue;
     }
 
-    const acc = await Database.account(uuid, "", true);
-
-    logger.out(`${name} with ${acc.arcadeWins} wins added.`);
-    res += `${name} with ${acc.arcadeWins} wins added.\n`;
+    await Database.account(uuid, "", true);
   }
 
   const info = await Database.info();
