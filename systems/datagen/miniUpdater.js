@@ -75,9 +75,9 @@ async function requestData(uuids) {
  * @param {MongoConnector} connector
  * @param {*} currentBatch
  * @param {*} segmentedAccs
- * @param {*} perSegment
+ * @returns {*}
  */
-async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, perSegment) {
+async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
   if (!uuidArr) return;
   Logger.verbose(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
   let workerData;
@@ -86,11 +86,6 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, pe
   } catch (error) {
     Logger.err(error);
     return;
-  }
-
-  if (workerData.key.remaining < perSegment + 5) {
-    Logger.debug(`Nearing rate limit sleeping for ${workerData.key.reset * 1000}ms`);
-    await Sleep(workerData.key.reset * 1005);
   }
 
   for (const uuid of uuidArr) {
@@ -113,6 +108,8 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs, pe
         .catch(Logger.err);
     }
   }
+
+  return workerData.key;
 }
 
 /**
@@ -140,14 +137,26 @@ async function fastUpdate(uuids, connector) {
 
   for (let i = 0; i < segmentedAccs.length; i += 1) {
     Logger.log(`Batching ${i} - ${i + 5} of ${segmentedAccs.length}`);
-    await Promise.all([
-      updateSegment(segmentedAccs[i], connector, i, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs, perSegment),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs, perSegment),
+    const times = await Promise.all([
+      updateSegment(segmentedAccs[i], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
     ]);
+
+    let minKey = { remaining: 120, reset: 0 };
+    for (const key of times) {
+      if (key.remaining < minKey.remaining) {
+        minKey = key;
+      }
+    }
+
+    if (minKey.remaining < perSegment + 5) {
+      Logger.warn(`Nearing rate limit sleeping for ${minKey.key.reset * 1000}ms`);
+      await Sleep(minKey.reset * 1005);
+    }
   }
 
   const runtime = Runtime.fromJSON();
