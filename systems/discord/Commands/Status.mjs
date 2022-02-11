@@ -223,6 +223,75 @@ function getImage(status) {
           return "resources/status/Classic-vampirez-kudong.png";
         }
 
+        case "QUAKE": {
+          switch (status.session.map) {
+            case "Apex III": {
+              return "resources/status/Classic-quake-Apex_III.png";
+            }
+
+            case "Ancient": {
+              return "resources/status/Classic-quake-Ancient.png";
+            }
+
+            case "Fryst": {
+              return "resources/status/Classic-quake-Fryst.png";
+            }
+
+            case "Cold_War": {
+              return "resources/status/Classic-quake-Cold_War.png";
+            }
+
+            case "Karunesh": {
+              return "resources/status/Classic-quake-Karunesh.png";
+            }
+
+            case "Forgotten": {
+              return "resources/status/Classic-quake-Forgotten.png";
+            }
+
+            case "Sunken": {
+              return "resources/status/Classic-quake-Sunken.png";
+            }
+
+            case "WoodStone": {
+              return "resources/status/Classic-quake-WoodStone.png";
+            }
+
+            case "Town": {
+              return "resources/status/Classic-quake-Town.png";
+            }
+
+            case "Demonic": {
+              return "resources/status/Classic-quake-Demonic.png";
+            }
+
+            case "Martian": {
+              return "resources/status/Classic-quake-Martian.png";
+            }
+
+            case "Sero": {
+              return "resources/status/Classic-quake-Sero.png";
+            }
+
+            case "Faarah": {
+              return "resources/status/Classic-quake-Faarah.png";
+            }
+
+            case "Lost World": {
+              return "resources/status/Classic-quake-Lost_World.png";
+            }
+
+            case "DigSite2": {
+              return "resources/status/Classic-quake-DigSite2.png";
+            }
+
+            case "Mines": {
+              return "resources/status/Classic-quake-Mines.png";
+            }
+          }
+          return "resources/status/Classic-quake-Apex_III.png";
+        }
+
         case "WALLS": {
           return "resources/status/Classic-walls-Aztec.png";
         }
@@ -306,6 +375,19 @@ function getImage(status) {
 
     case "TOURNAMENT": {
       return "resources/status/Tourney-lobby.png";
+    }
+
+    case "SURVIVAL_GAMES": {
+      status.session.gameType = "Blitz";
+      return "resources/status/Blitz-lobby.png";
+    }
+
+    case "SKYBLOCK": {
+      return "resources/status/Skyblock-hub.png";
+    }
+
+    case "PROTOTYPE": {
+      return "resources/status/Prototype-lobby.png";
     }
   }
 
