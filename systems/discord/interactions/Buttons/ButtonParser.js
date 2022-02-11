@@ -118,6 +118,9 @@ async function miwHandler(accUUID, timetype, interaction) {
   const commands = await commandStorage.default.getCommands();
   await interaction.deferUpdate();
   const miwRes = await commands.MiniWalls.execute([accUUID, timetype], interaction.user.id, undefined, interaction);
+  if (miwRes == undefined) {
+    return;
+  }
 
   return new ButtonResponse("", undefined, miwRes.components, [miwRes.file]);
 }
