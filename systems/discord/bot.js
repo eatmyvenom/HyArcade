@@ -69,7 +69,7 @@ module.exports = function doBot() {
       logger.debug("Registering message event");
       const messageHandler = await import("./messageHandler.mjs");
       client.on("messageCreate", msg => {
-        messageHandler.default(msg).catch(logger.err);
+        messageHandler.default(msg).catch(error => logger.err(error.stack));
       });
     }
   });

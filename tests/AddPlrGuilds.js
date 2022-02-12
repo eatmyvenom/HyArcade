@@ -3,15 +3,15 @@ const Logger = require("hyarcade-logger");
 const { default: fetch } = require("node-fetch");
 
 /**
- * 
+ *
  */
-async function main () {
+async function main() {
   Logger.name = "AddPlrGuilds";
   // eslint-disable-next-line no-undef
   const plrList = process.argv.slice(2);
   const newList = [];
 
-  for(const plr of plrList) {
+  for (const plr of plrList) {
     const req = await fetch(`https://api.slothpixel.me/api/guilds/${plr}`);
     const guild = await req.json();
 
@@ -22,11 +22,11 @@ async function main () {
   let guildList = await readFile("data/guildlist.json");
   guildList = JSON.parse(guildList.toString());
 
-  const realGuilds = [...new Set(guildList.concat(newList))];
+  const realGuilds = [...new Set([...guildList, ...newList])];
 
-  await writeFile("data/guildlist.json", JSON.stringify(realGuilds, null, "\t"));
+  await writeFile("data/guildlist.json", JSON.stringify(realGuilds, undefined, "\t"));
 }
 
 main()
-  .then(Logger.log)
-  .catch(Logger.err);
+  .then((...args) => Logger.log(...args))
+  .catch(error => Logger.err(error.stack));

@@ -56,7 +56,7 @@ async function AccountResolver(connector, url) {
         connector
           .updateAccount(acc)
           .then(() => {})
-          .catch(Logger.err);
+          .catch(error => Logger.err(error.stack));
       }
     }
   }
@@ -78,7 +78,7 @@ async function AccountResolver(connector, url) {
     connector
       .updateAccount(acc)
       .then(() => {})
-      .catch(Logger.err);
+      .catch(error => Logger.err(error.stack));
   }
 
   if (acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {

@@ -26,4 +26,6 @@ async function main() {
   return await Server(6000);
 }
 
-main().then(Logger.log).catch(Logger.err);
+main()
+  .then((...args) => Logger.log(...args))
+  .catch(error => Logger.err(error.stack));

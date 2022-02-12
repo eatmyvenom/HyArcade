@@ -1,16 +1,16 @@
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
-import CommandResponse from "./Utils/CommandResponse.js";
-import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
-import { ERROR_BLACKLIST, ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
-import Webhooks from "./Utils/Webhooks.js";
 import ButtonParser from "./interactions/Buttons/ButtonParser.js";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
 import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
 import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
 import registerAll from "./interactions/Utils/DeployCommands.mjs";
+import CommandResponse from "./Utils/CommandResponse.js";
+import { ERROR_LOG, LOG_MESSAGE_COMPONENT_USAGE, LOG_SLASH_COMMAND_USAGE } from "./Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_BLACKLIST, ERROR_UNKNOWN } from "./Utils/Embeds/StaticEmbeds.js";
+import Webhooks from "./Utils/Webhooks.js";
 
 const require = createRequire(import.meta.url);
 const { CommandInteraction, ButtonInteraction, SelectMenuInteraction, Interaction, Client } = require("discord.js");
@@ -180,7 +180,7 @@ async function interactionHandler(interaction) {
 export default async function (client) {
   registerAll(client)
     .then(() => {})
-    .catch(Logger.err);
+    .catch(error => Logger.err(error.stack));
 
   client.on("interactionCreate", interactionHandler);
 }

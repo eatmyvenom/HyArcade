@@ -105,7 +105,7 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
       connector
         .updateAccount(acc)
         .then(() => {})
-        .catch(Logger.err);
+        .catch(error => Logger.err(error.stack));
     }
   }
 

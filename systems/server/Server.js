@@ -70,7 +70,7 @@ module.exports = async function start(port) {
 
   const server = require("http").createServer(callback).listen(port);
 
-  server.on("close", logger.log);
+  server.on("close", (...args) => logger.log(...args));
   server.on("error", e => {
     logger.err(e.stack);
   });

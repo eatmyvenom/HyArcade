@@ -81,6 +81,6 @@ async function filler(interaction) {
 
 startUp()
   .then(() => {})
-  .catch(Logger.err);
+  .catch(error => Logger.err(error.stack));
 
 module.exports = filler;

@@ -159,7 +159,7 @@ module.exports = class BotRuntime {
     if (blacklist == undefined) {
       fs.readFile("data/blacklist")
         .then(bl => (blacklist = bl.toString().split("\n")))
-        .catch(logger.err);
+        .catch(error => logger.err(error.stack));
 
       setTimeout(() => (blacklist = undefined), 3600000);
       return [];

@@ -53,7 +53,7 @@ module.exports = async (req, res, connector) => {
         connector
           .updateAccount(newAcc)
           .then(() => {})
-          .catch(Logger.err);
+          .catch(error => Logger.err(error.stack));
 
         res.end();
       });

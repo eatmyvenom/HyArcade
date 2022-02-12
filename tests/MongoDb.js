@@ -14,4 +14,6 @@ async function main() {
   Logger.debug(c.guilds.writeConcern);
 }
 
-main().then(Logger.log).catch(Logger.err);
+main()
+  .then((...args) => Logger.log(...args))
+  .catch(error => Logger.err(error.stack));

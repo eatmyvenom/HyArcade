@@ -1,6 +1,9 @@
 import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
+import addAccounts from "../datagen/addAccounts.js";
+import isValidIGN from "../datagen/utils/ignValidator.js";
+import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";
 import MiniWallsVerify from "./MiniWallsVerify.mjs";
@@ -10,9 +13,6 @@ import LogUtils from "./Utils/LogUtils.js";
 import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
 import Webhooks from "./Utils/Webhooks.js";
 import VerifyChannel from "./VerifyChannel.js";
-import botCommands from "./botCommands.mjs";
-import addAccounts from "../datagen/addAccounts.js";
-import isValidIGN from "../datagen/utils/ignValidator.js";
 
 const require = createRequire(import.meta.url);
 const { Message } = require("discord.js");
@@ -38,7 +38,7 @@ async function logError(msg, e) {
 async function logCmd(msg) {
   LogUtils.logCommand(msg.content.split(" ")[0], msg.content.split(" ").slice(1), msg)
     .then(() => {})
-    .catch(Logger.err);
+    .catch(error => Logger.err(error.stack));
   Logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
 }
 

@@ -168,5 +168,5 @@ async function main() {
 }
 
 main()
-  .then(logger.log)
+  .then((...args) => logger.log(...args))
   .catch(error => logger.err(error.stack));
