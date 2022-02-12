@@ -32,11 +32,35 @@ let mw;
 /**
  *
  */
+function restartMW() {
+  Logger.error("Mini walls bot crashed!");
+  mw = child_process.fork("index.js", ["bot", "mw"], {
+    silent: false,
+  });
+  mw.on("exit", restartMW);
+}
+
+/**
+ *
+ */
+function restartArcade() {
+  Logger.error("Arcade bot crashed!");
+  arcade = child_process.fork("index.js", ["bot"], {
+    silent: false,
+  });
+  arcade.on("exit", restartArcade);
+}
+
+/**
+ *
+ */
 async function main() {
+  Logger.name = "Bot-Manager";
+  Logger.emoji = "🤖";
   try {
     Logger.info("Bots starting...");
-    const ascii = (await fs.readFile("resources/hyarcade.ascii")).toString();
-    Logger.info(ascii);
+    const ascii = await fs.readFile("resources/hyarcade.ascii");
+    Logger.info(ascii.toString());
     if (args[2] == "test") {
       Logger.info("Starting test arcade bot...");
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot", "test"], {
@@ -66,43 +90,23 @@ async function main() {
       Logger.info("Arcade bot spawned");
     });
     arcade.on("exit", restartArcade);
-  } catch (e) {
-    Logger.err(e.stack);
+  } catch (error) {
+    Logger.err(error.stack);
   }
 
   process.on("SIGINT", async signal => {
-    await BotExit();
-    arcade.removeAllListeners();
     mw.removeAllListeners();
+    arcade.removeAllListeners();
+
+    await BotExit();
 
     arcade.kill();
     mw.kill();
+
     Logger.log(`Exiting process with signal : ${signal}`);
 
     process.exit(0);
   });
-}
-
-/**
- *
- */
-function restartMW() {
-  Logger.error("Mini walls bot crashed!");
-  mw = child_process.fork("index.js", ["bot", "mw"], {
-    silent: false,
-  });
-  mw.on("exit", restartMW);
-}
-
-/**
- *
- */
-function restartArcade() {
-  Logger.error("Arcade bot crashed!");
-  arcade = child_process.fork("index.js", ["bot"], {
-    silent: false,
-  });
-  arcade.on("exit", restartArcade);
 }
 
 main();

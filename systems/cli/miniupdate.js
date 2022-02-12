@@ -8,6 +8,7 @@ const miniUpdater = require("../datagen/miniUpdater");
  */
 async function main() {
   Logger.name = "Data-Generator";
+  Logger.emoji = "📈";
   let forceLevel = 2;
 
   try {

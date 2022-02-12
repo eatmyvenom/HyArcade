@@ -82,6 +82,7 @@ module.exports = class BotEvents {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       logger.name = "Mini-Walls-Bot";
+      logger.emoji = "⚔️";
       logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
     } else if (BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");

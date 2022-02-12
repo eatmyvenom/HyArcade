@@ -57,7 +57,8 @@ async function callback(request, response) {
 }
 
 module.exports = async function start(port) {
-  logger.name = "Database";
+  logger.name = "API";
+  logger.emoji = "⚡";
   connector = new MongoConnector("mongodb://127.0.0.1:27017");
   await connector.connect();
 
