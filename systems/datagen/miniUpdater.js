@@ -198,6 +198,12 @@ async function miniUpdater(uuidArr, connector) {
       return obj;
     }, {});
 
+  for (const key in orderedDoc.player) {
+    if (key.startsWith("claimed_solo_bank_") || key.startsWith("claimed_coop_bank_")) {
+      delete orderedDoc.player[key];
+    }
+  }
+
   orderedDoc.player.stats.profiles = {
     "00000000000000000000000000000000": {
       profile_id: "00000000000000000000000000000000",
