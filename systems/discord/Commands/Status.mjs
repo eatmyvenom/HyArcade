@@ -292,6 +292,18 @@ function getImage(status) {
             case "Apex II": {
               return "resources/status/Classic-quake-Apex_II.png";
             }
+
+            case "Apex": {
+              return "resources/status/Classic-quake-Apex.png";
+            }
+
+            case "HustWood": {
+              return "resources/status/Classic-quake-HustWood.png";
+            }
+
+            case "DigSite": {
+              return "resources/status/Classic-quake-DigSite.png";
+            }
           }
           return "resources/status/Classic-quake-Apex_III.png";
         }
