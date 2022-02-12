@@ -85,7 +85,7 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
     workerData = await requestData(uuidArr);
   } catch (error) {
     Logger.err(error);
-    return;
+    return { remaining: 120, reset: 0 };
   }
 
   for (const uuid of uuidArr) {
@@ -148,7 +148,7 @@ async function fastUpdate(uuids, connector) {
 
     let minKey = { remaining: 120, reset: 0 };
     for (const key of times) {
-      if (key.remaining < minKey.remaining) {
+      if ((key?.remaining ?? 120) < minKey.remaining) {
         minKey = key;
       }
     }
