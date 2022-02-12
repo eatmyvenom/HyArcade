@@ -223,7 +223,7 @@ function getImage(status) {
           return "resources/status/Classic-vampirez-kudong.png";
         }
 
-        case "QUAKE": {
+        case "QUAKECRAFT": {
           switch (status.session.map) {
             case "Apex III": {
               return "resources/status/Classic-quake-Apex_III.png";
@@ -287,6 +287,10 @@ function getImage(status) {
 
             case "Mines": {
               return "resources/status/Classic-quake-Mines.png";
+            }
+
+            case "Apex II": {
+              return "resources/status/Classic-quake-Apex_II.png";
             }
           }
           return "resources/status/Classic-quake-Apex_III.png";
