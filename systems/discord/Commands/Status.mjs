@@ -328,6 +328,21 @@ function getImage(status) {
             case "Market": {
               return "resources/status/Classic-paintball-Market.png";
             }
+            case "Swamps": {
+              return "resources/status/Classic-paintball-Swamps.png";
+            }
+            case "Egypt": {
+              return "resources/status/Classic-paintball-Egypt.png";
+            }
+            case "Victorian": {
+              return "resources/status/Classic-paintball-Victorian.png";
+            }
+            case "Octagon": {
+              return "resources/status/Classic-paintball-Octagon.png";
+            }
+            case "Oh Canada!": {
+              return "resources/status/Classic-paintball-Oh_Canada!.png";
+            }
           }
           return "resources/status/Classic-paintball-LaMente.png";
         }
