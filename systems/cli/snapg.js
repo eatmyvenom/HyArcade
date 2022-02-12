@@ -30,7 +30,7 @@ async function archive(path = "./archive/", timetype) {
       .replace(/ /g, "_");
   }
 
-  await Promise.all([archiveJson("players", path, timetype), archiveJson("accounts", path, timetype)]);
+  await Promise.all([archiveJson("guild", path, timetype)]);
 }
 
 /**
