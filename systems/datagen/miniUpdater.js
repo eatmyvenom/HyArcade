@@ -154,7 +154,7 @@ async function fastUpdate(uuids, connector) {
     }
 
     if (minKey.remaining < perSegment + 5) {
-      Logger.warn(`Nearing rate limit sleeping for ${minKey.key.reset * 1000}ms`);
+      Logger.warn(`Nearing rate limit sleeping for ${(minKey?.reset ?? 3) * 1000}ms`);
       await Sleep(minKey.reset * 1005);
     }
   }
