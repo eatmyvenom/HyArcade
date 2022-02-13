@@ -355,6 +355,9 @@ function getImage(status) {
             case "Babyland": {
               return "resources/status/Classic-paintball-Babyland.png";
             }
+            case "Trick Or Treat": {
+              return "resources/status/Classic-paintball-Trick_Or_Treat.png";
+            }
           }
           return "resources/status/Classic-paintball-LaMente.png";
         }
