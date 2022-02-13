@@ -44,7 +44,7 @@ async function callback(request, response) {
     response.end();
   } else {
     try {
-      logger.verbose(`${request.headers.get("X-Real-IP")} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+      logger.verbose(`${request.headers["X-Real-IP"]} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       await mod(request, response, connector);
       logger.verbose("request completed");
     } catch (error) {
