@@ -46,7 +46,7 @@ module.exports = class RoleUpdater {
     const newRole = this.getRole(wins);
 
     if (wins == 0) {
-      logger.info(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
+      logger.verbose(`${discMember.user.tag} has 0 wins for ${this.guild.name} and is being ignored`);
       return;
     }
 
