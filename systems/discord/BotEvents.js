@@ -7,7 +7,7 @@ const BotRuntime = require("./BotRuntime");
 const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
 const SetPresence = require("./Utils/SetPresence");
 const Webhooks = require("./Utils/Webhooks");
-const roleHandler = require("./roleHandler");
+const roleHandler = require("./Utils/MemberHandlers/roleHandler");
 
 /**
  * @param {string} channelID
@@ -117,7 +117,7 @@ module.exports = class BotEvents {
     }
 
     if (BotRuntime.botMode == "mw") {
-      const NameUpdater = await import("./NameUpdater.mjs");
+      const NameUpdater = await import("./Utils/MemberHandlers/NameUpdater.mjs");
       await NameUpdater.default(BotRuntime.client);
     }
   }

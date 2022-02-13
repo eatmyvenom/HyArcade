@@ -3,11 +3,11 @@ const Logger = require("hyarcade-logger");
 const { mojangRequest } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account.js");
-const BotRuntime = require("./BotRuntime.js");
-const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
-const { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } = require("./Utils/Embeds/StaticEmbeds.js");
-const isValidIGN = require("../datagen/utils/ignValidator.js");
-const LogUtils = require("./Utils/LogUtils.js");
+const BotRuntime = require("../BotRuntime.js");
+const { playerLink } = require("./Embeds/AdvancedEmbeds.js");
+const { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } = require("./Embeds/StaticEmbeds.js");
+const isValidIGN = require("../../datagen/utils/ignValidator.js");
+const LogUtils = require("./LogUtils.js");
 
 /**
  * @param {string} id

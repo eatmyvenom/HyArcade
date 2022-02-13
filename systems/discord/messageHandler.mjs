@@ -4,13 +4,13 @@ import { createRequire } from "node:module";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";
-import MiniWallsVerify from "./MiniWallsVerify.mjs";
 import CommandResponse from "./Utils/CommandResponse.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
 import LogUtils from "./Utils/LogUtils.js";
+import MiniWallsVerify from "./Utils/MiniWallsVerify.mjs";
 import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
+import VerifyChannel from "./Utils/VerifyChannel.js";
 import Webhooks from "./Utils/Webhooks.js";
-import VerifyChannel from "./VerifyChannel.js";
 
 const require = createRequire(import.meta.url);
 const { Message } = require("discord.js");

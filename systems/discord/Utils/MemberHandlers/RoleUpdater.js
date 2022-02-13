@@ -1,6 +1,6 @@
 const logger = require("hyarcade-logger");
 const Role = require("hyarcade-structures/Discord/Role");
-const Webhooks = require("./Utils/Webhooks");
+const Webhooks = require("../Webhooks");
 
 module.exports = class RoleUpdater {
   roles = [];
