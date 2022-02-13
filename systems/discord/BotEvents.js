@@ -52,14 +52,14 @@ module.exports = class BotEvents {
     BotRuntime.botMode = mode;
 
     logger.info("Fetching logging hooks");
-    Webhooks.errHook = getHookFromChannel(cfg.discord.errChannel);
-    Webhooks.verifyHook = getHookFromChannel(cfg.discord.logChannel);
+    Webhooks.errHook = await getHookFromChannel(cfg.discord.errChannel);
+    Webhooks.verifyHook = await getHookFromChannel(cfg.discord.logChannel);
 
     logger.info("Fetching command log hook");
-    Webhooks.commandHook = getHookFromChannel(cfg.discord.cmdChannel);
+    Webhooks.commandHook = await getHookFromChannel(cfg.discord.cmdChannel);
 
     logger.info("Fetching verify log hook");
-    Webhooks.verifyHook = getHookFromChannel(cfg.discord.verifyChannel);
+    Webhooks.verifyHook = await getHookFromChannel(cfg.discord.verifyChannel);
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");
