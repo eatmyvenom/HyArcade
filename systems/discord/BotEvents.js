@@ -1,4 +1,4 @@
-const { Guild, TextChannel, InvalidRequestWarningData } = require("discord.js");
+const { Guild, TextChannel, InvalidRequestWarningData, Webhook } = require("discord.js");
 const fs = require("fs-extra");
 const cfg = require("hyarcade-config").fromJSON();
 const Runtime = require("hyarcade-config/Runtime");
@@ -8,6 +8,16 @@ const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
 const SetPresence = require("./Utils/SetPresence");
 const Webhooks = require("./Utils/Webhooks");
 const roleHandler = require("./roleHandler");
+
+/**
+ * @param {string} channelID
+ * @returns {Webhook}
+ */
+async function getHookFromChannel(channelID) {
+  const channelData = await BotRuntime.client.channels.fetch(channelID);
+  const channelHooks = await channelData.fetchWebhooks();
+  return await channelHooks.first();
+}
 
 module.exports = class BotEvents {
   static async rateLimit(rlInfo) {
@@ -41,21 +51,15 @@ module.exports = class BotEvents {
     BotRuntime.isBotInstance = true;
     BotRuntime.botMode = mode;
 
-    logger.info("Fetching logging channels");
-    const errchannel = await BotRuntime.client.channels.fetch(cfg.discord.errChannel);
-    const logchannel = await BotRuntime.client.channels.fetch(cfg.discord.logChannel);
-
     logger.info("Fetching logging hooks");
-    const errhooks = await errchannel.fetchWebhooks();
-    const loghooks = await logchannel.fetchWebhooks();
-    const errHook = await errhooks.first();
-    const logHook = await loghooks.first();
-    Webhooks.errHook = errHook;
-    Webhooks.logHook = logHook;
-    logger.info("Creating message copy hook");
-    const cmdChannel = await BotRuntime.client.channels.fetch(cfg.discord.cmdChannel);
-    const cmdHooks = await cmdChannel.fetchWebhooks();
-    Webhooks.commandHook = await cmdHooks.first();
+    Webhooks.errHook = getHookFromChannel(cfg.discord.errChannel);
+    Webhooks.verifyHook = getHookFromChannel(cfg.discord.logChannel);
+
+    logger.info("Fetching command log hook");
+    Webhooks.commandHook = getHookFromChannel(cfg.discord.cmdChannel);
+
+    logger.info("Fetching verify log hook");
+    Webhooks.verifyHook = getHookFromChannel(cfg.discord.verifyChannel);
 
     logger.info("Reading trusted users");
     const trustedFile = await fs.readFile("data/trustedUsers");

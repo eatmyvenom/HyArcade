@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 import addAccounts from "../datagen/addAccounts.js";
 import BotRuntime from "./BotRuntime.js";
 import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Utils/Embeds/StaticEmbeds.js";
+import LogUtils from "./Utils/LogUtils.js";
 const require = createRequire(import.meta.url);
 const { mojangRequest } = require("hyarcade-requests");
 const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
@@ -55,6 +56,7 @@ export default async function MiniWallsVerify(msg) {
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     await addAccounts([uuid]);
     await Database.linkDiscord(id, uuid);
+    await LogUtils.logVerify(id, acc.name);
     Logger.out(`${tag} was autoverified in miniwalls as ${ign}`);
     await msg.member.roles.remove("850033543425949736");
     await msg.member.roles.add("789721304722178069");

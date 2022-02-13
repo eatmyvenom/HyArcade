@@ -2218,7 +2218,7 @@ husky@^7.0.4:
 
 hyarcade-config@eatmyvenom/hyarcade-config:
   version "1.0.0"
-  resolved "https://codeload.github.com/eatmyvenom/hyarcade-config/tar.gz/83dbb99a9c2e7e08b88539a03eaaf1a52e8a9b7e"
+  resolved "https://codeload.github.com/eatmyvenom/hyarcade-config/tar.gz/c23fa7b8b44536facc17379748f617615f5c5387"
 
 hyarcade-logger@eatmyvenom/hyarcade-logger:
   version "1.0.0"

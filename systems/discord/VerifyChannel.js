@@ -7,6 +7,7 @@ const BotRuntime = require("./BotRuntime.js");
 const { playerLink } = require("./Utils/Embeds/AdvancedEmbeds.js");
 const { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } = require("./Utils/Embeds/StaticEmbeds.js");
 const isValidIGN = require("../datagen/utils/ignValidator.js");
+const LogUtils = require("./Utils/LogUtils.js");
 
 /**
  * @param {string} id
@@ -47,6 +48,7 @@ module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
 
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     await Database.linkDiscord(id, uuid);
+    await LogUtils.logVerify(id, acc.name);
 
     Logger.out(`${tag} was autoverified in ${msg.guild.name} as ${acc.name}`);
 

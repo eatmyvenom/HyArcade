@@ -8,6 +8,7 @@ import BotRuntime from "../BotRuntime.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
+import LogUtils from "../Utils/LogUtils.js";
 
 /**
  *
@@ -58,6 +59,7 @@ async function verifyCommand(args, rawMsg, interaction) {
 
   if (acc.hypixelDiscord?.toLowerCase() == tag?.toLowerCase()) {
     await Database.linkDiscord(id, uuid);
+    await LogUtils.logVerify(id, acc.name);
     Logger.out(`${tag} was verified as ${acc.name}`);
 
     await Database.addAccount(acc);

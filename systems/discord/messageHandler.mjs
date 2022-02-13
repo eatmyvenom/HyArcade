@@ -1,8 +1,6 @@
 import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
-import addAccounts from "../datagen/addAccounts.js";
-import isValidIGN from "../datagen/utils/ignValidator.js";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.js";
@@ -40,20 +38,6 @@ async function logCmd(msg) {
     .then(() => {})
     .catch(error => Logger.err(error.stack));
   Logger.out(`${msg.author.tag} ran : ${msg.cleanContent}`);
-}
-
-/**
- * @param {Message} msg
- */
-async function addIGNs(msg) {
-  if (cfg.discord.listenChannels.includes(msg.channel.id)) {
-    Logger.info("IGN channel message detected, automatically adding to database.");
-    const firstWord = msg.content.split(" ")[0];
-    if (!msg.author.bot && isValidIGN(firstWord)) {
-      Logger.out(`Attempting to add "${firstWord}" to database.`);
-      await addAccounts([firstWord]);
-    }
-  }
 }
 
 /**
@@ -219,6 +203,4 @@ export default async function messageHandler(msg) {
     await handleCommand(msg, cmdResponse);
     return;
   }
-
-  await addIGNs(msg);
 }

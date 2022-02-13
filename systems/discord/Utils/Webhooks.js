@@ -2,7 +2,7 @@ const { Webhook } = require("discord.js");
 
 module.exports = class Webhooks {
   /**
-   * Webhook for duplicating messages
+   * Webhook for logging commands
    *
    * @type {Webhook}
    * @static
@@ -10,7 +10,7 @@ module.exports = class Webhooks {
   static commandHook;
 
   /**
-   * Webhook for logging standard output
+   * Webhook for logging output
    *
    * @type {Webhook}
    * @static
@@ -18,10 +18,18 @@ module.exports = class Webhooks {
   static logHook;
 
   /**
-   * Webhook for logging standard error
+   * Webhook for logging errors
    *
    * @type {Webhook}
    * @static
    */
   static errHook;
+
+  /**
+   * Webhook for logging verifications
+   *
+   * @type {Webhook}
+   * @static
+   */
+  static verifyHook;
 };
