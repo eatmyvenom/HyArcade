@@ -204,7 +204,7 @@ async function miniUpdater(uuidArr, connector) {
     }
   }
 
-  orderedDoc.player.stats.profiles = {
+  orderedDoc.player.stats.SkyBlock.profiles = {
     "00000000000000000000000000000000": {
       profile_id: "00000000000000000000000000000000",
       cute_name: "green",
