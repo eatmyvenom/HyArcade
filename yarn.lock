@@ -2226,7 +2226,7 @@ hyarcade-logger@eatmyvenom/hyarcade-logger:
 
 hyarcade-requests@eatmyvenom/hyarcade-requests:
   version "1.0.0"
-  resolved "https://codeload.github.com/eatmyvenom/hyarcade-requests/tar.gz/02019314a01a2c67f570d1b55fd570a72b3db5ed"
+  resolved "https://codeload.github.com/eatmyvenom/hyarcade-requests/tar.gz/1f213677debe48166a81a6bf89245f11c3c77c68"
 
 hyarcade-structures@eatmyvenom/hyarcade-structures:
   version "1.0.0"
