@@ -343,6 +343,18 @@ function getImage(status) {
             case "Oh Canada!": {
               return "resources/status/Classic-paintball-Oh_Canada!.png";
             }
+            case "LaLaLand": {
+              return "resources/status/Classic-paintball-LaLaLand.png";
+            }
+            case "Siege": {
+              return "resources/status/Classic-paintball-Siege.png";
+            }
+            case "Gladiator": {
+              return "resources/status/Classic-paintball-Gladiator.png";
+            }
+            case "Babyland": {
+              return "resources/status/Classic-paintball-Babyland.png";
+            }
           }
           return "resources/status/Classic-paintball-LaMente.png";
         }
