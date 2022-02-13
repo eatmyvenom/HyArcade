@@ -42,12 +42,14 @@ async function logCmd(interaction) {
  */
 async function commandHandler(interaction) {
   if (await isBlacklisted(interaction?.user?.id)) {
+    Logger.warn("Blacklisted user was ignored");
     await interaction.reply({ embeds: [ERROR_BLACKLIST], ephemeral: true });
     return;
   }
 
   let responseObj;
   try {
+    Logger.log(`${interaction.user.tag} ran "${interaction.commandName}"`);
     responseObj = await CommandParser(interaction);
   } catch (error) {
     try {
@@ -106,6 +108,7 @@ async function logBtn(interaction) {
  * @param {ButtonInteraction} interaction
  */
 async function buttonHandler(interaction) {
+  Logger.verbose(`${interaction.user.tag} clicked button "${interaction.customId}`);
   if (await ForceOGuser(interaction)) {
     const updatedData = await ButtonParser(interaction);
 
@@ -134,6 +137,7 @@ async function buttonHandler(interaction) {
  * @param {SelectMenuInteraction} interaction
  */
 async function menuHandler(interaction) {
+  Logger.verbose(`${interaction.user.tag} clicked menu "${interaction.customId}`);
   if (await ForceOGuser(interaction)) {
     const updatedData = await MenuParser(interaction);
 
@@ -170,6 +174,8 @@ async function interactionHandler(interaction) {
     await menuHandler(interaction);
   } else if (interaction.isAutocomplete()) {
     await AutoCompleter(interaction);
+  } else {
+    Logger.warn("Unknown interaction type was attempted");
   }
 }
 
@@ -183,4 +189,5 @@ export default async function (client) {
     .catch(error => Logger.err(error.stack));
 
   client.on("interactionCreate", interactionHandler);
+  Logger.out("'interactionCreate' bound");
 }

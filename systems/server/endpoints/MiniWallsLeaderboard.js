@@ -13,7 +13,7 @@ module.exports = async (req, res, connector) => {
   const stat = url.searchParams.get("stat");
   const time = url.searchParams.get("time");
   if (req.method == "GET") {
-    Logger.info(`Mini Walls Leaderboard: ${stat} - ${time}`);
+    Logger.log(`Mini Walls Leaderboard: ${stat} - ${time}`);
     res.setHeader("Content-Type", "application/json");
 
     const leaderboard = JSON.stringify(await MiniWallsLeaderboard(connector, stat, time));

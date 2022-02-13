@@ -93,15 +93,17 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
     const accData = workerData.data[uuid];
     if (accData?.success == false || accData?.player == undefined) {
       if (cfg.logRateLimit) {
-        Logger.warn(`Account data retrevial unsuccessful for ${uuid}`);
+        Logger.warn(`Unable to access data for ${uuid}`);
       } else {
-        Logger.verbose(`Account data retrevial unsuccessful for ${uuid}`);
+        Logger.verbose(`Unable to access data for ${uuid}`);
       }
     } else {
       const acc = new Account(uuid, 0, uuid);
+      Logger.verbose("Merging data into master document");
       masterDoc = mergeDeep(masterDoc, accData);
       acc.setHypixel(accData);
 
+      Logger.verbose("Pushing data to mongo");
       connector
         .updateAccount(acc)
         .then(() => {})
@@ -179,6 +181,8 @@ async function miniUpdater(uuidArr, connector) {
     await fastUpdate(uuidArr, connector);
   }
 
+  Logger.log("Overwriting data for master API document");
+
   delete masterDoc.data;
   masterDoc.player.displayname = "playerName";
   masterDoc.player.playername = "playername";
@@ -203,6 +207,9 @@ async function miniUpdater(uuidArr, connector) {
       delete orderedDoc.player[key];
     }
   }
+
+  orderedDoc.player.claimed_solo_bank_00000000000000000000000000000000 = 0;
+  orderedDoc.player.claimed_coop_bank_00000000000000000000000000000000 = 0;
 
   orderedDoc.player.stats.SkyBlock.profiles = {
     "00000000000000000000000000000000": {

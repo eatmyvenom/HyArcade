@@ -19,7 +19,7 @@ module.exports = async (req, res, connector) => {
   const filter = url.searchParams.get("filter");
 
   if (req.method == "GET") {
-    Logger.info(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);
+    Logger.log(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);
     const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, filter ?? false, connector);
 
     res.setHeader("Content-Type", "application/json");
