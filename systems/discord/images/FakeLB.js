@@ -1,9 +1,13 @@
 const Database = require("hyarcade-requests/Database");
 const Arc3 = require("./FakeLBs/Arc3");
 const Arc4 = require("./FakeLBs/Arc4");
+const Arc5 = require("./FakeLBs/Arc5");
+const Arc6 = require("./FakeLBs/Arc6");
 const ArcLeft = require("./FakeLBs/ArcLeft");
 const Guild = require("./FakeLBs/Guild");
 const { getFromDB, getBanlist } = require("../BotRuntime");
+
+const generics = [Arc3, Arc4, Arc5, Arc6];
 
 /**
  * @param {number} lowerBound
@@ -56,9 +60,9 @@ module.exports = async function FakeLb(path, category, time) {
         }
 
         default: {
-          let random = chooseRandom(0, 1);
+          let random = chooseRandom(0, generics.length - 1);
 
-          return await (random == 0 ? Arc4(path, category, realTime, topTen) : Arc3(path, category, realTime, topTen));
+          return await generics[random](path, category, realTime, topTen);
         }
       }
     }
