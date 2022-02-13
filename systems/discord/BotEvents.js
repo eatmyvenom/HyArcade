@@ -53,7 +53,7 @@ module.exports = class BotEvents {
 
     logger.info("Fetching logging hooks");
     Webhooks.errHook = await getHookFromChannel(cfg.discord.errChannel);
-    Webhooks.verifyHook = await getHookFromChannel(cfg.discord.logChannel);
+    Webhooks.logHook = await getHookFromChannel(cfg.discord.logChannel);
 
     logger.info("Fetching command log hook");
     Webhooks.commandHook = await getHookFromChannel(cfg.discord.cmdChannel);
