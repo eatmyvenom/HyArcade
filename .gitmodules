@@ -1,18 +1,3 @@
-[submodule "src/request"]
-	path = packages/request
-	url = git@github.com:eatmyvenom/hyarcade-requests.git
-[submodule "src/Config"]
-	path = packages/Config
-	url = git@github.com:eatmyvenom/hyarcade-config.git
-[submodule "src/utils/Logger"]
-	path = packages/Logger
-	url = git@github.com:eatmyvenom/hyarcade-logger.git
 [submodule "src/Worker"]
 	path = packages/Worker
 	url = git@github.com:eatmyvenom/Hyarcade-Worker.git
-[submodule "packages/Utils"]
-	path = packages/Utils
-	url = git@github.com:eatmyvenom/hyarcade-utils.git
-[submodule "packages/Structures"]
-	path = packages/Structures
-	url = git@github.com:eatmyvenom/hyarcade-structures.git
