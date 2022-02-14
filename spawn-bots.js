@@ -4,8 +4,8 @@
 const child_process = require("child_process");
 const fs = require("fs-extra");
 const Logger = require("hyarcade-logger");
-const BotExit = require("./src/events/BotExit");
-const BotStart = require("./src/events/BotStart");
+const BotExit = require("./systems/events/BotExit");
+const BotStart = require("./systems/events/BotStart");
 // eslint-disable-next-line no-undef
 const args = process.argv;
 

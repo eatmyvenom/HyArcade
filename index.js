@@ -2,7 +2,7 @@
 const os = require("os");
 const fs = require("fs-extra");
 const process = require("process");
-const Webhook = require("./src/events/webhook");
+const Webhook = require("./systems/events/webhook");
 const { listNormal, listDiff, stringNormal, stringDaily } = require("hyarcade-utils/listUtils");
 const args = process.argv;
 const task = require("./systems/task");

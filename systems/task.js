@@ -3,8 +3,8 @@ const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const dataGen = require("./datagen/dataGeneration");
-const Webhook = require("../src/events/webhook");
-const lists = require("../src/listParser");
+const Webhook = require("./events/webhook");
+const lists = require("hyarcade-utils/listParser");
 const { stringNormal, stringDaily } = require("hyarcade-utils/listUtils");
 
 let accounts;
