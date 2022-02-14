@@ -195,13 +195,6 @@ async function miniUpdater(uuidArr, connector) {
       return obj;
     }, {});
 
-  orderedDoc.player = Object.keys(orderedDoc.player)
-    .sort()
-    .reduce((obj, key) => {
-      obj[key] = orderedDoc.player[key];
-      return obj;
-    }, {});
-
   for (const key in orderedDoc.player) {
     if (key.startsWith("claimed_solo_bank_") || key.startsWith("claimed_coop_bank_")) {
       delete orderedDoc.player[key];
@@ -211,12 +204,27 @@ async function miniUpdater(uuidArr, connector) {
   orderedDoc.player.claimed_solo_bank_00000000000000000000000000000000 = 0;
   orderedDoc.player.claimed_coop_bank_00000000000000000000000000000000 = 0;
 
+  for (const key in orderedDoc.player.housingMeta) {
+    if (key.startsWith("given_cookies_")) {
+      delete orderedDoc.player[key];
+    }
+  }
+
+  orderedDoc.housingMeta.given_cookies_000000 = ["00000000-0000-0000-0000-000000000000"];
+
   orderedDoc.player.stats.SkyBlock.profiles = {
     "00000000000000000000000000000000": {
       profile_id: "00000000000000000000000000000000",
       cute_name: "green",
     },
   };
+
+  orderedDoc.player = Object.keys(orderedDoc.player)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = orderedDoc.player[key];
+      return obj;
+    }, {});
 
   await writeFile("data/fullplayer.json", JSON.stringify(orderedDoc, undefined, 2));
 }
