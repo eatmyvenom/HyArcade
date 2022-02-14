@@ -87,16 +87,6 @@ async function addLeaderboards() {
 }
 
 /**
- * Generate the status for online players
- *
- * @returns {string[]} files changed by this task
- */
-async function status() {
-  await dataGen.genStatus();
-  return await ["status.json", "status.txt"];
-}
-
-/**
  * @returns {string[]}
  */
 async function statusTxtSorted() {
