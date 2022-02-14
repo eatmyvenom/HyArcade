@@ -102,7 +102,9 @@ async function main() {
 
   logger.debug(`Args are [${args}] - executing`);
   logger.debug("----- Process info -----");
+  logger.debug(`PLATFORM - ${process.platform} ${process.arch}`);
   logger.debug(`PID - ${process.pid}\nCWD - ${process.cwd()}\nNODE VERSION - ${process.versions.node}\nV8 VERSION - ${process.versions.v8}`);
+  logger.debug("------------------------");
   switch (args[2]) {
     case "discord":
       await webhookLog(args[3], args[4]);
