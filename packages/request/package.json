@@ -1,0 +1,20 @@
+{
+  "name": "hyarcade-requests",
+  "version": "1.0.0",
+  "description": "Request data from relavent apis for hyarcade",
+  "main": "Request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eatmyvenom/hyarcade-requests.git"
+  },
+  "author": "EatMyVenom",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/eatmyvenom/hyarcade-requests/issues"
+  },
+  "homepage": "https://github.com/eatmyvenom/hyarcade-requests#readme",
+  "dependencies": {}
+}

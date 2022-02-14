@@ -1,0 +1,23 @@
+{
+  "name": "hyarcade-logger",
+  "version": "1.0.0",
+  "description": "A logger for usage with hyarcade between modules",
+  "main": "Logger.js",
+  "module": "Logger.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eatmyvenom/hyarcade-logger.git"
+  },
+  "keywords": [
+    "Logger",
+    "hyarcade",
+    "arcadebot",
+    "eatmyvenom"
+  ],
+  "author": "EatMyVenom",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/eatmyvenom/hyarcade-logger/issues"
+  },
+  "homepage": "https://github.com/eatmyvenom/hyarcade-logger#readme"
+}
