@@ -1,4 +1,4 @@
-const task = require("../../src/cluster/task");
+const task = require("../task");
 
 /**
  *

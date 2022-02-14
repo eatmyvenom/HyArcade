@@ -2,10 +2,10 @@ const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 const Json = require("hyarcade-utils/FileHandling/Json");
-const dataGen = require("../../systems/datagen/dataGeneration");
-const Webhook = require("../events/webhook");
-const lists = require("../listParser");
-const { stringNormal, stringDaily } = require("../../packages/Utils/listUtils");
+const dataGen = require("./datagen/dataGeneration");
+const Webhook = require("../src/events/webhook");
+const lists = require("../src/listParser");
+const { stringNormal, stringDaily } = require("hyarcade-utils/listUtils");
 
 let accounts;
 
@@ -87,14 +87,6 @@ async function addLeaderboards() {
 }
 
 /**
- * @returns {string[]}
- */
-async function statusTxtSorted() {
-  await dataGen.statusTxtSorted();
-  return await ["status.txt"];
-}
-
-/**
  * Send a webhook message to discord
  *
  * @param {string} type
@@ -113,7 +105,7 @@ async function webhook(type, maxamnt) {
  *
  */
 async function discord() {
-  const DiscordBot = require("../../systems/discord/bot");
+  const DiscordBot = require("./discord/bot");
   await DiscordBot();
 }
 
@@ -122,8 +114,6 @@ module.exports = {
   guilds: glds,
   addLeaderboards,
   stats,
-  statusTxtSorted,
-  status,
   webhook,
   discord,
 };
