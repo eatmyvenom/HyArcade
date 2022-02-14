@@ -1,9 +1,9 @@
 /* eslint-disable unicorn/no-null */
 import { createRequire } from "node:module";
-import ButtonGenerator from "./Buttons/ButtonGenerator.js";
-import { addAccounts } from "../../../src/listUtils.js";
+import { addAccounts } from "../../../packages/Utils/listUtils.js";
 import CommandStorage from "../CommandStorage.mjs";
 import CommandResponse from "../Utils/CommandResponse.js";
+import ButtonGenerator from "./Buttons/ButtonGenerator.js";
 
 const require = createRequire(import.meta.url);
 const { MessageEmbed, CommandInteraction } = require("discord.js");

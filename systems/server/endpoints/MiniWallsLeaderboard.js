@@ -1,6 +1,6 @@
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
-const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
+const MiniWallsLeaderboard = require("hyarcade-utils/Leaderboards/MiniWallsLeaderboard");
 
 /**
  *

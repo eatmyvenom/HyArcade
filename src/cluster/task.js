@@ -5,7 +5,7 @@ const Json = require("hyarcade-utils/FileHandling/Json");
 const dataGen = require("../dataGeneration");
 const Webhook = require("../events/webhook");
 const lists = require("../listParser");
-const { stringNormal, stringDaily } = require("../listUtils");
+const { stringNormal, stringDaily } = require("../../packages/Utils/listUtils");
 
 let accounts;
 

@@ -1,11 +1,11 @@
 const config = require("hyarcade-config").fromJSON();
 const Json = require("hyarcade-utils/FileHandling/Json");
 const TimSort = require("timsort");
-const listDiffByProp = require("./utils/leaderboard/LBFromProp");
-const { stringifyList } = require("./utils/leaderboard/ListUtils");
-const stringLB = require("./utils/leaderboard/StringifyLB");
-const stringLBAdv = require("./utils/leaderboard/StringifyLBAdv");
-const stringLBDiffAdv = require("./utils/leaderboard/StringifyLBDiffAdv");
+const listDiffByProp = require("./Leaderboards/LBFromProp");
+const { stringifyList } = require("./Leaderboards/ListUtils");
+const stringLB = require("./Leaderboards/StringifyLB");
+const stringLBAdv = require("./Leaderboards/StringifyLBAdv");
+const stringLBDiffAdv = require("./Leaderboards/StringifyLBDiffAdv");
 
 /**
  * Turn a list of anything with wins into formatted text
@@ -130,7 +130,7 @@ module.exports = {
   stringNormal,
   stringDiff,
   stringDaily,
-  addAccounts: require("../systems/datagen/addAccounts"),
+  addAccounts: require("../../systems/datagen/addAccounts"),
   stringLB,
   stringLBDaily,
   stringLBDiff,

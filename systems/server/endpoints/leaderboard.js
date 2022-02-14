@@ -1,6 +1,6 @@
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
-const GenericLeaderboard = require("../../../src/utils/leaderboard/GenericLeaderboard");
+const GenericLeaderboard = require("hyarcade-utils/Leaderboards/GenericLeaderboard");
 
 /**
  *

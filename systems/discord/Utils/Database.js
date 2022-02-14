@@ -1,6 +1,6 @@
 const Logger = require("hyarcade-logger");
 const DBConnector = require("hyarcade-requests/Database");
-const MiniWallsLeaderboard = require("../../../src/utils/leaderboard/MiniWallsLeaderboard");
+const MiniWallsLeaderboard = require("hyarcade-utils/Leaderboards/MiniWallsLeaderboard");
 
 class Database {
   /**

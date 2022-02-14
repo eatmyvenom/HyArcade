@@ -6,7 +6,8 @@ const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const FakeLB = require("../../systems/discord/images/FakeLB");
-const listUtils = require("../listUtils");
+const listUtils = require("../../packages/Utils/listUtils");
+const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
 /**
  * Send text to a discord webhook
@@ -203,36 +204,6 @@ function generateEmbed(list) {
   embed.setDescription(str);
 
   return embed;
-}
-
-/**
- *
- * @param {*} list
- * @param {*} lbprop
- * @param {*} category
- * @param {*} maxamnt
- * @param {*} startingIndex
- * @returns {*}
- */
-function stringifyList(list, lbprop, category, maxamnt = 10, startingIndex = 0) {
-  let str = "";
-  const length = Math.min(maxamnt, list?.length ?? 0);
-  const sizedList = list.slice(0, length);
-
-  let propVal;
-  for (let i = startingIndex; i < sizedList.length; i += 1) {
-    propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
-    // don't print if player has 0 wins
-    if (!((propVal ?? 0) > 0)) continue;
-
-    const { name } = sizedList[i];
-
-    // eslint-disable-next-line prefer-template
-    const num = `\` ${i + 1}.`.padEnd(`\` ${[list.length - 1]}. `.length) + "`";
-
-    str += `${num} **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
-  }
-  return str.replace(/\\?_/g, "\\_");
 }
 
 /**

@@ -1,5 +1,5 @@
 const Json = require("hyarcade-utils/FileHandling/Json");
-const { getList } = require("./ListUtils");
+const { getList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
 /**
  *

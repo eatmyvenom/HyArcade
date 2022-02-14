@@ -3,7 +3,7 @@ const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const Command = require("hyarcade-structures/Discord/Command");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const { stringifyList } = require("../../../src/utils/leaderboard/ListUtils");
+const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
 /**
  * @param {string} prop
