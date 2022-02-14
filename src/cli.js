@@ -5,7 +5,7 @@ const { HypixelApi } = require("hyarcade-requests");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
 const webRequest = require("hyarcade-requests/webRequest");
 const Json = require("hyarcade-utils/FileHandling/Json");
-const dataGeneration = require("./dataGeneration");
+const dataGeneration = require("../systems/datagen/dataGeneration");
 const { stringNormal, stringDaily, addAccounts } = require("./listUtils");
 const args = process.argv;
 
