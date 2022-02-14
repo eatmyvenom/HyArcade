@@ -210,7 +210,7 @@ async function miniUpdater(uuidArr, connector) {
     }
   }
 
-  orderedDoc.housingMeta.given_cookies_000000 = ["00000000-0000-0000-0000-000000000000"];
+  orderedDoc.player.housingMeta.given_cookies_000000 = ["00000000-0000-0000-0000-000000000000"];
 
   orderedDoc.player.stats.SkyBlock.profiles = {
     "00000000000000000000000000000000": {
