@@ -165,7 +165,9 @@ async function main() {
   }
 
   if (killable) {
-    process.exit(0);
+    process.nextTick(() => {
+      process.exit(0);
+    });
   }
 }
 
