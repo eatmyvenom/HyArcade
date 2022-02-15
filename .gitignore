@@ -1,17 +1,16 @@
 # Workspace / metadata files
 *.json
-data/*
-wrangler.toml
 *.sh
 *.txt
 *.log
+*.tar.gz
+*.code-workspace
+data/*
+wrangler.toml
 starttime
 force
-*.code-workspace
 pid
 timeupdate
-wrangler.toml
-database.tar.gz
 
 # Config files
 !package.json
