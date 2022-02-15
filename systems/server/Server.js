@@ -38,13 +38,13 @@ async function callback(request, response) {
   const endpoint = url.pathname.slice(1).toLowerCase();
   const mod = urlModules[endpoint];
 
+  logger.verbose(`${request.headers["x-real-ip"]} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
   if (mod == undefined) {
     logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
     response.statusCode = 404;
     response.end();
   } else {
     try {
-      logger.verbose(`${request.headers["x-real-ip"]} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       await mod(request, response, connector);
       logger.verbose("request completed");
     } catch (error) {
