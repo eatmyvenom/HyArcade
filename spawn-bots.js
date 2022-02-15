@@ -59,7 +59,7 @@ async function main() {
   Logger.emoji = "🤖";
   try {
     Logger.info("Bots starting...");
-    const ascii = await fs.readFile("resources/hyarcade.ascii");
+    const ascii = await fs.readFile("assets/hyarcade.ascii");
     Logger.info(ascii.toString());
     if (args[2] == "test") {
       Logger.info("Starting test arcade bot...");

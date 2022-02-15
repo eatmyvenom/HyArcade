@@ -20,7 +20,7 @@ const { CommandInteraction, Message } = require("discord.js");
  */
 function getImage(status) {
   if (!status.session.online) {
-    return "resources/status/Main-lobby.png";
+    return "assets/status/Main-lobby.png";
   }
 
   switch (status.session.gameType) {
@@ -30,67 +30,67 @@ function getImage(status) {
       switch (status.session.mode) {
         case "LOBBY": {
           status.session.mode = "Lobby";
-          return "resources/status/Arcade-lobby-1.png";
+          return "assets/status/Arcade-lobby-1.png";
         }
 
         case "PARTY": {
           status.session.mode = "Party Games";
-          return "resources/status/Arcade-party-games-1.png";
+          return "assets/status/Arcade-party-games-1.png";
         }
 
         case "HOLE_IN_THE_WALL": {
           status.session.mode = "Hole in the Wall";
-          return "resources/status/Arcade-hole-in-the-wall-2.png";
+          return "assets/status/Arcade-hole-in-the-wall-2.png";
         }
 
         case "THROW_OUT": {
           status.session.mode = "Throw Out";
-          return "resources/status/Arcade-throw-out.png";
+          return "assets/status/Arcade-throw-out.png";
         }
 
         case "SOCCER": {
           status.session.mode = "Football";
-          return "resources/status/Arcade-football.png";
+          return "assets/status/Arcade-football.png";
         }
 
         case "ONEINTHEQUIVER": {
           status.session.mode = "Bounty Hunters";
-          return "resources/status/Arcade-bounty-hunters-2.png";
+          return "assets/status/Arcade-bounty-hunters-2.png";
         }
 
         case "DRAW_THEIR_THING": {
           status.session.mode = "Pixel Painters";
-          return "resources/status/Arcade-pixel-painters.png";
+          return "assets/status/Arcade-pixel-painters.png";
         }
 
         case "DEFENDER": {
           status.session.mode = "Creeper Attack";
-          return "resources/status/Arcade-creeper-attack.png";
+          return "assets/status/Arcade-creeper-attack.png";
         }
 
         case "DRAGONWARS2": {
           status.session.mode = "Dragon Wars";
-          return "resources/status/Arcade-dragon-wars.png";
+          return "assets/status/Arcade-dragon-wars.png";
         }
 
         case "DAYONE": {
           status.session.mode = "Blocking Dead";
-          return "resources/status/Arcade-blocking-dead.png";
+          return "assets/status/Arcade-blocking-dead.png";
         }
 
         case "STARWARS": {
           status.session.mode = "Galaxy Wars";
-          return "resources/status/Arcade-galaxy-wars.png";
+          return "assets/status/Arcade-galaxy-wars.png";
         }
 
         case "SIMON_SAYS": {
           status.session.mode = "Hypixel Says";
-          return "resources/status/Arcade-hypixel-says.png";
+          return "assets/status/Arcade-hypixel-says.png";
         }
 
         case "ENDER": {
           status.session.mode = "Ender Spleef";
-          return "resources/status/Arcade-ender-spleef.png";
+          return "assets/status/Arcade-ender-spleef.png";
         }
 
         case "FARM_HUNT": {
@@ -98,19 +98,19 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Farm": {
-              return "resources/status/Arcade-farm-hunt-4.png";
+              return "assets/status/Arcade-farm-hunt-4.png";
             }
 
             case "Meadow": {
-              return "resources/status/Arcade-farm-hunt-3.png";
+              return "assets/status/Arcade-farm-hunt-3.png";
             }
 
             case "Homestead": {
-              return "resources/status/Arcade-farm-hunt-1.png";
+              return "assets/status/Arcade-farm-hunt-1.png";
             }
 
             case "Beach Party": {
-              return "resources/status/Arcade-farm-hunt-2.png";
+              return "assets/status/Arcade-farm-hunt-2.png";
             }
           }
 
@@ -119,17 +119,17 @@ function getImage(status) {
 
         case "ZOMBIES_DEAD_END": {
           status.session.mode = "Zombies";
-          return "resources/status/Arcade-zombies-dead-end.png";
+          return "assets/status/Arcade-zombies-dead-end.png";
         }
 
         case "ZOMBIES_BAD_BLOOD": {
           status.session.mode = "Zombies";
-          return "resources/status/Arcade-zombies-bad-blood.png";
+          return "assets/status/Arcade-zombies-bad-blood.png";
         }
 
         case "ZOMBIES_ALIEN_ARCADIUM": {
           status.session.mode = "Zombies";
-          return "resources/status/Arcade-zombies-alien-arcadium.png";
+          return "assets/status/Arcade-zombies-alien-arcadium.png";
         }
 
         case "HIDE_AND_SEEK_PARTY_POOPER": {
@@ -137,11 +137,11 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Pool Party": {
-              return "resources/status/Arcade-party-pooper-pool.png";
+              return "assets/status/Arcade-party-pooper-pool.png";
             }
 
             case "House Party": {
-              return "resources/status/Arcade-party-pooper-house.png";
+              return "assets/status/Arcade-party-pooper-house.png";
             }
           }
 
@@ -151,7 +151,7 @@ function getImage(status) {
         case "MINI_WALLS": {
           status.session.mode = "Mini Walls";
 
-          return "resources/status/Arcade-mini-walls-babalon.png";
+          return "assets/status/Arcade-mini-walls-babalon.png";
         }
 
         case "PVP_CTW": {
@@ -159,45 +159,45 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Quabba": {
-              return "resources/status/Arcade-capture-the-wool-5.png";
+              return "assets/status/Arcade-capture-the-wool-5.png";
             }
 
             case "Amun": {
-              return "resources/status/Arcade-capture-the-wool-6.png";
+              return "assets/status/Arcade-capture-the-wool-6.png";
             }
 
             case "Desert Palace": {
-              return "resources/status/Arcade-capture-the-wool-2.png";
+              return "assets/status/Arcade-capture-the-wool-2.png";
             }
 
             case "Turrets": {
-              return "resources/status/Arcade-capture-the-wool-7.png";
+              return "assets/status/Arcade-capture-the-wool-7.png";
             }
 
             case "Tudor Garden": {
-              return "resources/status/Arcade-capture-the-wool-3.png";
+              return "assets/status/Arcade-capture-the-wool-3.png";
             }
 
             case "Manhattan Showdown": {
-              return "resources/status/Arcade-capture-the-wool-8.png";
+              return "assets/status/Arcade-capture-the-wool-8.png";
             }
 
             default: {
-              return "resources/status/Arcade-capture-the-wool-6.png";
+              return "assets/status/Arcade-capture-the-wool-6.png";
             }
           }
         }
       }
-      return "resources/status/Arcade-lobby-1.png";
+      return "assets/status/Arcade-lobby-1.png";
     }
 
     case "BEDWARS": {
-      return "resources/status/Bedwars-lobby.png";
+      return "assets/status/Bedwars-lobby.png";
     }
 
     case "MCGO": {
       status.session.gameType = "Cops and Crims";
-      return "resources/status/Cops-lobby.png";
+      return "assets/status/Cops-lobby.png";
     }
 
     case "LEGACY": {
@@ -207,237 +207,237 @@ function getImage(status) {
         case "VAMPIREZ": {
           switch (status.session.map) {
             case "Plundered": {
-              return "resources/status/Classic-vampirez-plundered.png";
+              return "assets/status/Classic-vampirez-plundered.png";
             }
             case "Kudong": {
-              return "resources/status/Classic-vampirez-kudong.png";
+              return "assets/status/Classic-vampirez-kudong.png";
             }
             case "Village": {
-              return "resources/status/Classic-vampirez-village.png";
+              return "assets/status/Classic-vampirez-village.png";
             }
             case "Church": {
-              return "resources/status/Classic-vampirez-village.png";
+              return "assets/status/Classic-vampirez-village.png";
             }
           }
 
-          return "resources/status/Classic-vampirez-kudong.png";
+          return "assets/status/Classic-vampirez-kudong.png";
         }
 
         case "QUAKECRAFT": {
           switch (status.session.map) {
             case "Apex III": {
-              return "resources/status/Classic-quake-Apex_III.png";
+              return "assets/status/Classic-quake-Apex_III.png";
             }
 
             case "Ancient": {
-              return "resources/status/Classic-quake-Ancient.png";
+              return "assets/status/Classic-quake-Ancient.png";
             }
 
             case "Fryst": {
-              return "resources/status/Classic-quake-Fryst.png";
+              return "assets/status/Classic-quake-Fryst.png";
             }
 
             case "Cold_War": {
-              return "resources/status/Classic-quake-Cold_War.png";
+              return "assets/status/Classic-quake-Cold_War.png";
             }
 
             case "Karunesh": {
-              return "resources/status/Classic-quake-Karunesh.png";
+              return "assets/status/Classic-quake-Karunesh.png";
             }
 
             case "Forgotten": {
-              return "resources/status/Classic-quake-Forgotten.png";
+              return "assets/status/Classic-quake-Forgotten.png";
             }
 
             case "Sunken": {
-              return "resources/status/Classic-quake-Sunken.png";
+              return "assets/status/Classic-quake-Sunken.png";
             }
 
             case "WoodStone": {
-              return "resources/status/Classic-quake-WoodStone.png";
+              return "assets/status/Classic-quake-WoodStone.png";
             }
 
             case "Town": {
-              return "resources/status/Classic-quake-Town.png";
+              return "assets/status/Classic-quake-Town.png";
             }
 
             case "Demonic": {
-              return "resources/status/Classic-quake-Demonic.png";
+              return "assets/status/Classic-quake-Demonic.png";
             }
 
             case "Martian": {
-              return "resources/status/Classic-quake-Martian.png";
+              return "assets/status/Classic-quake-Martian.png";
             }
 
             case "Sero": {
-              return "resources/status/Classic-quake-Sero.png";
+              return "assets/status/Classic-quake-Sero.png";
             }
 
             case "Faarah": {
-              return "resources/status/Classic-quake-Faarah.png";
+              return "assets/status/Classic-quake-Faarah.png";
             }
 
             case "Lost World": {
-              return "resources/status/Classic-quake-Lost_World.png";
+              return "assets/status/Classic-quake-Lost_World.png";
             }
 
             case "DigSite2": {
-              return "resources/status/Classic-quake-DigSite2.png";
+              return "assets/status/Classic-quake-DigSite2.png";
             }
 
             case "Mines": {
-              return "resources/status/Classic-quake-Mines.png";
+              return "assets/status/Classic-quake-Mines.png";
             }
 
             case "Apex II": {
-              return "resources/status/Classic-quake-Apex_II.png";
+              return "assets/status/Classic-quake-Apex_II.png";
             }
 
             case "Apex": {
-              return "resources/status/Classic-quake-Apex.png";
+              return "assets/status/Classic-quake-Apex.png";
             }
 
             case "HustWood": {
-              return "resources/status/Classic-quake-HustWood.png";
+              return "assets/status/Classic-quake-HustWood.png";
             }
 
             case "DigSite": {
-              return "resources/status/Classic-quake-DigSite.png";
+              return "assets/status/Classic-quake-DigSite.png";
             }
           }
-          return "resources/status/Classic-quake-Apex_III.png";
+          return "assets/status/Classic-quake-Apex_III.png";
         }
 
         case "WALLS": {
-          return "resources/status/Classic-walls-Aztec.png";
+          return "assets/status/Classic-walls-Aztec.png";
         }
 
         case "GINGERBREAD": {
           status.session.mode = "Turbo Kart Racers";
-          return "resources/status/Classic-tkr.png";
+          return "assets/status/Classic-tkr.png";
         }
 
         case "PAINTBALL": {
           switch (status.session.map) {
             case "LaMente": {
-              return "resources/status/Classic-paintball-LaMente.png";
+              return "assets/status/Classic-paintball-LaMente.png";
             }
             case "Boletus": {
-              return "resources/status/Classic-paintball-Boletus.png";
+              return "assets/status/Classic-paintball-Boletus.png";
             }
             case "Market": {
-              return "resources/status/Classic-paintball-Market.png";
+              return "assets/status/Classic-paintball-Market.png";
             }
             case "Swamps": {
-              return "resources/status/Classic-paintball-Swamps.png";
+              return "assets/status/Classic-paintball-Swamps.png";
             }
             case "Egypt": {
-              return "resources/status/Classic-paintball-Egypt.png";
+              return "assets/status/Classic-paintball-Egypt.png";
             }
             case "Victorian": {
-              return "resources/status/Classic-paintball-Victorian.png";
+              return "assets/status/Classic-paintball-Victorian.png";
             }
             case "Octagon": {
-              return "resources/status/Classic-paintball-Octagon.png";
+              return "assets/status/Classic-paintball-Octagon.png";
             }
             case "Oh Canada!": {
-              return "resources/status/Classic-paintball-Oh_Canada!.png";
+              return "assets/status/Classic-paintball-Oh_Canada!.png";
             }
             case "LaLaLand": {
-              return "resources/status/Classic-paintball-LaLaLand.png";
+              return "assets/status/Classic-paintball-LaLaLand.png";
             }
             case "Siege": {
-              return "resources/status/Classic-paintball-Siege.png";
+              return "assets/status/Classic-paintball-Siege.png";
             }
             case "Gladiator": {
-              return "resources/status/Classic-paintball-Gladiator.png";
+              return "assets/status/Classic-paintball-Gladiator.png";
             }
             case "Babyland": {
-              return "resources/status/Classic-paintball-Babyland.png";
+              return "assets/status/Classic-paintball-Babyland.png";
             }
             case "Trick Or Treat": {
-              return "resources/status/Classic-paintball-Trick_Or_Treat.png";
+              return "assets/status/Classic-paintball-Trick_Or_Treat.png";
             }
           }
-          return "resources/status/Classic-paintball-LaMente.png";
+          return "assets/status/Classic-paintball-LaMente.png";
         }
       }
 
-      return "resources/status/Classic-lobby.png";
+      return "assets/status/Classic-lobby.png";
     }
 
     case "SKYWARS": {
-      return "resources/status/Skywars-lobby.png";
+      return "assets/status/Skywars-lobby.png";
     }
 
     case "MURDER_MYSTERY": {
-      return "resources/status/Murder-mystery-lobby.png";
+      return "assets/status/Murder-mystery-lobby.png";
     }
 
     case "HOUSING": {
-      return "resources/status/Housing-lobby.png";
+      return "assets/status/Housing-lobby.png";
     }
 
     case "PIT": {
-      return "resources/status/Pit.png";
+      return "assets/status/Pit.png";
     }
 
     case "BUILD_BATTLE": {
-      return "resources/status/Build-battle-lobby.png";
+      return "assets/status/Build-battle-lobby.png";
     }
 
     case "DUELS": {
-      return "resources/status/Duels-lobby-new.png";
+      return "assets/status/Duels-lobby-new.png";
     }
 
     case "SPEED_UHC":
     case "UHC": {
-      return "resources/status/UHC-lobby.png";
+      return "assets/status/UHC-lobby.png";
     }
 
     case "TNTGAMES": {
       status.session.gameType = "Tnt Games";
-      return "resources/status/Tnt-lobby.png";
+      return "assets/status/Tnt-lobby.png";
     }
 
     case "WALLS3": {
       status.session.gameType = "Mega walls";
-      return "resources/status/Mega-walls-lobby.png";
+      return "assets/status/Mega-walls-lobby.png";
     }
 
     case "SUPER_SMASH": {
       status.session.gameType = "Smash heros";
-      return "resources/status/Smash-heros-lobby.png";
+      return "assets/status/Smash-heros-lobby.png";
     }
 
     case "BATTLEGROUND": {
       status.session.gameType = "Warlords";
-      return "resources/status/Warloads-lobby.png";
+      return "assets/status/Warloads-lobby.png";
     }
 
     case "MAIN": {
-      return "resources/status/Normal-lobby.png";
+      return "assets/status/Normal-lobby.png";
     }
 
     case "TOURNAMENT": {
-      return "resources/status/Tourney-lobby.png";
+      return "assets/status/Tourney-lobby.png";
     }
 
     case "SURVIVAL_GAMES": {
       status.session.gameType = "Blitz";
-      return "resources/status/Blitz-lobby.png";
+      return "assets/status/Blitz-lobby.png";
     }
 
     case "SKYBLOCK": {
-      return "resources/status/Skyblock-hub.png";
+      return "assets/status/Skyblock-hub.png";
     }
 
     case "PROTOTYPE": {
-      return "resources/status/Prototype-lobby.png";
+      return "assets/status/Prototype-lobby.png";
     }
   }
 
-  return "resources/status/Main-lobby.png";
+  return "assets/status/Main-lobby.png";
 }
 
 /**

@@ -156,7 +156,7 @@ module.exports = class HypixelApi {
   }
 
   static async achievements() {
-    const Api = new HypixelApi("resources/achievements");
+    const Api = new HypixelApi("assets/achievements");
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);
@@ -168,7 +168,7 @@ module.exports = class HypixelApi {
   }
 
   static async challenges() {
-    const Api = new HypixelApi("resources/challenges");
+    const Api = new HypixelApi("assets/challenges");
     const data = await Api.makeRequest();
     try {
       return JSON.parse(data);

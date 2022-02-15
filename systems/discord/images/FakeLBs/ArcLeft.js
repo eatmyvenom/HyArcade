@@ -12,7 +12,7 @@ function formatNum(n) {
 
 module.exports = async function ArcLeft(path, category, time, topTen) {
   const img = new ImageGenerator(1900, 1035, "'myFont'", false);
-  await img.addBackground("resources/leaderboard-left.png", 0, 0, 1900, 1035, "#00000000");
+  await img.addBackground("assets/leaderboard-left.png", 0, 0, 1900, 1035, "#00000000");
 
   let y = 110;
   const dy = 52;

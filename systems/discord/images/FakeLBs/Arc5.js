@@ -12,7 +12,7 @@ function formatNum(n) {
 
 module.exports = async function Arc5(path, category, time, topTen) {
   const img = new ImageGenerator(1900, 1035, "'myFont'", false);
-  await img.addBackground("resources/leaderboard5.png", 0, 0, 1900, 1035, "#00000000");
+  await img.addBackground("assets/leaderboard5.png", 0, 0, 1900, 1035, "#00000000");
 
   let y = 80;
   const dy = 74;

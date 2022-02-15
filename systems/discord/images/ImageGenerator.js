@@ -5,11 +5,11 @@ const StackBlur = require("stackblur-canvas");
 
 const imgCache = [];
 
-Canvas.registerFont("resources/minecraft.ttf", {
+Canvas.registerFont("assets/minecraft.ttf", {
   family: "myFont",
 });
 
-Canvas.registerFont("resources/bold.otf", {
+Canvas.registerFont("assets/bold.otf", {
   family: "boldmc",
 });
 
