@@ -1,6 +1,6 @@
 interface IDiscord {
     token: string;
-    backupToken: string;
+    backupToken?: string;
     miniToken: string;
     mwToken: string;
     testToken: string;

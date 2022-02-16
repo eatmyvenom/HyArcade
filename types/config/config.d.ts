@@ -1,22 +1,22 @@
 interface IConfig {
     key: string;
     mode: string;
-    alwaysForce: boolean;
+    alwaysForce?: boolean;
     logRateLimit: boolean;
-    watchdogTimeout: number;
+    watchdogTimeout?: number;
     cluster: string;
-    sortDirection: string;
-    printAllWins: boolean;
-    arcadeWinLimit: number;
-    cringeGameLowerBound: number;
-    cringeGameUpperBound: number;
+    sortDirection?: string;
+    printAllWins?: boolean;
+    arcadeWinLimit?: number;
+    cringeGameLowerBound?: number;
+    cringeGameUpperBound?: number;
     showDaytime: boolean;
     commandCharacter: string;
-    clusterTarget: string;
+    clusterTarget?: string;
     webhook: IWebhook;
-    loggingHooks: ILoggingHooks;
-    mojang: IMojang;
-    std: IStd;
+    loggingHooks?: ILoggingHooks;
+    mojang?: IMojang;
+    std?: IStd;
 }
 interface IWebhook {
     id: string;
@@ -25,8 +25,8 @@ interface IWebhook {
     pfp: string;
 }
 interface ILoggingHooks {
-    ignHook: IIgnHook;
-    copyHook: ICopyHook;
+    ignHook?: IIgnHook;
+    copyHook?: ICopyHook;
 }
 interface IIgnHook {
     id: string;

@@ -2,7 +2,7 @@ interface IOtherHooks {
     TO: ITO;
     HS: IHS;
     MW: IMW;
-    TEST: ITEST;
+    TEST?: ITEST;
     DW: IDW;
 }
 interface ITO {
