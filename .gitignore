@@ -19,6 +19,7 @@ timeupdate
 !.eslintrc.json
 !babel.config.json
 !config.def.json
+!.commitlintrc.json
 
 # Npm
 node_modules
