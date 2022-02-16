@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable unicorn/prefer-object-from-entries */
-const Runtime = require("hyarcade-config/Runtime");
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
@@ -160,10 +159,6 @@ async function fastUpdate(uuids, connector) {
       await Sleep(minKey.reset * 1005);
     }
   }
-
-  const runtime = Runtime.fromJSON();
-  runtime.needRoleupdate = true;
-  await runtime.save();
 }
 
 /**

@@ -1,4 +1,3 @@
-import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
 import botCommands from "./botCommands.mjs";
@@ -91,8 +90,6 @@ async function isBlacklisted(id) {
  * @param {CommandResponse} cmdResponse
  */
 async function sendText(msg, cmdResponse) {
-  const runtime = Runtime.fromJSON();
-  if (runtime.bot != "backup") {
     Logger.info("Sending command response!");
     try {
       const msgObj = cmdResponse.toDiscord({
@@ -105,7 +102,6 @@ async function sendText(msg, cmdResponse) {
         embeds: [ERROR_UNKNOWN],
       });
     }
-  }
 }
 
 /**

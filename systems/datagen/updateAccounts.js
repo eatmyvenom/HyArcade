@@ -1,5 +1,4 @@
 const fs = require("fs-extra");
-const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
 const Account = require("hyarcade-requests/types/Account");
@@ -207,10 +206,6 @@ async function fastUpdate(accounts, argForce) {
     ]);
   }
 
-  const runtime = Runtime.fromJSON();
-  runtime.needRoleupdate = true;
-  await runtime.save();
-
   updatedAccs = uniqBy(updatedAccs, a => a.uuid);
 
   return updatedAccs;
@@ -274,10 +269,6 @@ module.exports = async function updateAccounts(accounts, argForce = false, fast 
     temparray = accounts.slice(i, i + chunk);
     await updateAccountsInArr(temparray, oldAccs, argForce);
   }
-
-  const runtime = Runtime.fromJSON();
-  runtime.needRoleupdate = true;
-  await runtime.save();
 
   let updatedAccs = accounts;
 

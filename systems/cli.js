@@ -1,9 +1,7 @@
 const process = require("process");
-const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
-const webRequest = require("hyarcade-requests/webRequest");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const dataGeneration = require("./datagen/dataGeneration");
 const { stringNormal, stringDaily, addAccounts } = require("hyarcade-utils/listUtils");
@@ -160,36 +158,6 @@ async function addGIDsMembers(args) {
   await dataGeneration.addGuildIDs(uuid);
 }
 
-/**
- * @returns {object}
- */
-async function getServerStatus() {
-  const hyStatusRaw = await webRequest("https://status.hypixel.net/api/v2/status.json");
-  const hyStatus = JSON.parse(hyStatusRaw.data);
-  const mojangStatusRaw = await webRequest("https://status.mojang.com/check");
-  const mojangStatus = JSON.parse(mojangStatusRaw.data);
-  const runtime = Runtime.fromJSON();
-  const mwBot = runtime.mwHeartBeat;
-  const arcadeBot = runtime.undefinedHeartBeat;
-  const marcadeBot = runtime.miniHeartBeat;
-  const interactions = runtime.slashHeartBeat;
-  const database = runtime.dbERROR;
-
-  const obj = {
-    Hypixel: hyStatus.status.indicator,
-    MSession: mojangStatus[1]["session.minecraft.net"],
-    MAcc: mojangStatus[2]["account.mojang.com"],
-    MAuth: mojangStatus[3]["authserver.mojang.com"],
-    mw: Date.now() - mwBot < 900000,
-    arc: Date.now() - arcadeBot < 900000,
-    marc: Date.now() - marcadeBot < 900000,
-    slash: Date.now() - interactions < 900000,
-    database: !database,
-  };
-  await Json.write("serverStatus.json", obj);
-  return obj;
-}
-
 module.exports = {
   newAcc,
   newGuild,
@@ -203,5 +171,4 @@ module.exports = {
   addGIDsMembers,
   getUUID: getUUIDCli,
   linkDiscord,
-  getServerStatus,
 };

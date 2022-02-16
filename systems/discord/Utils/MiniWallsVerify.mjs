@@ -1,11 +1,10 @@
-import Runtime from "hyarcade-config/Runtime.js";
 import Logger from "hyarcade-logger";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
 import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";
 import BotRuntime from "../BotRuntime.js";
-import { ERROR_API_DOWN, ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Embeds/StaticEmbeds.js";
+import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Embeds/StaticEmbeds.js";
 import LogUtils from "./LogUtils.js";
 const require = createRequire(import.meta.url);
 const { mojangRequest } = require("hyarcade-requests");
@@ -33,14 +32,6 @@ export default async function MiniWallsVerify(msg) {
     Logger.warn("Someone tried to verify as an account that doesn't exist!");
     await msg.channel.send({
       embeds: [ERROR_IGN_UNDEFINED],
-    });
-    return;
-  }
-
-  if (Runtime.fromJSON().apiDown) {
-    Logger.warn("Someone tried to verify while API is down!");
-    await msg.channel.send({
-      embeds: [ERROR_API_DOWN],
     });
     return;
   }

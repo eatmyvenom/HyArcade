@@ -1,7 +1,6 @@
 const { Guild, TextChannel, InvalidRequestWarningData, Webhook } = require("discord.js");
 const fs = require("fs-extra");
 const cfg = require("hyarcade-config").fromJSON();
-const Runtime = require("hyarcade-config/Runtime");
 const logger = require("hyarcade-logger");
 const BotRuntime = require("./BotRuntime");
 const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
@@ -104,16 +103,11 @@ module.exports = class BotEvents {
   }
 
   static async heartBeat() {
-    const runtime = Runtime.fromJSON();
-    runtime[`${BotRuntime.botMode}HeartBeat`] = Date.now();
-    await runtime.save();
     logger.info("Heart beat - I'm alive!");
 
-    if (runtime.needRoleupdate == true && BotRuntime.botMode == undefined) {
+    if (BotRuntime.botMode == undefined) {
       await roleHandler(BotRuntime.client);
       logger.out("Roles updated!");
-      runtime.needRoleupdate = false;
-      await runtime.save();
     }
 
     if (BotRuntime.botMode == "mw") {

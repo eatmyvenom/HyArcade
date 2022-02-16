@@ -8,7 +8,6 @@ const args = process.argv;
 const task = require("./systems/task");
 
 const logger = require("hyarcade-logger");
-const Runtime = require("hyarcade-config/Runtime").fromJSON();
 
 /**
  * Send a list to a discord webhook as formatted text
@@ -89,11 +88,6 @@ async function rmPID() {
 async function main() {
   logger.debug("----- NEW PROCESS STARTED -----");
   let killable = true;
-
-  if (Runtime.apiDown && !(args[2] == "bot" || args[2] == "checkStatus" || args[2] == "serveDB")) {
-    logger.err("Refusing to run while api is down");
-    process.exit(1);
-  }
 
   if (!(args[2] == "bot" || args[2] == "serveDB")) {
     logger.verbose("Writing pid file");
