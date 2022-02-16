@@ -90,18 +90,18 @@ async function isBlacklisted(id) {
  * @param {CommandResponse} cmdResponse
  */
 async function sendText(msg, cmdResponse) {
-    Logger.info("Sending command response!");
-    try {
-      const msgObj = cmdResponse.toDiscord({
-        messageReference: msg.id,
-      });
-      await msg.channel.send(msgObj);
-    } catch (error) {
-      logError(msg, error);
-      await msg.channel.send({
-        embeds: [ERROR_UNKNOWN],
-      });
-    }
+  Logger.info("Sending command response!");
+  try {
+    const msgObj = cmdResponse.toDiscord({
+      messageReference: msg.id,
+    });
+    await msg.channel.send(msgObj);
+  } catch (error) {
+    logError(msg, error);
+    await msg.channel.send({
+      embeds: [ERROR_UNKNOWN],
+    });
+  }
 }
 
 /**
