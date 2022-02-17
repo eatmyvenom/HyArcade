@@ -63,12 +63,10 @@ module.exports = async function start(port) {
   await connector.connect();
 
   process.on("beforeExit", code => {
-    if (!process.argv.includes("--test")) {
-      logger.log(`Exiting process with code : ${code}`);
-    }
+    logger.log(`Exiting process with code : ${code}`);
   });
 
-  const server = require("http").createServer(callback).listen(port);
+  const server = require("http").createServer(callback).listen({ port, hostname: "localhost" });
 
   server.on("close", (...args) => logger.log(...args));
   server.on("error", e => {
