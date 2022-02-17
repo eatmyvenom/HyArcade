@@ -61,7 +61,11 @@ async function AccountResolver(connector, url) {
     }
   }
 
-  if (!cacheOnly && acc.updateTime < Date.now() - 600000) {
+  if (acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {
+    acc = undefined;
+  }
+
+  if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - 600000) {
     Logger.log(`Updating data for ${acc.name}`);
     const newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);
@@ -79,10 +83,6 @@ async function AccountResolver(connector, url) {
       .updateAccount(acc)
       .then(() => {})
       .catch(error => Logger.err(error.stack));
-  }
-
-  if (acc?.name == "null" || acc?.name == "INVALID-NAME" || acc?.nameHist?.includes("INVALID-NAME")) {
-    acc = undefined;
   }
 
   return acc;
