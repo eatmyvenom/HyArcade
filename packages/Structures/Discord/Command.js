@@ -2,7 +2,7 @@ const { Message } = require("discord.js");
 const { Interaction } = require("discord.js");
 const fs = require("fs-extra");
 const logger = require("hyarcade-logger");
-const Logger = require("hyarcade-logger");
+const Database = require("hyarcade-requests/Database");
 const CommandResponse = require("./CommandResponse");
 
 let trustedUsers;
@@ -28,7 +28,7 @@ module.exports = class Command {
   }
 
   async callback(args, rawMsg, interaction) {
-    Logger.debug(`Command Run\nName : ${this.name}\nArgs : ${args}\nMessage : ${rawMsg.content}\nInteraction? : ${interaction != undefined}`);
+    logger.debug(`Command Run\nName : ${this.name}\nArgs : ${args}\nMessage : ${rawMsg.content}\nInteraction? : ${interaction != undefined}`);
     return new CommandResponse("Bot broke :(");
   }
 
@@ -60,6 +60,11 @@ module.exports = class Command {
 
     if (Date.now() - this.executors[author] < rate) {
       logger.warn(`${author} has been rate limited for ${this.name}`);
+
+      Database.internal({ useCommand: { name: this.name, type: "rateLimits" } })
+        .then(() => {})
+        .catch(error => logger.err(error));
+
       if (interaction != undefined) {
         if (interaction.isCommand()) {
           return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined, false, true);
@@ -78,11 +83,32 @@ module.exports = class Command {
       this.allowed = this.allowed.filter(t => t != "%trusted%");
     }
     if (!this.allowed.includes(author) && !this.allowed.includes("*")) {
+      Database.internal({ useCommand: { name: this.name, type: "missingPerms" } })
+        .then(() => {})
+        .catch(error => logger.err(error));
+
       logger.info(`${author} tried to run the ${this.name} command without permissions... only ${this.allowed.toString()} are allowed`);
       return {
         res: "",
       };
     }
+
+    if (interaction) {
+      if (interaction.isCommand()) {
+        Database.internal({ useCommand: { name: this.name, type: "slashUses" } })
+          .then(() => {})
+          .catch(error => logger.err(error));
+      } else {
+        Database.internal({ useCommand: { name: this.name, type: "componentUses" } })
+          .then(() => {})
+          .catch(error => logger.err(error));
+      }
+    } else {
+      Database.internal({ useCommand: { name: this.name, type: "textUses" } })
+        .then(() => {})
+        .catch(error => logger.err(error));
+    }
+
     return await this.callback(args, rawMsg, interaction);
   }
 };

@@ -1,9 +1,10 @@
 class CommandMetadata {
   name = "";
-  uses = 0;
+  textUses = 0;
   slashUses = 0;
   componentUses = 0;
   rateLimits = 0;
+  missingPerms = 0;
 
   constructor(name) {
     this.name = name;
