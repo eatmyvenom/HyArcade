@@ -236,17 +236,22 @@ class HoleInTheWallStats extends ArcadeGameStats {
   rounds = 0;
   qualifiers = 0;
   finals = 0;
+  combinedScore = 0;
+  bestGame = 0;
 
   /**
    *
-   * @param {import("./hypixel").IArcade} arcade
+   * @param {import("./hypixel").IPlayer} player
    */
-  constructor(arcade) {
+  constructor(player) {
     super();
-    this.finals = arcade?.hitw_record_f ?? 0;
-    this.qualifiers = arcade?.hitw_record_q ?? 0;
-    this.wins = arcade?.wins_hole_in_the_wall ?? 0;
-    this.rounds = arcade?.rounds_hole_in_the_wall ?? 0;
+    this.finals = player?.stats?.Arcade?.hitw_record_f ?? 0;
+    this.qualifiers = player?.stats?.Arcade?.hitw_record_q ?? 0;
+    this.combinedScore = this.finals + this.qualifiers;
+    this.bestGame = player?.achievements?.arcade_hitw_practice_makes_perfect ?? 0;
+
+    this.wins = player?.stats?.Arcade?.wins_hole_in_the_wall ?? 0;
+    this.rounds = player?.stats?.Arcade?.rounds_hole_in_the_wall ?? 0;
   }
 }
 
@@ -558,8 +563,15 @@ class ArcadeQuests {
     this.arcadeGamer = player?.quests?.arcade_gamer?.completions?.length ?? 0;
     this.arcadeSpecialist = player?.quests?.arcade_specialist?.completions?.length ?? 0;
     this.arcadeWinner = player?.quests?.arcade_winner?.completions?.length ?? 0;
+
+    this.total = this.arcadeGamer + this.arcadeSpecialist + this.arcadeWinner;
+    this.daily = this.arcadeGamer + this.arcadeWinner;
+    this.weekly = this.arcadeSpecialist;
   }
 
+  total = 0;
+  daily = 0;
+  weekly = 0;
   arcadeGamer = 0;
   arcadeWinner = 0;
   arcadeSpecialist = 0;
@@ -627,6 +639,30 @@ class ZombiesStats {
   }
 }
 
+class ExtraStats {
+  tournamentTributes = 0;
+  tournamentTokens = 0;
+  classicTokens = 0;
+  migrated = false;
+  challengeAchievementsCompleted = 0;
+  totalCoins = 0;
+  rewardStreak = 0;
+
+  /**
+   *
+   * @param {import("./hypixel").IPlayer} player
+   */
+  constructor(player) {
+    this.tournamentTributes = player?.tourney?.total_tributes ?? 0;
+    this.tournamentTokens = player?.tournamentTokens ?? 0;
+    this.classicTokens = player?.stats?.Legacy?.total_tokens ?? 0;
+    this.migrated = player?.tourney?.quake_solo2_1 != undefined;
+    this.challengeAchievementsCompleted = (player?.achievementsOneTime ?? []).length;
+    this.totalCoins = player?.achievements?.general_coins ?? 0;
+    this.rewardStreak = player?.rewardStreak ?? 0;
+  }
+}
+
 class Account {
   name = "";
   name_lower = "";
@@ -637,10 +673,7 @@ class Account {
 
   rank = "";
 
-  version = "";
-
   firstLogin = 0;
-
   isLoggedIn = false;
   lastLogin = 0;
   lastLogout = 0;
@@ -683,6 +716,10 @@ class Account {
   partyGames = new PartyGamesStats();
   pixelPainters = new PixelPaintersStats();
   throwOut = new ThrowOutStats();
+  seasonalWins = new SeasonalStats();
+  miniWalls = new MiniWallsStats();
+  zombies = {};
+  extra = new ExtraStats();
 
   coinTransfers = 0;
   simTotal = 0;
@@ -691,45 +728,8 @@ class Account {
   combinedArcadeWins = 0;
   anyWins = 0;
   coinsEarned = 0;
-  monthlyCoins = 0;
-  weeklyCoins = 0;
   importance = 0;
-
-  /**
-   * Seasonal "simulator" games wins and stats
-   *
-   * @type {SeasonalStats}
-   * @memberof Account
-   */
-  seasonalWins = new SeasonalStats();
-
-  /**
-   *
-   * @type {MiniWallsStats}
-   * @memberof Account
-   */
-  miniWalls = new MiniWallsStats();
-
-  /**
-   *
-   * @type {ArcadeQuests}
-   * @memberof Account
-   */
   quests = {};
-
-  /**
-   *
-   * @type {ZombiesStats}
-   * @memberof Account
-   */
-  zombies = {};
-
-  hasOFCape = false;
-  hasLabyCape = false;
-
-  cloak = "";
-  clickEffect = "";
-  hat = "";
 
   plusColor = "";
   mvpColor = "";
@@ -999,6 +999,7 @@ class Account {
     this.quests = new ArcadeQuests(player);
     this.seasonalWins = new SeasonalStats(json?.player);
     this.simTotal = this.seasonalWins.total;
+    this.extra = new ExtraStats(json?.player);
 
     PopulateAccountData(json, this);
   }

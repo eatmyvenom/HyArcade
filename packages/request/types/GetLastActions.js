@@ -50,6 +50,7 @@ module.exports = function GetLastActions(acc) {
     acc?.eugene?.dailyTwoKExp ?? 0,
     acc?.lastClaimedReward ?? 0,
     acc?.petJourneyTimestamp ?? 0,
+    acc?.stats?.Legacy?.tokens_last_received_stamp ?? 0,
   );
 
   const swHeads = acc?.stats?.SkyWars?.head_collection ?? {};

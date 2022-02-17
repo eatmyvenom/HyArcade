@@ -46,6 +46,23 @@ function getWeeklyStat(a, b) {
 }
 
 /**
+ * @param {object} json
+ * @returns {number}
+ */
+function getQuestsCompleted(json) {
+  const quests = json?.player?.quests ?? {};
+  let completions = 0;
+
+  for (const quest of quests) {
+    if (quest.completions) {
+      completions += quest.completions.length;
+    }
+  }
+
+  return completions;
+}
+
+/**
  *
  * @param {object} json
  * @returns {string}
@@ -99,7 +116,6 @@ module.exports = function PopulateAccountData(json, account) {
   account.lastLogout = json?.player?.lastLogout ?? 0;
   account.firstLogin = json?.player?.firstLogin ?? Date.now();
 
-  account.version = json.player?.mcVersionRp ?? "1.8";
   account.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 
   account.xp = json.player?.networkExp ?? 0;
@@ -113,22 +129,18 @@ module.exports = function PopulateAccountData(json, account) {
   if (account.plusColor == undefined) {
     account.plusColor = account.rank == "VIP_PLUS" ? "GOLD" : "RED";
   }
-  account.cloak = json?.player?.currentCloak ?? "";
-  account.hat = json?.player?.currentHat ?? "";
-  account.clickEffect = json?.player?.currentClickEffect ?? "";
 
   account.arcadeCoins = json.player?.stats?.Arcade?.coins ?? 0;
   account.arcadeWins = json.player?.achievements?.arcade_arcade_winner ?? 0;
   account.anyWins = json.player?.achievements?.general_wins ?? 0;
   account.arcadeAchievementPoints = account?.arcadeAchievments?.totalEarned ?? 0;
 
-  account.questsCompleted = json.player?.achievements?.general_quest_master ?? 0;
+  account.questsCompleted = getQuestsCompleted(json);
   account.timePlaying = json.player?.timePlaying ?? 0;
 
   account.lastLogin = json.player?.lastLogin ?? 0;
   account.apiHidden = account.lastLogin == 0;
 
-  account.migrated = json?.player?.tourney?.quake_solo2_1 != undefined;
   account.coinTransfers = json?.player?.stats?.Arcade?.stamp_level ?? 0;
 
   account.coinsEarned = json.player?.achievements?.arcade_arcade_banker ?? 0;
