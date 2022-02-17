@@ -6,7 +6,7 @@ let msgs;
 
 export default new Command("ez", ["*"], async () => {
   if (msgs == undefined) {
-    const file = await fs.readFile("data/ezmsgs");
+    const file = await fs.readFile("data/ez");
     msgs = file.toString().split("\n");
   }
 
