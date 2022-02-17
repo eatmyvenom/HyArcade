@@ -5,6 +5,7 @@ const Config = require("hyarcade-config");
 const Logger = require("hyarcade-logger");
 const { default: fetch } = require("node-fetch");
 const webRequest = require("./webRequest");
+const PostRequest = require("./PostRequest");
 
 const cfg = Config.fromJSON();
 
@@ -507,5 +508,27 @@ module.exports = class Database {
     }
 
     return discAccs;
+  }
+
+  static async internal(json) {
+    const url = new URL("internal", cfg.database.url);
+
+    let response;
+    try {
+      response = await PostRequest(
+        url,
+        {
+          "Content-Type": "application/json",
+          Authorization: cfg.database.pass,
+        },
+        json,
+      );
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      return {};
+    }
+
+    return response;
   }
 };

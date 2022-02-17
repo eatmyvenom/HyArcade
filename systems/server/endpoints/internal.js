@@ -46,6 +46,7 @@ module.exports = async (req, res, connector) => {
 
         if (json.useCommand) {
           await connector.useCommand(json.useCommand.name, json.useCommand.type);
+          res.write(JSON.stringify({ success: true }));
         }
 
         res.end();
