@@ -1,135 +1,135 @@
 const fs = require("fs");
-const { Snowflake, Presence } = require("discord.js");
+const process = require("node:process");
 
-class BotUser {
-  username = "";
-  icon = "";
-  /**
-   *
-   * @type {Presence[]}
-   * @memberof BotUser
-   */
-  presences = [];
+class CommandImage {
+  file = "assets/arc.png";
+  overlay = "#00000000";
+}
+
+class CommandImages {
+  profile = new CommandImage();
+  topGames = new CommandImage();
+  leaderboard = new CommandImage();
+  gameStats = new CommandImage();
+}
+
+class Clusters {
+  main = {
+    name: "main",
+    key: process.env.HYARCADE_HYPIXEL_KEY,
+    tasks: ["accs"],
+    flags: [],
+  };
+}
+
+class Database {
+  url = "https://api.hyarcade.xyz";
+  pass = process.env.HYARCADE_KEY;
+}
+
+class MiniWallsConfig {
+  lbMsg = "";
+  guilds = [];
+  channels = [];
+}
+
+class PresenceItem {
+  activities = {
+    name: "Your stats",
+    type: "WATCHING",
+  };
+
+  status = "online";
+}
+
+class SetupItem {
+  username = "Arcade Bot";
+  icon = "https://i.vnmm.dev/arcadepfp2.png";
+  presences = [new PresenceItem()];
+}
+
+class DiscordSetupConfig {
+  bot = new SetupItem();
+  mini = new SetupItem();
+  test = new SetupItem();
+  mw = new SetupItem();
 }
 
 class DiscordConfig {
-  token = "";
-  backupToken = "";
-  miniToken = "";
-  mwToken = "";
-  testToken = "";
+  token = process.env.HYARCADE_DISCORD_TOKEN;
+  mwToken = process.env.HYARCADE_DISCORD_TOKEN;
+  testToken = process.env.HYARCADE_DISCORD_TOKEN;
 
-  /**
-   *
-   * @type {string[]}
-   * @memberof DiscordConfig
-   */
-  trustedUsers = [];
+  trustedUsers = ["156952208045375488"];
+  miniWalls = new MiniWallsConfig();
+  logChannel = process.env.HYARCADE_LOG_CHANNEL;
+  errChannel = process.env.HYARCADE_LOG_CHANNEL;
+  cmdChannel = process.env.HYARCADE_LOG_CHANNEL;
+  verifyChannel = process.env.HYARCADE_LOG_CHANNEL;
+  statusHook = process.env.HYARCADE_WEBHOOKV2;
 
-  /**
-   *
-   * @type {Snowflake}
-   * @memberof DiscordConfig
-   */
-  logChannel = "";
+  leaderboards = {};
+  lbArchive = {};
 
-  /**
-   *
-   * @type {Snowflake}
-   * @memberof DiscordConfig
-   */
-  errChannel = "";
-
-  /**
-   *
-   * @type {Presence[]}
-   * @memberof DiscordConfig
-   */
-  presences = [];
-
-  /**
-   *
-   * @type {object.<string, BotUser>}
-   * @memberof DiscordConfig
-   */
-  setup = {};
+  presences = [new PresenceItem()];
+  setup = new DiscordSetupConfig();
 }
 
-class Webhook {
-  id = "";
-  token = "";
-  username = "";
-  pfp = "";
+class DiscordBotConfig {
+  key = process.env.HYARCADE_DISCORD_TOKEN;
+  allEnabled = true;
+  enabled = {
+    guilds: [""],
+    channels: [""],
+  };
 }
 
-class EventManager {
-  /**
-   *
-   * @type {Webhook}
-   * @memberof EventManager
-   */
-  webhook = {};
-  winMod = 0;
-  name = "";
+class DiscordBotsConfig {
+  arcadeBot = new DiscordBotConfig();
+  miniWallsBot = new DiscordBotConfig();
+  testBot = new DiscordBotConfig();
+}
+
+class HypixelConfig {
+  mainKey = process.env.HYARCADE_HYPIXEL_KEY;
+  botKey = process.env.HYARCADE_HYPIXEL_KEY;
+  batchKeys = [process.env.HYARCADE_HYPIXEL_KEY];
+  loginLimit = 86400000;
+  importanceLimit = 5000;
+  minImportance = 500;
+  leaderboardLimit = 10;
+  segmentSize = 20;
+  alwaysForce = false;
+}
+
+class OtherHooksConfig {
+  TO = JSON.stringify(process.env.HYARCADE_WEBHOOK);
+  HS = JSON.stringify(process.env.HYARCADE_WEBHOOK);
+  MW = JSON.stringify(process.env.HYARCADE_WEBHOOK);
+  TEST = JSON.stringify(process.env.HYARCADE_WEBHOOK);
+  DW = JSON.stringify(process.env.HYARCADE_WEBHOOK);
 }
 
 class Config {
-  key = "";
-  altkeys = [];
-  dbURL = "";
-  dbPass = "";
-  mode = "";
+  key = process.env.HYARCADE_HYPIXEL_KEY;
+  mode = "prod";
   alwaysForce = false;
   logRateLimit = true;
-  watchdogTimeout = 30000;
-  cluster = "";
-  sortDirection = "";
-  printAllWins = false;
-  arcadeWinLimit = 0;
-  cringeGameLowerBound = 0;
-  cringeGameUpperBound = 0;
-  showDaytime = false;
-  commandCharacter = "";
-  clusterTarget = "";
-  clusters = {};
+  cluster = "main";
+  showDaytime = true;
+  commandCharacter = "a!";
+  webhook = JSON.stringify(process.env.HYARCADE_WEBHOOK);
 
-  /**
-   *
-   * @type {object.<string, EventManager>}
-   * @memberof Config
-   */
-  events = {};
-
-  /**
-   *
-   * @type {Webhook}
-   * @memberof Config
-   */
-  webhook = {};
-
-  /**
-   *
-   * @type {DiscordConfig}
-   * @memberof Config
-   */
-  discord = {};
-
-  /**
-   *
-   * @type {object.<string, Webhook>}
-   * @memberof Config
-   */
-  otherHooks = {};
-
-  mojang = class MojangSettings {
-    sleep = 0;
-  };
-
-  std = class STDControl {
-    disable = false;
-    out = "";
-    err = "";
-  };
+  // these are classes representing the structure of
+  // the files in the config directory except for the
+  // config.json file.
+  commandImages = new CommandImages();
+  clusters = new Clusters();
+  database = new Database();
+  discord = new DiscordConfig();
+  discordBot = new DiscordBotsConfig();
+  hypixel = new HypixelConfig();
+  otherHooks = new OtherHooksConfig();
 
   constructor(json) {
     for (const thing in json) {
@@ -144,7 +144,11 @@ class Config {
   static fromJSON() {
     const configs = fs.readdirSync("config");
 
-    const cfg = new Config(JSON.parse(fs.readFileSync("config/config.json")));
+    let cfg = new Config();
+    try {
+      cfg = new Config(JSON.parse(fs.readFileSync("config/config.json")));
+      // eslint-disable-next-line no-empty
+    } catch {}
 
     for (const file of configs) {
       if (file.slice(-5, file.length) == ".json") {

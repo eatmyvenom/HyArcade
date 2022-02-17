@@ -1,7 +1,7 @@
 interface IDiscord {
     token: string;
     backupToken?: string;
-    miniToken: string;
+    miniToken?: string;
     mwToken: string;
     testToken: string;
     trustedUsers: string[];
