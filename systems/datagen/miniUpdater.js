@@ -1,11 +1,11 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable unicorn/prefer-object-from-entries */
 const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
 const { readFile, writeFile } = require("fs-extra");
+const Database = require("hyarcade-requests/Database");
 
 let cfg;
 let masterDoc;
@@ -71,12 +71,11 @@ async function requestData(uuids) {
 /**
  *
  * @param {*} uuidArr
- * @param {MongoConnector} connector
  * @param {*} currentBatch
  * @param {*} segmentedAccs
  * @returns {*}
  */
-async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
+async function updateSegment(uuidArr, currentBatch, segmentedAccs) {
   if (!uuidArr) return;
   Logger.verbose(`Getting batch ${currentBatch} of ${segmentedAccs.length} from webworker!`);
   let workerData;
@@ -103,8 +102,7 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
       acc.setHypixel(accData);
 
       Logger.verbose("Pushing data to mongo");
-      connector
-        .updateAccount(acc)
+      Database.addAccount(acc)
         .then(() => {})
         .catch(error => Logger.err(error.stack));
     }
@@ -117,10 +115,9 @@ async function updateSegment(uuidArr, connector, currentBatch, segmentedAccs) {
  * Update the player data for all players in the list
  *
  * @param {string[]} uuids
- * @param connector
  * @returns {Promise<Account[]>}
  */
-async function fastUpdate(uuids, connector) {
+async function fastUpdate(uuids) {
   const perSegment = cfg.hypixel.segmentSize;
 
   // eslint-disable-next-line unicorn/no-array-reduce
@@ -139,12 +136,12 @@ async function fastUpdate(uuids, connector) {
   for (let i = 0; i < segmentedAccs.length; i += 1) {
     Logger.log(`Batching ${i} - ${i + 5} of ${segmentedAccs.length}`);
     const times = await Promise.all([
-      updateSegment(segmentedAccs[i], connector, i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], connector, i, segmentedAccs),
+      updateSegment(segmentedAccs[i], i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
+      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
     ]);
 
     let minKey = { remaining: 120, reset: 0 };
@@ -163,9 +160,8 @@ async function fastUpdate(uuids, connector) {
 
 /**
  * @param uuidArr
- * @param {MongoConnector} connector
  */
-async function miniUpdater(uuidArr, connector) {
+async function miniUpdater(uuidArr) {
   cfg = require("hyarcade-config").fromJSON();
 
   const masterFile = await readFile("data/fullplayer.json");
@@ -173,7 +169,7 @@ async function miniUpdater(uuidArr, connector) {
 
   if (cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     Logger.info("Using worker updating system");
-    await fastUpdate(uuidArr, connector);
+    await fastUpdate(uuidArr);
   }
 
   Logger.log("Overwriting data for master API document");
