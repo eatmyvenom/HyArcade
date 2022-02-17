@@ -7,6 +7,7 @@ const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 const Guild = require("hyarcade-structures/Guild");
 const { MongoClient, Collection } = require("mongodb");
 const Account = require("./types/Account");
+const CommandMetadata = require("hyarcade-structures/Discord/CommandMetadata");
 
 const Logger = new LoggerInstance("Mongo", "🗃️");
 
@@ -70,6 +71,11 @@ class MongoConnector {
   bannedList;
 
   /**
+   * @type {Collection<CommandMetadata>}
+   */
+  commands;
+
+  /**
    * Creates an instance of MongoConnector.
    *
    * @param {*} url
@@ -98,6 +104,8 @@ class MongoConnector {
     this.bannedList = this.database.collection("banlist");
 
     this.guilds = this.database.collection("guilds");
+
+    this.commands = this.database.collection("commands");
 
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
@@ -623,6 +631,21 @@ class MongoConnector {
 
   async deleteBanned(uuid) {
     await this.bannedList.deleteOne({ uuid });
+  }
+
+  async useCommand(name, type) {
+    const cmdData = await this.commands.findOne({ name });
+
+    if (cmdData) {
+      delete cmdData._id;
+      cmdData[type] += 1;
+      this.commands.replaceOne({ name }, cmdData, { upsert: true });
+    } else {
+      const newCommand = new CommandMetadata(name);
+
+      newCommand[type] += 1;
+      this.commands.replaceOne({ name }, newCommand, { upsert: true });
+    }
   }
 
   async destroy() {

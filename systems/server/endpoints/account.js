@@ -38,7 +38,7 @@ module.exports = async (req, res, connector) => {
       req.on("end", async () => {
         json = JSON.parse(data);
         const newAcc = Account.from(json);
-        Logger.info(`${newAcc.name} posted to database`);
+        Logger.verbose(`${newAcc.name} posted to database`);
 
         connector
           .updateAccount(newAcc)
