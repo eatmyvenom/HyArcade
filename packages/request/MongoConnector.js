@@ -86,6 +86,7 @@ class MongoConnector {
   }
 
   async connect(index = true) {
+    Logger.verbose("Connecting to Mongo database");
     await this.client.connect();
 
     this.database = this.client.db("hyarcade");
@@ -134,7 +135,7 @@ class MongoConnector {
       await this.discordList.createIndex({ discordID: 1 });
     }
 
-    Logger.log("MongoDB connector established...");
+    Logger.log("MongoDB connection established...");
   }
 
   async readCollection(collection) {
@@ -143,7 +144,10 @@ class MongoConnector {
       return;
     }
 
-    return await this[collection].find().toArray();
+    const coll = await this[collection].find().toArray();
+    Logger.debug("Collection converted to array");
+
+    return coll;
   }
 
   async snapshotAccounts(time) {
@@ -211,6 +215,7 @@ class MongoConnector {
       delete guild._id;
     }
 
+    Logger.info("Updating guild data in mongo");
     guild.uuid = guild.uuid.toLowerCase();
 
     const update = await this.guilds.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
@@ -240,6 +245,8 @@ class MongoConnector {
     for (const acc of accs) {
       await this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
     }
+
+    Logger.info("Accounts updated");
   }
 
   /**
@@ -382,6 +389,7 @@ class MongoConnector {
     pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.accounts.aggregate(pipeline).toArray();
+    Logger.debug("Historical leaderboard generation completed");
 
     return historical;
   }
@@ -491,6 +499,7 @@ class MongoConnector {
     pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.accounts.aggregate(pipeline).toArray();
+    Logger.debug("Historical leaderboard generation completed");
 
     return historical;
   }
