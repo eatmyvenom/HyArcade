@@ -65,8 +65,8 @@ async function callback(request, response) {
 module.exports = async function Server(port) {
   logger.name = "API";
   logger.emoji = "⚡";
-  // connector = new MongoConnector("mongodb://127.0.0.1:27017");
-  // await connector.connect();
+  connector = new MongoConnector("mongodb://127.0.0.1:27017");
+  await connector.connect();
 
   process.on("beforeExit", code => {
     logger.log(`Exiting process with code : ${code}`);
