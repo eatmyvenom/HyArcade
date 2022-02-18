@@ -1,5 +1,5 @@
 module.exports = function GetLastActions(acc) {
-  if (acc.displayname == undefined) return { quest: { time: 0 }, pets: 0, dailyReward: 0, otherActions: [] };
+  if (acc.displayname == undefined) return { quest: { time: 0 }, pets: 0, dailyReward: 0, otherActions: 0 };
   const actions = [];
 
   const allQuests = acc?.quests ?? {};
