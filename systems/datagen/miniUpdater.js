@@ -10,6 +10,8 @@ const Database = require("hyarcade-requests/Database");
 let cfg;
 let masterDoc;
 
+let disclist;
+
 /**
  * @param item
  * @returns {boolean}
@@ -101,6 +103,8 @@ async function updateSegment(uuidArr, currentBatch, segmentedAccs) {
       masterDoc = mergeDeep(masterDoc, accData);
       acc.setHypixel(accData);
 
+      acc.discord = disclist[acc.uuid];
+
       Logger.verbose("Pushing data to mongo");
       Database.addAccount(acc)
         .then(() => {})
@@ -135,14 +139,13 @@ async function fastUpdate(uuids) {
 
   for (let i = 0; i < segmentedAccs.length; i += 1) {
     Logger.log(`Batching ${i} - ${i + 5} of ${segmentedAccs.length}`);
-    const times = await Promise.all([
-      updateSegment(segmentedAccs[i], i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
-      updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs),
-    ]);
+
+    const batches = [updateSegment(segmentedAccs[i], i, segmentedAccs)];
+    for (let j = 1; j < cfg.hypixel.concurrentBatches; j++) {
+      batches.push(updateSegment(segmentedAccs[(i += 1)], i, segmentedAccs));
+    }
+
+    const times = await Promise.all(batches);
 
     let minKey = { remaining: 120, reset: 0 };
     for (const key of times) {
@@ -164,11 +167,22 @@ async function fastUpdate(uuids) {
 async function miniUpdater(uuidArr) {
   cfg = require("hyarcade-config").fromJSON();
 
+  if (!cfg.hypixel.autoUpdate) {
+    return;
+  }
+
   const masterFile = await readFile("data/fullplayer.json");
   masterDoc = masterFile.toJSON();
 
   if (cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     Logger.info("Using worker updating system");
+    const list = await Database.readDB("discordList");
+    const disclist = {};
+
+    for (const link of list) {
+      disclist[link.uuid] = link.discordID;
+    }
+
     await fastUpdate(uuidArr);
   }
 

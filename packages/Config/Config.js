@@ -104,7 +104,9 @@ class HypixelConfig {
   minImportance = 500;
   leaderboardLimit = 10;
   segmentSize = 20;
+  concurrentBatches = 6;
   alwaysForce = false;
+  autoUpdate = true;
 }
 
 class OtherHooksConfig {
