@@ -159,6 +159,12 @@ class Guild {
     for (const member of this.members) {
       const obj = {};
       obj.wins = member.arcadeWins;
+      obj.combinedArcadeWins = member.combinedArcadeWins;
+      obj.coins = member.arcadeCoins;
+      obj.achievementPoints = member.achievementPoints;
+      obj.arcadeAchievements = member?.arcadeAchievments?.totalEarned ?? 0;
+      obj.updateTime = member.updateTime;
+      obj.lastAction = member.actionTime;
       obj.name = member.name;
       obj.uuid = member.uuid;
       obj.rank = member.rank;
