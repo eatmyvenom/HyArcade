@@ -3,31 +3,15 @@ const { URL } = require("url");
 const logger = require("hyarcade-logger");
 
 const MongoConnector = require("hyarcade-requests/MongoConnector");
-
-const urlModules = {
-  account: require("./endpoints/account"),
-  acc: require("./endpoints/account"),
-  leaderboard: require("./endpoints/leaderboard"),
-  lb: require("./endpoints/leaderboard"),
-  db: require("./endpoints/Database"),
-  database: require("./endpoints/Database"),
-  mwlb: require("./endpoints/MiniWallsLeaderboard"),
-  miniwalls: require("./endpoints/MiniWallsLeaderboard"),
-  timeacc: require("./endpoints/TimeAcc"),
-  timeaccount: require("./endpoints/TimeAcc"),
-  acctimed: require("./endpoints/TimeAcc"),
-  info: require("./endpoints/info"),
-  ping: require("./endpoints/ping"),
-  disc: require("./endpoints/disc"),
-  guild: require("./endpoints/guild"),
-  hacker: require("./endpoints/hacker"),
-  banned: require("./endpoints/banned"),
-};
+const EndpointStorage = require("./EndpointStorage");
+const RateLimiter = require("./RateLimiter");
 
 /**
  * @type {MongoConnector}
  */
 let connector;
+
+let endpoints = new EndpointStorage();
 
 /**
  * @param {Request} request
@@ -36,9 +20,31 @@ let connector;
 async function callback(request, response) {
   const url = new URL(request.url, `https://${request.headers.host}`);
   const endpoint = url.pathname.slice(1).toLowerCase();
-  const mod = urlModules[endpoint];
+  const address = request.headers["x-real-ip"] ?? request.socket.remoteAddress;
 
-  logger.verbose(`${request.headers["x-real-ip"]} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+  if (!endpoints.initialized) {
+    await endpoints.loadAll();
+  }
+
+  const mod = endpoints.all[endpoint];
+
+  if (address == undefined) {
+    logger.err("Null requester attempted, denying connection");
+  }
+  logger.verbose(`${address} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+
+  const rateLimit = RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization);
+
+  if (rateLimit > 0) {
+    response.statusCode = 403;
+    response.setHeader("x-retry-after", rateLimit);
+    response.setHeader("Content-Type", "application/json");
+    response.write(JSON.stringify({ success: false, reason: "RATELIMIT" }));
+    response.end();
+    logger.warn(`${address} rate limited for ${rateLimit}ms`);
+    return;
+  }
+
   if (mod == undefined) {
     logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
     response.statusCode = 404;
@@ -56,11 +62,11 @@ async function callback(request, response) {
   }
 }
 
-module.exports = async function start(port) {
+module.exports = async function Server(port) {
   logger.name = "API";
   logger.emoji = "⚡";
-  connector = new MongoConnector("mongodb://127.0.0.1:27017");
-  await connector.connect();
+  // connector = new MongoConnector("mongodb://127.0.0.1:27017");
+  // await connector.connect();
 
   process.on("beforeExit", code => {
     logger.log(`Exiting process with code : ${code}`);

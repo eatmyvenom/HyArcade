@@ -24,7 +24,12 @@ class Clusters {
 
 class Database {
   url = "https://api.hyarcade.xyz";
+  defaultLimit = 120;
   pass = process.env.HYARCADE_KEY;
+  /**
+   * @type {object<string, number>}
+   */
+  keys = {};
 }
 
 class MiniWallsConfig {
