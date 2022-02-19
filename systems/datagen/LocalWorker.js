@@ -70,7 +70,7 @@ async function runBatch(batchUUIDs, key, address) {
         if (cfg.logRateLimit) {
           Logger.warn(`Rate limit hit, retrying after ${reply.headers["retry-after"]} seconds`);
         }
-        await Sleep(reply.headers["retry-after"] * 1001);
+        await Sleep(reply.headers["retry-after"] * 1010);
         reply = await requestData(uuid, key, address);
       }
 
