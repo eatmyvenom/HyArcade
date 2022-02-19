@@ -1,4 +1,4 @@
-import Database from "hyarcade-requests/Database";
+import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { inspect } from "node:util";
