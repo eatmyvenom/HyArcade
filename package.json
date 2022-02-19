@@ -11,7 +11,7 @@
         "commit": "cz",
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "postinstall": "is-ci || husky install",
-        "start": "node --max-old-space-size=6000 server.js",
+        "api": "node --max-old-space-size=6000 server.js",
         "update": "node --max-old-space-size=4000 . miniupdate"
     },
     "author": "EatMyVenom",
