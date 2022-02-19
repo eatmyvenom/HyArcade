@@ -101,12 +101,12 @@ async function runBatch(batchUUIDs, key, address) {
  * @param {string} address
  */
 async function LocalWorker(batchRes, key, address) {
-  Logger.name = `Worker-${address}`;
+  Logger.name = `Worker`;
 
-  Logger.info("Starting batch");
+  Logger.info(`Starting batch on ${address}`);
   const batchUUIDs = batchRes.map(a => a.uuid);
   await runBatch(batchUUIDs, key, address);
-  Logger.info("Batch completed");
+  Logger.info(`Starting batch on ${address}`);
 }
 
 module.exports = LocalWorker;
