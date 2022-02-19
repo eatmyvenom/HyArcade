@@ -73,9 +73,10 @@ async function runBatch(batchUUIDs, key, address) {
         reply = await requestData(uuid, key, address);
       }
 
-      if (reply?.player == undefined) {
+      if (reply?.data?.player == undefined) {
         if (cfg.logRateLimit) {
           Logger.warn(`Unable to access data for ${uuid}`);
+          Logger.warn(reply?.data);
         } else {
           Logger.verbose(`Unable to access data for ${uuid}`);
         }
