@@ -104,8 +104,8 @@ async function LocalWorker(key, address) {
 
   while (lastInfo != undefined) {
     Logger.info("Starting batch");
-    const batchUUIDs = await Database.internal({ getBatch: true });
-    console.log(batchUUIDs);
+    const batchRes = await Database.internal({ getBatch: true });
+    const batchUUIDs = batchRes.map(a => a.uuid);
     await runBatch(batchUUIDs, key, address);
     Logger.info("Batch completed");
 
