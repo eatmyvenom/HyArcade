@@ -89,7 +89,7 @@ async function runBatch(batchUUIDs, key, address) {
       await Database.addAccount(acc);
     } catch (error) {
       Logger.error("Error requesting data from local worker.");
-      Logger.error(error.stack);
+      Logger.error(error);
     }
   }
 }
