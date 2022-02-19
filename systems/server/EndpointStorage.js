@@ -31,7 +31,7 @@ class EndpointStorage {
       guild: await importNew("guild.js"),
       hacker: await importNew("hacker.js"),
       banned: await importNew("banned.js"),
-      internal: await importNew("nternal.js"),
+      internal: await importNew("internal.js"),
     };
   }
 }
