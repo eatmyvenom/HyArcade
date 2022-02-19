@@ -50,12 +50,13 @@ function getWeeklyStat(a, b) {
  * @returns {number}
  */
 function getQuestsCompleted(json) {
-  const quests = json?.player?.quests ?? {};
+  const quests = json?.player?.quests;
   let completions = 0;
 
   if (!quests) {
     return 0;
   }
+
   for (const quest of quests) {
     if (quest.completions) {
       completions += quest.completions.length;
