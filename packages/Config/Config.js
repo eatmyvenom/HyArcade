@@ -107,14 +107,15 @@ class HypixelConfig {
   concurrentBatches = 6;
   alwaysForce = false;
   autoUpdate = true;
+  localInterfaces = [];
 }
 
 class OtherHooksConfig {
-  TO = JSON.parse(process.env.HYARCADE_WEBHOOK);
-  HS = JSON.parse(process.env.HYARCADE_WEBHOOK);
-  MW = JSON.parse(process.env.HYARCADE_WEBHOOK);
-  TEST = JSON.parse(process.env.HYARCADE_WEBHOOK);
-  DW = JSON.parse(process.env.HYARCADE_WEBHOOK);
+  TO = {};
+  HS = {};
+  MW = {};
+  TEST = {};
+  DW = {};
 }
 
 class Config {
