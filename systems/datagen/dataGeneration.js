@@ -1,9 +1,8 @@
 const { HypixelApi } = require("hyarcade-requests");
 const Account = require("hyarcade-requests/types/Account");
 const Json = require("hyarcade-utils/FileHandling/Json");
-const lists = require("hyarcade-utils/listParser");
 const { addAccounts } = require("hyarcade-utils/listUtils");
-const updateAccounts = require("./updateAccounts");
+const miniUpdater = require("./miniUpdater");
 
 /**
  *
@@ -19,8 +18,7 @@ async function saveBoosters() {
  * @returns {Account[]}
  */
 async function updateAllAccounts() {
-  const accounts = await lists.accounts();
-  return await updateAccounts(accounts);
+  return await miniUpdater();
 }
 
 /**

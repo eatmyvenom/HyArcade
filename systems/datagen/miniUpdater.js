@@ -5,6 +5,7 @@ const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
 const { readFile, writeFile } = require("fs-extra");
+const fs = require("fs-extra");
 const Database = require("hyarcade-requests/Database");
 
 let cfg;
@@ -162,14 +163,28 @@ async function fastUpdate(uuids) {
 }
 
 /**
- * @param uuidArr
  */
-async function miniUpdater(uuidArr) {
+async function miniUpdater() {
   cfg = require("hyarcade-config").fromJSON();
 
   if (!cfg.hypixel.autoUpdate) {
     return;
   }
+  let forceLevel = 2;
+
+  Logger.name = "Data-Generator";
+  Logger.emoji = "📈";
+
+  try {
+    const fileData = await fs.readFile("force");
+    forceLevel = fileData.toString() == "" ? 2 : Number(fileData.toString());
+    await fs.rm("force");
+  } catch {
+    forceLevel = 0;
+  }
+
+  const uuidArr = await Database.internal({ fetchImportant: forceLevel });
+  Logger.info(`Preparing to update ${uuidArr.length} accounts`);
 
   const masterFile = await readFile("data/fullplayer.json");
   masterDoc = masterFile.toJSON();
@@ -232,6 +247,8 @@ async function miniUpdater(uuidArr) {
     }, {});
 
   await writeFile("data/fullplayer.json", JSON.stringify(orderedDoc, undefined, 2));
+
+  Logger.info("Update completed");
 }
 
 module.exports = miniUpdater;

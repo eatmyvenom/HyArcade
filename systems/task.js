@@ -1,7 +1,6 @@
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
-const Json = require("hyarcade-utils/FileHandling/Json");
 const dataGen = require("./datagen/dataGeneration");
 const Webhook = require("./events/webhook");
 const lists = require("hyarcade-utils/listParser");
@@ -25,13 +24,11 @@ async function keyFailure() {
  */
 async function accs() {
   if (await keyFailure()) {
+    logger.err("Main key is not functional!");
     return [];
   }
 
   accounts = await dataGen.updateAllAccounts();
-
-  await Database.writeDB("accounts", accounts);
-  return ["accounts.json"];
 }
 
 /**
@@ -60,13 +57,6 @@ async function glds() {
       }),
     );
   }
-
-  guilds.sort((a, b) => {
-    return b.wins - a.wins;
-  });
-  logger.info(`Saving guild data for ${guilds.length} guilds`);
-  await Json.write("guild.json", guilds);
-  return ["guild.json"];
 }
 
 /**
