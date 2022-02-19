@@ -24,8 +24,8 @@ async function main() {
       workers.push(LocalWorker(batchRes, key, netIP));
     }
 
-    Logger.log("Group finished");
     await Promise.all(workers);
+    Logger.log("Group finished");
     lastInfo = await Database.info();
   }
 }
