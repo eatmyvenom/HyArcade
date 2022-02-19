@@ -82,23 +82,34 @@ async function rmPID() {
 }
 
 /**
+ *
+ */
+function printRuntimeInfo() {
+  logger.debug("----- NEW PROCESS STARTED -----");
+
+  let start = new Date();
+
+  logger.debug(`Args are [${args}] - executing`);
+  logger.debug("----- Process info -----");
+  logger.debug(`START TIME - ${start.toString()}`);
+  logger.debug(`PLATFORM - ${process.platform} ${process.arch}`);
+  logger.debug(`PID - ${process.pid}\nCWD - ${process.cwd()}`);
+  logger.debug(`NODE VERSION - ${process.versions.node}\nV8 VERSION - ${process.versions.v8}`);
+  logger.debug("------------------------");
+}
+
+/**
  * Main function in a async wrapper to use other async functions
  *
  */
 async function main() {
-  logger.debug("----- NEW PROCESS STARTED -----");
+  printRuntimeInfo();
   let killable = true;
 
   if (!(args[2] == "bot" || args[2] == "serveDB")) {
     logger.verbose("Writing pid file");
     await writePID();
   }
-
-  logger.debug(`Args are [${args}] - executing`);
-  logger.debug("----- Process info -----");
-  logger.debug(`PLATFORM - ${process.platform} ${process.arch}`);
-  logger.debug(`PID - ${process.pid}\nCWD - ${process.cwd()}\nNODE VERSION - ${process.versions.node}\nV8 VERSION - ${process.versions.v8}`);
-  logger.debug("------------------------");
   switch (args[2]) {
     case "discord":
       await webhookLog(args[3], args[4]);
