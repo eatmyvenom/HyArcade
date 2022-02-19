@@ -1,4 +1,4 @@
-const webhook = require("../../src/events/webhook");
+const webhook = require("../events/webhook");
 
 /**
  * @param {string[]} args
