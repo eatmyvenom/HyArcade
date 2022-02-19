@@ -70,10 +70,21 @@ async function runBatch(batchUUIDs, key, address) {
           Logger.warn(`Rate limit hit, retrying after ${reply.headers["retry-after"]} seconds`);
         }
         await Sleep(reply.headers["retry-after"] * 1001);
-        reply = await await requestData(uuid, key, address);
+        reply = await requestData(uuid, key, address);
       }
+
+      if (reply?.player == undefined) {
+        if (cfg.logRateLimit) {
+          Logger.warn(`Unable to access data for ${uuid}`);
+        } else {
+          Logger.verbose(`Unable to access data for ${uuid}`);
+        }
+      }
+
       const acc = new Account("", 0, uuid);
       acc.setHypixel(reply.data);
+
+      await Database.addAccount(acc);
     } catch (error) {
       Logger.error("Error requesting data from local worker.");
       Logger.error(error.stack);
@@ -89,11 +100,16 @@ async function runBatch(batchUUIDs, key, address) {
 async function LocalWorker(key, address) {
   Logger.name = `Worker-${address}`;
 
-  while (await Database.info()) {
+  let lastInfo = await Database.info();
+
+  while (lastInfo != undefined) {
     Logger.info("Starting batch");
     const batchUUIDs = await Database.internal({ getBatch: true });
+    console.log(batchUUIDs);
     await runBatch(batchUUIDs, key, address);
     Logger.info("Batch completed");
+
+    lastInfo = await Database.info();
   }
 }
 
