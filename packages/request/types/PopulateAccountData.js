@@ -139,7 +139,7 @@ module.exports = function PopulateAccountData(json, account) {
   account.anyWins = json.player?.achievements?.general_wins ?? 0;
   account.arcadeAchievementPoints = account?.arcadeAchievments?.totalEarned ?? 0;
 
-  account.questsCompleted = getQuestsCompleted(json);
+  // account.questsCompleted = getQuestsCompleted(json);
   account.timePlaying = json.player?.timePlaying ?? 0;
 
   account.lastLogin = json.player?.lastLogin ?? 0;
