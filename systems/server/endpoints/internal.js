@@ -55,6 +55,7 @@ module.exports = async (req, res, connector) => {
 
         if (json.forceUpdate) {
           nextLevel = json.forceUpdate;
+          res.write(JSON.stringify({ success: true }));
         }
 
         if (json.getBatch) {
