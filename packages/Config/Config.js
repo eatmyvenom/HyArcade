@@ -110,11 +110,11 @@ class HypixelConfig {
 }
 
 class OtherHooksConfig {
-  TO = JSON.stringify(process.env.HYARCADE_WEBHOOK);
-  HS = JSON.stringify(process.env.HYARCADE_WEBHOOK);
-  MW = JSON.stringify(process.env.HYARCADE_WEBHOOK);
-  TEST = JSON.stringify(process.env.HYARCADE_WEBHOOK);
-  DW = JSON.stringify(process.env.HYARCADE_WEBHOOK);
+  TO = JSON.parse(process.env.HYARCADE_WEBHOOK);
+  HS = JSON.parse(process.env.HYARCADE_WEBHOOK);
+  MW = JSON.parse(process.env.HYARCADE_WEBHOOK);
+  TEST = JSON.parse(process.env.HYARCADE_WEBHOOK);
+  DW = JSON.parse(process.env.HYARCADE_WEBHOOK);
 }
 
 class Config {
