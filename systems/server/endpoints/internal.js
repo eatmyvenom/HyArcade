@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-lonely-if */
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const cfg = require("hyarcade-config").fromJSON();
@@ -12,6 +13,9 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 function safeEval(str) {
   return new AsyncFunction("c", `"use strict";return (${str})`);
 }
+
+let nextLevel = 0;
+let currentUUIDs = [];
 
 /**
  *
@@ -47,6 +51,20 @@ module.exports = async (req, res, connector) => {
         if (json.useCommand) {
           await connector.useCommand(json.useCommand.name, json.useCommand.type);
           res.write(JSON.stringify({ success: true }));
+        }
+
+        if (json.forceUpdate) {
+          nextLevel = json.forceUpdate;
+        }
+
+        if (json.getBatch) {
+          if (currentUUIDs.length === 0) {
+            currentUUIDs = await connector.getImportantAccounts(nextLevel);
+            nextLevel = 0;
+          }
+
+          const batch = currentUUIDs.splice(0, Math.min(cfg.hypixel.segmentSize, currentUUIDs.length));
+          res.write(JSON.stringify(batch));
         }
 
         res.end();
