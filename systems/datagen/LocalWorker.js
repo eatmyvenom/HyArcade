@@ -106,7 +106,7 @@ async function LocalWorker(batchRes, key, address) {
   Logger.info(`Starting batch on ${address}`);
   const batchUUIDs = batchRes.map(a => a.uuid);
   await runBatch(batchUUIDs, key, address);
-  Logger.info(`Starting batch on ${address}`);
+  Logger.info(`Batch finished on ${address}`);
 }
 
 module.exports = LocalWorker;
