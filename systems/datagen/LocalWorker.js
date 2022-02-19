@@ -2,6 +2,8 @@ const https = require("https");
 const Logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
+const Sleep = require("hyarcade-utils/Sleep");
+const cfg = require("hyarcade-config").fromJSON();
 
 /**
  *
@@ -40,7 +42,7 @@ function requestData(uuid, key, address) {
             reject(error);
           }
 
-          resolve(response);
+          resolve({ data: response, headers: res.headers });
         });
         res.on("error", reject);
       });
@@ -55,6 +57,32 @@ function requestData(uuid, key, address) {
 
 /**
  *
+ * @param {string} batchUUIDs
+ * @param {string} key
+ * @param {string} address
+ */
+async function runBatch(batchUUIDs, key, address) {
+  for (const uuid of batchUUIDs) {
+    try {
+      let reply = await requestData(uuid, key, address);
+      while (reply.headers["retry-after"]) {
+        if (cfg.logRateLimit) {
+          Logger.warn(`Rate limit hit, retrying after ${reply.headers["retry-after"]} seconds`);
+        }
+        await Sleep(reply.headers["retry-after"] * 1001);
+        reply = await await requestData(uuid, key, address);
+      }
+      const acc = new Account("", 0, uuid);
+      acc.setHypixel(reply.data);
+    } catch (error) {
+      Logger.error("Error requesting data from local worker.");
+      Logger.error(error.stack);
+    }
+  }
+}
+
+/**
+ *
  * @param {string} key
  * @param {string} address
  */
@@ -62,17 +90,10 @@ async function LocalWorker(key, address) {
   Logger.name = `Worker-${address}`;
 
   while (await Database.info()) {
+    Logger.info("Starting batch");
     const batchUUIDs = await Database.internal({ getBatch: true });
-    for (const uuid of batchUUIDs) {
-      try {
-        const data = await requestData(uuid, key, address);
-        const acc = new Account("", 0, uuid);
-        acc.setHypixel(data);
-      } catch (error) {
-        Logger.error("Error requesting data from local worker.");
-        Logger.error(error.stack);
-      }
-    }
+    await runBatch(batchUUIDs, key, address);
+    Logger.info("Batch completed");
   }
 }
 

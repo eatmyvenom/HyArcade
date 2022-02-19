@@ -2,6 +2,9 @@ const LocalWorker = require("../datagen/LocalWorker");
 
 const cfg = require("hyarcade-config").fromJSON();
 
+/**
+ *
+ */
 async function main() {
   const keys = cfg.hypixel.batchKeys;
   const interfaces = cfg.hypixel.localInterfaces;
