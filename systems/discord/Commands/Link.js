@@ -17,7 +17,7 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
   }
   let player = args[0];
   let discord = args[1];
-  const list = await BotRuntime.getFromDB("discordList");
+  const list = await Database.readDB("discordList");
   const disclist = {};
 
   for (const link of list) {

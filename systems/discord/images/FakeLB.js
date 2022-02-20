@@ -5,7 +5,7 @@ const Arc5 = require("./FakeLBs/Arc5");
 const Arc6 = require("./FakeLBs/Arc6");
 const ArcLeft = require("./FakeLBs/ArcLeft");
 const Guild = require("./FakeLBs/Guild");
-const { getFromDB, getBanlist } = require("../BotRuntime");
+const { getBanlist } = require("../BotRuntime");
 
 const generics = [Arc3, Arc4, Arc5, Arc6];
 
@@ -25,7 +25,7 @@ module.exports = async function FakeLb(path, category, time) {
   let topTen;
 
   if (category == "guild") {
-    topTen = await getFromDB("guilds");
+    topTen = await Database.readDB("guilds");
     topTen = topTen.sort((a, b) => b?.[path] - a?.[path]);
   } else if (path == undefined) {
     realTime = "monthly";

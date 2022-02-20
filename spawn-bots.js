@@ -20,38 +20,6 @@ function sleep(time) {
 }
 
 /**
- * @type {child_process.ChildProcess}
- */
-let arcade;
-
-/**
- * @type {child_process.ChildProcess}
- */
-let mw;
-
-/**
- *
- */
-function restartMW() {
-  Logger.error("Mini walls bot crashed!");
-  mw = child_process.fork("index.js", ["bot", "mw"], {
-    silent: false,
-  });
-  mw.on("exit", restartMW);
-}
-
-/**
- *
- */
-function restartArcade() {
-  Logger.error("Arcade bot crashed!");
-  arcade = child_process.fork("index.js", ["bot"], {
-    silent: false,
-  });
-  arcade.on("exit", restartArcade);
-}
-
-/**
  *
  */
 async function main() {
@@ -62,34 +30,21 @@ async function main() {
     const ascii = await fs.readFile("assets/hyarcade.ascii");
     Logger.info(ascii.toString());
     if (args[2] == "test") {
-      Logger.info("Starting test arcade bot...");
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot", "test"], {
         silent: false,
       });
     } else {
-      Logger.info("Starting arcade bot...");
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot"], {
         silent: false,
       });
       await sleep(5500);
-      Logger.info("Mini walls bot starting...");
       mw = child_process.fork("./systems/discord/ShardManager.js", ["bot", "mw"], {
         silent: false,
       });
 
-      mw.on("spawn", () => {
-        Logger.info("Mini walls bot spawned");
-      });
-      mw.on("exit", restartMW);
-
       await sleep(5500);
       await BotStart();
     }
-
-    arcade.on("spawn", async () => {
-      Logger.info("Arcade bot spawned");
-    });
-    arcade.on("exit", restartArcade);
   } catch (error) {
     Logger.err(error.stack);
   }

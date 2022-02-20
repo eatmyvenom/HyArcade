@@ -3,7 +3,6 @@ import Logger from "hyarcade-logger";
 import Database from "hyarcade-requests/Database.js";
 import mojangRequest from "hyarcade-requests/mojangRequest.js";
 import { Account, Command } from "hyarcade-structures";
-import BotRuntime from "../BotRuntime.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
@@ -49,7 +48,7 @@ async function verifyCommand(args, rawMsg, interaction) {
   await acc.updateData();
   uuid = acc.uuid;
 
-  const list = await BotRuntime.getFromDB("discordList");
+  const list = await Database.readDB("discordList");
   const disclist = {};
 
   for (const link of list) {

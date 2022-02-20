@@ -1,6 +1,5 @@
 import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("banlist", ["%trusted%"], async args => {
@@ -41,7 +40,7 @@ export default new Command("banlist", ["%trusted%"], async args => {
     case "list":
     case "show": {
       /** @type {string[]} */
-      let banned = await BotRuntime.getFromDB("bannedList");
+      let banned = await Database.readDB("bannedList");
       res = {
         res: `\`\`\`\n${banned.join("\n")}\`\`\``,
       };

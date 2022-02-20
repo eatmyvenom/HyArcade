@@ -1,10 +1,10 @@
+import { Database } from "hyarcade-requests";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("blacklist", ["%trusted%"], async args => {
-  let blacklist = await BotRuntime.getFromDB("blacklist");
+  let blacklist = await Database.readDB("blacklist");
 
   const operation = args[0] ?? "ls";
 
@@ -47,7 +47,7 @@ export default new Command("blacklist", ["%trusted%"], async args => {
   }
 
   if (hasChange) {
-    await BotRuntime.writeToDB("blacklist", blacklist);
+    await Database.writeDB("blacklist", blacklist);
   }
 
   return res;

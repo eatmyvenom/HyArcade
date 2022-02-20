@@ -1,8 +1,8 @@
 import { createRequire } from "node:module";
-import Database from "../Utils/Database.js";
 const require = createRequire(import.meta.url);
 
 const Command = require("hyarcade-structures/Discord/Command");
+const { Database } = require("hyarcade-requests");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");

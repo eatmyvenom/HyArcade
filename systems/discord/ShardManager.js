@@ -8,12 +8,13 @@ const Logger = require("hyarcade-logger");
  *
  */
 async function BotSpawner() {
+  Logger.name = "Shard-Manager";
   Logger.out(`Sharding ${args}`);
   try {
     const manager = new ShardingManager("./index.js", {
       token: cfg.discord.token,
       shardArgs: args,
-      respawn: false,
+      respawn: true,
     });
     manager.on("shardCreate", shard => Logger.info(`Launched shard ${shard.id}`));
     await manager.spawn();
@@ -23,4 +24,6 @@ async function BotSpawner() {
   }
 }
 
-BotSpawner();
+BotSpawner()
+  .then(() => {})
+  .catch(error => Logger.err(error));

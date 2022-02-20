@@ -1,6 +1,5 @@
 import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
-import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("hackerlist", ["%trusted%"], async args => {
@@ -41,7 +40,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
     case "list":
     case "show": {
       /** @type {string[]} */
-      let hackers = await BotRuntime.getFromDB("hackerList");
+      let hackers = await Database.readDB("hackerList");
       res = {
         res: `\`\`\`\n${hackers.join("\n")}\`\`\``,
       };

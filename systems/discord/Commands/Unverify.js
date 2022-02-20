@@ -2,7 +2,6 @@ const { Interaction } = require("discord.js");
 const Database = require("hyarcade-requests/Database");
 const Command = require("hyarcade-structures/Discord/Command");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const BotRuntime = require("../BotRuntime");
 
 /**
  *
@@ -12,7 +11,7 @@ const BotRuntime = require("../BotRuntime");
  * @returns {CommandResponse}
  */
 async function unverify(args, rawMsg, interaction) {
-  const list = await BotRuntime.getFromDB("discordList");
+  const list = await Database.readDB("discordList");
   const disclist = {};
 
   for (const link of list) {

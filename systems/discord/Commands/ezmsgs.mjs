@@ -1,13 +1,13 @@
+import { Database } from "hyarcade-requests";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("ezmsgs", ["%trusted%"], async args => {
   /**
    * @type {string[]}
    */
-  let msgs = await BotRuntime.getFromDB("ezmsgs");
+  let msgs = await Database.readDB("ezmsgs");
 
   const operation = args[0];
   const arg = args.slice(1).join(" ");
@@ -51,7 +51,7 @@ export default new Command("ezmsgs", ["%trusted%"], async args => {
   }
 
   if (hasChange) {
-    await BotRuntime.writeToDB("ezmsgs", msgs);
+    await Database.writeDB("ezmsgs", msgs);
   }
 
   return res;

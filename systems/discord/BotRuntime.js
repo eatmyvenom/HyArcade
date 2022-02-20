@@ -1,39 +1,12 @@
-const { MessageEmbed, Client, Message } = require("discord.js");
-const cfg = require("hyarcade-config").fromJSON();
+const { MessageEmbed, Client } = require("discord.js");
 const logger = require("hyarcade-logger");
-const { mojangRequest } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
-const { Account, AccountArray } = require("hyarcade-structures");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");
-const { default: axios } = require("axios");
 
 let hackerlist;
 let blacklist;
 let banlist;
-
-/**
- *
- * @param {string} string
- * @returns {Promise<Account>}
- */
-async function getFromHypixel(string) {
-  logger.info("Unable to resolve, getting by ign from hypixel.");
-
-  const plr = string;
-  let uuid;
-  uuid = plr?.length > 17 ? plr : await mojangRequest.getUUID(plr);
-
-  const acc = new Account("", 0, `${uuid}`);
-  await acc.updateData();
-
-  if (acc.name == "INVALID-NAME" || acc.name == undefined) {
-    return;
-  }
-
-  await Database.addAccount(acc);
-  return acc;
-}
 
 module.exports = class BotRuntime {
   static isBotInstance = false;
@@ -48,82 +21,6 @@ module.exports = class BotRuntime {
 
   static get trustedUsers() {
     return BotRuntime.tus;
-  }
-
-  /**
-   *
-   * @param {string} str
-   * @param {Message} rawMessage
-   * @param {boolean} canbeSelf
-   * @param {string} time
-   * @param {boolean} force
-   * @returns {Promise<Account>}
-   * @deprecated
-   */
-  static async resolveAccount(str, rawMessage, canbeSelf = true, time = "lifetime", force = false) {
-    logger.warn("Using deprecated function 'resolveAccount'");
-    let url;
-    url = time != "lifetime" ? new URL("timeacc", cfg.database.url) : new URL("account", cfg.database.url);
-
-    const urlArgs = url.searchParams;
-
-    if (str?.length == 32) {
-      if (force && time == "lifetime") return await getFromHypixel(str);
-      urlArgs.set("uuid", str.toLowerCase());
-    } else if (str?.length == 36) {
-      if (force && time == "lifetime") return await getFromHypixel(str);
-      urlArgs.set("uuid", str.toLowerCase().replace(/-/g, ""));
-    } else if (str?.length == 21 && str.startsWith("<@")) {
-      urlArgs.set("discid", str.slice(2, -1));
-    } else if (str?.length == 22 && str.startsWith("<!@")) {
-      urlArgs.set("discid", str.slice(3, -1));
-    } else if (str?.length == 18 && str.toUpperCase() == str.toLowerCase()) {
-      urlArgs.set("discid", str);
-    } else if (str != undefined && str != "null" && str != "" && str != undefined && str != "!") {
-      if (force && time == "lifetime") return await getFromHypixel(str);
-      urlArgs.set("ign", str.toLowerCase());
-    } else if (canbeSelf) {
-      urlArgs.set("discid", rawMessage?.author?.id ?? "");
-    }
-
-    if (time != "lifetime") {
-      urlArgs.set("time", time);
-    }
-
-    logger.debug(`Fetching ${url.searchParams.toString()} from database`);
-    let accdata = await axios.get(url.toString());
-    if (accdata.status == 200) {
-      accdata = await accdata.data;
-      if (accdata.name == "INVALID-NAME" || accdata.name == "null") {
-        return;
-      }
-      return accdata;
-    }
-
-    if (str != undefined) {
-      return await getFromHypixel(str);
-    }
-
-    return;
-  }
-
-  /**
-   *
-   * @param {string} file
-   * @param {string[]} fields
-   * @returns {object}
-   */
-  static async getFromDB(file, fields) {
-    const fileData = await Database.readDB(file, fields);
-
-    if (file == "accounts" || file == "dayaccounts" || file == "monthlyaccounts" || file == "weeklyaccounts") {
-      return AccountArray(fileData);
-    }
-    return fileData;
-  }
-
-  static async writeToDB(path, json) {
-    await Database.writeDB(path, json);
   }
 
   static getWebhookObj(embed) {
@@ -146,7 +43,7 @@ module.exports = class BotRuntime {
 
   static async getHackerlist() {
     if (hackerlist == undefined) {
-      let list = await BotRuntime.getFromDB("hackerList");
+      let list = await Database.readDB("hackerList");
       hackerlist = list.map(h => h.uuid);
       setTimeout(() => (hackerlist = undefined), 3600000);
     }
@@ -169,7 +66,7 @@ module.exports = class BotRuntime {
 
   static async getBanlist() {
     if (banlist == undefined) {
-      let list = await BotRuntime.getFromDB("bannedList");
+      let list = await Database.readDB("bannedList");
       banlist = list.map(h => h.uuid);
       setTimeout(() => (banlist = undefined), 3600000);
     }

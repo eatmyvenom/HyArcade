@@ -1,7 +1,6 @@
 const Database = require("hyarcade-requests/Database");
 const Command = require("hyarcade-structures/Discord/Command");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 
 module.exports = new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], async args => {
@@ -13,7 +12,7 @@ module.exports = new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], asyn
   }
   let player = args[0];
   let discord = args[1] ?? player;
-  const list = await BotRuntime.getFromDB("discordList");
+  const list = await Database.readDB("discordList");
   const disclist = {};
 
   for (const link of list) {
