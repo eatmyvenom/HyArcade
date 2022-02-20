@@ -1,4 +1,5 @@
 const Logger = require("hyarcade-logger");
+const { DupeKeyError } = require("hyarcade-errors");
 const cfg = require("hyarcade-config").fromJSON();
 
 /**
@@ -30,6 +31,7 @@ const endpointValues = {
 class clientData {
   recentRequests = 0;
   address = "";
+  key = "";
   firstCall = 0;
 }
 
@@ -50,8 +52,8 @@ function RateLimiter(address, endpoint, key, pass) {
   const client = clients.find(v => v.address == address);
   if (client != undefined) {
     let limit = cfg.database.defaultLimit;
-    if (key) {
-      limit = cfg.database.keys[key];
+    if (client.key) {
+      limit = cfg.database.keys[client.key];
     }
 
     if (Date.now() - client.firstCall > 60000) {
@@ -71,6 +73,14 @@ function RateLimiter(address, endpoint, key, pass) {
     emptyClient.firstCall = Date.now();
     emptyClient.address = address;
     emptyClient.recentRequests = endpointValues[endpoint];
+
+    if (key) {
+      if (clients.some(c => c.key == key)) {
+        throw new DupeKeyError("Duplicate Key used");
+      }
+
+      emptyClient.key = key;
+    }
 
     clients.push(emptyClient);
     return 0;

@@ -1,7 +1,7 @@
 const process = require("process");
 const { URL } = require("url");
 const logger = require("hyarcade-logger");
-
+const { DupeKeyError } = require("hyarcade-errors");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
@@ -33,7 +33,14 @@ async function callback(request, response) {
   }
   logger.verbose(`${address} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
 
-  const rateLimit = RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization);
+  let rateLimit;
+  try {
+    rateLimit = RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization);
+  } catch (error) {
+    if (error instanceof DupeKeyError) {
+      response.write(JSON.stringify({ success: false, reason: "DUPLICATE-KEY" }));
+    }
+  }
 
   if (rateLimit > 0) {
     response.statusCode = 403;
