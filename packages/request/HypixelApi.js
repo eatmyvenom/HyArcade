@@ -6,6 +6,7 @@ const logger = require("hyarcade-logger");
 const sleep = require("hyarcade-utils/Sleep");
 const hypixelReq = require("./hypixelReq");
 const Logger = require("hyarcade-logger");
+const { default: axios } = require("axios");
 
 /**
  * Function to get the key to use
@@ -114,11 +115,6 @@ module.exports = class HypixelApi {
     return await Api.makeRequest();
   }
 
-  static async boosters() {
-    const Api = new HypixelApi("boosters");
-    return await Api.makeRequest();
-  }
-
   static async counts() {
     const Api = new HypixelApi("counts");
     return await Api.makeRequest();
@@ -129,14 +125,112 @@ module.exports = class HypixelApi {
     return await Api.makeRequest();
   }
 
+  static async boosters() {
+    const Api = new HypixelApi("boosters");
+    return await Api.makeRequest();
+  }
+
+  static async punishmentstats() {
+    const Api = new HypixelApi("punishmentstats");
+    return await Api.makeRequest();
+  }
+
   static resources = class resources {
+    async games() {
+      const req = await axios.get("https://api.hypixel.net/resources/games");
+      return await req.data;
+    }
+
     async challenges() {
-      const Api = new HypixelApi("resources/challenges");
-      return await Api.makeRequest();
+      const req = await axios.get("https://api.hypixel.net/resources/challenges");
+      return await req.data;
     }
 
     static async achievements() {
-      const Api = new HypixelApi("resources/achievements");
+      const req = await axios.get("https://api.hypixel.net/resources/achievements");
+      return await req.data;
+    }
+
+    async quests() {
+      const req = await axios.get("https://api.hypixel.net/resources/quests");
+      return await req.data;
+    }
+
+    static guilds = class guilds {
+      async achievements() {
+        const req = await axios.get("https://api.hypixel.net/resources/guilds/achievements");
+        return await req.data;
+      }
+    };
+
+    static vanity = class vanity {
+      async pets() {
+        const req = await axios.get("https://api.hypixel.net/resources/vanity/pets");
+        return await req.data;
+      }
+
+      async companions() {
+        const req = await axios.get("https://api.hypixel.net/resources/vanity/companions");
+        return await req.data;
+      }
+    };
+
+    static skyblock = class skyblock {
+      static async collections() {
+        const req = await axios.get("https://api.hypixel.net/resources/skyblock/collections");
+        return req.data;
+      }
+
+      static async skills() {
+        const req = await axios.get("https://api.hypixel.net/resources/skyblock/skills");
+        return req.data;
+      }
+
+      static async items() {
+        const req = await axios.get("https://api.hypixel.net/resources/skyblock/items");
+        return req.data;
+      }
+
+      static async election() {
+        const req = await axios.get("https://api.hypixel.net/resources/skyblock/items");
+        return req.data;
+      }
+    };
+  };
+
+  static skyblock = class skyblock {
+    static async news() {
+      const Api = new HypixelApi("skyblock/news", {});
+      return await Api.makeRequest();
+    }
+
+    static async auction(uuid, player, profile) {
+      const Api = new HypixelApi("skyblock/auction", { uuid, player, profile });
+      return await Api.makeRequest();
+    }
+
+    static async auctions(page) {
+      const Api = new HypixelApi("skyblock/auctions", { page });
+      return await Api.makeRequest();
+    }
+
+    static async auctions_ended() {
+      const Api = new HypixelApi("skyblock/auctions_ended", {});
+      return await Api.makeRequest();
+    }
+
+    static async bazaar() {
+      const Api = new HypixelApi("skyblock/bazaar", {});
+      return await Api.makeRequest();
+    }
+
+    static async profile(profile) {
+      const Api = new HypixelApi("skyblock/profile", { profile });
+      return await Api.makeRequest();
+    }
+
+    static async profiles(uuid) {
+      const Api = new HypixelApi("skyblock/profiles", { uuid });
       return await Api.makeRequest();
     }
   };
