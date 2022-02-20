@@ -54,7 +54,7 @@ function RateLimiter(address, endpoint, key, pass) {
   if (client != undefined) {
     let limit = cfg.database.defaultLimit;
     if (client.key) {
-      limit = cfg.database.keys[client.key];
+      limit = cfg.database.keys[client.key]?.limit ?? 120;
     }
 
     if (Date.now() - client.firstCall > 60000) {

@@ -2,30 +2,18 @@ const Logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const LocalWorker = require("../datagen/LocalWorker");
 
-const cfg = require("hyarcade-config").fromJSON();
-
 /**
- *
+ * @param {string[]} args
  */
-async function main() {
-  Logger.name = "Local-Manager";
-  const keys = cfg.hypixel.batchKeys;
-  const interfaces = cfg.hypixel.localInterfaces;
-  const len = Math.min(keys.length, interfaces.length);
+async function main(args) {
+  Logger.name = "Worker";
 
   let ping = await Database.ping();
   while (ping) {
-    const workers = [];
-    for (let i = 0; i < len; i++) {
-      const key = keys[i];
-      const netIP = interfaces[i];
-      const batchRes = await Database.internal({ getBatch: true });
+    const batchRes = await Database.internal({ getBatch: true }, args[4]);
+    await LocalWorker(batchRes, args[3]);
 
-      workers.push(LocalWorker(batchRes, key, netIP));
-    }
-
-    await Promise.all(workers);
-    Logger.log("Group finished");
+    Logger.log("Batch completed");
     ping = await Database.ping();
   }
 }

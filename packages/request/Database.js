@@ -410,12 +410,12 @@ module.exports = class Database {
     return discAccs;
   }
 
-  static async internal(json) {
+  static async internal(json, auth) {
     const url = new URL("internal", cfg.database.url);
 
     let response;
     try {
-      response = await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass } });
+      response = await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass, key: auth } });
       response = response.data;
     } catch (error) {
       Logger.err("Can't connect to database");

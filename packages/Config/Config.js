@@ -22,12 +22,18 @@ class Clusters {
   };
 }
 
+class DatabaseKey {
+  limit = 120;
+  perms = [];
+}
+
 class Database {
   url = "https://api.hyarcade.xyz";
   defaultLimit = 120;
   pass = process.env.HYARCADE_KEY;
+  key = process.env.HYARCADE_KEY;
   /**
-   * @type {object<string, number>}
+   * @type {object<string, DatabaseKey>}
    */
   keys = {};
 }
