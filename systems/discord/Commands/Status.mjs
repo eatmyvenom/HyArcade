@@ -356,6 +356,9 @@ function getImage(status) {
             case "Trick Or Treat": {
               return "assets/status/Classic-paintball-Trick_Or_Treat.png";
             }
+            case "Herobrine": {
+              return "assets/status/Classic-paintball-Herobrine.png";
+            }
           }
           return "assets/status/Classic-paintball-LaMente.png";
         }
