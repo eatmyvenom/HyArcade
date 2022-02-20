@@ -1016,6 +1016,7 @@ class Account {
       this.setHypixel(json);
     } catch (error) {
       Logger.error(error);
+      Logger.error(error.stack);
     }
   }
 }
