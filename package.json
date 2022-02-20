@@ -7,6 +7,10 @@
     "packageManager": "yarn@3.1.1",
     "author": "EatMyVenom",
     "license": "MPL-2.0",
+    "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
+    "bugs": {
+        "url": "https://github.com/eatmyvenom/hyarcade/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/eatmyvenom/hyarcade.git"
@@ -28,6 +32,7 @@
     "dependencies": {
         "@commitlint/config-angular": "^16.0.0",
         "@discoveryjs/json-ext": "^0.5.6",
+        "axios": "^0.26.0",
         "canvas": "^2.9.0",
         "discord.js": "^13.6.0",
         "fs-extra": "^10.0.0",
@@ -72,5 +77,5 @@
         "commitizen": {
             "path": "cz-conventional-changelog"
         }
-  }
+    }
 }
