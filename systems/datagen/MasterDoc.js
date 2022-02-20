@@ -34,9 +34,11 @@ function mergeDeep(target, source) {
 
 class MasterDoc {
   masterDoc;
+  ready = false;
   async readData() {
     const masterFile = await readFile("data/fullplayer.json");
     this.masterDoc = masterFile.toJSON();
+    this.ready = true;
   }
 
   async addData(source) {

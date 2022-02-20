@@ -6,6 +6,8 @@ const { Account } = require("hyarcade-structures");
 const Sleep = require("hyarcade-utils/Sleep");
 const cfg = require("hyarcade-config").fromJSON();
 const { RequestTimeoutError } = require("hyarcade-errors");
+const MasterDoc = require("./MasterDoc");
+const doc = new MasterDoc();
 
 /**
  *
@@ -60,6 +62,17 @@ function requestData(uuid, key, address) {
 }
 
 /**
+ * @param apiData
+ */
+async function mergeData(apiData) {
+  if (!doc.ready) {
+    await doc.readData();
+  }
+
+  await doc.addData(apiData);
+}
+
+/**
  *
  * @param {string} batchUUIDs
  * @param {string} key
@@ -89,7 +102,10 @@ async function runBatch(batchUUIDs, key, address) {
       const acc = new Account("", 0, uuid);
       acc.setHypixel(reply.data);
 
-      await Database.addAccount(acc);
+      let mergeTask = mergeData(reply.data);
+      let pushTask = Database.addAccount(acc);
+
+      await Promise.all([mergeTask, pushTask]);
     } catch (error) {
       Logger.error("Error requesting data from local worker.");
       Logger.error(error);
