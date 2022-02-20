@@ -1,7 +1,7 @@
 const cfg = require("hyarcade-config").fromJSON();
+const { default: axios } = require("axios");
 const logger = require("hyarcade-logger");
 const { Account, AccountArray } = require("hyarcade-structures");
-const fetch = require("node-fetch");
 
 /**
  * @param {number} number
@@ -22,8 +22,8 @@ exports.getList = async function getList(type = "") {
   url.searchParams.set("path", path);
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
-  const listFetch = await fetch(url, { method: "get", headers: { Authorization: cfg.database.pass } });
-  const list = await listFetch.json();
+  const listFetch = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+  const list = listFetch.data;
   logger.debug("Data fetched!");
   return AccountArray(list);
 };

@@ -1,6 +1,6 @@
+import axios from "axios";
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command } from "hyarcade-structures";
-import fetch from "node-fetch";
 import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";
@@ -83,8 +83,8 @@ async function generateWhoisEmbed(acc) {
     .setColor(COLOR_PURPLE);
 
   let discord = "";
-  const ashconFetch = await fetch(`https://api.ashcon.app/mojang/v2/user/${acc.uuid}`);
-  const moj = await ashconFetch.json();
+  const ashconFetch = await axios.get(`https://api.ashcon.app/mojang/v2/user/${acc.uuid}`);
+  const moj = await ashconFetch.data;
 
   let nameHist = moj.username_history.reverse().map(n => `**${escapeUnderline(escapeItalic(n.username))}**${getNameDate(n.changed_at)}`);
 

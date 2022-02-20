@@ -1,6 +1,6 @@
+const { default: axios } = require("axios");
 const { readFile, writeFile } = require("fs-extra");
 const Logger = require("hyarcade-logger");
-const { default: fetch } = require("node-fetch");
 
 /**
  * @param {string[]} args
@@ -11,8 +11,8 @@ async function main(args) {
   const newList = [];
 
   for (const plr of plrList) {
-    const req = await fetch(`https://api.slothpixel.me/api/guilds/${plr}`);
-    const guild = await req.json();
+    const req = await axios.get(`https://api.slothpixel.me/api/guilds/${plr}`);
+    const guild = await req.data;
 
     newList.push(guild.id);
     Logger.info(`Adding guild "${guild.name}"`);

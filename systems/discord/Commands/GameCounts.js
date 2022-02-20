@@ -1,7 +1,7 @@
+const { default: axios } = require("axios");
 const { MessageEmbed } = require("discord.js");
 const Command = require("hyarcade-structures/Discord/Command");
 const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
-const { default: fetch } = require("node-fetch");
 
 /**
  * @param {number} n
@@ -16,8 +16,8 @@ function numberify(n) {
  * @returns {string}
  */
 async function getGames() {
-  const countFetch = await fetch("https://api.slothpixel.me/api/counts");
-  const apiRes = await countFetch.json();
+  const countFetch = await axios.get("https://api.slothpixel.me/api/counts");
+  const apiRes = countFetch.data;
 
   const arcade = apiRes.games.ARCADE;
 

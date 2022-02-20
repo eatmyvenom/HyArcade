@@ -4,9 +4,9 @@ const logger = require("hyarcade-logger");
 const { mojangRequest } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 const { Account, AccountArray } = require("hyarcade-structures");
-const fetch = require("node-fetch");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");
+const { default: axios } = require("axios");
 
 let hackerlist;
 let blacklist;
@@ -91,9 +91,9 @@ module.exports = class BotRuntime {
     }
 
     logger.debug(`Fetching ${url.searchParams.toString()} from database`);
-    let accdata = await fetch(url.toString());
+    let accdata = await axios.get(url.toString());
     if (accdata.status == 200) {
-      accdata = await accdata.json();
+      accdata = await accdata.data;
       if (accdata.name == "INVALID-NAME" || accdata.name == "null") {
         return;
       }

@@ -1,9 +1,9 @@
-const { default: fetch } = require("node-fetch");
+const { default: axios } = require("axios");
 const addAccounts = require("./addAccounts");
 
 module.exports = async function AddFriends(uuid) {
-  const friendsFetch = await fetch(`https://api.slothpixel.me/api/players/${uuid}/friends`);
-  const friendsList = await friendsFetch.json();
+  const friendsFetch = await axios.get(`https://api.slothpixel.me/api/players/${uuid}/friends`);
+  const friendsList = friendsFetch.data;
 
   const uuids = friendsList.map(f => f.uuid);
 

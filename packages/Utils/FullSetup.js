@@ -1,5 +1,5 @@
+const { default: axios } = require("axios");
 const { existsSync, writeFile, readdir, mkdir } = require("fs-extra");
-const { default: fetch } = require("node-fetch");
 
 /**
  * @param path
@@ -7,8 +7,8 @@ const { default: fetch } = require("node-fetch");
  */
 async function supplyFileFromURL(path, url) {
   if (!existsSync(path)) {
-    const req = await fetch(url);
-    await writeFile(path, await req.buffer());
+    const req = await axios.get(url, { responseType: "text" });
+    await writeFile(path, req.data);
   }
 }
 

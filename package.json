@@ -43,7 +43,6 @@
         "hyarcade-utils": "*",
         "javascript-time-ago": "^2.3.6",
         "mongodb": "^4.3.1",
-        "node-fetch": "2",
         "nodejs": "^0.0.0",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"

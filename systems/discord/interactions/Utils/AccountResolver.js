@@ -1,10 +1,10 @@
+const { default: axios } = require("axios");
 const { CommandInteraction } = require("discord.js");
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
 const { Account } = require("hyarcade-structures");
-const fetch = require("node-fetch");
 const BotRuntime = require("../../BotRuntime");
 
 /**
@@ -80,9 +80,9 @@ module.exports = async function resolveAccount(interaction, namearg = "player", 
   }
 
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);
-  let accdata = await fetch(url.toString());
+  let accdata = await axios.get(url.toString());
   if (accdata.status == 200) {
-    accdata = await accdata.json();
+    accdata = await accdata.data;
     if (time == "lifetime" && (str == undefined || accdata?.name == "INVALID-NAME" || accdata?.name == "null" || accdata?.name == undefined)) {
       return;
     } else if (time != "lifetime" && (accdata?.acc?.name == undefined || accdata?.timed?.name == undefined)) {
