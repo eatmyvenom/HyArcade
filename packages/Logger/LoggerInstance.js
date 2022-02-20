@@ -3,14 +3,12 @@ const path = require("path");
 const { argv, stdout, stderr } = require("process");
 const { writeFile } = require("fs-extra");
 
-let logLevel = 5;
-
-if (argv.includes("--verbose") || argv.includes("-v")) {
-  logLevel = 6;
-}
+let logLevel = process.env.HYARCADE_LOG_LEVEL ?? 5;
 
 if (argv.includes("--silent")) {
   logLevel = 0;
+} else if (argv.includes("--verbose") || argv.includes("-v")) {
+  logLevel = 6;
 }
 
 const levels = ["ERROR", "WARN", "LOG", "INFO", "DEBUG", "VERBOSE"];
@@ -58,7 +56,7 @@ function errorln(string, name) {
  * @param {string} emoji
  */
 function println(type, string, name, color = "\u001B[0m", emoji = "") {
-  let realEmoji = emoji ? `${emoji} ` : "";
+  let realEmoji = emoji ? `${emoji.trim()} ` : "";
   if (shouldLog(type)) {
     const str = `${realEmoji}[\u001B[36m${daytime().trim()}\u001B[0m] [\u001B[36m${name.trim()}\u001B[0m] [${color}${type}\u001B[0m]${color} ${string}\u001B[0m\n`;
     stdout.write(str, () => {});
