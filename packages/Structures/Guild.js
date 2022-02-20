@@ -1,7 +1,7 @@
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
-const Account = require("hyarcade-requests/types/Account");
+const Account = require("./Account/Account");
 
 /**
  * @param {string} str

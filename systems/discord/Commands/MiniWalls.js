@@ -1,7 +1,5 @@
 const Database = require("hyarcade-requests/Database");
-const Account = require("hyarcade-requests/types/Account");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const { Account, Command, CommandResponse } = require("hyarcade-structures");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");

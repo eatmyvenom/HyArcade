@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable unicorn/prefer-object-from-entries */
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
 const { readFile, writeFile } = require("fs-extra");

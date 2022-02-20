@@ -1,5 +1,5 @@
 const { MessageEmbed, User } = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const Compare = require("./Compare");
 const Arcade = require("./Stats/Arcade");
 

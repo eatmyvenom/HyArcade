@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-null */
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 
 /**

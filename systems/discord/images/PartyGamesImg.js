@@ -1,5 +1,5 @@
 const { MessageAttachment } = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const ImageGenerator = require("./ImageGenerator");
 
 /**

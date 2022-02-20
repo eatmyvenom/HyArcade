@@ -1,8 +1,6 @@
 import Config from "hyarcade-config";
 import Database from "hyarcade-requests/Database.js";
-import Account from "hyarcade-requests/types/Account.js";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { Account, Command, CommandResponse } from "hyarcade-structures";
 import { createRequire } from "node:module";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";

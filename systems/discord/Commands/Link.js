@@ -1,7 +1,7 @@
 const Database = require("hyarcade-requests/Database");
 const { addAccount } = require("hyarcade-requests/Database");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const Command = require("hyarcade-structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");

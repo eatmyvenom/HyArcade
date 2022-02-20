@@ -1,7 +1,6 @@
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
+const { Account, AccountArray } = require("hyarcade-structures");
 const fetch = require("node-fetch");
 
 /**

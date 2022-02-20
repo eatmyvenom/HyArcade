@@ -1,5 +1,5 @@
 const fs = require("fs-extra");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const normalize = require("../src/datagen/utils/NormalizeAccount");
 
 async function main () {

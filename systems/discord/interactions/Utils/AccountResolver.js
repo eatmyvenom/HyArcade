@@ -3,7 +3,7 @@ const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const fetch = require("node-fetch");
 const BotRuntime = require("../../BotRuntime");
 

@@ -1,5 +1,5 @@
 const { HypixelApi } = require("hyarcade-requests");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const { addAccounts } = require("hyarcade-utils/listUtils");
 const miniUpdater = require("./miniUpdater");

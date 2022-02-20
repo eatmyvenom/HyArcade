@@ -1,7 +1,7 @@
 const { CommandInteraction } = require("discord.js");
 const cfg = require("hyarcade-config").fromJSON();
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const fetch = require("node-fetch");
 const AccountResolver = require("./Utils/AccountResolver");
 const BotRuntime = require("../BotRuntime");

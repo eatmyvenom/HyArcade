@@ -1,7 +1,7 @@
 const { URL } = require("url");
 const cfg = require("hyarcade-config").fromJSON();
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const AccountResolver = require("../AccountResolver");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 

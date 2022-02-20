@@ -1,1 +1,1 @@
-module.exports = require("hyarcade-requests").types.Account;
+module.exports = require("./Account/Account");

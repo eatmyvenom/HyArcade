@@ -1,9 +1,7 @@
 import axios from "axios";
 import Requests from "hyarcade-requests";
 import Database from "hyarcade-requests/Database.js";
-import Account from "hyarcade-requests/types/Account.js";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { Account, Command, CommandResponse } from "hyarcade-structures";
 import { createRequire } from "node:module";
 import ImageGenerator from "../images/ImageGenerator.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";

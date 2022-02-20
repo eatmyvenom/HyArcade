@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 
 /**
  * @param {number} number

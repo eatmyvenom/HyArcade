@@ -1,10 +1,8 @@
 module.exports = class HyarcadeRequests {
+  static Database = require("./Database");
+  static HyarcadeWorkerRequest = require("./HyarcadeWorkerRequest");
   static HypixelApi = require("./HypixelApi");
   static hypixelReq = require("./hypixelReq");
   static mojangRequest = require("./mojangRequest");
-
-  static types = {
-    Account: require("./types/Account"),
-    AccountArray: require("./types/AccountArray"),
-  };
+  static MongoConnector = require("./MongoConnector");
 };

@@ -1,7 +1,6 @@
 const fs = require("fs-extra");
 const Logger = require("hyarcade-logger");
-const Account = require("hyarcade-requests/types/Account");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
+const { Account, AccountArray } = require("hyarcade-structures");
 const Accounts = require("./AccountArray");
 const { write, read } = require("./Json");
 const List = require("./List");

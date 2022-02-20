@@ -1,6 +1,5 @@
 import Database from "hyarcade-requests/Database.js";
-import Account from "hyarcade-requests/types/Account.js";
-import Command from "hyarcade-structures/Discord/Command.js";
+import { Account, Command } from "hyarcade-structures";
 import fetch from "node-fetch";
 import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";

@@ -1,10 +1,9 @@
 const { MessageEmbed, Client, Message } = require("discord.js");
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
-const { AccountArray } = require("hyarcade-requests").types;
 const { mojangRequest } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
-const Account = require("hyarcade-requests/types/Account");
+const { Account, AccountArray } = require("hyarcade-structures");
 const fetch = require("node-fetch");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");

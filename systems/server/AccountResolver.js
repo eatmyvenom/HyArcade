@@ -1,7 +1,6 @@
 const Logger = require("hyarcade-logger");
-const { mojangRequest } = require("hyarcade-requests");
-const Account = require("hyarcade-requests/types/Account");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
+const { mojangRequest, MongoConnector } = require("hyarcade-requests");
+const { Account } = require("hyarcade-structures");
 const Json = require("hyarcade-utils/FileHandling/Json");
 
 let fakeFile;

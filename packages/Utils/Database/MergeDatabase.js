@@ -1,7 +1,6 @@
 const Logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
-const Account = require("hyarcade-requests/types/Account");
-const AccountArray = require("hyarcade-requests/types/AccountArray");
+const { Account, AccountArray } = require("hyarcade-structures");
 const FileCache = require("../FileHandling/FileCache");
 const Json = require("../FileHandling/Json");
 

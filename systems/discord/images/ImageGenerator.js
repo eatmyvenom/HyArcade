@@ -1,6 +1,6 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
-const Account = require("hyarcade-requests/types/Account");
+const { Account } = require("hyarcade-structures");
 const StackBlur = require("stackblur-canvas");
 
 const imgCache = [];
