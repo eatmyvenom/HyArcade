@@ -19,7 +19,7 @@ function getKey() {
     key = config.clusters[config.cluster].key;
   }
 
-  if (process.argv[2] == "bot" || process.argv[2] == "serveDB") {
+  if (process.argv[2] == "bot" || process.argv[2] == "serveDB" || Logger.name == "API") {
     key = config.clusters.serverbot.key;
   }
 
