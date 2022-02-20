@@ -15,10 +15,10 @@ module.exports = async (req, res, connector) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
-    let acc = await AccountResolver(connector, url);
+    let resolvedAccount = await AccountResolver(connector, url);
 
-    if (acc?.name == "INVALID-NAME" || acc?.name == undefined || acc == undefined) {
-      Logger.warn(`Account query "${url.searchParams}" did not resolve.`);
+    if (resolvedAccount?.name == "INVALID-NAME" || resolvedAccount?.name == undefined || resolvedAccount == undefined) {
+      Logger.warn(`${url.searchParams} could not resolve to anything`);
       res.statusCode = 404;
       res.end(
         JSON.stringify({
@@ -28,7 +28,18 @@ module.exports = async (req, res, connector) => {
       return;
     }
 
-    res.write(JSON.stringify(acc));
+    const time = url.searchParams.get("time");
+    let response = {};
+
+    if (time != undefined && time != "lifetime") {
+      response.acc = resolvedAccount;
+      const snapshotAccount = await connector.getTimedAccount(resolvedAccount.uuid, time);
+      response.timed = snapshotAccount;
+    } else {
+      response = resolvedAccount;
+    }
+
+    res.write(JSON.stringify(response));
     res.end();
   } else if (req.method == "POST") {
     let data = "";
@@ -38,7 +49,6 @@ module.exports = async (req, res, connector) => {
       req.on("end", async () => {
         json = JSON.parse(data);
         const newAcc = Account.from(json);
-        Logger.verbose(`${newAcc.name} posted to database`);
 
         connector
           .updateAccount(newAcc)

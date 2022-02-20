@@ -23,9 +23,10 @@ const endpointValues = {
   info: 0,
   ping: 0,
   disc: 5,
-  guild: 5,
-  hacker: 5,
-  banned: 5,
+  guild: 0,
+  hacker: 0,
+  banned: 0,
+  internal: 1,
 };
 
 class clientData {
