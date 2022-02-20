@@ -20,11 +20,7 @@ function getKey() {
   }
 
   if (process.argv[2] == "bot" || process.argv[2] == "serveDB" || Logger.name == "API") {
-    key = config.clusters.serverbot.key;
-  }
-
-  if (config.mode == "test") {
-    key = config.hypixel.batchKeys[Math.floor(Math.random() * config.hypixel.batchKeys.length)];
+    key = config.hypixel.botKey;
   }
 
   return key;
