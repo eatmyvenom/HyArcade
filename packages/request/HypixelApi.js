@@ -60,13 +60,7 @@ module.exports = class HypixelApi {
   static async key() {
     const Api = new HypixelApi("key");
     const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.key();
-    }
+    return data;
   }
 
   /**
@@ -78,56 +72,28 @@ module.exports = class HypixelApi {
     const Api = new HypixelApi("player", {
       uuid,
     });
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.player(uuid);
-    }
+    return await Api.makeRequest();
   }
 
   static async friends(uuid) {
     const Api = new HypixelApi("friends", {
       uuid,
     });
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.friends(uuid);
-    }
+    return await Api.makeRequest();
   }
 
   static async recentgames(uuid) {
     const Api = new HypixelApi("recentgames", {
       uuid,
     });
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.recentgames(uuid);
-    }
+    return await Api.makeRequest();
   }
 
   static async status(uuid) {
     const Api = new HypixelApi("status", {
       uuid,
     });
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.status(uuid);
-    }
+    return await Api.makeRequest();
   }
 
   static async guild(something) {
@@ -145,73 +111,33 @@ module.exports = class HypixelApi {
         name: something,
       });
     }
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.guild(something);
-    }
-  }
-
-  static async achievements() {
-    const Api = new HypixelApi("assets/achievements");
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.achievements();
-    }
-  }
-
-  static async challenges() {
-    const Api = new HypixelApi("assets/challenges");
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.challenges();
-    }
+    return await Api.makeRequest();
   }
 
   static async boosters() {
     const Api = new HypixelApi("boosters");
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.boosters();
-    }
+    return await Api.makeRequest();
   }
 
   static async counts() {
     const Api = new HypixelApi("counts");
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.counts();
-    }
+    return await Api.makeRequest();
   }
 
   static async leaderboards() {
     const Api = new HypixelApi("leaderboards");
-    const data = await Api.makeRequest();
-    try {
-      return JSON.parse(data);
-    } catch {
-      logger.err("Hypixel sent malformed json data");
-      logger.err(data);
-      return await HypixelApi.leaderboards();
-    }
+    return await Api.makeRequest();
   }
+
+  static resources = class resources {
+    async challenges() {
+      const Api = new HypixelApi("resources/challenges");
+      return await Api.makeRequest();
+    }
+
+    static async achievements() {
+      const Api = new HypixelApi("resources/achievements");
+      return await Api.makeRequest();
+    }
+  };
 };

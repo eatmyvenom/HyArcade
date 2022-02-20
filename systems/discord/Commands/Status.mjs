@@ -1,7 +1,7 @@
+import axios from "axios";
 import Requests from "hyarcade-requests";
 import Database from "hyarcade-requests/Database.js";
 import Account from "hyarcade-requests/types/Account.js";
-import webRequest from "hyarcade-requests/webRequest.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
@@ -516,8 +516,8 @@ function classicGamesTransformer(status) {
  * @returns {string}
  */
 async function getLastAction(account) {
-  const friendDataReq = await webRequest(`https://api.slothpixel.me/api/players/${account.uuid}/friends`);
-  const friendData = JSON.parse(friendDataReq.data);
+  const friendDataReq = await axios.get(`https://api.slothpixel.me/api/players/${account.uuid}/friends`);
+  const friendData = friendDataReq.data;
 
   let friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
 
@@ -530,8 +530,8 @@ async function getLastAction(account) {
  * @returns {object}
  */
 async function getGEXP(account) {
-  const guildRequest = await webRequest(`https://api.slothpixel.me/api/guilds/${account.uuid}`);
-  const guildData = JSON.parse(guildRequest.data);
+  const guildRequest = await axios.get(`https://api.slothpixel.me/api/guilds/${account.uuid}`);
+  const guildData = guildRequest.data;
 
   if (!guildData.guild) {
     return { daily: "N/A", weekly: "N/A" };

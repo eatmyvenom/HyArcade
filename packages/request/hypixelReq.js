@@ -1,4 +1,4 @@
-const webRequest = require("./webRequest");
+const { default: axios } = require("axios");
 
 module.exports = class hypixelReq {
   url = "";
@@ -18,7 +18,8 @@ module.exports = class hypixelReq {
    * @returns {string}
    */
   async makeRequest() {
-    const req = await webRequest(this.url);
+    const req = await axios.get(this.url.toString());
+
     this.headers = req.headers;
     return req.data;
   }

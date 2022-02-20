@@ -1,5 +1,5 @@
+const { default: axios } = require("axios");
 const logger = require("hyarcade-logger");
-const webRequest = require("./webRequest");
 
 /**
  * The raw uuid response from mojang
@@ -9,9 +9,8 @@ const webRequest = require("./webRequest");
  */
 async function getUUIDRaw(name) {
   // promisify query
-  const response = await webRequest(`https://api.mojang.com/users/profiles/minecraft/${name}`);
-  const { data } = response;
-  return data;
+  const response = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${name}`, { responseType: "text" });
+  return response.data;
 }
 
 /**
@@ -19,7 +18,7 @@ async function getUUIDRaw(name) {
  * @returns {*}
  */
 async function getPlayerRaw(uuid) {
-  const response = await webRequest(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
+  const response = await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`, { responseType: "text" });
   const { data } = response;
   return data;
 }

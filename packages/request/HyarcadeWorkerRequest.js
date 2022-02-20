@@ -1,4 +1,4 @@
-const https = require("https");
+const { default: axios } = require("axios");
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const keys = [...cfg.hypixel.batchKeys, cfg.clusters[cfg.cluster].key];
@@ -32,46 +32,7 @@ class Response {
  * @returns {Promise<Response>}
  */
 async function HyarcadeWorkerRequest(accs) {
-  return new Promise((resolve, reject) => {
-    const url = `https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.database.pass}`;
-
-    const reqOptions = {
-      family: 4,
-      port: 443,
-      protocol: "https:",
-      timeout: 30000,
-      headers: {
-        apikey: getAPIKey(),
-        accs,
-      },
-    };
-
-    try {
-      const requester = https.get(url, reqOptions, res => {
-        let reply = "";
-        res.on("data", d => {
-          reply += d;
-        });
-        res.on("end", () => {
-          let response;
-
-          try {
-            response = JSON.parse(reply);
-          } catch (error) {
-            reject(error);
-          }
-
-          resolve(response);
-        });
-        res.on("error", reject);
-      });
-
-      requester.on("timeout", reject);
-      requester.on("error", reject);
-    } catch (error) {
-      reject(error);
-    }
-  });
+  return axios.get(`https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.database.pass}`, { headers: { apikey: getAPIKey(), accs } });
 }
 
 module.exports = HyarcadeWorkerRequest;
