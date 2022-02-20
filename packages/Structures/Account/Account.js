@@ -1010,9 +1010,13 @@ class Account {
    * @memberof account
    */
   async updateHypixel() {
-    const json = await HypixelApi.player(this.uuid);
+    try {
+      const json = await HypixelApi.player(this.uuid);
 
-    this.setHypixel(json);
+      this.setHypixel(json);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 }
 
