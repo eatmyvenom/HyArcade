@@ -3,7 +3,7 @@
 const Logger = require("hyarcade-logger");
 const AccountAP = require("./AccountAP");
 const PopulateAccountData = require("./PopulateAccountData");
-const HypixelApi = require("../HypixelApi");
+const HypixelApi = require("hyarcade-requests/HypixelApi");
 
 class ArcadeGameStats {
   /**

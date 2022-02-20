@@ -1,45 +1,12 @@
-/* eslint-disable unicorn/no-array-reduce */
-/* eslint-disable unicorn/prefer-object-from-entries */
 const Logger = require("hyarcade-logger");
 const { Account } = require("hyarcade-structures");
 const Sleep = require("hyarcade-utils/Sleep");
 const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
-const { readFile, writeFile } = require("fs-extra");
 const fs = require("fs-extra");
 const Database = require("hyarcade-requests/Database");
 
 let cfg;
-let masterDoc;
-
 let disclist;
-
-/**
- * @param item
- * @returns {boolean}
- */
-function isObject(item) {
-  return item && typeof item === "object" && !Array.isArray(item);
-}
-
-/**
- * @param target
- * @param source
- * @returns {object}
- */
-function mergeDeep(target, source) {
-  let output = Object.assign({}, target);
-  if (isObject(target) && isObject(source)) {
-    for (const key of Object.keys(source)) {
-      if (isObject(source[key])) {
-        if (!(key in target)) Object.assign(output, { [key]: source[key] });
-        else output[key] = mergeDeep(target[key], source[key]);
-      } else {
-        Object.assign(output, { [key]: source[key] });
-      }
-    }
-  }
-  return output;
-}
 
 /**
  *
@@ -100,8 +67,6 @@ async function updateSegment(uuidArr, currentBatch, segmentedAccs) {
       }
     } else {
       const acc = new Account(uuid, 0, uuid);
-      Logger.verbose("Merging data into master document");
-      masterDoc = mergeDeep(masterDoc, accData);
       acc.setHypixel(accData);
 
       acc.discord = disclist[acc.uuid];
@@ -186,9 +151,6 @@ async function miniUpdater() {
   const uuidArr = await Database.internal({ fetchImportant: forceLevel });
   Logger.info(`Preparing to update ${uuidArr.length} accounts`);
 
-  const masterFile = await readFile("data/fullplayer.json");
-  masterDoc = masterFile.toJSON();
-
   if (cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     Logger.info("Using worker updating system");
     const list = await Database.readDB("discordList");
@@ -200,53 +162,6 @@ async function miniUpdater() {
 
     await fastUpdate(uuidArr);
   }
-
-  Logger.log("Overwriting data for master API document");
-
-  delete masterDoc.data;
-  masterDoc.player.displayname = "playerName";
-  masterDoc.player.playername = "playername";
-  masterDoc.player.uuid = "00000000000000000000000000000000";
-
-  const orderedDoc = Object.keys(masterDoc)
-    .sort()
-    .reduce((obj, key) => {
-      obj[key] = masterDoc[key];
-      return obj;
-    }, {});
-
-  for (const key in orderedDoc.player) {
-    if (key.startsWith("claimed_solo_bank_") || key.startsWith("claimed_coop_bank_")) {
-      delete orderedDoc.player[key];
-    }
-  }
-
-  orderedDoc.player.claimed_solo_bank_00000000000000000000000000000000 = 0;
-  orderedDoc.player.claimed_coop_bank_00000000000000000000000000000000 = 0;
-
-  for (const key in orderedDoc.player.housingMeta) {
-    if (key.startsWith("given_cookies_")) {
-      delete orderedDoc.player[key];
-    }
-  }
-
-  orderedDoc.player.housingMeta.given_cookies_000000 = ["00000000-0000-0000-0000-000000000000"];
-
-  orderedDoc.player.stats.SkyBlock.profiles = {
-    "00000000000000000000000000000000": {
-      profile_id: "00000000000000000000000000000000",
-      cute_name: "green",
-    },
-  };
-
-  orderedDoc.player = Object.keys(orderedDoc.player)
-    .sort()
-    .reduce((obj, key) => {
-      obj[key] = orderedDoc.player[key];
-      return obj;
-    }, {});
-
-  await writeFile("data/fullplayer.json", JSON.stringify(orderedDoc, undefined, 2));
 
   Logger.info("Update completed");
 }

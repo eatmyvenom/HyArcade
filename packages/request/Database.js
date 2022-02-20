@@ -410,7 +410,7 @@ module.exports = class Database {
     return discAccs;
   }
 
-  static async internal(json, auth) {
+  static async internal(json, auth = "") {
     const url = new URL("internal", cfg.database.url);
 
     let response;
