@@ -13,8 +13,8 @@ async function main() {
   const interfaces = cfg.hypixel.localInterfaces;
   const len = Math.min(keys.length, interfaces.length);
 
-  let lastInfo = await Database.info();
-  while (lastInfo != undefined) {
+  let ping = await Database.ping();
+  while (ping) {
     const workers = [];
     for (let i = 0; i < len; i++) {
       const key = keys[i];
@@ -26,7 +26,7 @@ async function main() {
 
     await Promise.all(workers);
     Logger.log("Group finished");
-    lastInfo = await Database.info();
+    ping = await Database.ping();
   }
 }
 

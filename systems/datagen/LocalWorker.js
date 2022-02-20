@@ -1,6 +1,6 @@
 const https = require("https");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
-const Logger = new LoggerInstance("Worker", "🚧");
+const Logger = new LoggerInstance("Local-Worker", "🚧");
 const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
@@ -101,12 +101,10 @@ async function runBatch(batchUUIDs, key, address) {
  * @param {string} address
  */
 async function LocalWorker(batchRes, key, address) {
-  Logger.name = `Worker`;
-
-  Logger.info(`Starting batch on ${address}`);
+  Logger.info(`${address} - Start`);
   const batchUUIDs = batchRes.map(a => a.uuid);
   await runBatch(batchUUIDs, key, address);
-  Logger.info(`Batch finished on ${address}`);
+  Logger.info(`${address} - End`);
 }
 
 module.exports = LocalWorker;

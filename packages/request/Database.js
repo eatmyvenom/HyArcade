@@ -531,4 +531,16 @@ module.exports = class Database {
 
     return response;
   }
+
+  static async ping() {
+    const url = new URL("ping", cfg.database.url);
+
+    try {
+      const testData = await webRequest(url.toString());
+      JSON.parse(testData.data);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 };
