@@ -32,7 +32,7 @@ async function verifyCommand(args, rawMsg, interaction) {
 
   let uuid;
 
-  uuid = firstWord.length == 32 ? firstWord : await mojangRequest.getUUID(firstWord);
+  uuid = firstWord.length == 32 ? firstWord : await mojangRequest.getUUIDRaw(firstWord);
   if (`${uuid}`.length != 32) {
     const noexistEmbed = ERROR_IGN_UNDEFINED;
 
