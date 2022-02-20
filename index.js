@@ -160,7 +160,7 @@ async function main() {
     }
 
     default: {
-      const mod = require(`./systems/cli/${args[2].toLowerCase()}`);
+      const mod = require(`./systems/cli/${args[2]?.toLowerCase()}`);
       await mod(args);
     }
   }

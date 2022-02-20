@@ -9,6 +9,10 @@ if (argv.includes("--verbose") || argv.includes("-v")) {
   logLevel = 6;
 }
 
+if (argv.includes("--silent")) {
+  logLevel = 0;
+}
+
 const levels = ["ERROR", "WARN", "LOG", "INFO", "DEBUG", "VERBOSE"];
 
 /**
