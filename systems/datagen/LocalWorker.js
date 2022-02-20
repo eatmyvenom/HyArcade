@@ -5,6 +5,7 @@ const Database = require("hyarcade-requests/Database");
 const Account = require("hyarcade-requests/types/Account");
 const Sleep = require("hyarcade-utils/Sleep");
 const cfg = require("hyarcade-config").fromJSON();
+const { RequestTimeoutError } = require("hyarcade-errors");
 
 /**
  *
@@ -48,7 +49,9 @@ function requestData(uuid, key, address) {
         res.on("error", reject);
       });
 
-      requester.on("timeout", reject);
+      requester.on("timeout", () => {
+        reject(new RequestTimeoutError("The outgoing request timed out."));
+      });
       requester.on("error", reject);
     } catch (error) {
       reject(error);
@@ -77,7 +80,7 @@ async function runBatch(batchUUIDs, key, address) {
       if (reply?.data?.player == undefined) {
         if (cfg.logRateLimit) {
           Logger.warn(`Unable to access data for ${uuid}`);
-          Logger.warn(reply?.data);
+          Logger.warn(JSON.stringify(reply?.data, undefined, 2));
         } else {
           Logger.verbose(`Unable to access data for ${uuid}`);
         }
