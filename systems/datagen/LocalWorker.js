@@ -67,6 +67,9 @@ function requestData(uuid, key, address) {
 async function mergeData(apiData) {
   if (!doc.ready) {
     await doc.readData();
+    setInterval(() => {
+      doc.saveData();
+    }, 60000);
   }
 
   await doc.addData(apiData);
