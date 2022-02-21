@@ -40,7 +40,7 @@ async function getPlayer(uuid) {
 async function getUUID(name) {
   const raw = await getUUIDRaw(name);
 
-  return raw;
+  return raw.id;
 }
 
 module.exports = {
