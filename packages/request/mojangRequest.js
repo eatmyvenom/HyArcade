@@ -1,5 +1,4 @@
 const { default: axios } = require("axios");
-const logger = require("hyarcade-logger");
 
 /**
  * The raw uuid response from mojang
@@ -29,12 +28,7 @@ async function getPlayerRaw(uuid) {
  */
 async function getPlayer(uuid) {
   const raw = await getPlayerRaw(uuid);
-  if (raw != "") {
-    return JSON.parse(raw);
-  }
-  // log the missing username so i can change it
-  logger.err(`"${uuid}" does not exist`);
-  return;
+  return raw;
 }
 
 /**
@@ -46,13 +40,7 @@ async function getPlayer(uuid) {
 async function getUUID(name) {
   const raw = await getUUIDRaw(name);
 
-  // make sure the data isnt an empty response
-  if (raw != "") {
-    return JSON.parse(raw).id;
-  }
-  // log the missing username so i can change it
-  logger.err(`"${name}" does not exist`);
-  return;
+  return raw;
 }
 
 module.exports = {
