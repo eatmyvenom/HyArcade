@@ -1,3 +1,4 @@
+const Logger = require("hyarcade-logger");
 const webhook = require("../events/webhook");
 
 /**
@@ -6,6 +7,7 @@ const webhook = require("../events/webhook");
  * @returns {*}
  */
 async function main(args) {
+  Logger.name = "Screenshotter";
   switch (args[3]) {
     case "week": {
       return await webhook.sendFakeWeekLBs();

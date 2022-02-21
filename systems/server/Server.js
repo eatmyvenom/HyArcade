@@ -1,6 +1,8 @@
 const process = require("process");
 const { URL } = require("url");
 const logger = require("hyarcade-logger");
+const LoggerInstance = require("hyarcade-logger/LoggerInstance");
+const AccessLogger = new LoggerInstance("Access", "📄");
 const { DupeKeyError } = require("hyarcade-errors");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
@@ -29,9 +31,9 @@ async function callback(request, response) {
   const mod = endpoints.all[endpoint];
 
   if (address == undefined) {
-    logger.err("Null requester attempted, denying connection");
+    AccessLogger.err("Null requester attempted, denying connection");
   }
-  logger.verbose(`${address} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+  AccessLogger.verbose(`${address} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
 
   let rateLimit;
   try {
@@ -53,13 +55,12 @@ async function callback(request, response) {
   }
 
   if (mod == undefined) {
-    logger.err(`Attempted nonexistent endpoint '${endpoint}'`);
+    AccessLogger.err(`${address} attempted nonexistent endpoint '${endpoint}'`);
     response.statusCode = 404;
     response.end();
   } else {
     try {
       await mod(request, response, connector);
-      logger.verbose("request completed");
     } catch (error) {
       logger.err(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
       logger.err(error.stack);

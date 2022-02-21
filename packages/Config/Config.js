@@ -32,6 +32,7 @@ class Database {
   defaultLimit = 120;
   pass = process.env.HYARCADE_KEY;
   key = process.env.HYARCADE_KEY;
+  serverIP = "";
   /**
    * @type {object<string, DatabaseKey>}
    */

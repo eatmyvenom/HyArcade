@@ -1,4 +1,3 @@
-const Logger = require("hyarcade-logger");
 const { DupeKeyError } = require("hyarcade-errors");
 const cfg = require("hyarcade-config").fromJSON();
 
@@ -46,7 +45,6 @@ class clientData {
  */
 function RateLimiter(address, endpoint, key, pass) {
   if (pass == cfg.database.pass) {
-    Logger.verbose("Skipping rate limit with database master pass");
     return 0;
   }
 
