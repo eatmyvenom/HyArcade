@@ -986,7 +986,7 @@ class Account {
     this.football = new FootballStats(arcade);
     this.galaxyWars = new GalaxyWarsStats(arcade);
     this.hideAndSeek = new HideAndSeekStats(player);
-    this.holeInTheWall = new HoleInTheWallStats(arcade);
+    this.holeInTheWall = new HoleInTheWallStats(player);
     this.hypixelSays = new HypixelSaysStats(arcade);
     this.partyGames = new PartyGamesStats(arcade);
     this.pixelPainters = new PixelPaintersStats(arcade);
