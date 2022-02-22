@@ -1,4 +1,5 @@
 import axios from "axios";
+import fs from "fs-extra";
 import Requests from "hyarcade-requests";
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
@@ -316,51 +317,10 @@ function getImage(status) {
         }
 
         case "PAINTBALL": {
-          switch (status.session.map) {
-            case "LaMente": {
-              return "assets/status/Classic-paintball-LaMente.png";
-            }
-            case "Boletus": {
-              return "assets/status/Classic-paintball-Boletus.png";
-            }
-            case "Market": {
-              return "assets/status/Classic-paintball-Market.png";
-            }
-            case "Swamps": {
-              return "assets/status/Classic-paintball-Swamps.png";
-            }
-            case "Egypt": {
-              return "assets/status/Classic-paintball-Egypt.png";
-            }
-            case "Victorian": {
-              return "assets/status/Classic-paintball-Victorian.png";
-            }
-            case "Octagon": {
-              return "assets/status/Classic-paintball-Octagon.png";
-            }
-            case "Oh Canada!": {
-              return "assets/status/Classic-paintball-Oh_Canada!.png";
-            }
-            case "LaLaLand": {
-              return "assets/status/Classic-paintball-LaLaLand.png";
-            }
-            case "Siege": {
-              return "assets/status/Classic-paintball-Siege.png";
-            }
-            case "Gladiator": {
-              return "assets/status/Classic-paintball-Gladiator.png";
-            }
-            case "Babyland": {
-              return "assets/status/Classic-paintball-Babyland.png";
-            }
-            case "Trick Or Treat": {
-              return "assets/status/Classic-paintball-Trick_Or_Treat.png";
-            }
-            case "Herobrine": {
-              return "assets/status/Classic-paintball-Herobrine.png";
-            }
+          if (fs.existsSync(`assets/status/classic/paintball/${status.session.map}.png`)) {
+            return `assets/status/classic/paintball/${status.session.map}.png`;
           }
-          return "assets/status/Classic-paintball-LaMente.png";
+          break;
         }
       }
 
@@ -384,10 +344,21 @@ function getImage(status) {
     }
 
     case "BUILD_BATTLE": {
-      return "assets/status/Build-battle-lobby.png";
+      return status.session.mode == "LOBBY" ? "assets/status/Build-battle-lobby.png" : "assets/status/Build-battle.png";
     }
 
     case "DUELS": {
+      switch (status.session.mode) {
+        case "DUELS_SUMO_DUEL": {
+          status.session.mode = "Sumo";
+
+          if (fs.existsSync(`assets/status/duels/sumo/${status.session.map}.png`)) {
+            return `assets/status/duels/sumo/${status.session.map}.png`;
+          }
+          break;
+        }
+      }
+
       return "assets/status/Duels-lobby-new.png";
     }
 
@@ -398,11 +369,29 @@ function getImage(status) {
 
     case "TNTGAMES": {
       status.session.gameType = "Tnt Games";
+      switch (status.session.mode) {
+        case "TNTRUN": {
+          status.session.mode = "TNT Run";
+
+          if (fs.existsSync(`assets/status/tnt/run/${status.session.map}.png`)) {
+            return `assets/status/tnt/run/${status.session.map}.png`;
+          }
+          break;
+        }
+
+        case "PVPRUN": {
+          status.session.mode = "PVP Run";
+
+          if (fs.existsSync(`assets/status/tnt/run/${status.session.map}.png`)) {
+            return `assets/status/tnt/run/${status.session.map}.png`;
+          }
+        }
+      }
       return "assets/status/Tnt-lobby.png";
     }
 
     case "WALLS3": {
-      status.session.gameType = "Mega walls";
+      status.session.gameType = "Mega Walls";
       return "assets/status/Mega-walls-lobby.png";
     }
 
@@ -566,6 +555,8 @@ async function callback(args, rawmsg, interaction) {
 
   const status = await Requests.HypixelApi.status(acc.uuid);
 
+  const stsJSON = JSON.stringify(status, undefined, 2);
+
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
   const startY = 200;
@@ -656,7 +647,7 @@ async function callback(args, rawmsg, interaction) {
     }
   }
 
-  return new CommandResponse("", undefined, img.toDiscord());
+  return new CommandResponse(`\`\`\`${stsJSON}\`\`\``, undefined, img.toDiscord());
 }
 
 export default new Command(["status", "sts"], ["*"], callback, 10000);
