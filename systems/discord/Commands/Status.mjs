@@ -555,8 +555,6 @@ async function callback(args, rawmsg, interaction) {
 
   const status = await Requests.HypixelApi.status(acc.uuid);
 
-  const stsJSON = JSON.stringify(status, undefined, 2);
-
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
   const startY = 200;
@@ -647,7 +645,7 @@ async function callback(args, rawmsg, interaction) {
     }
   }
 
-  return new CommandResponse(`\`\`\`${stsJSON}\`\`\``, undefined, img.toDiscord());
+  return new CommandResponse("", undefined, img.toDiscord());
 }
 
 export default new Command(["status", "sts"], ["*"], callback, 10000);
