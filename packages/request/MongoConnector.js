@@ -567,7 +567,7 @@ class MongoConnector {
   }
 
   async getImportantAccounts(level = 0) {
-    Logger.out(`Getting important accounts with level: ${level}`);
+    Logger.info(`Getting important accounts with level: ${level}`);
     const cfg = Config.fromJSON();
     let accs = [];
     let leaderboarders = [];
