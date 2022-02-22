@@ -184,7 +184,9 @@ class Guild {
    */
   async getGuild() {
     try {
-      return await HypixelApi.guild(this.input);
+      if (this.input != undefined && this.input != "") {
+        return await HypixelApi.guild(this.input);
+      }
     } catch (error) {
       logger.err(error.stack);
       logger.err(this.input);
