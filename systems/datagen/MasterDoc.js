@@ -42,6 +42,10 @@ class MasterDoc {
   }
 
   async addData(source) {
+    if (source.success == false) {
+      return;
+    }
+
     this.masterDoc = mergeDeep(this.masterDoc, source);
   }
 
