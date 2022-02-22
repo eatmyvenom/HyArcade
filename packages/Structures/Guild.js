@@ -72,6 +72,7 @@ class Guild {
   input = "";
 
   memberUUIDs = [];
+  members = [];
 
   uuid = "";
   name = "";
