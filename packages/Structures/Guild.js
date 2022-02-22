@@ -71,6 +71,8 @@ class GameExperience {
 class Guild {
   input = "";
 
+  memberUUIDs = [];
+
   uuid = "";
   name = "";
 
