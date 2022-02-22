@@ -19,7 +19,7 @@ module.exports = async (req, res, connector) => {
 
     if (resolvedAccount?.name == "INVALID-NAME" || resolvedAccount?.name == undefined || resolvedAccount == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
-      res.statusCode = 404;
+      res.statusCode = 200;
       res.end(
         JSON.stringify({
           error: "ACC_UNDEFINED",
