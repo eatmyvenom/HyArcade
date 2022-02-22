@@ -1,13 +1,11 @@
 const https = require("https");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
-const Logger = new LoggerInstance("Local-Worker", "🚧");
+const Logger = new LoggerInstance("Local-Worker", "📈");
 const Database = require("hyarcade-requests/Database");
 const { Account } = require("hyarcade-structures");
 const Sleep = require("hyarcade-utils/Sleep");
 const cfg = require("hyarcade-config").fromJSON();
 const { RequestTimeoutError } = require("hyarcade-errors");
-const MasterDoc = require("./MasterDoc");
-const doc = new MasterDoc();
 
 /**
  *
@@ -62,20 +60,6 @@ function requestData(uuid, key, address) {
 }
 
 /**
- * @param apiData
- */
-async function mergeData(apiData) {
-  if (!doc.ready) {
-    await doc.readData();
-    setInterval(() => {
-      doc.saveData();
-    }, 60000);
-  }
-
-  await doc.addData(apiData);
-}
-
-/**
  *
  * @param {string} batchUUIDs
  * @param {string} key
@@ -96,7 +80,7 @@ async function runBatch(batchUUIDs, key, address) {
       if (reply?.data?.player == undefined) {
         if (cfg.logRateLimit) {
           Logger.warn(`Unable to access data for ${uuid}`);
-          Logger.warn(JSON.stringify(reply?.data, undefined, 2));
+          Logger.warn(JSON.stringify(reply?.data));
         } else {
           Logger.verbose(`Unable to access data for ${uuid}`);
         }
@@ -105,10 +89,7 @@ async function runBatch(batchUUIDs, key, address) {
       const acc = new Account("", 0, uuid);
       acc.setHypixel(reply.data);
 
-      let mergeTask = mergeData(reply.data);
-      let pushTask = Database.addAccount(acc);
-
-      await Promise.all([mergeTask, pushTask]);
+      await Database.addAccount(acc);
     } catch (error) {
       Logger.error("Error requesting data from local worker.");
       Logger.error(error);
@@ -123,10 +104,10 @@ async function runBatch(batchUUIDs, key, address) {
  * @param {string} address
  */
 async function LocalWorker(batchRes, key, address) {
-  Logger.info(`${address} - Start`);
+  Logger.verbose(`${address} - Querying data`);
   const batchUUIDs = batchRes.map(a => a.uuid);
   await runBatch(batchUUIDs, key, address);
-  Logger.info(`${address} - End`);
+  Logger.info(`Batch completed`);
 }
 
 module.exports = LocalWorker;
