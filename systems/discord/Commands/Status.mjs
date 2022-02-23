@@ -590,4 +590,4 @@ async function callback(args, rawmsg, interaction) {
   return new CommandResponse("", undefined, img.toDiscord());
 }
 
-export default new Command(["status", "sts"], ["*"], callback, 10000);
+export default new Command(["status", "sts"], ["*"], callback, 15000);
