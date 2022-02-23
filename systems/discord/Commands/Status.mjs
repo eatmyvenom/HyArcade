@@ -351,9 +351,28 @@ function getImage(status) {
       switch (status.session.mode) {
         case "DUELS_SUMO_DUEL": {
           status.session.mode = "Sumo";
-
           if (fs.existsSync(`assets/status/duels/sumo/${status.session.map}.png`)) {
             return `assets/status/duels/sumo/${status.session.map}.png`;
+          }
+          break;
+        }
+
+        case "DUELS_CAPTURE_THREES":
+        case "DUELS_BRIDGE_3V3V3V3":
+        case "DUELS_BRIDGE_2V2V2V2":
+        case "DUELS_BRIDGE_DOUBLES":
+        case "DUELS_BRIDGE_FOUR":
+        case "DUELS_BRIDGE_DUEL":
+        case "DUELS_BRIDGE_THREES": {
+          if (fs.existsSync(`assets/status/duels/bridge/${status.session.map}.png`)) {
+            return `assets/status/duels/bridge/${status.session.map}.png`;
+          }
+          break;
+        }
+
+        default: {
+          if (fs.existsSync(`assets/status/duels/normal/${status.session.map}.png`)) {
+            return `assets/status/duels/normal/${status.session.map}.png`;
           }
           break;
         }
