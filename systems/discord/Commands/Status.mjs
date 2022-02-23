@@ -516,6 +516,10 @@ async function callback(args, rawmsg, interaction) {
     let modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
     let typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
 
+    if (modeName.trim() == "") {
+      modeName = typeName;
+    }
+
     await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
     await img.drawMcText(ImageGenerator.formatAcc(status, true), img.canvas.width / 2, 100, 56, "center");
 
