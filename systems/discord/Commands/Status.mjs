@@ -223,86 +223,8 @@ function getImage(status) {
         }
 
         case "QUAKECRAFT": {
-          switch (status.session.map) {
-            case "Apex III": {
-              return "assets/status/Classic-quake-Apex_III.png";
-            }
-
-            case "Ancient": {
-              return "assets/status/Classic-quake-Ancient.png";
-            }
-
-            case "Fryst": {
-              return "assets/status/Classic-quake-Fryst.png";
-            }
-
-            case "Cold_War": {
-              return "assets/status/Classic-quake-Cold_War.png";
-            }
-
-            case "Karunesh": {
-              return "assets/status/Classic-quake-Karunesh.png";
-            }
-
-            case "Forgotten": {
-              return "assets/status/Classic-quake-Forgotten.png";
-            }
-
-            case "Sunken": {
-              return "assets/status/Classic-quake-Sunken.png";
-            }
-
-            case "WoodStone": {
-              return "assets/status/Classic-quake-WoodStone.png";
-            }
-
-            case "Town": {
-              return "assets/status/Classic-quake-Town.png";
-            }
-
-            case "Demonic": {
-              return "assets/status/Classic-quake-Demonic.png";
-            }
-
-            case "Martian": {
-              return "assets/status/Classic-quake-Martian.png";
-            }
-
-            case "Sero": {
-              return "assets/status/Classic-quake-Sero.png";
-            }
-
-            case "Faarah": {
-              return "assets/status/Classic-quake-Faarah.png";
-            }
-
-            case "Lost World": {
-              return "assets/status/Classic-quake-Lost_World.png";
-            }
-
-            case "DigSite2": {
-              return "assets/status/Classic-quake-DigSite2.png";
-            }
-
-            case "Mines": {
-              return "assets/status/Classic-quake-Mines.png";
-            }
-
-            case "Apex II": {
-              return "assets/status/Classic-quake-Apex_II.png";
-            }
-
-            case "Apex": {
-              return "assets/status/Classic-quake-Apex.png";
-            }
-
-            case "HustWood": {
-              return "assets/status/Classic-quake-HustWood.png";
-            }
-
-            case "DigSite": {
-              return "assets/status/Classic-quake-DigSite.png";
-            }
+          if (fs.existsSync(`assets/status/classic/quake/${status.session.map}.png`)) {
+            return `assets/status/classic/quake/${status.session.map}.png`;
           }
           return "assets/status/Classic-quake-Apex_III.png";
         }
