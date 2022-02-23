@@ -30,6 +30,7 @@ module.exports = async function LeaderboardCategorys(category, interaction, test
     delete categorys.Quests;
     delete categorys.Farmhunt;
     delete categorys.Positions;
+    delete categorys.Extra;
   }
 
   const allKeys = Object.keys(categorys);
