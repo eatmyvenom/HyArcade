@@ -16,6 +16,7 @@ const endpointValues = {
   database: 10,
   mwlb: 5,
   miniwalls: 5,
+  status: 3,
   timeacc: 1,
   timeaccount: 1,
   acctimed: 1,

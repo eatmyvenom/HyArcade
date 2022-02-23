@@ -640,13 +640,14 @@ class ZombiesStats {
 }
 
 class ExtraStats {
+  combinedAchievementProgress = 0;
+  classicTokens = 0;
+  challengeAchievementsCompleted = 0;
   tournamentTributes = 0;
   tournamentTokens = 0;
-  classicTokens = 0;
-  migrated = false;
-  challengeAchievementsCompleted = 0;
   totalCoins = 0;
   rewardStreak = 0;
+  migrated = false;
 
   /**
    *
@@ -660,6 +661,11 @@ class ExtraStats {
     this.challengeAchievementsCompleted = (player?.achievementsOneTime ?? []).length;
     this.totalCoins = player?.achievements?.general_coins ?? 0;
     this.rewardStreak = player?.rewardStreak ?? 0;
+
+    this.combinedAchievementProgress = 0;
+    for (const achievementName in player?.achievements ?? {}) {
+      this.combinedAchievementProgress += player?.achievements?.[achievementName] ?? 0;
+    }
   }
 }
 

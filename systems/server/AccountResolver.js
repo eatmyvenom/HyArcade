@@ -9,9 +9,10 @@ let fakeFile;
  *
  * @param {MongoConnector} connector
  * @param {URL} url
+ * @param {boolean} forceCache
  * @returns {Promise<Account>}
  */
-async function AccountResolver(connector, url) {
+async function AccountResolver(connector, url, forceCache = false) {
   if (fakeFile == undefined) {
     fakeFile = await Json.read("fakeStats.json");
   }
@@ -19,7 +20,7 @@ async function AccountResolver(connector, url) {
   const ign = url.searchParams.get("ign");
   let uuid = url.searchParams.get("uuid");
   const discid = url.searchParams.get("discid");
-  const cacheOnly = url.searchParams.has("cache");
+  const cacheOnly = url.searchParams.has("cache") || forceCache;
   let acc;
 
   if (ign != undefined) {
