@@ -1,6 +1,5 @@
 import axios from "axios";
 import fs from "fs-extra";
-import Requests from "hyarcade-requests";
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
 import { createRequire } from "node:module";
@@ -482,19 +481,17 @@ async function callback(args, rawmsg, interaction) {
   /**
    * @type {Account}
    */
-  let acc;
+  let status;
 
   if (interaction != undefined) {
     await interaction.deferReply();
-    acc = await Database.account(interaction.options.getString("player"), interaction.user.id);
-    if (acc == undefined) {
+    status = await Database.status(interaction.options.getString("player"), interaction.user.id);
+    if (status == undefined) {
       return new CommandResponse("", ERROR_UNLINKED);
     }
   } else {
-    acc = await Database.account(args[0], rawmsg.author.id);
+    status = await Database.status(args[0], rawmsg.author.id);
   }
-
-  const status = await Requests.HypixelApi.status(acc.uuid);
 
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
@@ -504,7 +501,7 @@ async function callback(args, rawmsg, interaction) {
 
   let y = startY;
   if (status.session.online) {
-    const counts = await Requests.HypixelApi.counts();
+    const counts = await Database.gameCounts();
 
     classicGamesTransformer(status);
 
@@ -520,7 +517,7 @@ async function callback(args, rawmsg, interaction) {
     let typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
 
     await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
-    await img.drawMcText(ImageGenerator.formatAcc(acc, true), img.canvas.width / 2, 100, 56, "center");
+    await img.drawMcText(ImageGenerator.formatAcc(status, true), img.canvas.width / 2, 100, 56, "center");
 
     await img.drawMcText("&aType", 300, (y += increase), 42, "center");
     await img.drawMcText(`&a${typeName}`, 300, (y += increase), 50, "center");
@@ -538,7 +535,7 @@ async function callback(args, rawmsg, interaction) {
     y += spacer;
 
     await img.drawMcText("&aLogin Time", 300, (y += increase), 42, "center");
-    await img.drawMcText(`&a${loggedIn(acc)}`, 300, (y += increase), 50, "center");
+    await img.drawMcText(`&a${loggedIn(status)}`, 300, (y += increase), 50, "center");
 
     y = startY;
 
@@ -554,27 +551,27 @@ async function callback(args, rawmsg, interaction) {
   } else {
     await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000008F");
     await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
-    await img.drawMcText(ImageGenerator.formatAcc(acc, true), img.canvas.width / 2, 100, 56, "center");
+    await img.drawMcText(ImageGenerator.formatAcc(status, true), img.canvas.width / 2, 100, 56, "center");
 
     await img.drawMcText("&aLast Logout", 300, (y += increase), 42, "center");
-    await img.drawMcText(`&a${lastSeen(acc)}`, 300, (y += increase), 50, "center");
+    await img.drawMcText(`&a${lastSeen(status)}`, 300, (y += increase), 50, "center");
 
     y += spacer + increase + increase + spacer;
 
-    let game = acc.mostRecentGameType;
+    let game = status.mostRecentGameType;
     game = `${game.slice(0, 1).toUpperCase()}${game.slice(1).toLowerCase()}`.replace(/_/g, " ");
 
     await img.drawMcText("&bLast Mode", 300, (y += increase), 42, "center");
     await img.drawMcText(`&b${game}`, 300, (y += increase), 50, "center");
 
-    if (acc.apiHidden) {
+    if (status.apiHidden) {
       y = startY;
 
       await img.drawMcText(`&aLast Known Action`, img.canvas.width - 300, (y += increase), 42, "center");
-      await img.drawMcText(`&a${await getLastAction(acc)}`, img.canvas.width - 300, (y += increase), 50, "center");
+      await img.drawMcText(`&a${await getLastAction(status)}`, img.canvas.width - 300, (y += increase), 50, "center");
       y += spacer;
 
-      const gexp = await getGEXP(acc);
+      const gexp = await getGEXP(status);
 
       await img.drawMcText(`&bDaily GEXP`, img.canvas.width - 300, (y += increase), 42, "center");
       await img.drawMcText(`&b${gexp.daily}`, img.canvas.width - 300, (y += increase), 50, "center");
