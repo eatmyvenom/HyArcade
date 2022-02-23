@@ -26,6 +26,8 @@ module.exports = async (req, res, connector) => {
     status.lastLogout = resolvedAccount.lastLogout;
     status.lastLogin = resolvedAccount.lastLogin;
     status.isLoggedIn = resolvedAccount.isLoggedIn;
+    status.apiHidden = resolvedAccount.apiHidden;
+    status.mostRecentGameType = resolvedAccount.mostRecentGameType;
 
     if (cacheAccount.extra.combinedAchievementProgress != resolvedAccount.extra.combinedAchievementProgress) {
       status.actionTime.otherActions = Math.max(status.actionTime.otherActions, cacheAccount.updateTime);
