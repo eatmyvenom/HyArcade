@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
 
     if (Date.now() - countsTime > 300000) {
       counts = await HypixelApi.counts();
+      countsTime = Date.now();
     }
 
     res.write(JSON.stringify(counts));
