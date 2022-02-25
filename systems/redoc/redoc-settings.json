@@ -1,10 +1,27 @@
 {
   "jsonSampleExpandLevel": 1,
   "theme": {
+    "colors": {
+      "http": {
+        "get": "#379c35",
+        "post": "#7873f5",
+        "delete": "#c60532"
+      },
+      "responses": {
+        "success": {
+          "color": "#379c35"
+        },
+        "error": {
+          "color": "#c60532"
+        }
+      }
+    },
     "sidebar": {
       "backgroundColor": "#2d3040",
       "textColor": "#AAAAAA",
-      "rightLineColor": "#44a3e7"
+      "rightLineColor": "#7873f5",
+      "separatorLabelColor": "#7873f5",
+      "width": "17.5%"
     },
     "rightPanel": {
       "backgroundColor": "#2d3040"
@@ -16,6 +33,10 @@
       "panels": {
         "backgroundColor": "#2d3040"
       }
+    },
+    "spacing": {
+      "sectionVertical": 6,
+      "sectionHorizontal": 24
     }
   }
 }

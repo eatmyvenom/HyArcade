@@ -9,6 +9,10 @@ const { Database } = require("hyarcade-requests");
 function convertObject(obj) {
   const res = { type: "object", properties: {} };
 
+  if (typeof obj == "string") {
+    return { type: "string" };
+  }
+
   if (Array.isArray(obj) && obj.length > 0) {
     return { type: "array", items: convertObject(obj[0]) };
   }
@@ -21,7 +25,6 @@ function convertObject(obj) {
     } else {
       res.properties[field] = {
         type: typeof obj[field],
-        example: obj[field],
       };
     }
   }
@@ -72,7 +75,7 @@ async function main() {
 ## Limits
       Any IP address has a default rate limit of 120 requests per minute.
 
-### Response Format
+## Response Format
 All responses in JSON format.
       # Authentication
       <!-- ReDoc-Inject: <security-definitions> -->`,
