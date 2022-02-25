@@ -34,7 +34,7 @@ class EndpointStorage {
       hacker: await importNew("hacker.js"),
       banned: await importNew("banned.js"),
       internal: await importNew("internal.js"),
-      undefined: await importNew("redoc.js"),
+      "": await importNew("redoc.js"),
     };
   }
 }
