@@ -11,8 +11,9 @@ module.exports = async (req, res, connector) => {
     res.setHeader("Content-Type", "application/json");
 
     const obj = await connector.getInfo();
+    const { version } = require("../../../package.json");
 
-    res.write(JSON.stringify(obj));
+    res.write(JSON.stringify({ ...obj, version }));
     res.end();
   } else {
     res.statusCode = 404;
