@@ -1,0 +1,4503 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Hyarcade API",
+    "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n### Response Format\nAll responses in JSON format.\n      # Authentication\n      <!-- ReDoc-Inject: <security-definitions> -->",
+    "version": "v1",
+    "contact": {
+      "name": "EatMyVenom",
+      "url": "https://vnmm.dev",
+      "email": "v.nmm@outlook.net"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.hyarcade.xyz"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "Api Key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "key",
+        "description": "Not needed in most use cases, the rate limits are 120/minute per IP. If you want to use more than that contact eatmyvenom."
+      },
+      "Database Pass": {
+        "type": "Override",
+        "in": "header",
+        "name": "authorization",
+        "description": "A key to use internal systems and override rate limits, meant for any companion systems like Arcade Bot."
+      }
+    },
+    "responses": {
+      "RateLimited": {
+        "description": "A request limit has been reached, usually this is due to the limit on the key being reached but can also be triggered by a global throttle.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "reason": {
+                  "type": "string",
+                  "example": "RATELIMIT"
+                },
+                "timeout": {
+                  "type": "number",
+                  "example": 30000
+                }
+              }
+            }
+          }
+        }
+      },
+      "MissingPage": {
+        "description": "The data requested does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "cause": {
+                  "type": "string",
+                  "example": "Data not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/account": {
+      "get": {
+        "summary": "Account",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "ign",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "discid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "61f0ed9afee8927bacd06ad7"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "vnmm"
+                    },
+                    "name_lower": {
+                      "type": "string",
+                      "example": "vnmm"
+                    },
+                    "nameHist": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "0": {
+                            "type": "string",
+                            "example": "H"
+                          },
+                          "1": {
+                            "type": "string",
+                            "example": "a"
+                          },
+                          "2": {
+                            "type": "string",
+                            "example": "g"
+                          },
+                          "3": {
+                            "type": "string",
+                            "example": "a"
+                          },
+                          "4": {
+                            "type": "string",
+                            "example": "n"
+                          },
+                          "5": {
+                            "type": "string",
+                            "example": "B"
+                          },
+                          "6": {
+                            "type": "string",
+                            "example": "o"
+                          },
+                          "7": {
+                            "type": "string",
+                            "example": "y"
+                          },
+                          "8": {
+                            "type": "string",
+                            "example": "s"
+                          }
+                        }
+                      }
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "example": "92a5199614ac4bd181d1f3c951fb719f"
+                    },
+                    "uuidPosix": {
+                      "type": "string",
+                      "example": "92a51996-14ac-4bd1-81d1-f3c951fb719f"
+                    },
+                    "internalId": {
+                      "type": "string",
+                      "example": "53a7972cfa32dc526932883c"
+                    },
+                    "rank": {
+                      "type": "string",
+                      "example": "MVP_PLUS_PLUS"
+                    },
+                    "firstLogin": {
+                      "type": "number",
+                      "example": 1403492140000
+                    },
+                    "isLoggedIn": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "lastLogin": {
+                      "type": "number",
+                      "example": 1645747227778
+                    },
+                    "lastLogout": {
+                      "type": "number",
+                      "example": 1645747244497
+                    },
+                    "mostRecentGameType": {
+                      "type": "string",
+                      "example": "BEDWARS"
+                    },
+                    "questsCompleted": {
+                      "type": "number",
+                      "example": 1226
+                    },
+                    "achievementPoints": {
+                      "type": "number",
+                      "example": 7655
+                    },
+                    "xp": {
+                      "type": "number",
+                      "example": 180365065
+                    },
+                    "level": {
+                      "type": "number",
+                      "example": 377.37406070959884
+                    },
+                    "karma": {
+                      "type": "number",
+                      "example": 20862490
+                    },
+                    "ranksGifted": {
+                      "type": "number",
+                      "example": 60
+                    },
+                    "arcadeAchievments": {
+                      "type": "object",
+                      "properties": {
+                        "totalEarned": {
+                          "type": "number",
+                          "example": 1370
+                        },
+                        "totalAvailiable": {
+                          "type": "number",
+                          "example": 2565
+                        },
+                        "overall": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 155
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 155
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "General: Arcade Banker"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 4791327
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": -4491327
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": -4491327
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 75
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "General: World Economics"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        },
+                        "blockingDead": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 80
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Blocking Dead: Zombie Killer"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 3725
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": -1725
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": -1725
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 75
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Blocking Dead: No Mercy"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Blocking Dead: Lone Survivor"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "bountyHunters": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 5
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 105
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Bounty Hunters: Kills"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 76
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 3424
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 24
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Bounty Hunter: Fight Like a Man"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Bounty Hunters: No mutiny today"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "captureTheWool": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 200
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 260
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Capture the Wool: Oh sheep"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 2
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 26
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 174
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 24
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 15
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Capture the Wool: Hey there"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "0": {
+                                    "type": "string",
+                                    "example": "C"
+                                  },
+                                  "1": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "2": {
+                                    "type": "string",
+                                    "example": "p"
+                                  },
+                                  "3": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "4": {
+                                    "type": "string",
+                                    "example": "u"
+                                  },
+                                  "5": {
+                                    "type": "string",
+                                    "example": "r"
+                                  },
+                                  "6": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "7": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "8": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "9": {
+                                    "type": "string",
+                                    "example": "h"
+                                  },
+                                  "10": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "11": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "12": {
+                                    "type": "string",
+                                    "example": "W"
+                                  },
+                                  "13": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "14": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "15": {
+                                    "type": "string",
+                                    "example": "l"
+                                  },
+                                  "16": {
+                                    "type": "string",
+                                    "example": ":"
+                                  },
+                                  "17": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "18": {
+                                    "type": "string",
+                                    "example": "O"
+                                  },
+                                  "19": {
+                                    "type": "string",
+                                    "example": "h"
+                                  },
+                                  "20": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "21": {
+                                    "type": "string",
+                                    "example": "s"
+                                  },
+                                  "22": {
+                                    "type": "string",
+                                    "example": "h"
+                                  },
+                                  "23": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "24": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "25": {
+                                    "type": "string",
+                                    "example": "p"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "creeperAttack": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 45
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 110
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Creeper Attack: Team Work"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 3
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 48
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 7
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 2
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 30
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Creeper Attack: Hssssss"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Creeper Attack: Creeeep"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "dragonWars": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 45
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 210
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Dragon Wars: Slayer"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 2
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 238
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 1762
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 262
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 15
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Dragon Wars: Blast"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Dragon Wars: Dragon Tamer"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 15
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "enderSpleef": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 175
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Ender Spleef: Unmatched Power"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 200
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Ender Spleef: No Powerhouse"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Ender Spleef: Overpowered"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "farmHunt": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 90
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 125
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Farm Hunt: Farm Domination"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 4
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 226
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 24
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 24
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 50
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Farm Hunt: Can't hide from me!"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Farm Hunt: Giddy up horsey!"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "football": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 40
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Football: Football Pro"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 2
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 86
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 414
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 14
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 15
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Football: Pro"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "0": {
+                                    "type": "string",
+                                    "example": "F"
+                                  },
+                                  "1": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "2": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "3": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "4": {
+                                    "type": "string",
+                                    "example": "b"
+                                  },
+                                  "5": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "6": {
+                                    "type": "string",
+                                    "example": "l"
+                                  },
+                                  "7": {
+                                    "type": "string",
+                                    "example": "l"
+                                  },
+                                  "8": {
+                                    "type": "string",
+                                    "example": ":"
+                                  },
+                                  "9": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "10": {
+                                    "type": "string",
+                                    "example": "F"
+                                  },
+                                  "11": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "12": {
+                                    "type": "string",
+                                    "example": "o"
+                                  },
+                                  "13": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "14": {
+                                    "type": "string",
+                                    "example": "b"
+                                  },
+                                  "15": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "16": {
+                                    "type": "string",
+                                    "example": "l"
+                                  },
+                                  "17": {
+                                    "type": "string",
+                                    "example": "l"
+                                  },
+                                  "18": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "19": {
+                                    "type": "string",
+                                    "example": "P"
+                                  },
+                                  "20": {
+                                    "type": "string",
+                                    "example": "r"
+                                  },
+                                  "21": {
+                                    "type": "string",
+                                    "example": "o"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "galaxyWars": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 0
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 130
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Galaxy Wars: Galactic Warrior"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 4
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 2496
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 46
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "object",
+                              "properties": {}
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Galaxy Wars: Now I am the Master"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 15
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "hideAndSeek": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 45
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 195
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hide and Seek: Master Seeker"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 3
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 86
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 164
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 14
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 30
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hide and Seek: Close Call"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hide and Seek: Prop Hunter"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "holeInTheWall": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 15
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 90
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hole in the Wall: Practice Makes Perfect"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 350
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 50
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 0
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hole in The Wall: Score"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        },
+                        "hypixelSays": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 55
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 55
+                            },
+                            "tieredAP": {
+                              "type": "object",
+                              "properties": {}
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Hypixel Says: Bad Health Choices"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        },
+                        "miniWalls": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Mini Walls: Winner"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 770
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": -520
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": -520
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 75
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Mini Walls: Last Man Standing"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        },
+                        "pixelPainters": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 0
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "tieredAP": {
+                              "type": "object",
+                              "properties": {}
+                            },
+                            "achievementsEarned": {
+                              "type": "object",
+                              "properties": {}
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Pixel Painters: Number 1"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "throwOut": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 20
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 90
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Throw Out: Professional Yeeter"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 2
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 454
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 2046
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 46
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 15
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Throw Out: Superman"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Throw Out: Regular Guy"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "zombies": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 285
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 330
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Zombies: Nice Shot"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 13368
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": -5868
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": -5868
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 75
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Zombies: Feels Good"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 5
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Zombies: Serial Killer"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 15
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "partyGames": {
+                          "type": "object",
+                          "properties": {
+                            "apEarned": {
+                              "type": "number",
+                              "example": 180
+                            },
+                            "apAvailable": {
+                              "type": "number",
+                              "example": 225
+                            },
+                            "tieredAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Party Games: Super Star"
+                                  },
+                                  "currentTier": {
+                                    "type": "number",
+                                    "example": 3
+                                  },
+                                  "topTier": {
+                                    "type": "number",
+                                    "example": 5
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "example": 1116
+                                  },
+                                  "toTop": {
+                                    "type": "number",
+                                    "example": 3884
+                                  },
+                                  "toNext": {
+                                    "type": "number",
+                                    "example": 1384
+                                  },
+                                  "ap": {
+                                    "type": "number",
+                                    "example": 30
+                                  },
+                                  "availiableAP": {
+                                    "type": "number",
+                                    "example": 75
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsEarned": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Party Games: Explosive Archer"
+                                  },
+                                  "points": {
+                                    "type": "number",
+                                    "example": 10
+                                  }
+                                }
+                              }
+                            },
+                            "achievementsMissing": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "0": {
+                                    "type": "string",
+                                    "example": "P"
+                                  },
+                                  "1": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "2": {
+                                    "type": "string",
+                                    "example": "r"
+                                  },
+                                  "3": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "4": {
+                                    "type": "string",
+                                    "example": "y"
+                                  },
+                                  "5": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "6": {
+                                    "type": "string",
+                                    "example": "G"
+                                  },
+                                  "7": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "8": {
+                                    "type": "string",
+                                    "example": "m"
+                                  },
+                                  "9": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "10": {
+                                    "type": "string",
+                                    "example": "s"
+                                  },
+                                  "11": {
+                                    "type": "string",
+                                    "example": ":"
+                                  },
+                                  "12": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "13": {
+                                    "type": "string",
+                                    "example": "S"
+                                  },
+                                  "14": {
+                                    "type": "string",
+                                    "example": "u"
+                                  },
+                                  "15": {
+                                    "type": "string",
+                                    "example": "p"
+                                  },
+                                  "16": {
+                                    "type": "string",
+                                    "example": "e"
+                                  },
+                                  "17": {
+                                    "type": "string",
+                                    "example": "r"
+                                  },
+                                  "18": {
+                                    "type": "string",
+                                    "example": " "
+                                  },
+                                  "19": {
+                                    "type": "string",
+                                    "example": "S"
+                                  },
+                                  "20": {
+                                    "type": "string",
+                                    "example": "t"
+                                  },
+                                  "21": {
+                                    "type": "string",
+                                    "example": "a"
+                                  },
+                                  "22": {
+                                    "type": "string",
+                                    "example": "r"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "arcadeChallenges": {
+                      "type": "object",
+                      "properties": {
+                        "zombies": {
+                          "type": "number",
+                          "example": 29
+                        },
+                        "partyGames": {
+                          "type": "number",
+                          "example": 520
+                        },
+                        "galaxyWars": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "holeInTheWall": {
+                          "type": "number",
+                          "example": 36
+                        },
+                        "hypixelSays": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "creeperAttack": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "blockingDead": {
+                          "type": "number",
+                          "example": 9
+                        },
+                        "enderSpleef": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "football": {
+                          "type": "number",
+                          "example": 16
+                        },
+                        "miniWalls": {
+                          "type": "number",
+                          "example": 18
+                        },
+                        "hideAndSeek": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "farmhunt": {
+                          "type": "number",
+                          "example": 48
+                        },
+                        "throwOut": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "dragonWars": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "pixelPainters": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "bountyHunters": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "captureTheWool": {
+                          "type": "number",
+                          "example": 42
+                        }
+                      }
+                    },
+                    "blockingDead": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 32
+                        },
+                        "hints": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 3725
+                        },
+                        "headshots": {
+                          "type": "number",
+                          "example": 2533
+                        },
+                        "weapon": {
+                          "type": "string",
+                          "example": "FIRE_AXE"
+                        }
+                      }
+                    },
+                    "bountyHunters": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 49
+                        },
+                        "bowKills": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "swordKills": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "bountyKills": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "deaths": {
+                          "type": "number",
+                          "example": 54
+                        }
+                      }
+                    },
+                    "captureTheWool": {
+                      "type": "object",
+                      "properties": {
+                        "kills": {
+                          "type": "number",
+                          "example": 3141
+                        },
+                        "woolCaptures": {
+                          "type": "number",
+                          "example": 26
+                        }
+                      }
+                    },
+                    "creeperAttack": {
+                      "type": "object",
+                      "properties": {
+                        "maxWave": {
+                          "type": "number",
+                          "example": 24
+                        }
+                      }
+                    },
+                    "dragonWars": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 238
+                        }
+                      }
+                    },
+                    "enderSpleef": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "blocksBroken": {
+                          "type": "number",
+                          "example": 661
+                        },
+                        "totalPowerups": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "bigshotPowerups": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "tripleshotPowerups": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "farmhunt": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 227
+                        },
+                        "poop": {
+                          "type": "number",
+                          "example": 823
+                        },
+                        "animalWins": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "hunterWins": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 72
+                        },
+                        "animalKills": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "hunterKills": {
+                          "type": "number",
+                          "example": 69
+                        },
+                        "bowKills": {
+                          "type": "number",
+                          "example": 40
+                        },
+                        "animalBowKills": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "hunterBowKills": {
+                          "type": "number",
+                          "example": 18
+                        },
+                        "tauntsUsed": {
+                          "type": "number",
+                          "example": 155
+                        },
+                        "safeTauntsUsed": {
+                          "type": "number",
+                          "example": 85
+                        },
+                        "riskyTauntsUsed": {
+                          "type": "number",
+                          "example": 26
+                        },
+                        "dangerousTauntsUsed": {
+                          "type": "number",
+                          "example": 19
+                        },
+                        "fireworksUsed": {
+                          "type": "number",
+                          "example": 25
+                        }
+                      }
+                    },
+                    "football": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 67
+                        },
+                        "goals": {
+                          "type": "number",
+                          "example": 86
+                        },
+                        "powerkicks": {
+                          "type": "number",
+                          "example": 485
+                        },
+                        "kicks": {
+                          "type": "number",
+                          "example": 416
+                        }
+                      }
+                    },
+                    "galaxyWars": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "deaths": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "rebelKills": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "empireKills": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "shotsFired": {
+                          "type": "number",
+                          "example": 299
+                        }
+                      }
+                    },
+                    "hideAndSeek": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 63
+                        },
+                        "propHuntHiderWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "propHuntSeekerWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "propHuntWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "partyPooperHiderWins": {
+                          "type": "number",
+                          "example": 16
+                        },
+                        "partyPooperSeekerWins": {
+                          "type": "number",
+                          "example": 47
+                        },
+                        "partyPooperWins": {
+                          "type": "number",
+                          "example": 63
+                        },
+                        "seekerWins": {
+                          "type": "number",
+                          "example": 47
+                        },
+                        "hiderWins": {
+                          "type": "number",
+                          "example": 16
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 86
+                        },
+                        "objectives": {
+                          "type": "number",
+                          "example": 13
+                        }
+                      }
+                    },
+                    "holeInTheWall": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "rounds": {
+                          "type": "number",
+                          "example": 6515
+                        },
+                        "qualifiers": {
+                          "type": "number",
+                          "example": 177
+                        },
+                        "finals": {
+                          "type": "number",
+                          "example": 134
+                        },
+                        "combinedScore": {
+                          "type": "number",
+                          "example": 311
+                        },
+                        "bestGame": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "hypixelSays": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 39
+                        },
+                        "simonWins": {
+                          "type": "number",
+                          "example": 39
+                        },
+                        "santaWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "totalPoints": {
+                          "type": "number",
+                          "example": 2961
+                        },
+                        "simonPoints": {
+                          "type": "number",
+                          "example": 2961
+                        },
+                        "santaPoints": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "totalRoundWins": {
+                          "type": "number",
+                          "example": 193
+                        },
+                        "simonRoundWins": {
+                          "type": "number",
+                          "example": 193
+                        },
+                        "santaRoundWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "maxScoreSimon": {
+                          "type": "number",
+                          "example": 9
+                        },
+                        "maxScoreSanta": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "maxScore": {
+                          "type": "number",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "partyGames": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 724
+                        },
+                        "wins1": {
+                          "type": "number",
+                          "example": 724
+                        },
+                        "wins2": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "wins3": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "roundsWon": {
+                          "type": "number",
+                          "example": 243
+                        },
+                        "starsEarned": {
+                          "type": "number",
+                          "example": 1116
+                        },
+                        "animalSlaughterWins": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "animalSlaughterKills": {
+                          "type": "number",
+                          "example": 642
+                        },
+                        "animalSlaughterPB": {
+                          "type": "number",
+                          "example": 113
+                        },
+                        "anvilSpleefWins": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "anvilSpleefPB": {
+                          "type": "number",
+                          "example": 116656
+                        },
+                        "bombardmentWins": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "bombardmentPB": {
+                          "type": "number",
+                          "example": 67967
+                        },
+                        "chickenRingsWins": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "chickenRingsPB": {
+                          "type": "number",
+                          "example": 39855
+                        },
+                        "diveWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "diveScore": {
+                          "type": "number",
+                          "example": 261
+                        },
+                        "divePB": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "highGroundWins": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "highGroundScore": {
+                          "type": "number",
+                          "example": 963
+                        },
+                        "highGroundPB": {
+                          "type": "number",
+                          "example": 52
+                        },
+                        "hoeWins": {
+                          "type": "number",
+                          "example": 15
+                        },
+                        "hoeScore": {
+                          "type": "number",
+                          "example": 5116
+                        },
+                        "hoePB": {
+                          "type": "number",
+                          "example": 352
+                        },
+                        "jigsawWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "jigsawPB": {
+                          "type": "number",
+                          "example": 5703
+                        },
+                        "jungleJumpWins": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "jungleJumpPB": {
+                          "type": "number",
+                          "example": 13908
+                        },
+                        "labEscapeWins": {
+                          "type": "number",
+                          "example": 21
+                        },
+                        "labEscapePB": {
+                          "type": "number",
+                          "example": 45805
+                        },
+                        "lawnMoowerWins": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "lawnMoowerScore": {
+                          "type": "number",
+                          "example": 7057
+                        },
+                        "lawnMoowerPB": {
+                          "type": "number",
+                          "example": 501
+                        },
+                        "minecartRacingWins": {
+                          "type": "number",
+                          "example": 12
+                        },
+                        "minecartRacingPB": {
+                          "type": "number",
+                          "example": 18858
+                        },
+                        "rpgWins": {
+                          "type": "number",
+                          "example": 16
+                        },
+                        "rpgKills": {
+                          "type": "number",
+                          "example": 132
+                        },
+                        "rpgPB": {
+                          "type": "number",
+                          "example": 25
+                        },
+                        "spiderMazeWins": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "spiderMazePB": {
+                          "type": "number",
+                          "example": 15608
+                        },
+                        "theFloorIsLavaWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "theFloorIsLavaPB": {
+                          "type": "number",
+                          "example": 13155
+                        },
+                        "avalancheWins": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "volcanoWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "pigFishingWins": {
+                          "type": "number",
+                          "example": 12
+                        },
+                        "trampolinioWins": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "pigJoustingWins": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "workshopWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "shootingRangeWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "frozenFloorWins": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "cannonPaintingWins": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "fireLeapersWins": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "superSheepWins": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "pixelPainters": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "throwOut": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 13
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 454
+                        },
+                        "deaths": {
+                          "type": "number",
+                          "example": 225
+                        }
+                      }
+                    },
+                    "seasonalWins": {
+                      "type": "object",
+                      "properties": {
+                        "easter": {
+                          "type": "number",
+                          "example": 9
+                        },
+                        "scuba": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "halloween": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "grinch": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "total": {
+                          "type": "number",
+                          "example": 9
+                        },
+                        "grinchGiftsFound": {
+                          "type": "number",
+                          "example": 32
+                        },
+                        "pointsScuba": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "foundScuba": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "foundEaster": {
+                          "type": "number",
+                          "example": 968
+                        },
+                        "foundHalloween": {
+                          "type": "number",
+                          "example": 185
+                        },
+                        "deliveredSanta": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "santaWins": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "miniWalls": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "number",
+                          "example": 721
+                        },
+                        "kit": {
+                          "type": "string",
+                          "example": "soldier"
+                        },
+                        "arrowsHit": {
+                          "type": "number",
+                          "example": 479
+                        },
+                        "arrowsShot": {
+                          "type": "number",
+                          "example": 4025
+                        },
+                        "finalKills": {
+                          "type": "number",
+                          "example": 2233
+                        },
+                        "kills": {
+                          "type": "number",
+                          "example": 6377
+                        },
+                        "witherKills": {
+                          "type": "number",
+                          "example": 599
+                        },
+                        "deaths": {
+                          "type": "number",
+                          "example": 3328
+                        },
+                        "witherDamage": {
+                          "type": "number",
+                          "example": 32009
+                        }
+                      }
+                    },
+                    "zombies": {
+                      "type": "object",
+                      "properties": {
+                        "basic_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 1923
+                        },
+                        "best_round_zombies": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "best_round_zombies_deadend": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "best_round_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "bullets_hit_zombies": {
+                          "type": "number",
+                          "example": 21406
+                        },
+                        "bullets_shot_zombies": {
+                          "type": "number",
+                          "example": 31501
+                        },
+                        "deaths_zombies": {
+                          "type": "number",
+                          "example": 52
+                        },
+                        "deaths_zombies_deadend": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "deaths_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "doors_opened_zombies": {
+                          "type": "number",
+                          "example": 36
+                        },
+                        "doors_opened_zombies_deadend": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "doors_opened_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "empowered_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 88
+                        },
+                        "fastest_time_10_zombies": {
+                          "type": "number",
+                          "example": 381
+                        },
+                        "fastest_time_10_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 431
+                        },
+                        "fire_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 98
+                        },
+                        "headshots_zombies": {
+                          "type": "number",
+                          "example": 10034
+                        },
+                        "pig_zombie_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 238
+                        },
+                        "players_revived_zombies": {
+                          "type": "number",
+                          "example": 82
+                        },
+                        "players_revived_zombies_deadend": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "players_revived_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "times_knocked_down_zombies": {
+                          "type": "number",
+                          "example": 215
+                        },
+                        "times_knocked_down_zombies_deadend": {
+                          "type": "number",
+                          "example": 28
+                        },
+                        "times_knocked_down_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 28
+                        },
+                        "tnt_baby_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 43
+                        },
+                        "total_rounds_survived_zombies": {
+                          "type": "number",
+                          "example": 936
+                        },
+                        "total_rounds_survived_zombies_deadend": {
+                          "type": "number",
+                          "example": 165
+                        },
+                        "total_rounds_survived_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 165
+                        },
+                        "windows_repaired_zombies": {
+                          "type": "number",
+                          "example": 734
+                        },
+                        "windows_repaired_zombies_deadend": {
+                          "type": "number",
+                          "example": 169
+                        },
+                        "windows_repaired_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 169
+                        },
+                        "wolf_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 489
+                        },
+                        "zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 6684
+                        },
+                        "zombie_kills_zombies_deadend": {
+                          "type": "number",
+                          "example": 1925
+                        },
+                        "zombie_kills_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 1925
+                        },
+                        "blaze_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 14
+                        },
+                        "magma_cube_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 285
+                        },
+                        "magma_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 115
+                        },
+                        "tnt_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "best_round_zombies_badblood": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "best_round_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 30
+                        },
+                        "deaths_zombies_badblood": {
+                          "type": "number",
+                          "example": 38
+                        },
+                        "deaths_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 32
+                        },
+                        "slime_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 214
+                        },
+                        "slime_zombie_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 288
+                        },
+                        "times_knocked_down_zombies_badblood": {
+                          "type": "number",
+                          "example": 154
+                        },
+                        "times_knocked_down_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 150
+                        },
+                        "total_rounds_survived_zombies_badblood": {
+                          "type": "number",
+                          "example": 704
+                        },
+                        "total_rounds_survived_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 650
+                        },
+                        "werewolf_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 79
+                        },
+                        "windows_repaired_zombies_badblood": {
+                          "type": "number",
+                          "example": 538
+                        },
+                        "windows_repaired_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 499
+                        },
+                        "witch_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 324
+                        },
+                        "zombie_kills_zombies_badblood": {
+                          "type": "number",
+                          "example": 4141
+                        },
+                        "zombie_kills_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 4023
+                        },
+                        "best_round_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 43
+                        },
+                        "best_round_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 43
+                        },
+                        "blob_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 79
+                        },
+                        "chgluglu_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 18
+                        },
+                        "clown_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 14
+                        },
+                        "deaths_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "deaths_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "fastest_time_10_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 412
+                        },
+                        "fastest_time_20_zombies": {
+                          "type": "number",
+                          "example": 991
+                        },
+                        "fastest_time_20_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 1009
+                        },
+                        "ghast_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 35
+                        },
+                        "giant_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "iron_golem_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 11
+                        },
+                        "mega_blob_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "mega_magma_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 28
+                        },
+                        "players_revived_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 32
+                        },
+                        "players_revived_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 32
+                        },
+                        "rainbow_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 33
+                        },
+                        "sentinel_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 39
+                        },
+                        "skeleton_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 12
+                        },
+                        "space_blaster_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 33
+                        },
+                        "space_grunt_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 26
+                        },
+                        "the_old_one_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "times_knocked_down_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 33
+                        },
+                        "times_knocked_down_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 33
+                        },
+                        "total_rounds_survived_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 67
+                        },
+                        "total_rounds_survived_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 59
+                        },
+                        "windows_repaired_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 27
+                        },
+                        "windows_repaired_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 25
+                        },
+                        "worm_small_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 62
+                        },
+                        "worm_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 87
+                        },
+                        "zombie_kills_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 618
+                        },
+                        "zombie_kills_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 611
+                        },
+                        "zombies_hideTutorials": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "doors_opened_zombies_alienarcadium": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "doors_opened_zombies_alienarcadium_normal": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "fastest_time_10_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 381
+                        },
+                        "players_revived_zombies_badblood": {
+                          "type": "number",
+                          "example": 44
+                        },
+                        "players_revived_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 44
+                        },
+                        "wither_zombie_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 312
+                        },
+                        "wither_skeleton_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 415
+                        },
+                        "wolf_pet_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 8
+                        },
+                        "cave_spider_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 18
+                        },
+                        "charged_creeper_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 176
+                        },
+                        "creeper_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 92
+                        },
+                        "fastest_time_20_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 991
+                        },
+                        "fastest_time_30_zombies": {
+                          "type": "number",
+                          "example": 1562
+                        },
+                        "fastest_time_30_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 1562
+                        },
+                        "herobrine_minion_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 266
+                        },
+                        "invisible_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 224
+                        },
+                        "wins_zombies": {
+                          "type": "number",
+                          "example": 18
+                        },
+                        "wins_zombies_badblood": {
+                          "type": "number",
+                          "example": 15
+                        },
+                        "wins_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 15
+                        },
+                        "wither_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "family_daughter_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "doors_opened_zombies_badblood": {
+                          "type": "number",
+                          "example": 27
+                        },
+                        "doors_opened_zombies_badblood_normal": {
+                          "type": "number",
+                          "example": 25
+                        },
+                        "family_father_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "family_twin_blue_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "herobrine_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "king_slime_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "family_twin_red_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "ender_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 105
+                        },
+                        "endermite_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 145
+                        },
+                        "fastest_time_20_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 1052
+                        },
+                        "fastest_time_30_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 1748
+                        },
+                        "guardian_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 161
+                        },
+                        "silverfish_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "skelefish_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 40
+                        },
+                        "wins_zombies_deadend": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "wins_zombies_deadend_normal": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "broodmother_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "inferno_zombie_kills_zombies": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "extra": {
+                      "type": "object",
+                      "properties": {
+                        "combinedAchievementProgress": {
+                          "type": "number",
+                          "example": 18151157
+                        },
+                        "classicTokens": {
+                          "type": "number",
+                          "example": 479
+                        },
+                        "challengeAchievementsCompleted": {
+                          "type": "number",
+                          "example": 483
+                        },
+                        "tournamentTributes": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "tournamentTokens": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "totalCoins": {
+                          "type": "number",
+                          "example": 5481899
+                        },
+                        "rewardStreak": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "migrated": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    },
+                    "coinTransfers": {
+                      "type": "number",
+                      "example": 128
+                    },
+                    "simTotal": {
+                      "type": "number",
+                      "example": 9
+                    },
+                    "arcadeCoins": {
+                      "type": "number",
+                      "example": 4922988
+                    },
+                    "arcadeWins": {
+                      "type": "number",
+                      "example": 2161
+                    },
+                    "combinedArcadeWins": {
+                      "type": "number",
+                      "example": 1933
+                    },
+                    "anyWins": {
+                      "type": "number",
+                      "example": 14330
+                    },
+                    "coinsEarned": {
+                      "type": "number",
+                      "example": 4791327
+                    },
+                    "importance": {
+                      "type": "number",
+                      "example": 9874
+                    },
+                    "quests": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number",
+                          "example": 434
+                        },
+                        "daily": {
+                          "type": "number",
+                          "example": 397
+                        },
+                        "weekly": {
+                          "type": "number",
+                          "example": 37
+                        },
+                        "arcadeGamer": {
+                          "type": "number",
+                          "example": 196
+                        },
+                        "arcadeWinner": {
+                          "type": "number",
+                          "example": 201
+                        },
+                        "arcadeSpecialist": {
+                          "type": "number",
+                          "example": 37
+                        }
+                      }
+                    },
+                    "plusColor": {
+                      "type": "string",
+                      "example": "DARK_PURPLE"
+                    },
+                    "mvpColor": {
+                      "type": "string",
+                      "example": "AQUA"
+                    },
+                    "hypixelDiscord": {
+                      "type": "string",
+                      "example": "vnmm#6969"
+                    },
+                    "discord": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "timePlaying": {
+                      "type": "number",
+                      "example": 2009
+                    },
+                    "updateTime": {
+                      "type": "number",
+                      "example": 1645752288141
+                    },
+                    "arcadeAchievementPoints": {
+                      "type": "number",
+                      "example": 1370
+                    },
+                    "apiHidden": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "weeklyCoins": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "monthlyCoins": {
+                      "type": "number",
+                      "example": 385
+                    },
+                    "unknownWins": {
+                      "type": "number",
+                      "example": 228
+                    },
+                    "actionTime": {
+                      "type": "object",
+                      "properties": {
+                        "quest": {
+                          "type": "object",
+                          "properties": {
+                            "time": {
+                              "type": "number",
+                              "example": 1645676753718
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "bedwars_daily_win"
+                            }
+                          }
+                        },
+                        "pets": {
+                          "type": "number",
+                          "example": 1644393646855
+                        },
+                        "dailyReward": {
+                          "type": "number",
+                          "example": 1636430989380
+                        },
+                        "otherActions": {
+                          "type": "number",
+                          "example": 1645747228271
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      },
+      "post": {
+        "summary": "Upload Account",
+        "responses": {
+          "200": {
+            "description": "Upload Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/leaderboard": {
+      "get": {
+        "summary": "Leaderboard",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "time",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "max",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Leaderboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "NilsThePotato"
+                      },
+                      "uuid": {
+                        "type": "string",
+                        "example": "c89a9b74c5314a269458187ec0cb2e97"
+                      },
+                      "rank": {
+                        "type": "string",
+                        "example": "MVP_PLUS"
+                      },
+                      "partyGames": {
+                        "type": "object",
+                        "properties": {
+                          "wins": {
+                            "type": "number",
+                            "example": 2629
+                          }
+                        }
+                      },
+                      "importance": {
+                        "type": "number",
+                        "example": 18703
+                      },
+                      "plusColor": {
+                        "type": "string",
+                        "example": "GREEN"
+                      },
+                      "mvpColor": {
+                        "type": "string",
+                        "example": "GOLD"
+                      },
+                      "historicalData": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "uuid": {
+                              "type": "string",
+                              "example": "c89a9b74c5314a269458187ec0cb2e97"
+                            },
+                            "partyGames": {
+                              "type": "object",
+                              "properties": {
+                                "wins": {
+                                  "type": "number",
+                                  "example": 2085
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "lbProp": {
+                        "type": "number",
+                        "example": 544
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/database": {
+      "get": {
+        "summary": "Database collection",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Database collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/miniwalls": {
+      "get": {
+        "summary": "Mini Walls Leaderboard",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "stat",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "time",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mini Walls Leaderboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "_Osirus"
+                      },
+                      "uuid": {
+                        "type": "string",
+                        "example": "960253b8c69148c9825344676dc87821"
+                      },
+                      "rank": {
+                        "type": "string",
+                        "example": "MVP_PLUS"
+                      },
+                      "miniWalls": {
+                        "type": "object",
+                        "properties": {
+                          "wins": {
+                            "type": "number",
+                            "example": 29927
+                          },
+                          "kit": {
+                            "type": "string",
+                            "example": "soldier"
+                          },
+                          "arrowsHit": {
+                            "type": "number",
+                            "example": 115494
+                          },
+                          "arrowsShot": {
+                            "type": "number",
+                            "example": 284566
+                          },
+                          "finalKills": {
+                            "type": "number",
+                            "example": 83719
+                          },
+                          "kills": {
+                            "type": "number",
+                            "example": 167265
+                          },
+                          "witherKills": {
+                            "type": "number",
+                            "example": 26326
+                          },
+                          "deaths": {
+                            "type": "number",
+                            "example": 67605
+                          },
+                          "witherDamage": {
+                            "type": "number",
+                            "example": 1473927
+                          }
+                        }
+                      },
+                      "importance": {
+                        "type": "number",
+                        "example": 89870
+                      },
+                      "plusColor": {
+                        "type": "string",
+                        "example": "BLACK"
+                      },
+                      "mvpColor": {
+                        "type": "string",
+                        "example": "GOLD"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "summary": "Info",
+        "responses": {
+          "200": {
+            "description": "Info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accs": {
+                      "type": "number",
+                      "example": 75506
+                    },
+                    "guilds": {
+                      "type": "number",
+                      "example": 997
+                    },
+                    "links": {
+                      "type": "number",
+                      "example": 720
+                    },
+                    "mem": {
+                      "type": "number",
+                      "example": 6408.596
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "summary": "Ping",
+        "responses": {
+          "200": {
+            "description": "Ping",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "string",
+                      "example": "pong"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Status",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "ign",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "discid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "example": "92a5199614ac4bd181d1f3c951fb719f"
+                    },
+                    "session": {
+                      "type": "object",
+                      "properties": {
+                        "online": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    },
+                    "actionTime": {
+                      "type": "object",
+                      "properties": {
+                        "quest": {
+                          "type": "object",
+                          "properties": {
+                            "time": {
+                              "type": "number",
+                              "example": 1645676753718
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "bedwars_daily_win"
+                            }
+                          }
+                        },
+                        "pets": {
+                          "type": "number",
+                          "example": 1644393646855
+                        },
+                        "dailyReward": {
+                          "type": "number",
+                          "example": 1636430989380
+                        },
+                        "otherActions": {
+                          "type": "number",
+                          "example": 1645747228271
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "vnmm"
+                    },
+                    "rank": {
+                      "type": "string",
+                      "example": "MVP_PLUS_PLUS"
+                    },
+                    "mvpColor": {
+                      "type": "string",
+                      "example": "AQUA"
+                    },
+                    "plusColor": {
+                      "type": "string",
+                      "example": "DARK_PURPLE"
+                    },
+                    "lastLogout": {
+                      "type": "number",
+                      "example": 1645747244497
+                    },
+                    "lastLogin": {
+                      "type": "number",
+                      "example": 1645747227778
+                    },
+                    "isLoggedIn": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "apiHidden": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "mostRecentGameType": {
+                      "type": "string",
+                      "example": "BEDWARS"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/gamecounts": {
+      "get": {
+        "summary": "Game Counts",
+        "responses": {
+          "200": {
+            "description": "Game Counts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/disc": {
+      "get": {
+        "summary": "Discord Meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Discord Meta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        },
+        "security": [
+          {
+            "Database Pass": []
+          }
+        ]
+      }
+    },
+    "/guild": {
+      "get": {
+        "summary": "Guild",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "member",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Guild",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "61f78883b6ba5b11cdd47700"
+                    },
+                    "input": {
+                      "type": "string",
+                      "example": "f7cdad7175a14cfd85ecf4e8b1b471f2"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "example": "53bd67d7ed503e868873eceb"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Rebel"
+                    },
+                    "arcadeEXP": {
+                      "type": "number",
+                      "example": 208311954
+                    },
+                    "gexp": {
+                      "type": "number",
+                      "example": 513693329
+                    },
+                    "membersStats": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "CodePython_"
+                          },
+                          "uuid": {
+                            "type": "string",
+                            "example": "0a003a1a343449b787d4581b3ff905d9"
+                          },
+                          "rank": {
+                            "type": "string",
+                            "example": "MVP_PLUS"
+                          },
+                          "mvpColor": {
+                            "type": "string",
+                            "example": "GOLD"
+                          },
+                          "plusColor": {
+                            "type": "string",
+                            "example": "GREEN"
+                          },
+                          "guildRank": {
+                            "type": "string",
+                            "example": "Sergeant"
+                          },
+                          "joinTime": {
+                            "type": "number",
+                            "example": 1510854030292
+                          },
+                          "questParticipation": {
+                            "type": "number",
+                            "example": 2547
+                          },
+                          "gexpHistory": {
+                            "type": "object",
+                            "properties": {
+                              "2022-02-24": {
+                                "type": "number",
+                                "example": 40583
+                              },
+                              "2022-02-23": {
+                                "type": "number",
+                                "example": 62248
+                              },
+                              "2022-02-22": {
+                                "type": "number",
+                                "example": 63080
+                              },
+                              "2022-02-21": {
+                                "type": "number",
+                                "example": 47234
+                              },
+                              "2022-02-20": {
+                                "type": "number",
+                                "example": 20142
+                              },
+                              "2022-02-19": {
+                                "type": "number",
+                                "example": 42901
+                              },
+                              "2022-02-18": {
+                                "type": "number",
+                                "example": 29556
+                              }
+                            }
+                          },
+                          "arcadeWins": {
+                            "type": "number",
+                            "example": 311
+                          },
+                          "combinedArcadeWins": {
+                            "type": "number",
+                            "example": 273
+                          },
+                          "arcadeCoins": {
+                            "type": "number",
+                            "example": 103899
+                          },
+                          "achievementPoints": {
+                            "type": "number",
+                            "example": 11695
+                          },
+                          "arcadeAchievements": {
+                            "type": "number",
+                            "example": 880
+                          },
+                          "updateTime": {
+                            "type": "number",
+                            "example": 1645737947696
+                          },
+                          "lastAction": {
+                            "type": "object",
+                            "properties": {
+                              "quest": {
+                                "type": "object",
+                                "properties": {
+                                  "time": {
+                                    "type": "number",
+                                    "example": 1645725970921
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "blitz_win"
+                                  }
+                                }
+                              },
+                              "pets": {
+                                "type": "number",
+                                "example": 0
+                              },
+                              "dailyReward": {
+                                "type": "number",
+                                "example": 1640458904673
+                              },
+                              "otherActions": {
+                                "type": "number",
+                                "example": 1645725970921
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "color": {
+                      "type": "string",
+                      "example": "YELLOW"
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "ΘREBLΘ"
+                    },
+                    "createTime": {
+                      "type": "number",
+                      "example": 1404921815102
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Rebel aims to unite and enhance the experience of skilled players throughout the network. Apply now: https://hypixel.net/threads/rebel.221532/"
+                    },
+                    "games": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "0": {
+                            "type": "string",
+                            "example": "S"
+                          },
+                          "1": {
+                            "type": "string",
+                            "example": "K"
+                          },
+                          "2": {
+                            "type": "string",
+                            "example": "Y"
+                          },
+                          "3": {
+                            "type": "string",
+                            "example": "W"
+                          },
+                          "4": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "5": {
+                            "type": "string",
+                            "example": "R"
+                          },
+                          "6": {
+                            "type": "string",
+                            "example": "S"
+                          }
+                        }
+                      }
+                    },
+                    "achievements": {
+                      "type": "object",
+                      "properties": {
+                        "experienceKings": {
+                          "type": "number",
+                          "example": 651205
+                        },
+                        "winners": {
+                          "type": "number",
+                          "example": 3256
+                        },
+                        "concurrentOnline": {
+                          "type": "number",
+                          "example": 125
+                        }
+                      }
+                    },
+                    "gameExperience": {
+                      "type": "object",
+                      "properties": {
+                        "vampirez": {
+                          "type": "number",
+                          "example": 108925312
+                        },
+                        "arena": {
+                          "type": "number",
+                          "example": 11185202
+                        },
+                        "prototypeGames": {
+                          "type": "number",
+                          "example": 1978226966
+                        },
+                        "smashHeros": {
+                          "type": "number",
+                          "example": 97752302
+                        },
+                        "turboKartRacers": {
+                          "type": "number",
+                          "example": 59128818
+                        },
+                        "duels": {
+                          "type": "number",
+                          "example": 144947353
+                        },
+                        "bedwars": {
+                          "type": "number",
+                          "example": 779786761
+                        },
+                        "quakecraft": {
+                          "type": "number",
+                          "example": 93694237
+                        },
+                        "battleground": {
+                          "type": "number",
+                          "example": 58385671
+                        },
+                        "blitz": {
+                          "type": "number",
+                          "example": 148815424
+                        },
+                        "buildBattle": {
+                          "type": "number",
+                          "example": 214359689
+                        },
+                        "copsAndCrips": {
+                          "type": "number",
+                          "example": 48728096
+                        },
+                        "megaWalls": {
+                          "type": "number",
+                          "example": 128987191
+                        },
+                        "arcadeGames": {
+                          "type": "number",
+                          "example": 208311954
+                        },
+                        "housing": {
+                          "type": "number",
+                          "example": 207633278
+                        },
+                        "murderMystery": {
+                          "type": "number",
+                          "example": 82225584
+                        },
+                        "skywars": {
+                          "type": "number",
+                          "example": 401049410
+                        },
+                        "walls": {
+                          "type": "number",
+                          "example": 150422088
+                        },
+                        "UHC": {
+                          "type": "number",
+                          "example": 205857655
+                        },
+                        "paintball": {
+                          "type": "number",
+                          "example": 28434853
+                        },
+                        "pit": {
+                          "type": "number",
+                          "example": 3704744
+                        },
+                        "speedUHC": {
+                          "type": "number",
+                          "example": 4784361
+                        },
+                        "tntGames": {
+                          "type": "number",
+                          "example": 143147132
+                        }
+                      }
+                    },
+                    "wins": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "arcadeCoins": {
+                      "type": "number",
+                      "example": 372542645
+                    },
+                    "combinedAP": {
+                      "type": "number",
+                      "example": 1495680
+                    },
+                    "arcadeWins": {
+                      "type": "number",
+                      "example": 136583
+                    },
+                    "karma": {
+                      "type": "number",
+                      "example": 3520749408
+                    },
+                    "ranksGifted": {
+                      "type": "number",
+                      "example": 1050
+                    },
+                    "hitwWins": {
+                      "type": "number",
+                      "example": 9903
+                    },
+                    "farmhuntWins": {
+                      "type": "number",
+                      "example": 30090
+                    },
+                    "miniWallsWins": {
+                      "type": "number",
+                      "example": 13835
+                    },
+                    "footballWins": {
+                      "type": "number",
+                      "example": 8332
+                    },
+                    "hypixelSaysWins": {
+                      "type": "number",
+                      "example": 20232
+                    },
+                    "enderSpleefWins": {
+                      "type": "number",
+                      "example": 1749
+                    },
+                    "throwOutWins": {
+                      "type": "number",
+                      "example": 1091
+                    },
+                    "galaxyWarsWins": {
+                      "type": "number",
+                      "example": 1187
+                    },
+                    "dragonWarsWins": {
+                      "type": "number",
+                      "example": 1373
+                    },
+                    "bountyHuntersWins": {
+                      "type": "number",
+                      "example": 1164
+                    },
+                    "blockingDeadWins": {
+                      "type": "number",
+                      "example": 1258
+                    },
+                    "hideAndSeekWins": {
+                      "type": "number",
+                      "example": 13306
+                    },
+                    "zombiesWins": {
+                      "type": "number",
+                      "example": 1320
+                    },
+                    "pixelPaintersWins": {
+                      "type": "number",
+                      "example": 592
+                    },
+                    "partyGamesWins": {
+                      "type": "number",
+                      "example": 15319
+                    },
+                    "simWins": {
+                      "type": "number",
+                      "example": 15832
+                    },
+                    "updateTime": {
+                      "type": "number",
+                      "example": 1645748285928
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/hacker": {
+      "get": {
+        "summary": "Hacker Meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hacker Meta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        },
+        "security": [
+          {
+            "Database Pass": []
+          }
+        ]
+      }
+    },
+    "/banned": {
+      "get": {
+        "summary": "Banned Meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Banned Meta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        },
+        "security": [
+          {
+            "Database Pass": []
+          }
+        ]
+      }
+    },
+    "/internal": {
+      "post": {
+        "summary": "Internal usage",
+        "responses": {
+          "200": {
+            "description": "Internal usage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        },
+        "security": [
+          {
+            "Database Pass": []
+          }
+        ]
+      }
+    }
+  }
+}

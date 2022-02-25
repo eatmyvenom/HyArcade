@@ -13,6 +13,7 @@ pid
 timeupdate
 
 # Config files
+!systems/redoc/*.json
 !package.json
 !package-lock.json
 !.prettierrc.json

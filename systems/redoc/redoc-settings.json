@@ -1,0 +1,21 @@
+{
+  "jsonSampleExpandLevel": 1,
+  "theme": {
+    "sidebar": {
+      "backgroundColor": "#2d3040",
+      "textColor": "#AAAAAA",
+      "rightLineColor": "#44a3e7"
+    },
+    "rightPanel": {
+      "backgroundColor": "#2d3040"
+    },
+    "codeBlock": {
+      "backgroundColor": "#181c30"
+    },
+    "components": {
+      "panels": {
+        "backgroundColor": "#2d3040"
+      }
+    }
+  }
+}
