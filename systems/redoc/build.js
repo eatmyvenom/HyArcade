@@ -69,11 +69,11 @@ async function main() {
     description: `# Introduction
       This is backend api for all Hyarcade systems
       [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)
-      ## Limits
+## Limits
       Any IP address has a default rate limit of 120 requests per minute.
 
-      ### Response Format
-      All responses in JSON format.
+### Response Format
+All responses in JSON format.
       # Authentication
       <!-- ReDoc-Inject: <security-definitions> -->`,
     version: "v1",
@@ -127,7 +127,7 @@ async function main() {
       },
     },
     MissingPage: {
-      description: "The page provided does not exist.",
+      description: "The data requested does not exist.",
       content: {
         "application/json": {
           schema: {
@@ -139,7 +139,7 @@ async function main() {
               },
               cause: {
                 type: "string",
-                example: "Page not found",
+                example: "Data not found",
               },
             },
           },
@@ -287,6 +287,26 @@ async function main() {
       ]),
     },
     "/gamecounts": { get: await getPath(Database.gameCounts(), "Game Counts") },
+    "/guild": {
+      get: await getPath(await Database.guild("53bd67d7ed503e868873eceb"), "Guild", [
+        {
+          in: "query",
+          name: "uuid",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+        {
+          in: "query",
+          name: "member",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+      ]),
+    },
     "/disc": {
       get: await getPath(
         { success: true },
@@ -319,26 +339,6 @@ async function main() {
         ],
         true,
       ),
-    },
-    "/guild": {
-      get: await getPath(await Database.guild("53bd67d7ed503e868873eceb"), "Guild", [
-        {
-          in: "query",
-          name: "uuid",
-          schema: {
-            type: "string",
-          },
-          required: false,
-        },
-        {
-          in: "query",
-          name: "member",
-          schema: {
-            type: "string",
-          },
-          required: false,
-        },
-      ]),
     },
     "/hacker": {
       get: await getPath(
