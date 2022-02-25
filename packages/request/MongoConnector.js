@@ -5,8 +5,6 @@ const os = require("node:os");
 const Config = require("hyarcade-config");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 const { MongoClient, Collection } = require("mongodb");
-const Account = require("hyarcade-structures/Account/Account");
-const Guild = require("hyarcade-structures/Guild");
 const CommandMetadata = require("hyarcade-structures/Discord/CommandMetadata");
 
 const Logger = new LoggerInstance("Mongo", "🗃️");
@@ -31,22 +29,22 @@ class MongoConnector {
   client;
 
   /**
-   * @type {Collection<Account>}
+   * @type {Collection<object>}
    */
   accounts;
 
   /**
-   * @type {Collection<Account>}
+   * @type {Collection<object>}
    */
   dailyAccounts;
 
   /**
-   * @type {Collection<Account>}
+   * @type {Collection<object>}
    */
   weeklyAccounts;
 
   /**
-   * @type {Collection<Account>}
+   * @type {Collection<object>}
    */
   monthlyAccounts;
 
@@ -56,7 +54,7 @@ class MongoConnector {
   discordList;
 
   /**
-   * @type {Collection<Guild>}
+   * @type {Collection<object>}
    */
   guilds;
 
@@ -208,7 +206,7 @@ class MongoConnector {
 
   /**
    *
-   * @param {Guild} guild
+   * @param {object} guild
    */
   async updateGuild(guild) {
     if (guild._id) {
@@ -229,7 +227,7 @@ class MongoConnector {
   /**
    *
    * @param {string} memberUUID
-   * @returns {Guild}
+   * @returns {object}
    */
   async getGuildByMember(memberUUID) {
     return await this.guilds.findOne({ memberUUIDs: memberUUID.toLowerCase() });
@@ -238,7 +236,7 @@ class MongoConnector {
   /**
    *
    *
-   * @param {Account[]} accs
+   * @param {object} accs
    * @memberof MongoConnector
    */
   async updateAccounts(accs) {
@@ -252,7 +250,7 @@ class MongoConnector {
   /**
    *
    *
-   * @param {Account[]} accs
+   * @param {object} accs
    * @memberof MongoConnector
    */
   async updateDaily(accs) {
@@ -264,7 +262,7 @@ class MongoConnector {
   /**
    *
    *
-   * @param {Account[]} accs
+   * @param {object} accs
    * @memberof MongoConnector
    */
   async updateWeekly(accs) {
@@ -276,7 +274,7 @@ class MongoConnector {
   /**
    *
    *
-   * @param {Account[]} accs
+   * @param {object} accs
    * @memberof MongoConnector
    */
   async updateMonthly(accs) {
