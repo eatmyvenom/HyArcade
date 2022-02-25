@@ -1,4 +1,5 @@
 const cfg = require("hyarcade-config").fromJSON();
+const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const { mojangRequest } = require("hyarcade-requests");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
@@ -15,6 +16,10 @@ module.exports = async (req, res, connector) => {
   if (req.method == "GET") {
     const uuid = url.searchParams.get("uuid");
     let memberUUID = url.searchParams.get("member");
+
+    if (uuid == undefined && memberUUID == undefined) {
+      throw new MissingFieldError("Request has no input to resolve to an guild", ["uuid"]);
+    }
 
     let guild;
     if (uuid) {

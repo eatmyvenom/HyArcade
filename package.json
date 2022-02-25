@@ -24,12 +24,12 @@
         "build:redoc": "redoc-cli bundle systems/redoc/swagger-new.json -t systems/redoc/redoc.handlebars --options systems/redoc/redoc-settings.json -o assets/api-docs.html",
         "build:worker": "cd src/Worker;wrangler publish;cd ../..",
         "bot:test": "node index.js bot test",
-        "bot": "node spawn-bots.js",
+        "postinstall": "is-ci || husky install",
         "commit": "cz",
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
-        "postinstall": "is-ci || husky install",
+        "bot": "node spawn-bots.js",
         "api": "node --max-old-space-size=6000 server.js",
-        "update": "node --max-old-space-size=4000 . miniupdate"
+        "worker": "node . worker"
     },
     "dependencies": {
         "@commitlint/config-angular": "^16.0.0",
@@ -43,9 +43,10 @@
         "hyarcade-requests": "*",
         "hyarcade-structures": "*",
         "hyarcade-utils": "*",
+        "hyarcade-errors": "*",
         "javascript-time-ago": "^2.3.6",
         "mongodb": "^4.3.1",
-        "nodejs": "^0.0.0",
+        "nodejs": "^16.0.0",
         "redoc-cli": "^0.13.7",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"

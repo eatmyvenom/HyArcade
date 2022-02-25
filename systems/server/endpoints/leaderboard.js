@@ -1,3 +1,4 @@
+const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const GenericLeaderboard = require("hyarcade-utils/Leaderboards/GenericLeaderboard");
@@ -17,6 +18,10 @@ module.exports = async (req, res, connector) => {
   const reverse = url.searchParams.has("reverse");
   const max = Math.min(url.searchParams.get("max") ?? 200, 1000);
   const filter = url.searchParams.get("filter");
+
+  if (lbprop == undefined) {
+    throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);
+  }
 
   if (req.method == "GET") {
     Logger.log(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);

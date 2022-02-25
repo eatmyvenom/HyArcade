@@ -1,3 +1,4 @@
+const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const { mojangRequest, MongoConnector } = require("hyarcade-requests");
 const { Account } = require("hyarcade-structures");
@@ -21,6 +22,11 @@ async function AccountResolver(connector, url, forceCache = false) {
   let uuid = url.searchParams.get("uuid");
   const discid = url.searchParams.get("discid");
   const cacheOnly = url.searchParams.has("cache") || forceCache;
+
+  if (ign == undefined && uuid == undefined && discid == undefined) {
+    throw new MissingFieldError("Request has no input to resolve to an account", ["ign"]);
+  }
+
   let acc;
 
   if (ign != undefined) {

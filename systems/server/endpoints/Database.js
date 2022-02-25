@@ -1,3 +1,4 @@
+const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 
@@ -12,6 +13,10 @@ module.exports = async (req, res, connector) => {
   if (req.method == "GET") {
     const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
+
+    if (file == undefined) {
+      throw new MissingFieldError("No collection specified", ["path"]);
+    }
 
     Logger.log(`Sending ${fields ?? "full"} ${file} collection`);
     const data = await connector.readCollection(file);

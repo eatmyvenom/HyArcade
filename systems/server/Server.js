@@ -3,7 +3,7 @@ const { URL } = require("url");
 const logger = require("hyarcade-logger");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 const AccessLogger = new LoggerInstance("Access", "📄");
-const { DupeKeyError } = require("hyarcade-errors");
+const { DupeKeyError, MissingFieldError } = require("hyarcade-errors");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
@@ -41,6 +41,7 @@ async function callback(request, response) {
   } catch (error) {
     if (error instanceof DupeKeyError) {
       response.write(JSON.stringify({ success: false, reason: "DUPLICATE-KEY" }));
+      return;
     }
   }
 
@@ -62,10 +63,17 @@ async function callback(request, response) {
     try {
       await mod(request, response, connector);
     } catch (error) {
-      logger.err(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
-      logger.err(error.stack);
-      response.statusCode = 404;
-      response.end();
+      if (error instanceof MissingFieldError) {
+        response.statusCode = 400;
+        response.setHeader("Content-Type", "application/json");
+        response.write(JSON.stringify({ success: false, cause: "Missing Field(s)", message: error.message, neededFields: error.neededFields }));
+        response.end();
+      } else {
+        logger.err(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
+        logger.err(error.stack);
+        response.statusCode = 404;
+        response.end();
+      }
     }
   }
 }

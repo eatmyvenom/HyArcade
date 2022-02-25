@@ -50,6 +50,7 @@ async function getPath(obj, description, parameters, internal = false) {
         description,
         content: { "application/json": { schema } },
       },
+      400: { $ref: "#/components/responses/MissingInput" },
       404: { $ref: "#/components/responses/MissingPage" },
     },
   };
@@ -144,6 +145,28 @@ All responses in JSON format.
                 type: "string",
                 example: "Data not found",
               },
+            },
+          },
+        },
+      },
+    },
+    MissingInput: {
+      description: "The request was missing required input",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: false,
+              },
+              cause: {
+                type: "string",
+                example: "Missing Field(s)",
+              },
+              message: { type: "string" },
+              neededFields: { type: "array", items: { type: "string", example: "path" } },
             },
           },
         },
