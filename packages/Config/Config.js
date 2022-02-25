@@ -125,6 +125,11 @@ class OtherHooksConfig {
   DW = {};
 }
 
+class ThirdPartyConfig {
+  observerKey = "";
+  slothPixelKey = "";
+}
+
 class Config {
   key = process.env.HYARCADE_HYPIXEL_KEY;
   mode = "prod";
@@ -145,6 +150,7 @@ class Config {
   discordBot = new DiscordBotsConfig();
   hypixel = new HypixelConfig();
   otherHooks = new OtherHooksConfig();
+  thirdParty = new ThirdPartyConfig();
 
   constructor(json) {
     for (const thing in json) {

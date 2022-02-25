@@ -1,0 +1,9 @@
+apiDefinitions:
+  hyarcade: swagger-new.json
+
+referenceDocs:
+  jsonSampleExpandLevel: 1
+  expandDefaultResponse: false
+  theme:
+    menu:
+      backgroundColor: '#ffffff'

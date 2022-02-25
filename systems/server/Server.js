@@ -48,7 +48,7 @@ async function callback(request, response) {
     response.statusCode = 403;
     response.setHeader("x-retry-after", rateLimit);
     response.setHeader("Content-Type", "application/json");
-    response.write(JSON.stringify({ success: false, reason: "RATELIMIT" }));
+    response.write(JSON.stringify({ success: false, reason: "RATELIMIT", timeout: rateLimit }));
     response.end();
     logger.warn(`${address} rate limited for ${rateLimit}ms`);
     return;
