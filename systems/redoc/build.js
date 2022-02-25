@@ -77,9 +77,7 @@ async function main() {
       Any IP address has a default rate limit of 120 requests per minute.
 
 ## Response Format
-All responses in JSON format.
-      # Authentication
-      <!-- ReDoc-Inject: <security-definitions> -->`,
+All responses in JSON format.`,
     version: "v1",
     contact: {
       name: "EatMyVenom",

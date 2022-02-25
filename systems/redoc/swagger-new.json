@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Hyarcade API",
-    "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.\n      # Authentication\n      <!-- ReDoc-Inject: <security-definitions> -->",
+    "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.",
     "version": "v1",
     "contact": {
       "name": "EatMyVenom",
