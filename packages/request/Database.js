@@ -483,4 +483,34 @@ module.exports = class Database {
 
     return counts;
   }
+
+  static async friends(text, discordID) {
+    const url = new URL("friends", cfg.database.url);
+
+    if (text != undefined && text != "" && text != "!") {
+      if (text.length < 17) {
+        url.searchParams.set("ign", text);
+      } else {
+        url.searchParams.set("uuid", text.replace(/-/g, ""));
+      }
+    }
+
+    if (discordID != undefined && discordID != "") {
+      url.searchParams.set("discid", discordID);
+    }
+
+    let sts;
+    try {
+      Logger.verbose(`Fetching ${url.searchParams} from database!`);
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      sts = accReq.data;
+    } catch (error) {
+      Logger.err("Error fetching data from database");
+      Logger.err(error.stack);
+      Logger.err(sts);
+      return {};
+    }
+
+    return sts;
+  }
 };

@@ -1,4 +1,3 @@
-import axios from "axios";
 import fs from "fs-extra";
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
@@ -446,8 +445,7 @@ function classicGamesTransformer(status) {
  * @returns {string}
  */
 async function getLastAction(account) {
-  const friendDataReq = await axios.get(`https://api.slothpixel.me/api/players/${account.uuid}/friends`);
-  const friendData = friendDataReq.data;
+  const friendData = await Database.friends(account.uuid);
 
   let friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
 
@@ -460,15 +458,14 @@ async function getLastAction(account) {
  * @returns {object}
  */
 async function getGEXP(account) {
-  const guildRequest = await axios.get(`https://api.slothpixel.me/api/guilds/${account.uuid}`);
-  const guildData = guildRequest.data;
+  const guildData = await Database.guild(account.uuid);
 
-  if (!guildData.guild) {
+  if (guildData.ERROR) {
     return { daily: "N/A", weekly: "N/A" };
   }
 
-  const accountData = guildData.members.find(acc => acc.uuid == account.uuid);
-  return { daily: Object.values(accountData.exp_history)[0], weekly: Object.values(accountData.exp_history).reduce((p, i) => p + i) };
+  const accountData = guildData.membersStats.find(acc => acc.uuid == account.uuid);
+  return { daily: Object.values(accountData.gexpHistory)[0], weekly: Object.values(accountData.gexpHistory).reduce((p, i) => p + i) };
 }
 
 /**
