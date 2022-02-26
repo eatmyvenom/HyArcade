@@ -12,6 +12,7 @@ class OneTimeAP extends Achievement {
   points = 0;
   gamePercentUnlocked = 0;
   globalPercentUnlocked = 0;
+  legacy = false;
 }
 
 class APTier {
@@ -26,7 +27,9 @@ class TieredAP extends Achievement {
    * @type {ArrayLike<APTier>}
    * @memberof TieredAP
    */
+  name = "";
   tiers = {};
+  legacy = false;
 }
 
 class TeiredAchievementWrapper {
@@ -79,6 +82,7 @@ class AccountWithAchievements {
 
 class GameTieredAP {
   name = "";
+  legacy = false;
   currentTier = 0;
   topTier = 0;
   amount = 0;
@@ -95,6 +99,7 @@ class GameTieredAP {
   constructor(amnt, achievement) {
     this.amount = amnt;
     this.name = achievement.name;
+    this.legacy = achievement.legacy ?? false;
 
     const tierArr = [...achievement.tiers];
 
@@ -134,13 +139,17 @@ class GameAP {
 
     for (const onetime of onetimes) {
       if (onetimeArr.has(onetime.stat)) {
-        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points });
-        this.apEarned += onetime.achievement.points;
+        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, legacy: onetime.achievement.legacy ?? false });
+        if (onetime.achievement.legacy != true) {
+          this.apEarned += onetime.achievement.points;
+        }
       } else {
-        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points });
+        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, legacy: onetime.achievement.legacy ?? false });
       }
 
-      this.apAvailable += onetime.achievement.points;
+      if (onetime.achievement.legacy != true) {
+        this.apAvailable += onetime.achievement.points;
+      }
     }
 
     for (const tierAP of tiered) {
@@ -152,14 +161,18 @@ class GameAP {
           this.achievementsMissing.push(gameTier.name);
         }
 
-        this.apEarned += gameTier.ap;
-        this.apAvailable += gameTier.availiableAP;
+        if (!gameTier.legacy) {
+          this.apEarned += gameTier.ap;
+          this.apAvailable += gameTier.availiableAP;
+        }
 
         this.tieredAP.push(gameTier);
       } else {
         const gameTier = new GameTieredAP(0, tierAP.achievement);
 
-        this.apAvailable += gameTier.availiableAP;
+        if (!gameTier.legacy) {
+          this.apAvailable += gameTier.availiableAP;
+        }
 
         this.tieredAP.push(gameTier);
       }
