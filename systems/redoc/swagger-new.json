@@ -2805,6 +2805,9 @@
                     },
                     "mem": {
                       "type": "number"
+                    },
+                    "version": {
+                      "type": "string"
                     }
                   }
                 }
@@ -2902,6 +2905,15 @@
                       "properties": {
                         "online": {
                           "type": "boolean"
+                        },
+                        "gameType": {
+                          "type": "string"
+                        },
+                        "mode": {
+                          "type": "string"
+                        },
+                        "map": {
+                          "type": "string"
                         }
                       }
                     },
@@ -2956,6 +2968,72 @@
                     },
                     "mostRecentGameType": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingInput"
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/friends": {
+      "get": {
+        "summary": "Friends",
+        "tags": [
+          "Player Info"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "ign",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "discid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friends",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "sent_by": {
+                        "type": "string"
+                      },
+                      "started": {
+                        "type": "number"
+                      }
                     }
                   }
                 }
@@ -3080,6 +3158,9 @@
                           "gexpHistory": {
                             "type": "object",
                             "properties": {
+                              "2022-02-26": {
+                                "type": "number"
+                              },
                               "2022-02-25": {
                                 "type": "number"
                               },
@@ -3096,9 +3177,6 @@
                                 "type": "number"
                               },
                               "2022-02-20": {
-                                "type": "number"
-                              },
-                              "2022-02-19": {
                                 "type": "number"
                               }
                             }
