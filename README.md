@@ -68,10 +68,14 @@ There are very many features availiable here, these are listed by system scope.
 ---
 ## Tech Stack
 * **NodeJS** - I started writing this in JS and didn't stop
-* **yarn** - Used over npm for workspaces
-* **MongoDB** - Best node compatable database system
-* **DiscordJS** - module that allows you to easily interact with the Discord API.
-* **node-canvas** - A near identical copy to html5 canvas for nodejs
+* **Yarn** - Used over npm for workspaces.
+* **Eslint** - All in one code linter for javascript.
+* **Prettier** - Eslint compatable formatter for javascript.
+* **MongoDB** - Best node compatable database system.
+* **DiscordJS** - Module that allows you to easily interact with the Discord API.
+* **Redoc** - Easy to use OpenAPI frontend.
+* **Node-Canvas** - A near identical copy to html5 canvas for nodejs.
+* **Hypixel Api** - 😐.
 ---
 ## How to Run
 **NodeJS 16+ is needed**
