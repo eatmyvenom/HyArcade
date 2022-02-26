@@ -3,7 +3,7 @@ import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
 import { createRequire } from "node:module";
 import ImageGenerator from "../images/ImageGenerator.js";
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import { ERROR_IGN_UNDEFINED, ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
 const require = createRequire(import.meta.url);
@@ -497,6 +497,11 @@ async function callback(args, rawmsg, interaction) {
   const spacer = 40;
 
   let y = startY;
+
+  if (!status.session) {
+    return new CommandResponse("", ERROR_IGN_UNDEFINED);
+  }
+
   if (status.session.online) {
     const counts = await Database.gameCounts();
 

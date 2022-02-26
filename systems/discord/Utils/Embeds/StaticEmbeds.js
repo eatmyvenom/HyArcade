@@ -53,7 +53,7 @@ exports.ERROR_INPUT_IGN_MW = new MessageEmbed()
   .setDescription("Input a name or uuid to link your discord to! Read [this](https://docs.hyarcade.xyz/bots/mw-verify) to see a more detailed explanation.")
   .setColor(COLOR_RED);
 
-exports.ERROR_IGN_UNDEFINED = new MessageEmbed().setTitle("ERROR").setDescription("The ign you specified does not exist or has been changed.").setColor(COLOR_RED);
+exports.ERROR_IGN_UNDEFINED = new MessageEmbed().setTitle("ERROR").setDescription("The name you specified does not exist or has been changed.").setColor(COLOR_RED);
 
 exports.ERROR_PLAYER_PREVIOUSLY_LINKED = new MessageEmbed().setTitle("ERROR").setDescription("This player has already been linked!").setColor(COLOR_RED);
 
