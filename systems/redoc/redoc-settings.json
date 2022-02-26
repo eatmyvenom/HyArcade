@@ -18,13 +18,14 @@
     },
     "sidebar": {
       "backgroundColor": "#2d3040",
-      "textColor": "#AAAAAA",
+      "textColor": "#ddddff",
       "rightLineColor": "#7873f5",
       "separatorLabelColor": "#7873f5",
       "width": "17.5%"
     },
     "rightPanel": {
-      "backgroundColor": "#2d3040"
+      "backgroundColor": "#2d3040",
+      "textColor": "#ddddff"
     },
     "codeBlock": {
       "backgroundColor": "#181c30"

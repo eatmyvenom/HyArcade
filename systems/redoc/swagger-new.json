@@ -3,7 +3,7 @@
   "info": {
     "title": "Hyarcade API",
     "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.",
-    "version": "v1",
+    "version": "2.4.7",
     "contact": {
       "name": "EatMyVenom",
       "url": "https://vnmm.dev",
@@ -111,6 +111,9 @@
     "/account": {
       "get": {
         "summary": "Account",
+        "tags": [
+          "Player Info"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -2492,6 +2495,9 @@
       },
       "post": {
         "summary": "Upload Account",
+        "tags": [
+          "Data Generation"
+        ],
         "responses": {
           "200": {
             "description": "Upload Account",
@@ -2520,6 +2526,9 @@
     "/leaderboard": {
       "get": {
         "summary": "Leaderboard",
+        "tags": [
+          "Leaderboards"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -2638,6 +2647,9 @@
     "/database": {
       "get": {
         "summary": "Database collection",
+        "tags": [
+          "Other"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -2672,6 +2684,9 @@
     "/miniwalls": {
       "get": {
         "summary": "Mini Walls Leaderboard",
+        "tags": [
+          "Leaderboards"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -2768,6 +2783,9 @@
     "/info": {
       "get": {
         "summary": "Info",
+        "tags": [
+          "Other"
+        ],
         "responses": {
           "200": {
             "description": "Info",
@@ -2805,6 +2823,9 @@
     "/ping": {
       "get": {
         "summary": "Ping",
+        "tags": [
+          "Other"
+        ],
         "responses": {
           "200": {
             "description": "Ping",
@@ -2833,6 +2854,9 @@
     "/status": {
       "get": {
         "summary": "Status",
+        "tags": [
+          "Player Info"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -2950,6 +2974,9 @@
     "/gamecounts": {
       "get": {
         "summary": "Game Counts",
+        "tags": [
+          "Other"
+        ],
         "responses": {
           "200": {
             "description": "Game Counts",
@@ -2974,6 +3001,9 @@
     "/guild": {
       "get": {
         "summary": "Guild",
+        "tags": [
+          "Guilds"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -3306,11 +3336,43 @@
             "$ref": "#/components/responses/MissingPage"
           }
         }
+      },
+      "post": {
+        "summary": "Upload Guild",
+        "tags": [
+          "Data Generation"
+        ],
+        "responses": {
+          "200": {
+            "description": "Upload Guild",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingInput"
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
       }
     },
     "/disc": {
       "get": {
         "summary": "Discord Meta",
+        "tags": [
+          "Internal"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -3370,6 +3432,9 @@
     "/hacker": {
       "get": {
         "summary": "Hacker Meta",
+        "tags": [
+          "Internal"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -3421,6 +3486,9 @@
     "/banned": {
       "get": {
         "summary": "Banned Meta",
+        "tags": [
+          "Internal"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -3472,6 +3540,9 @@
     "/internal": {
       "post": {
         "summary": "Internal usage",
+        "tags": [
+          "Internal"
+        ],
         "responses": {
           "200": {
             "description": "Internal usage",

@@ -46,7 +46,7 @@
         "hyarcade-errors": "*",
         "javascript-time-ago": "^2.3.6",
         "mongodb": "^4.3.1",
-        "nodejs": "^16.0.0",
+        "nodejs": "*",
         "redoc-cli": "^0.13.7",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"

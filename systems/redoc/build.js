@@ -33,17 +33,19 @@ function convertObject(obj) {
 }
 
 /**
+ * @param category
  * @param obj
  * @param description
  * @param parameters
  * @param internal
  * @returns {object}
  */
-async function getPath(obj, description, parameters, internal = false) {
+async function getPath(category, obj, description, parameters, internal = false) {
   const schema = convertObject(obj);
 
   const response = {
     summary: description,
+    tags: [category],
     parameters,
     responses: {
       200: {
@@ -78,7 +80,7 @@ async function main() {
 
 ## Response Format
 All responses in JSON format.`,
-    version: "v1",
+    version: require("../../package.json").version,
     contact: {
       name: "EatMyVenom",
       url: "https://vnmm.dev",
@@ -176,7 +178,7 @@ All responses in JSON format.`,
 
   swagger.paths = {
     "/account": {
-      get: await getPath(await Database.account("vnmm", undefined, true), "Account", [
+      get: await getPath("Player Info", await Database.account("vnmm", undefined, true), "Account", [
         {
           in: "query",
           name: "uuid",
@@ -202,10 +204,10 @@ All responses in JSON format.`,
           required: false,
         },
       ]),
-      post: await getPath({ success: true }, "Upload Account"),
+      post: await getPath("Data Generation", { success: true }, "Upload Account"),
     },
     "/leaderboard": {
-      get: await getPath(await Database.getLeaderboard("wins", "partyGames", "monthly", false, false, 10), "Leaderboard", [
+      get: await getPath("Leaderboards", await Database.getLeaderboard("wins", "partyGames", "monthly", false, false, 10), "Leaderboard", [
         {
           in: "query",
           name: "category",
@@ -249,7 +251,7 @@ All responses in JSON format.`,
       ]),
     },
     "/database": {
-      get: await getPath({}, "Database collection", [
+      get: await getPath("Other", {}, "Database collection", [
         {
           in: "query",
           name: "path",
@@ -261,7 +263,7 @@ All responses in JSON format.`,
       ]),
     },
     "/miniwalls": {
-      get: await getPath(await Database.getMWLeaderboard("wins"), "Mini Walls Leaderboard", [
+      get: await getPath("Leaderboards", await Database.getMWLeaderboard("wins"), "Mini Walls Leaderboard", [
         {
           in: "query",
           name: "stat",
@@ -280,10 +282,10 @@ All responses in JSON format.`,
         },
       ]),
     },
-    "/info": { get: await getPath(await Database.info(), "Info") },
-    "/ping": { get: await getPath({ response: "pong" }, "Ping") },
+    "/info": { get: await getPath("Other", await Database.info(), "Info") },
+    "/ping": { get: await getPath("Other", { response: "pong" }, "Ping") },
     "/status": {
-      get: await getPath(await Database.status("vnmm"), "Status", [
+      get: await getPath("Player Info", await Database.status("vnmm"), "Status", [
         {
           in: "query",
           name: "uuid",
@@ -310,9 +312,9 @@ All responses in JSON format.`,
         },
       ]),
     },
-    "/gamecounts": { get: await getPath(Database.gameCounts(), "Game Counts") },
+    "/gamecounts": { get: await getPath("Other", Database.gameCounts(), "Game Counts") },
     "/guild": {
-      get: await getPath(await Database.guild("53bd67d7ed503e868873eceb"), "Guild", [
+      get: await getPath("Guilds", await Database.guild("53bd67d7ed503e868873eceb"), "Guild", [
         {
           in: "query",
           name: "uuid",
@@ -330,9 +332,11 @@ All responses in JSON format.`,
           required: false,
         },
       ]),
+      post: await getPath("Data Generation", { success: true }, "Upload Guild"),
     },
     "/disc": {
       get: await getPath(
+        "Internal",
         { success: true },
         "Discord Meta",
         [
@@ -366,6 +370,7 @@ All responses in JSON format.`,
     },
     "/hacker": {
       get: await getPath(
+        "Internal",
         { success: true },
         "Hacker Meta",
         [
@@ -391,6 +396,7 @@ All responses in JSON format.`,
     },
     "/banned": {
       get: await getPath(
+        "Internal",
         { success: true },
         "Banned Meta",
         [
@@ -414,7 +420,7 @@ All responses in JSON format.`,
         true,
       ),
     },
-    "/internal": { post: await getPath({ success: true }, "Internal usage", undefined, true) },
+    "/internal": { post: await getPath("Internal", { success: true }, "Internal usage", undefined, true) },
   };
 
   await writeJson("systems/redoc/swagger-new.json", swagger, { spaces: 2 });
