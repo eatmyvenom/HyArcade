@@ -36,7 +36,7 @@ async function verifyCommand(args, rawMsg, interaction) {
   if (`${uuid}`.length != 32) {
     const noexistEmbed = ERROR_IGN_UNDEFINED;
 
-    return new CommandResponse(noexistEmbed);
+    return new CommandResponse("", noexistEmbed);
   }
 
   if (uuid == undefined) {
@@ -65,7 +65,7 @@ async function verifyCommand(args, rawMsg, interaction) {
     return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
   }
 
-  return new CommandResponse(ERROR_LINK_HYPIXEL_MISMATCH);
+  return new CommandResponse("", ERROR_LINK_HYPIXEL_MISMATCH);
 }
 
 export default new Command("verify", ["*"], verifyCommand);
