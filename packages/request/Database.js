@@ -507,18 +507,48 @@ module.exports = class Database {
       url.searchParams.set("discid", discordID);
     }
 
-    let sts;
+    let fl;
     try {
       Logger.verbose(`Fetching ${url.searchParams} from database!`);
       const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      sts = accReq.data;
+      fl = accReq.data;
     } catch (error) {
       Logger.err("Error fetching data from database");
       Logger.err(error.stack);
-      Logger.err(sts);
+      Logger.err(fl);
       return {};
     }
 
-    return sts;
+    return fl;
+  }
+
+  static async achievements(text, discordID) {
+    const url = new URL("achievements", cfg.database.url);
+
+    if (text != undefined && text != "" && text != "!") {
+      if (text.length < 17) {
+        url.searchParams.set("ign", text);
+      } else {
+        url.searchParams.set("uuid", text.replace(/-/g, ""));
+      }
+    }
+
+    if (discordID != undefined && discordID != "") {
+      url.searchParams.set("discid", discordID);
+    }
+
+    let ap;
+    try {
+      Logger.verbose(`Fetching ${url.searchParams} from database!`);
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
+      ap = accReq.data;
+    } catch (error) {
+      Logger.err("Error fetching data from database");
+      Logger.err(error.stack);
+      Logger.err(ap);
+      return {};
+    }
+
+    return ap;
   }
 };

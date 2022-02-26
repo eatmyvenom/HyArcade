@@ -3049,6 +3049,2416 @@
         }
       }
     },
+    "/achievements": {
+      "get": {
+        "summary": "Achievements",
+        "tags": [
+          "Player Info"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "ign",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "discid",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievements",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "arcade": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "arena": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "bedwars": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "blitz": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "buildbattle": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "christmas2017": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "copsandcrims": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "duels": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "easter": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "general": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "gingerbread": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "halloween2017": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "housing": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "murdermystery": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "paintball": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pit": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quake": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "skyblock": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "skyclash": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "skywars": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "speeduhc": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "summer": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "supersmash": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "tntgames": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "truecombat": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "uhc": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "vampirez": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "walls": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "walls3": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "warlords": {
+                      "type": "object",
+                      "properties": {
+                        "apEarned": {
+                          "type": "number"
+                        },
+                        "apAvailable": {
+                          "type": "number"
+                        },
+                        "tieredAP": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              },
+                              "currentTier": {
+                                "type": "number"
+                              },
+                              "topTier": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "toTop": {
+                                "type": "number"
+                              },
+                              "toNext": {
+                                "type": "number"
+                              },
+                              "ap": {
+                                "type": "number"
+                              },
+                              "availiableAP": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsEarned": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "achievementsMissing": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "points": {
+                                "type": "number"
+                              },
+                              "legacy": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingInput"
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
     "/gamecounts": {
       "get": {
         "summary": "Game Counts",

@@ -340,6 +340,34 @@ All responses in JSON format.`,
         },
       ]),
     },
+    "/achievements": {
+      get: await getPath("Player Info", await Database.achievements("vnmm"), "Achievements", [
+        {
+          in: "query",
+          name: "uuid",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+        {
+          in: "query",
+          name: "ign",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+        {
+          in: "query",
+          name: "discid",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+      ]),
+    },
     "/gamecounts": { get: await getPath("Other", Database.gameCounts(), "Game Counts") },
     "/guild": {
       get: await getPath("Guilds", await Database.guild("53bd67d7ed503e868873eceb"), "Guild", [
