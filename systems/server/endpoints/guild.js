@@ -4,6 +4,7 @@ const Logger = require("hyarcade-logger");
 const { mojangRequest } = require("hyarcade-requests");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const Guild = require("hyarcade-structures/Guild");
+const { DataNotFoundError } = require("hyarcade-errors");
 
 /**
  *
@@ -28,6 +29,11 @@ module.exports = async (req, res, connector) => {
       if (memberUUID.length < 32) {
         memberUUID = await mojangRequest.getUUID(memberUUID);
       }
+
+      if (memberUUID == undefined) {
+        throw new DataNotFoundError();
+      }
+
       guild = await connector.getGuildByMember(memberUUID);
     }
 

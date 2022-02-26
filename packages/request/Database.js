@@ -4,6 +4,14 @@ const { default: axios } = require("axios");
 
 const cfg = Config.fromJSON();
 
+/**
+ * @param status
+ * @returns {boolean}
+ */
+function validateStatus(status) {
+  return status < 500;
+}
+
 module.exports = class Database {
   static async readDB(file, fields) {
     let fileData;
@@ -18,7 +26,7 @@ module.exports = class Database {
     Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
     try {
-      let fileReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      let fileReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       fileData = fileReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -34,7 +42,7 @@ module.exports = class Database {
     url.searchParams.set("path", path);
     Logger.debug(`Writing to ${path} in database`);
 
-    await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass } });
+    await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
   }
 
   static async account(text, discordID, cacheOnly = false) {
@@ -59,7 +67,7 @@ module.exports = class Database {
     let acc;
     try {
       Logger.verbose(`Fetching ${url.searchParams} from database!`);
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       acc = accReq.data;
     } catch (error) {
       Logger.err("Error fetching data from database");
@@ -85,7 +93,7 @@ module.exports = class Database {
     let guild;
     try {
       Logger.debug(`Fetching guild ${url.searchParams} from database!`);
-      const guildReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const guildReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       guild = guildReq.data;
     } catch (error) {
       Logger.err("Error fetching data from database");
@@ -123,7 +131,7 @@ module.exports = class Database {
     let acc;
     try {
       Logger.debug(`Fetching ${url.searchParams} from database!`);
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       acc = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -140,7 +148,7 @@ module.exports = class Database {
 
     let info;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       info = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -157,7 +165,7 @@ module.exports = class Database {
     const url = new URL("account", cfg.database.url);
 
     try {
-      await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass } });
+      await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
@@ -170,7 +178,7 @@ module.exports = class Database {
     const url = new URL("guild", cfg.database.url);
 
     try {
-      await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass } });
+      await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
@@ -193,7 +201,7 @@ module.exports = class Database {
 
     let disc;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       disc = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -220,7 +228,7 @@ module.exports = class Database {
 
     let disc;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       disc = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -243,7 +251,7 @@ module.exports = class Database {
 
     let hack;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       hack = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -266,7 +274,7 @@ module.exports = class Database {
 
     let hack;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       hack = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -289,7 +297,7 @@ module.exports = class Database {
 
     let hack;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       hack = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -312,7 +320,7 @@ module.exports = class Database {
 
     let ban;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       ban = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -354,7 +362,7 @@ module.exports = class Database {
 
     Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
     try {
-      const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       lb = lbReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -379,7 +387,7 @@ module.exports = class Database {
     let lb;
 
     try {
-      const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       lb = lbReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -398,7 +406,7 @@ module.exports = class Database {
 
     let discAccs;
     try {
-      const req = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const req = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       discAccs = await req.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -455,7 +463,7 @@ module.exports = class Database {
     let sts;
     try {
       Logger.verbose(`Fetching ${url.searchParams} from database!`);
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       sts = accReq.data;
     } catch (error) {
       Logger.err("Error fetching data from database");
@@ -472,7 +480,7 @@ module.exports = class Database {
 
     let counts;
     try {
-      const req = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const req = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       counts = req.data;
     } catch (error) {
       Logger.err("Can't connect to database");
@@ -502,7 +510,7 @@ module.exports = class Database {
     let sts;
     try {
       Logger.verbose(`Fetching ${url.searchParams} from database!`);
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       sts = accReq.data;
     } catch (error) {
       Logger.err("Error fetching data from database");

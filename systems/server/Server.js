@@ -3,7 +3,7 @@ const { URL } = require("url");
 const logger = require("hyarcade-logger");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 const AccessLogger = new LoggerInstance("Access", "📄");
-const { DupeKeyError, MissingFieldError } = require("hyarcade-errors");
+const { DupeKeyError, MissingFieldError, DataNotFoundError } = require("hyarcade-errors");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
@@ -67,6 +67,11 @@ async function callback(request, response) {
         response.statusCode = 400;
         response.setHeader("Content-Type", "application/json");
         response.write(JSON.stringify({ success: false, cause: "Missing Field(s)", message: error.message, neededFields: error.neededFields }));
+        response.end();
+      } else if (error instanceof DataNotFoundError) {
+        response.statusCode = 404;
+        response.setHeader("Content-Type", "application/json");
+        response.write(JSON.stringify({ success: false, cause: "Data not found" }));
         response.end();
       } else {
         logger.err(`${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
