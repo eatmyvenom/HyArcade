@@ -22,6 +22,7 @@ const endpointValues = {
   acctimed: 1,
   gamecounts: 1,
   friends: 2,
+  achievements: 2,
   info: 0,
   ping: 0,
   disc: 5,

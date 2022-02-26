@@ -29,6 +29,7 @@ class EndpointStorage {
       ping: await importNew("ping.js"),
       status: await importNew("Status.js"),
       friends: await importNew("Friends.js"),
+      achievements: await importNew("Achievements.js"),
       gamecounts: await importNew("GameCounts.js"),
       disc: await importNew("disc.js"),
       guild: await importNew("guild.js"),
