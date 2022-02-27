@@ -208,7 +208,13 @@ class Achievements {
       for (const tieredAP in achievements[game].tiered) {
         allTiered.push(new TeiredAchievementWrapper(achievements[game].tiered[tieredAP], `${game}_${tieredAP}`));
       }
-      this[game] = new GameAP(accData, oneTimes, allTiered);
+      const gameData = new GameAP(accData, oneTimes, allTiered);
+      this[game] = gameData;
+
+      this.totalEarned += gameData.apEarned;
+      this.totalAvailiable += gameData.apAvailable;
+      this.totalLegacyEarned += gameData.legacyEarned;
+      this.totalLegacyAvailable += gameData.legacyAvailable;
     }
   }
 }
