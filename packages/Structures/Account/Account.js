@@ -670,6 +670,8 @@ class ExtraStats {
 }
 
 class Account {
+  _id = "";
+
   name = "";
   name_lower = "";
   nameHist = [];
@@ -678,13 +680,16 @@ class Account {
   internalId = "";
 
   rank = "";
+  plusColor = "";
+  mvpColor = "";
 
+  apiHidden = false;
   firstLogin = 0;
   isLoggedIn = false;
   lastLogin = 0;
   lastLogout = 0;
-
   mostRecentGameType = "";
+  actionTime = {};
 
   questsCompleted = 0;
   achievementPoints = 0;
@@ -693,19 +698,16 @@ class Account {
   karma = 0;
   ranksGifted = 0;
 
-  /**
-   *
-   * @type {AccountAP}
-   * @memberof Account
-   */
-  arcadeAchievments = new AccountAP();
+  arcadeCoins = 0;
+  coinsEarned = 0;
+  arcadeWins = 0;
+  combinedArcadeWins = 0;
+  importance = 0;
+  arcadeAchievementPoints = 0;
 
-  /**
-   *
-   * @type {ArcadeChallenges}
-   * @memberof Account
-   */
+  arcadeAchievments = new AccountAP();
   arcadeChallenges = new ArcadeChallenges();
+  quests = {};
 
   blockingDead = new BlockingDeadStats();
   bountyHunters = new BountyHuntersStats();
@@ -729,16 +731,9 @@ class Account {
 
   coinTransfers = 0;
   simTotal = 0;
-  arcadeCoins = 0;
-  arcadeWins = 0;
-  combinedArcadeWins = 0;
-  anyWins = 0;
-  coinsEarned = 0;
-  importance = 0;
-  quests = {};
+  unknownWins = 0;
 
-  plusColor = "";
-  mvpColor = "";
+  anyWins = 0;
 
   hypixelDiscord = "";
   discord = "";
