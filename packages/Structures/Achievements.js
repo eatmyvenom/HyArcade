@@ -125,6 +125,7 @@ class GameAP {
   legacyAvailable = 0;
 
   tieredAP = [];
+  challengeAP = [];
 
   achievementsEarned = [];
   achievementsMissing = [];
@@ -140,7 +141,8 @@ class GameAP {
     const tieredKeys = Object.keys(accData?.achievements ?? []);
 
     for (const onetime of onetimes) {
-      if (onetimeArr.has(onetime.stat)) {
+      const completed = onetimeArr.has(onetime.stat);
+      if (completed) {
         this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
         if (onetime.achievement.legacy != true) {
           this.apEarned += onetime.achievement.points;
@@ -150,6 +152,8 @@ class GameAP {
       } else {
         this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
       }
+
+      this.challengeAP.push({ ...onetime.achievement, completed });
 
       if (onetime.achievement.legacy != true) {
         this.apAvailable += onetime.achievement.points;
