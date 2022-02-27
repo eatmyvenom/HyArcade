@@ -1,7 +1,7 @@
 const { ButtonInteraction, Interaction } = require("discord.js");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
-const { Database } = require("hyarcade-requests");
+const { readFile } = require("fs-extra");
 
 let commandStorage;
 
@@ -54,7 +54,8 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
  */
 async function ezHandler() {
   if (ezmsgs == undefined) {
-    ezmsgs = await Database.readDB("ezmsgs");
+    const file = await readFile("data/ez");
+    ezmsgs = file.toString().split("\n");
   }
   const msg = ezmsgs[Math.floor(Math.random() * ezmsgs.length)];
   const buttons = await ButtonGenerator.getEZ();
