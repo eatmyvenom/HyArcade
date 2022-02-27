@@ -18,6 +18,11 @@ module.exports = async (req, res, connector) => {
 
     const AP = new Achievements(rawAPI.player);
 
+    AP.name = acc.name;
+    AP.rank = acc.rank;
+    AP.mvpColor = acc.mvpColor;
+    AP.plusColor = acc.plusColor;
+
     res.write(JSON.stringify(AP));
     res.end();
   } else {
