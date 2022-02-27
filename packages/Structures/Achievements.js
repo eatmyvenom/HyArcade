@@ -85,9 +85,11 @@ class GameTieredAP {
   legacy = false;
   currentTier = 0;
   topTier = 0;
+
   amount = 0;
   toTop = 0;
   toNext = 0;
+
   ap = 0;
   availiableAP = 0;
 
@@ -121,8 +123,15 @@ class GameTieredAP {
 class GameAP {
   apEarned = 0;
   apAvailable = 0;
+
   legacyEarned = 0;
   legacyAvailable = 0;
+
+  challengeEarned = 0;
+  challengeAvailable = 0;
+
+  tieredEarned = 0;
+  tieredAvailable = 0;
 
   tieredAP = [];
   challengeAP = [];
@@ -146,6 +155,7 @@ class GameAP {
         this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
         if (onetime.achievement.legacy != true) {
           this.apEarned += onetime.achievement.points;
+          this.challengeEarned += onetime.achievement.points;
         } else {
           this.legacyEarned += onetime.achievement.points;
         }
@@ -157,6 +167,7 @@ class GameAP {
 
       if (onetime.achievement.legacy != true) {
         this.apAvailable += onetime.achievement.points;
+        this.challengeAvailable += onetime.achievement.points;
       } else {
         this.legacyAvailable += onetime.achievement.points;
       }
@@ -174,6 +185,8 @@ class GameAP {
         if (!gameTier.legacy) {
           this.apEarned += gameTier.ap;
           this.apAvailable += gameTier.availiableAP;
+          this.tieredEarned += gameTier.ap;
+          this.tieredAvailable += gameTier.availiableAP;
         } else {
           this.legacyEarned += gameTier.ap;
           this.legacyAvailable += gameTier.availiableAP;
@@ -185,6 +198,7 @@ class GameAP {
 
         if (!gameTier.legacy) {
           this.apAvailable += gameTier.availiableAP;
+          this.tieredAvailable += gameTier.availiableAP;
         } else {
           this.legacyAvailable += gameTier.availiableAP;
         }
