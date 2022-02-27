@@ -533,8 +533,10 @@ async function callback(args, rawmsg, interaction) {
 
     y += spacer;
 
-    await img.drawMcText("&bMode", 300, (y += increase), 42, "center");
-    await img.drawMcText(`&b${modeName}`, 300, (y += increase), 50, "center");
+    if (modeName != typeName) {
+      await img.drawMcText("&bMode", 300, (y += increase), 42, "center");
+      await img.drawMcText(`&b${modeName}`, 300, (y += increase), 50, "center");
+    }
 
     y += spacer;
 
