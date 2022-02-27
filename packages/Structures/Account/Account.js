@@ -670,8 +670,6 @@ class ExtraStats {
 }
 
 class Account {
-  _id = "";
-
   name = "";
   name_lower = "";
   nameHist = [];
