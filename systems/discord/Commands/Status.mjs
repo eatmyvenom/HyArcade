@@ -555,7 +555,7 @@ async function callback(args, rawmsg, interaction) {
 
     y += spacer;
 
-    if (status.session.mode != undefined && status.session.mode != "LOBBY") {
+    if (status.session.mode != undefined && status.session.mode != "LOBBY" && modeName != typeName) {
       await img.drawMcText(`&b${modeName} players`, img.canvas.width - 300, (y += increase), 42, "center");
       await img.drawMcText(`&b${modeOthers}`, img.canvas.width - 300, (y += increase), 50, "center");
     }
