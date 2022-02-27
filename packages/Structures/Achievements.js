@@ -121,6 +121,8 @@ class GameTieredAP {
 class GameAP {
   apEarned = 0;
   apAvailable = 0;
+  legacyEarned = 0;
+  legacyAvailable = 0;
 
   tieredAP = [];
 
@@ -139,16 +141,20 @@ class GameAP {
 
     for (const onetime of onetimes) {
       if (onetimeArr.has(onetime.stat)) {
-        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
         if (onetime.achievement.legacy != true) {
           this.apEarned += onetime.achievement.points;
+        } else {
+          this.legacyEarned += onetime.achievement.points;
         }
       } else {
-        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
       }
 
       if (onetime.achievement.legacy != true) {
         this.apAvailable += onetime.achievement.points;
+      } else {
+        this.legacyAvailable += onetime.achievement.points;
       }
     }
 
@@ -156,14 +162,17 @@ class GameAP {
       if (tieredKeys.includes(tierAP.stat)) {
         const gameTier = new GameTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
         if (gameTier.currentTier == gameTier.topTier) {
-          this.achievementsEarned.push(gameTier.name);
+          this.achievementsEarned.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
         } else {
-          this.achievementsMissing.push(gameTier.name);
+          this.achievementsMissing.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
         }
 
         if (!gameTier.legacy) {
           this.apEarned += gameTier.ap;
           this.apAvailable += gameTier.availiableAP;
+        } else {
+          this.legacyEarned += gameTier.ap;
+          this.legacyAvailable += gameTier.availiableAP;
         }
 
         this.tieredAP.push(gameTier);
@@ -172,6 +181,8 @@ class GameAP {
 
         if (!gameTier.legacy) {
           this.apAvailable += gameTier.availiableAP;
+        } else {
+          this.legacyAvailable += gameTier.availiableAP;
         }
 
         this.tieredAP.push(gameTier);
@@ -181,6 +192,11 @@ class GameAP {
 }
 
 class Achievements {
+  totalEarned = 0;
+  totalAvailiable = 0;
+  totalLegacyEarned = 0;
+  totalLegacyAvailable = 0;
+
   constructor(accData) {
     for (const game in achievements) {
       const oneTimes = [];
