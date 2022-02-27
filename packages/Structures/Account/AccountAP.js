@@ -81,11 +81,14 @@ class AccountWithAchievements {
 
 class ArcadeTieredAP {
   name = "";
+  legacy = false;
   currentTier = 0;
   topTier = 0;
+
   amount = 0;
   toTop = 0;
   toNext = 0;
+
   ap = 0;
   availiableAP = 0;
 
@@ -97,6 +100,7 @@ class ArcadeTieredAP {
   constructor(amnt, achievement) {
     this.amount = amnt;
     this.name = achievement.name;
+    this.legacy = achievement.legacy ?? false;
 
     const tierArr = [...achievement.tiers];
 
@@ -119,7 +123,17 @@ class ArcadeGameAP {
   apEarned = 0;
   apAvailable = 0;
 
+  legacyEarned = 0;
+  legacyAvailable = 0;
+
+  challengeEarned = 0;
+  challengeAvailable = 0;
+
+  tieredEarned = 0;
+  tieredAvailable = 0;
+
   tieredAP = [];
+  challengeAP = [];
 
   achievementsEarned = [];
   achievementsMissing = [];
@@ -135,33 +149,58 @@ class ArcadeGameAP {
     const tieredKeys = Object.keys(accData?.achievements ?? []);
 
     for (const onetime of onetimes) {
-      if (onetimeArr.has(onetime.stat)) {
-        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points });
-        this.apEarned += onetime.achievement.points;
+      const completed = onetimeArr.has(onetime.stat);
+      if (completed) {
+        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
+        if (onetime.achievement.legacy != true) {
+          this.apEarned += onetime.achievement.points;
+          this.challengeEarned += onetime.achievement.points;
+        } else {
+          this.legacyEarned += onetime.achievement.points;
+        }
       } else {
-        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points });
+        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
       }
 
-      this.apAvailable += onetime.achievement.points;
+      this.challengeAP.push({ ...onetime.achievement, completed });
+
+      if (onetime.achievement.legacy != true) {
+        this.apAvailable += onetime.achievement.points;
+        this.challengeAvailable += onetime.achievement.points;
+      } else {
+        this.legacyAvailable += onetime.achievement.points;
+      }
     }
 
     for (const tierAP of tiered) {
       if (tieredKeys.includes(tierAP.stat)) {
         const gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
         if (gameTier.currentTier == gameTier.topTier) {
-          this.achievementsEarned.push(gameTier.name);
+          this.achievementsEarned.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
         } else {
-          this.achievementsMissing.push(gameTier.name);
+          this.achievementsMissing.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
         }
 
-        this.apEarned += gameTier.ap;
-        this.apAvailable += gameTier.availiableAP;
+        if (!gameTier.legacy) {
+          this.apEarned += gameTier.ap;
+          this.apAvailable += gameTier.availiableAP;
+          this.tieredEarned += gameTier.ap;
+          this.tieredAvailable += gameTier.availiableAP;
+        } else {
+          this.legacyEarned += gameTier.ap;
+          this.legacyAvailable += gameTier.availiableAP;
+        }
 
         this.tieredAP.push(gameTier);
       } else {
         const gameTier = new ArcadeTieredAP(0, tierAP.achievement);
 
-        this.apAvailable += gameTier.availiableAP;
+        if (!gameTier.legacy) {
+          this.apAvailable += gameTier.availiableAP;
+          this.tieredAvailable += gameTier.availiableAP;
+        } else {
+          this.legacyAvailable += gameTier.availiableAP;
+        }
 
         this.tieredAP.push(gameTier);
       }

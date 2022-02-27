@@ -58,13 +58,13 @@ function getAllChallenge(gameAp) {
   let value = "";
 
   for (const ap of gameAp.achievementsEarned) {
-    if (ap.name != undefined) {
+    if (ap.challenge) {
       value += `\` +${ap.points.toString().padEnd(3)}\` ${ap.name}\n`;
     }
   }
 
   for (const ap of gameAp.achievementsMissing) {
-    if (ap.name != undefined) {
+    if (ap.challenge) {
       value += `\n\` -${ap.points.toString().padEnd(3)}\` ~~${ap.name}~~`;
     }
   }
