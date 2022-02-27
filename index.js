@@ -3,37 +3,10 @@ const os = require("os");
 const fs = require("fs-extra");
 const process = require("process");
 const Webhook = require("./systems/events/webhook");
-const { listNormal, listDiff, stringNormal, stringDaily } = require("hyarcade-utils/listUtils");
 const args = process.argv;
 const task = require("./systems/task");
 
 const logger = require("hyarcade-logger");
-
-/**
- * Send a list to a discord webhook as formatted text
- *
- * @param {string} [type="players"] the type of list to log
- * @param {number} [maxamnt=undefined] the maximum index to reach in the list
- */
-async function webhookLog(type = "players", maxamnt) {
-  await Webhook.send(`\`\`\`\n${await stringNormal(type, maxamnt)}\n\`\`\``);
-  await Webhook.send(`\`\`\`\n${await stringDaily(type, maxamnt)}\n\`\`\``);
-}
-
-/**
- * Send a list to a discord webhook as a set of formatted embeds
- *
- * @param {string} [type="players"] the type of list to use
- * @param {number} [maxamnt=undefined] the maximum index to reach in the list
- * @see webhookLog
- */
-async function webhookEmbed(type = "accounts", maxamnt) {
-  const normal = await listNormal(type, maxamnt);
-  const day = await listDiff(type, "day", maxamnt);
-
-  await Webhook.sendEmbed("WINS", normal);
-  await Webhook.sendEmbed("", day);
-}
 
 /**
  * Send party games daily embed
@@ -111,13 +84,6 @@ async function main() {
     await writePID();
   }
   switch (args[2]) {
-    case "discord":
-      await webhookLog(args[3], args[4]);
-      break;
-    case "discordE":
-      await webhookEmbed(args[3], args[4]);
-      break;
-
     case "discordPG":
       await sendPGDay();
       break;

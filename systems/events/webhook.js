@@ -6,7 +6,6 @@ const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const FakeLB = require("../discord/images/FakeLB");
-const listUtils = require("hyarcade-utils/listUtils");
 const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
 /**
@@ -291,13 +290,14 @@ async function genDWKillEmbed() {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGWEmbed() {
-  const week = await listUtils.stringLBDiff("wins", 25, "weekly", "partyGames");
+  const list = await Database.getLeaderboard("wins", "partyGames", "weekly", false, false, 25);
+  const weekly = stringifyList(list, "lbProp", undefined, 25);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
     .setColor(0x44a3e7)
     .setTimestamp(Date.now())
-    .addField("-------------- Top weekly wins --------------", week, true);
+    .addField("-------------- Top weekly wins --------------", weekly, true);
 
   return embed;
 }
@@ -306,7 +306,8 @@ async function genPGWEmbed() {
  * @returns {Discord.MessageEmbed}
  */
 async function genPGMEmbed() {
-  const month = await listUtils.stringLBDiff("wins", 25, "monthly", "partyGames");
+  const list = await Database.getLeaderboard("wins", "partyGames", "monthly", false, false, 25);
+  const month = stringifyList(list, "lbProp", undefined, 25);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Party games leaderboards")
@@ -340,7 +341,8 @@ async function genHSEmbed() {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSWEmbed() {
-  const week = await listUtils.stringLBDiff("wins", 25, "weekly", "hypixelSays");
+  const list = await Database.getLeaderboard("wins", "hypixelSays", "weekly", false, false, 25);
+  const week = stringifyList(list, "lbProp", undefined, 25);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")
@@ -355,7 +357,8 @@ async function genHSWEmbed() {
  * @returns {Discord.MessageEmbed}
  */
 async function genHSMEmbed() {
-  const month = await listUtils.stringLBDiff("wins", 25, "monthly", "hypixelSays");
+  const list = await Database.getLeaderboard("wins", "hypixelSays", "monthly", false, false, 25);
+  const month = stringifyList(list, "lbProp", undefined, 25);
 
   const embed = new Discord.MessageEmbed()
     .setTitle("Hypixel says leaderboards")

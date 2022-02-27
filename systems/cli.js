@@ -4,7 +4,7 @@ const { HypixelApi } = require("hyarcade-requests");
 const mojangRequest = require("hyarcade-requests/mojangRequest");
 const Json = require("hyarcade-utils/FileHandling/Json");
 const dataGeneration = require("./datagen/dataGeneration");
-const { stringNormal, stringDaily, addAccounts } = require("hyarcade-utils/listUtils");
+const addAccounts = require("./datagen/addAccounts");
 const args = process.argv;
 
 /**
@@ -82,48 +82,6 @@ async function newGuild() {
 }
 
 /**
- * Log a normal list
- *
- * @param {string} name
- */
-async function logNormal(name) {
-  logger.out(await stringNormal(name));
-}
-
-/**
- * Log a daily list
- *
- * @param {string} name
- */
-async function logDaily(name) {
-  logger.out(await stringDaily(name));
-}
-
-/**
- * Log a normal list from arguments
- *
- * @param {string[]} args
- */
-async function log(args) {
-  const logName = args[3];
-  const str = await stringNormal(logName);
-
-  logger.out(str);
-}
-
-/**
- * Log a normal list from arguments
- *
- * @param {string[]} args
- */
-async function logD(args) {
-  const logName = args[3];
-  const str = await stringDaily(logName);
-
-  logger.out(str);
-}
-
-/**
  * Get the uuid for a player
  *
  * @param {string[]} args
@@ -162,10 +120,6 @@ module.exports = {
   newAcc,
   newGuild,
   newPlayer,
-  logNormal,
-  logDaily,
-  log,
-  logD,
   addGuildMembers,
   addGIDMembers,
   addGIDsMembers,

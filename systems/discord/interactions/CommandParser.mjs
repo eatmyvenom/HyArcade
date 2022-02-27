@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-null */
-import { addAccounts } from "hyarcade-utils/listUtils.js";
 import { createRequire } from "node:module";
+import addAccounts from "../../datagen/addAccounts.js";
 import CommandStorage from "../CommandStorage.mjs";
 import CommandResponse from "../Utils/CommandResponse.js";
 import ButtonGenerator from "./Buttons/ButtonGenerator.js";
