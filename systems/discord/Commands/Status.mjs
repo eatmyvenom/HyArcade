@@ -260,7 +260,10 @@ function getImage(status) {
     }
 
     case "PIT": {
-      return "assets/status/Pit.png";
+      if (fs.existsSync(`assets/status/pit/${status.session.map}.png`)) {
+        return `assets/status/pit/${status.session.map}.png`;
+      }
+      return "assets/status/pit/Castle.png";
     }
 
     case "BUILD_BATTLE": {
