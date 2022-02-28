@@ -177,6 +177,32 @@ class MongoConnector {
     Logger.info("Snapshot process completed");
   }
 
+  async snapshotGuilds(time) {
+    let realTime = time;
+    if (time == "day") {
+      realTime = "daily";
+    }
+
+    if (this[`${realTime}Guilds`] == undefined) {
+      // Exit if query will throw an error
+      return;
+    }
+
+    Logger.info(`Snapshotting to "${realTime}Guilds" collection`);
+
+    const cursor = this.accounts.find();
+
+    /** @type {Collection} */
+    const newCollection = this[`${realTime}Guilds`];
+
+    await cursor.forEach(async guild => {
+      delete guild._id;
+      await newCollection.replaceOne({ uuid: guild.uuid }, guild, { upsert: true });
+    });
+
+    Logger.info("Snapshot process completed");
+  }
+
   async getAccount(input) {
     if (input.length == 32 || input.length == 36) {
       return await this.accounts.findOne({ uuid: input });
