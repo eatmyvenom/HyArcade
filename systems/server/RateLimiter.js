@@ -12,6 +12,7 @@ const endpointValues = {
   acc: 1,
   leaderboard: 3,
   lb: 3,
+  guildleaderboard: 3,
   db: 10,
   database: 10,
   mwlb: 5,

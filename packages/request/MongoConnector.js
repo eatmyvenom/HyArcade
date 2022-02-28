@@ -92,17 +92,20 @@ class MongoConnector {
     this.accounts = this.database.collection("accounts");
 
     this.dailyAccounts = this.database.collection("dailyAccounts");
-
     this.weeklyAccounts = this.database.collection("weeklyAccounts");
-
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
 
     this.discordList = this.database.collection("discordList");
 
     this.hackerList = this.database.collection("hackerlist");
     this.bannedList = this.database.collection("banlist");
+    this.blackList = this.database.collection("blacklist");
 
     this.guilds = this.database.collection("guilds");
+
+    this.dailyGuilds = this.database.collection("dailyGuilds");
+    this.weeklyGuilds = this.database.collection("weeklyGuilds");
+    this.monthlyGuilds = this.database.collection("monthlyGuilds");
 
     this.commands = this.database.collection("commands");
 
@@ -502,6 +505,107 @@ class MongoConnector {
     return historical;
   }
 
+  async getGuildLeaderboard(stat, reverse = false, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
+    const options = {
+      sort: {
+        [stat]: reverse ? 1 : -1,
+      },
+      projection: {
+        _id: 0,
+        uuid: 1,
+        name: 1,
+        color: 1,
+        tag: 1,
+        [stat]: 1,
+      },
+      limit,
+    };
+
+    return await this.guilds.find({}, options).toArray();
+  }
+
+  async getGuildHistoricalLeaderboard(stat, time, reverse = false, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
+    let realTime = time;
+    if (time == "day") {
+      realTime = "daily";
+    }
+
+    if (this[`${realTime}Guilds`] == undefined) {
+      // Exit if query will throw an error
+      return [];
+    }
+
+    const pipeline = [];
+
+    const earlyFilter = {
+      $match: { [stat]: { $gt: 0 } },
+    };
+    pipeline.push(earlyFilter);
+
+    const lookup = {
+      from: this[`${realTime}Guilds`].collectionName,
+      let: { uuid: "$uuid" },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ["$uuid", "$$uuid"] },
+          },
+        },
+        { $project: { [stat]: 1, _id: 0, uuid: 1 } },
+      ],
+      as: "historicalData",
+    };
+    pipeline.push({ $lookup: lookup });
+
+    const match = {
+      $match: { historicalData: { $size: 1 } },
+    };
+    pipeline.push(match);
+
+    const project = {
+      _id: 0,
+      uuid: 1,
+      name: 1,
+      rank: 1,
+      banned: 1,
+      hacker: 1,
+      importance: 1,
+      plusColor: 1,
+      mvpColor: 1,
+      historicalData: 1,
+      [stat]: 1,
+      lbProp: {
+        $subtract: [
+          `$${stat}`,
+          {
+            $reduce: {
+              input: "$historicalData",
+              initialValue: 0,
+              in: { $max: ["$$value", `$$this.${stat}`] },
+            },
+          },
+        ],
+      },
+    };
+    pipeline.push({ $project: project });
+
+    const sort = { lbProp: reverse ? 1 : -1 };
+    pipeline.push({ $sort: sort }, { $limit: limit });
+
+    const historical = await this.guilds.aggregate(pipeline).toArray();
+    Logger.debug("Historical leaderboard generation completed");
+
+    return historical;
+  }
+
   async getLeaderboarders(limit) {
     const leaderboarders = [
       ...(await this.getLeaderboard("achievementPoints", false, limit)),
@@ -638,6 +742,14 @@ class MongoConnector {
 
   async deleteBanned(uuid) {
     await this.bannedList.deleteOne({ uuid });
+  }
+
+  async addBlacklist(uuid) {
+    await this.hackerList.replaceOne({ uuid }, { uuid }, { upsert: true });
+  }
+
+  async deleteBlacklist(uuid) {
+    await this.hackerList.deleteOne({ uuid });
   }
 
   async useCommand(name, type) {

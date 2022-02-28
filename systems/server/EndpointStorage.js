@@ -25,6 +25,7 @@ class EndpointStorage {
       database: await importNew("Database.js"),
       mwlb: await importNew("MiniWallsLeaderboard.js"),
       miniwalls: await importNew("MiniWallsLeaderboard.js"),
+      guildleaderboard: await importNew("GuildLeaderboard.js"),
       info: await importNew("info.js"),
       ping: await importNew("ping.js"),
       status: await importNew("Status.js"),
