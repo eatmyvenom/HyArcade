@@ -11,13 +11,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install node.js v16
+        uses: actions/setup-node@v2
+        with:
           node-version: 16
           cache: 'yarn'
           cache-dependency-path: yarn.lock
-    - name: Install modules
-      run: yarn --immutable
-    - name: Run ESLint
-      run: yarn lint
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: ESLint
+        run: yarn lint
