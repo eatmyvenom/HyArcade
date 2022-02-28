@@ -1,3 +1,0 @@
-[submodule "src/Worker"]
-	path = packages/Worker
-	url = git@github.com:eatmyvenom/Hyarcade-Worker.git
