@@ -620,6 +620,7 @@ async function genMiWLB(prop, timetype, limit) {
  */
 async function sendMW() {
   let guildlist = await Database.getGuildLeaderboard("miniWallsWins", undefined, false, "25");
+  guildlist = guildlist.filter(g => g.uuid != "5cf6ddfb77ce842c855426b0");
 
   let str = stringifyList(guildlist, "miniWallsWins", undefined, 10);
   const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
