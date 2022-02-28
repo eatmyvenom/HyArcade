@@ -1,10 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [unreleased]
+# [2.4.9](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.4.9) - (2022-02-28)
 
 ## Bug Fixes
 
+- **github:** :rocket: actions error ([397ac69](https://github.com/eatmyvenom/hyarcade/commit/397ac6935c13a73442de9639227795acc6c98b43))
 - **events:** :iphone: fix using outdated leaderboard system ([88d209b](https://github.com/eatmyvenom/hyarcade/commit/88d209b56990cb84afcb0ce44b943d5bbc15894e))
 - **discord:** :speech_balloon: ezmsgs ([16f150a](https://github.com/eatmyvenom/hyarcade/commit/16f150a2c926a405589dc074a48771e27da3bdd2))
 
