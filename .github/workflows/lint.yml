@@ -22,7 +22,7 @@ jobs:
           cache-dependency-path: yarn.lock
 
       - name: Install dependencies
-        run: yarn --immutable
+        run: yarn install
 
       - name: ESLint
         run: yarn lint
