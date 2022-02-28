@@ -23,6 +23,7 @@
         "prebuild:redoc": "node systems/redoc/build.js",
         "build:redoc": "redoc-cli bundle systems/redoc/swagger-new.json -t systems/redoc/redoc.handlebars --options systems/redoc/redoc-settings.json -o assets/api-docs.html",
         "build:worker": "cd src/Worker;wrangler publish;cd ../..",
+        "changelog": "git cliff --output ./CHANGELOG.md -c ./cliff.toml",
         "bot:test": "node index.js bot test",
         "postinstall": "is-ci || husky install",
         "commit": "cz",
