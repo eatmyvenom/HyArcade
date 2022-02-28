@@ -29,7 +29,7 @@ function miwstringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
   size = size > list.length ? list.length : size;
   const sizedList = list.slice(0, size);
 
-  const names = list.map(a => a.name);
+  const names = sizedList.map(a => a.name);
   const max = Math.max(...names.map(n => n.length));
 
   let propVal;
