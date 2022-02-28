@@ -8,6 +8,103 @@ const FakeLB = require("../discord/images/FakeLB");
 const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
 /**
+ * @param {number} number
+ * @returns {string} Formatted number
+ */
+function formatNum(number) {
+  return Intl.NumberFormat("en").format(number);
+}
+
+/**
+ * @param list
+ * @param lbprop
+ * @param category
+ * @param maxamnt
+ * @param startingIndex
+ * @returns {string}
+ */
+function miwstringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
+  let str = "";
+  let size = maxamnt + startingIndex;
+  size = size > list.length ? list.length : size;
+  const sizedList = list.slice(0, size);
+
+  const names = list.map(a => a.name);
+  const max = Math.max(...names.map(({ length }) => length));
+
+  let propVal;
+  for (let i = startingIndex; i < sizedList.length; i += 1) {
+    propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
+
+    let name = `${sizedList[i].name}`.replace(/\\/g, "");
+    name = name.padStart(name.length + Math.floor((max - name.length) / 2), " ").padEnd(max, " ");
+
+    name = `\` ${name} \``;
+
+    // eslint-disable-next-line prefer-template
+    let num = "";
+    switch (i + 1) {
+      case 1: {
+        num = "<:one:947758480826195978>";
+        break;
+      }
+
+      case 2: {
+        num = "<:two:947758859055939615>";
+        break;
+      }
+
+      case 3: {
+        num = "<:three:947759206650503209>";
+        break;
+      }
+
+      case 4: {
+        num = "<:four:947759958076850239>";
+        break;
+      }
+
+      case 5: {
+        num = "<:five:947760346553262080>";
+        break;
+      }
+
+      case 6: {
+        num = "<:six:947760707322146827>";
+        break;
+      }
+
+      case 7: {
+        num = "<:seven:947761084050341948>";
+        break;
+      }
+
+      case 8: {
+        num = "<:eight:947761459537018882>";
+        break;
+      }
+
+      case 9: {
+        num = "<:nine:947761739229978624>";
+        break;
+      }
+
+      case 10: {
+        num = "<:ten:947762100569268324>";
+        break;
+      }
+
+      default: {
+        num = `**${i + 1}`.padEnd(`${sizedList.length + 1}  `.length) + "**   ";
+      }
+    }
+
+    str += `${num} ${name} **${formatNum(propVal ?? 0)}**\n`;
+  }
+  return str;
+}
+
+/**
  * Send text to a discord webhook
  *
  * @param {string} [content=""]
@@ -440,7 +537,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "kills": {
       gameName = "Kills";
       const lb = await getLB("kills", timetype, limit);
-      res = stringifyList(lb.res, "kills", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "kills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -452,7 +549,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "deaths": {
       gameName = "Deaths";
       const lb = await getLB("deaths", timetype, limit);
-      res = stringifyList(lb.res, "deaths", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "deaths", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -465,7 +562,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "witherdmg": {
       gameName = "Wither Damage";
       const lb = await getLB("witherDamage", timetype, limit);
-      res = stringifyList(lb.res, "witherDamage", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "witherDamage", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -478,7 +575,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "witherki8lls": {
       gameName = "Wither Kills";
       const lb = await getLB("witherKills", timetype, limit);
-      res = stringifyList(lb.res, "witherKills", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "witherKills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -491,7 +588,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "finals": {
       gameName = "Final Kills";
       const lb = await getLB("finalKills", timetype, limit);
-      res = stringifyList(lb.res, "finalKills", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "finalKills", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -509,7 +606,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "killdeath": {
       gameName = "Kills+Finals/Deaths";
       const lb = await getLB("kd", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -525,7 +622,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "kdnofinal": {
       gameName = "Kills/Deaths ratios";
       const lb = await getLB("kdnf", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -537,7 +634,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "finaldeath":
     case "fd": {
       const lb = await getLB("fd", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -548,7 +645,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "witherdamagedeath": {
       gameName = "Wither Damage/Deaths";
       const lb = await getLB("wdd", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -561,7 +658,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "wikdr": {
       gameName = "Wither Kills/Deaths";
       const lb = await getLB("wkd", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -572,7 +669,7 @@ async function genMiWLB(prop, timetype, limit) {
     case "arrowhit/miss": {
       gameName = "Arrow accuracy";
       const lb = await getLB("aa", timetype, limit);
-      res = stringifyList(lb.res, "ratio", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "ratio", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -580,7 +677,7 @@ async function genMiWLB(prop, timetype, limit) {
     default: {
       gameName = "Wins";
       const lb = await getLB("wins", timetype, limit);
-      res = stringifyList(lb.res, "wins", "miniWalls", limit);
+      res = miwstringifyList(lb.res, "wins", "miniWalls", limit);
       correctedTime = lb.time;
       break;
     }
@@ -622,7 +719,7 @@ async function sendMW() {
   let guildlist = await Database.getGuildLeaderboard("miniWallsWins", undefined, false, "25");
   guildlist = guildlist.filter(g => g.uuid != "5cf6ddfb77ce842c855426b0");
 
-  let str = stringifyList(guildlist, "miniWallsWins", undefined, 10);
+  let str = miwstringifyList(guildlist, "miniWallsWins", undefined, 10);
   const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
 
   const wins = await genMiWLB("wins", "l", 25);
