@@ -4,7 +4,7 @@
     "private": true,
     "description": "A full system for gathering and displaying peoples hypixel arcade games stats",
     "main": "index.js",
-    "packageManager": "yarn@3.1.1",
+    "packageManager": "yarn@3.2.0",
     "author": "EatMyVenom",
     "license": "MPL-2.0",
     "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
@@ -39,14 +39,13 @@
         "discord.js": "^13.6.0",
         "fs-extra": "^10.0.0",
         "hyarcade-config": "*",
+        "hyarcade-errors": "*",
         "hyarcade-logger": "*",
         "hyarcade-requests": "*",
         "hyarcade-structures": "*",
         "hyarcade-utils": "*",
-        "hyarcade-errors": "*",
         "javascript-time-ago": "^2.3.6",
         "mongodb": "^4.3.1",
-        "nodejs": "*",
         "redoc-cli": "^0.13.7",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"
@@ -71,7 +70,9 @@
         "prettier": "^2.5.1"
     },
     "engines": {
-        "yarn": ">=1.4.0"
+        "node": ">=16.10.0",
+        "yarn": ">=3.2.0",
+        "npm": "Please use yarn instead of NPM to install dependencies"
     },
     "workspaces": [
         "packages/*"
