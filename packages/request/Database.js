@@ -335,7 +335,7 @@ module.exports = class Database {
   static async getLeaderboard(path, category, time, min, reverse, max) {
     Logger.verbose("Reading database");
 
-    const url = new URL("lb", cfg.database.url);
+    const url = new URL("leaderboard", cfg.database.url);
     url.searchParams.set("path", path);
 
     if (category != undefined && category != "undefined") {
@@ -374,8 +374,42 @@ module.exports = class Database {
     return lb;
   }
 
+  static async getGuildLeaderboard(path, time, reverse, max) {
+    Logger.verbose("Reading database");
+
+    const url = new URL("guildleaderboard", cfg.database.url);
+    url.searchParams.set("path", path);
+
+    if (time != undefined) {
+      url.searchParams.set("time", time);
+    }
+
+    if (max != undefined) {
+      url.searchParams.set("max", max);
+    }
+
+    if (reverse) {
+      url.searchParams.set("reverse", "");
+    }
+
+    let lb;
+
+    Logger.debug(`Fetching ${time ?? "lifetime"} ${path} guild leaderboard`);
+    try {
+      const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
+      lb = lbReq.data;
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(lb);
+      return {};
+    }
+
+    return lb;
+  }
+
   static async getMWLeaderboard(stat, time) {
-    Logger.info(`Fetching miniwalls ${stat} leaderboard from!`);
+    Logger.debug(`Fetching miniwalls ${stat} leaderboard from!`);
 
     const url = new URL("mwlb", cfg.database.url);
     url.searchParams.set("stat", stat);

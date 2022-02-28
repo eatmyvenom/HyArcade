@@ -390,6 +390,35 @@ All responses in JSON format.`,
       ]),
       post: await getPath("Data Generation", { success: true }, "Upload Guild"),
     },
+    "/guildleaderboard": {
+      get: await getPath("Leaderboards", await Database.getGuildLeaderboard("gexp"), "Guild Leaderboard", [
+        {
+          in: "query",
+          name: "path",
+          schema: {
+            type: "string",
+          },
+          required: true,
+        },
+        {
+          in: "query",
+          name: "time",
+          schema: {
+            type: "string",
+          },
+          required: false,
+        },
+        {
+          in: "query",
+          name: "max",
+          schema: {
+            type: "integer",
+          },
+          required: false,
+        },
+      ]),
+      post: await getPath("Data Generation", { success: true }, "Upload Guild"),
+    },
     "/disc": {
       get: await getPath(
         "Internal",

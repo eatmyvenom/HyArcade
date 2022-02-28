@@ -4,7 +4,6 @@ const config = require("hyarcade-config").fromJSON();
 const { MessageEmbed } = Discord;
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
-const Json = require("hyarcade-utils/FileHandling/Json");
 const FakeLB = require("../discord/images/FakeLB");
 const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
@@ -618,26 +617,11 @@ async function genMiWLB(prop, timetype, limit) {
 }
 
 /**
- * @param {number} number
- * @returns {string}
- */
-function formatNum(number) {
-  return Intl.NumberFormat("en").format(number);
-}
-
-/**
  */
 async function sendMW() {
-  let guildlist = await Json.read("guild.json");
-  guildlist.sort((a, b) => b.miniWallsWins - a.miniWallsWins);
+  let guildlist = await Database.getGuildLeaderboard("miniWallsWins", undefined, false, "25");
 
-  let str = "";
-  guildlist = guildlist.filter(g => g.uuid != "5cf6ddfb77ce842c855426b0");
-  for (let i = 0; i < Math.min(10, guildlist.length); i += 1) {
-    const g = guildlist[i];
-    str += `${` \`${i + 1}.`.padEnd(4)}\` **${g.name}** (\`${formatNum(g.miniWallsWins)}\`)\n`;
-  }
-
+  let str = stringifyList(guildlist, "miniWallsWins", undefined, 10);
   const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
 
   const wins = await genMiWLB("wins", "l", 25);

@@ -37,15 +37,14 @@ exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, 
   let propVal;
   for (let i = startingIndex; i < sizedList.length; i += 1) {
     propVal = category == undefined ? sizedList[i]?.[lbprop] : sizedList[i]?.[category]?.[lbprop];
-    // don't print if player has 0 wins
     if (!((propVal ?? 0) > 0) && !cfg.printAllWins) continue;
 
-    const { name } = sizedList[i];
+    const name = sizedList[i].tag ? `**${sizedList[i].name}** [${sizedList[i].tag}]` : `**${sizedList[i].name}**`;
 
     // eslint-disable-next-line prefer-template
     const num = `\` ${i + 1}`.padEnd(`\` ${sizedList.length} `.length) + "`";
 
-    str += `${num} **${name}** (\`${formatNum(propVal ?? 0)}\`)\n`;
+    str += `${num} ${name} (\`${formatNum(propVal ?? 0)}\`)\n`;
   }
   return str.replace(/\\?_/g, "\\_");
 };

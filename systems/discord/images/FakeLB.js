@@ -25,8 +25,7 @@ module.exports = async function FakeLb(path, category, time) {
   let topTen;
 
   if (category == "guild") {
-    topTen = await Database.readDB("guilds");
-    topTen = topTen.sort((a, b) => b?.[path] - a?.[path]);
+    topTen = await Database.getGuildLeaderboard(path, time);
   } else if (path == undefined) {
     realTime = "monthly";
     topTen = await Database.getMWLeaderboard("wins", "monthly");

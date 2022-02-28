@@ -3,7 +3,7 @@
   "info": {
     "title": "Hyarcade API",
     "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.",
-    "version": "2.4.7",
+    "version": "2.4.9",
     "contact": {
       "name": "EatMyVenom",
       "url": "https://vnmm.dev",
@@ -175,6 +175,15 @@
                     "rank": {
                       "type": "string"
                     },
+                    "plusColor": {
+                      "type": "string"
+                    },
+                    "mvpColor": {
+                      "type": "string"
+                    },
+                    "apiHidden": {
+                      "type": "boolean"
+                    },
                     "firstLogin": {
                       "type": "number"
                     },
@@ -189,6 +198,31 @@
                     },
                     "mostRecentGameType": {
                       "type": "string"
+                    },
+                    "actionTime": {
+                      "type": "object",
+                      "properties": {
+                        "quest": {
+                          "type": "object",
+                          "properties": {
+                            "time": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "pets": {
+                          "type": "number"
+                        },
+                        "dailyReward": {
+                          "type": "number"
+                        },
+                        "otherActions": {
+                          "type": "number"
+                        }
+                      }
                     },
                     "questsCompleted": {
                       "type": "number"
@@ -206,6 +240,24 @@
                       "type": "number"
                     },
                     "ranksGifted": {
+                      "type": "number"
+                    },
+                    "arcadeCoins": {
+                      "type": "number"
+                    },
+                    "coinsEarned": {
+                      "type": "number"
+                    },
+                    "arcadeWins": {
+                      "type": "number"
+                    },
+                    "combinedArcadeWins": {
+                      "type": "number"
+                    },
+                    "importance": {
+                      "type": "number"
+                    },
+                    "arcadeAchievementPoints": {
                       "type": "number"
                     },
                     "arcadeAchievments": {
@@ -226,6 +278,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -233,6 +303,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -258,6 +331,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -268,6 +367,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -287,6 +392,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -294,6 +417,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -319,6 +445,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -329,6 +481,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -343,6 +501,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -358,6 +522,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -365,6 +547,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -390,6 +575,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -400,6 +611,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -414,6 +631,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -429,6 +652,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -436,6 +677,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -461,6 +705,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -471,6 +741,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -478,7 +754,21 @@
                             "achievementsMissing": {
                               "type": "array",
                               "items": {
-                                "type": "string"
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
+                                  }
+                                }
                               }
                             }
                           }
@@ -492,6 +782,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -499,6 +807,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -524,6 +835,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -534,6 +871,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -548,6 +891,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -563,6 +912,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -570,6 +937,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -595,6 +965,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -605,6 +1001,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -619,6 +1021,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -634,6 +1042,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -641,6 +1067,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -666,6 +1095,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -676,6 +1131,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -690,6 +1151,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -705,6 +1172,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -712,6 +1197,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -737,6 +1225,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -747,6 +1261,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -761,6 +1281,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -776,6 +1302,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -783,6 +1327,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -804,6 +1351,32 @@
                                   },
                                   "availiableAP": {
                                     "type": "number"
+                                  }
+                                }
+                              }
+                            },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -818,6 +1391,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -825,7 +1404,21 @@
                             "achievementsMissing": {
                               "type": "array",
                               "items": {
-                                "type": "string"
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
+                                  }
+                                }
                               }
                             }
                           }
@@ -839,6 +1432,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -846,6 +1457,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -867,6 +1481,32 @@
                                   },
                                   "availiableAP": {
                                     "type": "number"
+                                  }
+                                }
+                              }
+                            },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -885,6 +1525,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -900,6 +1546,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -907,6 +1571,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -932,6 +1599,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -942,6 +1635,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -956,6 +1655,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -971,6 +1676,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -978,6 +1701,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -1003,6 +1729,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -1013,6 +1765,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1032,9 +1790,53 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "object",
                               "properties": {}
+                            },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
                             },
                             "achievementsEarned": {
                               "type": "array",
@@ -1046,6 +1848,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1065,6 +1873,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -1072,6 +1898,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -1097,6 +1926,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -1107,6 +1962,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1126,9 +1987,53 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "object",
                               "properties": {}
+                            },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
                             },
                             "achievementsEarned": {
                               "type": "object",
@@ -1144,6 +2049,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1159,6 +2070,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -1166,6 +2095,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -1191,6 +2123,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -1201,6 +2159,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1215,6 +2179,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1230,6 +2200,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -1237,6 +2225,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -1262,6 +2253,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -1272,6 +2289,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1286,6 +2309,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1301,6 +2330,24 @@
                             "apAvailable": {
                               "type": "number"
                             },
+                            "legacyEarned": {
+                              "type": "number"
+                            },
+                            "legacyAvailable": {
+                              "type": "number"
+                            },
+                            "challengeEarned": {
+                              "type": "number"
+                            },
+                            "challengeAvailable": {
+                              "type": "number"
+                            },
+                            "tieredEarned": {
+                              "type": "number"
+                            },
+                            "tieredAvailable": {
+                              "type": "number"
+                            },
                             "tieredAP": {
                               "type": "array",
                               "items": {
@@ -1308,6 +2355,9 @@
                                 "properties": {
                                   "name": {
                                     "type": "string"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   },
                                   "currentTier": {
                                     "type": "number"
@@ -1333,6 +2383,32 @@
                                 }
                               }
                             },
+                            "challengeAP": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "gamePercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "globalPercentUnlocked": {
+                                    "type": "number"
+                                  },
+                                  "completed": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            },
                             "achievementsEarned": {
                               "type": "array",
                               "items": {
@@ -1343,6 +2419,12 @@
                                   },
                                   "points": {
                                     "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
                                   }
                                 }
                               }
@@ -1350,7 +2432,21 @@
                             "achievementsMissing": {
                               "type": "array",
                               "items": {
-                                "type": "string"
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "points": {
+                                    "type": "number"
+                                  },
+                                  "challenge": {
+                                    "type": "boolean"
+                                  },
+                                  "legacy": {
+                                    "type": "boolean"
+                                  }
+                                }
                               }
                             }
                           }
@@ -1409,6 +2505,29 @@
                           "type": "number"
                         },
                         "captureTheWool": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "quests": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "daily": {
+                          "type": "number"
+                        },
+                        "weekly": {
+                          "type": "number"
+                        },
+                        "arcadeGamer": {
+                          "type": "number"
+                        },
+                        "arcadeWinner": {
+                          "type": "number"
+                        },
+                        "arcadeSpecialist": {
                           "type": "number"
                         }
                       }
@@ -2381,52 +3500,11 @@
                     "simTotal": {
                       "type": "number"
                     },
-                    "arcadeCoins": {
-                      "type": "number"
-                    },
-                    "arcadeWins": {
-                      "type": "number"
-                    },
-                    "combinedArcadeWins": {
+                    "unknownWins": {
                       "type": "number"
                     },
                     "anyWins": {
                       "type": "number"
-                    },
-                    "coinsEarned": {
-                      "type": "number"
-                    },
-                    "importance": {
-                      "type": "number"
-                    },
-                    "quests": {
-                      "type": "object",
-                      "properties": {
-                        "total": {
-                          "type": "number"
-                        },
-                        "daily": {
-                          "type": "number"
-                        },
-                        "weekly": {
-                          "type": "number"
-                        },
-                        "arcadeGamer": {
-                          "type": "number"
-                        },
-                        "arcadeWinner": {
-                          "type": "number"
-                        },
-                        "arcadeSpecialist": {
-                          "type": "number"
-                        }
-                      }
-                    },
-                    "plusColor": {
-                      "type": "string"
-                    },
-                    "mvpColor": {
-                      "type": "string"
                     },
                     "hypixelDiscord": {
                       "type": "string"
@@ -2439,46 +3517,6 @@
                     },
                     "updateTime": {
                       "type": "number"
-                    },
-                    "arcadeAchievementPoints": {
-                      "type": "number"
-                    },
-                    "apiHidden": {
-                      "type": "boolean"
-                    },
-                    "weeklyCoins": {
-                      "type": "number"
-                    },
-                    "monthlyCoins": {
-                      "type": "number"
-                    },
-                    "unknownWins": {
-                      "type": "number"
-                    },
-                    "actionTime": {
-                      "type": "object",
-                      "properties": {
-                        "quest": {
-                          "type": "object",
-                          "properties": {
-                            "time": {
-                              "type": "number"
-                            },
-                            "name": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "pets": {
-                          "type": "number"
-                        },
-                        "dailyReward": {
-                          "type": "number"
-                        },
-                        "otherActions": {
-                          "type": "number"
-                        }
-                      }
                     }
                   }
                 }
@@ -2590,6 +3628,15 @@
                       "rank": {
                         "type": "string"
                       },
+                      "plusColor": {
+                        "type": "string"
+                      },
+                      "mvpColor": {
+                        "type": "string"
+                      },
+                      "importance": {
+                        "type": "number"
+                      },
                       "partyGames": {
                         "type": "object",
                         "properties": {
@@ -2597,15 +3644,6 @@
                             "type": "number"
                           }
                         }
-                      },
-                      "importance": {
-                        "type": "number"
-                      },
-                      "plusColor": {
-                        "type": "string"
-                      },
-                      "mvpColor": {
-                        "type": "string"
                       },
                       "historicalData": {
                         "type": "array",
@@ -2724,6 +3762,15 @@
                       "rank": {
                         "type": "string"
                       },
+                      "plusColor": {
+                        "type": "string"
+                      },
+                      "mvpColor": {
+                        "type": "string"
+                      },
+                      "importance": {
+                        "type": "number"
+                      },
                       "miniWalls": {
                         "type": "object",
                         "properties": {
@@ -2755,15 +3802,6 @@
                             "type": "number"
                           }
                         }
-                      },
-                      "importance": {
-                        "type": "number"
-                      },
-                      "plusColor": {
-                        "type": "string"
-                      },
-                      "mvpColor": {
-                        "type": "string"
                       }
                     }
                   }
@@ -6929,6 +7967,18 @@
                           }
                         }
                       }
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "rank": {
+                      "type": "string"
+                    },
+                    "mvpColor": {
+                      "type": "string"
+                    },
+                    "plusColor": {
+                      "type": "string"
                     }
                   }
                 }
@@ -7003,6 +8053,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
                     "input": {
                       "type": "string"
                     },
@@ -7050,6 +8103,9 @@
                           "gexpHistory": {
                             "type": "object",
                             "properties": {
+                              "2022-02-27": {
+                                "type": "number"
+                              },
                               "2022-02-26": {
                                 "type": "number"
                               },
@@ -7066,9 +8122,6 @@
                                 "type": "number"
                               },
                               "2022-02-21": {
-                                "type": "number"
-                              },
-                              "2022-02-20": {
                                 "type": "number"
                               }
                             }
@@ -7293,6 +8346,107 @@
                     },
                     "updateTime": {
                       "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingInput"
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      },
+      "post": {
+        "summary": "Upload Guild",
+        "tags": [
+          "Data Generation"
+        ],
+        "responses": {
+          "200": {
+            "description": "Upload Guild",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingInput"
+          },
+          "404": {
+            "$ref": "#/components/responses/MissingPage"
+          }
+        }
+      }
+    },
+    "/guildleaderboard": {
+      "get": {
+        "summary": "Guild Leaderboard",
+        "tags": [
+          "Leaderboards"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "time",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "max",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Guild Leaderboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "gexp": {
+                        "type": "number"
+                      },
+                      "color": {
+                        "type": "string"
+                      },
+                      "tag": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
