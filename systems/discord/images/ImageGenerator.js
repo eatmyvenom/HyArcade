@@ -1,5 +1,6 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
+const Logger = require("hyarcade-logger");
 const { Account } = require("hyarcade-structures");
 const StackBlur = require("stackblur-canvas");
 
@@ -92,7 +93,13 @@ module.exports = class ImageGenerator {
   }
 
   async addImage(path, x, y, bgIterations = 0, bgStrenth = "11", width, height) {
-    const img = await Canvas.loadImage(path);
+    let img;
+    try {
+      img = await Canvas.loadImage(path);
+    } catch {
+      Logger.error(`Could not load image from ${path}`);
+      return;
+    }
     for (let i = bgIterations; i >= 4; i -= 1) {
       this.context.beginPath();
       this.context.rect(x - i / 2, y - i / 2, img.width + i, img.height + i);
