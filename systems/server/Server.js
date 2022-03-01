@@ -22,7 +22,7 @@ let endpoints = new EndpointStorage();
 async function callback(request, response) {
   const url = new URL(request.url, `https://${request.headers.host}`);
   const endpoint = url.pathname.slice(1).toLowerCase();
-  const address = request.headers["x-real-ip"] ?? request.socket.remoteAddress;
+  const address = request.headers["x-real-ip"];
 
   if (!endpoints.initialized) {
     await endpoints.loadAll();
