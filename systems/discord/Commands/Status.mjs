@@ -280,6 +280,11 @@ function getImage(status) {
           break;
         }
 
+        case "DUELS_PARKOUR_EIGHT": {
+          status.session.mode = "Parkour";
+          return "assets/status/duels/parkour.png";
+        }
+
         case "DUELS_CAPTURE_THREES":
         case "DUELS_BRIDGE_3V3V3V3":
         case "DUELS_BRIDGE_2V2V2V2":
