@@ -1,13 +1,29 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [2.4.9](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.4.9) - (2022-02-28)
+# [2.5.0](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.5.0) - (2022-03-01)
 
 ## Bug Fixes
 
+- **discord:** :speech_balloon: start as proc for args ([c3d8bbc](https://github.com/eatmyvenom/hyarcade/commit/c3d8bbcd8f3ca50ad826941cc2657e4c9071a8e8))
+- **pm2:** :test_tube: fix pm2 causing runaway processes ([a90dbff](https://github.com/eatmyvenom/hyarcade/commit/a90dbffc8a81b0e5957652383721973c2c501c5d))
+- **pm2:** :test_tube: worker script ([36e94b0](https://github.com/eatmyvenom/hyarcade/commit/36e94b04adeb2a4bdcbf92d53c5f5b65efad317d))
+- **discord:** :speech_balloon: dont map all ([da8340f](https://github.com/eatmyvenom/hyarcade/commit/da8340f6dd00442c5fe3fc6a5bb65d98c29c2bd8))
+- **discord:** :speech_balloon: destruct error ([94fdaef](https://github.com/eatmyvenom/hyarcade/commit/94fdaef06136bb0020f4aabaad8188ef5071935c))
+- **events:** :rewind: fix wrong guilds ([11e08f0](https://github.com/eatmyvenom/hyarcade/commit/11e08f0c48a11f71c0252eff3180d3ed1bf8c95c))
+- **datagen:** :chart_with_upwards_trend: properly snapshot guild data ([54f790c](https://github.com/eatmyvenom/hyarcade/commit/54f790c587da21183f5edddc67823b35da6579e8))
 - **github:** :rocket: actions error ([397ac69](https://github.com/eatmyvenom/hyarcade/commit/397ac6935c13a73442de9639227795acc6c98b43))
 - **events:** :iphone: fix using outdated leaderboard system ([88d209b](https://github.com/eatmyvenom/hyarcade/commit/88d209b56990cb84afcb0ce44b943d5bbc15894e))
 - **discord:** :speech_balloon: ezmsgs ([16f150a](https://github.com/eatmyvenom/hyarcade/commit/16f150a2c926a405589dc074a48771e27da3bdd2))
+
+## Features
+
+- **pm2:** :test_tube: add pm2 compat ([eec98e0](https://github.com/eatmyvenom/hyarcade/commit/eec98e09a8f64ab6431081f5b4e711d072274082))
+- **discord:** :speech_balloon: add tntag status ([0d7276c](https://github.com/eatmyvenom/hyarcade/commit/0d7276c88371f3701ec0667d29cd9fd0cc763ea9))
+- **discord:** :speech_balloon: add parkour duels img ([cccc067](https://github.com/eatmyvenom/hyarcade/commit/cccc067a0a1530812b673743043a1a33ec1f893d))
+- **discord:** :speech_balloon: update miw lb visuals ([2c1a0f2](https://github.com/eatmyvenom/hyarcade/commit/2c1a0f2e4c131d91ced0f54d5732d0c82648b7fb))
+- Utilize guild leaderboards ([b041850](https://github.com/eatmyvenom/hyarcade/commit/b041850fa542e76a55fc9302e757a24c53f615de))
+- **api:** :zap: add guild leaderboards ([82f5ab6](https://github.com/eatmyvenom/hyarcade/commit/82f5ab6b854e8d2f5379d289eb384258db92c939))
 
 # [2.4.8](https://github.com/eatmyvenom/hyarcade/compare/2.4.7...2.4.8) - (2022-02-27)
 
