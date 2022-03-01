@@ -731,6 +731,7 @@ class MongoConnector {
       accs = await this.accounts.find({}, opts).toArray();
     }
 
+    Logger.verbose("returning important accounts");
     return [...accs, ...leaderboarders];
   }
 

@@ -34,7 +34,7 @@
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "bot": "node spawn-bots.js",
         "api": "node --max-old-space-size=6000 server.js",
-        "worker": "node . workers"
+        "worker": "node index.js workers"
     },
     "dependencies": {
         "@commitlint/config-angular": "^16.2.1",
