@@ -18,7 +18,7 @@ module.exports = {
     },
     {
       name: "Worker",
-      script: "yarn workers",
+      script: "yarn worker",
       error_file: "/dev/null",
       out_file: "/dev/null",
       restart: true,
