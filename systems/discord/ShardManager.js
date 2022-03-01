@@ -15,7 +15,7 @@ async function BotSpawner() {
       token: cfg.discord.token,
       shardArgs: args,
       respawn: true,
-      mode: "worker",
+      mode: "process",
     });
     manager.on("shardCreate", shard => Logger.info(`Launched shard ${shard.id}`));
     await manager.spawn();
