@@ -332,6 +332,16 @@ function getImage(status) {
           if (fs.existsSync(`assets/status/tnt/run/${status.session.map}.png`)) {
             return `assets/status/tnt/run/${status.session.map}.png`;
           }
+          break;
+        }
+
+        case "TNTAG": {
+          status.session.mode = "Tnt Tag";
+
+          if (fs.existsSync(`assets/status/tnt/tag/${status.session.map}.png`)) {
+            return `assets/status/tnt/tag/${status.session.map}.png`;
+          }
+          break;
         }
       }
       return "assets/status/Tnt-lobby.png";
