@@ -22,6 +22,9 @@ timeupdate
 !config.def.json
 !.commitlintrc.json
 
+# High res images
+assets/
+
 # Npm
 node_modules
 
