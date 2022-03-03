@@ -1,7 +1,7 @@
 const redis = require("redis");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
 
-const Logger = new LoggerInstance("📄", "Redis");
+const Logger = new LoggerInstance("Redis", "📄");
 
 class RedisInterface {
   /** @type {redis.RedisClientType} */
