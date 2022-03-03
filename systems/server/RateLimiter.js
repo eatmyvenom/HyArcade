@@ -1,10 +1,6 @@
 const { DupeKeyError } = require("hyarcade-errors");
+const { MongoConnector } = require("hyarcade-requests");
 const cfg = require("hyarcade-config").fromJSON();
-
-/**
- * @type {clientData[]}
- */
-let clients = [];
 
 const endpointValues = {
   undefined: 1,
@@ -46,22 +42,24 @@ class clientData {
  * @param {string} endpoint
  * @param {string} key
  * @param {string} pass
- * @returns {number}
+ * @param {MongoConnector} mongo
+ * @returns {Promise<number>}
  */
-function RateLimiter(address, endpoint, key, pass) {
+async function RateLimiter(address, endpoint, key, pass, mongo) {
   if (pass == cfg.database.pass) {
     return 0;
   }
 
-  const client = clients.find(v => v.address == address);
+  const client = await mongo.getRequester(address);
   if (client != undefined) {
     let limit = cfg.database.defaultLimit;
     if (client.key) {
-      limit = cfg.database.keys[client.key]?.limit ?? 120;
+      limit = cfg.database.keys[client.key]?.limit ?? cfg.database.defaultLimit;
     }
 
     if (Date.now() - client.firstCall > 60000) {
       client.recentRequests = 0;
+      client.key = key;
       client.firstCall = Date.now();
     }
 
@@ -71,6 +69,8 @@ function RateLimiter(address, endpoint, key, pass) {
     }
 
     client.recentRequests += endpointValues[endpoint];
+
+    await mongo.updateRequester(client);
     return 0;
   } else {
     const emptyClient = new clientData();
@@ -79,14 +79,14 @@ function RateLimiter(address, endpoint, key, pass) {
     emptyClient.recentRequests = endpointValues[endpoint];
 
     if (key) {
-      if (clients.some(c => c.key == key)) {
+      if (await mongo.requesterKeyInUse(key)) {
         throw new DupeKeyError("Duplicate Key used");
       }
 
       emptyClient.key = key;
     }
 
-    clients.push(emptyClient);
+    await mongo.updateRequester(client);
     return 0;
   }
 }

@@ -7,11 +7,11 @@ const { DupeKeyError, MissingFieldError, DataNotFoundError } = require("hyarcade
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
+const RedisInterface = require("hyarcade-requests/RedisInterface");
+const cfg = require("hyarcade-config").fromJSON();
 
-/**
- * @type {MongoConnector}
- */
-let connector;
+let mongo;
+let redis;
 
 let endpoints = new EndpointStorage();
 
@@ -37,7 +37,7 @@ async function callback(request, response) {
 
   let rateLimit;
   try {
-    rateLimit = RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization);
+    rateLimit = await RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization, mongo);
   } catch (error) {
     if (error instanceof DupeKeyError) {
       response.write(JSON.stringify({ success: false, reason: "DUPLICATE-KEY" }));
@@ -61,7 +61,7 @@ async function callback(request, response) {
     response.end();
   } else {
     try {
-      await mod(request, response, connector);
+      await mod(request, response, mongo, redis);
     } catch (error) {
       if (error instanceof MissingFieldError) {
         response.statusCode = 400;
@@ -86,8 +86,12 @@ async function callback(request, response) {
 module.exports = async function Server(port) {
   logger.name = "API";
   logger.emoji = "⚡";
-  connector = new MongoConnector("mongodb://127.0.0.1:27017");
-  await connector.connect();
+
+  mongo = new MongoConnector("mongodb://127.0.0.1:27017");
+  await mongo.connect();
+
+  redis = new RedisInterface(cfg.redis.url);
+  await redis.connect();
 
   process.on("beforeExit", code => {
     logger.log(`Exiting process with code : ${code}`);

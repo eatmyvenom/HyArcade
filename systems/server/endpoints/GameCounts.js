@@ -1,19 +1,22 @@
 const { HypixelApi } = require("hyarcade-requests");
-let counts = {};
-let countsTime = 0;
+const MongoConnector = require("hyarcade-requests/MongoConnector");
+const RedisInterface = require("hyarcade-requests/RedisInterface");
 
 /**
  *
  * @param {*} req
  * @param {*} res
+ * @param {MongoConnector} connector
+ * @param {RedisInterface} redisInterface
  */
-module.exports = async (req, res) => {
+module.exports = async (req, res, connector, redisInterface) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
-    if (Date.now() - countsTime > 300000) {
+    let counts;
+    if (redisInterface.exists("counts")) {
       counts = await HypixelApi.counts();
-      countsTime = Date.now();
+      await redisInterface.setJSON("counts", counts, 600);
     }
 
     res.write(JSON.stringify(counts));

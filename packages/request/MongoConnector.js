@@ -22,6 +22,13 @@ class BannedObject {
   uuid = "";
 }
 
+class RequesterObject {
+  recentRequests = 0;
+  address = "";
+  key = "";
+  firstCall = 0;
+}
+
 class MongoConnector {
   /**
    * @type {MongoClient}
@@ -73,6 +80,9 @@ class MongoConnector {
    */
   commands;
 
+  /** @type {Collection<RequesterObject>} */
+  requests;
+
   /**
    * Creates an instance of MongoConnector.
    *
@@ -108,6 +118,7 @@ class MongoConnector {
     this.monthlyGuilds = this.database.collection("monthlyGuilds");
 
     this.commands = this.database.collection("commands");
+    this.requests = this.database.collection("requests");
 
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
@@ -792,6 +803,20 @@ class MongoConnector {
       newCommand[type] += 1;
       this.commands.replaceOne({ name }, newCommand, { upsert: true });
     }
+  }
+
+  async getRequester(address) {
+    return await this.requests.findOne({ address });
+  }
+
+  async updateRequester(requester) {
+    delete requester._id;
+    await this.requests.replaceOne({ address: requester.address }, requester, { upsert: true });
+  }
+
+  async requesterKeyInUse(key) {
+    const requester = await this.requests.findOne({ key });
+    return requester != undefined;
   }
 
   async destroy() {
