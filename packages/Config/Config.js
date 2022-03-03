@@ -130,6 +130,10 @@ class ThirdPartyConfig {
   slothPixelKey = "";
 }
 
+class RedisConfig {
+  url = process.env.HYARCADE_REDIS_URL;
+}
+
 class Config {
   key = process.env.HYARCADE_HYPIXEL_KEY;
   mode = "prod";
@@ -151,6 +155,7 @@ class Config {
   hypixel = new HypixelConfig();
   otherHooks = new OtherHooksConfig();
   thirdParty = new ThirdPartyConfig();
+  redis = new RedisConfig();
 
   constructor(json) {
     for (const thing in json) {

@@ -28,7 +28,18 @@ module.exports = async function FakeLb(path, category, time) {
     topTen = await Database.getGuildLeaderboard(path, time);
   } else if (path == undefined) {
     realTime = "monthly";
-    topTen = await Database.getMWLeaderboard("wins", "monthly");
+    topTen = [
+      { ...(await Database.account("2h24")), lbProp: 1104 },
+      { ...(await Database.account("kole1")), lbProp: 974 },
+      { ...(await Database.account("VoiVoc")), lbProp: 784 },
+      { ...(await Database.account("KyouOnTop")), lbProp: 774 },
+      { ...(await Database.account("tinykorean")), lbProp: 656 },
+      { ...(await Database.account("woalfy")), lbProp: 618 },
+      { ...(await Database.account("gieswd")), lbProp: 608 },
+      { ...(await Database.account("shoashii")), lbProp: 600 },
+      { ...(await Database.account("_neary")), lbProp: 512 },
+      { ...(await Database.account("shoashi")), lbProp: 490 },
+    ];
   } else {
     topTen = await Database.getLeaderboard(path, category, realTime);
   }

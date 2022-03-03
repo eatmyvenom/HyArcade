@@ -51,6 +51,7 @@
         "hyarcade-utils": "*",
         "javascript-time-ago": "^2.3.13",
         "mongodb": "^4.4.0",
+        "redis": "^4.0.4",
         "redoc-cli": "^0.13.8",
         "stackblur-canvas": "^2.5.0",
         "timsort": "^0.3.0"
