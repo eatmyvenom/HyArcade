@@ -1,5 +1,6 @@
 const Logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
+const Sleep = require("hyarcade-utils/Sleep");
 const LocalWorker = require("./Worker/LocalWorker");
 const cfg = require("hyarcade-config").fromJSON();
 
@@ -26,6 +27,11 @@ async function WorkerManager() {
     Logger.log("Starting batches");
     await Promise.all(workers);
     ping = await Database.ping();
+
+    for (let i = 0; i < 10 && ping == false; i++) {
+      await Sleep(30000);
+      ping = await Database.ping();
+    }
   }
 }
 
