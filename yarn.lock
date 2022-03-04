@@ -2015,6 +2015,7 @@ __metadata:
     hyarcade-requests: "workspace:^"
     hyarcade-structures: "workspace:^"
     hyarcade-utils: "workspace:^"
+    redoc-cli: ^0.13.8
     timsort: ^0.3.0
   languageName: unknown
   linkType: soft
