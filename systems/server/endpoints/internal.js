@@ -1,6 +1,7 @@
 /* eslint-disable unicorn/no-lonely-if */
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
+const RedisInterface = require("hyarcade-requests/RedisInterface");
 const cfg = require("hyarcade-config").fromJSON();
 
 // eslint-disable-next-line prefer-arrow-callback
@@ -14,16 +15,14 @@ function safeEval(str) {
   return new AsyncFunction("c", `"use strict";return (${str})`);
 }
 
-let nextLevel = 0;
-let currentUUIDs = [];
-
 /**
  *
  * @param {*} req
  * @param {*} res
  * @param {MongoConnector} connector
+ * @param {RedisInterface} redis
  */
-module.exports = async (req, res, connector) => {
+module.exports = async (req, res, connector, redis) => {
   if (req.method == "GET") {
     res.statusCode = 404;
     res.end();
@@ -59,18 +58,23 @@ module.exports = async (req, res, connector) => {
         }
 
         if ((fullAuth || key.perms.includes("forceUpdate")) && json.forceUpdate) {
-          nextLevel = json.forceUpdate;
+          await redis.set("nextLevel", json.forceUpdate);
+
           res.write(JSON.stringify({ success: true }));
         }
 
         if ((fullAuth || key.perms.includes("batch")) && json.getBatch) {
+          let currentUUIDs = (await redis.getJSON("currentUUIDs")) ?? [];
           if (currentUUIDs.length === 0) {
-            currentUUIDs = await connector.getImportantAccounts(nextLevel);
-            nextLevel = 0;
+            const nextLevel = await redis.get("nextLevel");
+            currentUUIDs = await connector.getImportantAccounts(nextLevel ?? 0);
+            await redis.set("nextLevel", 0);
           }
 
           const batch = currentUUIDs.splice(0, Math.min(cfg.hypixel.segmentSize, currentUUIDs.length));
-          res.write(JSON.stringify(batch));
+          await redis.setJSON("currentUUIDs", currentUUIDs);
+
+          await res.write(JSON.stringify(batch));
         }
 
         res.end();
