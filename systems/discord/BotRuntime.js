@@ -3,6 +3,7 @@ const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");
+const path = require("path");
 
 let hackerlist;
 let blacklist;
@@ -53,7 +54,8 @@ module.exports = class BotRuntime {
 
   static async getBlacklist() {
     if (blacklist == undefined) {
-      fs.readFile("data/blacklist")
+      // eslint-disable-next-line no-undef
+      fs.readFile(path.join(__dirname, "../../", "data/blacklist"))
         .then(bl => (blacklist = bl.toString().split("\n")))
         .catch(error => logger.err(error.stack));
 

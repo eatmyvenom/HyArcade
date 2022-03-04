@@ -1,6 +1,7 @@
 const { writeJson } = require("fs-extra");
 const Logger = require("hyarcade-logger");
 const { Database } = require("hyarcade-requests");
+const path = require("path");
 
 /**
  * @param obj
@@ -508,7 +509,8 @@ All responses in JSON format.`,
     "/internal": { post: await getPath("Internal", { success: true }, "Internal usage", undefined, true) },
   };
 
-  await writeJson("systems/redoc/swagger-new.json", swagger, { spaces: 2 });
+  // eslint-disable-next-line no-undef
+  await writeJson(path.join(__dirname, "swagger-new.json"), swagger, { spaces: 2 });
 }
 
 main()

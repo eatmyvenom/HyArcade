@@ -1,7 +1,10 @@
 /* eslint-disable jsdoc/no-undefined-types */
 
 const fs = require("fs-extra");
-const { achievements } = JSON.parse(fs.readFileSync("data/achievements.json"));
+const path = require("node:path");
+
+// eslint-disable-next-line no-undef
+const { achievements } = JSON.parse(fs.readFileSync(path.join(__dirname, "../../", "data/achievements.json")));
 
 class Achievement {
   name = "";

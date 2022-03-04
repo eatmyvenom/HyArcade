@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const FakeLB = require("../../src/discord/images/FakeLB");
+const FakeLB = require("../../discord/images/FakeLB");
 
 /**
  *

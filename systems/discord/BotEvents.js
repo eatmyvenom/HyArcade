@@ -1,5 +1,4 @@
 const { Guild, TextChannel, InvalidRequestWarningData, Webhook } = require("discord.js");
-const fs = require("fs-extra");
 const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const BotRuntime = require("./BotRuntime");
@@ -61,9 +60,7 @@ module.exports = class BotEvents {
     Webhooks.verifyHook = await getHookFromChannel(cfg.discord.verifyChannel);
 
     logger.info("Reading trusted users");
-    const trustedFile = await fs.readFile("data/trustedUsers");
-    const tus = trustedFile.toString().trim().split("\n");
-    BotRuntime.tus = tus;
+    BotRuntime.tus = cfg.discord.trustedUsers;
 
     logger.info("Selecting mode");
     if (mode == "role") {

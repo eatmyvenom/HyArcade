@@ -83,7 +83,10 @@ async function callback(request, response) {
   }
 }
 
-module.exports = async function Server(port) {
+/**
+ * @param port
+ */
+async function Server(port) {
   logger.name = "API";
   logger.emoji = "⚡";
 
@@ -109,4 +112,12 @@ module.exports = async function Server(port) {
 
     process.exit(0);
   });
-};
+}
+
+if (require.main == module) {
+  Server()
+    .then(() => {})
+    .catch(error => logger.err(error.stack));
+}
+
+module.exports = Server;

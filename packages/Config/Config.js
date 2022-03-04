@@ -1,5 +1,6 @@
 const fs = require("fs");
 const process = require("node:process");
+const path = require("path");
 
 class CommandImage {
   file = "assets/arc.png";
@@ -168,17 +169,19 @@ class Config {
    * @returns {Config}
    */
   static fromJSON() {
-    const configs = fs.readdirSync("config");
+    // eslint-disable-next-line no-undef
+    const configDir = path.join(__dirname, "../..", "config");
+    const configs = fs.readdirSync(configDir);
 
     let cfg = new Config();
     try {
-      cfg = new Config(JSON.parse(fs.readFileSync("config/config.json")));
+      cfg = new Config(JSON.parse(fs.readFileSync(path.join(configDir, "config.json"))));
       // eslint-disable-next-line no-empty
     } catch {}
 
     for (const file of configs) {
       if (file.slice(-5, file.length) == ".json") {
-        cfg[file.replace(/\.json/g, "")] = JSON.parse(fs.readFileSync(`config/${file}`));
+        cfg[file.replace(/\.json/g, "")] = JSON.parse(fs.readFileSync(path.join(configDir, file)));
       }
     }
 

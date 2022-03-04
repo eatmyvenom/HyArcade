@@ -15,13 +15,13 @@ const fullIntents = [
 
 const lesserIntents = [Discord.Intents.FLAGS.GUILDS];
 
-const mwIntents = [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILDS];
+const miwIntents = [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILDS];
 
 /**
  * Execute the discord bot
  *
  */
-module.exports = function doBot() {
+function doBot() {
   const mode = process.argv[3];
   let client;
   if (mode == "mini") {
@@ -34,7 +34,7 @@ module.exports = function doBot() {
     });
   } else if (mode == "mw") {
     client = new Discord.Client({
-      intents: mwIntents,
+      intents: miwIntents,
       allowedMentions: {
         parse: [],
         repliedUser: false,
@@ -101,6 +101,12 @@ module.exports = function doBot() {
     client.login(config.discord.token);
   }
 
-  setInterval(BotEvents.cyclePresence, 7200000);
-  setInterval(BotEvents.heartBeat, 1800000);
-};
+  setInterval(BotEvents.cyclePresence, 3600000);
+  setInterval(BotEvents.heartBeat, 900000);
+}
+
+module.exports = doBot;
+
+if (require.main == module) {
+  doBot();
+}

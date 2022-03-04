@@ -3,17 +3,22 @@
   "version": "1.0.0",
   "description": "Request data from relavent apis for hyarcade",
   "main": "Request.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eatmyvenom/hyarcade-requests.git"
+    "url": "git+https://github.com/eatmyvenom/hyarcade.git"
   },
   "author": "EatMyVenom",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/eatmyvenom/hyarcade-requests/issues"
+    "url": "https://github.com/eatmyvenom/hyarcade/issues"
   },
-  "homepage": "https://github.com/eatmyvenom/hyarcade-requests#readme"
+  "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "hyarcade-config": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-utils": "workspace:^",
+    "mongodb": "^4.4.1",
+    "redis": "^4.0.4"
+  }
 }

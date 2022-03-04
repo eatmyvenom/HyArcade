@@ -41,7 +41,7 @@ function errorln(string, name) {
     stderr.write(str, () => {});
   }
 
-  writeFile(path.join(process.cwd(), "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, {
+  writeFile(path.join(__dirname, "../..", "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, {
     flag: "a",
   })
     .then(() => {})
@@ -62,7 +62,7 @@ function println(type, string, name, color = "\u001B[0m", emoji = "") {
     stdout.write(str, () => {});
   }
 
-  writeFile(path.join(process.cwd(), "logs", `${name.trim()}-out.log`), `${daytime().trim()} - ${string}\n`, {
+  writeFile(path.join(__dirname, "../..", "logs", `${name.trim()}-out.log`), `${daytime().trim()} - ${string}\n`, {
     flag: "a",
   })
     .then(() => {})

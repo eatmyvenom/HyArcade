@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 const process = require("process");
 const Webhook = require("./systems/events/webhook");
 const args = process.argv;
-const task = require("./systems/task");
+const task = require("./systems/cli/task");
 
 const logger = require("hyarcade-logger");
 
@@ -126,8 +126,8 @@ async function main() {
     }
 
     default: {
-      const mod = require(`./systems/cli/${args[2]?.toLowerCase()}`);
-      await mod(args);
+      const runCli = require("./systems/cli");
+      await runCli();
     }
   }
 

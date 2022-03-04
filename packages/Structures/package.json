@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "EatMyVenom",
-  "license": "MPL-2.0"
+  "license": "MPL-2.0",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "hyarcade-config": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-requests": "workspace:^"
+  }
 }

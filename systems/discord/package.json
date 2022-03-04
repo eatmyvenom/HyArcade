@@ -1,0 +1,22 @@
+{
+  "name": "bot",
+  "version": "0.0.0",
+  "private": true,
+  "main": "ShardManager.js",
+  "scripts": {
+    "start": "node . bot"
+  },
+  "dependencies": {
+    "axios": "^0.26.0",
+    "canvas": "^2.9.0",
+    "discord.js": "^13.6.0",
+    "hyarcade-config": "workspace:^",
+    "hyarcade-errors": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-requests": "workspace:^",
+    "hyarcade-structures": "workspace:^",
+    "hyarcade-utils": "workspace:^",
+    "javascript-time-ago": "^2.3.13",
+    "stackblur-canvas": "^2.5.0"
+  }
+}

@@ -3,15 +3,17 @@ const { ShardingManager } = require("discord.js");
 const cfg = require("hyarcade-config").fromJSON();
 const args = process.argv.slice(2);
 const Logger = require("hyarcade-logger");
+const path = require("path");
 
 /**
- *
+ * @param args
  */
-async function BotSpawner() {
+async function BotSpawner(args) {
   Logger.name = "Shard-Manager";
   Logger.out(`Sharding ${args}`);
   try {
-    const manager = new ShardingManager("./index.js", {
+    // eslint-disable-next-line no-undef
+    const manager = new ShardingManager(path.join(__dirname, "bot.js"), {
       token: cfg.discord.token,
       shardArgs: args,
       respawn: true,
@@ -25,6 +27,6 @@ async function BotSpawner() {
   }
 }
 
-BotSpawner()
+BotSpawner(args)
   .then(() => {})
   .catch(error => Logger.err(error));

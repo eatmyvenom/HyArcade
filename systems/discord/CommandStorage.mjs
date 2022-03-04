@@ -3,6 +3,10 @@ import fs from "fs-extra";
 import Logger from "hyarcade-logger";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import path from "node:path";
+import { URL } from "node:url";
+
+const __dirname = new URL(".", import.meta.url).pathname;
 
 /**
  * @param {string} mod
@@ -18,7 +22,8 @@ class CommandStorage {
   static _commands = {};
 
   static async initCommands() {
-    const dir = await fs.readdir("systems/discord/Commands");
+    // eslint-disable-next-line no-undef
+    const dir = await fs.readdir(path.join(__dirname, "Commands"));
 
     for (const file of dir) {
       this._commands[file.slice(0, file.indexOf("."))] = await importNew(file);

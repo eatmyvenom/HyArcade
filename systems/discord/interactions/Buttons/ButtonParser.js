@@ -2,6 +2,7 @@ const { ButtonInteraction, Interaction } = require("discord.js");
 const ButtonGenerator = require("./ButtonGenerator");
 const ButtonResponse = require("./ButtonResponse");
 const { readFile } = require("fs-extra");
+const path = require("node:path");
 
 let commandStorage;
 
@@ -54,7 +55,8 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
  */
 async function ezHandler() {
   if (ezmsgs == undefined) {
-    const file = await readFile("data/ez");
+    // eslint-disable-next-line no-undef
+    const file = await readFile(path.join(__dirname, "../../../../", "data/ez"));
     ezmsgs = file.toString().split("\n");
   }
   const msg = ezmsgs[Math.floor(Math.random() * ezmsgs.length)];

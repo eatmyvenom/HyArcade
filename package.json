@@ -37,37 +37,27 @@
         "worker": "node index.js workers"
     },
     "dependencies": {
-        "@commitlint/config-angular": "^16.2.1",
-        "@discoveryjs/json-ext": "^0.5.6",
-        "axios": "^0.26.0",
-        "canvas": "^2.9.0",
-        "discord.js": "^13.6.0",
         "fs-extra": "^10.0.1",
         "hyarcade-config": "*",
         "hyarcade-errors": "*",
         "hyarcade-logger": "*",
         "hyarcade-requests": "*",
         "hyarcade-structures": "*",
-        "hyarcade-utils": "*",
-        "javascript-time-ago": "^2.3.13",
-        "mongodb": "^4.4.0",
-        "redis": "^4.0.4",
-        "redoc-cli": "^0.13.8",
-        "stackblur-canvas": "^2.5.0",
-        "timsort": "^0.3.0"
+        "hyarcade-utils": "*"
     },
     "devDependencies": {
         "@babel/core": "^7.17.5",
         "@babel/eslint-parser": "^7.17.0",
         "@babel/preset-env": "^7.16.11",
         "@commitlint/cli": "^16.2.1",
+        "@commitlint/config-angular": "^16.2.1",
         "@types/node": "^17.0.21",
         "commitizen": "^4.2.4",
         "commitlint": "^16.2.1",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^8.10.0",
-        "eslint-config-prettier": "^8.4.0",
-        "eslint-plugin-jsdoc": "^37.9.4",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-jsdoc": "^37.9.6",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-unicorn": "^41.0.0",
         "husky": "^7.0.4",
@@ -81,7 +71,8 @@
         "npm": "Please use yarn instead of NPM to install dependencies"
     },
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "systems/*"
     ],
     "config": {
         "commitizen": {

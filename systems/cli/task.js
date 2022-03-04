@@ -1,7 +1,7 @@
 const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
-const dataGen = require("./datagen/dataGeneration");
+const dataGen = require("../datagen/dataGeneration");
 const lists = require("hyarcade-utils/listParser");
 
 let accounts;
@@ -79,7 +79,7 @@ async function addLeaderboards() {
  *
  */
 async function discord() {
-  const DiscordBot = require("./discord/bot");
+  const DiscordBot = require("../discord/bot");
   await DiscordBot();
 }
 

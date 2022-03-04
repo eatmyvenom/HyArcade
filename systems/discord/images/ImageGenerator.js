@@ -4,8 +4,6 @@ const Logger = require("hyarcade-logger");
 const { Account } = require("hyarcade-structures");
 const StackBlur = require("stackblur-canvas");
 
-const imgCache = [];
-
 Canvas.registerFont("assets/minecraft.ttf", {
   family: "myFont",
 });
@@ -76,14 +74,7 @@ module.exports = class ImageGenerator {
   }
 
   async addBackground(path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
-    let bg;
-
-    if (imgCache[path] != undefined) {
-      bg = imgCache[path];
-    } else {
-      bg = await Canvas.loadImage(path);
-      imgCache[path] = bg;
-    }
+    let bg = await Canvas.loadImage(path);
 
     this.context.drawImage(bg, x, y, dx, dy);
     this.context.beginPath();

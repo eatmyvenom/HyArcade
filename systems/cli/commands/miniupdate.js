@@ -1,4 +1,4 @@
-const miniUpdater = require("../datagen/miniUpdater");
+const miniUpdater = require("../../datagen/miniUpdater");
 
 /**
  *

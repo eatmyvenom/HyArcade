@@ -1,0 +1,18 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "main": "Server.js",
+  "scripts": {
+    "start": "node --max-old-space-size=6000 ."
+  },
+  "dependencies": {
+    "hyarcade-config": "workspace:^",
+    "hyarcade-errors": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-requests": "workspace:^",
+    "hyarcade-structures": "workspace:^",
+    "hyarcade-utils": "workspace:^",
+    "timsort": "^0.3.0"
+  }
+}

@@ -1,6 +1,6 @@
 const { Message } = require("discord.js");
 const { Interaction } = require("discord.js");
-const fs = require("fs-extra");
+const cfg = require("hyarcade-config").fromJSON();
 const logger = require("hyarcade-logger");
 const Database = require("hyarcade-requests/Database");
 const CommandResponse = require("./CommandResponse");
@@ -42,7 +42,7 @@ module.exports = class Command {
    */
   async execute(args, author, rawMsg, interaction) {
     if (trustedUsers == undefined) {
-      const trustedFile = await fs.readFile("data/trustedUsers");
+      const trustedFile = cfg.discord.trustedUsers;
       const tus = trustedFile.toString().trim().split("\n");
 
       trustedUsers = tus;

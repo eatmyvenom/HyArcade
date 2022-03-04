@@ -1485,13 +1485,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discoveryjs/json-ext@npm:^0.5.6":
-  version: 0.5.6
-  resolution: "@discoveryjs/json-ext@npm:0.5.6"
-  checksum: e97df618511fb202dffa2eb0d23e17dfb02943a70e5bc38f6b9603ad1cb1d6b525aa2b07ff9fb00b041abe425b341146ddd9e487f1e35ddadc8c6b8c56358ae0
-  languageName: node
-  linkType: hard
-
 "@emotion/is-prop-valid@npm:^0.8.8":
   version: 0.8.8
   resolution: "@emotion/is-prop-valid@npm:0.8.8"
@@ -2012,6 +2005,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"api@workspace:systems/server":
+  version: 0.0.0-use.local
+  resolution: "api@workspace:systems/server"
+  dependencies:
+    hyarcade-config: "workspace:^"
+    hyarcade-errors: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    hyarcade-structures: "workspace:^"
+    hyarcade-utils: "workspace:^"
+    timsort: ^0.3.0
+  languageName: unknown
+  linkType: soft
+
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"
@@ -2206,6 +2213,24 @@ __metadata:
   checksum: 6117170393200f68b35a061ecbf55d01dd989302e7b3c798a3012354fa638d124f0b2f79e63f77be5556be80322a09c40339eda6413ba7468524c0b6d4b4cb7a
   languageName: node
   linkType: hard
+
+"bot@workspace:systems/discord":
+  version: 0.0.0-use.local
+  resolution: "bot@workspace:systems/discord"
+  dependencies:
+    axios: ^0.26.0
+    canvas: ^2.9.0
+    discord.js: ^13.6.0
+    hyarcade-config: "workspace:^"
+    hyarcade-errors: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    hyarcade-structures: "workspace:^"
+    hyarcade-utils: "workspace:^"
+    javascript-time-ago: ^2.3.13
+    stackblur-canvas: ^2.5.0
+  languageName: unknown
+  linkType: soft
 
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
@@ -2582,6 +2607,12 @@ __metadata:
   checksum: 3c21b897a2ff551ae5b3c3ab32c866ed2965dcf7fb442f81adf0e27f4a397925c8f84619af7bcc6354821303f6ee9b2aa31d248306174f32c287986158cf4eed
   languageName: node
   linkType: hard
+
+"cli@workspace:systems/cli":
+  version: 0.0.0-use.local
+  resolution: "cli@workspace:systems/cli"
+  languageName: unknown
+  linkType: soft
 
 "cliui@npm:^7.0.2":
   version: 7.0.4
@@ -2969,6 +3000,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"datagen@workspace:systems/datagen":
+  version: 0.0.0-use.local
+  resolution: "datagen@workspace:systems/datagen"
+  dependencies:
+    hyarcade-config: "workspace:^"
+    hyarcade-errors: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    hyarcade-structures: "workspace:^"
+    hyarcade-utils: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3":
   version: 4.3.3
   resolution: "debug@npm:4.3.3"
@@ -3261,20 +3305,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.4.0":
-  version: 8.4.0
-  resolution: "eslint-config-prettier@npm:8.4.0"
+"eslint-config-prettier@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: ee8dc343f1fed15dc0658e190a966cc23644477f2331a7f56ae2bb79dd74892e3cde8ea5c142e7a3329a8291a1de041e13ca96e54d0c85ff4a2aba13390c5f10
+  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^37.9.4":
-  version: 37.9.4
-  resolution: "eslint-plugin-jsdoc@npm:37.9.4"
+"eslint-plugin-jsdoc@npm:^37.9.6":
+  version: 37.9.6
+  resolution: "eslint-plugin-jsdoc@npm:37.9.6"
   dependencies:
     "@es-joy/jsdoccomment": ~0.20.1
     comment-parser: 1.3.0
@@ -3286,7 +3330,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: 1e338f03020b2efab6077c91f2a8c251f1ee8be4a2299fa49db84ecb1f8f1e362be2d005ac7b9d9ceff5596bd7c0a9a5ed816edb8b3e904ed3edb0aab8b88799
+  checksum: 8d9d2d88f2c5dd2bc5c2c04b888020e99c80e07af819ac1a4918eb43b85ae74b0cd37d440207b962f8b0158220a8e1fb370f15c99e4edb595e195727cd3f27ba
   languageName: node
   linkType: hard
 
@@ -4161,39 +4205,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hyarcade-config@*, hyarcade-config@workspace:packages/Config":
+"hyarcade-config@*, hyarcade-config@workspace:^, hyarcade-config@workspace:packages/Config":
   version: 0.0.0-use.local
   resolution: "hyarcade-config@workspace:packages/Config"
   languageName: unknown
   linkType: soft
 
-"hyarcade-errors@*, hyarcade-errors@workspace:packages/Errors":
+"hyarcade-errors@*, hyarcade-errors@workspace:^, hyarcade-errors@workspace:packages/Errors":
   version: 0.0.0-use.local
   resolution: "hyarcade-errors@workspace:packages/Errors"
   languageName: unknown
   linkType: soft
 
-"hyarcade-logger@*, hyarcade-logger@workspace:packages/Logger":
+"hyarcade-logger@*, hyarcade-logger@workspace:^, hyarcade-logger@workspace:packages/Logger":
   version: 0.0.0-use.local
   resolution: "hyarcade-logger@workspace:packages/Logger"
   languageName: unknown
   linkType: soft
 
-"hyarcade-requests@*, hyarcade-requests@workspace:packages/request":
+"hyarcade-requests@*, hyarcade-requests@workspace:^, hyarcade-requests@workspace:packages/request":
   version: 0.0.0-use.local
   resolution: "hyarcade-requests@workspace:packages/request"
+  dependencies:
+    axios: ^0.26.0
+    hyarcade-config: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-utils: "workspace:^"
+    mongodb: ^4.4.1
+    redis: ^4.0.4
   languageName: unknown
   linkType: soft
 
-"hyarcade-structures@*, hyarcade-structures@workspace:packages/Structures":
+"hyarcade-structures@*, hyarcade-structures@workspace:^, hyarcade-structures@workspace:packages/Structures":
   version: 0.0.0-use.local
   resolution: "hyarcade-structures@workspace:packages/Structures"
+  dependencies:
+    discord.js: ^13.6.0
+    hyarcade-config: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
   languageName: unknown
   linkType: soft
 
-"hyarcade-utils@*, hyarcade-utils@workspace:packages/Utils":
+"hyarcade-utils@*, hyarcade-utils@workspace:^, hyarcade-utils@workspace:packages/Utils":
   version: 0.0.0-use.local
   resolution: "hyarcade-utils@workspace:packages/Utils"
+  dependencies:
+    axios: ^0.26.0
+    fs-extra: ^10.0.1
+    hyarcade-config: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    hyarcade-structures: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -4206,17 +4269,13 @@ __metadata:
     "@babel/preset-env": ^7.16.11
     "@commitlint/cli": ^16.2.1
     "@commitlint/config-angular": ^16.2.1
-    "@discoveryjs/json-ext": ^0.5.6
     "@types/node": ^17.0.21
-    axios: ^0.26.0
-    canvas: ^2.9.0
     commitizen: ^4.2.4
     commitlint: ^16.2.1
     cz-conventional-changelog: ^3.3.0
-    discord.js: ^13.6.0
     eslint: ^8.10.0
-    eslint-config-prettier: ^8.4.0
-    eslint-plugin-jsdoc: ^37.9.4
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-jsdoc: ^37.9.6
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-unicorn: ^41.0.0
     fs-extra: ^10.0.1
@@ -4228,14 +4287,8 @@ __metadata:
     hyarcade-structures: "*"
     hyarcade-utils: "*"
     is-ci: ^3.0.1
-    javascript-time-ago: ^2.3.13
     json-ts: ^1.6.4
-    mongodb: ^4.4.0
     prettier: ^2.5.1
-    redis: ^4.0.4
-    redoc-cli: ^0.13.8
-    stackblur-canvas: ^2.5.0
-    timsort: ^0.3.0
   languageName: unknown
   linkType: soft
 
@@ -5148,7 +5201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-connection-string-url@npm:^2.4.1":
+"mongodb-connection-string-url@npm:^2.5.2":
   version: 2.5.2
   resolution: "mongodb-connection-string-url@npm:2.5.2"
   dependencies:
@@ -5158,19 +5211,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "mongodb@npm:4.4.0"
+"mongodb@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "mongodb@npm:4.4.1"
   dependencies:
     bson: ^4.6.1
     denque: ^2.0.1
-    mongodb-connection-string-url: ^2.4.1
+    mongodb-connection-string-url: ^2.5.2
     saslprep: ^1.0.3
-    socks: ^2.6.1
+    socks: ^2.6.2
   dependenciesMeta:
     saslprep:
       optional: true
-  checksum: e485927d1def94f28564bdcb98d82144914bf23854e8bd15437fcef0d9a36f36997f7e97e0aad730ebf299c6a919430669198e02b5e2f4410f74a4002409b182
+  checksum: 5a2924df04612cc3dfd54e6f4a9b4ab01683fe2bcb8a6aa424485939fc213aea4c7e9b59ef244aa30ccc14948906990335a6371310fe354aec8206983f3f733a
   languageName: node
   linkType: hard
 
@@ -6106,6 +6159,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redoc@workspace:systems/redoc":
+  version: 0.0.0-use.local
+  resolution: "redoc@workspace:systems/redoc"
+  dependencies:
+    hyarcade-config: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    redoc-cli: ^0.13.8
+  languageName: unknown
+  linkType: soft
+
 "reftools@npm:^1.1.9":
   version: 1.1.9
   resolution: "reftools@npm:1.1.9"
@@ -6576,7 +6640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"socks@npm:^2.6.1":
+"socks@npm:^2.6.1, socks@npm:^2.6.2":
   version: 2.6.2
   resolution: "socks@npm:2.6.2"
   dependencies:

@@ -6,18 +6,12 @@
   "module": "Logger.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eatmyvenom/hyarcade-logger.git"
+    "url": "git+https://github.com/eatmyvenom/hyarcade.git"
   },
-  "keywords": [
-    "Logger",
-    "hyarcade",
-    "arcadebot",
-    "eatmyvenom"
-  ],
   "author": "EatMyVenom",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/eatmyvenom/hyarcade-logger/issues"
+    "url": "https://github.com/eatmyvenom/hyarcade/issues"
   },
-  "homepage": "https://github.com/eatmyvenom/hyarcade-logger#readme"
+  "homepage": "https://github.com/eatmyvenom/hyarcade#readme"
 }

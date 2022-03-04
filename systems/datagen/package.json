@@ -1,0 +1,17 @@
+{
+  "name": "datagen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "WorkerManager.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "hyarcade-config": "workspace:^",
+    "hyarcade-errors": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-requests": "workspace:^",
+    "hyarcade-structures": "workspace:^",
+    "hyarcade-utils": "workspace:^"
+  }
+}

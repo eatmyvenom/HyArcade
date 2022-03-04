@@ -1,4 +1,4 @@
-const WorkerManager = require("../datagen/WorkerManager");
+const WorkerManager = require("../../datagen/WorkerManager");
 
 /**
  *

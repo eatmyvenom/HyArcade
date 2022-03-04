@@ -1,4 +1,4 @@
-const AddFriends = require("../datagen/AddFriends");
+const AddFriends = require("../../datagen/AddFriends");
 
 /**
  *

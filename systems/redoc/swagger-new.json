@@ -3,7 +3,7 @@
   "info": {
     "title": "Hyarcade API",
     "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.",
-    "version": "2.4.9",
+    "version": "2.5.0",
     "contact": {
       "name": "EatMyVenom",
       "url": "https://vnmm.dev",
@@ -8103,6 +8103,18 @@
                           "gexpHistory": {
                             "type": "object",
                             "properties": {
+                              "2022-03-03": {
+                                "type": "number"
+                              },
+                              "2022-03-02": {
+                                "type": "number"
+                              },
+                              "2022-03-01": {
+                                "type": "number"
+                              },
+                              "2022-02-28": {
+                                "type": "number"
+                              },
                               "2022-02-27": {
                                 "type": "number"
                               },
@@ -8110,18 +8122,6 @@
                                 "type": "number"
                               },
                               "2022-02-25": {
-                                "type": "number"
-                              },
-                              "2022-02-24": {
-                                "type": "number"
-                              },
-                              "2022-02-23": {
-                                "type": "number"
-                              },
-                              "2022-02-22": {
-                                "type": "number"
-                              },
-                              "2022-02-21": {
                                 "type": "number"
                               }
                             }

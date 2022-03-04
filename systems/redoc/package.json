@@ -1,0 +1,15 @@
+{
+  "name": "redoc",
+  "version": "0.0.0",
+  "private": true,
+  "main": "build.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "hyarcade-config": "workspace:^",
+    "hyarcade-logger": "workspace:^",
+    "hyarcade-requests": "workspace:^",
+    "redoc-cli": "^0.13.8"
+  }
+}
