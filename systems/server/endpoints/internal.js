@@ -88,7 +88,7 @@ module.exports = async (req, res, connector, redis) => {
             reply.list = await connector.ezMsgs.find().toArray();
           }
 
-          res.write(JSON.stringify(res));
+          res.write(JSON.stringify(reply));
         }
 
         res.end();
