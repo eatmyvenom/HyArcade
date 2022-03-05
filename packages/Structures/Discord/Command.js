@@ -42,10 +42,7 @@ module.exports = class Command {
    */
   async execute(args, author, rawMsg, interaction) {
     if (trustedUsers == undefined) {
-      const trustedFile = cfg.discord.trustedUsers;
-      const tus = trustedFile.toString().trim().split("\n");
-
-      trustedUsers = tus;
+      trustedUsers = cfg.discord.trustedUsers;
     }
 
     let rate = this.rateLimit;
@@ -82,6 +79,7 @@ module.exports = class Command {
       this.allowed = [...this.allowed, ...trustedUsers];
       this.allowed = this.allowed.filter(t => t != "%trusted%");
     }
+
     if (!this.allowed.includes(author) && !this.allowed.includes("*")) {
       Database.internal({ useCommand: { name: this.name, type: "missingPerms" } })
         .then(() => {})
