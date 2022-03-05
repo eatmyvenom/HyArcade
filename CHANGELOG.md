@@ -1,10 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [2.5.0](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.5.0) - (2022-03-01)
+# [2.5.1](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.5.1) - (2022-03-05)
 
 ## Bug Fixes
 
+- **discord:** :speech_balloon: command permissions ([48f9b24](https://github.com/eatmyvenom/hyarcade/commit/48f9b24936e735548c4d429f5559c2ae15b13c73))
+- **datagen:** :chart_with_upwards_trend: dont instant crash on api out ([20f901a](https://github.com/eatmyvenom/hyarcade/commit/20f901afcef587d82e97f85ea639bcb644669373))
+- **api:** :zap: missing deps ([4b7ca6b](https://github.com/eatmyvenom/hyarcade/commit/4b7ca6baa688e54a2eb3b8865e85ede7de130c5d))
+- **api:** :zap: make internal endpoint fully stateless ([d2f82e0](https://github.com/eatmyvenom/hyarcade/commit/d2f82e0a3ac3a0be8aa29462371481e6f3498612))
+- **api:** :zap: logger name ([043ed12](https://github.com/eatmyvenom/hyarcade/commit/043ed12054429e3c8bbb4582f98855a69e5af59d))
+- **discord:** :speech_balloon: verify never works ([d2cca7d](https://github.com/eatmyvenom/hyarcade/commit/d2cca7d91179c195090ec892b9ae02d1559bd38b))
+- **api:** :zap: deny unknown reqs ([605a7a5](https://github.com/eatmyvenom/hyarcade/commit/605a7a523c56280344c62fbe912a0501b3ca7fc5))
+- **discord:** :speech_balloon: dont crash on missing assets ([2b55a07](https://github.com/eatmyvenom/hyarcade/commit/2b55a07958f839d3bb0a49c54fc41a8ce507f8de))
 - **discord:** :speech_balloon: start as proc for args ([c3d8bbc](https://github.com/eatmyvenom/hyarcade/commit/c3d8bbcd8f3ca50ad826941cc2657e4c9071a8e8))
 - **pm2:** :test_tube: fix pm2 causing runaway processes ([a90dbff](https://github.com/eatmyvenom/hyarcade/commit/a90dbffc8a81b0e5957652383721973c2c501c5d))
 - **pm2:** :test_tube: worker script ([36e94b0](https://github.com/eatmyvenom/hyarcade/commit/36e94b04adeb2a4bdcbf92d53c5f5b65efad317d))
@@ -18,12 +26,24 @@ All notable changes to this project will be documented in this file.
 
 ## Features
 
+- :alien: move ezmsgs to mongo ([424e434](https://github.com/eatmyvenom/hyarcade/commit/424e4347760896bca7f60b447ea237dabbd4e535))
+- **mongo:** :card_file_box: move fake player data to mongo ([528db5b](https://github.com/eatmyvenom/hyarcade/commit/528db5b4ea23b5e92a1cb4c76bc34a17beb1c7c2))
+- **redis:** :page_facing_up: add redis support ([1e3cd54](https://github.com/eatmyvenom/hyarcade/commit/1e3cd54108f20edc349b19c6e9ad5f29bddc5a36))
 - **pm2:** :test_tube: add pm2 compat ([eec98e0](https://github.com/eatmyvenom/hyarcade/commit/eec98e09a8f64ab6431081f5b4e711d072274082))
 - **discord:** :speech_balloon: add tntag status ([0d7276c](https://github.com/eatmyvenom/hyarcade/commit/0d7276c88371f3701ec0667d29cd9fd0cc763ea9))
 - **discord:** :speech_balloon: add parkour duels img ([cccc067](https://github.com/eatmyvenom/hyarcade/commit/cccc067a0a1530812b673743043a1a33ec1f893d))
 - **discord:** :speech_balloon: update miw lb visuals ([2c1a0f2](https://github.com/eatmyvenom/hyarcade/commit/2c1a0f2e4c131d91ced0f54d5732d0c82648b7fb))
 - Utilize guild leaderboards ([b041850](https://github.com/eatmyvenom/hyarcade/commit/b041850fa542e76a55fc9302e757a24c53f615de))
 - **api:** :zap: add guild leaderboards ([82f5ab6](https://github.com/eatmyvenom/hyarcade/commit/82f5ab6b854e8d2f5379d289eb384258db92c939))
+
+## Performance
+
+- **api:** :zap: make api stateless ([05eafa5](https://github.com/eatmyvenom/hyarcade/commit/05eafa5addfc20b2ef7c4ddcb8ff3beccdec5445))
+- **github:** :rocket: remove assets from repo ([e28dbb8](https://github.com/eatmyvenom/hyarcade/commit/e28dbb87166e2f14cee82acb370b3b0ffb401ec2))
+
+## Refactor
+
+- :memo: restructure code ([d0af433](https://github.com/eatmyvenom/hyarcade/commit/d0af4338672b8e6d18deb68761d066c94cd5e897))
 
 # [2.4.8](https://github.com/eatmyvenom/hyarcade/compare/2.4.7...2.4.8) - (2022-02-27)
 
