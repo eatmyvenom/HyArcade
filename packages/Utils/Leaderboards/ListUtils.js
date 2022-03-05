@@ -1,5 +1,6 @@
 const cfg = require("hyarcade-config").fromJSON();
 const { default: axios } = require("axios");
+const Logger = require("hyarcade-logger");
 const logger = require("hyarcade-logger");
 const { Account, AccountArray } = require("hyarcade-structures");
 
@@ -17,7 +18,8 @@ function formatNum(number) {
  * @returns {Promise<Account>} Account list
  */
 exports.getList = async function getList(type = "") {
-  const url = new URL("db", cfg.database.url);
+  Logger.warn("YOU SHOULD NOT BE HERE!");
+  const url = new URL("database", cfg.database.url);
   const path = `${type}accounts`;
   url.searchParams.set("path", path);
   logger.debug(`Fetching ${url.searchParams.toString()} from database`);

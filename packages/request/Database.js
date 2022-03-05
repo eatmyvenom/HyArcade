@@ -15,7 +15,7 @@ function validateStatus(status) {
 module.exports = class Database {
   static async readDB(file, fields) {
     let fileData;
-    const url = new URL("db", cfg.database.url);
+    const url = new URL("database", cfg.database.url);
     const path = `${file}`;
     url.searchParams.set("path", path);
 
@@ -38,7 +38,7 @@ module.exports = class Database {
   }
 
   static async writeDB(path, json) {
-    const url = new URL("db", cfg.database.url);
+    const url = new URL("database", cfg.database.url);
     url.searchParams.set("path", path);
     Logger.debug(`Writing to ${path} in database`);
 
