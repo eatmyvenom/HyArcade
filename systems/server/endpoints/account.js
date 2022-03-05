@@ -4,6 +4,9 @@ const Logger = require("hyarcade-logger");
 const { Account } = require("hyarcade-structures");
 const AccountResolver = require("../AccountResolver");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
+const MergeJSON = require("hyarcade-utils/MergeJSON");
+
+let fakeData;
 
 /**
  *
@@ -12,6 +15,10 @@ const MongoConnector = require("hyarcade-requests/MongoConnector");
  * @param {MongoConnector} connector
  */
 module.exports = async (req, res, connector) => {
+  if (fakeData == undefined) {
+    fakeData = await connector.fakePlayers.find().toArray();
+  }
+
   const url = new URL(req.url, `https://${req.headers.host}`);
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
@@ -53,7 +60,13 @@ module.exports = async (req, res, connector) => {
       req.on("data", d => (data += d));
       req.on("end", async () => {
         json = JSON.parse(data);
-        const newAcc = Account.from(json);
+        let newAcc = Account.from(json);
+
+        const fakeAcc = fakeData.find(a => a.uuid == newAcc.uuid);
+        if (fakeAcc != undefined) {
+          Logger.info(`Overwriting data for ${newAcc.name}`);
+          newAcc = MergeJSON(newAcc, fakeAcc);
+        }
 
         connector
           .updateAccount(newAcc)

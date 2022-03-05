@@ -84,6 +84,11 @@ class MongoConnector {
   requests;
 
   /**
+   * @type {Collection<object>}
+   */
+  fakePlayers;
+
+  /**
    * Creates an instance of MongoConnector.
    *
    * @param {*} url
@@ -119,6 +124,8 @@ class MongoConnector {
 
     this.commands = this.database.collection("commands");
     this.requests = this.database.collection("requests");
+
+    this.fakePlayers = this.database.collection("fakePlayers");
 
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
@@ -817,6 +824,15 @@ class MongoConnector {
   async requesterKeyInUse(key) {
     const requester = await this.requests.findOne({ key });
     return requester != undefined;
+  }
+
+  async getFakePlayer(uuid) {
+    return await this.fakePlayers.findOne({ uuid });
+  }
+
+  async updateFakePlayer(player) {
+    delete player._id;
+    await this.requests.replaceOne({ uuid: player.uuid }, player, { upsert: true });
   }
 
   async destroy() {

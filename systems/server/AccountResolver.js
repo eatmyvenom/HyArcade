@@ -2,9 +2,9 @@ const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const { mojangRequest, MongoConnector } = require("hyarcade-requests");
 const { Account } = require("hyarcade-structures");
-const Json = require("hyarcade-utils/FileHandling/Json");
+const MergeJSON = require("hyarcade-utils/MergeJSON");
 
-let fakeFile;
+let fakeData;
 
 /**
  *
@@ -14,8 +14,8 @@ let fakeFile;
  * @returns {Promise<Account>}
  */
 async function AccountResolver(connector, url, forceCache = false) {
-  if (fakeFile == undefined) {
-    fakeFile = await Json.read("fakeStats.json");
+  if (fakeData == undefined) {
+    fakeData = await connector.fakePlayers.find().toArray();
   }
 
   const ign = url.searchParams.get("ign");
@@ -73,14 +73,15 @@ async function AccountResolver(connector, url, forceCache = false) {
 
   if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - 600000) {
     Logger.log(`Updating data for ${acc.name}`);
-    const newAccount = new Account(acc.name, 0, acc.uuid);
+    let newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);
 
     await newAccount.updateHypixel();
 
-    if (Object.keys(fakeFile).includes(newAccount.uuid)) {
+    const fakeAcc = fakeData.find(a => a.uuid == newAccount.uuid);
+    if (fakeAcc != undefined) {
       Logger.info(`Overwriting data for ${newAccount.name}`);
-      Object.assign(newAccount, fakeFile[newAccount.uuid]);
+      newAccount = MergeJSON(newAccount, fakeAcc);
     }
 
     acc = newAccount;
