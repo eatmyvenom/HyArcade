@@ -74,21 +74,21 @@ module.exports = async (req, res, connector, redis) => {
           const batch = currentUUIDs.splice(0, Math.min(cfg.hypixel.segmentSize, currentUUIDs.length));
           await redis.setJSON("currentUUIDs", currentUUIDs);
 
-          await res.write(JSON.stringify(batch));
+          res.write(JSON.stringify(batch));
         }
 
         if ((fullAuth || key.perms.includes("listEdit")) && json.ezmsgs) {
-          let res = {};
+          let reply = {};
           if (json.ezmsgs.add) {
             await connector.addEZMsg(json.ezmsgs.add);
-            res.success = true;
+            reply.success = true;
           }
 
           if (json.ezmsgs.ls) {
-            res.list = await connector.ezMsgs.find().toArray();
+            reply.list = await connector.ezMsgs.find().toArray();
           }
 
-          await res.write(JSON.stringify(res));
+          res.write(JSON.stringify(res));
         }
 
         res.end();
