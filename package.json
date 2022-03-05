@@ -37,6 +37,7 @@
         "worker": "node index.js workers"
     },
     "dependencies": {
+        "@commitlint/config-angular": "^16.2.1",
         "fs-extra": "^10.0.1",
         "hyarcade-config": "*",
         "hyarcade-errors": "*",

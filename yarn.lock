@@ -3306,7 +3306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.5.0":
+"eslint-config-prettier@npm:^8.4.0":
   version: 8.5.0
   resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
@@ -3317,7 +3317,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^37.9.6":
+"eslint-plugin-jsdoc@npm:^37.9.4":
   version: 37.9.6
   resolution: "eslint-plugin-jsdoc@npm:37.9.6"
   dependencies:
@@ -4275,8 +4275,8 @@ __metadata:
     commitlint: ^16.2.1
     cz-conventional-changelog: ^3.3.0
     eslint: ^8.10.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-jsdoc: ^37.9.6
+    eslint-config-prettier: ^8.4.0
+    eslint-plugin-jsdoc: ^37.9.4
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-unicorn: ^41.0.0
     fs-extra: ^10.0.1
