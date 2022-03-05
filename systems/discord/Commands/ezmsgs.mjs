@@ -7,7 +7,8 @@ export default new Command("ezmsgs", ["%trusted%"], async args => {
   /**
    * @type {string[]}
    */
-  let msgs = await Database.readDB("ezmsgs");
+  let msgs = await Database.readDB("ezMsgs");
+  msgs = msgs.map(m => m.str);
 
   const operation = args[0];
   const arg = args.slice(1).join(" ");
@@ -20,24 +21,13 @@ export default new Command("ezmsgs", ["%trusted%"], async args => {
   }
 
   let res;
-  let hasChange = false;
 
   switch (operation) {
     case "+":
     case "add":
     case "plus": {
-      msgs.push(arg);
+      await Database.internal({ ezmsgs: { add: arg } });
       res = new CommandResponse("Message added!");
-      hasChange = true;
-      break;
-    }
-
-    case "-":
-    case "rm":
-    case "remove": {
-      msgs = msgs.filter(h => h != arg);
-      res = new CommandResponse("Message removed!");
-      hasChange = true;
       break;
     }
 
@@ -48,10 +38,10 @@ export default new Command("ezmsgs", ["%trusted%"], async args => {
       res = new CommandResponse(`\`\`\`\n${msgs.join("\n")}\`\`\``);
       break;
     }
-  }
 
-  if (hasChange) {
-    await Database.writeDB("ezmsgs", msgs);
+    default: {
+      res = new CommandResponse("Not a valid action!");
+    }
   }
 
   return res;

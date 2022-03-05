@@ -77,6 +77,20 @@ module.exports = async (req, res, connector, redis) => {
           await res.write(JSON.stringify(batch));
         }
 
+        if ((fullAuth || key.perms.includes("listEdit")) && json.ezmsgs) {
+          let res = {};
+          if (json.ezmsgs.add) {
+            await connector.addEZMsg(json.ezmsgs.add);
+            res.success = true;
+          }
+
+          if (json.ezmsgs.ls) {
+            res.list = await connector.ezMsgs.find().toArray();
+          }
+
+          await res.write(JSON.stringify(res));
+        }
+
         res.end();
       });
     } else {

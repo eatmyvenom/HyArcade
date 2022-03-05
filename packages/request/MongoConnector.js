@@ -89,6 +89,11 @@ class MongoConnector {
   fakePlayers;
 
   /**
+   * @type {Collection<object>}
+   */
+  ezMsgs;
+
+  /**
    * Creates an instance of MongoConnector.
    *
    * @param {*} url
@@ -126,6 +131,8 @@ class MongoConnector {
     this.requests = this.database.collection("requests");
 
     this.fakePlayers = this.database.collection("fakePlayers");
+
+    this.ezMsgs = this.database.collection("ezMsgs");
 
     if (index) {
       await this.guilds.createIndex({ uuid: 1 });
@@ -833,6 +840,10 @@ class MongoConnector {
   async updateFakePlayer(player) {
     delete player._id;
     await this.requests.replaceOne({ uuid: player.uuid }, player, { upsert: true });
+  }
+
+  async addEZMsg(str) {
+    await this.ezMsgs.insertOne({ str });
   }
 
   async destroy() {
