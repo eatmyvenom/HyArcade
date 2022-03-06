@@ -4218,6 +4218,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"hyarcade-events@workspace:packages/events":
+  version: 0.0.0-use.local
+  resolution: "hyarcade-events@workspace:packages/events"
+  languageName: unknown
+  linkType: soft
+
 "hyarcade-logger@*, hyarcade-logger@workspace:^, hyarcade-logger@workspace:packages/Logger":
   version: 0.0.0-use.local
   resolution: "hyarcade-logger@workspace:packages/Logger"

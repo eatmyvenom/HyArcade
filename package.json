@@ -32,7 +32,7 @@
         "tag:major": "npm version major -m 'build: :bookmark: %s' && yarn posttag",
         "posttag": "yarn changelog && git add CHANGELOG.md && git commit --amend --no-edit",
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
-        "bot": "node spawn-bots.js",
+        "bot": "yarn workspace bot start",
         "api": "node --max-old-space-size=6000 server.js",
         "worker": "node index.js workers"
     },

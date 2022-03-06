@@ -22,6 +22,7 @@ const miwIntents = [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.
  *
  */
 function doBot() {
+  logger.name = "Bot";
   const mode = process.argv[3];
   let client;
   if (mode == "mini") {
