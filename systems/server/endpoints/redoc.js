@@ -1,4 +1,5 @@
 const { readFile } = require("fs-extra");
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 
 /**
  *
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "text/html");
 
-    res.write(await readFile("assets/api-docs.html"));
+    res.write(await readFile(GetAsset("api-docs.html")));
     res.end();
   } else {
     res.statusCode = 404;

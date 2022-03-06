@@ -1,5 +1,6 @@
 const { MessageAttachment } = require("discord.js");
 const { Account } = require("hyarcade-structures");
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const ImageGenerator = require("./ImageGenerator");
 
 /**
@@ -31,7 +32,7 @@ function ms2time(time) {
 async function generateImage(account, game) {
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
-  await img.addBackground("assets/blur.png", 0, 0, 1280, 800, "#00000064");
+  await img.addBackground(GetAsset("blur.png"), 0, 0, 1280, 800, "#00000064");
 
   await img.drawMcText(`&f${game} Stats`, 640, 40, 56, "center");
   await img.drawMcText(`${ImageGenerator.formatAcc(account)}`, img.canvas.width / 2, 110, 50, "center");

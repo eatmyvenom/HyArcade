@@ -1,3 +1,4 @@
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const ImageGenerator = require("../ImageGenerator");
 
 /**
@@ -12,7 +13,7 @@ function formatNum(n) {
 
 module.exports = async function Arc3(path, category, time, topTen) {
   const img = new ImageGenerator(1900, 1035, "'myFont'", false);
-  await img.addBackground("assets/lb3.png", 0, 0, 1900, 1035, "#00000000");
+  await img.addBackground(GetAsset("lb3.png"), 0, 0, 1900, 1035, "#00000000");
 
   let y = 100;
   const dy = 48;

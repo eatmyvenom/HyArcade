@@ -1,9 +1,10 @@
 const fs = require("fs");
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const process = require("node:process");
 const path = require("path");
 
 class CommandImage {
-  file = "assets/arc.png";
+  file = GetAsset("/arc.png");
   overlay = "#00000000";
 }
 

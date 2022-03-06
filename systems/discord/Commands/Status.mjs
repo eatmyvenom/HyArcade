@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
+import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
 import ImageGenerator from "../images/ImageGenerator.js";
 import { ERROR_IGN_UNDEFINED, ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
@@ -17,7 +18,7 @@ const { CommandInteraction, Message } = require("discord.js");
  */
 function getImage(status) {
   if (!status.session.online) {
-    return "assets/status/Main-lobby.png";
+    return "status/Main-lobby.png";
   }
 
   switch (status.session.gameType) {
@@ -27,67 +28,67 @@ function getImage(status) {
       switch (status.session.mode) {
         case "LOBBY": {
           status.session.mode = "Lobby";
-          return "assets/status/Arcade-lobby-1.png";
+          return "status/Arcade-lobby-1.png";
         }
 
         case "PARTY": {
           status.session.mode = "Party Games";
-          return "assets/status/Arcade-party-games-1.png";
+          return "status/Arcade-party-games-1.png";
         }
 
         case "HOLE_IN_THE_WALL": {
           status.session.mode = "Hole in the Wall";
-          return "assets/status/Arcade-hole-in-the-wall-2.png";
+          return "status/Arcade-hole-in-the-wall-2.png";
         }
 
         case "THROW_OUT": {
           status.session.mode = "Throw Out";
-          return "assets/status/Arcade-throw-out.png";
+          return "status/Arcade-throw-out.png";
         }
 
         case "SOCCER": {
           status.session.mode = "Football";
-          return "assets/status/Arcade-football.png";
+          return "status/Arcade-football.png";
         }
 
         case "ONEINTHEQUIVER": {
           status.session.mode = "Bounty Hunters";
-          return "assets/status/Arcade-bounty-hunters-2.png";
+          return "status/Arcade-bounty-hunters-2.png";
         }
 
         case "DRAW_THEIR_THING": {
           status.session.mode = "Pixel Painters";
-          return "assets/status/Arcade-pixel-painters.png";
+          return "status/Arcade-pixel-painters.png";
         }
 
         case "DEFENDER": {
           status.session.mode = "Creeper Attack";
-          return "assets/status/Arcade-creeper-attack.png";
+          return "status/Arcade-creeper-attack.png";
         }
 
         case "DRAGONWARS2": {
           status.session.mode = "Dragon Wars";
-          return "assets/status/Arcade-dragon-wars.png";
+          return "status/Arcade-dragon-wars.png";
         }
 
         case "DAYONE": {
           status.session.mode = "Blocking Dead";
-          return "assets/status/Arcade-blocking-dead.png";
+          return "status/Arcade-blocking-dead.png";
         }
 
         case "STARWARS": {
           status.session.mode = "Galaxy Wars";
-          return "assets/status/Arcade-galaxy-wars.png";
+          return "status/Arcade-galaxy-wars.png";
         }
 
         case "SIMON_SAYS": {
           status.session.mode = "Hypixel Says";
-          return "assets/status/Arcade-hypixel-says.png";
+          return "status/Arcade-hypixel-says.png";
         }
 
         case "ENDER": {
           status.session.mode = "Ender Spleef";
-          return "assets/status/Arcade-ender-spleef.png";
+          return "status/Arcade-ender-spleef.png";
         }
 
         case "FARM_HUNT": {
@@ -95,19 +96,19 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Farm": {
-              return "assets/status/Arcade-farm-hunt-4.png";
+              return "status/Arcade-farm-hunt-4.png";
             }
 
             case "Meadow": {
-              return "assets/status/Arcade-farm-hunt-3.png";
+              return "status/Arcade-farm-hunt-3.png";
             }
 
             case "Homestead": {
-              return "assets/status/Arcade-farm-hunt-1.png";
+              return "status/Arcade-farm-hunt-1.png";
             }
 
             case "Beach Party": {
-              return "assets/status/Arcade-farm-hunt-2.png";
+              return "status/Arcade-farm-hunt-2.png";
             }
           }
 
@@ -116,17 +117,17 @@ function getImage(status) {
 
         case "ZOMBIES_DEAD_END": {
           status.session.mode = "Zombies";
-          return "assets/status/Arcade-zombies-dead-end.png";
+          return "status/Arcade-zombies-dead-end.png";
         }
 
         case "ZOMBIES_BAD_BLOOD": {
           status.session.mode = "Zombies";
-          return "assets/status/Arcade-zombies-bad-blood.png";
+          return "status/Arcade-zombies-bad-blood.png";
         }
 
         case "ZOMBIES_ALIEN_ARCADIUM": {
           status.session.mode = "Zombies";
-          return "assets/status/Arcade-zombies-alien-arcadium.png";
+          return "status/Arcade-zombies-alien-arcadium.png";
         }
 
         case "HIDE_AND_SEEK_PARTY_POOPER": {
@@ -134,11 +135,11 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Pool Party": {
-              return "assets/status/Arcade-party-pooper-pool.png";
+              return "status/Arcade-party-pooper-pool.png";
             }
 
             case "House Party": {
-              return "assets/status/Arcade-party-pooper-house.png";
+              return "status/Arcade-party-pooper-house.png";
             }
           }
 
@@ -148,7 +149,7 @@ function getImage(status) {
         case "MINI_WALLS": {
           status.session.mode = "Mini Walls";
 
-          return "assets/status/Arcade-mini-walls-babalon.png";
+          return "status/Arcade-mini-walls-babalon.png";
         }
 
         case "PVP_CTW": {
@@ -156,45 +157,45 @@ function getImage(status) {
 
           switch (status.session.map) {
             case "Quabba": {
-              return "assets/status/Arcade-capture-the-wool-5.png";
+              return "status/Arcade-capture-the-wool-5.png";
             }
 
             case "Amun": {
-              return "assets/status/Arcade-capture-the-wool-6.png";
+              return "status/Arcade-capture-the-wool-6.png";
             }
 
             case "Desert Palace": {
-              return "assets/status/Arcade-capture-the-wool-2.png";
+              return "status/Arcade-capture-the-wool-2.png";
             }
 
             case "Turrets": {
-              return "assets/status/Arcade-capture-the-wool-7.png";
+              return "status/Arcade-capture-the-wool-7.png";
             }
 
             case "Tudor Garden": {
-              return "assets/status/Arcade-capture-the-wool-3.png";
+              return "status/Arcade-capture-the-wool-3.png";
             }
 
             case "Manhattan Showdown": {
-              return "assets/status/Arcade-capture-the-wool-8.png";
+              return "status/Arcade-capture-the-wool-8.png";
             }
 
             default: {
-              return "assets/status/Arcade-capture-the-wool-6.png";
+              return "status/Arcade-capture-the-wool-6.png";
             }
           }
         }
       }
-      return "assets/status/Arcade-lobby-1.png";
+      return "status/Arcade-lobby-1.png";
     }
 
     case "BEDWARS": {
-      return "assets/status/Bedwars-lobby.png";
+      return "status/Bedwars-lobby.png";
     }
 
     case "MCGO": {
       status.session.gameType = "Cops and Crims";
-      return "assets/status/Cops-lobby.png";
+      return "status/Cops-lobby.png";
     }
 
     case "LEGACY": {
@@ -204,85 +205,85 @@ function getImage(status) {
         case "VAMPIREZ": {
           switch (status.session.map) {
             case "Plundered": {
-              return "assets/status/Classic-vampirez-plundered.png";
+              return "status/Classic-vampirez-plundered.png";
             }
             case "Kudong": {
-              return "assets/status/Classic-vampirez-kudong.png";
+              return "status/Classic-vampirez-kudong.png";
             }
             case "Village": {
-              return "assets/status/Classic-vampirez-village.png";
+              return "status/Classic-vampirez-village.png";
             }
             case "Church": {
-              return "assets/status/Classic-vampirez-village.png";
+              return "status/Classic-vampirez-village.png";
             }
           }
 
-          return "assets/status/Classic-vampirez-kudong.png";
+          return "status/Classic-vampirez-kudong.png";
         }
 
         case "QUAKECRAFT": {
-          if (fs.existsSync(`assets/status/classic/quake/${status.session.map}.png`)) {
-            return `assets/status/classic/quake/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/classic/quake/${status.session.map}.png`))) {
+            return `status/classic/quake/${status.session.map}.png`;
           }
-          return "assets/status/Classic-quake-Apex_III.png";
+          return "status/Classic-quake-Apex_III.png";
         }
 
         case "WALLS": {
-          return "assets/status/Classic-walls-Aztec.png";
+          return "status/Classic-walls-Aztec.png";
         }
 
         case "GINGERBREAD": {
           status.session.mode = "Turbo Kart Racers";
-          return "assets/status/Classic-tkr.png";
+          return "status/Classic-tkr.png";
         }
 
         case "PAINTBALL": {
-          if (fs.existsSync(`assets/status/classic/paintball/${status.session.map}.png`)) {
-            return `assets/status/classic/paintball/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/classic/paintball/${status.session.map}.png`))) {
+            return `status/classic/paintball/${status.session.map}.png`;
           }
           break;
         }
       }
 
-      return "assets/status/Classic-lobby.png";
+      return "status/Classic-lobby.png";
     }
 
     case "SKYWARS": {
-      return "assets/status/Skywars-lobby.png";
+      return "status/Skywars-lobby.png";
     }
 
     case "MURDER_MYSTERY": {
-      return "assets/status/Murder-mystery-lobby.png";
+      return "status/Murder-mystery-lobby.png";
     }
 
     case "HOUSING": {
-      return "assets/status/Housing-lobby.png";
+      return "status/Housing-lobby.png";
     }
 
     case "PIT": {
-      if (fs.existsSync(`assets/status/pit/${status.session.map}.png`)) {
-        return `assets/status/pit/${status.session.map}.png`;
+      if (fs.existsSync(GetAsset(`status/pit/${status.session.map}.png`))) {
+        return `status/pit/${status.session.map}.png`;
       }
-      return "assets/status/pit/Castle.png";
+      return "status/pit/Castle.png";
     }
 
     case "BUILD_BATTLE": {
-      return status.session.mode == "LOBBY" ? "assets/status/Build-battle-lobby.png" : "assets/status/Build-battle.png";
+      return status.session.mode == "LOBBY" ? "status/Build-battle-lobby.png" : "status/Build-battle.png";
     }
 
     case "DUELS": {
       switch (status.session.mode) {
         case "DUELS_SUMO_DUEL": {
           status.session.mode = "Sumo";
-          if (fs.existsSync(`assets/status/duels/sumo/${status.session.map}.png`)) {
-            return `assets/status/duels/sumo/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/duels/sumo/${status.session.map}.png`))) {
+            return `status/duels/sumo/${status.session.map}.png`;
           }
           break;
         }
 
         case "DUELS_PARKOUR_EIGHT": {
           status.session.mode = "Parkour";
-          return "assets/status/duels/parkour.png";
+          return "status/duels/parkour.png";
         }
 
         case "DUELS_CAPTURE_THREES":
@@ -292,26 +293,26 @@ function getImage(status) {
         case "DUELS_BRIDGE_FOUR":
         case "DUELS_BRIDGE_DUEL":
         case "DUELS_BRIDGE_THREES": {
-          if (fs.existsSync(`assets/status/duels/bridge/${status.session.map}.png`)) {
-            return `assets/status/duels/bridge/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/duels/bridge/${status.session.map}.png`))) {
+            return `status/duels/bridge/${status.session.map}.png`;
           }
           break;
         }
 
         default: {
-          if (fs.existsSync(`assets/status/duels/normal/${status.session.map}.png`)) {
-            return `assets/status/duels/normal/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/duels/normal/${status.session.map}.png`))) {
+            return `status/duels/normal/${status.session.map}.png`;
           }
           break;
         }
       }
 
-      return "assets/status/Duels-lobby-new.png";
+      return "status/Duels-lobby-new.png";
     }
 
     case "SPEED_UHC":
     case "UHC": {
-      return "assets/status/UHC-lobby.png";
+      return "status/UHC-lobby.png";
     }
 
     case "TNTGAMES": {
@@ -320,8 +321,8 @@ function getImage(status) {
         case "TNTRUN": {
           status.session.mode = "TNT Run";
 
-          if (fs.existsSync(`assets/status/tnt/run/${status.session.map}.png`)) {
-            return `assets/status/tnt/run/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/tnt/run/${status.session.map}.png`))) {
+            return `status/tnt/run/${status.session.map}.png`;
           }
           break;
         }
@@ -329,8 +330,8 @@ function getImage(status) {
         case "PVPRUN": {
           status.session.mode = "PVP Run";
 
-          if (fs.existsSync(`assets/status/tnt/run/${status.session.map}.png`)) {
-            return `assets/status/tnt/run/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/tnt/run/${status.session.map}.png`))) {
+            return `status/tnt/run/${status.session.map}.png`;
           }
           break;
         }
@@ -338,53 +339,53 @@ function getImage(status) {
         case "TNTAG": {
           status.session.mode = "Tnt Tag";
 
-          if (fs.existsSync(`assets/status/tnt/tag/${status.session.map}.png`)) {
-            return `assets/status/tnt/tag/${status.session.map}.png`;
+          if (fs.existsSync(GetAsset(`status/tnt/tag/${status.session.map}.png`))) {
+            return `status/tnt/tag/${status.session.map}.png`;
           }
           break;
         }
       }
-      return "assets/status/Tnt-lobby.png";
+      return "status/Tnt-lobby.png";
     }
 
     case "WALLS3": {
       status.session.gameType = "Mega Walls";
-      return "assets/status/Mega-walls-lobby.png";
+      return "status/Mega-walls-lobby.png";
     }
 
     case "SUPER_SMASH": {
       status.session.gameType = "Smash heros";
-      return "assets/status/Smash-heros-lobby.png";
+      return "status/Smash-heros-lobby.png";
     }
 
     case "BATTLEGROUND": {
       status.session.gameType = "Warlords";
-      return "assets/status/Warloads-lobby.png";
+      return "status/Warloads-lobby.png";
     }
 
     case "MAIN": {
-      return "assets/status/Normal-lobby.png";
+      return "status/Normal-lobby.png";
     }
 
     case "TOURNAMENT": {
-      return "assets/status/Tourney-lobby.png";
+      return "status/Tourney-lobby.png";
     }
 
     case "SURVIVAL_GAMES": {
       status.session.gameType = "Blitz";
-      return "assets/status/Blitz-lobby.png";
+      return "status/Blitz-lobby.png";
     }
 
     case "SKYBLOCK": {
-      return "assets/status/Skyblock-hub.png";
+      return "status/Skyblock-hub.png";
     }
 
     case "PROTOTYPE": {
-      return "assets/status/Prototype-lobby.png";
+      return "status/Prototype-lobby.png";
     }
   }
 
-  return "assets/status/Main-lobby.png";
+  return "status/Main-lobby.png";
 }
 
 /**
@@ -528,7 +529,7 @@ async function callback(args, rawmsg, interaction) {
     const modeOthers = counts?.games?.[status.session.gameType]?.modes?.[status.session.mode] ?? "Unknown";
     const typeOthers = counts?.games?.[status.session.gameType]?.players ?? "Unknown";
 
-    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000004F");
+    await img.addBackground(GetAsset(getImage(status)), 0, 0, 1280, 800, "#00000052");
 
     const type = `${status.session.gameType}`.replace(/_/g, " ").trim();
     const mode = `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();
@@ -575,7 +576,7 @@ async function callback(args, rawmsg, interaction) {
       await img.drawMcText(`&b${modeOthers}`, img.canvas.width - 300, (y += increase), 50, "center");
     }
   } else {
-    await img.addBackground(getImage(status), 0, 0, 1280, 800, "#0000008F");
+    await img.addBackground(GetAsset(getImage(status)), 0, 0, 1280, 800, "#0000008F");
     await img.drawMcText("Player Status", img.canvas.width / 2, 40, 56, "center");
     await img.drawMcText(ImageGenerator.formatAcc(status, true), img.canvas.width / 2, 100, 56, "center");
 

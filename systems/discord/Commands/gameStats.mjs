@@ -2,6 +2,7 @@ import Database from "hyarcade-requests/Database.js";
 import { Account } from "hyarcade-structures";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
@@ -36,7 +37,7 @@ async function genImg(account, game = "") {
     case "party":
     case "partygames":
     case "pg": {
-      await img.addBackground("assets/status/Arcade-party-games-1.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-party-games-1.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(32);
 
       img.drawMcText("Party Games", img.canvas.width / 2, 100, 124, "center");
@@ -82,7 +83,7 @@ async function genImg(account, game = "") {
     case "farmhunt":
     case "5":
     case "frmhnt": {
-      await img.addBackground("assets/status/Arcade-farm-hunt-3.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-farm-hunt-3.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Farm Hunt", img.canvas.width / 2, 100, 124, "center");
@@ -128,7 +129,7 @@ async function genImg(account, game = "") {
     case "hypixel":
     case "says":
     case "hysays": {
-      await img.addBackground("assets/status/Arcade-hypixel-says.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-hypixel-says.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Hypixel Says", img.canvas.width / 2, 100, 124, "center");
@@ -178,7 +179,7 @@ async function genImg(account, game = "") {
     case "hit":
     case "hole":
     case "pain": {
-      await img.addBackground("assets/status/Arcade-hole-in-the-wall-2.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-hole-in-the-wall-2.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Hole in the Wall", img.canvas.width / 2, 100, 124, "center");
@@ -236,7 +237,7 @@ async function genImg(account, game = "") {
     case "wall":
     case "pvp":
     case "miniwalls": {
-      await img.addBackground("assets/miwblur2.png", -500, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("miwblur2.png"), -500, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Mini Walls", img.canvas.width / 2, 100, 124, "center");
@@ -315,7 +316,7 @@ async function genImg(account, game = "") {
     case "fuck":
     case "shit":
     case "football": {
-      await img.addBackground("assets/status/Arcade-football-3.png", 0, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-football-3.png"), 0, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Football", img.canvas.width / 2, 100, 124, "center");
@@ -372,7 +373,7 @@ async function genImg(account, game = "") {
     case "enderman":
     case "trash":
     case "enderspleef": {
-      await img.addBackground("assets/status/Arcade-ender-spleef.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-ender-spleef.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Ender Spleef", img.canvas.width / 2, 100, 124, "center");
@@ -418,7 +419,7 @@ async function genImg(account, game = "") {
     case "toss":
     case "sumo2":
     case "throwout": {
-      await img.addBackground("assets/status/Arcade-throw-out.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-throw-out.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Throw Out", img.canvas.width / 2, 100, 124, "center");
@@ -468,7 +469,7 @@ async function genImg(account, game = "") {
     case "sw":
     case "galaxy":
     case "galaxywars": {
-      await img.addBackground("assets/status/Arcade-galaxy-wars.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-galaxy-wars.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Galaxy Wars", img.canvas.width / 2, 100, 124, "center");
@@ -517,7 +518,7 @@ async function genImg(account, game = "") {
     case "dw":
     case "dragon":
     case "dragonwars": {
-      await img.addBackground("assets/status/Arcade-dragon-wars.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-dragon-wars.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Dragon Wars", img.canvas.width / 2, 100, 124, "center");
@@ -559,7 +560,7 @@ async function genImg(account, game = "") {
     case "bounty":
     case "oneinthequiver":
     case "bountyhunters": {
-      await img.addBackground("assets/status/Arcade-bounty-hunters-3.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-bounty-hunters-3.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Bounty Hunters", img.canvas.width / 2, 100, 124, "center");
@@ -605,7 +606,7 @@ async function genImg(account, game = "") {
     case "dayone":
     case "blocking":
     case "blockingdead": {
-      await img.addBackground("assets/status/Arcade-blocking-dead.png", -500, 0, 4000, 2040, "#0000007F");
+      await img.addBackground(GetAsset("status/Arcade-blocking-dead.png"), -500, 0, 4000, 2040, "#0000007F");
       await img.blur(32);
 
       img.drawMcText("Blocking Dead", img.canvas.width / 2, 100, 124, "center");
@@ -654,7 +655,7 @@ async function genImg(account, game = "") {
     case "hideandseek":
     case "hidenseek":
     case "hideseek": {
-      await img.addBackground("assets/status/Arcade-hide-and-seek-party-pooper-1.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-hide-and-seek-party-pooper-1.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(48);
 
       img.drawMcText("Hide and Seek", img.canvas.width / 2, 100, 124, "center");
@@ -711,7 +712,7 @@ async function genImg(account, game = "") {
     case "zomb":
     case "zbies":
     case "zombies": {
-      await img.addBackground("assets/status/Arcade-zombies-dead-end.png", 0, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-zombies-dead-end.png"), 0, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Zombies", img.canvas.width / 2, 100, 124, "center");
@@ -753,7 +754,7 @@ async function genImg(account, game = "") {
     case "ctwwool":
     case "ctwwoolcaptured":
     case "ctwkills": {
-      await img.addBackground("assets/status/Arcade-capture-the-wool-3.png", -500, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-capture-the-wool-3.png"), -500, 0, 4000, 2040, "#0000006F");
       await img.blur(48);
 
       img.drawMcText("Capture the Wool", img.canvas.width / 2, 100, 124, "center");
@@ -797,7 +798,7 @@ async function genImg(account, game = "") {
     case "drawmything":
     case "drawtheirthing":
     case "drawing": {
-      await img.addBackground("assets/status/Arcade-pixel-painters.png", -500, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("status/Arcade-pixel-painters.png"), -500, 0, 4000, 2040, "#0000006F");
       await img.blur(48);
 
       img.drawMcText("Pixel Painters", img.canvas.width / 2, 100, 124, "center");
@@ -832,7 +833,7 @@ async function genImg(account, game = "") {
     case "season":
     case "14":
     case "sea": {
-      await img.addBackground("assets/arcblur11.png", -500, 0, 4000, 2040, "#0000006F");
+      await img.addBackground(GetAsset("arcblur11.png"), -500, 0, 4000, 2040, "#0000006F");
       await img.blur(16);
 
       img.drawMcText("Seasonal Games", img.canvas.width / 2, 100, 124, "center");
@@ -882,7 +883,7 @@ async function genImg(account, game = "") {
     }
 
     default: {
-      await img.addBackground("assets/arcblur9.png", -250, -100, 4000, 2040, "#0000008F");
+      await img.addBackground(GetAsset("arcblur9.png"), -250, -100, 4000, 2040, "#0000008F");
       await img.blur(16);
 
       img.drawMcText("Overall Arcade", img.canvas.width / 2, 100, 124, "center");

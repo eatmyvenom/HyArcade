@@ -5,6 +5,7 @@ const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const ImageGenerator = require("../images/ImageGenerator");
 const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 
 /**
  *
@@ -139,7 +140,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc.miniWalls;
 
   const img = new ImageGenerator(2560, 1600, "'myfont'", true);
-  await img.addBackground("assets/miwblur2.png", 0, 0, 2560, 1600, "#0000008E");
+  await img.addBackground(GetAsset("miwblur2.png"), 0, 0, 2560, 1600, "#0000008E");
   img.context.beginPath();
   img.context.rect(0, 0, 2560, 1600);
 

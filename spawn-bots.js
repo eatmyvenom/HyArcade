@@ -4,6 +4,7 @@
 const child_process = require("child_process");
 const fs = require("fs-extra");
 const Logger = require("hyarcade-logger");
+const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const BotExit = require("./systems/events/BotExit");
 const BotStart = require("./systems/events/BotStart");
 // eslint-disable-next-line no-undef
@@ -27,7 +28,7 @@ async function main() {
   Logger.emoji = "🤖";
   try {
     Logger.info("Bots starting...");
-    const ascii = await fs.readFile("assets/hyarcade.ascii");
+    const ascii = await fs.readFile(GetAsset("hyarcade.ascii"));
     Logger.info(ascii.toString());
     if (args[2] == "test") {
       arcade = child_process.fork("./systems/discord/ShardManager.js", ["bot", "test"], {
