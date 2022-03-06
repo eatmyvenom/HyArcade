@@ -1,5 +1,5 @@
 const Logger = require("hyarcade-logger");
-const webhook = require("../events/webhook");
+const webhook = require("../../events/webhook");
 
 /**
  *
