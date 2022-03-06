@@ -1,10 +1,14 @@
+/* eslint-disable jsdoc/require-returns */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
 const maxLength = 25;
 let interval;
 
 /**
  *
  */
-async function load () {
+async function load() {
   await refresh();
   clearInterval(interval);
   interval = setInterval(refresh, 25000);
@@ -13,16 +17,16 @@ async function load () {
 /**
  *
  */
-async function refresh () {
+async function refresh() {
   const time = document.querySelector("time");
   let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
-    cache: "no-store"
+    cache: "no-store",
   });
   servertime = await servertime.text();
   const formatted = new Date(servertime);
   time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
   let events = await fetch("https://hyarcade.xyz/resources/events.json", {
-    cache: "no-store"
+    cache: "no-store",
   });
   events = await events.text();
   await formatPage(events);
@@ -31,12 +35,12 @@ async function refresh () {
 /**
  * @param events
  */
-async function formatPage (events) {
+async function formatPage(events) {
   events = JSON.parse(events);
   console.log(events);
-  const content = document.getElementById("evtWrapper");
+  const content = document.querySelector("#evtWrapper");
   let newContent = "";
-  for(const evt of events) {
+  for (const evt of events) {
     newContent += `${evt[1]}\n\n`;
   }
   content.innerHTML = newContent;
@@ -45,13 +49,12 @@ async function formatPage (events) {
 /**
  * @param number
  */
-function formatNum (number) {
-  const str = new Number(number);
-  if(number == undefined) {
-    return new Number(0).toLocaleString();
-  } 
+function formatNum(number) {
+  const str = Number(number);
+  if (number == undefined) {
+    return Number(0).toLocaleString();
+  }
   return str.toLocaleString();
-    
 }
 
 window.addEventListener("load", load);

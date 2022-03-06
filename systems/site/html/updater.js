@@ -1,25 +1,24 @@
+/* eslint-disable no-unused-vars */
 let maxLength = 50;
 
 /**
  * @param ext
  * @param clazzz
  */
-function addstuff (ext, clazzz) {
+function addstuff(ext, clazzz) {
   fetch(`https://eatmyvenom.me/share/${ext}`, {
-    cache: "no-store"
-  }).then((res) => {
-    res.text().then((txt) => {
+    cache: "no-store",
+  }).then(res => {
+    res.text().then(txt => {
       const arr = txt.split("\n");
       const len = Math.min(arr.length, maxLength);
       const newArr = arr.slice(0, len);
       console.log(ext);
-      if((`${ext}`).includes("pgA") || ext.includes("status")) {
-        for(let i = 0; i < newArr.length; i += 1) {
-          if(newArr[i].trim() != "") {
+      if (`${ext}`.includes("pgA") || ext.includes("status")) {
+        for (let i = 0; i < newArr.length; i += 1) {
+          if (newArr[i].trim() != "") {
             const line = newArr[i].split(":");
-            newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0]
-              .replace(/[0-9][0-9][0-9]\)/g, "")
-              .trim()}'>${line[0]}</a>:${line[1]}`;
+            newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0].replace(/\d{3}\)/g, "").trim()}'>${line[0]}</a>:${line[1]}`;
           }
         }
       }
@@ -31,7 +30,7 @@ function addstuff (ext, clazzz) {
 /**
  *
  */
-function main () {
+function main() {
   addstuff("pgd.txt", ".daily");
   addstuff("pg.txt", ".lb");
   addstuff("pgG.txt", ".guild");
@@ -44,21 +43,17 @@ function main () {
 /**
  * @param sel
  */
-function toggleDisplay (sel) {
+function toggleDisplay(sel) {
   const e = document.querySelector(sel);
-  if(e.style.display === "none") {
-    e.style.display = "inline-block";
-  } else {
-    e.style.display = "none";
-  }
+  e.style.display = e.style.display === "none" ? "inline-block" : "none";
 }
 
 /**
  * @param sel
  */
-function toggleBtn (sel) {
+function toggleBtn(sel) {
   const e = document.querySelector(sel);
-  if(e.hasAttribute("off")) {
+  if (e.hasAttribute("off")) {
     e.removeAttribute("off");
   } else {
     e.setAttribute("off", "");
@@ -68,7 +63,7 @@ function toggleBtn (sel) {
 /**
  *
  */
-function toggleCombined () {
+function toggleCombined() {
   toggleDisplay(".lbh");
   toggleDisplay(".lb");
   toggleDisplay(".dayh");
@@ -79,7 +74,7 @@ function toggleCombined () {
 /**
  *
  */
-function toggleGuilds () {
+function toggleGuilds() {
   toggleDisplay(".gldh");
   toggleDisplay(".guild");
   toggleDisplay(".glddh");
@@ -90,7 +85,7 @@ function toggleGuilds () {
 /**
  *
  */
-function toggleNormal () {
+function toggleNormal() {
   toggleDisplay(".acch");
   toggleDisplay(".accounts");
   toggleDisplay(".accdh");
@@ -101,7 +96,7 @@ function toggleNormal () {
 /**
  * @param value
  */
-function maxValChange (value) {
+function maxValChange(value) {
   maxLength = value;
 }
 
