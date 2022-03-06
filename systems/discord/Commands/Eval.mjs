@@ -24,7 +24,7 @@ export default new Command("eval", ["156952208045375488"], async (args, rawMsg) 
 
   let evaled;
   try {
-    evaled = f(c, require, BotRuntime, rawMsg, Database);
+    evaled = await f(c, require, BotRuntime, rawMsg, Database);
   } catch (error) {
     evaled = error;
   }
