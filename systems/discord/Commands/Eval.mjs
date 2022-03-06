@@ -7,12 +7,15 @@ import BotRuntime from "../BotRuntime.js";
 
 const require = createRequire(import.meta.url);
 
+// eslint-disable-next-line prefer-arrow-callback
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+
 /**
  * @param {string} str
  * @returns {string}
  */
 function safeEval(str) {
-  return new Function("c", "r", "br", "m", "db", `"use strict";return (${str})`);
+  return new AsyncFunction("c", "r", "br", "m", "db", `"use strict";return (${str})`);
 }
 
 export default new Command("eval", ["156952208045375488"], async (args, rawMsg) => {
