@@ -21,7 +21,7 @@ const Logger = require("hyarcade-logger");
  * @returns {*}
  */
 async function main() {
-  const Server = require("./systems/server/Server");
+  const Server = require("./systems/api/Server");
   Logger.out("Starting server for database and listening on port 6000");
   return await Server(6000);
 }

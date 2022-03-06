@@ -2005,9 +2005,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"api@workspace:systems/server":
+"api@workspace:systems/api":
   version: 0.0.0-use.local
-  resolution: "api@workspace:systems/server"
+  resolution: "api@workspace:systems/api"
   dependencies:
     hyarcade-config: "workspace:^"
     hyarcade-errors: "workspace:^"

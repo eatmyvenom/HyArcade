@@ -118,7 +118,7 @@ async function main() {
       break;
 
     case "serveDB": {
-      const Server = require("./systems/server/Server");
+      const Server = require("./systems/api/Server");
       logger.out("Starting server for database and listening on port 6000");
       await Server(6000);
       killable = false;
