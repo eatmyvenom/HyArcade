@@ -22,7 +22,12 @@ export default new Command("eval", ["156952208045375488"], async (args, rawMsg) 
   const c = BotRuntime.client;
   const f = safeEval(args.join(" "));
 
-  let evaled = f(c, require, BotRuntime, rawMsg, Database);
+  let evaled;
+  try {
+    evaled = f(c, require, BotRuntime, rawMsg, Database);
+  } catch (error) {
+    evaled = error;
+  }
 
   if (typeof evaled != "string") {
     evaled = inspect(evaled, true);
