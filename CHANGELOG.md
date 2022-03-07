@@ -1,10 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [2.5.1](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.5.1) - (2022-03-05)
+# [2.6.0](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.6.0) - (2022-03-07)
 
 ## Bug Fixes
 
+- **discord:** :speech_balloon: improper image reading ([7fb042d](https://github.com/eatmyvenom/hyarcade/commit/7fb042d4a638737c28c4d4672307b67e7ac57d70))
+- **site:** :lock: js/xss-through-dom vulnerability ([57403d0](https://github.com/eatmyvenom/hyarcade/commit/57403d01c4a9175e257615826e911ccef70fccd4))
+- **site:** :globe_with_meridians: refresh far less often ([f842ae7](https://github.com/eatmyvenom/hyarcade/commit/f842ae78f9d0278c65fbb0f26ee144c83c5d9721))
+- **dependencies:** Import ([1359dfd](https://github.com/eatmyvenom/hyarcade/commit/1359dfd06de487a74d2fb198ce6798e1b0ba96bd))
+- **discord:** :speech_balloon: await async function idiot ([85e5610](https://github.com/eatmyvenom/hyarcade/commit/85e5610cd667bccfc86f08bf153bee92b607c875))
+- **discord:** :speech_balloon: catch eval errors ([998143d](https://github.com/eatmyvenom/hyarcade/commit/998143dbcd2e38ae3fc86d143200273ea75d386a))
+- **discord:** :speech_balloon: async eval ([8734215](https://github.com/eatmyvenom/hyarcade/commit/8734215d3c600880b652911ea07255e97621d32f))
+- **cli:** :memo: fix auto fakelb ([cb88743](https://github.com/eatmyvenom/hyarcade/commit/cb88743c590278ed411f449d93bbccc1b3a4dddf))
+- **api:** :zap: correct reply ([bca2342](https://github.com/eatmyvenom/hyarcade/commit/bca2342410547954de0f5d659d52043318d0abeb))
+- **api wrapper:** :alembic: use correct url ([e79b020](https://github.com/eatmyvenom/hyarcade/commit/e79b02091bc65afb95ef93c87040bd648a34f93e))
+- **api:** :zap: ez crash ([c05ae17](https://github.com/eatmyvenom/hyarcade/commit/c05ae17329eaaf06a9ff655c7ecbb358dc19662f))
+- **github:** :rocket: fix build fail ([f1bf51b](https://github.com/eatmyvenom/hyarcade/commit/f1bf51b1aceb5f678cea8def0566181819c8a643))
+- **package:** :package: run pretag ([c98ebb2](https://github.com/eatmyvenom/hyarcade/commit/c98ebb2089d9d2392dc3fcee2d7f86d832a28a4f))
+- **github:** :construction_worker: pretag instead of posttag ([f58cd26](https://github.com/eatmyvenom/hyarcade/commit/f58cd268364063588244508d004a5b1f7d80b48f))
 - **discord:** :speech_balloon: command permissions ([48f9b24](https://github.com/eatmyvenom/hyarcade/commit/48f9b24936e735548c4d429f5559c2ae15b13c73))
 - **datagen:** :chart_with_upwards_trend: dont instant crash on api out ([20f901a](https://github.com/eatmyvenom/hyarcade/commit/20f901afcef587d82e97f85ea639bcb644669373))
 - **api:** :zap: missing deps ([4b7ca6b](https://github.com/eatmyvenom/hyarcade/commit/4b7ca6baa688e54a2eb3b8865e85ede7de130c5d))
@@ -26,6 +40,10 @@ All notable changes to this project will be documented in this file.
 
 ## Features
 
+- Merge branch 'site-rework' ([4719ec8](https://github.com/eatmyvenom/hyarcade/commit/4719ec8be45a8e14b4ee878315764d2189250967))
+- **site:** :globe_with_meridians: add site to pm2 ([f5320a6](https://github.com/eatmyvenom/hyarcade/commit/f5320a60c7c343d446f405ad67adddcbb4dabf43))
+- **site:** :globe_with_meridians: rework site hosting ([307678d](https://github.com/eatmyvenom/hyarcade/commit/307678d33e2d9df360aacc5d01b18268ced3cc29))
+- **cli:** :memo: send sts via cli ([6aca8fd](https://github.com/eatmyvenom/hyarcade/commit/6aca8fd19f3fa3d2e7d0dc2e57b5f676b6bc44a8))
 - :alien: move ezmsgs to mongo ([424e434](https://github.com/eatmyvenom/hyarcade/commit/424e4347760896bca7f60b447ea237dabbd4e535))
 - **mongo:** :card_file_box: move fake player data to mongo ([528db5b](https://github.com/eatmyvenom/hyarcade/commit/528db5b4ea23b5e92a1cb4c76bc34a17beb1c7c2))
 - **redis:** :page_facing_up: add redis support ([1e3cd54](https://github.com/eatmyvenom/hyarcade/commit/1e3cd54108f20edc349b19c6e9ad5f29bddc5a36))
@@ -43,6 +61,9 @@ All notable changes to this project will be documented in this file.
 
 ## Refactor
 
+- **api:** :zap: rename server to api ([e75c708](https://github.com/eatmyvenom/hyarcade/commit/e75c7082cbc9fe1cbc173f0be610b0628c6a6f22))
+- :recycle: rework bot spawning ([e168083](https://github.com/eatmyvenom/hyarcade/commit/e168083f03c97066bb48ff0087727ff2a8122e0a))
+- :recycle: remove assets symlinks ([f2d85c9](https://github.com/eatmyvenom/hyarcade/commit/f2d85c9ced6df27c214657774231dca3810404a7))
 - :memo: restructure code ([d0af433](https://github.com/eatmyvenom/hyarcade/commit/d0af4338672b8e6d18deb68761d066c94cd5e897))
 
 # [2.4.8](https://github.com/eatmyvenom/hyarcade/compare/2.4.7...2.4.8) - (2022-02-27)
