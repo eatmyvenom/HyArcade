@@ -23,7 +23,7 @@ async function load() {
       mainTitle.innerHTML = "Party games";
       address.innerHTML = '<a href="https://discord.gg/kVSdPevCwm">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "wins";
+      lifetime.id = "partyGamesWins";
       break;
     }
 
