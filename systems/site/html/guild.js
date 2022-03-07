@@ -243,16 +243,16 @@ async function getLeaderboards(element) {
   if (formattedTime == "") {
     if (idArr.length > 1) {
       for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].plusColor, lb[i].mvpColor);
+        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
       }
     } else {
       for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].plusColor, lb[i].mvpColor);
+        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
       }
     }
   } else {
     for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-      text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].color.toLowerCase(), lb[i].plusColor, lb[i].mvpColor);
+      text += formatLine(lb[i].name, lb[i]?.lbProp ?? 0, lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
     }
   }
 
@@ -270,11 +270,12 @@ async function getLeaderboards(element) {
  * @param {string} value
  * @param {string} uuid
  * @param {string} color
+ * @param {string} tag
  * @returns {string}
  */
-function formatLine(name, value, uuid, color) {
+function formatLine(name, value, uuid, color, tag) {
   let longName = `${name}`;
-  longName = `<a href="guildstats.html?q=${uuid}" class="minecraft"><b class="${color}">${name}</b></a>`;
+  longName = `<a href="guildstats.html?q=${uuid}" class="minecraft"><b class="${color}">${name} [${tag}]</b></a>`;
   if (value > 0) {
     return `<li>${longName} <i class="minecraft">${formatNum(value)}</i></li>`;
   }
