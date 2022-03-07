@@ -3,8 +3,9 @@ import Database from "hyarcade-requests/Database.js";
 import { Account } from "hyarcade-structures";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
+import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
 import ImageGenerator from "../images/ImageGenerator.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const cfg = Config.fromJSON();
 
@@ -72,7 +73,7 @@ export default new Command(
     }
 
     const img = new ImageGenerator(1280, 800, "'myFont'", true);
-    await img.addBackground(cfg.commandImages.profile.file, 0, 0, 1280, 800, cfg.commandImages.leaderboard.overlay);
+    await img.addBackground(GetAsset(cfg.commandImages.profile.file), 0, 0, 1280, 800, cfg.commandImages.leaderboard.overlay);
 
     img.drawMcText("&f&lArcade Games", 640, 50, 56, "center");
     img.drawMcText(ImageGenerator.formatAcc(acc, true), 640, 100, 50, "center");
