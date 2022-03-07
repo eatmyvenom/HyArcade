@@ -598,7 +598,7 @@ async function getLeaderboards(element) {
     .replace(/&/g, "&amp;")
     .replace(/>/g, "&gt;")
     .replace(/</g, "&lt;")
-    .replace(/"/g, "&quot;")}</h2><ol>${text.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;")}</ol>`;
+    .replace(/"/g, "&quot;")}</h2><ol>${text}</ol>`;
   element.setAttribute("vis", true);
 }
 
