@@ -34,6 +34,7 @@
         "lint": "eslint './{src,packages,systems}/**/*.{js,mjs}' --fix",
         "bot": "yarn workspace bot start",
         "api": "node --max-old-space-size=6000 server.js",
+        "site": "yarn workspace site start",
         "worker": "node index.js workers"
     },
     "dependencies": {

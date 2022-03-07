@@ -9,6 +9,14 @@ module.exports = {
       combine_logs: true,
     },
     {
+      name: "Site",
+      script: "yarn site",
+      error_file: "/dev/null",
+      out_file: "/dev/null",
+      restart: true,
+      combine_logs: true,
+    },
+    {
       name: "Bot",
       script: "yarn bot",
       error_file: "/dev/null",

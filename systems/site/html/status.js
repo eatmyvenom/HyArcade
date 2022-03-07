@@ -1,9 +1,9 @@
 /**
  *
  */
-async function load () {
+async function load() {
   let status = await fetch("https://hyarcade.xyz/resources/serverStatus.json", {
-    cache: "no-store"
+    cache: "no-store",
   });
   status = await status.json();
   const main = document.querySelector("main");

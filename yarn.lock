@@ -6622,6 +6622,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"site@workspace:systems/site":
+  version: 0.0.0-use.local
+  resolution: "site@workspace:systems/site"
+  dependencies:
+    hyarcade-config: "workspace:^"
+    hyarcade-errors: "workspace:^"
+    hyarcade-logger: "workspace:^"
+    hyarcade-requests: "workspace:^"
+    hyarcade-structures: "workspace:^"
+    hyarcade-utils: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "slugify@npm:~1.4.7":
   version: 1.4.7
   resolution: "slugify@npm:1.4.7"
