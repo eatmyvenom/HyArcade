@@ -59,8 +59,19 @@ async function callback(request, response) {
     } else if (pages.has(endpoint.slice(1))) {
       replyData = await fs.readFile("html/generic.html");
     } else {
-      Logger.warn(`${endpoint} redirected to home`);
-      replyData = await fs.readFile("html/hub.html");
+      switch (endpoint) {
+        case "/github": {
+          response.writeHead(302, {
+            Location: "https://github.com/eatmyvenom/hyarcade",
+          });
+          break;
+        }
+
+        default: {
+          Logger.warn(`${endpoint} redirected to home`);
+          replyData = await fs.readFile("html/hub.html");
+        }
+      }
     }
 
     response.write(replyData);
