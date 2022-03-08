@@ -58,7 +58,7 @@ function formatWins(guild) {
   const members = guild.membersStats;
 
   for (const m of members) {
-    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "GOLD")} ${m.name}</b><i>Wins ${formatNumber(m?.wins ?? 0)}</i></p>`;
+    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "GOLD")} ${m.name}</b><i>Wins ${formatNumber(m?.arcadeWins ?? 0)}</i></p>`;
   }
 }
 
@@ -101,7 +101,7 @@ function formatGames(guild) {
 function formatStats(guild) {
   const statsEle = document.querySelector(".stats");
 
-  statsEle.innerHTML += `<p><b>Guild experience</b><i>${formatNumber(guild.gxp)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b>Guild experience</b><i>${formatNumber(guild.gexp)}</i></p><br>`;
   statsEle.innerHTML += `<p><b>Arcade GXP</b><i>${formatNumber(guild.arcadeEXP)}</i></p><br>`;
   statsEle.innerHTML += `<p><b>Arcade coins</b><i>${formatNumber(guild.arcadeCoins)}</i></p><br>`;
 }
