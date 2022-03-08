@@ -613,7 +613,7 @@ async function getLeaderboards(element) {
  */
 function formatLine(name, value, uuid, rank, plusColor, rankColor) {
   let longName = `${name}`;
-  longName = `<a href="player.html?q=${uuid}" class="minecraft"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(
+  longName = `<a href="player?q=${uuid}" class="minecraft"><img src="https://crafatar.com/avatars/${uuid}?overlay" height="24" /> ${formatRank(
     rank,
     plusColor,
     longName,

@@ -58,6 +58,10 @@ async function callback(request, response) {
       }
     } else if (pages.has(endpoint.slice(1))) {
       replyData = await fs.readFile("html/generic.html");
+    } else if (urlPath[1] == "player") {
+      replyData = await fs.readFile("html/player.html");
+    } else if (urlPath[1] == "guildstats") {
+      replyData = await fs.readFile("html/guildstats.html");
     } else {
       switch (endpoint) {
         case "/github": {

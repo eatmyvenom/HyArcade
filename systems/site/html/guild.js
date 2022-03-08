@@ -275,7 +275,7 @@ async function getLeaderboards(element) {
  */
 function formatLine(name, value, uuid, color, tag) {
   let longName = `${name}`;
-  longName = `<a href="../guildstats.html?q=${uuid}" class="minecraft"><b class="${color}">${name} [${tag}]</b></a>`;
+  longName = `<a href="../guildstats?q=${uuid}" class="minecraft"><b class="${color}">${name} [${tag}]</b></a>`;
   if (value > 0) {
     return `<li>${longName} <i class="minecraft">${formatNum(value)}</i></li>`;
   }

@@ -40,7 +40,7 @@ module.exports = class AdvancedEmbeds {
     rank = rank == "" ? "" : `[${rank}]`;
 
     let embed = new MessageEmbed()
-      .setAuthor({ name: `${rank} ${acc.name}`, url: `https://hyarcade.xyz/player.html?q=${acc.name}` })
+      .setAuthor({ name: `${rank} ${acc.name}`, url: `https://hyarcade.xyz/player?q=${acc.name}` })
       .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay&time=${Date.now()}`)
       .setColor(0xee0061);
 

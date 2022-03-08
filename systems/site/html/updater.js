@@ -18,7 +18,7 @@ function addstuff(ext, clazzz) {
         for (let i = 0; i < newArr.length; i += 1) {
           if (newArr[i].trim() != "") {
             const line = newArr[i].split(":");
-            newArr[i] = `<a href='https://eatmyvenom.me/share/partygames/player.html?q=${line[0].replace(/\d{3}\)/g, "").trim()}'>${line[0]}</a>:${line[1]}`;
+            newArr[i] = `<a href='https://hyarcade.xyz/player?q=${line[0].replace(/\d{3}\)/g, "").trim()}'>${line[0]}</a>:${line[1]}`;
           }
         }
       }
