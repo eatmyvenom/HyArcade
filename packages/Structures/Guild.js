@@ -88,6 +88,8 @@ class Guild {
 
   games = [];
 
+  guildRanks = [];
+
   /** @type {GuildAchievements} */
   achievements = {};
 
@@ -151,6 +153,8 @@ class Guild {
     this.games = data?.guild?.preferredGames ?? [];
     this.createTime = data?.guild?.created ?? 0;
     this.description = data?.guild?.description ?? "";
+
+    this.guildRanks = data?.guild?.ranks ?? [];
 
     this.achievements = {
       experienceKings: data?.guild?.achievements?.EXPERIENCE_KINGS ?? 0,
@@ -242,7 +246,7 @@ class Guild {
       obj.rank = member.rank;
       obj.mvpColor = member.mvpColor;
       obj.plusColor = member.plusColor;
-      obj.guildRank = member.guildData.rank;
+      obj.guildRank = this.guildRanks.find(r => r.name == member.guildData.rank);
       obj.joinTime = member.guildData.joined;
       obj.questParticipation = member.guildData.questParticipation;
       obj.gexpHistory = member.guildData.expHistory;
