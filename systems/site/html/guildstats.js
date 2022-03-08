@@ -1,4 +1,4 @@
-const guildURL = "https://cdn.hyarcade.xyz/db?path=guilds";
+const guildURL = "https://api.hyarcade.xyz/guild";
 
 /**
  *
@@ -110,11 +110,11 @@ function formatStats(guild) {
  *
  */
 function updateData() {
-  const name = decodeURI(new URLSearchParams(window.location.search).get("name"));
+  const id = decodeURI(new URLSearchParams(window.location.search).get("q"));
 
-  fetch(guildURL).then(v => {
-    v.json().then(v => {
-      const guild = v.find(g => g.name.toLowerCase() == name.toLowerCase());
+  fetch(`${guildURL}?uuid=${id.trim()}`).then(g => {
+    g.json().then(gld => {
+      const guild = gld;
 
       formatTitle(guild);
       formatStats(guild);
