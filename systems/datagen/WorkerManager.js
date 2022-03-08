@@ -35,4 +35,10 @@ async function WorkerManager() {
   }
 }
 
+if (require.main == module) {
+  WorkerManager()
+    .then(() => {})
+    .catch(error => Logger.err(error.stack));
+}
+
 module.exports = WorkerManager;

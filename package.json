@@ -67,7 +67,7 @@
         "prettier": "^2.5.1"
     },
     "engines": {
-        "node": ">=16.13.2",
+        "node": ">=16.14.0",
         "yarn": ">=3.2.0",
         "npm": "Please use yarn instead of NPM to install dependencies"
     },
