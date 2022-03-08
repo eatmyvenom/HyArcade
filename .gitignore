@@ -4,7 +4,6 @@
 *.txt
 *.log
 *.tar.gz
-*.code-workspace
 data/*
 wrangler.toml
 starttime
