@@ -63,7 +63,7 @@ body {
   text-shadow: 0.1em 0.1em #3F2A00;
 }
 
-.gray {
+.gray, .grey {
   color: #aaaaaa;
   text-shadow: 0.1em 0.1em #2A2A2A;
 }
