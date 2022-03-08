@@ -30,25 +30,13 @@ async function handleLbs() {
 async function refresh() {
   handleLbs().then(console.log).catch(console.error);
 
-  const time = document.querySelector("time");
-
   if (localStorage.getItem("timeout") == undefined) {
     localStorage.setItem("timeout", Date.now());
   } else if (Date.now() - localStorage.getItem("timeout") > 86400000) {
     localStorage.clear();
     localStorage.setItem("timeout", Date.now());
   }
-
-  let servertime = await fetch("https://hyarcade.xyz/resources/timeupdate", {
-    cache: "no-store",
-    mode: "cors",
-  });
-
   showCounts().then(console.log).catch(console.error);
-
-  servertime = await servertime.text();
-  const formatted = new Date(servertime);
-  time.innerHTML = `Last database update : ${formatted.toLocaleTimeString()}`;
 }
 
 /**
