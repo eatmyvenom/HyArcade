@@ -32,10 +32,7 @@ class EndpointStorage {
       friends: await importNew("Friends.js"),
       achievements: await importNew("Achievements.js"),
       gamecounts: await importNew("GameCounts.js"),
-      disc: await importNew("disc.js"),
       guild: await importNew("guild.js"),
-      hacker: await importNew("hacker.js"),
-      banned: await importNew("banned.js"),
       internal: await importNew("internal.js"),
       "": await importNew("redoc.js"),
     };
