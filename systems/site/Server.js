@@ -87,6 +87,8 @@ async function callback(request, response) {
  * @param port
  */
 async function Server(port) {
+  Logger.name = "Site";
+  Logger.emoji = "🌐";
   Logger.log("Starting website server...");
   const server = require("http").createServer(callback).listen({ port, hostname: "localhost" });
 
