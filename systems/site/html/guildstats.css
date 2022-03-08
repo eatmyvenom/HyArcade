@@ -2,8 +2,20 @@
     box-sizing: border-box;
 }
 
+
+@font-face {
+  font-family: minecraf;
+  src: url(https://hyarcade.xyz/assets/mc.otf);
+}
+
+.minecraft, .minecraft * {
+  font-family: minecraf;
+  text-shadow: 0.1em 0.1em black;
+}
+
 html {
-    font-family: "Fira Code", monospace;
+    font-family: minecraf;
+    text-shadow: 0.1em 0.1em black;
     font-size: 16px;
 }
 
@@ -87,26 +99,28 @@ header > p {
 }
 
 .members > p > img {
-    width: 42px;
-    height: 42px;
+    width: 24px;
+    height: 24px;
     vertical-align: middle;
 }
 
 .members > p > b, .members > p > i {
     display: inline-block;
     vertical-align: middle;
-    text-align: center;
     height: 20px;
 }
 
 .members > p > b {
     width: 50%;
+    text-align: left;
+    margin-left: 12px;
 }
 
 .members > p > i {
-    width: 30%;
+    width: 40%;
     text-decoration: none;
     font-style: normal;
+    text-align: right;
 }
 
 .stats > p > b::after {
@@ -133,4 +147,27 @@ header > p {
 
 .stats > p, .members > p, .games > p {
     padding-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    main {
+        display: block;
+    }
+
+    header > .tag, header > p { 
+        width: auto;
+    }
+
+    main > * {
+        margin: 12px;
+    }
+
+    a {
+        display: block;
+        width: max-content;
+    }
+
+    a img {
+        width: 60vw;
+    }
 }

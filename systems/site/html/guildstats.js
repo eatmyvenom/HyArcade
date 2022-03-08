@@ -12,23 +12,20 @@ function playerHead(uuid) {
 /**
  *
  * @param {string} rank
- * @param {string} plusColor
  * @returns {string}
  */
-function formatRank(rank, plusColor) {
+function getRankColor(rank) {
   let betterRank = rank.replace(/_PLUS/g, "+");
 
   if (betterRank == "MVP++") {
-    betterRank = `<b class="gold">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="gold">]</b>`;
+    return "gold";
   } else if (betterRank == "MVP+" || betterRank == "MVP") {
-    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]</b>`;
+    return "aqua";
   } else if (betterRank == "VIP+" || betterRank == "VIP") {
-    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]</b>`;
+    return "green";
   } else {
-    betterRank = "";
+    return "gray";
   }
-
-  return betterRank;
 }
 
 /**
@@ -55,10 +52,22 @@ function formatTitle(guild) {
  */
 function formatWins(guild) {
   const memberEle = document.querySelector(".members");
-  const members = guild.membersStats;
+  const members = guild.membersStats ?? [];
+
+  members.sort((m1, m2) => {
+    return (m2.guildRank?.priority ?? 999) - (m1.guildRank?.priority ?? 999);
+  });
 
   for (const m of members) {
-    memberEle.innerHTML += `<p>${playerHead(m.uuid)}<b>${formatRank(m?.rank ?? "", m?.plusColor ?? "GOLD")} ${m.name}</b><i>Wins ${formatNumber(m?.arcadeWins ?? 0)}</i></p>`;
+    let wins = `<i>Wins ${formatNumber(m?.arcadeWins ?? 0)}</i>`;
+
+    let rankTag = m.guildRank ? m.guildRank.tag : "GM";
+
+    let guildRank;
+    guildRank = rankTag == undefined ? "" : `<span class="dark_aqua">[${rankTag}]</span> `;
+
+    let player = `<b class="${getRankColor(m?.rank ?? "")}">${guildRank}${m.name}</b>`;
+    memberEle.innerHTML += `<p>${playerHead(m.uuid)}${player}${wins}</p>`;
   }
 }
 
@@ -104,6 +113,8 @@ function formatStats(guild) {
   statsEle.innerHTML += `<p><b>Guild experience</b><i>${formatNumber(guild.gexp)}</i></p><br>`;
   statsEle.innerHTML += `<p><b>Arcade GXP</b><i>${formatNumber(guild.arcadeEXP)}</i></p><br>`;
   statsEle.innerHTML += `<p><b>Arcade coins</b><i>${formatNumber(guild.arcadeCoins)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b>Combined AP</b><i>${formatNumber(guild.combinedAP)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b>Combined Karma</b><i>${formatNumber(guild.karma)}</i></p><br>`;
 }
 
 /**

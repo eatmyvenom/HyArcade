@@ -226,7 +226,6 @@ async function getLeaderboards(element) {
     console.info(`fetching ${url}`);
     const raw = await fetch(url, { mode: "cors" });
     lb = await raw.json();
-    localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
   } else {
     const path = idArr[0];
     const args = `path=${path}${formattedTime}&max=${maxLength}`;
@@ -235,7 +234,6 @@ async function getLeaderboards(element) {
     console.info(`fetching ${url}`);
     const raw = await fetch(url, { mode: "cors" });
     lb = await raw.json();
-    localStorage.setItem(args, JSON.stringify({ lb, time: Date.now() }));
   }
 
   let text = "";
