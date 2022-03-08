@@ -91,6 +91,63 @@ module.exports = async (req, res, connector, redis) => {
           res.write(JSON.stringify(reply));
         }
 
+        if ((fullAuth || key.perms.includes("discord")) && json.discord) {
+          let reply = {};
+          if (json.discord.ln) {
+            await connector.linkDiscord(json.discord.ln.id, json.discord.ln.uuid);
+            reply.success = true;
+          }
+
+          if (json.discord.rm) {
+            await connector.linkDiscord(json.discord.fuv.id, json.discord.fuv.uuid);
+            reply.success = true;
+          }
+
+          if (json.discord.ls) {
+            reply.list = await connector.getDiscordAccounts();
+          }
+
+          res.write(JSON.stringify(reply));
+        }
+
+        if ((fullAuth || key.perms.includes("banned")) && json.banned) {
+          let reply = {};
+          if (json.banned.add) {
+            await connector.addBanned(json.banned.ln.uuid);
+            reply.success = true;
+          }
+
+          if (json.banned.rm) {
+            await connector.deleteBanned(json.banned.rm.uuid);
+            reply.success = true;
+          }
+
+          if (json.banned.ls) {
+            reply.list = await connector.bannedList.find().toArray();
+          }
+
+          res.write(JSON.stringify(reply));
+        }
+
+        if ((fullAuth || key.perms.includes("hacker")) && json.hacker) {
+          let reply = {};
+          if (json.hacker.add) {
+            await connector.addHacker(json.hacker.ln.uuid);
+            reply.success = true;
+          }
+
+          if (json.hacker.rm) {
+            await connector.deleteHacker(json.hacker.rm.uuid);
+            reply.success = true;
+          }
+
+          if (json.hacker.ls) {
+            reply.list = await connector.hackerList.find().toArray();
+          }
+
+          res.write(JSON.stringify(reply));
+        }
+
         res.end();
       });
     } else {

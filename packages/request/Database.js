@@ -186,150 +186,80 @@ module.exports = class Database {
     }
   }
 
-  static async linkDiscord(id, uuid) {
-    const url = new URL("disc", cfg.database.url);
-
-    if (id != undefined && id != "") {
-      url.searchParams.set("id", id);
-    }
-
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
-
-    url.searchParams.set("action", "ln");
-
-    let disc;
-    try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      disc = accReq.data;
-    } catch (error) {
-      Logger.err("Can't connect to database");
-      Logger.err(error.stack);
-      Logger.err(disc);
-      return {};
-    }
-
-    return disc;
-  }
-
-  static async unlinkDiscord(id, uuid) {
-    const url = new URL("disc", cfg.database.url);
-
-    if (id != undefined && id != "") {
-      url.searchParams.set("id", id);
-    }
-
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
-
-    url.searchParams.set("action", "rm");
-
-    let disc;
-    try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      disc = accReq.data;
-    } catch (error) {
-      Logger.err("Can't connect to database");
-      Logger.err(error.stack);
-      Logger.err(disc);
-      return {};
-    }
-
-    return disc;
-  }
-
   static async addHacker(uuid) {
-    const url = new URL("hacker", cfg.database.url);
+    const url = new URL("internal", cfg.database.url);
 
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
+    const obj = { hacker: { add: { uuid } } };
 
-    url.searchParams.set("action", "add");
-
-    let hack;
+    let hacker;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      hack = accReq.data;
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      hacker = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
-      Logger.err(hack);
+      Logger.err(hacker);
       return {};
     }
 
-    return hack;
+    return hacker;
   }
 
   static async delHacker(uuid) {
-    const url = new URL("hacker", cfg.database.url);
+    const url = new URL("internal", cfg.database.url);
 
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
+    const obj = { hacker: { rm: { uuid } } };
 
-    url.searchParams.set("action", "del");
-
-    let hack;
+    let hacker;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      hack = accReq.data;
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      hacker = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
-      Logger.err(hack);
+      Logger.err(hacker);
       return {};
     }
 
-    return hack;
+    return hacker;
   }
 
   static async addBanned(uuid) {
-    const url = new URL("banned", cfg.database.url);
+    const url = new URL("internal", cfg.database.url);
 
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
+    const obj = { banned: { add: { uuid } } };
 
-    url.searchParams.set("action", "add");
-
-    let hack;
+    let banned;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      hack = accReq.data;
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      banned = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
-      Logger.err(hack);
+      Logger.err(banned);
       return {};
     }
 
-    return hack;
+    return banned;
   }
 
   static async delBanned(uuid) {
-    const url = new URL("banned", cfg.database.url);
+    const url = new URL("internal", cfg.database.url);
 
-    if (uuid != undefined) {
-      url.searchParams.set("uuid", uuid);
-    }
+    const obj = { banned: { rm: { uuid } } };
 
-    url.searchParams.set("action", "del");
-
-    let ban;
+    let banned;
     try {
-      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      ban = accReq.data;
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      banned = accReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");
       Logger.err(error.stack);
-      Logger.err(ban);
+      Logger.err(banned);
       return {};
     }
 
-    return ban;
+    return banned;
   }
 
   static async getLeaderboard(path, category, time, min, reverse, max) {
@@ -433,25 +363,6 @@ module.exports = class Database {
     return lb;
   }
 
-  static async getLinkedAccounts() {
-    const url = new URL("disc", cfg.database.url);
-
-    url.searchParams.set("action", "ls");
-
-    let discAccs;
-    try {
-      const req = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
-      discAccs = await req.data;
-    } catch (error) {
-      Logger.err("Can't connect to database");
-      Logger.err(error.stack);
-      Logger.err(discAccs);
-      return {};
-    }
-
-    return discAccs;
-  }
-
   static async internal(json, auth = "") {
     const url = new URL("internal", cfg.database.url);
 
@@ -477,6 +388,63 @@ module.exports = class Database {
     } catch {
       return false;
     }
+  }
+
+  static async linkDiscord(id, uuid) {
+    const url = new URL("internal", cfg.database.url);
+
+    const obj = { discord: { ln: { id, uuid } } };
+
+    let disc;
+    try {
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      disc = accReq.data;
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(disc);
+      return {};
+    }
+
+    return disc;
+  }
+
+  static async unlinkDiscord(id, uuid) {
+    const url = new URL("internal", cfg.database.url);
+
+    const obj = { discord: { rm: { id, uuid } } };
+
+    let disc;
+    try {
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      disc = accReq.data;
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(disc);
+      return {};
+    }
+
+    return disc;
+  }
+
+  static async getLinkedAccounts() {
+    const url = new URL("internal", cfg.database.url);
+
+    const obj = { discord: { ls: true } };
+
+    let discAccs;
+    try {
+      const accReq = await axios.post(url.toString(), obj, { headers: { Authorization: cfg.database.pass } });
+      discAccs = accReq.data;
+    } catch (error) {
+      Logger.err("Can't connect to database");
+      Logger.err(error.stack);
+      Logger.err(discAccs);
+      return {};
+    }
+
+    return discAccs;
   }
 
   static async status(text, discordID) {
