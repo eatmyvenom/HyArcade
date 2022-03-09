@@ -444,7 +444,7 @@ module.exports = class Database {
       return {};
     }
 
-    return discAccs;
+    return discAccs.list;
   }
 
   static async status(text, discordID) {
