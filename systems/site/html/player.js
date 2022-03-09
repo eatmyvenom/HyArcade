@@ -492,8 +492,7 @@ async function handleData() {
 
   await nameHist(playerdata.uuid);
   await accStatus(playerdata.uuid);
-  await guildStats(playerdata.guildID);
-  // await recentgames(playerdata.uuid);
+  await guildStats(playerdata.uuid);
 }
 
 /**
@@ -505,21 +504,21 @@ function makeTag(tag, color) {
 }
 
 /**
- * @param id
+ * @param muuid
  */
-async function guildStats(id) {
+async function guildStats(muuid) {
   if (guildData == undefined) {
-    guildData = await fetch("https://hyarcade.xyz/resources/guild.json");
+    guildData = await fetch(`https://api.hyarcade.xyz/guild?member=${muuid}`);
     guildData = await guildData.json();
   }
 
-  const guild = guildData.find(g => g.uuid == id);
+  const guild = guildData;
 
   if (guild != undefined) {
     document.querySelector("#guild").style.display = "block";
     setHtmlByName("gname", `<b class="aqua">Name - ${guild.name}</b>`);
     setHtmlByName("gtag", `<b class="white">Tag - ${makeTag(guild.tag, guild.color)}</b>`);
-    setHtmlByName("gmembercount", `<b class="light_purple">Members - ${guild.memberUUIDs.length}</b>`);
+    setHtmlByName("gmembercount", `<b class="light_purple">Members - ${guild.membersStats.length}</b>`);
   } else {
     document.querySelector("#guild").style.display = "none";
   }

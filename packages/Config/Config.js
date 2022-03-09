@@ -99,6 +99,7 @@ class DiscordBotConfig {
 }
 
 class DiscordBotsConfig {
+  invite = "";
   arcadeBot = new DiscordBotConfig();
   miniWallsBot = new DiscordBotConfig();
   testBot = new DiscordBotConfig();

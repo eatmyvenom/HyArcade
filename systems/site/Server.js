@@ -2,6 +2,7 @@ const fs = require("fs-extra");
 const http = require("http");
 const Logger = require("hyarcade-logger");
 const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const cfg = require("hyarcade-config").fromJSON();
 
 const pages = new Set([
   "arcade",
@@ -67,6 +68,13 @@ async function callback(request, response) {
         case "/github": {
           response.writeHead(302, {
             Location: "https://github.com/eatmyvenom/hyarcade",
+          });
+          break;
+        }
+
+        case "/invite": {
+          response.writeHead(302, {
+            Location: cfg.discordBot.invite,
           });
           break;
         }
