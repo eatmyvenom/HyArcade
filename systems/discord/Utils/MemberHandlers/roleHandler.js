@@ -1,15 +1,15 @@
 const { Client } = require("discord.js");
-const fs = require("fs-extra");
 const Database = require("hyarcade-requests/Database");
 const Role = require("hyarcade-structures/Discord/Role");
 const RoleUpdater = require("./RoleUpdater");
+const cfg = require("hyarcade-config").fromJSON();
 
 /**
  *
  * @param {Client} client
  */
 module.exports = async function roleHandler(client) {
-  const roleSet = await fs.readJSON("config.roles.json");
+  const roleSet = cfg.roles;
   const list = await Database.readDB("discordList");
   const disclist = {};
 
