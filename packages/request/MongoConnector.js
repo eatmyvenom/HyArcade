@@ -846,7 +846,10 @@ class MongoConnector {
   }
 
   async updateRequester(requester) {
-    delete requester._id;
+    if (requester._id) {
+      delete requester._id;
+    }
+    console.log(requester);
     await this.requests.replaceOne({ address: requester.address }, requester, { upsert: true });
   }
 
@@ -861,7 +864,7 @@ class MongoConnector {
 
   async updateFakePlayer(player) {
     delete player._id;
-    await this.requests.replaceOne({ uuid: player.uuid }, player, { upsert: true });
+    await this.fakePlayers.replaceOne({ uuid: player.uuid }, player, { upsert: true });
   }
 
   async addEZMsg(str) {

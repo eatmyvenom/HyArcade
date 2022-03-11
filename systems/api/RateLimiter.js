@@ -1,5 +1,5 @@
 const { DupeKeyError } = require("hyarcade-errors");
-const { MongoConnector } = require("hyarcade-requests");
+const MongoConnector = require("hyarcade-requests/MongoConnector");
 const cfg = require("hyarcade-config").fromJSON();
 
 const endpointValues = {
@@ -23,9 +23,7 @@ const endpointValues = {
   info: 0,
   ping: 0,
   disc: 5,
-  guild: 0,
-  hacker: 0,
-  banned: 0,
+  guild: 4,
   internal: 1,
 };
 
@@ -86,7 +84,7 @@ async function RateLimiter(address, endpoint, key, pass, mongo) {
       emptyClient.key = key;
     }
 
-    await mongo.updateRequester(client);
+    await mongo.updateRequester(emptyClient);
     return 0;
   }
 }

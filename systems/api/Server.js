@@ -32,6 +32,9 @@ async function callback(request, response) {
 
   if (address == undefined) {
     AccessLogger.err("Null requester attempted, denying connection");
+    response.write(JSON.stringify({ success: false }));
+    response.end();
+    return;
   }
   AccessLogger.verbose(`${address} - ${request.method?.toUpperCase()} ${url.pathname} (${url.searchParams})`);
 
@@ -42,6 +45,8 @@ async function callback(request, response) {
     if (error instanceof DupeKeyError) {
       response.write(JSON.stringify({ success: false, reason: "DUPLICATE-KEY" }));
       return;
+    } else {
+      logger.error(error.stack);
     }
   }
 
