@@ -132,6 +132,7 @@ class MongoConnector {
     this.weeklyGuilds = this.database.collection("weeklyGuilds");
     this.monthlyGuilds = this.database.collection("monthlyGuilds");
 
+    this.webpages = this.database.collection("webpages");
     this.commands = this.database.collection("commands");
     this.requests = this.database.collection("requests");
 
