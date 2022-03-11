@@ -58,6 +58,7 @@ module.exports = async (req, res, connector, redis) => {
         }
 
         if ((fullAuth || key.perms.includes("forceUpdate")) && json.forceUpdate) {
+          Logger.debug("Setting next force level to " + json.forceUpdate);
           await redis.set("nextLevel", json.forceUpdate);
 
           res.write(JSON.stringify({ success: true }));
