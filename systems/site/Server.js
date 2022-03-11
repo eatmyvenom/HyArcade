@@ -1,6 +1,7 @@
 const fs = require("fs-extra");
 const http = require("http");
 const Logger = require("hyarcade-logger");
+const { Database } = require("hyarcade-requests");
 const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const cfg = require("hyarcade-config").fromJSON();
 
@@ -35,6 +36,10 @@ async function callback(request, response) {
   const urlPath = endpoint.split("/");
 
   let replyData = "";
+
+  Database.internal({ usePage: { endpoint } })
+    .then(() => {})
+    .catch(error => Logger.error(error));
 
   if (request.method == "GET") {
     if (endpoint == "/") {

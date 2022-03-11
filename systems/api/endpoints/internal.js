@@ -57,6 +57,11 @@ module.exports = async (req, res, connector, redis) => {
           res.write(JSON.stringify({ success: true }));
         }
 
+        if ((fullAuth || key.perms.includes("statsEdit")) && json.usePage) {
+          await connector.useWebpage(json.usePage.endpoint, Date.now());
+          res.write(JSON.stringify({ success: true }));
+        }
+
         if ((fullAuth || key.perms.includes("forceUpdate")) && json.forceUpdate) {
           Logger.debug("Setting next force level to " + json.forceUpdate);
           await redis.set("nextLevel", json.forceUpdate);

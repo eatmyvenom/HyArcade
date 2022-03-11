@@ -80,6 +80,11 @@ class MongoConnector {
    */
   commands;
 
+  /**
+   * @type {Collection<object>}
+   */
+  webpages;
+
   /** @type {Collection<RequesterObject>} */
   requests;
 
@@ -816,6 +821,22 @@ class MongoConnector {
 
       newCommand[type] += 1;
       this.commands.replaceOne({ name }, newCommand, { upsert: true });
+    }
+  }
+
+  async useWebpage(endpoint, time) {
+    const pageData = await this.webpages.findOne({ endpoint });
+
+    if (pageData) {
+      delete pageData._id;
+
+      this.webpages.updateOne({ endpoint }, { $inc: { uses: 1 }, $set: { lastUse: time } });
+
+      this.webpages.replaceOne({ endpoint }, pageData, { upsert: true });
+    } else {
+      const newWebpage = { endpoint, uses: 1, lastUse: time };
+
+      this.webpages.replaceOne({ endpoint }, newWebpage, { upsert: true });
     }
   }
 
