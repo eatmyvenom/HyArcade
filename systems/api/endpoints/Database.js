@@ -14,6 +14,12 @@ module.exports = async (req, res, connector) => {
     const fields = url.searchParams.get("fields");
     const file = url.searchParams.get("path");
 
+    if (file == "requests") {
+      res.write(JSON.stringify([]));
+      res.end();
+      return;
+    }
+
     if (file == undefined) {
       throw new MissingFieldError("No collection specified", ["path"]);
     }
