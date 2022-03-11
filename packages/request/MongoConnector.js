@@ -849,7 +849,6 @@ class MongoConnector {
     if (requester._id) {
       delete requester._id;
     }
-    console.log(requester);
     await this.requests.replaceOne({ address: requester.address }, requester, { upsert: true });
   }
 
