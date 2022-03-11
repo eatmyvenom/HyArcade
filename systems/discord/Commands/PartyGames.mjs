@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+import PartyGamesMenu from "../interactions/Components/Menus/Generators/PartyGamesMenu.js";
 const require = createRequire(import.meta.url);
 
 const Command = require("hyarcade-structures/Discord/Command");
@@ -8,7 +9,6 @@ const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const PartyGamesImg = require("../images/PartyGamesImg");
-const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
 
 /**
  *
@@ -90,7 +90,7 @@ export default new Command(
     if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
     const img = await PartyGamesImg(acc, game);
-    const menu = await MenuGenerator.partyGamesMenu(acc.uuid, game, time);
+    const menu = PartyGamesMenu(acc.uuid, game, time);
     return new CommandResponse("", undefined, img, menu);
   },
   2500,

@@ -1,5 +1,5 @@
 const { SelectMenuInteraction } = require("discord.js");
-const ButtonResponse = require("../Buttons/ButtonResponse");
+const ComponentResponse = require("../ComponentResponse");
 
 let commandStorage;
 
@@ -8,18 +8,18 @@ let commandStorage;
  * @param {string} time
  * @param {string} game
  * @param {SelectMenuInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function statsHandler(accUUID, time, game, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
 
   const res = await commands.gameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", undefined, res.components, [res.file]);
+  return new ComponentResponse("", undefined, res.components, [res.file]);
 }
 
 /**
@@ -27,11 +27,11 @@ async function statsHandler(accUUID, time, game, interaction) {
  * @param {string} time
  * @param {string} game
  * @param {SelectMenuInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function partyGamesHandler(accUUID, time, game, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
 
@@ -39,31 +39,31 @@ async function partyGamesHandler(accUUID, time, game, interaction) {
 
   const pgRes = await commands.PartyGames.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", undefined, pgRes.components, [pgRes.file]);
+  return new ComponentResponse("", undefined, pgRes.components, [pgRes.file]);
 }
 
 /**
  * @param {string} accUUID
  * @param {string} game
  * @param {SelectMenuInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function apHandler(accUUID, game, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
 
   const commands = await commandStorage.default.getCommands();
 
   const apRes = await commands.ArcadeAP.execute([accUUID, game], interaction.user.id, undefined, interaction);
-  return new ButtonResponse("", [apRes.embed], apRes.components);
+  return new ComponentResponse("", [apRes.embed], apRes.components);
 }
 
 /**
  *
  * @param {SelectMenuInteraction} interaction
- * @returns {Promise<ButtonResponse>}
+ * @returns {Promise<ComponentResponse>}
  */
 module.exports = async function MenuParser(interaction) {
   const data = interaction.customId.split(":");

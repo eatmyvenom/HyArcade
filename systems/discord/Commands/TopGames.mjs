@@ -4,7 +4,7 @@ import { Account, Command, CommandResponse } from "hyarcade-structures";
 import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
 import ImageGenerator from "../images/ImageGenerator.js";
-import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
+import TopGamesButtons from "../interactions/Components/Buttons/Generators/TopGamesButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 const require = createRequire(import.meta.url);
@@ -251,7 +251,7 @@ async function topGamesHandler(args, rawMsg, interaction) {
 
   const img = await generateImage(acc, timetype);
 
-  const buttons = await ButtonGenerator.getTopGames(timetype, acc.uuid);
+  const buttons = TopGamesButtons(timetype, acc.uuid);
 
   return new CommandResponse("", undefined, img, buttons);
 }

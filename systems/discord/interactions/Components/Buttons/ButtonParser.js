@@ -1,7 +1,7 @@
 const { ButtonInteraction, Interaction } = require("discord.js");
-const ButtonGenerator = require("./ButtonGenerator");
-const ButtonResponse = require("./ButtonResponse");
+const ComponentResponse = require("../ComponentResponse");
 const { Database } = require("hyarcade-requests");
+const EZButton = require("./Generators/EZButton");
 
 let commandStorage;
 
@@ -12,18 +12,18 @@ let ezmsgs;
  * @param {string} time
  * @param {string} game
  * @param {Interaction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function statsHandler(accUUID, time = "lifetime", game, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
 
   const res = await commands.gameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", undefined, res.components, [res.file]);
+  return new ComponentResponse("", undefined, res.components, [res.file]);
 }
 
 /**
@@ -31,11 +31,11 @@ async function statsHandler(accUUID, time = "lifetime", game, interaction) {
  * @param {string} leaderboard
  * @param {string} time
  * @param {number} index
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function leaderboardHandler(interaction, leaderboard, time, index) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
@@ -46,11 +46,11 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
     return;
   }
 
-  return new ButtonResponse("", undefined, res?.components, [res?.file]);
+  return new ComponentResponse("", undefined, res?.components, [res?.file]);
 }
 
 /**
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function ezHandler() {
   if (ezmsgs == undefined) {
@@ -58,8 +58,8 @@ async function ezHandler() {
     ezmsgs = ezmsgs.map(m => m.str);
   }
   const msg = ezmsgs[Math.floor(Math.random() * ezmsgs.length)];
-  const buttons = await ButtonGenerator.getEZ();
-  return new ButtonResponse(msg, undefined, buttons);
+  const buttons = EZButton();
+  return new ComponentResponse(msg, undefined, buttons);
 }
 
 /**
@@ -67,18 +67,18 @@ async function ezHandler() {
  * @param {string} accUUID
  * @param {string} map
  * @param {ButtonInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function zombiesHandler(accUUID, map, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
 
   const zombiesRes = await commands.Zombies.execute([accUUID, map], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", [zombiesRes.embed], zombiesRes.components);
+  return new ComponentResponse("", [zombiesRes.embed], zombiesRes.components);
 }
 
 /**
@@ -86,11 +86,11 @@ async function zombiesHandler(accUUID, map, interaction) {
  * @param {string} accUUID
  * @param {string} timetype
  * @param {ButtonInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function topGamesHandler(accUUID, timetype, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
@@ -101,7 +101,7 @@ async function topGamesHandler(accUUID, timetype, interaction) {
     return;
   }
 
-  return new ButtonResponse("", undefined, topGamesRes?.components, [topGamesRes?.file]);
+  return new ComponentResponse("", undefined, topGamesRes?.components, [topGamesRes?.file]);
 }
 
 /**
@@ -109,11 +109,11 @@ async function topGamesHandler(accUUID, timetype, interaction) {
  * @param {string} accUUID
  * @param {string} timetype
  * @param {ButtonInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function miwHandler(accUUID, timetype, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
@@ -123,7 +123,7 @@ async function miwHandler(accUUID, timetype, interaction) {
     return;
   }
 
-  return new ButtonResponse("", undefined, miwRes.components, [miwRes.file]);
+  return new ComponentResponse("", undefined, miwRes.components, [miwRes.file]);
 }
 
 /**
@@ -131,24 +131,24 @@ async function miwHandler(accUUID, timetype, interaction) {
  * @param {string} time
  * @param {string} game
  * @param {Interaction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 async function pgHandler(accUUID, time, game, interaction) {
   if (commandStorage == undefined) {
-    commandStorage = await import("../../CommandStorage.mjs");
+    commandStorage = await import("../../../CommandStorage.mjs");
     await commandStorage.default.initCommands();
   }
   const commands = await commandStorage.default.getCommands();
 
   const pgRes = await commands.PartyGames.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
-  return new ButtonResponse("", undefined, pgRes.components, [pgRes.file]);
+  return new ComponentResponse("", undefined, pgRes.components, [pgRes.file]);
 }
 
 /**
  *
  * @param {ButtonInteraction} interaction
- * @returns {ButtonResponse}
+ * @returns {ComponentResponse}
  */
 module.exports = async function ButtonParser(interaction) {
   const data = interaction.customId.split(":");

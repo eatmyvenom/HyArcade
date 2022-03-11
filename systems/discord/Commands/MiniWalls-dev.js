@@ -3,8 +3,8 @@ const { Account, Command, CommandResponse } = require("hyarcade-structures");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
+const MiniWallsButtons = require("../interactions/Components/Buttons/Generators/MiniWallsButtons");
 const ImageGenerator = require("../images/ImageGenerator");
-const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
 const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 
 /**
@@ -176,7 +176,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
   img.drawMcText(`${witherColor}WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
   img.drawMcText(`${aaColor}Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, (y += increment), size, rightAlign);
 
-  return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
+  return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }
 
 module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);

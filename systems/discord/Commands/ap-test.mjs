@@ -1,7 +1,6 @@
 import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 import GameAP from "../Utils/Embeds/GameAP.js";
 
 export default new Command(["dev-totalap"], ["*"], async (args, rawMsg, interaction) => {
@@ -21,7 +20,6 @@ export default new Command(["dev-totalap"], ["*"], async (args, rawMsg, interact
   }
 
   const embed = GameAP(acc, args[1]);
-  const menu = MenuGenerator.apMenu(acc.uuid, args[1]);
 
-  return new CommandResponse("", embed, undefined, menu);
+  return new CommandResponse("", embed, undefined);
 });

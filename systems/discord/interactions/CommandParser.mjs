@@ -2,8 +2,8 @@
 import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";
 import CommandStorage from "../CommandStorage.mjs";
+import EZButton from "../interactions/Components/Buttons/Generators/EZButton.js";
 import CommandResponse from "../Utils/CommandResponse.js";
-import ButtonGenerator from "./Buttons/ButtonGenerator.js";
 
 const require = createRequire(import.meta.url);
 const { MessageEmbed, CommandInteraction } = require("discord.js");
@@ -123,9 +123,8 @@ export default async interaction => {
     case "arcade": {
       switch (interaction.options.getSubcommand()) {
         case "ez": {
-          const buttons = await ButtonGenerator.getEZ();
+          const buttons = EZButton();
 
-          /** @type {CommandResponse} */
           const res = await commands.EZ.execute([], authorID, null, interaction);
           res.components = buttons;
 

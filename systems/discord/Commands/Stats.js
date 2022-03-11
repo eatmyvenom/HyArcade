@@ -5,7 +5,7 @@ const BotRuntime = require("../BotRuntime");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
-const MenuGenerator = require("../interactions/SelectionMenus/MenuGenerator");
+const StatsMenu = require("../interactions/Components/Menus/Generators/StatsMenu");
 
 /**
  *
@@ -88,7 +88,7 @@ module.exports = new Command(
 
     const cmdRes = await BotRuntime.getStats(acc, `${game}`);
     const e = cmdRes.embed;
-    const menu = await MenuGenerator.statsMenu(acc.uuid, time, game ?? "undefined");
+    const menu = StatsMenu(acc.uuid, time, game ?? "undefined");
     return {
       res: "",
       embed: e,

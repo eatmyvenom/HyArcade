@@ -1,11 +1,10 @@
 import Database from "hyarcade-requests/Database.js";
 import { Account, Command, CommandResponse } from "hyarcade-structures";
 import { createRequire } from "node:module";
+import ZombiesButtons from "../interactions/Components/Buttons/Generators/ZombiesButtons.js";
+import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 
 const require = createRequire(import.meta.url);
-
-import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
-import ButtonGenerator from "../interactions/Buttons/ButtonGenerator.js";
 
 const { MessageEmbed } = require("discord.js");
 
@@ -223,25 +222,25 @@ export default new Command("zombies", ["*"], async (args, rawMsg, interaction) =
   switch (map.toLowerCase()) {
     case "bb": {
       embed = createBadBloodEmbed(acc);
-      buttons = await ButtonGenerator.getZombies("bb", acc.uuid);
+      buttons = ZombiesButtons("bb", acc.uuid);
       break;
     }
 
     case "de": {
       embed = createDeadEndEmbed(acc);
-      buttons = await ButtonGenerator.getZombies("de", acc.uuid);
+      buttons = ZombiesButtons("de", acc.uuid);
       break;
     }
 
     case "aa": {
       embed = createAlienArcadiumEmbed(acc);
-      buttons = await ButtonGenerator.getZombies("aa", acc.uuid);
+      buttons = ZombiesButtons("aa", acc.uuid);
       break;
     }
 
     default: {
       embed = createDefaultEmbed(acc);
-      buttons = await ButtonGenerator.getZombies("o", acc.uuid);
+      buttons = ZombiesButtons("o", acc.uuid);
       break;
     }
   }

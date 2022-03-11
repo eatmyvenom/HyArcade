@@ -1,20 +1,15 @@
 const Json = require("hyarcade-utils/FileHandling/Json");
 const { getList } = require("hyarcade-utils/Leaderboards/ListUtils");
 
-module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category, fileCache) {
+module.exports = async function listDiffByProp(name, prop, timetype, maxamnt, category) {
   let newlist;
   let oldlist;
-  if (fileCache != undefined) {
-    newlist = JSON.parse(JSON.stringify(fileCache[`${name}`]));
-    oldlist = JSON.parse(JSON.stringify(fileCache[`${timetype}${name}`]));
+  if (name == "accounts") {
+    newlist = await getList();
+    oldlist = await getList(timetype);
   } else {
-    if (name == "accounts") {
-      newlist = await getList();
-      oldlist = await getList(timetype);
-    } else {
-      newlist = await Json.read(`${name}.json`);
-      oldlist = await Json.read(`${name}.${timetype}.json`);
-    }
+    newlist = await Json.read(`${name}.json`);
+    oldlist = await Json.read(`${name}.${timetype}.json`);
   }
 
   let acc;

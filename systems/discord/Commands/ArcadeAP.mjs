@@ -1,8 +1,8 @@
 import Database from "hyarcade-requests/Database.js";
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import ArcadeAPMenu from "../interactions/Components/Menus/Generators/ArcadeAPMenu.js";
 import ArcadeAp from "../Utils/Embeds/ArcadeAp.js";
-import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
 
 export default new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0] ?? "!";
@@ -21,7 +21,7 @@ export default new Command(["ap", "achievements", "arcade-ap", "aap"], ["*"], as
   }
 
   const embed = ArcadeAp(acc, args[1]);
-  const menu = MenuGenerator.apMenu(acc.uuid, args[1]);
+  const menu = ArcadeAPMenu(acc.uuid, args[1]);
 
   return new CommandResponse("", embed, undefined, menu);
 });

@@ -1,10 +1,10 @@
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
-import ButtonParser from "./interactions/Buttons/ButtonParser.js";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser.js";
 import CommandParser from "./interactions/CommandParser.mjs";
-import MenuParser from "./interactions/SelectionMenus/MenuParser.js";
+import ButtonParser from "./interactions/Components/Buttons/ButtonParser.js";
+import MenuParser from "./interactions/Components/Menus/MenuParser.js";
 import AutoCompleter from "./interactions/Utils/AutoCompleter.js";
 import registerAll from "./interactions/Utils/DeployCommands.mjs";
 import CommandResponse from "./Utils/CommandResponse.js";

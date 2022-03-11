@@ -11,7 +11,7 @@ const MillisecondLBs = require("../Utils/Leaderboards/MillisecondLBs");
 const ReversedLBs = require("../Utils/Leaderboards/ReversedLBs");
 const SecondLBs = require("../Utils/Leaderboards/SecondLBs");
 const ImageGenerator = require("../images/ImageGenerator");
-const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
+const LeaderboardButtons = require("../interactions/Components/Buttons/Generators/LeaderboardButtons");
 
 /**
  *
@@ -1231,7 +1231,7 @@ async function hander(args, rawMsg, interaction) {
 
   logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
-  const buttons = await ButtonGenerator.getLBButtons(startingIndex, gid, timetype);
+  const buttons = LeaderboardButtons(startingIndex, gid, timetype);
 
   return new CommandResponse("", undefined, finalRes, buttons);
 }

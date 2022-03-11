@@ -1,4 +1,4 @@
-module.exports = class ButtonResponse {
+module.exports = class ComponentResponse {
   content = "";
   embeds = [];
   newButtons = [];

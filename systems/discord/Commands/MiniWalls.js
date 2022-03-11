@@ -4,7 +4,7 @@ const BotRuntime = require("../BotRuntime");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
 const ImageGenerator = require("../images/ImageGenerator");
-const ButtonGenerator = require("../interactions/Buttons/ButtonGenerator");
+const MiniWallsButtons = require("../interactions/Components/Buttons/Generators/MiniWallsButtons");
 
 /**
  *
@@ -187,7 +187,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
   img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
   img.writeText(`Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, (y += increment), rightAlign, aaColor, fontSize);
 
-  return new CommandResponse("", undefined, img.toDiscord(), await ButtonGenerator.getMiw(time, acc.uuid));
+  return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }
 
 module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);

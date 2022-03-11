@@ -4,7 +4,7 @@ import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
 import ImageGenerator from "../images/ImageGenerator.js";
-import MenuGenerator from "../interactions/SelectionMenus/MenuGenerator.js";
+import StatsMenu from "../interactions/Components/Menus/Generators/StatsMenu.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
@@ -1024,7 +1024,7 @@ export default new Command(
     if (acc == undefined || acc.name == undefined || acc.name == "INVALID-NAME") return new CommandResponse("", ERROR_IGN_UNDEFINED);
 
     const img = await genImg(acc, game);
-    const menu = await MenuGenerator.statsMenu(acc.uuid, time, game ?? "undefined");
+    const menu = StatsMenu(acc.uuid, time, game ?? "undefined");
 
     return new CommandResponse("", undefined, img.toDiscord(), menu);
   },
