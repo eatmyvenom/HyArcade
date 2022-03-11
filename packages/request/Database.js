@@ -166,9 +166,8 @@ module.exports = class Database {
 
     try {
       await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
-    } catch (error) {
-      Logger.err("Can't connect to database");
-      Logger.err(error.stack);
+    } catch {
+      Logger.err("A database connection error occured");
       return {};
     }
   }
@@ -552,5 +551,24 @@ module.exports = class Database {
     }
 
     return ap;
+  }
+
+  static async DeleteAccount(uuid) {
+    const url = new URL("account", cfg.database.url);
+    url.searchParams.set("uuid", uuid);
+
+    let del;
+    try {
+      Logger.verbose(`Sending DELETE ${url.searchParams} from database!`);
+      const accReq = await axios.delete(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
+      del = accReq.data;
+    } catch (error) {
+      Logger.err("Database connection error.");
+      Logger.err(error.stack);
+      Logger.err(del);
+      return {};
+    }
+
+    return del;
   }
 };

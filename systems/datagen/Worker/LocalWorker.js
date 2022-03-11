@@ -81,6 +81,7 @@ async function runBatch(batchUUIDs, key, address) {
         if (cfg.logRateLimit) {
           Logger.warn(`Unable to access data for ${uuid}`);
           Logger.warn(JSON.stringify(reply?.data));
+          await Database.DeleteAccount(uuid);
         } else {
           Logger.verbose(`Unable to access data for ${uuid}`);
         }

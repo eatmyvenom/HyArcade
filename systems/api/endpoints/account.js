@@ -76,7 +76,23 @@ module.exports = async (req, res, connector) => {
         res.end();
       });
     } else {
-      Logger.warn("Someone tried to post without correct AUTH");
+      Logger.warn("Someone tried to POST without auth");
+      res.statusCode = 403;
+      res.end();
+    }
+  } else if (req.method == "DELETE") {
+    const key = cfg.database.keys[req.headers.key];
+    const fullAuth = req.headers.authorization == cfg.database.pass;
+    const keyValid = key != undefined && key.perms.includes("push");
+
+    if (fullAuth || keyValid) {
+      const uuid = url.searchParams.get("uuid");
+
+      await connector.accounts.deleteMany({ uuid });
+      res.write(JSON.stringify({ success: true }));
+      res.end();
+    } else {
+      Logger.warn("Someone tried to DELETE without auth");
       res.statusCode = 403;
       res.end();
     }
