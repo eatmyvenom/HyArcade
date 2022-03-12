@@ -85,7 +85,7 @@ async function callback(request, response) {
         }
 
         default: {
-          Logger.warn(`${endpoint} redirected to home`);
+          Logger.warn(`${endpoint} redirected to home (${request.headers["x-real-ip"]})`);
           replyData = await fs.readFile("html/hub.html");
         }
       }
