@@ -1,8 +1,8 @@
 import Command from "hyarcade-structures/Discord/Command.js";
 import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
 import BotRuntime from "../BotRuntime.js";
+const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
 
 /**
@@ -16,7 +16,7 @@ async function infoHandler() {
     .setThumbnail(BotRuntime.client.user.avatarURL())
     .addField("Website", "[Link](https://hyarcade.xyz)", false)
     .addField("Github", "[Link](https://github.com/eatmyvenom/hyarcade)", true)
-    .addField("Bot invite link", "[Link](https://hyarcade.xyz/botinvite.html)", true)
+    .addField("Bot invite link", "[Link](https://hyarcade.xyz/invite)", true)
     .addField("HyArcade server", "[Invite](https://discord.gg/6kFBVDcRd5)", true)
     .addField("Developer", "**` vnmm `** - <@156952208045375488>", false)
     .setColor(0x2f3136);
