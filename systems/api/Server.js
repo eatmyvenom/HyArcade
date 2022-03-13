@@ -30,7 +30,7 @@ async function callback(request, response) {
 
   const mod = endpoints.all[endpoint];
 
-  if (address == undefined) {
+  if (address == undefined && request.headers.authorization != cfg.database.pass) {
     AccessLogger.err("Null requester attempted, denying connection");
     response.write(JSON.stringify({ success: false }));
     response.end();
