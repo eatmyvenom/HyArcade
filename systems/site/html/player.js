@@ -473,7 +473,7 @@ async function handleData() {
     return;
   }
 
-  rawjson = await (playername.length > 16 ? fetch(`https://cdn.hyarcade.xyz/account?uuid=${playername}`) : fetch(`https://cdn.hyarcade.xyz/account?ign=${playername}`));
+  rawjson = await (playername.length > 16 ? fetch(`https://api.hyarcade.xyz/account?uuid=${playername}`) : fetch(`https://api.hyarcade.xyz/account?ign=${playername}`));
   playerdata = await rawjson.json();
 
   if (playerdata != undefined && playerdata.name != undefined) {
@@ -586,7 +586,7 @@ function focusSearch(event) {
 function getSuggestions(event) {
   const query = event.target.value;
   if (query.trim() != "") {
-    fetch(`https://cdn.hyarcade.xyz/resolve?q=${query.trim()}`).then(displaySuggestions).catch(console.error);
+    fetch(`https://api.hyarcade.xyz/resolve?q=${query.trim()}`).then(displaySuggestions).catch(console.error);
   }
 }
 

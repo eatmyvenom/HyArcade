@@ -78,28 +78,28 @@ function formatWins(guild) {
 function formatGames(guild) {
   const gamesEle = document.querySelector(".games");
   const gamesArr = [
-    ["Party games", guild.partyGamesWins],
-    ["Hypixel says", guild.hypixelSaysWins],
+    ["Party Games", guild.partyGamesWins],
+    ["Hypixel Says", guild.hypixelSaysWins],
     ["Bounty Hunters", guild.bountyHuntersWins],
-    ["Hole in the wall", guild.hitwWins],
-    ["Farm hunt", guild.farmhuntWins],
-    ["Mini walls", guild.miniWallsWins],
+    ["Hole in the Wall", guild.hitwWins],
+    ["Farm Hunt", guild.farmhuntWins],
+    ["Mini Walls", guild.miniWallsWins],
     ["Football", guild.footballWins],
-    ["Ender spleef", guild.enderSpleefWins],
-    ["Throw out", guild.throwOutWins],
-    ["Galaxy wars", guild.galaxyWarsWins],
-    ["Dragon wars", guild.dragonWarsWins],
-    ["Blocking dead", guild.blockingDeadWins],
-    ["Hide and seek", guild.hideAndSeekWins],
+    ["Ender Spleef", guild.enderSpleefWins],
+    ["Throw Out", guild.throwOutWins],
+    ["Galaxy Wars", guild.galaxyWarsWins],
+    ["Dragon Wars", guild.dragonWarsWins],
+    ["Blocking Dead", guild.blockingDeadWins],
+    ["Hide and Seek", guild.hideAndSeekWins],
     ["Zombies", guild.zombiesWins],
-    ["Pixel painters", guild.pixelPaintersWins],
-    ["Seasonal games", guild.simWins],
+    ["Pixel Painters", guild.pixelPaintersWins],
+    ["Seasonal Games", guild.simWins],
   ];
 
   gamesArr.sort((a, b) => b[1] - a[1]);
 
   for (const g of gamesArr) {
-    gamesEle.innerHTML += `<p><b>${g[0]}</b><i>${formatNumber(g[1])}</i></p><br>`;
+    gamesEle.innerHTML += `<p><b class="yellow">${g[0]}</b><i class="gray">${formatNumber(g[1])}</i></p><br>`;
   }
 }
 
@@ -110,11 +110,11 @@ function formatGames(guild) {
 function formatStats(guild) {
   const statsEle = document.querySelector(".stats");
 
-  statsEle.innerHTML += `<p><b>Guild experience</b><i>${formatNumber(guild.gexp)}</i></p><br>`;
-  statsEle.innerHTML += `<p><b>Arcade GXP</b><i>${formatNumber(guild.arcadeEXP)}</i></p><br>`;
-  statsEle.innerHTML += `<p><b>Arcade coins</b><i>${formatNumber(guild.arcadeCoins)}</i></p><br>`;
-  statsEle.innerHTML += `<p><b>Combined AP</b><i>${formatNumber(guild.combinedAP)}</i></p><br>`;
-  statsEle.innerHTML += `<p><b>Combined Karma</b><i>${formatNumber(guild.karma)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b class="yellow">Guild experience</b><i class="gray">${formatNumber(guild.gexp)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b class="yellow">Arcade GXP</b><i class="gray">${formatNumber(guild.arcadeEXP)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b class="yellow">Arcade coins</b><i class="gray">${formatNumber(guild.arcadeCoins)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b class="yellow">Combined AP</b><i class="gray">${formatNumber(guild.combinedAP)}</i></p><br>`;
+  statsEle.innerHTML += `<p><b class="yellow">Combined Karma</b><i class="gray">${formatNumber(guild.karma)}</i></p><br>`;
 }
 
 /**

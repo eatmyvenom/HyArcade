@@ -21,12 +21,11 @@ html {
 
 body {
     background-color: #181c30;
-
 }
 
 main {
     display: grid;
-    grid-template-columns: 25% auto 25% auto 30%;
+    grid-template-columns: auto auto auto;
     margin-left: 0.5vw;
     margin-right: 0.5vw;
     color: white;
@@ -36,7 +35,7 @@ main {
 
 header {
     grid-column-start: 1;
-    grid-column-end: 6;
+    grid-column-end: 4;
     padding: 4px;
     display: block;
     font-size: 32px;
@@ -79,11 +78,14 @@ header > p {
 }
 
 .games, .stats, .members, header {
-    border: 2px solid white;
-    border-image: linear-gradient(to bottom right, #bb00dd, #44a3e7);
-    border-image-slice: 1;
+    border: 1px solid #0066cc;
     padding: 4px;
     height: max-content;
+    width: 100%;
+}
+
+header {
+    border-color: #8c54fe;
 }
 
 .games {
@@ -91,11 +93,11 @@ header > p {
 }
 
 .members {
-    grid-column-start: 5;
+    grid-column-start: 3;
 }
 
 .stats {
-    grid-column-start: 3;
+    grid-column-start: 2;
 }
 
 .members > p > img {
@@ -108,6 +110,7 @@ header > p {
     display: inline-block;
     vertical-align: middle;
     height: 20px;
+    line-height: 1;
 }
 
 .members > p > b {
