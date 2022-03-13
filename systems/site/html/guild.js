@@ -185,7 +185,7 @@ async function load() {
   }
 
   await refresh();
-  setInterval(refresh, 25000);
+  setInterval(refresh, 250000);
 }
 
 /**
