@@ -382,7 +382,7 @@ module.exports = class Database {
     const url = new URL("ping", cfg.database.url);
 
     try {
-      const testData = await axios.get(url.toString(), { timeout: 10000 });
+      const testData = await axios.get(url.toString(), { timeout: 10000, headers: { Authorization: cfg.database.pass } });
       return testData.data.response == "pong";
     } catch {
       return false;
