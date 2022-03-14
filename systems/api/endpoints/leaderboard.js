@@ -1,11 +1,11 @@
 /* eslint-disable unicorn/no-array-reduce */
 const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
-const { mojangRequest } = require("hyarcade-requests");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
 const { Guild } = require("hyarcade-structures");
 const GenericLeaderboard = require("hyarcade-utils/Leaderboards/GenericLeaderboard");
 const MiniWallsLeaderboard = require("hyarcade-utils/Leaderboards/MiniWallsLeaderboard");
+const GuildResolver = require("../GuildResolver");
 
 /**
  * @param lbprop
@@ -26,23 +26,11 @@ async function GuildLeaderboard(lbprop, timePeriod, reverse, max, connector) {
 }
 
 /**
- * @param input
+ * @param guild
  * @param path
  * @param reverse
- * @param {MongoConnector} connector
  */
-async function GuildMemberLeaderboard(input, path, reverse, connector) {
-  let guild;
-
-  if (input.length == 24) {
-    guild = await connector.getGuild(input);
-  } else if (input.length == 32 || input.length == 36) {
-    guild = await connector.getGuildByMember(input.replace(/-/g, ""));
-  } else {
-    const memberUUID = await mojangRequest.getUUID(input);
-    guild = await connector.getGuildByMember(memberUUID);
-  }
-
+async function GuildMemberLeaderboard(guild, path, reverse) {
   const members = guild.memberStats;
 
   const sorted = members.sort((m1, m2) => {
@@ -121,12 +109,20 @@ module.exports = async (req, res, connector) => {
       }
 
       case "gmember": {
-        const guild = args.get("guild");
         const path = args.get("path");
         const reverse = args.has("reverse");
 
         if (path == undefined) {
           throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);
+        }
+
+        const guild = await GuildResolver(req, connector);
+
+        if (guild.error) {
+          res.setHeader("Content-Type", "application/json");
+          res.write(JSON.stringify(guild));
+          res.end();
+          return;
         }
 
         const mems = await GuildMemberLeaderboard(guild, path, reverse, connector);
