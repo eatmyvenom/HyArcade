@@ -31,7 +31,7 @@ async function GuildLeaderboard(lbprop, timePeriod, reverse, max, connector) {
  * @param reverse
  */
 async function GuildMemberLeaderboard(guild, path, reverse) {
-  const members = guild.memberStats;
+  const members = guild.membersStats;
 
   const sorted = members.sort((m1, m2) => {
     const m1Val = path.split(".").reduce((a, b) => a[b], m1);
