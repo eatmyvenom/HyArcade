@@ -347,6 +347,43 @@ class MongoConnector {
     await this.accounts.replaceOne({ uuid: acc.uuid }, acc, { upsert: true });
   }
 
+  async getOldLeaderboard(stat, time, reverse = false, limit = 10) {
+    if (limit == 0) {
+      return [];
+    }
+
+    let realTime = time;
+    if (time == "day") {
+      realTime = "daily";
+    }
+
+    if (this[`${realTime}Accounts`] == undefined) {
+      // Exit if query will throw an error
+      return [];
+    }
+
+    const options = {
+      sort: {
+        [stat]: reverse ? 1 : -1,
+      },
+      projection: {
+        _id: 0,
+        uuid: 1,
+        name: 1,
+        rank: 1,
+        plusColor: 1,
+        banned: 1,
+        hacker: 1,
+        importance: 1,
+        mvpColor: 1,
+        [stat]: 1,
+      },
+      limit,
+    };
+
+    return await this[`${realTime}Accounts`].find({}, options).toArray();
+  }
+
   async getLeaderboard(stat, reverse = false, limit = 10) {
     if (limit == 0) {
       return [];

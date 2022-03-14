@@ -21,7 +21,8 @@ let endpoints = new EndpointStorage();
  */
 async function callback(request, response) {
   const url = new URL(request.url, `https://${request.headers.host}`);
-  const endpoint = url.pathname.slice(1).toLowerCase();
+  const reqPath = url.pathname.split("/").slice(1);
+  const endpoint = reqPath[0];
   const address = request.headers["x-real-ip"];
 
   if (!endpoints.initialized) {

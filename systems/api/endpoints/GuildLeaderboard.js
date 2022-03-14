@@ -11,7 +11,7 @@ const { Guild } = require("hyarcade-structures");
  * @param {MongoConnector} connector
  * @returns {Promise<Guild>}
  */
-async function getLeaderboard(lbprop, timePeriod, reverse, max, connector) {
+async function GuildLeaderboard(lbprop, timePeriod, reverse, max, connector) {
   Logger.verbose("Getting guild leaderboard");
 
   const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
@@ -41,7 +41,7 @@ module.exports = async (req, res, connector) => {
 
   if (req.method == "GET") {
     Logger.log(`Guild Leaderboard: ${lbprop} - ${timePeriod} - ${max}`);
-    const guilds = await getLeaderboard(lbprop, timePeriod, reverse, max, connector);
+    const guilds = await GuildLeaderboard(lbprop, timePeriod, reverse, max, connector);
 
     res.setHeader("Content-Type", "application/json");
     res.write(JSON.stringify(guilds));
