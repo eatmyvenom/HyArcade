@@ -37,7 +37,7 @@ async function GuildMemberLeaderboard(guild, path, reverse) {
     const m1Val = path.split(".").reduce((a, b) => a[b], m1);
     const m2Val = path.split(".").reduce((a, b) => a[b], m2);
 
-    return reverse ? m2Val - m1Val : m1Val - m2Val;
+    return reverse ? m1Val - m2Val : m2Val - m1Val;
   });
 
   return sorted;
