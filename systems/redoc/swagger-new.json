@@ -3,7 +3,7 @@
   "info": {
     "title": "Hyarcade API",
     "description": "# Introduction\n      This is backend api for all Hyarcade systems\n      [Hyarcade](https://hyarcade.xyz/) - [GitHub Repo](https://github.com/eatmyvenom/hyarcade)\n## Limits\n      Any IP address has a default rate limit of 120 requests per minute.\n\n## Response Format\nAll responses in JSON format.",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "contact": {
       "name": "EatMyVenom",
       "url": "https://vnmm.dev",
@@ -3719,7 +3719,7 @@
         }
       }
     },
-    "/miniwalls": {
+    "/leaderboard/miniwalls": {
       "get": {
         "summary": "Mini Walls Leaderboard",
         "tags": [
@@ -3943,15 +3943,6 @@
                       "properties": {
                         "online": {
                           "type": "boolean"
-                        },
-                        "gameType": {
-                          "type": "string"
-                        },
-                        "mode": {
-                          "type": "string"
-                        },
-                        "map": {
-                          "type": "string"
                         }
                       }
                     },
@@ -8092,7 +8083,24 @@
                             "type": "string"
                           },
                           "guildRank": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "default": {
+                                "type": "boolean"
+                              },
+                              "tag": {
+                                "type": "string"
+                              },
+                              "created": {
+                                "type": "number"
+                              },
+                              "priority": {
+                                "type": "number"
+                              }
+                            }
                           },
                           "joinTime": {
                             "type": "number"
@@ -8103,25 +8111,25 @@
                           "gexpHistory": {
                             "type": "object",
                             "properties": {
-                              "2022-03-03": {
+                              "2022-03-16": {
                                 "type": "number"
                               },
-                              "2022-03-02": {
+                              "2022-03-15": {
                                 "type": "number"
                               },
-                              "2022-03-01": {
+                              "2022-03-14": {
                                 "type": "number"
                               },
-                              "2022-02-28": {
+                              "2022-03-13": {
                                 "type": "number"
                               },
-                              "2022-02-27": {
+                              "2022-03-12": {
                                 "type": "number"
                               },
-                              "2022-02-26": {
+                              "2022-03-11": {
                                 "type": "number"
                               },
-                              "2022-02-25": {
+                              "2022-03-10": {
                                 "type": "number"
                               }
                             }
@@ -8188,6 +8196,30 @@
                       "type": "array",
                       "items": {
                         "type": "string"
+                      }
+                    },
+                    "guildRanks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "default": {
+                            "type": "boolean"
+                          },
+                          "tag": {
+                            "type": "object",
+                            "properties": {}
+                          },
+                          "created": {
+                            "type": "number"
+                          },
+                          "priority": {
+                            "type": "number"
+                          }
+                        }
                       }
                     },
                     "achievements": {
@@ -8390,7 +8422,7 @@
         }
       }
     },
-    "/guildleaderboard": {
+    "/leaderboard/guilds": {
       "get": {
         "summary": "Guild Leaderboard",
         "tags": [
@@ -8432,20 +8464,23 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "uuid": {
-                        "type": "string"
-                      },
                       "name": {
                         "type": "string"
                       },
-                      "gexp": {
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "rank": {
+                        "type": "string"
+                      },
+                      "plusColor": {
+                        "type": "string"
+                      },
+                      "mvpColor": {
+                        "type": "string"
+                      },
+                      "importance": {
                         "type": "number"
-                      },
-                      "color": {
-                        "type": "string"
-                      },
-                      "tag": {
-                        "type": "string"
                       }
                     }
                   }
@@ -8489,176 +8524,6 @@
             "$ref": "#/components/responses/MissingPage"
           }
         }
-      }
-    },
-    "/disc": {
-      "get": {
-        "summary": "Discord Meta",
-        "tags": [
-          "Internal"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "uuid",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "action",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Discord Meta",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/MissingInput"
-          },
-          "404": {
-            "$ref": "#/components/responses/MissingPage"
-          }
-        },
-        "security": [
-          {
-            "Database Pass": []
-          }
-        ]
-      }
-    },
-    "/hacker": {
-      "get": {
-        "summary": "Hacker Meta",
-        "tags": [
-          "Internal"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "action",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "uuid",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Hacker Meta",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/MissingInput"
-          },
-          "404": {
-            "$ref": "#/components/responses/MissingPage"
-          }
-        },
-        "security": [
-          {
-            "Database Pass": []
-          }
-        ]
-      }
-    },
-    "/banned": {
-      "get": {
-        "summary": "Banned Meta",
-        "tags": [
-          "Internal"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "action",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
-            "name": "uuid",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Banned Meta",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/MissingInput"
-          },
-          "404": {
-            "$ref": "#/components/responses/MissingPage"
-          }
-        },
-        "security": [
-          {
-            "Database Pass": []
-          }
-        ]
       }
     },
     "/internal": {

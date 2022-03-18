@@ -4296,6 +4296,7 @@ __metadata:
     is-ci: ^3.0.1
     json-ts: ^1.6.4
     prettier: ^2.5.1
+    redoc-cli: ^0.13.9
   languageName: unknown
   linkType: soft
 
@@ -5837,7 +5838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prismjs@npm:^1.24.1":
+"prismjs@npm:^1.24.1, prismjs@npm:^1.27.0":
   version: 1.27.0
   resolution: "prismjs@npm:1.27.0"
   checksum: 85c7f4a3e999073502cc9e1882af01e3709706369ec254b60bff1149eda701f40d02512acab956012dc7e61cfd61743a3a34c1bd0737e8dbacd79141e5698bbc
@@ -6129,6 +6130,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redoc-cli@npm:^0.13.9":
+  version: 0.13.9
+  resolution: "redoc-cli@npm:0.13.9"
+  dependencies:
+    chokidar: ^3.5.1
+    handlebars: ^4.7.7
+    isarray: ^2.0.5
+    mkdirp: ^1.0.4
+    mobx: ^6.3.2
+    node-libs-browser: ^2.2.1
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    redoc: 2.0.0-rc.65
+    styled-components: ^5.3.0
+    yargs: ^17.0.1
+  bin:
+    redoc-cli: index.js
+  checksum: d95aa80abb161ab64cbaf03235d635856bf00483be2d683d5c56b123255cb2d011dd066adfccdb7c587de7c0bc58e70097293dfba21115547002e32ad8be1b27
+  languageName: node
+  linkType: hard
+
 "redoc@npm:2.0.0-rc.64":
   version: 2.0.0-rc.64
   resolution: "redoc@npm:2.0.0-rc.64"
@@ -6163,6 +6185,43 @@ __metadata:
     react-dom: ^16.8.4 || ^17.0.0
     styled-components: ^4.1.1 || ^5.1.1
   checksum: 91a79eede5c44c9f55f0d37ece9e1600bb7fd605d0e811891e104e1fad6b82f1c818ed1bb4dc687878b6b33f399615edcce8eac66ca20084c40fa5f6bc766eb3
+  languageName: node
+  linkType: hard
+
+"redoc@npm:2.0.0-rc.65":
+  version: 2.0.0-rc.65
+  resolution: "redoc@npm:2.0.0-rc.65"
+  dependencies:
+    "@redocly/openapi-core": ^1.0.0-beta.54
+    "@redocly/react-dropdown-aria": ^2.0.11
+    classnames: ^2.3.1
+    decko: ^1.2.0
+    dompurify: ^2.2.8
+    eventemitter3: ^4.0.7
+    json-pointer: ^0.6.2
+    lunr: ^2.3.9
+    mark.js: ^8.11.1
+    marked: ^4.0.10
+    mobx-react: ^7.2.0
+    openapi-sampler: ^1.2.1
+    path-browserify: ^1.0.1
+    perfect-scrollbar: ^1.5.1
+    polished: ^4.1.3
+    prismjs: ^1.27.0
+    prop-types: ^15.7.2
+    react-tabs: ^3.2.2
+    slugify: ~1.4.7
+    stickyfill: ^1.1.1
+    style-loader: ^3.3.1
+    swagger2openapi: ^7.0.6
+    url-template: ^2.0.8
+  peerDependencies:
+    core-js: ^3.1.4
+    mobx: ^6.0.4
+    react: ^16.8.4 || ^17.0.0
+    react-dom: ^16.8.4 || ^17.0.0
+    styled-components: ^4.1.1 || ^5.1.1
+  checksum: 589e3811c8f05ef6259730e326740750a2e7dc1f1c3649516fd0d7e1ad7c104e55dc87fae40309e77fb234ad33c94be9beeebb2ff57f80e1f1cfaf24c019e725
   languageName: node
   linkType: hard
 

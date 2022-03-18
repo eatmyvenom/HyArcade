@@ -306,7 +306,7 @@ module.exports = class Database {
   static async getGuildLeaderboard(path, time, reverse, max) {
     Logger.verbose("Reading database");
 
-    const url = new URL("guildleaderboard", cfg.database.url);
+    const url = new URL("leaderboard/guilds", cfg.database.url);
     url.searchParams.set("path", path);
 
     if (time != undefined) {
@@ -340,7 +340,7 @@ module.exports = class Database {
   static async getMWLeaderboard(stat, time) {
     Logger.debug(`Fetching miniwalls ${stat} leaderboard from!`);
 
-    const url = new URL("mwlb", cfg.database.url);
+    const url = new URL("leaderboard/miniwalls", cfg.database.url);
     url.searchParams.set("stat", stat);
 
     if (time != undefined) {

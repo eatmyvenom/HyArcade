@@ -263,7 +263,7 @@ All responses in JSON format.`,
         },
       ]),
     },
-    "/miniwalls": {
+    "/leaderboard/miniwalls": {
       get: await getPath("Leaderboards", await Database.getMWLeaderboard("wins"), "Mini Walls Leaderboard", [
         {
           in: "query",
@@ -391,7 +391,7 @@ All responses in JSON format.`,
       ]),
       post: await getPath("Data Generation", { success: true }, "Upload Guild"),
     },
-    "/guildleaderboard": {
+    "/leaderboard/guilds": {
       get: await getPath("Leaderboards", await Database.getGuildLeaderboard("gexp"), "Guild Leaderboard", [
         {
           in: "query",
