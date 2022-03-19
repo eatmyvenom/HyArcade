@@ -13,7 +13,7 @@ async function main(args) {
     const batchRes = await Database.internal({ getBatch: true }, args[4]);
     await LocalWorker(batchRes, args[3]);
 
-    Logger.log("Batch completed");
+    Logger.verbose("Batch completed");
     ping = await Database.ping();
   }
 }
