@@ -145,6 +145,10 @@ class GameStats {
     wins: 0,
   };
 
+  seasonal = {
+    wins: 0,
+  };
+
   /**
    *
    * @param {object[]} members
@@ -202,6 +206,8 @@ class GameStats {
       this.throwOut.kills += member?.throwOut?.kills ?? 0;
 
       this.zombies.wins += member?.zombies?.wins_zombies ?? 0;
+
+      this.seasonal.wins += member?.seasonalWins?.total ?? 0;
     }
   }
 }

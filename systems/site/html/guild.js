@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
@@ -23,7 +24,7 @@ async function load() {
       mainTitle.innerHTML = "Party games";
       address.innerHTML = '<a href="https://discord.gg/kVSdPevCwm">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "partyGamesWins";
+      lifetime.id = "gameStats.partyGames.wins";
       break;
     }
 
@@ -31,7 +32,7 @@ async function load() {
       mainTitle.innerHTML = "Hypixel Says";
       address.innerHTML = '<a href="https://discord.gg/GzjN5c4zze">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "hypixelSaysWins";
+      lifetime.id = "gameStats.hypixelSays.wins";
       break;
     }
 
@@ -39,7 +40,7 @@ async function load() {
       mainTitle.innerHTML = "Farm hunt";
       address.innerHTML = '<a href="https://discord.gg/fVgcvhtaWk">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "farmhuntWins";
+      lifetime.id = "gameStats.farmHunt.wins";
       break;
     }
 
@@ -47,7 +48,7 @@ async function load() {
       mainTitle.innerHTML = "Hole in the wall";
       address.innerHTML = '<a href="https://discord.gg/Gh24vw5b54">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "hitwWins";
+      lifetime.id = "gameStats.holeInTheWall.wins";
       break;
     }
 
@@ -56,7 +57,7 @@ async function load() {
       address.innerHTML = '<a href="https://discord.gg/P5c5RSG2yF">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
 
-      lifetime.id = "footballWins";
+      lifetime.id = "gameStats.football.wins";
       break;
     }
 
@@ -64,7 +65,7 @@ async function load() {
       mainTitle.innerHTML = "Ender spleef";
       address.innerHTML = '<a href="https://discord.gg/9xRhumdEyq">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "enderSpleefWins";
+      lifetime.id = "gameStats.enderSpleef.wins";
       break;
     }
 
@@ -72,7 +73,7 @@ async function load() {
       mainTitle.innerHTML = "Throw out";
       address.innerHTML = '<a href="https://discord.gg/2sMpvqtJYh">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "throwOutWins";
+      lifetime.id = "gameStats.throwOut.wins";
       break;
     }
 
@@ -80,7 +81,7 @@ async function load() {
       mainTitle.innerHTML = "Galaxy Wars";
       address.innerHTML = '<a href="https://discord.gg/v9ZwqyZfYj">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "galaxyWarsWins";
+      lifetime.id = "gameStats.galaxyWars.wins";
       break;
     }
 
@@ -88,7 +89,7 @@ async function load() {
       mainTitle.innerHTML = "Dragon Wars";
       address.innerHTML = '<a href="https://discord.gg/7ccREnQVuU">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "dragonWarsWins";
+      lifetime.id = "gameStats.dragonWars.wins";
       break;
     }
 
@@ -96,7 +97,7 @@ async function load() {
       mainTitle.innerHTML = "Bounty Hunters";
       address.innerHTML = "";
       lifetime.title = "Lifetime wins";
-      lifetime.id = "bountyHuntersWins";
+      lifetime.id = "gameStats.bountyHunters.wins";
       break;
     }
 
@@ -104,7 +105,7 @@ async function load() {
       mainTitle.innerHTML = "Blocking Dead";
       address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "blockingDeadWins";
+      lifetime.id = "gameStats.blockingDead.wins";
       break;
     }
 
@@ -112,7 +113,7 @@ async function load() {
       mainTitle.innerHTML = "Hide and Seek";
       address.innerHTML = '<a href="https://discord.gg/MkGKhztYcZ">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "hideAndSeekWins";
+      lifetime.id = "gameStats.hideAndSeek.wins";
       break;
     }
 
@@ -149,14 +150,14 @@ async function load() {
       mainTitle.innerHTML = "Zombies";
       address.innerHTML = '<a href="https://discord.gg/2RDCTPWqVT">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "zombiesWins";
+      lifetime.id = "gameStats.zombies.wins";
       break;
     }
 
     case "pixelpainters": {
       mainTitle.innerHTML = "Pixel painters";
       lifetime.title = "Lifetime wins";
-      lifetime.id = "pixelPaintersWins";
+      lifetime.id = "gameStats.pixelPainters.wins";
       break;
     }
 
@@ -164,7 +165,7 @@ async function load() {
       mainTitle.innerHTML = "Mini walls";
       address.innerHTML = '<a href="https://discord.gg/a3mFVpMPaf">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "miniWallsWins";
+      lifetime.id = "gameStats.miniWalls.wins";
       break;
     }
 
@@ -172,7 +173,7 @@ async function load() {
       mainTitle.innerHTML = "Seasonal Arcade games";
       address.innerHTML = '<a href="https://discord.gg/Nq6ytH7sBk">Discord Invite</a>';
       lifetime.title = "Lifetime wins";
-      lifetime.id = "simWins";
+      lifetime.id = "gameStats.seasonal.wins";
       break;
     }
   }
@@ -213,40 +214,23 @@ async function getLeaderboards(element) {
   let lb = [];
 
   const id = element.getAttribute("id");
-  const idArr = id.split(".");
 
   let formattedTime = "";
 
-  if (idArr.length > 1) {
-    const category = idArr[0];
-    const path = idArr[1];
-    const args = `path=${path}&category=${category}${formattedTime}&max=${maxLength}`;
+  const path = id;
+  const args = `path=${path}${formattedTime}&max=${maxLength}`;
 
-    const url = `https://api.hyarcade.xyz/guildleaderboard?${args}&min`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url, { mode: "cors" });
-    lb = await raw.json();
-  } else {
-    const path = idArr[0];
-    const args = `path=${path}${formattedTime}&max=${maxLength}`;
-
-    const url = `https://api.hyarcade.xyz/guildleaderboard?${args}&min`;
-    console.info(`fetching ${url}`);
-    const raw = await fetch(url, { mode: "cors" });
-    lb = await raw.json();
-  }
+  const url = `https://api.hyarcade.xyz/leaderboard/guilds?${args}&min`;
+  console.info(`fetching ${url}`);
+  const raw = await fetch(url, { mode: "cors" });
+  lb = await raw.json();
 
   let text = "";
 
   if (formattedTime == "") {
-    if (idArr.length > 1) {
-      for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]][idArr[1]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
-      }
-    } else {
-      for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
-        text += formatLine(lb[i].name, lb[i][idArr[0]], lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
-      }
+    for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
+      const stat = path.split(".").reduce((a, b) => a[b], lb[i]) ?? 0;
+      text += formatLine(lb[i].name, stat, lb[i].uuid, lb[i].color.toLowerCase(), lb[i].tag, lb[i].mvpColor);
     }
   } else {
     for (let i = 0; i < Math.min(maxLength, lb.length); i += 1) {
