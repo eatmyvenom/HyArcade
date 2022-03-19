@@ -7,6 +7,7 @@
     "start": "node ."
   },
   "dependencies": {
+    "handlebars": "^4.7.7",
     "hyarcade-config": "workspace:^",
     "hyarcade-errors": "workspace:^",
     "hyarcade-logger": "workspace:^",

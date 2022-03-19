@@ -1,176 +1,220 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 
 @font-face {
   font-family: minecraf;
   src: url(https://hyarcade.xyz/assets/mc.otf);
 }
 
-.minecraft, .minecraft * {
+.minecraft,
+.minecraft * {
   font-family: minecraf;
   text-shadow: 0.1em 0.1em black;
 }
 
 html {
-    font-family: minecraf;
-    text-shadow: 0.1em 0.1em black;
-    font-size: 16px;
+  font-family: minecraf;
+  text-shadow: 0.1em 0.1em black;
+  font-size: 16px;
 }
 
 body {
-    background-color: #181c30;
+  background-color: #181c30;
 }
 
 main {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    margin-left: 0.5vw;
-    margin-right: 0.5vw;
-    color: white;
-    column-gap: 0.5vw;
-    row-gap: 0.5vw;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  color: white;
+  column-gap: 0.5vw;
+  row-gap: 0.5vw;
 }
 
 header {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    padding: 4px;
-    display: block;
-    font-size: 32px;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  padding: 4px;
+  display: block;
+  font-size: 32px;
 }
 
-header > .tag, header > p {
-    display: inline-block;
-    width: 49%;
+header > .tag,
+header > p {
+  display: inline-block;
+  width: 49%;
 }
 
-.black { color : #000000 }
-.dark_blue { color :#0000aa }
-.dark_green { color :#00AA00 }
-.dark_aqua { color :#00aaaa }
-.dark_red { color :#aa0000 }
-.dark_purple { color :aa00aa }
-.gold { color :#ffaa00 }
-.gray { color :#aaaaaa }
-.dark_gray { color :#555555 }
-.blue { color :#5555ff }
-.green { color :#55ff55 }
-.aqua { color :#55ffff }
-.red { color :#ff5555 }
-.light_purple { color :#ff55ff }
-.yellow { color :#ffff55 }
-.white { color :#ffffff }
+.black {
+  color: #000000;
+}
+.dark_blue {
+  color: #0000aa;
+}
+.dark_green {
+  color: #00aa00;
+}
+.dark_aqua {
+  color: #00aaaa;
+}
+.dark_red {
+  color: #aa0000;
+}
+.dark_purple {
+  color: aa00aa;
+}
+.gold {
+  color: #ffaa00;
+}
+.gray {
+  color: #aaaaaa;
+}
+.dark_gray {
+  color: #555555;
+}
+.blue {
+  color: #5555ff;
+}
+.green {
+  color: #55ff55;
+}
+.aqua {
+  color: #55ffff;
+}
+.red {
+  color: #ff5555;
+}
+.light_purple {
+  color: #ff55ff;
+}
+.yellow {
+  color: #ffff55;
+}
+.white {
+  color: #ffffff;
+}
 
 header > .tag::before {
-    content: "[";
+  content: "[";
 }
 
 header > .tag::after {
-    content: "]";
+  content: "]";
 }
 
 header > p {
-    margin: 0;
-    text-align: right;
-    display: inline-block;
+  margin: 0;
+  text-align: right;
+  display: inline-block;
 }
 
-.games, .stats, .members, header {
-    border: 1px solid #0066cc;
-    padding: 4px;
-    height: max-content;
-    width: 100%;
+.games,
+.stats,
+.members,
+header {
+  border: 1px solid #0066cc;
+  padding: 4px;
+  height: max-content;
+  width: 100%;
 }
 
 header {
-    border-color: #8c54fe;
+  border-color: #8c54fe;
 }
 
 .games {
-    grid-column-start: 1;
+  grid-column-start: 1;
 }
 
 .members {
-    grid-column-start: 3;
+  grid-column-start: 3;
 }
 
 .stats {
-    grid-column-start: 2;
+  grid-column-start: 2;
 }
 
 .members > p > img {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
-.members > p > b, .members > p > i {
-    display: inline-block;
-    vertical-align: middle;
-    height: 20px;
-    line-height: 1;
+.members > p > b,
+.members > p > i {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  line-height: 1;
 }
 
 .members > p > b {
-    width: 50%;
-    text-align: left;
-    margin-left: 12px;
+  width: 50%;
+  text-align: left;
+  margin-left: 12px;
 }
 
 .members > p > i {
-    width: 40%;
-    text-decoration: none;
-    font-style: normal;
-    text-align: right;
+  width: 40%;
+  text-decoration: none;
+  font-style: normal;
+  text-align: right;
 }
 
 .stats > p > b::after {
-    content: ": "
+  content: ": ";
 }
 
-.stats > p, .games > p {
-    margin : 4px 0px 4px 0px;
-    font-size: 18px;
+.stats > p,
+.games > p {
+  margin: 4px 0px 4px 0px;
+  font-size: 18px;
 }
 
-.stats > p > i, .games > p > i {
-    font-style: normal;
+.stats > p > i,
+.games > p > i {
+  font-style: normal;
 }
 
 .games > p > b::after {
-    content: ": ";
+  content: ": ";
 }
 
-.stats > h2, .members > h2, .games > h2 {
-    text-align: center;
-    font-size: 28px;
+.stats > h2,
+.members > h2,
+.games > h2 {
+  text-align: center;
+  font-size: 28px;
 }
 
-.stats > p, .members > p, .games > p {
-    padding-left: 10px;
+.stats > p,
+.members > p,
+.games > p {
+  padding-left: 10px;
 }
 
 @media only screen and (max-width: 768px) {
-    main {
-        display: block;
-    }
+  main {
+    display: block;
+  }
 
-    header > .tag, header > p { 
-        width: auto;
-    }
+  header > .tag,
+  header > p {
+    width: auto;
+  }
 
-    main > * {
-        margin: 12px;
-    }
+  main > * {
+    margin: 12px;
+  }
 
-    a {
-        display: block;
-        width: max-content;
-    }
+  a {
+    display: block;
+    width: max-content;
+  }
 
-    a img {
-        width: 60vw;
-    }
+  a img {
+    width: 60vw;
+  }
 }

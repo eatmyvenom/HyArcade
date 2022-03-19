@@ -4,6 +4,9 @@ const Logger = require("hyarcade-logger");
 const { Database } = require("hyarcade-requests");
 const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
 const cfg = require("hyarcade-config").fromJSON();
+const Handlebars = require("handlebars");
+
+let context;
 
 const pages = new Set([
   "arcade",
@@ -27,10 +30,38 @@ const pages = new Set([
 ]);
 
 /**
+ * @param urlPath
+ * @param response
+ */
+async function handleAssets(urlPath, response) {
+  if (fs.existsSync(GetAsset(`site/images/${urlPath[2]}`))) {
+    const replyData = await fs.readFile(GetAsset(`site/images/${urlPath[2]}`));
+    response.write(replyData);
+    response.end();
+    return;
+  } else {
+    Logger.info(urlPath[2]);
+    response.statusCode = 403;
+    response.end();
+    return;
+  }
+}
+
+/**
  * @param {http.IncomingMessage} request
  * @param {http.ServerResponse} response
  */
 async function callback(request, response) {
+  if (context == undefined) {
+    context = {};
+
+    const head = await fs.readFile("include/head.html");
+    const footer = await fs.readFile("include/footer.html");
+
+    context.head = head.toString();
+    context.footer = footer.toString();
+  }
+
   const url = new URL(request.url, `https://${request.headers.host}`);
   const endpoint = url.pathname.toLowerCase();
   const urlPath = endpoint.split("/");
@@ -43,45 +74,42 @@ async function callback(request, response) {
 
   if (request.method == "GET") {
     if (endpoint == "/") {
-      replyData = await fs.readFile("html/hub.html");
+      replyData = await fs.readFile("html/hub.handlebars");
     } else if (urlPath[urlPath.length - 1].endsWith(".js") || (urlPath[urlPath.length - 1].endsWith(".css") && urlPath.length < 4)) {
       if (fs.existsSync(`html/${urlPath[urlPath.length - 1]}`)) {
         replyData = await fs.readFile(`html/${urlPath[urlPath.length - 1]}`);
       } else {
         Logger.info(urlPath.length - 1);
         response.statusCode = 403;
-        replyData = "";
+        response.end();
+        return;
       }
     } else if (urlPath[1] == "guilds") {
-      replyData = await fs.readFile("html/guild.html");
+      replyData = await fs.readFile("html/guild.handlebars");
     } else if (urlPath[1] == "assets") {
-      if (fs.existsSync(GetAsset(`site/images/${urlPath[2]}`))) {
-        replyData = await fs.readFile(GetAsset(`site/images/${urlPath[2]}`));
-      } else {
-        Logger.info(urlPath[2]);
-        response.statusCode = 403;
-        replyData = "";
-      }
+      return await handleAssets(urlPath, response);
     } else if (pages.has(endpoint.slice(1))) {
-      replyData = await fs.readFile("html/generic.html");
+      replyData = await fs.readFile("html/generic.handlebars");
     } else if (urlPath[1] == "player") {
-      replyData = await fs.readFile("html/player.html");
+      replyData = await fs.readFile("html/player.handlebars");
     } else if (urlPath[1] == "guildstats") {
-      replyData = await fs.readFile("html/guildstats.html");
+      replyData = await fs.readFile("html/guildstats.handlebars");
     } else {
       switch (endpoint) {
         case "/github": {
           response.writeHead(302, {
             Location: "https://github.com/eatmyvenom/hyarcade",
           });
-          break;
+          response.end();
+          return;
         }
 
         case "/invite": {
           response.writeHead(302, {
             Location: cfg.discordBot.invite,
           });
-          break;
+          response.end();
+          return;
         }
 
         default: {
@@ -91,7 +119,10 @@ async function callback(request, response) {
       }
     }
 
-    response.write(replyData);
+    const template = Handlebars.compile(replyData.toString());
+    const page = template(context);
+
+    response.write(page);
     response.end();
   }
 }
@@ -102,7 +133,7 @@ async function callback(request, response) {
 async function Server(port) {
   Logger.name = "Site";
   Logger.emoji = "🌐";
-  Logger.log("Starting website server...");
+  Logger.log(`Starting website server on port ${port}`);
   const server = require("http").createServer(callback).listen({ port, hostname: "localhost" });
 
   server.on("close", (...args) => Logger.log(...args));

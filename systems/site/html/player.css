@@ -1,6 +1,6 @@
 * {
-    font-size: 16px;
-    font-family: minecraf;
+  font-size: 16px;
+  font-family: minecraf;
 }
 
 @font-face {
@@ -9,8 +9,8 @@
 }
 
 .minecraft {
-    font-family: minecraf;
-    text-shadow: 0.1em 0.1em #000000;
+  font-family: minecraf;
+  text-shadow: 0.1em 0.1em #000000;
 }
 
 .minecraft * {
@@ -18,17 +18,19 @@
 }
 
 h3 {
-    font-family: minecraf;
-    font-size: 24px;
-    text-shadow: 0.1em 0.1em #000000;
+  font-family: minecraf;
+  font-size: 24px;
+  text-shadow: 0.1em 0.1em #000000;
 }
 
 h3 * {
-    font-family: minecraf;
-    font-size: 24px;
+  font-family: minecraf;
+  font-size: 24px;
 }
 
-.vnm_light_blue { color: #44a3e7; }
+.vnm_light_blue {
+  color: #44a3e7;
+}
 
 .black {
   color: #000000;
@@ -37,37 +39,37 @@ h3 * {
 
 .dark_blue {
   color: #0000aa;
-  text-shadow: 0.1em 0.1em #00002A;
+  text-shadow: 0.1em 0.1em #00002a;
 }
 
 .dark_green {
-  color: #00AA00;
-  text-shadow: 0.1em 0.1em #002A00;
+  color: #00aa00;
+  text-shadow: 0.1em 0.1em #002a00;
 }
 
 .dark_aqua {
   color: #00aaaa;
-  text-shadow: 0.1em 0.1em #002A2A;
+  text-shadow: 0.1em 0.1em #002a2a;
 }
 
 .dark_red {
   color: #aa0000;
-  text-shadow: 0.1em 0.1em #2A0000;
+  text-shadow: 0.1em 0.1em #2a0000;
 }
 
 .dark_purple {
   color: #aa00aa;
-  text-shadow: 0.1em 0.1em #2A002A;
+  text-shadow: 0.1em 0.1em #2a002a;
 }
 
 .gold {
   color: #ffaa00;
-  text-shadow: 0.1em 0.1em #3F2A00;
+  text-shadow: 0.1em 0.1em #3f2a00;
 }
 
 .gray {
   color: #aaaaaa;
-  text-shadow: 0.1em 0.1em #2A2A2A;
+  text-shadow: 0.1em 0.1em #2a2a2a;
 }
 
 .dark_gray {
@@ -77,207 +79,207 @@ h3 * {
 
 .blue {
   color: #5555ff;
-  text-shadow: 0.1em 0.1em #15153F;
+  text-shadow: 0.1em 0.1em #15153f;
 }
 
 .green {
   color: #55ff55;
-  text-shadow: 0.1em 0.1em #153F15;
+  text-shadow: 0.1em 0.1em #153f15;
 }
 
 .aqua {
   color: #55ffff;
-  text-shadow: 0.1em 0.1em #153F3F;
+  text-shadow: 0.1em 0.1em #153f3f;
 }
 
 .red {
   color: #ff5555;
-  text-shadow: 0.1em 0.1em #3F1515;
+  text-shadow: 0.1em 0.1em #3f1515;
 }
 
 .light_purple {
   color: #ff55ff;
-  text-shadow: 0.1em 0.1em #3F153F;
+  text-shadow: 0.1em 0.1em #3f153f;
 }
 
 .yellow {
   color: #ffff55;
-  text-shadow: 0.1em 0.1em #3F3F15;
+  text-shadow: 0.1em 0.1em #3f3f15;
 }
 
 .white {
   color: #ffffff;
-  text-shadow: 0.1em 0.1em #3F3F3F;
+  text-shadow: 0.1em 0.1em #3f3f3f;
 }
 
 #home {
-    margin-left: 14px;
+  margin-left: 14px;
 }
 
 main {
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  width: 100%;
 }
 
 #info {
-    grid-column: 1;
-    grid-row-start: 1;
-    grid-row-end: 2;
+  grid-column: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 #status {
-    grid-column: 4;
-    grid-row-start: 1;
+  grid-column: 4;
+  grid-row-start: 1;
 }
 
 #stats p {
-    margin: 1em;
-    padding: 12px;
-    border: 1px solid #8c54fe;
+  margin: 1em;
+  padding: 12px;
+  border: 1px solid #8c54fe;
 }
 
 #guild {
-    grid-column: 1;
-    grid-row-start: 2;
-    grid-row-end: 3;
+  grid-column: 1;
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 
 #stats {
-    grid-column-start: 2;
-    grid-column-end: 4;
+  grid-column-start: 2;
+  grid-column-end: 4;
 }
 
 #info img {
-    float: right;
+  float: right;
 }
 
 #stats {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-row-start: 1;
-    grid-row-end: 5;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row-start: 1;
+  grid-row-end: 5;
 }
 
 #stats > h3 {
-    text-align: center;
-    grid-column-start: 1;
-    grid-column-end: 3;
+  text-align: center;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 aside {
-    grid-column-start: 4;
-    /* position: absolute; */
-    /* display: block; */
-    /* top: 5vh; */
-    /* right: 2vw; */
-    width: 100%;
+  grid-column-start: 4;
+  /* position: absolute; */
+  /* display: block; */
+  /* top: 5vh; */
+  /* right: 2vw; */
+  width: 100%;
 }
 
 article {
-    grid-column-start: 1;
+  grid-column-start: 1;
 }
 
 input {
-    background: #2d3040;
-    border: 2px solid #44a3e7;
-    color: white;
-    height: inherit;
-    outline: none !important;
+  background: #2d3040;
+  border: 2px solid #44a3e7;
+  color: white;
+  height: inherit;
+  outline: none !important;
 }
 
 img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    height: auto;
-    width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: 100%;
 }
 
 img#render {
-    height: auto;
-    width: 10%;
+  height: auto;
+  width: 10%;
 }
 
 button {
-    background-color: #181c30;
-    border: 2px solid #44a3e7;
-    border-radius: 0;
-    color: white;
+  background-color: #181c30;
+  border: 2px solid #44a3e7;
+  border-radius: 0;
+  color: white;
 }
 
 .material-icons {
-    text-align: center;
-    vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 #info,
 #status,
 #guild {
-    background-color: #181c30;
-    border: 1px solid #0066cc;
-    margin: 4px;
-    padding: 12px;
-    transition-duration: 0.3s;
+  background-color: #181c30;
+  border: 1px solid #0066cc;
+  margin: 4px;
+  padding: 12px;
+  transition-duration: 0.3s;
 }
 
 #stats,
 #info {
-    line-height: 1.25;
+  line-height: 1.25;
 }
 
 input {
-    display: inline-block;
-    height: 32px;
-    width: 100%;
-    transition-duration: 0.3s;
+  display: inline-block;
+  height: 32px;
+  width: 100%;
+  transition-duration: 0.3s;
 }
 
 #home {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 #query {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 nav {
-    margin-bottom: 1%;
+  margin-bottom: 1%;
 }
 
 nav > button:hover {
-    background: #06c;
+  background: #06c;
 }
 
 nav > input:hover {
-    border-color: #06c;
+  border-color: #06c;
 }
 
 button {
-    height: 32px;
+  height: 32px;
 }
 
 h6 {
-    font-family: minecraf;
-    text-shadow: 0.1em 0.1em #000000;
-    font-size: 18px;
-    margin: auto;
-    display: inline-block;
-    text-align: center;
+  font-family: minecraf;
+  text-shadow: 0.1em 0.1em #000000;
+  font-size: 18px;
+  margin: auto;
+  display: inline-block;
+  text-align: center;
 }
 
 nav {
-    margin-top : 0.5vh;
-    border: none;
+  margin-top: 0.5vh;
+  border: none;
 }
 
 .pre {
-    white-space: pre-line;
+  white-space: pre-line;
 }
 
 article {
-    display: inline-block;
-    width: 40%;
+  display: inline-block;
+  width: 40%;
 }
 
 /* article:focus-within span {
@@ -289,29 +291,28 @@ article {
 } */
 
 article:not(:focus-within) span {
-    display: none;
+  display: none;
 }
 
-
 @media only screen and (max-width: 600px) {
+  h3,
+  h3 * {
+    font-size: 18px;
+  }
 
-    h3, h3 * {
-        font-size: 18px;
-    }
+  article {
+    width: 90%;
+  }
 
-    article {
-        width: 90%;
-    }
+  main {
+    display: block;
+  }
 
-    main {
-        display: block;
-    }
+  #uuid {
+    font-size: 14px;
+  }
 
-    #uuid {
-        font-size: 14px;
-    }
-
-    #stats {
-        display: block;
-    }
+  #stats {
+    display: block;
+  }
 }

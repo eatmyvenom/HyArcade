@@ -123,8 +123,8 @@ function formatStats(guild) {
 function updateData() {
   const id = decodeURI(new URLSearchParams(window.location.search).get("q"));
 
-  fetch(`${guildURL}?uuid=${id.trim()}`).then(g => {
-    g.json().then(gld => {
+  fetch(`${guildURL}?uuid=${id.trim()}`).then((g) => {
+    g.json().then((gld) => {
       const guild = gld;
 
       formatTitle(guild);

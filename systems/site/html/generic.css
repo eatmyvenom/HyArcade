@@ -7,7 +7,8 @@
   src: url(https://hyarcade.xyz/assets/mc.otf);
 }
 
-.minecraft, .minecraft * {
+.minecraft,
+.minecraft * {
   font-family: minecraf;
   text-shadow: 0.1em 0.1em black;
 }
@@ -35,37 +36,38 @@ body {
 
 .dark_blue {
   color: #0000aa;
-  text-shadow: 0.1em 0.1em #00002A;
+  text-shadow: 0.1em 0.1em #00002a;
 }
 
 .dark_green {
-  color: #00AA00;
-  text-shadow: 0.1em 0.1em #002A00;
+  color: #00aa00;
+  text-shadow: 0.1em 0.1em #002a00;
 }
 
 .dark_aqua {
   color: #00aaaa;
-  text-shadow: 0.1em 0.1em #002A2A;
+  text-shadow: 0.1em 0.1em #002a2a;
 }
 
 .dark_red {
   color: #aa0000;
-  text-shadow: 0.1em 0.1em #2A0000;
+  text-shadow: 0.1em 0.1em #2a0000;
 }
 
 .dark_purple {
   color: #aa00aa;
-  text-shadow: 0.1em 0.1em #2A002A;
+  text-shadow: 0.1em 0.1em #2a002a;
 }
 
 .gold {
   color: #ffaa00;
-  text-shadow: 0.1em 0.1em #3F2A00;
+  text-shadow: 0.1em 0.1em #3f2a00;
 }
 
-.gray, .grey {
+.gray,
+.grey {
   color: #aaaaaa;
-  text-shadow: 0.1em 0.1em #2A2A2A;
+  text-shadow: 0.1em 0.1em #2a2a2a;
 }
 
 .dark_gray {
@@ -75,37 +77,37 @@ body {
 
 .blue {
   color: #5555ff;
-  text-shadow: 0.1em 0.1em #15153F;
+  text-shadow: 0.1em 0.1em #15153f;
 }
 
 .green {
   color: #55ff55;
-  text-shadow: 0.1em 0.1em #153F15;
+  text-shadow: 0.1em 0.1em #153f15;
 }
 
 .aqua {
   color: #55ffff;
-  text-shadow: 0.1em 0.1em #153F3F;
+  text-shadow: 0.1em 0.1em #153f3f;
 }
 
 .red {
   color: #ff5555;
-  text-shadow: 0.1em 0.1em #3F1515;
+  text-shadow: 0.1em 0.1em #3f1515;
 }
 
 .light_purple {
   color: #ff55ff;
-  text-shadow: 0.1em 0.1em #3F153F;
+  text-shadow: 0.1em 0.1em #3f153f;
 }
 
 .yellow {
   color: #ffff55;
-  text-shadow: 0.1em 0.1em #3F3F15;
+  text-shadow: 0.1em 0.1em #3f3f15;
 }
 
 .white {
   color: #ffffff;
-  text-shadow: 0.1em 0.1em #3F3F3F;
+  text-shadow: 0.1em 0.1em #3f3f3f;
 }
 
 div {
@@ -117,12 +119,12 @@ div {
 main {
   padding: 8px;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 
 nav {
   display: flex;
-  justify-content:center;
+  justify-content: center;
 }
 
 nav button {
@@ -200,7 +202,8 @@ header {
   justify-content: space-between;
 }
 
-header h1, header aside {
+header h1,
+header aside {
   display: inline-block;
 }
 
@@ -210,22 +213,22 @@ div {
   width: fit-content;
 }
 
-div[vis=false] {
+div[vis="false"] {
   border: none;
   height: 75px;
   position: relative;
 }
 
-div[vis=false] ol li {
-    width: 0px;
-    height: 0px;
-    overflow: hidden;
-    font-size: 0px;
-    opacity: 0;
+div[vis="false"] ol li {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+  font-size: 0px;
+  opacity: 0;
 }
 
 div h2 {
-    text-align: center;
+  text-align: center;
 }
 
 address a {
@@ -262,7 +265,7 @@ div li img {
 
 ol li::marker {
   color: #ffffff;
-  text-shadow: 0.1em 0.1em #3F3F3F;
+  text-shadow: 0.1em 0.1em #3f3f3f;
   font-family: minecraf;
   font-weight: 600;
 }
@@ -306,7 +309,8 @@ input {
     font-size: 18px;
   }
 
-  div, main div {
+  div,
+  main div {
     display: block;
     width: 91%;
     font-size: 12px;
@@ -329,13 +333,13 @@ footer {
   display: block;
 }
 
-footer>a {
+footer > a {
   display: block;
   color: #44a3e7 !important;
   border: none !important;
 }
 
-footer>a:hover {
+footer > a:hover {
   border: none;
 }
 
@@ -345,21 +349,21 @@ footer {
   display: block;
 }
 
-footer>a {
+footer > a {
   display: block;
   color: #44a3e7 !important;
   text-decoration: none;
 }
 
-footer>a,
-footer>div,
-footer>a:hover,
-footer>div:hover {
+footer > a,
+footer > div,
+footer > a:hover,
+footer > div:hover {
   border: none !important;
   box-shadow: none;
 }
 
-footer>* {
+footer > * {
   margin: 1.5%;
 }
 
@@ -456,7 +460,6 @@ footer>* {
 }
 
 @keyframes lds-default {
-
   0%,
   20%,
   80%,

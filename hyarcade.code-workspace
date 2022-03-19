@@ -48,7 +48,8 @@
 			"*.tsx": "$(capture).ts",
 			"tsconfig.json": "tsconfig.*.json",
 			"package.json": "package-lock.json, .npmrc, yarn.lock, .yarnrc, .yarnrc.yml, .nvmrc",
-			"*.html": "$(capture).js, $(capture).css"
+			"*.html": "$(capture).js, $(capture).css",
+			"*.handlebars": "$(capture).js, $(capture).css"
 		}
 	}
 }

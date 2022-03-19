@@ -1,70 +1,70 @@
 footer {
-    display : grid;
-    background: #2d3040;
-    border-top: 1px solid #ff3399;
+  display: grid;
+  background: #2d3040;
+  border-top: 1px solid #ff3399;
 }
 
 footer div {
-    all: initial;
-    display : grid;
-    width: 25%;
-    height: 80px;
-    margin: auto;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: auto auto;
+  all: initial;
+  display: grid;
+  width: 25%;
+  height: 80px;
+  margin: auto;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
 }
 
 footer div:hover {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 footer div a:hover {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 footer div a {
-    all: initial;
-    display: inline-block;
-    margin: auto;
-    vertical-align: middle;
-    color: #44a3e7;
+  all: initial;
+  display: inline-block;
+  margin: auto;
+  vertical-align: middle;
+  color: #44a3e7;
 }
 
 footer div a img {
-    all: initial;
-    width: 24px;
+  all: initial;
+  width: 24px;
 }
 
 footer div .botinvite {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    grid-column-end : 2;
+  grid-row-start: 2;
+  grid-column-start: 2;
+  grid-column-end: 2;
 }
 
 footer div .home {
-    grid-row-start: 2;
-    grid-column-start: 3;
-    grid-column-end : 3;
+  grid-row-start: 2;
+  grid-column-start: 3;
+  grid-column-end: 3;
 }
 
 @media only screen and (max-width: 600px) {
-    footer {
-        margin-top:25px;
-    }
-    footer div {
-        display: block;
-        width: 100%;
-        height:max-content;
-    }
+  footer {
+    margin-top: 25px;
+  }
+  footer div {
+    display: block;
+    width: 100%;
+    height: max-content;
+  }
 
-    footer div a {
-        display : block;
-        width: 100%;
-        margin: 25px 0px 25px 0px;
-        text-align: center;
-    }
+  footer div a {
+    display: block;
+    width: 100%;
+    margin: 25px 0px 25px 0px;
+    text-align: center;
+  }
 
-    footer div a img {
-        width: 25px;
-    }
+  footer div a img {
+    width: 25px;
+  }
 }
