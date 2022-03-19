@@ -220,7 +220,7 @@ async function getLeaderboards(element) {
   const path = id;
   const args = `path=${path}${formattedTime}&max=${maxLength}`;
 
-  const url = `https://api.hyarcade.xyz/leaderboard/guilds?${args}&min`;
+  const url = `https://api.hyarcade.xyz/leaderboard/guild?${args}&min`;
   console.info(`fetching ${url}`);
   const raw = await fetch(url, { mode: "cors" });
   lb = await raw.json();

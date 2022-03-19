@@ -306,7 +306,7 @@ module.exports = class Database {
   static async getGuildLeaderboard(path, time, reverse, max) {
     Logger.verbose("Reading database");
 
-    const url = new URL("leaderboard/guilds", cfg.database.url);
+    const url = new URL("leaderboard/guild", cfg.database.url);
     url.searchParams.set("path", path);
 
     if (time != undefined) {

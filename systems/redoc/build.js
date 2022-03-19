@@ -391,7 +391,7 @@ All responses in JSON format.`,
       ]),
       post: await getPath("Data Generation", { success: true }, "Upload Guild"),
     },
-    "/leaderboard/guilds": {
+    "/leaderboard/guild": {
       get: await getPath("Leaderboards", await Database.getGuildLeaderboard("gexp"), "Guild Leaderboard", [
         {
           in: "query",
