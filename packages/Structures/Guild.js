@@ -2,14 +2,6 @@ const logger = require("hyarcade-logger");
 const { HypixelApi } = require("hyarcade-requests");
 const Database = require("hyarcade-requests/Database");
 
-/**
- * @param {string} str
- * @returns {number}
- */
-function numberify(str) {
-  return Number(str);
-}
-
 class GuildAchievements {
   experienceKings = 0;
   winners = 0;
@@ -68,6 +60,152 @@ class GameExperience {
   }
 }
 
+class GameStats {
+  blockingDead = {
+    wins: 0,
+    kills: 0,
+  };
+
+  bountyHunters = {
+    wins: 0,
+    kills: 0,
+  };
+
+  captureTheWool = {
+    woolCaptures: 0,
+    kills: 0,
+  };
+
+  dragonWars = {
+    wins: 0,
+    kills: 0,
+  };
+
+  enderSpleef = {
+    wins: 0,
+    blocksBroken: 0,
+  };
+
+  farmHunt = {
+    wins: 0,
+    kills: 0,
+    taunts: 0,
+  };
+
+  football = {
+    wins: 0,
+    goals: 0,
+  };
+
+  galaxyWars = {
+    wins: 0,
+    kills: 0,
+  };
+
+  hideAndSeek = {
+    wins: 0,
+    objectives: 0,
+    kills: 0,
+  };
+
+  holeInTheWall = {
+    wins: 0,
+    qualifiers: 0,
+    finals: 0,
+  };
+
+  hypixelSays = {
+    wins: 0,
+    roundWins: 0,
+    points: 0,
+  };
+
+  miniWalls = {
+    wins: 0,
+    kills: 0,
+    witherDamage: 0,
+  };
+
+  partyGames = {
+    wins: 0,
+    stars: 0,
+    roundsWon: 0,
+  };
+
+  pixelPainters = {
+    wins: 0,
+  };
+
+  throwOut = {
+    wins: 0,
+    kills: 0,
+  };
+
+  zombies = {
+    wins: 0,
+  };
+
+  /**
+   *
+   * @param {object[]} members
+   */
+  constructor(members) {
+    for (const member of members) {
+      this.blockingDead.wins += member?.blockingDead?.wins ?? 0;
+      this.blockingDead.kills += member?.blockingDead?.kills ?? 0;
+
+      this.bountyHunters.wins += member?.bountyHunters?.wins ?? 0;
+      this.bountyHunters.kills += member?.bountyHunters?.kills ?? 0;
+
+      this.captureTheWool.woolCaptures += member?.captureTheWool?.woolCaptures ?? 0;
+      this.captureTheWool.kills += member?.captureTheWool?.kills ?? 0;
+
+      this.dragonWars.wins += member?.dragonWars?.wins ?? 0;
+      this.dragonWars.kills += member?.dragonWars?.kills ?? 0;
+
+      this.enderSpleef.wins += member?.enderSpleef?.wins ?? 0;
+      this.enderSpleef.blocksBroken += member?.enderSpleef?.blocksBroken ?? 0;
+
+      this.farmHunt.wins += member?.farmhunt?.wins ?? 0;
+      this.farmHunt.kills += member?.farmhunt?.kills ?? 0;
+      this.farmHunt.taunts += member?.farmhunt?.tauntsUsed ?? 0;
+
+      this.football.wins += member?.football?.wins ?? 0;
+      this.football.goals += member?.football?.goals ?? 0;
+
+      this.galaxyWars.wins += member?.galaxyWars?.wins ?? 0;
+      this.galaxyWars.kills += member?.galaxyWars?.kills ?? 0;
+
+      this.hideAndSeek.wins += member?.hideAndSeek?.wins ?? 0;
+      this.hideAndSeek.kills += member?.hideAndSeek?.kills ?? 0;
+      this.hideAndSeek.objectives += member?.hideAndSeek?.objectives ?? 0;
+
+      this.holeInTheWall.wins += member?.holeInTheWall?.wins ?? 0;
+      this.holeInTheWall.qualifiers += member?.holeInTheWall?.qualifiers ?? 0;
+      this.holeInTheWall.finals += member?.holeInTheWall?.finals ?? 0;
+
+      this.hypixelSays.wins += member?.hypixelSays?.wins ?? 0;
+      this.hypixelSays.roundWins += member?.hypixelSays?.totalRoundWins ?? 0;
+      this.hypixelSays.points += member?.hypixelSays?.totalPoints ?? 0;
+
+      this.miniWalls.wins += member?.miniWalls?.wins ?? 0;
+      this.miniWalls.kills += member?.miniWalls?.kills ?? 0;
+      this.miniWalls.witherDamage += member?.miniWalls?.witherDamage ?? 0;
+
+      this.partyGames.wins += member?.partyGames?.wins ?? 0;
+      this.partyGames.stars += member?.partyGames?.stars ?? 0;
+      this.partyGames.roundsWon += member?.partyGames?.roundsWon ?? 0;
+
+      this.pixelPainters.wins += member?.pixelPainters?.wins ?? 0;
+
+      this.throwOut.wins += member?.throwOut?.wins ?? 0;
+      this.throwOut.kills += member?.throwOut?.kills ?? 0;
+
+      this.zombies.wins += member?.zombies?.wins_zombies ?? 0;
+    }
+  }
+}
+
 class Guild {
   input = "";
 
@@ -96,28 +234,17 @@ class Guild {
   /** @type {GameExperience} */
   gameExperience = {};
 
-  wins = 0;
+  /** @type {GameStats} */
+  gameStats = {};
+
   arcadeCoins = 0;
   combinedAP = 0;
   arcadeWins = 0;
   karma = 0;
   ranksGifted = 0;
-  hitwWins = 0;
-  farmhuntWins = 0;
-  miniWallsWins = 0;
-  footballWins = 0;
-  hypixelSaysWins = 0;
-  enderSpleefWins = 0;
-  throwOutWins = 0;
-  galaxyWarsWins = 0;
-  dragonWarsWins = 0;
-  bountyHuntersWins = 0;
-  blockingDeadWins = 0;
-  hideAndSeekWins = 0;
-  zombiesWins = 0;
-  pixelPaintersWins = 0;
-  partyGamesWins = 0;
-  simWins = 0;
+  arcadeAchievementPoints = 0;
+  questsCompleted = 0;
+  totalWins = 0;
 
   updateTime = 0;
 
@@ -208,31 +335,19 @@ class Guild {
     await this.updateMemberData();
     this.updateMemberStats();
 
-    for (let i = 0; i < this.members.length; i += 1) {
-      const member = this.members[i];
-      this.wins += member?.wins ?? 0;
+    this.gameStats = new GameStats(this.members);
+
+    for (const member of this.members) {
       this.arcadeCoins += member?.arcadeCoins ?? 0;
-      this.combinedAP += member?.achievementPoints ?? 0;
-      this.arcadeWins += member?.combinedArcadeWins ?? 0;
-      this.karma += numberify(member?.karma ?? 0);
-      this.ranksGifted += numberify(member?.ranksGifted ?? 0);
-      this.hitwWins += numberify(member?.holeInTheWall?.wins ?? 0);
-      this.farmhuntWins += numberify(member?.farmhunt?.wins ?? 0);
-      this.miniWallsWins += numberify(member?.miniWalls?.wins ?? 0);
-      this.footballWins += numberify(member?.football?.wins ?? 0);
-      this.enderSpleefWins += numberify(member?.enderSpleef?.wins ?? 0);
-      this.throwOutWins += numberify(member?.throwOut?.wins ?? 0);
-      this.galaxyWarsWins += numberify(member?.galaxyWars?.wins ?? 0);
-      this.dragonWarsWins += numberify(member?.dragonWars?.wins ?? 0);
-      this.bountyHuntersWins += numberify(member?.bountyHunters?.wins ?? 0);
-      this.blockingDeadWins += numberify(member?.blockingDead?.wins ?? 0);
-      this.hideAndSeekWins += numberify(member?.hideAndSeek?.wins ?? 0);
-      this.hypixelSaysWins += numberify(member?.hypixelSays?.wins ?? 0);
-      this.zombiesWins += numberify(member?.zombies?.wins_zombies ?? 0);
-      this.pixelPaintersWins += numberify(member?.pixelPainters?.wins ?? 0);
-      this.partyGamesWins += numberify(member?.partyGames?.wins ?? 0);
-      this.simWins += numberify(member?.seasonalWins?.total ?? 0);
+      this.combinedAP += member.achievementPoints ?? 0;
+      this.arcadeWins += member?.arcadeWins ?? 0;
+      this.karma += member?.karma ?? 0;
+      this.ranksGifted += member?.ranksGifted ?? 0;
+      this.arcadeAchievementPoints += member?.arcadeAchievementPoints ?? 0;
+      this.questsCompleted += member?.questsCompleted ?? 0;
+      this.totalWins += member?.anyWins ?? 0;
     }
+
     delete this.members;
     delete this.memberUUIDs;
     return this.wins;
@@ -250,11 +365,17 @@ class Guild {
       obj.joinTime = member.guildData.joined;
       obj.questParticipation = member.guildData.questParticipation;
       obj.gexpHistory = member.guildData.expHistory;
-      obj.arcadeWins = member.arcadeWins;
-      obj.combinedArcadeWins = member.combinedArcadeWins;
-      obj.arcadeCoins = member.arcadeCoins;
-      obj.achievementPoints = member.achievementPoints;
-      obj.arcadeAchievements = member?.arcadeAchievments?.totalEarned ?? 0;
+      obj.stats = {
+        arcadeWins: member.arcadeWins,
+        combinedArcadeWins: member.combinedArcadeWins,
+        arcadeCoins: member.arcadeCoins,
+        achievementPoints: member.achievementPoints,
+        arcadeAchievements: member?.arcadeAchievments?.totalEarned ?? 0,
+        questsCompleted: member?.questsCompleted ?? 0,
+        xp: member?.xp ?? 0,
+        level: member?.level ?? 0,
+        totalWins: member?.anyWins ?? 0,
+      };
       obj.updateTime = member.updateTime;
       obj.lastAction = member.actionTime;
       this.membersStats.push(obj);
