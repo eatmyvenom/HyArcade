@@ -59,7 +59,7 @@ function formatWins(guild) {
   });
 
   for (const m of members) {
-    let wins = `<i>Wins ${formatNumber(m?.arcadeWins ?? 0)}</i>`;
+    let wins = `<i>Wins ${formatNumber(m?.stats.arcadeWins ?? 0)}</i>`;
 
     let rankTag = m.guildRank ? m.guildRank.tag : "GM";
 
@@ -78,22 +78,22 @@ function formatWins(guild) {
 function formatGames(guild) {
   const gamesEle = document.querySelector(".games");
   const gamesArr = [
-    ["Party Games", guild.partyGamesWins],
-    ["Hypixel Says", guild.hypixelSaysWins],
-    ["Bounty Hunters", guild.bountyHuntersWins],
-    ["Hole in the Wall", guild.hitwWins],
-    ["Farm Hunt", guild.farmhuntWins],
-    ["Mini Walls", guild.miniWallsWins],
-    ["Football", guild.footballWins],
-    ["Ender Spleef", guild.enderSpleefWins],
-    ["Throw Out", guild.throwOutWins],
-    ["Galaxy Wars", guild.galaxyWarsWins],
-    ["Dragon Wars", guild.dragonWarsWins],
-    ["Blocking Dead", guild.blockingDeadWins],
-    ["Hide and Seek", guild.hideAndSeekWins],
-    ["Zombies", guild.zombiesWins],
-    ["Pixel Painters", guild.pixelPaintersWins],
-    ["Seasonal Games", guild.simWins],
+    ["Party Games", guild.gameStats.partyGames.wins],
+    ["Hypixel Says", guild.gameStats.hypixelSays.wins],
+    ["Bounty Hunters", guild.gameStats.bountyHunters.wins],
+    ["Hole in the Wall", guild.gameStats.holeInTheWall.wins],
+    ["Farm Hunt", guild.gameStats.farmHunt.wins],
+    ["Mini Walls", guild.gameStats.miniWalls.wins],
+    ["Football", guild.gameStats.football.wins],
+    ["Ender Spleef", guild.gameStats.enderSpleef.wins],
+    ["Throw Out", guild.gameStats.throwOut.wins],
+    ["Galaxy Wars", guild.gameStats.galaxyWars.wins],
+    ["Dragon Wars", guild.gameStats.dragonWars.wins],
+    ["Blocking Dead", guild.gameStats.blockingDead.wins],
+    ["Hide and Seek", guild.gameStats.hideAndSeek.wins],
+    ["Zombies", guild.gameStats.zombies.wins],
+    ["Pixel Painters", guild.gameStats.pixelPainters.wins],
+    ["Seasonal Games", guild.gameStats.seasonal.wins],
   ];
 
   gamesArr.sort((a, b) => b[1] - a[1]);
@@ -123,8 +123,8 @@ function formatStats(guild) {
 function updateData() {
   const id = decodeURI(new URLSearchParams(window.location.search).get("q"));
 
-  fetch(`${guildURL}?uuid=${id.trim()}`).then((g) => {
-    g.json().then((gld) => {
+  fetch(`${guildURL}?uuid=${id.trim()}`).then(g => {
+    g.json().then(gld => {
       const guild = gld;
 
       formatTitle(guild);

@@ -563,7 +563,7 @@ async function nameHist(uuid) {
   setHtmlByName(
     "namehist",
     `<b class="gold"><u>Name History</u></b><br><b class="yellow">${mojData.username_history
-      .map((e) => e.username)
+      .map(e => e.username)
       .reverse()
       .join("<br>")}</b>`,
   );
