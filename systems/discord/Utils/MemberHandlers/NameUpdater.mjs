@@ -22,14 +22,14 @@ export default async function NameUpdater(client) {
   const miwMembers = await miwServer.members.fetch();
 
   for (const m of miwMembers) {
-    const uuid = disclist[m.id];
+    const uuid = disclist[m[1].user.id];
     if (uuid != undefined) {
       const acc = accs.find(a => a.uuid == uuid);
       if (acc != undefined && acc.name != undefined && acc.name != "INVALID-NAME" && acc.name != m.displayName) {
         try {
-          await m.setNickname(acc.name);
+          await m[1].setNickname(acc.name);
         } catch (error) {
-          logger.err(error.stack);
+          logger.err(error);
         }
       }
     }
