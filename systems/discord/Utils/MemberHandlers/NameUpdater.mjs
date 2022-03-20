@@ -25,7 +25,7 @@ export default async function NameUpdater(client) {
     const uuid = disclist[m[1].user.id];
     if (uuid != undefined) {
       const acc = accs.find(a => a.uuid == uuid);
-      if (acc != undefined && acc.name != undefined && acc.name != "INVALID-NAME" && acc.name != m.displayName) {
+      if (acc != undefined && acc.name != undefined && acc.name != "INVALID-NAME" && acc.name != m[1].displayName) {
         try {
           await m[1].setNickname(acc.name);
         } catch (error) {
