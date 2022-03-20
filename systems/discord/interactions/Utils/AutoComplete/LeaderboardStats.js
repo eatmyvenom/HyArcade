@@ -58,15 +58,22 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
       delete genStats["Unknown Wins"];
       delete genStats["Xp"];
     }
+
     const types = Object.keys(genStats)
       .map(k => ({ name: k, value: genStats[k] }))
       .sort();
 
     const filtered = types.filter(v => v.name.toLowerCase().startsWith(stat.toLowerCase())).sort();
-    const res = filtered.length > 0 ? filtered : types;
+    const res = filtered.length > 0 ? filtered : [];
 
     try {
       interaction.respond(res.slice(0, Math.min(24, res.length)).sort());
+    } catch (error) {
+      Logger.err(error);
+    }
+  } else {
+    try {
+      interaction.respond([]);
     } catch (error) {
       Logger.err(error);
     }

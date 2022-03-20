@@ -36,7 +36,7 @@ module.exports = async function LeaderboardCategorys(category, interaction, test
   const allKeys = Object.keys(categorys);
   const keys = allKeys.filter(k => k.toLowerCase().startsWith(category.toLowerCase())).sort();
 
-  const types = keys.length > 0 ? keys.map(k => ({ name: k, value: categorys[k] })) : allKeys.map(k => ({ name: k, value: categorys[k] }));
+  const types = keys.length > 0 ? keys.map(k => ({ name: k, value: categorys[k] })) : [];
 
   try {
     interaction.respond(types.sort());
