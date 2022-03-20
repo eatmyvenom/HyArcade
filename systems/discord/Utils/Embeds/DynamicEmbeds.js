@@ -80,7 +80,7 @@ exports.LOG_MESSAGE_COMPONENT_USAGE = function (interaction) {
     .addField("User", `<@${interaction.user.id}>\n- \`${interaction.user.id}\``, true)
     .addField("Server", `\` ${interaction.guild.name} \`\n- \`${interaction.guild.id}\``, true)
     .addField("Channel", `<#${interaction.channel.id}>\n- \`${interaction.channel.name}\`\n- \`${interaction.channel.id}\``, true)
-    .setFooter({ text: `${interaction.message.interaction.id ?? "MSG"}` });
+    .setFooter({ text: `${interaction?.message?.interaction?.id ?? "MSG"}` });
 };
 
 exports.INFO_WHOIS = function (acc) {
