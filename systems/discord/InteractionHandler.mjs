@@ -30,9 +30,7 @@ async function isBlacklisted(id) {
  */
 async function logCmd(interaction) {
   await Webhooks.commandHook.send({
-    embeds: [
-      LOG_SLASH_COMMAND_USAGE(interaction.user?.id, interaction.user?.tag, interaction.commandName, interaction.guild?.name, interaction.channel?.id, interaction.options?.data),
-    ],
+    embeds: [LOG_SLASH_COMMAND_USAGE(interaction)],
   });
 }
 
@@ -99,7 +97,7 @@ async function commandHandler(interaction) {
  */
 async function logBtn(interaction) {
   await Webhooks.commandHook.send({
-    embeds: [LOG_MESSAGE_COMPONENT_USAGE(interaction.user?.id, interaction.user?.tag, interaction.customId, interaction.values, interaction.guild?.name, interaction.channel?.id)],
+    embeds: [LOG_MESSAGE_COMPONENT_USAGE(interaction)],
   });
 }
 

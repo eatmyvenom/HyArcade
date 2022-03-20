@@ -1,4 +1,4 @@
-const { MessageEmbed, Message } = require("discord.js");
+const { MessageEmbed, Message, CommandInteraction, MessageComponentInteraction } = require("discord.js");
 const { COLOR_PRIMARY, COLOR_RED, COLOR_PURPLE, COLOR_SUCCESS, COLOR_PINK } = require("./Colors");
 
 exports.INFO_ACCOUNTS_ADDED = function (res) {
@@ -47,26 +47,40 @@ exports.ERROR_ARGS_LENGTH = function (len) {
   return new MessageEmbed().setTitle("ERROR").setColor(COLOR_RED).setDescription(`This command requires ${len} arguments`);
 };
 
-exports.LOG_SLASH_COMMAND_USAGE = function (userid, usertag, command, server, channel, options) {
+/**
+ *
+ * @param {CommandInteraction} interaction
+ * @returns {MessageEmbed}
+ */
+exports.LOG_SLASH_COMMAND_USAGE = function (interaction) {
   return new MessageEmbed()
-    .setTitle(`Command run by ${usertag}`)
+    .setTitle(`Command run`)
     .setColor(COLOR_SUCCESS)
-    .addField("Command", `${command}`, false)
-    .addField("User", `<@${userid}>`, true)
-    .addField("Server", `${server}`, true)
-    .addField("Channel", `<#${channel}>`, true)
-    .addField("Options", `\`${JSON.stringify(options)}\``, false);
+    .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.avatarURL() })
+    .addField("Command", `${interaction.commandName}`, false)
+    .addField("User", `<@${interaction.user.id}>\n- \`${interaction.user.id}\``, true)
+    .addField("Server", `\` ${interaction.guild.name} \`\n- \`${interaction.guild.id}\``, true)
+    .addField("Channel", `<#${interaction.channel.id}>\n- \`${interaction.channel.name}\`\n- \`${interaction.channel.id}\``, true)
+    .addField("Options", `\`${JSON.stringify(interaction.options.data)}\``, false)
+    .setFooter({ text: `${interaction.id}` });
 };
 
-exports.LOG_MESSAGE_COMPONENT_USAGE = function (userid, usertag, componentID, values, server, channel) {
+/**
+ *
+ * @param {MessageComponentInteraction} interaction
+ * @returns {MessageEmbed}
+ */
+exports.LOG_MESSAGE_COMPONENT_USAGE = function (interaction) {
   return new MessageEmbed()
-    .setTitle(`Component used by ${usertag}`)
+    .setTitle(`${interaction.componentType} component used`)
     .setColor(COLOR_PURPLE)
-    .addField("ID", `\`${componentID}\``, false)
-    .addField("Values", `\`${values?.join(", ")}\``, false)
-    .addField("User", `<@${userid}>`, true)
-    .addField("Server", `${server}`, true)
-    .addField("Channel", `<#${channel}>`, true);
+    .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.avatarURL() })
+    .addField("ID", `\`${interaction.customId}\``, false)
+    .addField("Values", `\`${interaction.values?.join(", ")}\``, false)
+    .addField("User", `<@${interaction.user.id}>\n- \`${interaction.user.id}\``, true)
+    .addField("Server", `\` ${interaction.guild.name} \`\n- \`${interaction.guild.id}\``, true)
+    .addField("Channel", `<#${interaction.channel.id}>\n- \`${interaction.channel.name}\`\n- \`${interaction.channel.id}\``, true)
+    .setFooter({ text: `${interaction.message.interaction.id ?? "MSG"}` });
 };
 
 exports.INFO_WHOIS = function (acc) {

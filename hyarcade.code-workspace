@@ -3,6 +3,10 @@
 		{
 			"name": "HyArcade",
 			"path": "."
+		},
+		{
+			"name": "SSH FS - server2",
+			"uri": "ssh://server2/home/eatmyvenom/pg-api"
 		}
 	],
 	"settings": {
