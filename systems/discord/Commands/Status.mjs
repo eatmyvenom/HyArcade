@@ -11,6 +11,8 @@ const require = createRequire(import.meta.url);
 
 const { CommandInteraction, Message } = require("discord.js");
 
+let gameData;
+
 /**
  *
  * @param {object} status
@@ -509,6 +511,11 @@ async function callback(args, rawmsg, interaction) {
     status = await Database.status(args[0], rawmsg.author.id);
   }
 
+  if (gameData == undefined) {
+    const gameAPI = Database.Resource("games");
+    gameData = gameAPI.games;
+  }
+
   const img = new ImageGenerator(1280, 800, "'myFont'", true);
 
   const startY = 200;
@@ -531,8 +538,10 @@ async function callback(args, rawmsg, interaction) {
 
     await img.addBackground(GetAsset(getImage(status)), 0, 0, 1280, 800, "#00000052");
 
-    const type = `${status.session.gameType}`.replace(/_/g, " ").trim();
-    const mode = `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();
+    const type = gameData[status.session.gameType] ? gameData[status.session.gameType].name : `${status.session.gameType}`.replace(/_/g, " ").trim();
+    const mode = gameData[status.session.gameType]?.modeNames?.[status.session.mode]
+      ? gameData[status.session.gameType]?.modeNames?.[status.session.mode]
+      : `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();
 
     let modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
     let typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;

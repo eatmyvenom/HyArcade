@@ -6,4 +6,5 @@ module.exports = {
   hypixelReq: require("./hypixelReq"),
   mojangRequest: require("./mojangRequest"),
   MongoConnector: require("./MongoConnector"),
+  RedisInterface: require("./RedisInterface"),
 };

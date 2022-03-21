@@ -571,4 +571,23 @@ module.exports = class Database {
 
     return del;
   }
+
+  static async Resource(path) {
+    const url = new URL("account", cfg.database.url);
+    url.searchParams.set("path", path);
+
+    let resource;
+    try {
+      Logger.verbose(`Getting ${path} resource from database`);
+      const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
+      resource = accReq.data;
+    } catch (error) {
+      Logger.err("Database connection error.");
+      Logger.err(error.stack);
+      Logger.err(resource);
+      return {};
+    }
+
+    return resource;
+  }
 };

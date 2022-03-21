@@ -132,12 +132,12 @@ module.exports = class HypixelApi {
   }
 
   static resources = class resources {
-    async games() {
+    static async games() {
       const req = await axios.get("https://api.hypixel.net/resources/games");
       return await req.data;
     }
 
-    async challenges() {
+    static async challenges() {
       const req = await axios.get("https://api.hypixel.net/resources/challenges");
       return await req.data;
     }
@@ -147,7 +147,7 @@ module.exports = class HypixelApi {
       return await req.data;
     }
 
-    async quests() {
+    static async quests() {
       const req = await axios.get("https://api.hypixel.net/resources/quests");
       return await req.data;
     }
