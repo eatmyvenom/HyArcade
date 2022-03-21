@@ -59,5 +59,18 @@ module.exports = {
     info,
     gc,
     raw,
+    {
+      type: 1,
+      name: "dev",
+      description: "Dev only",
+      options: [
+        {
+          type: 3,
+          name: "input",
+          description: "input",
+          required: true,
+        },
+      ],
+    },
   ],
 };

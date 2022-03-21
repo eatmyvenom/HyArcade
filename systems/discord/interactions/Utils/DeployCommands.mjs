@@ -1,9 +1,9 @@
 import Logger from "hyarcade-logger";
 import { createRequire } from "node:module";
+import BotRuntime from "../../BotRuntime.js";
 import Dev from "./AvailableCommands/Dev.js";
 import fullInteractionObjects from "./AvailableCommands/General.js";
 import MiniWallsInteractionObjects from "./AvailableCommands/MiniWalls.js";
-import BotRuntime from "../../BotRuntime.js";
 
 const require = createRequire(import.meta.url);
 const { Client } = require("discord.js");
@@ -32,7 +32,7 @@ export default async function (client) {
           await g.commands.set(Object.values(Dev));
         }
       } else {
-        // await g.commands.set(cmdarr);
+        await g.commands.set(cmdarr);
       }
     } catch (error) {
       Logger.warn("Couldn't change guild slash commands!");
