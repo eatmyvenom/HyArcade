@@ -14,11 +14,11 @@ module.exports = async (req, res, connector, redisInterface) => {
     res.setHeader("Content-Type", "application/json");
 
     let counts;
-    if (!redisInterface.exists("counts")) {
+    if (await redisInterface.exists("counts")) {
+      counts = redisInterface.getJSON(counts);
+    } else {
       counts = await HypixelApi.counts();
       await redisInterface.setJSON("counts", counts, 600);
-    } else {
-      counts = redisInterface.getJSON(counts);
     }
 
     res.write(JSON.stringify(counts));
