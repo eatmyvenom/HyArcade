@@ -573,7 +573,7 @@ module.exports = class Database {
   }
 
   static async Resource(path) {
-    const url = new URL("account", cfg.database.url);
+    const url = new URL("hypixelresource", cfg.database.url);
     url.searchParams.set("path", path);
 
     let resource;

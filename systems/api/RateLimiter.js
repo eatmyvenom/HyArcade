@@ -22,6 +22,7 @@ const endpointValues = {
   achievements: 2,
   info: 0,
   ping: 0,
+  hypixelresource: 0,
   disc: 5,
   guild: 4,
   internal: 1,

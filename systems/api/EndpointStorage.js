@@ -34,6 +34,7 @@ class EndpointStorage {
       gamecounts: await importNew("GameCounts.js"),
       guild: await importNew("guild.js"),
       internal: await importNew("internal.js"),
+      hypixelresource: await importNew("HypixelResource.js"),
       "": await importNew("redoc.js"),
     };
   }
