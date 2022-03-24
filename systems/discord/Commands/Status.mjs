@@ -391,6 +391,20 @@ function getImage(status) {
 }
 
 /**
+ * @param {number} n
+ * @returns {string}
+ */
+function numberify(n) {
+  const r = Intl.NumberFormat("en").format(Number(n));
+
+  if (r == "NaN") {
+    return;
+  }
+
+  return r;
+}
+
+/**
  * @param {Account} acc
  * @returns {string}
  */
@@ -512,7 +526,7 @@ async function callback(args, rawmsg, interaction) {
   }
 
   if (gameData == undefined) {
-    const gameAPI = Database.Resource("games");
+    const gameAPI = await Database.Resource("games");
     gameData = gameAPI.games;
   }
 
@@ -533,8 +547,8 @@ async function callback(args, rawmsg, interaction) {
 
     classicGamesTransformer(status);
 
-    const modeOthers = counts?.games?.[status.session.gameType]?.modes?.[status.session.mode] ?? "Unknown";
-    const typeOthers = counts?.games?.[status.session.gameType]?.players ?? "Unknown";
+    const modeOthers = numberify(counts?.games?.[status.session.gameType]?.modes?.[status.session.mode]) ?? "Unknown";
+    const typeOthers = numberify(counts?.games?.[status.session.gameType]?.players) ?? "Unknown";
 
     await img.addBackground(GetAsset(getImage(status)), 0, 0, 1280, 800, "#00000052");
 
