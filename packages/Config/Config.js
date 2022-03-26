@@ -39,6 +39,7 @@ class Database {
    * @type {object<string, DatabaseKey>}
    */
   keys = {};
+  cacheLbs = [];
 }
 
 class MiniWallsConfig {

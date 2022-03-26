@@ -2,6 +2,7 @@
 const { MissingFieldError } = require("hyarcade-errors");
 const Logger = require("hyarcade-logger");
 const MongoConnector = require("hyarcade-requests/MongoConnector");
+const RedisInterface = require("hyarcade-requests/RedisInterface");
 const { Guild } = require("hyarcade-structures");
 const GenericLeaderboard = require("hyarcade-utils/Leaderboards/GenericLeaderboard");
 const MiniWallsLeaderboard = require("hyarcade-utils/Leaderboards/MiniWallsLeaderboard");
@@ -61,8 +62,9 @@ async function OldLeaderboard(path, timePeriod, reverse, max, connector) {
  * @param {*} req
  * @param {*} res
  * @param {MongoConnector} connector
+ * @param {RedisInterface} redisInterface
  */
-module.exports = async (req, res, connector) => {
+module.exports = async (req, res, connector, redisInterface) => {
   const url = new URL(req.url, `https://${req.headers.host}`);
   const reqPath = url.pathname.split("/").slice(1);
 
@@ -159,7 +161,7 @@ module.exports = async (req, res, connector) => {
         }
 
         Logger.log(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);
-        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, connector);
+        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, connector, redisInterface);
 
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(accs));

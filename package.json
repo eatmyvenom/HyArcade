@@ -36,7 +36,8 @@
         "bot": "yarn workspace bot start",
         "api": "node --max-old-space-size=6000 server.js",
         "site": "yarn workspace site start",
-        "worker": "node index.js workers"
+        "worker": "node index.js workers",
+        "refreshcache": "node index.js cachelbs"
     },
     "dependencies": {
         "@commitlint/config-angular": "^16.2.1",
