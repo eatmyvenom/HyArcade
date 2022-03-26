@@ -9,7 +9,6 @@ class CommandImage {
 }
 
 class CommandImages {
-  profile = new CommandImage();
   topGames = new CommandImage();
   leaderboard = new CommandImage();
   gameStats = new CommandImage();

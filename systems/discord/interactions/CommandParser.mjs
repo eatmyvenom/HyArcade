@@ -80,10 +80,6 @@ export default async interaction => {
       return await commands.Compare.execute([opts.getString("player1"), opts.getString("player2"), opts.getString("game")], authorID, null, interaction);
     }
 
-    case commands.Profile.name: {
-      return await commands.Profile.execute([opts.getString("player")], authorID, null, interaction);
-    }
-
     case commands.TopGames.name: {
       return await commands.TopGames.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
     }

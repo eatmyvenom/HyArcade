@@ -7,7 +7,6 @@ If you are verified you can use "!" in any `<player>` input to resolve to yourse
 ### Commands
 * `stats <player> [game] [time]` - Get somebodys stats in an arcade game, if you don't choose a player and you are linked it will give your stats.
 * `leaderboard <category> <stat> [type] [start]` - Get some arcade related leaderboard. The options are auto generated, if you try to use an option that does not show up in the list it will not work.
-* `profile <player>` - Generates an image with arcade info for a specific player.
 * `top-games <player> [time]` - Gets the top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `status <player>` - Displays current whereabouts of any player.
 * `compare <player1> <player2> <game>` - Compare two players in arcade games.
@@ -26,7 +25,6 @@ If you are verified you can use "!" in any `<player>` input to resolve to yourse
   * `verify` - Link yourself to the arcade bot using your hypixel IGN. Your discord tag needs to be set in hypixel for this to work. If you find yourself unable to do this, look [here](./bots/Verify) for a more detailed explanation.
   * `leaderboard <category> <stat> [type] [start]` - Get some arcade related leaderboard. The options are auto generated, if you try to use an option that does not show up in the list it will not work.
   * `stats <player> [game] [time]` - Get somebodys stats in an arcade game, if you don't choose a player and you are linked it will give your stats.
-  * `profile <player>` - Generates an image with arcade info for a specific player.
   * `achievements <player> [game]` - Show a players Arcade Games achievement completion.
   * `info` - Gives you some relavent links to all of the different areas of HyArcade.
   * `game-counts` - Show how many people are currently playing all arcade games.
@@ -42,7 +40,6 @@ I do not provide support in any way for using text commands, if you are having t
 * `whois <player>` - Shows information about how a player may be recognized.
 * `getraw <player> <path>` - Gets raw data from the Hyarcade database for a player.
 * `apiraw <player> <path>` - Returns raw stats from the hypixel api.
-* `profile <player>` - Generates an image with arcade info for a specific player.
 * `top-games <player> [time]` - Gets the top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `lastupdate` - Shows the last time the database was refreshed.
 * `dbinfo` - Give basic info about the bots database

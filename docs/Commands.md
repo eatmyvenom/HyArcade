@@ -9,7 +9,6 @@ Each point listed here is a command. Everything in the `<>` is a required argume
 * `info` - Gives you some relavent links to all of the different areas of HyArcade.
 * `whois <player>` - Gets relavent information about who someone is.
 * `compare <player1> <player2> <game>` - Compare two players in an arcade game.
-* `profile <player>` - Generates an image with cool info about a specific player.
 * `top-games <player>` - Gets the arcade top games won of a specific player. If a time is specified then it gets only the games won within that time period.
 * `zombies <player>` - Zombies specific stats since there are so many.
 * `arena <player>` - Overall arena stats because why not.

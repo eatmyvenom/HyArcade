@@ -4,12 +4,10 @@ const gc = require("./GameCounts");
 const raw = require("./GetDataRaw");
 const info = require("./Info");
 const leaderboard = require("./Leaderboard-v3");
-const profile = require("./Profile");
 const stats = require("./Stats");
 const verify = require("./Verify");
 
 leaderboard.type = 1;
-profile.type = 1;
 compare.type = 1;
 stats.type = 1;
 ap.type = 1;
@@ -54,7 +52,6 @@ module.exports = {
     verify,
     leaderboard,
     stats,
-    profile,
     ap,
     info,
     gc,
