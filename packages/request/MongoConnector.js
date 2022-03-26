@@ -105,7 +105,7 @@ class MongoConnector {
    * @memberof MongoConnector
    */
   constructor(url) {
-    this.client = new MongoClient(url);
+    this.client = new MongoClient(url, { maxPoolSize: 500, minPoolSize: 50 });
   }
 
   async connect(index = true) {
