@@ -41,7 +41,7 @@ module.exports = {
       restart: true,
     },
     {
-      name: "Cache Manager",
+      name: "Cache",
       script: "yarn refreshcache",
       error_file: "/dev/null",
       out_file: "/dev/null",

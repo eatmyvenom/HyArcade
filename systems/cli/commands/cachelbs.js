@@ -13,19 +13,13 @@ async function main() {
 
   for (const lb of lbs) {
     const daily = await Database.getLeaderboard(lb, undefined, "daily", false, false, 1000);
-
-    redis.addLeaderboard(lb, "daily");
-    await redis.leaderboards[lb].setMany(daily);
+    await redis.getLeaderboard(lb, "daily").setMany(daily);
 
     const weekly = await Database.getLeaderboard(lb, undefined, "weekly", false, false, 1000);
-
-    redis.addLeaderboard(lb, "weekly");
-    await redis.leaderboards[lb].setMany(weekly);
+    await redis.getLeaderboard(lb, "weekly").setMany(weekly);
 
     const monthly = await Database.getLeaderboard(lb, undefined, "monthly", false, false, 1000);
-
-    redis.addLeaderboard(lb, "monthly");
-    await redis.leaderboards[lb].setMany(monthly);
+    await redis.getLeaderboard(lb, "monthly").setMany(monthly);
   }
 
   await redis.destroy();
