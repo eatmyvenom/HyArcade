@@ -4,6 +4,16 @@ const { Database, RedisInterface } = require("hyarcade-requests");
 const cfg = require("hyarcade-config").fromJSON();
 
 /**
+ * @param name
+ * @param time
+ * @param redis
+ */
+async function cacheLB(name, time, redis) {
+  const lb = await Database.getLeaderboard(name, undefined, "daily", false, false, 1000, true);
+  await redis.getLeaderboard(name, "daily").setMany(lb);
+}
+
+/**
  *
  */
 async function main() {
@@ -14,14 +24,11 @@ async function main() {
   const lbs = cfg.database.cacheLbs;
 
   for (const lb of lbs) {
-    const daily = await Database.getLeaderboard(lb, undefined, "daily", false, false, 1000, true);
-    await redis.getLeaderboard(lb, "daily").setMany(daily);
+    const daily = cacheLB(lb, "daily", redis);
+    const weekly = cacheLB(lb, "weekly", redis);
+    const monthly = cacheLB(lb, "monthly", redis);
 
-    const weekly = await Database.getLeaderboard(lb, undefined, "weekly", false, false, 1000, true);
-    await redis.getLeaderboard(lb, "weekly").setMany(weekly);
-
-    const monthly = await Database.getLeaderboard(lb, undefined, "monthly", false, false, 1000, true);
-    await redis.getLeaderboard(lb, "monthly").setMany(monthly);
+    await Promise.all([daily, weekly, monthly]);
   }
 
   await redis.destroy();
