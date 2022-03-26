@@ -17,15 +17,16 @@ const RedisInterface = require("hyarcade-requests/RedisInterface");
  */
 module.exports = async function (category, lbprop, timePeriod, reverse, max, connector, redisInterface) {
   Logger.verbose("Getting leaderboard");
+  const time = timePeriod == "day" ? "daily" : timePeriod;
   const dotNotated = `${category ?? ""}.${lbprop}`.replace(/\.+/g, ".").replace(/^\./, "");
 
   let accs;
 
-  if (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == null || timePeriod == "") {
+  if (time == undefined || time == "life" || time == "lifetime" || time == null || time == "") {
     accs = await connector.getLeaderboard(dotNotated, reverse, max);
   } else {
-    if (await redisInterface.exists(`lb:${timePeriod}:${dotNotated}`)) {
-      const list = await redisInterface.getLeaderboard(dotNotated, timePeriod).getRange(max);
+    if (await redisInterface.exists(`lb:${time}:${dotNotated}`)) {
+      const list = await redisInterface.getLeaderboard(dotNotated, time).getRange(max);
 
       const uuids = list.map(li => li.value);
 
@@ -38,7 +39,7 @@ module.exports = async function (category, lbprop, timePeriod, reverse, max, con
         accs.push({ ...displayData, lbProp: lilAcc.score });
       }
     } else {
-      accs = await connector.getHistoricalLeaderboard(dotNotated, timePeriod, reverse, max);
+      accs = await connector.getHistoricalLeaderboard(dotNotated, time, reverse, max);
     }
   }
 
