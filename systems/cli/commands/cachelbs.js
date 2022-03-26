@@ -9,8 +9,8 @@ const cfg = require("hyarcade-config").fromJSON();
  * @param redis
  */
 async function cacheLB(name, time, redis) {
-  const lb = await Database.getLeaderboard(name, undefined, "daily", false, false, 1000, true);
-  await redis.getLeaderboard(name, "daily").setMany(lb);
+  const lb = await Database.getLeaderboard(name, undefined, time, false, false, 1000, true);
+  await redis.getLeaderboard(name, time).setMany(lb);
 }
 
 /**
