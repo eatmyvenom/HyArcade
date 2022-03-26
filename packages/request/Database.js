@@ -261,7 +261,7 @@ module.exports = class Database {
     return banned;
   }
 
-  static async getLeaderboard(path, category, time, min, reverse, max) {
+  static async getLeaderboard(path, category, time, min, reverse, max, noCache = false) {
     Logger.verbose("Reading database");
 
     const url = new URL("leaderboard", cfg.database.url);
@@ -285,6 +285,10 @@ module.exports = class Database {
 
     if (reverse) {
       url.searchParams.set("reverse", "");
+    }
+
+    if (noCache) {
+      url.searchParams.set("noCache", "");
     }
 
     let lb;

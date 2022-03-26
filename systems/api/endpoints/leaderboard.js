@@ -154,6 +154,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         const lbprop = args.get("path");
         const timePeriod = args.get("time");
         const reverse = args.has("reverse");
+        const noCache = args.has("noCache");
         const max = Math.min(args.get("max") ?? 200, 1000);
 
         if (lbprop == undefined) {
@@ -161,7 +162,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         }
 
         Logger.log(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);
-        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, connector, redisInterface);
+        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, noCache, connector, redisInterface);
 
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(accs));

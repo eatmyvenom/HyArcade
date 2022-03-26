@@ -11,11 +11,12 @@ const RedisInterface = require("hyarcade-requests/RedisInterface");
  * @param {string} timePeriod the time period to get the data from
  * @param {boolean} reverse whether the leaderboard should be reversed to show lowest values
  * @param {string} max the maximum amount of accounts to return
+ * @param noCache
  * @param {MongoConnector} connector The mongodb connection
  * @param {RedisInterface} redisInterface
  * @returns {Promise<Account[]>}
  */
-module.exports = async function (category, lbprop, timePeriod, reverse, max, connector, redisInterface) {
+module.exports = async function (category, lbprop, timePeriod, reverse, max, noCache, connector, redisInterface) {
   Logger.verbose("Getting leaderboard");
   const time = timePeriod == "day" ? "daily" : timePeriod;
   const dotNotated = `${category ?? ""}.${lbprop}`.replace(/\.+/g, ".").replace(/^\./, "");
@@ -25,7 +26,7 @@ module.exports = async function (category, lbprop, timePeriod, reverse, max, con
   if (time == undefined || time == "life" || time == "lifetime" || time == null || time == "") {
     accs = await connector.getLeaderboard(dotNotated, reverse, max);
   } else {
-    if (await redisInterface.exists(`lb:${time}:${dotNotated}`)) {
+    if ((await redisInterface.exists(`lb:${time}:${dotNotated}`)) && !noCache) {
       const list = await redisInterface.getLeaderboard(dotNotated, time).getRange(max);
 
       const uuids = list.map(li => li.value);
