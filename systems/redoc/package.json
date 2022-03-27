@@ -10,6 +10,6 @@
     "hyarcade-config": "workspace:^",
     "hyarcade-logger": "workspace:^",
     "hyarcade-requests": "workspace:^",
-    "redoc-cli": "^0.13.8"
+    "redoc-cli": "^0.13.9"
   }
 }

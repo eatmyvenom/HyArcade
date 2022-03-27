@@ -7,8 +7,8 @@
     "start": "node . bot"
   },
   "dependencies": {
-    "axios": "^0.26.0",
-    "canvas": "^2.9.0",
+    "axios": "^0.26.1",
+    "canvas": "^2.9.1",
     "discord.js": "^13.6.0",
     "hyarcade-config": "workspace:^",
     "hyarcade-errors": "workspace:^",

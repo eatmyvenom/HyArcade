@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
   "dependencies": {
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
     "hyarcade-config": "workspace:^",
     "hyarcade-logger": "workspace:^",
     "hyarcade-utils": "workspace:^",
