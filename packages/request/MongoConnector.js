@@ -802,7 +802,9 @@ class MongoConnector {
     }
 
     Logger.verbose("returning important accounts");
-    return [...accs, ...leaderboarders];
+    const total = [...accs, ...leaderboarders];
+    Logger.info(`Sending ${total.length} accounts to workers.`);
+    return total;
   }
 
   async getInfo() {
