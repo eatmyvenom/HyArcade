@@ -115,10 +115,10 @@ async function getAccount(uuid, key, address) {
 async function runBatch(batchUUIDs, key, address) {
   const replys = await Promise.all(batchUUIDs.map(async uuid => await getAccount(uuid, key, address)));
 
-  const remainders = replys.map(r => r.remain);
+  const remainders = replys.map(r => r?.remain ?? 99);
   const realRemaining = Math.min(...remainders);
 
-  const resets = replys.map(r => r.reset ?? 99);
+  const resets = replys.map(r => r?.reset ?? 99);
   const realReset = Math.min(...resets);
 
   if (realRemaining < remainders.length) {
