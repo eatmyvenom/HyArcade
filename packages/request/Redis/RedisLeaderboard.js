@@ -38,6 +38,10 @@ class RedisLeaderboard {
     return await this.client.ZRANK(`hyarcade:lb:${this.time}:${this.name}`, uuid);
   }
 
+  async setExpire(seconds) {
+    return await this.client.EXPIRE(`hyarcade:lb:${this.time}:${this.name}`, seconds);
+  }
+
   async destroy() {
     return await this.client.DEL(`hyarcade:lb:${this.time}:${this.name}`);
   }
