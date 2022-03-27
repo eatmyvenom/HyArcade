@@ -5,7 +5,7 @@ const Database = require("hyarcade-requests/Database");
 const { Account } = require("hyarcade-structures");
 const Sleep = require("hyarcade-utils/Sleep");
 const cfg = require("hyarcade-config").fromJSON();
-const { RequestTimeoutError } = require("hyarcade-errors");
+const { RequestTimeoutError, HypixelResponseError } = require("hyarcade-errors");
 
 /**
  *
@@ -31,6 +31,12 @@ function requestData(uuid, key, address) {
 
     try {
       const requester = https.get(url, reqOptions, res => {
+        if (res.statusCode > 500) {
+          reject(new HypixelResponseError("Hypixel Encountered an error", res.statusCode));
+          res.destroy();
+          return;
+        }
+
         let reply = "";
         res.on("data", d => {
           reply += d;
@@ -41,6 +47,7 @@ function requestData(uuid, key, address) {
           try {
             response = JSON.parse(reply);
           } catch (error) {
+            Logger.error("Error parsing hypixel response.");
             reject(error);
           }
 
@@ -92,8 +99,11 @@ async function runBatch(batchUUIDs, key, address) {
 
       await Database.addAccount(acc);
     } catch (error) {
-      Logger.error("Error requesting data from local worker.");
-      Logger.error(error);
+      if (error instanceof HypixelResponseError) {
+        Logger.warn(error);
+      } else {
+        Logger.error(error);
+      }
     }
   }
 }
