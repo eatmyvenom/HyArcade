@@ -725,9 +725,7 @@ class MongoConnector {
       ...(await this.getLeaderboard("arcadeWins", false, limit)),
     ];
 
-    return leaderboarders.map(a => {
-      a.uuid;
-    });
+    return leaderboarders;
   }
 
   async getDiscordAccounts() {
