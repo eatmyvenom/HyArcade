@@ -100,7 +100,8 @@ async function runBatch(batchUUIDs, key, address) {
       await Database.addAccount(acc);
     } catch (error) {
       if (error instanceof HypixelResponseError) {
-        Logger.warn(error);
+        Logger.verbose(error);
+        return await runBatch(batchUUIDs, key, address);
       } else {
         Logger.error(error);
       }
