@@ -725,7 +725,9 @@ class MongoConnector {
       ...(await this.getLeaderboard("arcadeWins", false, limit)),
     ];
 
-    return leaderboarders;
+    return leaderboarders.map(a => {
+      a.uuid;
+    });
   }
 
   async getDiscordAccounts() {
@@ -778,7 +780,9 @@ class MongoConnector {
     if (level == 0) {
       const basicQuery = [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }];
 
-      accs = await this.accounts.find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts).toArray();
+      const mainAccs = await this.accounts.find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts).toArray();
+      const highImportance = await this.accounts.find({ importance: { $gte: cfg.hypixel.forceImportance } }, opts).toArray();
+      accs = [...mainAccs, ...highImportance];
 
       leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit);
     } else if (level == 1) {
