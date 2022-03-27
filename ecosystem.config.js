@@ -47,6 +47,7 @@ module.exports = {
       out_file: "/dev/null",
       combine_logs: true,
       restart: false,
+      autorestart: false,
       cron_restart: "*/20 * * * *",
     },
   ],
