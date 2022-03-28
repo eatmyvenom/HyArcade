@@ -10,8 +10,6 @@ module.exports = {
       ...logs,
       name: "API",
       script: "yarn api",
-      instances: "max",
-      exec_mode: "cluster",
       restart: true,
     },
     {
