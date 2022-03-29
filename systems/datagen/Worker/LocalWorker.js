@@ -86,16 +86,18 @@ async function getAccount(uuid, key, address) {
         Logger.warn(`Unable to access data for ${uuid}`);
         Logger.warn(JSON.stringify(reply?.data));
         await Database.DeleteAccount(uuid);
+        return { remain: reply.headers["ratelimit-remaining"], reset: reply.headers["ratelimit-reset"] };
       } else {
         Logger.verbose(`Unable to access data for ${uuid}`);
+        return { remain: reply.headers["ratelimit-remaining"], reset: reply.headers["ratelimit-reset"] };
       }
+    } else {
+      const acc = new Account("", 0, uuid);
+      acc.setHypixel(reply.data);
+
+      await Database.addAccount(acc);
+      return { remain: reply.headers["ratelimit-remaining"], reset: reply.headers["ratelimit-reset"] };
     }
-
-    const acc = new Account("", 0, uuid);
-    acc.setHypixel(reply.data);
-
-    await Database.addAccount(acc);
-    return { remain: reply.headers["ratelimit-remaining"], reset: reply.headers["ratelimit-reset"] };
   } catch (error) {
     if (error instanceof HypixelResponseError) {
       Logger.verbose(error);
