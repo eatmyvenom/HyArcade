@@ -113,18 +113,7 @@ async function getAccount(uuid, key, address) {
  * @param {string} address
  */
 async function runBatch(batchUUIDs, key, address) {
-  const replys = await Promise.all(batchUUIDs.map(async uuid => await getAccount(uuid, key, address)));
-
-  const remainders = replys.map(r => r?.remain ?? 99);
-  const realRemaining = Math.min(...remainders);
-
-  const resets = replys.map(r => r?.reset ?? 99);
-  const realReset = Math.min(...resets);
-
-  if (realRemaining < remainders.length) {
-    Logger.verbose(`Nearing rate limit, waiting for ${realReset} seconds`);
-    await Sleep(realReset * 1100 + 1000);
-  }
+  await Promise.all(batchUUIDs.map(async uuid => await getAccount(uuid, key, address)));
 }
 
 /**
