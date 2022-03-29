@@ -3,9 +3,10 @@ header = """
 # Changelog
 All notable changes to this project will be documented in this file.\n
 """
+
 body = """
 {% if version %}\
-    # [{{ version | trim_start_matches(pat="v") }}]\
+    # [{{ version }}]\
     {% if previous %}\
         {% if previous.version %}\
             (https://github.com/eatmyvenom/hyarcade/compare/{{ previous.version }}...{{ version }})\
@@ -15,7 +16,7 @@ body = """
     {% endif %} \
     - ({{ timestamp | date(format="%Y-%m-%d") }})
 {% else %}\
-    # [unreleased]
+    # Latest
 {% endif %}\
 {% for group, commits in commits | group_by(attribute="group") %}
     ## {{ group | upper_first }}
@@ -55,5 +56,6 @@ commit_parsers = [
 ]
 filter_commits = true
 ignore_tags = ""
+tag_pattern = "*"
 topo_order = false
 sort_commits = "newest"

@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [2.7.0](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.7.0) - (2022-03-28)
+# Latest
 
 ## Bug Fixes
 
