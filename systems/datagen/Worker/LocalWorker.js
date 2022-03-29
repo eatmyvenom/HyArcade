@@ -35,6 +35,10 @@ function requestData(uuid, key, address) {
           reject(new HypixelResponseError("Hypixel Encountered an error", res.statusCode));
           res.destroy();
           return;
+        } else if (res.statusCode == 403) {
+          reject(new Error("API KEY REJECTED!"));
+          res.destroy();
+          return;
         }
 
         let reply = "";
