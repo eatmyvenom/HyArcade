@@ -762,6 +762,15 @@ class MongoConnector {
     return await this.accounts.find({ uuid: { $in: uuids } }, options).toArray();
   }
 
+  async getOutdatedAccs() {
+    const projection = {
+      uuid: 1,
+      _id: 0,
+    };
+
+    return await this.accounts.find({}, { sort: { updateTime: 1 }, limit: 240, projection }).toArray();
+  }
+
   async getImportantAccounts(level = 0) {
     Logger.info(`Getting important accounts with level: ${level}`);
     const cfg = Config.fromJSON();
@@ -801,8 +810,9 @@ class MongoConnector {
       accs = await this.accounts.find({}, opts).toArray();
     }
 
-    Logger.verbose("returning important accounts");
-    const total = [...accs, ...leaderboarders];
+    const oldest = await this.getOutdatedAccs();
+
+    const total = [...oldest, ...accs, ...leaderboarders];
     Logger.info(`Sending ${total.length} accounts to workers.`);
     return total;
   }

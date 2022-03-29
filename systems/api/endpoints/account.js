@@ -88,8 +88,10 @@ module.exports = async (req, res, connector) => {
     if (fullAuth || keyValid) {
       const uuid = url.searchParams.get("uuid");
 
-      await connector.accounts.deleteMany({ uuid });
-      res.write(JSON.stringify({ success: true }));
+      Logger.warn(`Removing ${uuid} from database!`);
+      const del = await connector.accounts.deleteMany({ uuid });
+      Logger.debug(JSON.stringify(del));
+      res.write(JSON.stringify(del));
       res.end();
     } else {
       Logger.warn("Someone tried to DELETE without auth");
