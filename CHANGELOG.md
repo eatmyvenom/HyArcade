@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Bug Fixes
 
+- **package:** Changelog generation ([5fa6b96](https://github.com/eatmyvenom/hyarcade/commit/5fa6b969da58798f2e25388faa3b01c8a46da42d))
 - **pm2:** :tada: remove clustering ([e701a37](https://github.com/eatmyvenom/hyarcade/commit/e701a37b2930d76c9ae9323ca29ff2adbaea32d0))
 - **redoc:** :memo: dedupe endpoitns ([b8b0c7f](https://github.com/eatmyvenom/hyarcade/commit/b8b0c7fd6467cdc39fc0e653e803fc35d1ed16bd))
 - **redis:** :page_facing_up: remove accounts before setting lbs ([614b0b6](https://github.com/eatmyvenom/hyarcade/commit/614b0b68fabf24aeaebe0fcfa5eb343763b55e9e))
