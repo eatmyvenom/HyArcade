@@ -121,7 +121,7 @@ async function Server(port) {
 }
 
 if (require.main == module) {
-  Server()
+  Server(6000)
     .then(() => {})
     .catch(error => logger.err(error.stack));
 }
