@@ -72,16 +72,28 @@ module.exports = async (req, res, connector, redis) => {
 
         if ((fullAuth || key.perms.includes("batch")) && json.getBatch) {
           let currentUUIDs = (await redis.getJSON("currentUUIDs")) ?? [];
+          const isGenerating = (await redis.get("generating")) == true;
           if (currentUUIDs.length === 0) {
-            const nextLevel = await redis.get("nextLevel");
-            currentUUIDs = await connector.getImportantAccounts(nextLevel ?? 0);
-            await redis.set("nextLevel", 0);
+            if (!isGenerating) {
+              const nextLevel = await redis.get("nextLevel");
+              await redis.set("generating", true);
+              currentUUIDs = await connector.getImportantAccounts(nextLevel ?? 0);
+              await redis.set("nextLevel", 0);
+              await redis.set("generating", false);
+            } else {
+              Logger.debug("Returning random accounts");
+              const templist = await connector.accounts.aggregate([{ $sample: cfg.hypixel.segmentSize }]).toArray();
+
+              res.write(JSON.stringify(templist));
+            }
           }
 
           const batch = currentUUIDs.splice(0, Math.min(cfg.hypixel.segmentSize, currentUUIDs.length));
           await redis.setJSON("currentUUIDs", currentUUIDs);
 
-          res.write(JSON.stringify(batch));
+          if (batch.length > 0) {
+            res.write(JSON.stringify(batch));
+          }
         }
 
         if ((fullAuth || key.perms.includes("listEdit")) && json.ezmsgs) {
