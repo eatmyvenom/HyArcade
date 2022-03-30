@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 ## Bug Fixes
 
+- **mongo:** :card_file_box: refresh random accounts if no new list ([e559ff8](https://github.com/eatmyvenom/hyarcade/commit/e559ff86f5f3d61b5a3e5f4d0301503401a6485c))
+- **datagen:** :chart_with_upwards_trend: dont readd deleted accs ([720d5f4](https://github.com/eatmyvenom/hyarcade/commit/720d5f47cee1730d2c2729a11d8291554578f872))
+- **api:** :zap: correctly listen ([42c1851](https://github.com/eatmyvenom/hyarcade/commit/42c18517cb978511820e01e574b974e6ec8f7211))
+
+## Features
+
+- **datagen:** :chart_with_upwards_trend: better error catching ([734983a](https://github.com/eatmyvenom/hyarcade/commit/734983a2b2379bfd57ba3f034fbf8c1d9fa8494c))
+- **datagen:** :chart_with_upwards_trend: run workers more aggresively ([6f9019b](https://github.com/eatmyvenom/hyarcade/commit/6f9019bb2400120f0b1e4718da0c6c5f3154538d))
+- **mongo:** :card_file_box: always refresh oldest accounts ([bf6dcb4](https://github.com/eatmyvenom/hyarcade/commit/bf6dcb401955f8bffd16da651d6a1a435438cb36))
+
+# [v2.7.1](https://github.com/eatmyvenom/hyarcade/compare/2.4.8...v2.7.1) - (2022-03-29)
+
+## Bug Fixes
+
 - **package:** Changelog generation ([5fa6b96](https://github.com/eatmyvenom/hyarcade/commit/5fa6b969da58798f2e25388faa3b01c8a46da42d))
 - **pm2:** :tada: remove clustering ([e701a37](https://github.com/eatmyvenom/hyarcade/commit/e701a37b2930d76c9ae9323ca29ff2adbaea32d0))
 - **redoc:** :memo: dedupe endpoitns ([b8b0c7f](https://github.com/eatmyvenom/hyarcade/commit/b8b0c7fd6467cdc39fc0e653e803fc35d1ed16bd))
