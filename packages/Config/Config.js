@@ -135,6 +135,7 @@ class ThirdPartyConfig {
 
 class RedisConfig {
   url = process.env.HYARCADE_REDIS_URL;
+  leaderboardSize = 1000;
 }
 
 class Config {
