@@ -18,7 +18,7 @@ const levels = ["ERROR", "WARN", "LOG", "INFO", "DEBUG", "VERBOSE"];
  * @returns {boolean}
  */
 function shouldLog(type) {
-  return levels.slice(0, logLevel).includes(type);
+  return levels.includes(type) ? levels.slice(0, logLevel).includes(type) : true;
 }
 
 /**
@@ -26,9 +26,35 @@ function shouldLog(type) {
  */
 function daytime() {
   const d = new Date();
-  return `${`0${d.getMonth() + 1}`.slice(-2)}/${`0${d.getDate()}`.slice(-2)}-${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(
+  return `${`0${d.getMonth() + 1}`.slice(-2)}-${`0${d.getDate()}`.slice(-2)}T${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(
     -2,
   )}:${`00${d.getMilliseconds()}`.slice(-3)}`;
+}
+
+/**
+ * @returns {string}
+ */
+function timeStr() {
+  return `\u001B[32m${daytime().trim()}\u001B[0m |`;
+}
+
+/**
+ *
+ * @param {string} name
+ * @returns {string}
+ */
+function nameStr(name) {
+  return `\u001B[36m${name.trim().slice(0, 8).padEnd(8)}\u001B[0m |`;
+}
+
+/**
+ *
+ * @param {string} type
+ * @param {string} color
+ * @returns {string}
+ */
+function typeStr(type, color) {
+  return `${color}${type.slice(0, 8).padEnd(8)}\u001B[0m |`;
 }
 
 /**
@@ -37,7 +63,7 @@ function daytime() {
  */
 function errorln(string, name) {
   if (shouldLog("ERROR")) {
-    const str = `❌ [\u001B[36m${daytime().trim()}\u001B[0m] [\u001B[36m${name.trim()}\u001B[0m] [\u001B[31mERROR\u001B[0m]\u001B[31m ${string}\u001B[0m\n`;
+    const str = `❌ ${timeStr()} ${nameStr(name)} ${typeStr("ERROR", "\u001B[31m")}\u001B[31m ${string}\u001B[0m\n`;
     stderr.write(str, () => {});
   }
 
@@ -58,7 +84,7 @@ function errorln(string, name) {
 function println(type, string, name, color = "\u001B[0m", emoji = "") {
   let realEmoji = emoji ? `${emoji.trim()} ` : "";
   if (shouldLog(type)) {
-    const str = `${realEmoji}[\u001B[36m${daytime().trim()}\u001B[0m] [\u001B[36m${name.trim()}\u001B[0m] [${color}${type}\u001B[0m]${color} ${string}\u001B[0m\n`;
+    const str = `${realEmoji}${timeStr()} ${nameStr(name)} ${typeStr(type, color)} ${color}${string}\u001B[0m\n`;
     stdout.write(str, () => {});
   }
 
@@ -119,6 +145,16 @@ class LoggerInstance {
    */
   info(...content) {
     print("INFO", content.join(" "), this.name, "\u001B[32m", this.emoji);
+  }
+
+  /**
+   * Log content to stdout or a file
+   *
+   * @param {string} event
+   * @param {string|string[]} content
+   */
+  event(event, ...content) {
+    print(event.toUpperCase(), content.join(" "), this.name, "\u001B[44m", this.emoji);
   }
 
   /**
