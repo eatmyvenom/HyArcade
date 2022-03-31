@@ -4,7 +4,7 @@
 const os = require("node:os");
 const Config = require("hyarcade-config");
 const LoggerInstance = require("hyarcade-logger/LoggerInstance");
-const { MongoClient, Collection } = require("mongodb");
+const { MongoClient, Collection, Db } = require("mongodb");
 const CommandMetadata = require("hyarcade-structures/Discord/CommandMetadata");
 
 const Logger = new LoggerInstance("Mongo", "🗃️");
@@ -34,6 +34,9 @@ class MongoConnector {
    * @type {MongoClient}
    */
   client;
+
+  /** @type {Db} */
+  database;
 
   /**
    * @type {Collection<object>}
