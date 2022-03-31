@@ -1,5 +1,5 @@
 {
-  "name": "hyarcade-logger",
+  "name": "@hyarcade/logger",
   "version": "1.0.0",
   "description": "A logger for usage with hyarcade between modules",
   "main": "Logger.js",

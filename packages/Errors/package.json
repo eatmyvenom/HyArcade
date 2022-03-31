@@ -1,5 +1,5 @@
 {
-  "name": "hyarcade-errors",
+  "name": "@hyarcade/errors",
   "version": "1.0.0",
   "description": "error structures",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "hyarcade-events",
+  "name": "@hyarcade/events",
   "version": "0.0.0",
   "description": "Webhook events",
   "main": "index.js",

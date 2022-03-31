@@ -1,5 +1,5 @@
 {
-  "name": "hyarcade-requests",
+  "name": "@hyarcade/requests",
   "version": "1.0.0",
   "description": "Request data from relavent apis for hyarcade",
   "main": "Request.js",
@@ -14,10 +14,10 @@
   },
   "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
   "dependencies": {
+    "@hyarcade/config": "workspace:^",
+    "@hyarcade/logger": "workspace:^",
+    "@hyarcade/utils": "workspace:^",
     "axios": "^0.26.1",
-    "hyarcade-config": "workspace:^",
-    "hyarcade-logger": "workspace:^",
-    "hyarcade-utils": "workspace:^",
     "mongodb": "^4.4.1",
     "redis": "^4.0.4"
   }

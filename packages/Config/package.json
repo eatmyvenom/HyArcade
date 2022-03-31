@@ -1,5 +1,5 @@
 {
-  "name": "hyarcade-config",
+  "name": "@hyarcade/config",
   "version": "1.0.0",
   "description": "config for hyarcade",
   "main": "Config.js",
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eatmyvenom/hyarcade-config.git"
+    "url": "git+https://github.com/eatmyvenom/@hyarcade/config.git"
   },
   "author": "EatMyVenom",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/eatmyvenom/hyarcade-config/issues"
+    "url": "https://github.com/eatmyvenom/@hyarcade/config/issues"
   },
-  "homepage": "https://github.com/eatmyvenom/hyarcade-config#readme"
+  "homepage": "https://github.com/eatmyvenom/@hyarcade/config#readme"
 }

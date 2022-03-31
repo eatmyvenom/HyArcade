@@ -1,5 +1,5 @@
 {
-    "name": "hyarcade",
+    "name": "@hyarcade",
     "version": "2.7.2",
     "private": true,
     "description": "A full system for gathering and displaying peoples hypixel arcade games stats",
@@ -37,17 +37,18 @@
         "api": "yarn workspace api start",
         "site": "yarn workspace site start",
         "worker": "node index.js workers",
-        "refreshcache": "node index.js cachelbs"
+        "refreshcache": "node index.js cachelbs",
+        "cli": "node index.js"
     },
     "dependencies": {
         "@commitlint/config-angular": "^16.2.3",
+        "@hyarcade/config": "*",
+        "@hyarcade/errors": "*",
+        "@hyarcade/logger": "*",
+        "@hyarcade/requests": "*",
+        "@hyarcade/structures": "*",
+        "@hyarcade/utils": "*",
         "fs-extra": "^10.0.1",
-        "hyarcade-config": "*",
-        "hyarcade-errors": "*",
-        "hyarcade-logger": "*",
-        "hyarcade-requests": "*",
-        "hyarcade-structures": "*",
-        "hyarcade-utils": "*",
         "redoc-cli": "^0.13.9"
     },
     "devDependencies": {

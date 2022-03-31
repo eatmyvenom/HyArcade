@@ -39,4 +39,4 @@ process.on("uncaughtException", (error, origin) => {
   process.exit(1);
 });
 
-module.exports = Logger;
+module.exports = { ...Logger, LoggerInstance };
