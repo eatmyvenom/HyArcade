@@ -10,7 +10,11 @@ async function main() {
 
   Logger.name = args[2]?.toLowerCase();
 
-  await mod(args);
+  try {
+    await mod(args);
+  } catch (error) {
+    Logger.err(error.stack);
+  }
 
   process.nextTick(() => {
     process.exit(0);
