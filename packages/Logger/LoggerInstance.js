@@ -5,7 +5,7 @@ const { writeFile } = require("fs-extra");
 
 let logLevel = process.env.HYARCADE_LOG_LEVEL ?? 5;
 
-if (argv.includes("--silent")) {
+if (argv.includes("--silent") || process.env.SILENT == true) {
   logLevel = 0;
 } else if (argv.includes("--verbose") || argv.includes("-v")) {
   logLevel = 6;
@@ -43,7 +43,7 @@ function timeStr() {
  * @param {string} name
  * @returns {string}
  */
-function nameStr(name) {
+function nameStr(name = "") {
   return `\u001B[36m${name.trim().slice(0, 8).padEnd(8)}\u001B[0m |`;
 }
 
@@ -61,7 +61,7 @@ function typeStr(type, color) {
  * @param {string} string
  * @param {string} name
  */
-function errorln(string, name) {
+function errorln(string, name = "") {
   if (shouldLog("ERROR")) {
     const str = `❌ ${timeStr()} ${nameStr(name)} ${typeStr("ERROR", "\u001B[31m")}\u001B[31m ${string}\u001B[0m\n`;
     stderr.write(str, () => {});
@@ -102,7 +102,7 @@ function println(type, string, name, color = "\u001B[0m", emoji = "") {
  * @param {string} color
  * @param {string} emoji
  */
-function print(type, string, name, color = "\u001B[0m", emoji = "") {
+function print(type, string, name = "", color = "\u001B[0m", emoji = "") {
   for (const s of string?.toString()?.split("\n") ?? "") {
     println(type, s, name, color, emoji);
   }
@@ -155,6 +155,17 @@ class LoggerInstance {
    */
   event(event, ...content) {
     print(event.toUpperCase(), content.join(" "), this.name, "\u001B[44m", this.emoji);
+  }
+
+  /**
+   * Log content to stdout or a file
+   *
+   * @param {string} name
+   * @param {string} color
+   * @param {string|string[]} content
+   */
+  custom(name, color, ...content) {
+    print(name.toUpperCase(), content.join(" "), this.name, color, this.emoji);
   }
 
   /**
