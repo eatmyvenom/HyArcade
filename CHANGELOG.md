@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 
 ## Bug Fixes
 
+- **cli:** :rotating_light: catch cli errors ([7e704f5](https://github.com/eatmyvenom/hyarcade/commit/7e704f567811bffdb6a945bd910fed55ec9fc6f7))
+
+## Features
+
+- **logs:** :loud_sound: log important info for each process ([e2928e4](https://github.com/eatmyvenom/hyarcade/commit/e2928e45a3ff23a3f4537fec236b94b2b8cace9d))
+- **logs:** :loud_sound: better formatting ([5829602](https://github.com/eatmyvenom/hyarcade/commit/5829602a1f66da233ca1983d6de067db435cd2fa))
+- **redis:** :page_facing_up: make redis lbs configurable ([7acc814](https://github.com/eatmyvenom/hyarcade/commit/7acc814aa6dfd805189ce01a559da1d7e877ba4a))
+
+## Refactor
+
+- Rework imports ([9e4904a](https://github.com/eatmyvenom/hyarcade/commit/9e4904a2c57fbdc249508a9a8f16d01fe08d1cb6))
+- **cli:** :rotating_light: remove all cli from index ([c76a105](https://github.com/eatmyvenom/hyarcade/commit/c76a1059088b007b4141043dff42bbbc08879c50))
+
+# [v2.7.2](https://github.com/eatmyvenom/hyarcade/compare/v2.7.1...v2.7.2) - (2022-03-30)
+
+## Bug Fixes
+
 - **mongo:** :card_file_box: refresh random accounts if no new list ([e559ff8](https://github.com/eatmyvenom/hyarcade/commit/e559ff86f5f3d61b5a3e5f4d0301503401a6485c))
 - **datagen:** :chart_with_upwards_trend: dont readd deleted accs ([720d5f4](https://github.com/eatmyvenom/hyarcade/commit/720d5f47cee1730d2c2729a11d8291554578f872))
 - **api:** :zap: correctly listen ([42c1851](https://github.com/eatmyvenom/hyarcade/commit/42c18517cb978511820e01e574b974e6ec8f7211))
