@@ -1,4 +1,4 @@
-import Logger from "hyarcade-logger";
+import Logger from "@hyarcade/logger";
 import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
 import ForceOGuser from "./interactions/Buttons/ForceOGuser.js";

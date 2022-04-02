@@ -1,6 +1,6 @@
 const { MessageEmbed, Client } = require("discord.js");
-const logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
+const logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
 const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");
 const path = require("path");

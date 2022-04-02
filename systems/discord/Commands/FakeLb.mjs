@@ -1,6 +1,6 @@
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
-import GetAsset from "hyarcade-utils/FileHandling/GetAsset.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import FakeLB from "../images/FakeLB.js";
 import ImageGenerator from "../images/ImageGenerator.js";
 

@@ -1,5 +1,5 @@
-const { HypixelApi } = require("hyarcade-requests");
-const Achievements = require("hyarcade-structures/Achievements");
+const { HypixelApi } = require("@hyarcade/requests");
+const Achievements = require("@hyarcade/structures/Achievements");
 const AccountResolver = require("../AccountResolver");
 
 /**

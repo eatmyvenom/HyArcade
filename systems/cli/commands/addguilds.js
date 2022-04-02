@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
 const { readFile, writeFile } = require("fs-extra");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 
 /**
  * @param {string[]} args

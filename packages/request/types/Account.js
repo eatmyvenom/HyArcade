@@ -1,1 +1,1 @@
-module.exports = require("hyarcade-structures").Account;
+module.exports = require("@hyarcade/structures").Account;

@@ -1,6 +1,6 @@
 const { Guild, TextChannel, InvalidRequestWarningData, Webhook } = require("discord.js");
-const cfg = require("hyarcade-config").fromJSON();
-const logger = require("hyarcade-logger");
+const cfg = require("@hyarcade/config").fromJSON();
+const logger = require("@hyarcade/logger");
 const BotRuntime = require("./BotRuntime");
 const { ERROR_LOG } = require("./Utils/Embeds/DynamicEmbeds");
 const SetPresence = require("./Utils/SetPresence");

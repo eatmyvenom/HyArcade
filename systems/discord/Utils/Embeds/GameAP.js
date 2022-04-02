@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const Achievements = require("hyarcade-structures/Achievements");
+const Achievements = require("@hyarcade/structures/Achievements");
 
 /**
  * @param {number} n

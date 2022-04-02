@@ -1,14 +1,14 @@
 const process = require("process");
 const { URL } = require("url");
-const logger = require("hyarcade-logger");
-const LoggerInstance = require("hyarcade-logger/LoggerInstance");
+const logger = require("@hyarcade/logger");
+const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
 const AccessLogger = new LoggerInstance("Access", "📄");
-const { DupeKeyError, MissingFieldError, DataNotFoundError } = require("hyarcade-errors");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
+const { DupeKeyError, MissingFieldError, DataNotFoundError } = require("@hyarcade/errors");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
-const RedisInterface = require("hyarcade-requests/RedisInterface");
-const cfg = require("hyarcade-config").fromJSON();
+const RedisInterface = require("@hyarcade/requests/RedisInterface");
+const cfg = require("@hyarcade/config").fromJSON();
 
 let mongo;
 let redis;

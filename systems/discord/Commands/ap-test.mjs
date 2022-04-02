@@ -1,6 +1,6 @@
-import Database from "hyarcade-requests/Database.js";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "@hyarcade/requests/Database.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import GameAP from "../Utils/Embeds/GameAP.js";
 
 export default new Command(["dev-totalap"], ["*"], async (args, rawMsg, interaction) => {

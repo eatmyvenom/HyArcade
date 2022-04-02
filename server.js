@@ -15,7 +15,7 @@
  * which case I would need to specify a new start script.
  */
 
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 
 /**
  * @returns {*}

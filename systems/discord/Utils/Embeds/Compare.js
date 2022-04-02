@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { Account } = require("hyarcade-structures");
+const { Account } = require("@hyarcade/structures");
 const EmojiGetter = require("../Formatting/EmojiGetter");
 
 /**

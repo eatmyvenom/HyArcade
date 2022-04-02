@@ -1,6 +1,6 @@
 const { Presence, Client } = require("discord.js");
 
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  * @param {string} type

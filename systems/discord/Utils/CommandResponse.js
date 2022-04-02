@@ -1,1 +1,1 @@
-module.exports = require("hyarcade-structures/Discord/CommandResponse");
+module.exports = require("@hyarcade/structures/Discord/CommandResponse");

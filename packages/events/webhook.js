@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
 const Discord = require("discord.js");
-const config = require("hyarcade-config").fromJSON();
+const config = require("@hyarcade/config").fromJSON();
 const { MessageEmbed } = Discord;
-const logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
+const logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
 const FakeLB = require("../../systems/discord/images/FakeLB");
-const { stringifyList } = require("hyarcade-utils/Leaderboards/ListUtils");
+const { stringifyList } = require("@hyarcade/utils/Leaderboards/ListUtils");
 
 /**
  * Send text to a discord webhook

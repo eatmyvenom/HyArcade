@@ -1,6 +1,6 @@
-const Database = require("hyarcade-requests/Database");
-const { Account, AccountArray } = require("hyarcade-structures");
-const Guild = require("hyarcade-structures/Guild");
+const Database = require("@hyarcade/requests/Database");
+const { Account, AccountArray } = require("@hyarcade/structures");
+const Guild = require("@hyarcade/structures/Guild");
 
 /**
  * Gets a list of account object from the json account list

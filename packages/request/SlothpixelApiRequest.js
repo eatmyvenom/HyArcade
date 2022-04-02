@@ -1,6 +1,6 @@
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 const { default: axios } = require("axios");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 const url = require("url");
 
 /**

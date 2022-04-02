@@ -1,7 +1,7 @@
 const { Interaction } = require("discord.js");
-const Database = require("hyarcade-requests/Database");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Database = require("@hyarcade/requests/Database");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 
 /**
  *

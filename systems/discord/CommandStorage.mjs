@@ -1,8 +1,8 @@
 import { CommandInteraction } from "discord.js";
 import fs from "fs-extra";
-import Logger from "hyarcade-logger";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Logger from "@hyarcade/logger";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import path from "node:path";
 import { URL } from "node:url";
 

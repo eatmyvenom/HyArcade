@@ -1,5 +1,5 @@
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const Accounts = require("hyarcade-utils/FileHandling/AccountArray");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const Accounts = require("@hyarcade/utils/FileHandling/AccountArray");
 
 /**
  *

@@ -1,5 +1,5 @@
 const redis = require("redis");
-const LoggerInstance = require("hyarcade-logger/LoggerInstance");
+const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
 const RedisLeaderboard = require("./Redis/RedisLeaderboard");
 
 const Logger = new LoggerInstance("Redis", "🔔");

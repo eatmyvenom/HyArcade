@@ -1,9 +1,9 @@
 const fs = require("fs-extra");
-const logger = require("hyarcade-logger");
-const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
-const { Account } = require("hyarcade-structures");
-const sleep = require("hyarcade-utils/Sleep");
-const Sleep = require("hyarcade-utils/Sleep");
+const logger = require("@hyarcade/logger");
+const HyarcadeWorkerRequest = require("@hyarcade/requests/HyarcadeWorkerRequest");
+const { Account } = require("@hyarcade/structures");
+const sleep = require("@hyarcade/utils/Sleep");
+const Sleep = require("@hyarcade/utils/Sleep");
 const Util = require("node:util");
 const NormalizeAccount = require("./utils/NormalizeAccount");
 
@@ -241,7 +241,7 @@ async function updateAccountsInArr(accounts, oldAccs, argForce) {
  * @returns {Promise<Account[]>}
  */
 module.exports = async function updateAccounts(accounts, argForce = false, fast = false) {
-  cfg = require("hyarcade-config").fromJSON();
+  cfg = require("@hyarcade/config").fromJSON();
 
   if (fast || cfg.clusters[cfg.cluster].flags.includes("useWorkers")) {
     logger.info("Using worker updating system");

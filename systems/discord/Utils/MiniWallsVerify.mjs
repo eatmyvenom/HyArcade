@@ -1,13 +1,13 @@
-import Logger from "hyarcade-logger";
-import Database from "hyarcade-requests/Database.js";
-import { Account } from "hyarcade-structures";
+import Logger from "@hyarcade/logger";
+import Database from "@hyarcade/requests/Database.js";
+import { Account } from "@hyarcade/structures";
 import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Embeds/StaticEmbeds.js";
 import LogUtils from "./LogUtils.js";
 const require = createRequire(import.meta.url);
-const { mojangRequest } = require("hyarcade-requests");
+const { mojangRequest } = require("@hyarcade/requests");
 const { playerLink } = require("./Embeds/AdvancedEmbeds.js");
 
 /**

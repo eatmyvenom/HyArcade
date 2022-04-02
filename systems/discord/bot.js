@@ -1,7 +1,7 @@
 const process = require("process");
 const Discord = require("discord.js");
-const config = require("hyarcade-config").fromJSON();
-const logger = require("hyarcade-logger");
+const config = require("@hyarcade/config").fromJSON();
+const logger = require("@hyarcade/logger");
 const BotEvents = require("./BotEvents");
 const BotRuntime = require("./BotRuntime");
 

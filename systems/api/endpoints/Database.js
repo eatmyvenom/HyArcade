@@ -1,6 +1,6 @@
-const { MissingFieldError } = require("hyarcade-errors");
-const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
+const { MissingFieldError } = require("@hyarcade/errors");
+const Logger = require("@hyarcade/logger");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
 
 /**
  *

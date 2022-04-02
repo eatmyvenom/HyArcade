@@ -1,11 +1,11 @@
 /* eslint-disable unicorn/consistent-destructuring */
 const process = require("process");
 const url = require("url");
-const config = require("hyarcade-config").fromJSON();
-const logger = require("hyarcade-logger");
-const sleep = require("hyarcade-utils/Sleep");
+const config = require("@hyarcade/config").fromJSON();
+const logger = require("@hyarcade/logger");
+const sleep = require("@hyarcade/utils/Sleep");
 const hypixelReq = require("./hypixelReq");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 const { default: axios } = require("axios");
 
 /**

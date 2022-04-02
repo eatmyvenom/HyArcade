@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
 
 /**

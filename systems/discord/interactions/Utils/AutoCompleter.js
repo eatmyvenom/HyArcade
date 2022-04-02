@@ -1,7 +1,7 @@
 const { AutocompleteInteraction } = require("discord.js");
-const Logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
-const { Account } = require("hyarcade-structures");
+const Logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
+const { Account } = require("@hyarcade/structures");
 const LeaderboardCategorys = require("./AutoComplete/LeaderboardCategorys");
 const LeaderboardStats = require("./AutoComplete/LeaderboardStats");
 

@@ -1,6 +1,6 @@
 const { readdir, rm } = require("fs-extra");
-const Logger = require("hyarcade-logger");
-const ExecAsync = require("hyarcade-utils/ExecAsync");
+const Logger = require("@hyarcade/logger");
+const ExecAsync = require("@hyarcade/utils/ExecAsync");
 
 /**
  *

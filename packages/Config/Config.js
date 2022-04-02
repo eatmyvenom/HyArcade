@@ -1,5 +1,5 @@
 const fs = require("fs");
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const process = require("node:process");
 const path = require("path");
 
@@ -30,7 +30,7 @@ class DatabaseKey {
 
 class Database {
   url = "https://api.hyarcade.xyz";
-  defaultLimit = 120;
+  defaultLimit = 100;
   pass = process.env.HYARCADE_KEY;
   key = process.env.HYARCADE_KEY;
   serverIP = "";
@@ -38,6 +38,15 @@ class Database {
    * @type {object<string, DatabaseKey>}
    */
   keys = {};
+  maxLBSize = 2000;
+  defaultLBSize = 250;
+  cacheTime = {
+    accounts: 600000,
+    guilds: 14400000,
+    config: 600000,
+    counts: 600,
+    resources: 6000,
+  };
   cacheLbs = [];
 }
 
@@ -117,6 +126,10 @@ class HypixelConfig {
   concurrentBatches = 6;
   alwaysForce = false;
   autoUpdate = true;
+  datagen = {
+    outdateAmount: 480,
+    hypixelReqTimeout: 5000,
+  };
   localInterfaces = [];
 }
 

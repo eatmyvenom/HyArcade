@@ -1,6 +1,6 @@
-import Database from "hyarcade-requests/Database.js";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "@hyarcade/requests/Database.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import ArcadeAPMenu from "../interactions/Components/Menus/Generators/ArcadeAPMenu.js";
 import ArcadeAp from "../Utils/Embeds/ArcadeAp.js";
 

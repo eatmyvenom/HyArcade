@@ -2,7 +2,7 @@
 /* eslint-disable unicorn/no-array-reduce */
 
 const { readFile, writeFile } = require("fs-extra");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 
 /**
  * @param item

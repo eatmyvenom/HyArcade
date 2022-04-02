@@ -1,4 +1,4 @@
-const Database = require("hyarcade-requests/Database");
+const Database = require("@hyarcade/requests/Database");
 const Arc3 = require("./FakeLBs/Arc3");
 const Arc4 = require("./FakeLBs/Arc4");
 const Arc5 = require("./FakeLBs/Arc5");

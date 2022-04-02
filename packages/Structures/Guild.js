@@ -1,6 +1,6 @@
-const logger = require("hyarcade-logger");
-const { HypixelApi } = require("hyarcade-requests");
-const Database = require("hyarcade-requests/Database");
+const logger = require("@hyarcade/logger");
+const { HypixelApi } = require("@hyarcade/requests");
+const Database = require("@hyarcade/requests/Database");
 
 class GuildAchievements {
   experienceKings = 0;

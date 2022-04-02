@@ -1,5 +1,5 @@
 const TimSort = require("timsort");
-const { getList } = require("hyarcade-utils/Leaderboards/ListUtils");
+const { getList } = require("@hyarcade/utils/Leaderboards/ListUtils");
 
 /**
  * @param {number} number

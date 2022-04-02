@@ -1,8 +1,8 @@
 const Canvas = require("canvas");
 const Discord = require("discord.js");
-const Logger = require("hyarcade-logger");
-const { Account } = require("hyarcade-structures");
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const Logger = require("@hyarcade/logger");
+const { Account } = require("@hyarcade/structures");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const StackBlur = require("stackblur-canvas");
 
 Canvas.registerFont(GetAsset("minecraft.ttf"), {

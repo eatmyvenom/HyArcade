@@ -1,6 +1,6 @@
-import Database from "hyarcade-requests/Database.js";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Database from "@hyarcade/requests/Database.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
 import { inspect } from "node:util";
 import BotRuntime from "../BotRuntime.js";

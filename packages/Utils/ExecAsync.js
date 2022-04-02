@@ -1,5 +1,5 @@
-const Logger = require("hyarcade-logger");
-const LoggerInstance = require("hyarcade-logger/LoggerInstance");
+const Logger = require("@hyarcade/logger");
+const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
 const { exec, ExecException } = require("child_process");
 
 /**

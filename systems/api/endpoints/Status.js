@@ -1,5 +1,5 @@
-const { HypixelApi } = require("hyarcade-requests");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
+const { HypixelApi } = require("@hyarcade/requests");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const AccountResolver = require("../AccountResolver");
 
 /**

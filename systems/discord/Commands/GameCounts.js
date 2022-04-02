@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const { MessageEmbed } = require("discord.js");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 
 /**
  * @param {number} n

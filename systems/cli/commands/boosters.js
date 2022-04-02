@@ -1,5 +1,5 @@
 const { writeJson } = require("fs-extra");
-const { HypixelApi, Database } = require("hyarcade-requests");
+const { HypixelApi, Database } = require("@hyarcade/requests");
 
 /**
  */

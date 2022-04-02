@@ -1,4 +1,4 @@
-const connector = require("hyarcade-requests/MongoConnector");
+const connector = require("@hyarcade/requests/MongoConnector");
 
 /**
  *

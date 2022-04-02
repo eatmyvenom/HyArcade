@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/no-null */
-const Logger = require("hyarcade-logger");
-const { Account } = require("hyarcade-structures");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const RedisInterface = require("hyarcade-requests/RedisInterface");
+const Logger = require("@hyarcade/logger");
+const { Account } = require("@hyarcade/structures");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const RedisInterface = require("@hyarcade/requests/RedisInterface");
 
 /**
  *

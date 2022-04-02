@@ -1,8 +1,8 @@
-const Logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
-const Sleep = require("hyarcade-utils/Sleep");
+const Logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
+const Sleep = require("@hyarcade/utils/Sleep");
 const LocalWorker = require("./Worker/LocalWorker");
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  */

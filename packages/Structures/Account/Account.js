@@ -1,9 +1,9 @@
 /* eslint-disable jsdoc/valid-types */
 
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 const AccountAP = require("./AccountAP");
 const PopulateAccountData = require("./PopulateAccountData");
-const HypixelApi = require("hyarcade-requests/HypixelApi");
+const HypixelApi = require("@hyarcade/requests/HypixelApi");
 
 class ArcadeGameStats {
   /**

@@ -1,6 +1,6 @@
-const logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
-const { getUUID } = require("hyarcade-requests/mojangRequest");
+const logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
+const { getUUID } = require("@hyarcade/requests/mojangRequest");
 const isValidIGN = require("./utils/ignValidator");
 
 /**

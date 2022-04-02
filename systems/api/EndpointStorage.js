@@ -12,7 +12,6 @@ class EndpointStorage {
   initialized = false;
 
   async loadAll() {
-    this.initialized = true;
     this.all = {
       account: await importNew("account.js"),
       acc: await importNew("account.js"),
@@ -24,8 +23,6 @@ class EndpointStorage {
       db: await importNew("Database.js"),
       database: await importNew("Database.js"),
       mwlb: await importNew("MiniWallsLeaderboard.js"),
-      miniwalls: await importNew("MiniWallsLeaderboard.js"),
-      guildleaderboard: await importNew("GuildLeaderboard.js"),
       info: await importNew("info.js"),
       ping: await importNew("ping.js"),
       status: await importNew("Status.js"),
@@ -37,6 +34,7 @@ class EndpointStorage {
       hypixelresource: await importNew("HypixelResource.js"),
       "": await importNew("redoc.js"),
     };
+    this.initialized = true;
   }
 }
 

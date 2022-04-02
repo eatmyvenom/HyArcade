@@ -2,10 +2,12 @@
 /* eslint-disable unicorn/no-array-callback-reference */
 /* eslint-disable unicorn/no-array-method-this-argument */
 const os = require("node:os");
-const Config = require("hyarcade-config");
-const LoggerInstance = require("hyarcade-logger/LoggerInstance");
-const { MongoClient, Collection, Db } = require("mongodb");
-const CommandMetadata = require("hyarcade-structures/Discord/CommandMetadata");
+const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
+const { MongoClient, Collection } = require("mongodb");
+const CommandMetadata = require("@hyarcade/structures/Discord/CommandMetadata");
+const config = require("@hyarcade/config");
+let cfg = config.fromJSON();
+let cfgTime = Date.now();
 
 const Logger = new LoggerInstance("Mongo", "🗃️");
 
@@ -766,17 +768,23 @@ class MongoConnector {
   }
 
   async getOutdatedAccs() {
+    if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
+      cfg = config.fromJSON();
+    }
+
     const projection = {
       uuid: 1,
       _id: 0,
     };
 
-    return await this.accounts.find({}, { sort: { updateTime: 1 }, limit: 240, projection }).toArray();
+    return await this.accounts.find({}, { sort: { updateTime: 1 }, limit: cfg.hypixel.datagen.outdateAmount, projection }).toArray();
   }
 
   async getImportantAccounts(level = 0) {
     Logger.info(`Getting important accounts with level: ${level}`);
-    const cfg = Config.fromJSON();
+    if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
+      cfg = config.fromJSON();
+    }
     let accs = [];
     let leaderboarders = [];
 

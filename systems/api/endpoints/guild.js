@@ -1,6 +1,6 @@
-const cfg = require("hyarcade-config").fromJSON();
-const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
+const cfg = require("@hyarcade/config").fromJSON();
+const Logger = require("@hyarcade/logger");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const GuildResolver = require("../GuildResolver");
 
 /**

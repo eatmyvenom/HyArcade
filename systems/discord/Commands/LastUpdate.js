@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const fs = require("fs-extra");
-const Command = require("hyarcade-structures/Discord/Command");
+const Command = require("@hyarcade/structures/Discord/Command");
 
 /**
  *

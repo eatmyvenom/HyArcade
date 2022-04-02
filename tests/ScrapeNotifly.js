@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 const addAccounts = require("../src/datagen/addAccounts");
 
 /**

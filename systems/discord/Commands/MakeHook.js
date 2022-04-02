@@ -1,4 +1,4 @@
-const Command = require("hyarcade-structures/Discord/Command");
+const Command = require("@hyarcade/structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("mkhook", ["156952208045375488"], async args => {

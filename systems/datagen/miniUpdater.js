@@ -1,9 +1,9 @@
-const Logger = require("hyarcade-logger");
-const { Account } = require("hyarcade-structures");
-const Sleep = require("hyarcade-utils/Sleep");
-const HyarcadeWorkerRequest = require("hyarcade-requests/HyarcadeWorkerRequest");
+const Logger = require("@hyarcade/logger");
+const { Account } = require("@hyarcade/structures");
+const Sleep = require("@hyarcade/utils/Sleep");
+const HyarcadeWorkerRequest = require("@hyarcade/requests/HyarcadeWorkerRequest");
 const fs = require("fs-extra");
-const Database = require("hyarcade-requests/Database");
+const Database = require("@hyarcade/requests/Database");
 
 let cfg;
 let disclist;
@@ -130,7 +130,7 @@ async function fastUpdate(uuids) {
 /**
  */
 async function miniUpdater() {
-  cfg = require("hyarcade-config").fromJSON();
+  cfg = require("@hyarcade/config").fromJSON();
 
   if (!cfg.hypixel.autoUpdate) {
     return;

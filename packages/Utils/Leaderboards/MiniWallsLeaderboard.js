@@ -1,6 +1,6 @@
-const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const { Account } = require("hyarcade-structures");
+const Logger = require("@hyarcade/logger");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const { Account } = require("@hyarcade/structures");
 const TimSort = require("timsort");
 
 /**

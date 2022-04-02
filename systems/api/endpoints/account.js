@@ -1,10 +1,10 @@
 const { URL } = require("url");
-const cfg = require("hyarcade-config").fromJSON();
-const Logger = require("hyarcade-logger");
-const { Account } = require("hyarcade-structures");
+const cfg = require("@hyarcade/config").fromJSON();
+const Logger = require("@hyarcade/logger");
+const { Account } = require("@hyarcade/structures");
 const AccountResolver = require("../AccountResolver");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const MergeJSON = require("hyarcade-utils/MergeJSON");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const MergeJSON = require("@hyarcade/utils/MergeJSON");
 
 let fakeData;
 

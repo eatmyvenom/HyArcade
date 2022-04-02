@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
-const cfg = require("hyarcade-config").fromJSON();
-const logger = require("hyarcade-logger");
+const cfg = require("@hyarcade/config").fromJSON();
+const logger = require("@hyarcade/logger");
 const keys = [...cfg.hypixel.batchKeys, cfg.clusters[cfg.cluster].key];
 
 let currentKey = 0;
@@ -32,7 +32,7 @@ class Response {
  * @returns {Promise<Response>}
  */
 async function HyarcadeWorkerRequest(accs) {
-  return axios.get(`https://hyarcade-worker.vnmm.workers.dev?pass=${cfg.database.pass}`, { headers: { apikey: getAPIKey(), accs } });
+  return axios.get(`https://@hyarcade/worker.vnmm.workers.dev?pass=${cfg.database.pass}`, { headers: { apikey: getAPIKey(), accs } });
 }
 
 module.exports = HyarcadeWorkerRequest;

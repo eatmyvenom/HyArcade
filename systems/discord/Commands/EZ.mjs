@@ -1,6 +1,6 @@
-import { Database } from "hyarcade-requests";
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import { Database } from "@hyarcade/requests";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 
 let msgs;
 

@@ -1,6 +1,6 @@
-const { RedisInterface } = require("hyarcade-requests");
+const { RedisInterface } = require("@hyarcade/requests");
 
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  * @param args

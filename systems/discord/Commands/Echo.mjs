@@ -1,5 +1,5 @@
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import BotRuntime from "../BotRuntime.js";
 
 export default new Command("echo", ["%trusted%"], async (args, rawMsg) => {

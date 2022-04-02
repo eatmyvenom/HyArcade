@@ -1,5 +1,5 @@
-const Logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
+const Logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
 const LocalWorker = require("../../datagen/Worker/LocalWorker");
 
 /**

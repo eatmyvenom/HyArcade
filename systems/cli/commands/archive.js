@@ -1,5 +1,5 @@
 const fs = require("fs-extra");
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 
 /**
  * Copy a json file to another location with a timestamp or type

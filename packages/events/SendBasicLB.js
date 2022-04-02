@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Database = require("hyarcade-requests/Database");
+const Database = require("@hyarcade/requests/Database");
 
 /**
  * @param {number} number

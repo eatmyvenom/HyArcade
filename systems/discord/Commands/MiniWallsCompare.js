@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
-const logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
-const Command = require("hyarcade-structures/Discord/Command");
+const logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
+const Command = require("@hyarcade/structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");

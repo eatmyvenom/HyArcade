@@ -1,6 +1,6 @@
-const Logger = require("hyarcade-logger");
-const { HypixelApi } = require("hyarcade-requests");
-const Database = require("hyarcade-requests/Database");
+const Logger = require("@hyarcade/logger");
+const { HypixelApi } = require("@hyarcade/requests");
+const Database = require("@hyarcade/requests/Database");
 const addAccounts = require("../../datagen/addAccounts");
 
 /**

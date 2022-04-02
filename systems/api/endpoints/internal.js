@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/no-lonely-if */
-const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const RedisInterface = require("hyarcade-requests/RedisInterface");
-const cfg = require("hyarcade-config").fromJSON();
+const Logger = require("@hyarcade/logger");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const RedisInterface = require("@hyarcade/requests/RedisInterface");
+const cfg = require("@hyarcade/config").fromJSON();
 
 // eslint-disable-next-line prefer-arrow-callback
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;

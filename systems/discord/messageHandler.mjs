@@ -1,4 +1,4 @@
-import Logger from "hyarcade-logger";
+import Logger from "@hyarcade/logger";
 import { createRequire } from "node:module";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
@@ -13,7 +13,7 @@ import Webhooks from "./Utils/Webhooks.js";
 
 const require = createRequire(import.meta.url);
 const { Message } = require("discord.js");
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 const { ERROR_UNKNOWN } = require("./Utils/Embeds/StaticEmbeds.js");
 
 /**

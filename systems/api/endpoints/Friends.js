@@ -1,4 +1,4 @@
-const { SlothpixelApiRequest } = require("hyarcade-requests");
+const { SlothpixelApiRequest } = require("@hyarcade/requests");
 const AccountResolver = require("../AccountResolver");
 
 /**

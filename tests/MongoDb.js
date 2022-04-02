@@ -1,5 +1,5 @@
-const Logger = require("hyarcade-logger");
-const connector = require("hyarcade-requests/MongoConnector");
+const Logger = require("@hyarcade/logger");
+const connector = require("@hyarcade/requests/MongoConnector");
 
 /**
  *

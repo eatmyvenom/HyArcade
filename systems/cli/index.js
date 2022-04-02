@@ -1,4 +1,4 @@
-const Logger = require("hyarcade-logger");
+const Logger = require("@hyarcade/logger");
 const process = require("process");
 
 /**

@@ -1,8 +1,11 @@
-const { MissingFieldError } = require("hyarcade-errors");
-const Logger = require("hyarcade-logger");
-const { mojangRequest, MongoConnector } = require("hyarcade-requests");
-const { Account } = require("hyarcade-structures");
-const MergeJSON = require("hyarcade-utils/MergeJSON");
+const { MissingFieldError } = require("@hyarcade/errors");
+const Logger = require("@hyarcade/logger");
+const { mojangRequest, MongoConnector } = require("@hyarcade/requests");
+const { Account } = require("@hyarcade/structures");
+const MergeJSON = require("@hyarcade/utils/MergeJSON");
+const config = require("@hyarcade/config");
+let cfg = config.fromJSON();
+let cfgTime = Date.now();
 
 let fakeData;
 
@@ -16,6 +19,10 @@ let fakeData;
 async function AccountResolver(connector, url, forceCache = false) {
   if (fakeData == undefined) {
     fakeData = await connector.fakePlayers.find().toArray();
+  }
+
+  if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
+    cfg = config.fromJSON();
   }
 
   const ign = url.searchParams.get("ign");
@@ -71,7 +78,7 @@ async function AccountResolver(connector, url, forceCache = false) {
     acc = undefined;
   }
 
-  if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - 600000) {
+  if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - cfg.database.cacheTime.accounts) {
     Logger.log(`Updating data for ${acc.name}`);
     let newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);

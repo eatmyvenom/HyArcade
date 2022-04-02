@@ -1,7 +1,7 @@
-const Logger = require("hyarcade-logger");
-const { Database, RedisInterface } = require("hyarcade-requests");
+const Logger = require("@hyarcade/logger");
+const { Database, RedisInterface } = require("@hyarcade/requests");
 
-const cfg = require("hyarcade-config").fromJSON();
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  * @param name

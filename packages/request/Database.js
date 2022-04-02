@@ -1,5 +1,5 @@
-const Config = require("hyarcade-config");
-const Logger = require("hyarcade-logger");
+const Config = require("@hyarcade/config");
+const Logger = require("@hyarcade/logger");
 const { default: axios } = require("axios");
 
 const cfg = Config.fromJSON();

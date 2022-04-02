@@ -1,5 +1,5 @@
-const start = require("hyarcade-events/BotStart");
-const stop = require("hyarcade-events/BotExit");
+const start = require("@hyarcade/events/BotStart");
+const stop = require("@hyarcade/events/BotExit");
 
 /**
  *

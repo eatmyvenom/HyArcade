@@ -1,4 +1,4 @@
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const ImageGenerator = require("../ImageGenerator");
 
 const colorFormatters = {

@@ -1,6 +1,6 @@
 const { writeJson } = require("fs-extra");
-const Logger = require("hyarcade-logger");
-const { HypixelApi } = require("hyarcade-requests");
+const Logger = require("@hyarcade/logger");
+const { HypixelApi } = require("@hyarcade/requests");
 const Achievements = require("../packages/Structures/Achievements");
 
 /**

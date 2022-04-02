@@ -1,5 +1,5 @@
-import Command from "hyarcade-structures/Discord/Command.js";
-import CommandResponse from "hyarcade-structures/Discord/CommandResponse.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import { createRequire } from "node:module";
 import BotRuntime from "../BotRuntime.js";
 const require = createRequire(import.meta.url);

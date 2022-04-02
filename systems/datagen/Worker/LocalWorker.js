@@ -1,11 +1,11 @@
 const https = require("https");
-const LoggerInstance = require("hyarcade-logger/LoggerInstance");
+const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
 const Logger = new LoggerInstance("Local-Worker", "📈");
-const Database = require("hyarcade-requests/Database");
-const { Account } = require("hyarcade-structures");
-const Sleep = require("hyarcade-utils/Sleep");
-const cfg = require("hyarcade-config").fromJSON();
-const { RequestTimeoutError, HypixelResponseError } = require("hyarcade-errors");
+const Database = require("@hyarcade/requests/Database");
+const { Account } = require("@hyarcade/structures");
+const Sleep = require("@hyarcade/utils/Sleep");
+const cfg = require("@hyarcade/config").fromJSON();
+const { RequestTimeoutError, HypixelResponseError } = require("@hyarcade/errors");
 
 /**
  *
@@ -22,7 +22,7 @@ function requestData(uuid, key, address) {
       family: 4,
       port: 443,
       protocol: "https:",
-      timeout: 30000,
+      timeout: cfg.hypixel.datagen.hypixelReqTimeout,
       localAddress: address,
       headers: {
         "API-KEY": key,

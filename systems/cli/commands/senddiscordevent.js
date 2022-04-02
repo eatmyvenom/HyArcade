@@ -1,4 +1,4 @@
-const AccountEvent = require("hyarcade-structures/Event");
+const AccountEvent = require("@hyarcade/structures/Event");
 
 /**
  * @param {string[]} args

@@ -1,4 +1,4 @@
-const webhook = require("hyarcade-events/webhook");
+const webhook = require("@hyarcade/events/webhook");
 
 /** */
 async function main() {

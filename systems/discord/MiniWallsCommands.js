@@ -1,5 +1,5 @@
 const { Message } = require("discord.js");
-const logger = require("hyarcade-logger");
+const logger = require("@hyarcade/logger");
 const linkCmd = require("./Commands/Link");
 const MiniWalls = require("./Commands/MiniWalls");
 const MiniWallsDev = require("./Commands/MiniWalls-dev");

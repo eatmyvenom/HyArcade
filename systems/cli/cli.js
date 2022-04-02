@@ -1,8 +1,8 @@
 const process = require("process");
-const logger = require("hyarcade-logger");
-const { HypixelApi } = require("hyarcade-requests");
-const mojangRequest = require("hyarcade-requests/mojangRequest");
-const Json = require("hyarcade-utils/FileHandling/Json");
+const logger = require("@hyarcade/logger");
+const { HypixelApi } = require("@hyarcade/requests");
+const mojangRequest = require("@hyarcade/requests/mojangRequest");
+const Json = require("@hyarcade/utils/FileHandling/Json");
 const dataGeneration = require("../datagen/dataGeneration");
 const addAccounts = require("../datagen/addAccounts");
 const args = process.argv;

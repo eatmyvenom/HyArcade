@@ -1,6 +1,6 @@
-const { DupeKeyError } = require("hyarcade-errors");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const cfg = require("hyarcade-config").fromJSON();
+const { DupeKeyError } = require("@hyarcade/errors");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const cfg = require("@hyarcade/config").fromJSON();
 
 const endpointValues = {
   undefined: 1,
@@ -8,11 +8,9 @@ const endpointValues = {
   acc: 1,
   leaderboard: 3,
   lb: 3,
-  guildleaderboard: 3,
   db: 10,
   database: 10,
   mwlb: 5,
-  miniwalls: 5,
   status: 3,
   timeacc: 1,
   timeaccount: 1,

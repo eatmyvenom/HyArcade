@@ -1,8 +1,8 @@
-const Database = require("hyarcade-requests/Database");
-const { addAccount } = require("hyarcade-requests/Database");
-const mojangRequest = require("hyarcade-requests/mojangRequest");
-const { Account } = require("hyarcade-structures");
-const Command = require("hyarcade-structures/Discord/Command");
+const Database = require("@hyarcade/requests/Database");
+const { addAccount } = require("@hyarcade/requests/Database");
+const mojangRequest = require("@hyarcade/requests/mojangRequest");
+const { Account } = require("@hyarcade/structures");
+const Command = require("@hyarcade/structures/Discord/Command");
 const BotRuntime = require("../BotRuntime");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED, INFO_LINK_SUCCESS, ERROR_PLAYER_PREVIOUSLY_LINKED, ERROR_ACCOUNT_PREVIOUSLY_LINKED } = require("../Utils/Embeds/StaticEmbeds");

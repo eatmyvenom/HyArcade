@@ -1,4 +1,4 @@
-const config = require("hyarcade-config").fromJSON();
+const config = require("@hyarcade/config").fromJSON();
 const TimSort = require("timsort");
 const MakeLeaderboardAdv = require("./MakeLeaderboardAdv");
 

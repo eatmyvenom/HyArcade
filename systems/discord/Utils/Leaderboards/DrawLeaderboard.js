@@ -1,6 +1,6 @@
-const Config = require("hyarcade-config");
-const Logger = require("hyarcade-logger");
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const Config = require("@hyarcade/config");
+const Logger = require("@hyarcade/logger");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const ImageGenerator = require("../../images/ImageGenerator");
 
 const cfg = Config.fromJSON();

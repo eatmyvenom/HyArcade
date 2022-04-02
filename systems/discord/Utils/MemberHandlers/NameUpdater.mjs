@@ -1,5 +1,5 @@
-import logger from "hyarcade-logger";
-import Database from "hyarcade-requests/Database.js";
+import logger from "@hyarcade/logger";
+import Database from "@hyarcade/requests/Database.js";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 

@@ -1,7 +1,7 @@
-const Logger = require("hyarcade-logger");
-const Database = require("hyarcade-requests/Database");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Logger = require("@hyarcade/logger");
+const Database = require("@hyarcade/requests/Database");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const Util = require("node:util");
 const AccountComparitor = require("../Utils/AccountComparitor");
 

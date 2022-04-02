@@ -1,5 +1,6 @@
-const { MissingFieldError, DataNotFoundError } = require("hyarcade-errors");
-const { HypixelApi, MongoConnector, RedisInterface } = require("hyarcade-requests");
+const { MissingFieldError, DataNotFoundError } = require("@hyarcade/errors");
+const { HypixelApi, MongoConnector, RedisInterface } = require("@hyarcade/requests");
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  *
@@ -25,7 +26,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         data = await redisInterface.getJSON(`hyresource-${path}`);
       } else {
         data = await HypixelApi.resources[path]();
-        await redisInterface.setJSON(`hyresource-${path}`, data, 6000);
+        await redisInterface.setJSON(`hyresource-${path}`, data, cfg.database.cacheTime.resources);
       }
     } else {
       throw new DataNotFoundError("The specified resource does not exist");

@@ -1,12 +1,13 @@
 /* eslint-disable unicorn/no-array-reduce */
-const { MissingFieldError } = require("hyarcade-errors");
-const Logger = require("hyarcade-logger");
-const MongoConnector = require("hyarcade-requests/MongoConnector");
-const RedisInterface = require("hyarcade-requests/RedisInterface");
-const { Guild } = require("hyarcade-structures");
-const GenericLeaderboard = require("hyarcade-utils/Leaderboards/GenericLeaderboard");
-const MiniWallsLeaderboard = require("hyarcade-utils/Leaderboards/MiniWallsLeaderboard");
+const { MissingFieldError } = require("@hyarcade/errors");
+const Logger = require("@hyarcade/logger");
+const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const RedisInterface = require("@hyarcade/requests/RedisInterface");
+const { Guild } = require("@hyarcade/structures");
+const GenericLeaderboard = require("@hyarcade/utils/Leaderboards/GenericLeaderboard");
+const MiniWallsLeaderboard = require("@hyarcade/utils/Leaderboards/MiniWallsLeaderboard");
 const GuildResolver = require("../GuildResolver");
+const cfg = require("@hyarcade/config").fromJSON();
 
 /**
  * @param lbprop
@@ -76,7 +77,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         const lbprop = args.get("path");
         const timePeriod = args.get("time");
         const reverse = args.has("reverse");
-        const max = Math.min(args.get("max") ?? 200, 1000);
+        const max = Math.min(args.get("max") ?? cfg.database.defaultLBSize, cfg.database.maxLBSize);
 
         if (lbprop == undefined) {
           throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);
@@ -138,7 +139,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         const path = args.get("path");
         const timePeriod = args.get("time");
         const reverse = args.has("reverse");
-        const max = Math.min(args.get("max") ?? 200, 1000);
+        const max = Math.min(args.get("max") ?? cfg.database.defaultLBSize, cfg.database.maxLBSize);
 
         const accs = await OldLeaderboard(path, timePeriod, reverse, max, connector);
 
@@ -155,7 +156,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         const timePeriod = args.get("time");
         const reverse = args.has("reverse");
         const noCache = args.has("noCache");
-        const max = Math.min(args.get("max") ?? 200, 1000);
+        const max = Math.min(args.get("max") ?? cfg.database.defaultLBSize, cfg.database.maxLBSize);
 
         if (lbprop == undefined) {
           throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);

@@ -1,6 +1,6 @@
-const Database = require("hyarcade-requests/Database");
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Database = require("@hyarcade/requests/Database");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");

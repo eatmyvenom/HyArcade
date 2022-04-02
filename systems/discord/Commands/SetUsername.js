@@ -1,5 +1,5 @@
-const Command = require("hyarcade-structures/Discord/Command");
-const CommandResponse = require("hyarcade-structures/Discord/CommandResponse");
+const Command = require("@hyarcade/structures/Discord/Command");
+const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const BotRuntime = require("../BotRuntime");
 
 module.exports = new Command("setusername", ["%trusted%"], async args => {

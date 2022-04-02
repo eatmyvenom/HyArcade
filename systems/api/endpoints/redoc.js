@@ -1,5 +1,5 @@
 const { readFile } = require("fs-extra");
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 
 /**
  *

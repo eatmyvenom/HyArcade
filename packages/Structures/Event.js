@@ -1,5 +1,5 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
-const config = require("hyarcade-config").fromJSON();
+const config = require("@hyarcade/config").fromJSON();
 
 /**
  *

@@ -1,6 +1,6 @@
 import { CommandInteraction } from "discord.js";
-import Logger from "hyarcade-logger";
-import { Command } from "hyarcade-structures";
+import Logger from "@hyarcade/logger";
+import { Command } from "@hyarcade/structures";
 import CommandStorage from "../CommandStorage.mjs";
 
 /**

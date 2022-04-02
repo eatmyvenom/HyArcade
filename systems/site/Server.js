@@ -1,9 +1,9 @@
 const fs = require("fs-extra");
 const http = require("http");
-const Logger = require("hyarcade-logger");
-const { Database } = require("hyarcade-requests");
-const GetAsset = require("hyarcade-utils/FileHandling/GetAsset");
-const cfg = require("hyarcade-config").fromJSON();
+const Logger = require("@hyarcade/logger");
+const { Database } = require("@hyarcade/requests");
+const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
+const cfg = require("@hyarcade/config").fromJSON();
 const Handlebars = require("handlebars");
 
 let context;

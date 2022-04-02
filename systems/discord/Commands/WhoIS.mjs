@@ -1,6 +1,6 @@
 import axios from "axios";
-import Database from "hyarcade-requests/Database.js";
-import { Account, Command } from "hyarcade-structures";
+import Database from "@hyarcade/requests/Database.js";
+import { Account, Command } from "@hyarcade/structures";
 import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";

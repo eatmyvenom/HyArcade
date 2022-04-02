@@ -1,8 +1,8 @@
-const logger = require("hyarcade-logger");
-const { HypixelApi } = require("hyarcade-requests");
-const Database = require("hyarcade-requests/Database");
+const logger = require("@hyarcade/logger");
+const { HypixelApi } = require("@hyarcade/requests");
+const Database = require("@hyarcade/requests/Database");
 const dataGen = require("../datagen/dataGeneration");
-const lists = require("hyarcade-utils/listParser");
+const lists = require("@hyarcade/utils/listParser");
 
 let accounts;
 

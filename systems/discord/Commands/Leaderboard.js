@@ -1,8 +1,8 @@
 const { Message, CommandInteraction, ButtonInteraction } = require("discord.js");
 const { MessageActionRow } = require("discord.js");
 const { MessageButton } = require("discord.js");
-const logger = require("hyarcade-logger");
-const Command = require("hyarcade-structures/Discord/Command");
+const logger = require("@hyarcade/logger");
+const Command = require("@hyarcade/structures/Discord/Command");
 const CommandResponse = require("../Utils/CommandResponse");
 const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
