@@ -5,7 +5,7 @@ const Accounts = require("@hyarcade/utils/FileHandling/AccountArray");
  *
  */
 async function main() {
-  const connector = new MongoConnector("mongodb://127.0.0.1:27017");
+  const connector = new MongoConnector();
   await connector.connect(false);
 
   const DailyProcessor = new Accounts(`data/accounts.day`);

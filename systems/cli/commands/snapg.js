@@ -6,7 +6,7 @@ const MongoConnector = require("@hyarcade/requests/MongoConnector");
  * @returns {*}
  */
 async function main(args) {
-  const c = new MongoConnector("mongodb://127.0.0.1:27017");
+  const c = new MongoConnector();
 
   await c.connect(false);
   await c.snapshotGuilds(args[3]);

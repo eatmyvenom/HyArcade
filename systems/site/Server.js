@@ -143,7 +143,7 @@ async function Server(port) {
 }
 
 if (require.main == module) {
-  Server(5000)
+  Server(cfg.site.port)
     .then(() => {})
     .catch(error => Logger.err(error.stack));
 }

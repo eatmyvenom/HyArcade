@@ -12,7 +12,7 @@ function isObject(item) {
  * @returns {object}
  */
 function MergeJSON(target, source) {
-  let output = Object.assign({}, target);
+  const output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
     for (const key of Object.keys(source)) {
       if (isObject(source[key])) {

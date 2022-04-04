@@ -8,7 +8,7 @@ async function main() {
   const gamesAPI = Database.Resource("games");
   const games = Object.values(gamesAPI.games);
 
-  let boosters = networkBoosters.boosters.filter(b => b.length < b.originalLength);
+  const boosters = networkBoosters.boosters.filter(b => b.length < b.originalLength);
 
   for (const b of boosters) {
     b.game = games.find(g => g.id == b.gameType).name;

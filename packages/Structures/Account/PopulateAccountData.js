@@ -70,6 +70,7 @@ module.exports = function PopulateAccountData(json, account) {
   account.hypixelDiscord = json.player?.socialMedia?.links?.DISCORD ?? "";
 
   account.name = json?.player?.displayname ?? "INVALID-NAME";
+  // eslint-disable-next-line camelcase
   account.name_lower = account.name.toLowerCase();
   account.nameHist = json?.player?.knownAliases ?? ["INVALID-NAME"];
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const ImageGenerator = require("../ImageGenerator");
 

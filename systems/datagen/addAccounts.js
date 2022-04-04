@@ -14,7 +14,7 @@ module.exports = async function addAccounts(names) {
 
   let res = "";
   const nameArr = names;
-  for (let name of nameArr) {
+  for (const name of nameArr) {
     let uuid;
     if (name.length == 32 || name.length == 36) {
       uuid = name.replace(/-/g, "").toLowerCase();

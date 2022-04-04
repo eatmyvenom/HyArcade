@@ -10,8 +10,8 @@ module.exports = new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], asyn
       embed: ERROR_ARGS_LENGTH(1),
     };
   }
-  let player = args[0];
-  let discord = args[1] ?? player;
+  const player = args[0];
+  const discord = args[1] ?? player;
   const list = await Database.readDB("discordList");
   const disclist = {};
 

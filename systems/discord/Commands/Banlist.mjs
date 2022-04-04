@@ -40,7 +40,7 @@ export default new Command("banlist", ["%trusted%"], async args => {
     case "list":
     case "show": {
       /** @type {string[]} */
-      let banned = await Database.readDB("bannedList");
+      const banned = await Database.readDB("bannedList");
       res = {
         res: `\`\`\`\n${banned.join("\n")}\`\`\``,
       };

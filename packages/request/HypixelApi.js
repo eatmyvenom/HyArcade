@@ -210,6 +210,7 @@ module.exports = class HypixelApi {
       return await Api.makeRequest();
     }
 
+    // eslint-disable-next-line camelcase
     static async auctions_ended() {
       const Api = new HypixelApi("skyblock/auctions_ended", {});
       return await Api.makeRequest();

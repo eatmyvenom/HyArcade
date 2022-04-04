@@ -671,6 +671,7 @@ class ExtraStats {
 
 class Account {
   name = "";
+  // eslint-disable-next-line camelcase
   name_lower = "";
   nameHist = [];
   uuid = "";
@@ -919,6 +920,7 @@ class Account {
     return this.zombies.wins_zombies;
   }
   set zombiesWins(v) {
+    // eslint-disable-next-line camelcase
     this.zombies.wins_zombies = v;
   }
 

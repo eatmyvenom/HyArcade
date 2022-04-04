@@ -40,7 +40,7 @@ export default new Command("hackerlist", ["%trusted%"], async args => {
     case "list":
     case "show": {
       /** @type {string[]} */
-      let hackers = await Database.readDB("hackerList");
+      const hackers = await Database.readDB("hackerList");
       res = {
         res: `\`\`\`\n${hackers.join("\n")}\`\`\``,
       };

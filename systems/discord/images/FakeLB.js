@@ -59,7 +59,7 @@ module.exports = async function FakeLb(path, category, time) {
         }
 
         default: {
-          let random = chooseRandom(0, generics.length - 1);
+          const random = chooseRandom(0, generics.length - 1);
 
           return await generics[random](path, category, realTime, topTen);
         }

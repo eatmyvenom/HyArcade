@@ -10,7 +10,7 @@ const Logger = new LoggerInstance(name, "🎮");
 
 Logger.debug("----- NEW PROCESS STARTED -----");
 
-let start = new Date();
+const start = new Date();
 
 Logger.debug(`Args are [${process.argv}] - executing`);
 Logger.debug("----- Process info -----");
@@ -39,4 +39,5 @@ process.on("uncaughtException", (error, origin) => {
   process.exit(1);
 });
 
-module.exports = { ...Logger, LoggerInstance };
+module.exports = Logger;
+module.exports.LoggerInstance = LoggerInstance;

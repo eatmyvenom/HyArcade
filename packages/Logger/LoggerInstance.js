@@ -82,7 +82,7 @@ function errorln(string, name = "") {
  * @param {string} emoji
  */
 function println(type, string, name, color = "\u001B[0m", emoji = "") {
-  let realEmoji = emoji ? `${emoji.trim()} ` : "";
+  const realEmoji = emoji ? `${emoji.trim()} ` : "";
   if (shouldLog(type)) {
     const str = `${realEmoji}${timeStr()} ${nameStr(name)} ${typeStr(type, color)} ${color}${string}\u001B[0m\n`;
     stdout.write(str, () => {});

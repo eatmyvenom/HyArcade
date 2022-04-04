@@ -25,8 +25,7 @@ module.exports = class BotRuntime {
   }
 
   static getWebhookObj(embed) {
-    let embeds;
-    embeds = embed == undefined ? [] : [embed];
+    const embeds = embed == undefined ? [] : [embed];
     return {
       username: BotRuntime.client.user.username,
       avatarURL: BotRuntime.client.user.avatarURL({ format: "png" }),
@@ -44,7 +43,7 @@ module.exports = class BotRuntime {
 
   static async getHackerlist() {
     if (hackerlist == undefined) {
-      let list = await Database.readDB("hackerList");
+      const list = await Database.readDB("hackerList");
       hackerlist = list.map(h => h.uuid);
       setTimeout(() => (hackerlist = undefined), 3600000);
     }
@@ -68,7 +67,7 @@ module.exports = class BotRuntime {
 
   static async getBanlist() {
     if (banlist == undefined) {
-      let list = await Database.readDB("bannedList");
+      const list = await Database.readDB("bannedList");
       banlist = list.map(h => h.uuid);
       setTimeout(() => (banlist = undefined), 3600000);
     }

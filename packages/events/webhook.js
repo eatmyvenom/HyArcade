@@ -629,7 +629,7 @@ async function sendMW() {
     g.lbProp = g.gameStats.miniWalls.wins;
   }
 
-  let str = stringifyList(guildlist, "lbProp", undefined, 10);
+  const str = stringifyList(guildlist, "lbProp", undefined, 10);
   const gEmbed = new MessageEmbed().setTitle("Lifetime Guild Wins").setDescription(str).setColor(0xc60532);
 
   const wins = await genMiWLB("wins", "l", 25);

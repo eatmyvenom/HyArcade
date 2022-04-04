@@ -15,7 +15,7 @@ function playerHead(uuid) {
  * @returns {string}
  */
 function getRankColor(rank) {
-  let betterRank = rank.replace(/_PLUS/g, "+");
+  const betterRank = rank.replace(/_PLUS/g, "+");
 
   if (betterRank == "MVP++") {
     return "gold";
@@ -59,14 +59,13 @@ function formatWins(guild) {
   });
 
   for (const m of members) {
-    let wins = `<i>Wins ${formatNumber(m?.stats.arcadeWins ?? 0)}</i>`;
+    const wins = `<i>Wins ${formatNumber(m?.stats.arcadeWins ?? 0)}</i>`;
 
-    let rankTag = m.guildRank ? m.guildRank.tag : "GM";
+    const rankTag = m.guildRank ? m.guildRank.tag : "GM";
 
-    let guildRank;
-    guildRank = rankTag == undefined ? "" : `<span class="dark_aqua">[${rankTag}]</span> `;
+    const guildRank = rankTag == undefined ? "" : `<span class="dark_aqua">[${rankTag}]</span> `;
 
-    let player = `<b class="${getRankColor(m?.rank ?? "")}">${guildRank}${m.name}</b>`;
+    const player = `<b class="${getRankColor(m?.rank ?? "")}">${guildRank}${m.name}</b>`;
     memberEle.innerHTML += `<p>${playerHead(m.uuid)}${player}${wins}</p>`;
   }
 }

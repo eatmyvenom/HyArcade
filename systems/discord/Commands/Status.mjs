@@ -482,7 +482,7 @@ function classicGamesTransformer(status) {
 async function getLastAction(account) {
   const friendData = await Database.friends(account.uuid);
 
-  let friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
+  const friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
 
   const time = Math.max(account.actionTime.quest.time, account.actionTime.pets, account.actionTime.dailyReward, account.actionTime.otherActions, ...friendTimestamps);
   return TimeFormatter(time);
@@ -558,7 +558,7 @@ async function callback(args, rawmsg, interaction) {
       : `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();
 
     let modeName = `${mode.slice(0, 1).toUpperCase()}${mode.slice(1).toLowerCase()}`;
-    let typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
+    const typeName = `${type.slice(0, 1).toUpperCase()}${type.slice(1).toLowerCase()}`;
 
     if (modeName.trim() == "") {
       modeName = typeName;

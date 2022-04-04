@@ -1,12 +1,19 @@
 {
-  "plugins": ["jsdoc"],
+  "plugins": [
+    "jsdoc"
+  ],
   "root": true,
   "env": {
     "browser": true,
     "commonjs": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:jsdoc/recommended", "plugin:prettier/recommended", "plugin:unicorn/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:jsdoc/recommended",
+    "plugin:prettier/recommended",
+    "plugin:unicorn/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
@@ -21,18 +28,37 @@
     "unicorn/number-literal-case": 0,
     "unicorn/numeric-separators-style": 0,
     "unicorn/no-nested-ternary": 0,
-    "unicorn/prevent-abbreviations" : 0,
-    "template-curly-spacing": ["error", "never"],
-    "object-curly-spacing": ["warn", "always"],
-    "space-before-blocks": ["error", "always"],
+    "unicorn/prevent-abbreviations": 0,
+    "template-curly-spacing": [
+      "error",
+      "never"
+    ],
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "space-before-blocks": [
+      "error",
+      "always"
+    ],
     "prefer-arrow-callback": "error",
     "arrow-spacing": "error",
     "no-param-reassign": "error",
     "no-whitespace-before-property": "error",
     "object-shorthand": "error",
-    "semi": ["error", "always"],
+    "prefer-const": "warn",
+    "camelcase": "warn",
+    "semi": [
+      "error",
+      "always"
+    ],
     "no-use-before-define": "warn",
-    "max-depth": ["error", { "max": 4 }],
+    "max-depth": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
     "prettier/prettier": [
       2,
       {

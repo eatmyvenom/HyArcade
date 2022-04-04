@@ -30,7 +30,7 @@ async function main(args) {
 
   const arr = Object.entries(guildFetches).sort((a, b) => a[1] - b[1]);
 
-  for (let g of arr) {
+  for (const g of arr) {
     Logger.out(`${g[0]} - ${g[1]}`);
   }
 }

@@ -6,8 +6,7 @@ const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
 const { MongoClient, Collection } = require("mongodb");
 const CommandMetadata = require("@hyarcade/structures/Discord/CommandMetadata");
 const config = require("@hyarcade/config");
-let cfg = config.fromJSON();
-let cfgTime = Date.now();
+const cfg = config.fromJSON();
 
 const Logger = new LoggerInstance("Mongo", "🗃️");
 
@@ -106,11 +105,10 @@ class MongoConnector {
   /**
    * Creates an instance of MongoConnector.
    *
-   * @param {*} url
    * @memberof MongoConnector
    */
-  constructor(url) {
-    this.client = new MongoClient(url, { maxPoolSize: 500, minPoolSize: 50 });
+  constructor() {
+    this.client = new MongoClient(cfg.database.mongoURL, { maxPoolSize: 750, minPoolSize: 50 });
   }
 
   async connect(index = true) {
@@ -172,6 +170,7 @@ class MongoConnector {
       await this.discordList.createIndex({ discordID: 1 });
     }
 
+    cfg.autoRefresh();
     Logger.log("MongoDB connection established...");
   }
 
@@ -251,6 +250,7 @@ class MongoConnector {
       Logger.warn(`${input} was not able to be resolved to a discord account`);
       return;
     } else {
+      // eslint-disable-next-line camelcase
       return await this.accounts.findOne({ name_lower: input.toLowerCase() });
     }
   }
@@ -520,7 +520,7 @@ class MongoConnector {
     };
 
     const hackerArr = await this.hackerList.find().toArray();
-    let hackers = hackerArr.map(h => h.uuid);
+    const hackers = hackerArr.map(h => h.uuid);
 
     const query = { uuid: { $nin: hackers } };
 
@@ -538,7 +538,7 @@ class MongoConnector {
     }
 
     const hackerArr = await this.hackerList.find().toArray();
-    let hackers = hackerArr.map(h => h.uuid);
+    const hackers = hackerArr.map(h => h.uuid);
 
     if (this[`${realTime}Accounts`] == undefined) {
       // Exit if query will throw an error
@@ -768,10 +768,6 @@ class MongoConnector {
   }
 
   async getOutdatedAccs() {
-    if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
-      cfg = config.fromJSON();
-    }
-
     const projection = {
       uuid: 1,
       _id: 0,
@@ -782,9 +778,6 @@ class MongoConnector {
 
   async getImportantAccounts(level = 0) {
     Logger.info(`Getting important accounts with level: ${level}`);
-    if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
-      cfg = config.fromJSON();
-    }
     let accs = [];
     let leaderboarders = [];
 

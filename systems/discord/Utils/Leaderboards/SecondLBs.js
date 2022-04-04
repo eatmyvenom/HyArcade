@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 module.exports = {
   zombies: {
     fastest_time_10_zombies_alienarcadium_normal: true,

@@ -215,7 +215,7 @@ async function getLeaderboards(element) {
 
   const id = element.getAttribute("id");
 
-  let formattedTime = "";
+  const formattedTime = "";
 
   const path = id;
   const args = `path=${path}${formattedTime}&max=${maxLength}`;

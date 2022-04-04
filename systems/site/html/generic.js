@@ -409,7 +409,7 @@ async function showCounts() {
   const info = document.querySelector("#info");
 
   let counts = await fetch("https://api.slothpixel.me/api/counts", { cache: "no-store", mode: "cors" });
-  let rawData = await counts.text();
+  const rawData = await counts.text();
 
   try {
     counts = JSON.parse(rawData);
@@ -528,9 +528,7 @@ async function getLeaderboards(element) {
 
   const time = document.querySelector("[selected]").id;
 
-  let formattedTime;
-
-  formattedTime = time == "lifetime" ? "" : `&time=${time}`;
+  const formattedTime = time == "lifetime" ? "" : `&time=${time}`;
 
   if (idArr.length > 1) {
     const category = idArr[0];

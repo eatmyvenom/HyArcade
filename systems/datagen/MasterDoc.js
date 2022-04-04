@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable unicorn/prefer-object-from-entries */
 /* eslint-disable unicorn/no-array-reduce */
 
@@ -18,7 +19,7 @@ function isObject(item) {
  * @returns {object}
  */
 function mergeDeep(target, source) {
-  let output = Object.assign({}, target);
+  const output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
     for (const key of Object.keys(source)) {
       if (isObject(source[key])) {

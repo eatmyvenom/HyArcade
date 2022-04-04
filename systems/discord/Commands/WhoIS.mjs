@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from "axios";
 import Database from "@hyarcade/requests/Database.js";
 import { Account, Command } from "@hyarcade/structures";

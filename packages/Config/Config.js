@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const process = require("node:process");
 const path = require("path");
@@ -33,6 +33,7 @@ class Database {
   defaultLimit = 100;
   pass = process.env.HYARCADE_KEY;
   key = process.env.HYARCADE_KEY;
+  mongoURL = "mongodb://127.0.0.1:27017";
   serverIP = "";
   /**
    * @type {object<string, DatabaseKey>}
@@ -148,10 +149,15 @@ class ThirdPartyConfig {
 
 class RedisConfig {
   url = process.env.HYARCADE_REDIS_URL;
-  leaderboardSize = 1000;
+  leaderboardSize = 2000;
+}
+
+class SiteConfig {
+  port = 5000;
 }
 
 class Config {
+  _interval;
   key = process.env.HYARCADE_HYPIXEL_KEY;
   mode = "prod";
   alwaysForce = false;
@@ -162,8 +168,7 @@ class Config {
   webhook = JSON.stringify(process.env.HYARCADE_WEBHOOK);
 
   // these are classes representing the structure of
-  // the files in the config directory except for the
-  // config.json file.
+  // the files in the config directory
   commandImages = new CommandImages();
   clusters = new Clusters();
   database = new Database();
@@ -173,6 +178,7 @@ class Config {
   otherHooks = new OtherHooksConfig();
   thirdParty = new ThirdPartyConfig();
   redis = new RedisConfig();
+  site = new SiteConfig();
 
   constructor(json) {
     for (const thing in json) {
@@ -192,8 +198,9 @@ class Config {
     let cfg = new Config();
     try {
       cfg = new Config(JSON.parse(fs.readFileSync(path.join(configDir, "config.json"))));
-      // eslint-disable-next-line no-empty
-    } catch {}
+    } catch {
+      process.emitWarning(new Error("Error reading hyarcade config"));
+    }
 
     for (const file of configs) {
       if (file.slice(-5, file.length) == ".json") {
@@ -202,6 +209,18 @@ class Config {
     }
 
     return cfg;
+  }
+
+  autoRefresh() {
+    this._interval = setInterval(() => {
+      const newCfg = Config.fromJSON();
+      Object.assign(this, newCfg);
+    }, 600000);
+  }
+
+  destroy() {
+    clearInterval(this._interval);
+    delete this;
   }
 }
 

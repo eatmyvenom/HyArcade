@@ -65,8 +65,7 @@ async function commandHandler(interaction) {
     }
   }
 
-  let res;
-  res = responseObj instanceof CommandResponse ? responseObj : new CommandResponse(responseObj);
+  const res = responseObj instanceof CommandResponse ? responseObj : new CommandResponse(responseObj);
 
   try {
     await (!interaction.deferred && !interaction.replied ? interaction.reply(res.toDiscord()) : interaction.followUp(res.toDiscord()));

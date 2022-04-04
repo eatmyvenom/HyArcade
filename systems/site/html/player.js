@@ -467,13 +467,11 @@ function formatRank(rank, plusColor, name = "", mvpColor = "GOLD") {
  *
  */
 async function handleData() {
-  let rawjson;
-
   if (playerdata?.name?.toLowerCase()?.startsWith(playername.toLowerCase())) {
     return;
   }
 
-  rawjson = await (playername.length > 16 ? fetch(`https://api.hyarcade.xyz/account?uuid=${playername}`) : fetch(`https://api.hyarcade.xyz/account?ign=${playername}`));
+  const rawjson = await (playername.length > 16 ? fetch(`https://api.hyarcade.xyz/account?uuid=${playername}`) : fetch(`https://api.hyarcade.xyz/account?ign=${playername}`));
   playerdata = await rawjson.json();
 
   if (playerdata != undefined && playerdata.name != undefined) {

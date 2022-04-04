@@ -1,5 +1,5 @@
 {
-    "name": "@hyarcade",
+    "name": "hyarcade",
     "version": "2.7.3",
     "private": true,
     "description": "A full system for gathering and displaying peoples hypixel arcade games stats",

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const Canvas = require("canvas");
 const Discord = require("discord.js");
 const Logger = require("@hyarcade/logger");
@@ -75,7 +76,7 @@ module.exports = class ImageGenerator {
   }
 
   async addBackground(path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
-    let bg = await Canvas.loadImage(path);
+    const bg = await Canvas.loadImage(path);
 
     this.context.drawImage(bg, x, y, dx, dy);
     this.context.beginPath();
@@ -451,8 +452,7 @@ module.exports = class ImageGenerator {
     const title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
     const ignWidth = title.w;
 
-    let guildWidth;
-    guildWidth = guild != undefined ? this.context.measureText(` [${guild}]`).width : 0;
+    const guildWidth = guild != undefined ? this.context.measureText(` [${guild}]`).width : 0;
 
     const dashWidth = this.context.measureText(" - ").width;
     const winsWidth = this.context.measureText(`${count}`).width;

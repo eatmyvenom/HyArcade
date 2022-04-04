@@ -26,7 +26,7 @@ module.exports = class Database {
     Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
 
     try {
-      let fileReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
+      const fileReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
       fileData = fileReq.data;
     } catch (error) {
       Logger.err("Can't connect to database");

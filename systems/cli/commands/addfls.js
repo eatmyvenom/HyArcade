@@ -19,8 +19,7 @@ async function main(args) {
   for (const uuid of uuids) {
     const freq = await HypixelApi.friends(uuid);
     for (const friend of freq.records) {
-      let addUUID;
-      addUUID = friend.uuidSender == uuid ? friend.uuidReceiver : friend.uuidSender;
+      const addUUID = friend.uuidSender == uuid ? friend.uuidReceiver : friend.uuidSender;
 
       if (!friends.includes(addUUID)) {
         friends.push(addUUID);
