@@ -155,7 +155,12 @@ class GameAP {
     for (const onetime of onetimes) {
       const completed = onetimeArr.has(onetime.stat);
       if (completed) {
-        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsEarned.push({
+          name: onetime.achievement.name,
+          points: onetime.achievement.points,
+          challenge: true,
+          legacy: onetime.achievement.legacy ?? false,
+        });
         if (onetime.achievement.legacy != true) {
           this.apEarned += onetime.achievement.points;
           this.challengeEarned += onetime.achievement.points;
@@ -163,7 +168,12 @@ class GameAP {
           this.legacyEarned += onetime.achievement.points;
         }
       } else {
-        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsMissing.push({
+          name: onetime.achievement.name,
+          points: onetime.achievement.points,
+          challenge: true,
+          legacy: onetime.achievement.legacy ?? false,
+        });
       }
 
       this.challengeAP.push({ ...onetime.achievement, completed });
@@ -180,9 +190,19 @@ class GameAP {
       if (tieredKeys.includes(tierAP.stat)) {
         const gameTier = new GameTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
         if (gameTier.currentTier == gameTier.topTier) {
-          this.achievementsEarned.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
+          this.achievementsEarned.push({
+            name: gameTier.name,
+            points: gameTier.availiableAP - gameTier.ap,
+            challenge: false,
+            legacy: gameTier.legacy,
+          });
         } else {
-          this.achievementsMissing.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
+          this.achievementsMissing.push({
+            name: gameTier.name,
+            points: gameTier.availiableAP - gameTier.ap,
+            challenge: false,
+            legacy: gameTier.legacy,
+          });
         }
 
         if (!gameTier.legacy) {

@@ -28,7 +28,9 @@ module.exports = class Command {
   }
 
   async callback(args, rawMsg, interaction) {
-    logger.debug(`Command Run\nName : ${this.name}\nArgs : ${args}\nMessage : ${rawMsg.content}\nInteraction? : ${interaction != undefined}`);
+    logger.debug(
+      `Command Run\nName : ${this.name}\nArgs : ${args}\nMessage : ${rawMsg.content}\nInteraction? : ${interaction != undefined}`,
+    );
     return new CommandResponse("Bot broke :(");
   }
 
@@ -64,7 +66,14 @@ module.exports = class Command {
 
       if (interaction != undefined) {
         if (interaction.isCommand()) {
-          return new CommandResponse("Sorry, you can't run this command yet. Please wait a few seconds!", undefined, undefined, undefined, false, true);
+          return new CommandResponse(
+            "Sorry, you can't run this command yet. Please wait a few seconds!",
+            undefined,
+            undefined,
+            undefined,
+            false,
+            true,
+          );
         }
         if (!interaction.deferred) {
           await interaction.deferUpdate();

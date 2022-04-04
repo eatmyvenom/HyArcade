@@ -17,7 +17,7 @@ module.exports = class RoleUpdater {
 
   /**
    *
-   * @param {*} wins
+   * @param {number} wins
    * @returns {Role}
    */
   getRole(wins) {
@@ -26,7 +26,6 @@ module.exports = class RoleUpdater {
         return role;
       }
     }
-    return;
   }
 
   async updateAll(disclist, accs) {

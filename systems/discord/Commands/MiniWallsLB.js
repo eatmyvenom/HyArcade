@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const { MessageEmbed } = require("discord.js");
 const logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/requests/Database");
@@ -140,7 +141,12 @@ module.exports = new Command(
       case "witherdmg": {
         gameName = "Wither Damage";
         const lb = await getLB("witherDamage", timetype, limit, "miniWalls");
-        res = stringifyList(lb.res, timetype == "lifetime" ? "witherDamage" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
+        res = stringifyList(
+          lb.res,
+          timetype == "lifetime" ? "witherDamage" : "lbProp",
+          timetype == "lifetime" ? "miniWalls" : undefined,
+          limit,
+        );
         correctedTime = lb.time;
         break;
       }
@@ -153,7 +159,12 @@ module.exports = new Command(
       case "witherkills": {
         gameName = "Wither Kills";
         const lb = await getLB("witherKills", timetype, limit, "miniWalls");
-        res = stringifyList(lb.res, timetype == "lifetime" ? "witherKills" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
+        res = stringifyList(
+          lb.res,
+          timetype == "lifetime" ? "witherKills" : "lbProp",
+          timetype == "lifetime" ? "miniWalls" : undefined,
+          limit,
+        );
         correctedTime = lb.time;
         break;
       }
@@ -166,7 +177,12 @@ module.exports = new Command(
       case "finals": {
         gameName = "Final Kills";
         const lb = await getLB("finalKills", timetype, limit, "miniWalls");
-        res = stringifyList(lb.res, timetype == "lifetime" ? "finalKills" : "lbProp", timetype == "lifetime" ? "miniWalls" : undefined, limit);
+        res = stringifyList(
+          lb.res,
+          timetype == "lifetime" ? "finalKills" : "lbProp",
+          timetype == "lifetime" ? "miniWalls" : undefined,
+          limit,
+        );
         correctedTime = lb.time;
         break;
       }
@@ -305,7 +321,9 @@ module.exports = new Command(
       return new MessageEmbed()
         .setTitle("ERROR")
         .setColor(0xff0000)
-        .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+        .setDescription(
+          "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!",
+        );
     }
 
     if (res.length > 2000) {

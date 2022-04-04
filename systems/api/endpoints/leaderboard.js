@@ -20,7 +20,11 @@ const cfg = require("@hyarcade/config").fromJSON();
 async function GuildLeaderboard(lbprop, timePeriod, reverse, max, connector) {
   Logger.verbose("Getting guild leaderboard");
 
-  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
+  const accs = await (timePeriod == undefined ||
+  timePeriod == "life" ||
+  timePeriod == "lifetime" ||
+  timePeriod == undefined ||
+  timePeriod == ""
     ? connector.getGuildLeaderboard(lbprop, reverse, max)
     : connector.getGuildHistoricalLeaderboard(lbprop, timePeriod, reverse, max));
 

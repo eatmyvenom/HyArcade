@@ -1,7 +1,6 @@
-const { MessageEmbed, Client } = require("discord.js");
+const { Client } = require("discord.js");
 const logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/requests/Database");
-const AdvancedEmbeds = require("./Utils/Embeds/AdvancedEmbeds");
 const fs = require("fs-extra");
 const path = require("path");
 
@@ -31,14 +30,6 @@ module.exports = class BotRuntime {
       avatarURL: BotRuntime.client.user.avatarURL({ format: "png" }),
       embeds,
     };
-  }
-
-  static async getStats(acc, game) {
-    /**
-     * @type {MessageEmbed}
-     */
-    const embed = await AdvancedEmbeds.getStats(acc, game, false);
-    return embed;
   }
 
   static async getHackerlist() {

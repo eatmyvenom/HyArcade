@@ -12,7 +12,10 @@ async function lastUpdateHandler() {
 
   time = Math.floor(time / 1000);
 
-  const embed = new MessageEmbed().setTitle("Update time").setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`).setColor(0x00b37b);
+  const embed = new MessageEmbed()
+    .setTitle("Update time")
+    .setDescription(`<t:${time}:d> <t:${time}:T> -- <t:${time}:R>`)
+    .setColor(0x00b37b);
 
   return {
     res: "",

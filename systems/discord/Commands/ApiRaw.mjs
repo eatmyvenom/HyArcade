@@ -53,11 +53,11 @@ export default new Command("apiraw", ["*"], async (args, rawMsg, interaction) =>
     val = acc;
   }
 
-  if (typeof val == "number" || typeof val == "boolean") {
+  if (typeof val === "number" || typeof val === "boolean") {
     val = `${val}`;
   }
 
-  if (typeof val != "string") {
+  if (typeof val !== "string") {
     val = Util.inspect(val, true);
   }
 

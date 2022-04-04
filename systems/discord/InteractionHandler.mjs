@@ -53,7 +53,12 @@ async function commandHandler(interaction) {
     try {
       Logger.err(error.stack);
       await Webhooks.errHook.send({
-        embeds: [ERROR_LOG(error, `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map(a => `${a.name} : ${a.value}`))}`)],
+        embeds: [
+          ERROR_LOG(
+            error,
+            `Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data.map(a => `${a.name} : ${a.value}`))}`,
+          ),
+        ],
       });
       await (!interaction.deferred && !interaction.replied
         ? interaction.reply({ embeds: [ERROR_UNKNOWN], ephemeral: true })
@@ -74,7 +79,12 @@ async function commandHandler(interaction) {
       Logger.err(`Error from /${interaction.commandName} ${JSON.stringify(interaction.options.data)}`);
       Logger.err(error.stack);
       Webhooks.errHook.send({
-        embeds: [ERROR_LOG(error, `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``)],
+        embeds: [
+          ERROR_LOG(
+            error,
+            `Interaction usage by ${interaction.user.tag}\n\`/${interaction.commandName} ${JSON.stringify(interaction.options.data)}\``,
+          ),
+        ],
       });
 
       await (!interaction.deferred && !interaction.replied

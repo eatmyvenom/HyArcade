@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import fs from "fs-extra";
 import Database from "@hyarcade/requests/Database.js";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
@@ -484,7 +485,13 @@ async function getLastAction(account) {
 
   const friendTimestamps = friendData.error ? [] : Object.values(friendData).map(f => f.started);
 
-  const time = Math.max(account.actionTime.quest.time, account.actionTime.pets, account.actionTime.dailyReward, account.actionTime.otherActions, ...friendTimestamps);
+  const time = Math.max(
+    account.actionTime.quest.time,
+    account.actionTime.pets,
+    account.actionTime.dailyReward,
+    account.actionTime.otherActions,
+    ...friendTimestamps,
+  );
   return TimeFormatter(time);
 }
 
@@ -552,7 +559,9 @@ async function callback(args, rawmsg, interaction) {
 
     await img.addBackground(GetAsset(getImage(status)), 0, 0, 1280, 800, "#00000052");
 
-    const type = gameData[status.session.gameType] ? gameData[status.session.gameType].name : `${status.session.gameType}`.replace(/_/g, " ").trim();
+    const type = gameData[status.session.gameType]
+      ? gameData[status.session.gameType].name
+      : `${status.session.gameType}`.replace(/_/g, " ").trim();
     const mode = gameData[status.session.gameType]?.modeNames?.[status.session.mode]
       ? gameData[status.session.gameType]?.modeNames?.[status.session.mode]
       : `${status.session.mode}`.replace(/_/g, " ").replace(type, "").trim();

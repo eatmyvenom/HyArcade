@@ -65,7 +65,7 @@ async function execute(msg, senderID) {
     }
     return new CommandResponse(res);
   }
-  return;
+  return new CommandResponse(undefined, undefined, undefined, undefined, true);
 }
 
 export default {

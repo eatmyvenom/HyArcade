@@ -87,7 +87,8 @@ async function callback(request, response) {
     } else if (urlPath[1] == "guilds") {
       replyData = await fs.readFile("html/guild.handlebars");
     } else if (urlPath[1] == "assets") {
-      return await handleAssets(urlPath, response);
+      await handleAssets(urlPath, response);
+      return;
     } else if (pages.has(endpoint.slice(1))) {
       replyData = await fs.readFile("html/generic.handlebars");
     } else if (urlPath[1] == "player") {

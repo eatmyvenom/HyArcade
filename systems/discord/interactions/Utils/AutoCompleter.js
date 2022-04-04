@@ -41,7 +41,7 @@ const zombies = {
 /**
  *
  * @param {AutocompleteInteraction} interaction
- * @returns {*}
+ * @returns {void}
  */
 async function leaderboardFiller(interaction) {
   if (testStats == undefined) {
@@ -54,11 +54,13 @@ async function leaderboardFiller(interaction) {
 
   switch (interaction.options.getFocused(true).name) {
     case "category": {
-      return LeaderboardCategorys(category, interaction, testStats);
+      LeaderboardCategorys(category, interaction, testStats);
+      break;
     }
 
     case "stat": {
-      return LeaderboardStats(category, stat, interaction, testStats);
+      LeaderboardStats(category, stat, interaction, testStats);
+      break;
     }
   }
 }

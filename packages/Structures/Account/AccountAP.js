@@ -154,7 +154,12 @@ class ArcadeGameAP {
     for (const onetime of onetimes) {
       const completed = onetimeArr.has(onetime.stat);
       if (completed) {
-        this.achievementsEarned.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsEarned.push({
+          name: onetime.achievement.name,
+          points: onetime.achievement.points,
+          challenge: true,
+          legacy: onetime.achievement.legacy ?? false,
+        });
         if (onetime.achievement.legacy != true) {
           this.apEarned += onetime.achievement.points;
           this.challengeEarned += onetime.achievement.points;
@@ -162,7 +167,12 @@ class ArcadeGameAP {
           this.legacyEarned += onetime.achievement.points;
         }
       } else {
-        this.achievementsMissing.push({ name: onetime.achievement.name, points: onetime.achievement.points, challenge: true, legacy: onetime.achievement.legacy ?? false });
+        this.achievementsMissing.push({
+          name: onetime.achievement.name,
+          points: onetime.achievement.points,
+          challenge: true,
+          legacy: onetime.achievement.legacy ?? false,
+        });
       }
 
       this.challengeAP.push({ ...onetime.achievement, completed });
@@ -179,9 +189,19 @@ class ArcadeGameAP {
       if (tieredKeys.includes(tierAP.stat)) {
         const gameTier = new ArcadeTieredAP(accData.achievements[tierAP.stat], tierAP.achievement);
         if (gameTier.currentTier == gameTier.topTier) {
-          this.achievementsEarned.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
+          this.achievementsEarned.push({
+            name: gameTier.name,
+            points: gameTier.availiableAP - gameTier.ap,
+            challenge: false,
+            legacy: gameTier.legacy,
+          });
         } else {
-          this.achievementsMissing.push({ name: gameTier.name, points: gameTier.availiableAP - gameTier.ap, challenge: false, legacy: gameTier.legacy });
+          this.achievementsMissing.push({
+            name: gameTier.name,
+            points: gameTier.availiableAP - gameTier.ap,
+            challenge: false,
+            legacy: gameTier.legacy,
+          });
         }
 
         if (!gameTier.legacy) {
@@ -338,7 +358,10 @@ class AccountAP {
     this.overall = new ArcadeGameAP(
       accData,
       [new OneTimeAchievementWrapper(arcadeOneTime.WORLD_ECONOMICS, "WORLD_ECONOMICS")],
-      [new TeiredAchievementWrapper(arcadeTiered.ARCADE_BANKER, "ARCADE_BANKER"), new TeiredAchievementWrapper(arcadeTiered.ARCADE_WINNER, "ARCADE_WINNER")],
+      [
+        new TeiredAchievementWrapper(arcadeTiered.ARCADE_BANKER, "ARCADE_BANKER"),
+        new TeiredAchievementWrapper(arcadeTiered.ARCADE_WINNER, "ARCADE_WINNER"),
+      ],
     );
 
     this.blockingDead = new ArcadeGameAP(
@@ -376,7 +399,10 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.CTW_COMEBACK, "CTW_COMEBACK"),
         new OneTimeAchievementWrapper(arcadeOneTime.CTW_NINJA, "CTW_NINJA"),
       ],
-      [new TeiredAchievementWrapper(arcadeTiered.CTW_OH_SHEEP, "CTW_OH_SHEEP"), new TeiredAchievementWrapper(arcadeTiered.CTW_SLAYER, "CTW_SLAYER")],
+      [
+        new TeiredAchievementWrapper(arcadeTiered.CTW_OH_SHEEP, "CTW_OH_SHEEP"),
+        new TeiredAchievementWrapper(arcadeTiered.CTW_SLAYER, "CTW_SLAYER"),
+      ],
     );
 
     this.creeperAttack = new ArcadeGameAP(
@@ -400,7 +426,10 @@ class AccountAP {
         new OneTimeAchievementWrapper(arcadeOneTime.DW_QUICK_WIN, "DW_QUICK_WIN"),
         new OneTimeAchievementWrapper(arcadeOneTime.DW_VOID, "DW_VOID"),
       ],
-      [new TeiredAchievementWrapper(arcadeTiered.DW_SLAYER, "DW_SLAYER"), new TeiredAchievementWrapper(arcadeTiered.DW_DRAGONBORN, "DW_DRAGONBORN")],
+      [
+        new TeiredAchievementWrapper(arcadeTiered.DW_SLAYER, "DW_SLAYER"),
+        new TeiredAchievementWrapper(arcadeTiered.DW_DRAGONBORN, "DW_DRAGONBORN"),
+      ],
     );
 
     this.enderSpleef = new ArcadeGameAP(
@@ -470,7 +499,10 @@ class AccountAP {
 
     this.holeInTheWall = new ArcadeGameAP(
       accData,
-      [new OneTimeAchievementWrapper(arcadeOneTime.HOLE_SCORE, "HOLE_SCORE"), new OneTimeAchievementWrapper(arcadeOneTime.HOLE_FINALS, "HOLE_FINALS")],
+      [
+        new OneTimeAchievementWrapper(arcadeOneTime.HOLE_SCORE, "HOLE_SCORE"),
+        new OneTimeAchievementWrapper(arcadeOneTime.HOLE_FINALS, "HOLE_FINALS"),
+      ],
       [new TeiredAchievementWrapper(arcadeTiered.HITW_PRACTICE_MAKES_PERFECT, "HITW_PRACTICE_MAKES_PERFECT")],
     );
 
@@ -522,7 +554,11 @@ class AccountAP {
       [new TeiredAchievementWrapper(arcadeTiered.PARTY_SUPER_STAR, "PARTY_SUPER_STAR")],
     );
 
-    this.pixelPainters = new ArcadeGameAP(accData, [new OneTimeAchievementWrapper(arcadeOneTime.PIXEL_PAINTERS_ONE, "PIXEL_PAINTERS_ONE")], []);
+    this.pixelPainters = new ArcadeGameAP(
+      accData,
+      [new OneTimeAchievementWrapper(arcadeOneTime.PIXEL_PAINTERS_ONE, "PIXEL_PAINTERS_ONE")],
+      [],
+    );
 
     this.throwOut = new ArcadeGameAP(
       accData,

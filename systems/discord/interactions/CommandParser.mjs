@@ -20,11 +20,21 @@ export default async interaction => {
 
   switch (interaction.commandName) {
     case "stats": {
-      return commands.gameStats.execute([opts.getString("player"), opts.getString("game"), opts.getString("time")], authorID, null, interaction);
+      return commands.gameStats.execute(
+        [opts.getString("player"), opts.getString("game"), opts.getString("time")],
+        authorID,
+        null,
+        interaction,
+      );
     }
 
     case "leaderboard": {
-      return await commands.Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start")], authorID, null, interaction);
+      return await commands.Leaderboard.execute(
+        [opts.getString("game"), opts.getString("type"), opts.getInteger("start")],
+        authorID,
+        null,
+        interaction,
+      );
     }
 
     case "add-account": {
@@ -61,7 +71,12 @@ export default async interaction => {
     }
 
     case commands.GetDataRaw.name: {
-      return await commands.GetDataRaw.execute([opts.getString("player"), opts.getString("path"), opts.getString("time")], authorID, null, interaction);
+      return await commands.GetDataRaw.execute(
+        [opts.getString("player"), opts.getString("path"), opts.getString("time")],
+        authorID,
+        null,
+        interaction,
+      );
     }
 
     case commands.LinkMe.name: {
@@ -77,7 +92,12 @@ export default async interaction => {
     }
 
     case commands.Compare.name: {
-      return await commands.Compare.execute([opts.getString("player1"), opts.getString("player2"), opts.getString("game")], authorID, null, interaction);
+      return await commands.Compare.execute(
+        [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
+        authorID,
+        null,
+        interaction,
+      );
     }
 
     case commands.TopGames.name: {
@@ -132,7 +152,12 @@ export default async interaction => {
         }
 
         case commands.Compare.name: {
-          return await commands.Compare.execute([opts.getString("player1"), opts.getString("player2"), opts.getString("game")], authorID, null, interaction);
+          return await commands.Compare.execute(
+            [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
+            authorID,
+            null,
+            interaction,
+          );
         }
 
         case "help": {
@@ -140,7 +165,12 @@ export default async interaction => {
         }
 
         case "leaderboard": {
-          return await commands.Leaderboard.execute([opts.getString("game"), opts.getString("type"), opts.getInteger("start")], authorID, null, interaction);
+          return await commands.Leaderboard.execute(
+            [opts.getString("game"), opts.getString("type"), opts.getInteger("start")],
+            authorID,
+            null,
+            interaction,
+          );
         }
 
         case "profile": {
@@ -165,9 +195,16 @@ export default async interaction => {
         }
 
         case "leaderboard": {
-          return await commands.MiniWallsLB.execute([opts.getString("type"), opts.getString("time"), opts.getString("amount")], authorID, null, interaction);
+          return await commands.MiniWallsLB.execute(
+            [opts.getString("type"), opts.getString("time"), opts.getString("amount")],
+            authorID,
+            null,
+            interaction,
+          );
         }
       }
     }
   }
+
+  return new CommandResponse("You ran a command that doesn't exist somehow.");
 };

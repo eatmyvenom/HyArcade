@@ -10,7 +10,7 @@ const path = require("path");
 function convertObject(obj) {
   const res = { type: "object", properties: {} };
 
-  if (typeof obj == "string") {
+  if (typeof obj === "string") {
     return { type: "string" };
   }
 
@@ -21,7 +21,7 @@ function convertObject(obj) {
   for (const field in obj) {
     if (Array.isArray(obj[field] && obj.length > 0)) {
       res.properties[field] = { type: "array", items: convertObject(obj[field][0]) };
-    } else if (typeof obj[field] == "object") {
+    } else if (typeof obj[field] === "object") {
       res.properties[field] = convertObject(obj[field]);
     } else {
       res.properties[field] = {
@@ -96,7 +96,8 @@ All responses in JSON format.`,
       type: "apiKey",
       in: "header",
       name: "key",
-      description: "Not needed in most use cases, the rate limits are 120/minute per IP. If you want to use more than that contact eatmyvenom.",
+      description:
+        "Not needed in most use cases, the rate limits are 120/minute per IP. If you want to use more than that contact eatmyvenom.",
     },
     "Database Pass": {
       type: "Override",
@@ -108,7 +109,8 @@ All responses in JSON format.`,
 
   const responses = {
     RateLimited: {
-      description: "A request limit has been reached, usually this is due to the limit on the key being reached but can also be triggered by a global throttle.",
+      description:
+        "A request limit has been reached, usually this is due to the limit on the key being reached but can also be triggered by a global throttle.",
       content: {
         "application/json": {
           schema: {

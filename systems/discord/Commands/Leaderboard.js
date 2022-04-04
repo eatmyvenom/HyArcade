@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const { Message, CommandInteraction, ButtonInteraction } = require("discord.js");
 const { MessageActionRow } = require("discord.js");
 const { MessageButton } = require("discord.js");
@@ -21,7 +22,10 @@ const LeaderboardButtons = require("../interactions/Components/Buttons/Generator
 function ms2time(time) {
   const date = new Date(time);
 
-  return `${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}.${date.getMilliseconds().toString().padStart(3, "0")}`;
+  return `${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}.${date
+    .getMilliseconds()
+    .toString()
+    .padStart(3, "0")}`;
 }
 
 /**

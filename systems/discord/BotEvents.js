@@ -126,7 +126,9 @@ module.exports = class BotEvents {
    * @param {Guild} guild
    */
   static guildCreate(guild) {
-    Webhooks.logHook.send(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`);
+    Webhooks.logHook.send(
+      `Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`,
+    );
     logger.out(`Bot was added to guild ${guild.name} with ${guild.memberCount} members!`);
     logger.debug(`Guild owner: ${guild.ownerID}`);
     logger.debug(`Guild ID: ${guild.id}`);

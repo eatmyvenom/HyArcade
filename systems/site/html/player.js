@@ -19,7 +19,7 @@ function setName(name) {
  * @param {KeyboardEvent} event
  */
 function ignIpt(event) {
-  if (event.key == "Enter") {
+  if (event.key === "Enter") {
     setName(event.target.value);
     event.target.blur();
   }
@@ -51,7 +51,7 @@ function refresh() {
  */
 function formatNum(number) {
   const str = Number(number);
-  if (number == undefined) {
+  if (number === undefined) {
     return Number(0).toLocaleString();
   }
   return str.toLocaleString();
@@ -101,9 +101,9 @@ function partyGames(data) {
     `Wins: <span class="gray">${formatNum(data.partyGames.wins)}</span><br /><br />` +
     `Rounds Won: <span class="gray">${formatNum(data.partyGames.roundsWon)}</span><br />` +
     `Stars Earned: <span class="gray">${formatNum(data.partyGames.starsEarned)}</span><br /><br />` +
-    `Achievements: <span class="gray">${data.arcadeAchievments.partyGames.apEarned} / ${data.arcadeAchievments.partyGames.apAvailable} (${Math.round(
-      (data.arcadeAchievments.partyGames.apEarned / data.arcadeAchievments.partyGames.apAvailable) * 100,
-    )}%)</span>`;
+    `Achievements: <span class="gray">${data.arcadeAchievments.partyGames.apEarned} / ${
+      data.arcadeAchievments.partyGames.apAvailable
+    } (${Math.round((data.arcadeAchievments.partyGames.apEarned / data.arcadeAchievments.partyGames.apAvailable) * 100)}%)</span>`;
 
   ele.innerHTML = html;
 }
@@ -133,7 +133,9 @@ function farmhunt(data) {
  * @param obj
  */
 function formatAp(obj) {
-  return `Achievements: <span class="gray">${obj.apEarned} / ${obj.apAvailable} (${Math.round((obj.apEarned / obj.apAvailable) * 100)}%)</span>`;
+  return `Achievements: <span class="gray">${obj.apEarned} / ${obj.apAvailable} (${Math.round(
+    (obj.apEarned / obj.apAvailable) * 100,
+  )}%)</span>`;
 }
 
 /**
@@ -424,7 +426,10 @@ function displayData(data) {
   setHtmlByName("name", `${formatRank(data.rank, data.plusColor, data.name, data.mvpColor)}`);
   setHtmlByName("xp", `<b class="aqua">Level - ${formatNum(data.level)}</b>`);
   setHtmlByName("karma", `<b class="light_purple"> Karma - ${formatNum(data.karma)}</b>`);
-  setHtmlByName("aap", `<b class="green">Arcade AP - ${data.arcadeAchievments.totalEarned} / ${data.arcadeAchievments.totalAvailiable}</b>`);
+  setHtmlByName(
+    "aap",
+    `<b class="green">Arcade AP - ${data.arcadeAchievments.totalEarned} / ${data.arcadeAchievments.totalAvailiable}</b>`,
+  );
 }
 
 /**
@@ -449,9 +454,15 @@ function formatRank(rank, plusColor, name = "", mvpColor = "GOLD") {
       `<b class="${plusColor.toLowerCase()}">+</b>`,
     )}</b><b class="${mvpColor.toLowerCase()}">]${name}</b>`;
   } else if (betterRank == "MVP+" || betterRank == "MVP") {
-    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]${name}</b>`;
+    betterRank = `<b class="aqua">[${betterRank.replace(
+      /\+/g,
+      `<b class="${plusColor.toLowerCase()}">+</b>`,
+    )}</b><b class="aqua">]${name}</b>`;
   } else if (betterRank == "VIP+" || betterRank == "VIP") {
-    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]${name}</b>`;
+    betterRank = `<b class="green">[${betterRank.replace(
+      /\+/g,
+      `<b class="${plusColor.toLowerCase()}">+</b>`,
+    )}</b><b class="green">]${name}</b>`;
   } else if (betterRank == "YOUTUBER") {
     betterRank = `<b class="red">[</b><b class="white">YOUTUBE</b><b class="red">]${name}</b>`;
   } else if (betterRank == "ADMIN") {
@@ -471,7 +482,9 @@ async function handleData() {
     return;
   }
 
-  const rawjson = await (playername.length > 16 ? fetch(`https://api.hyarcade.xyz/account?uuid=${playername}`) : fetch(`https://api.hyarcade.xyz/account?ign=${playername}`));
+  const rawjson = await (playername.length > 16
+    ? fetch(`https://api.hyarcade.xyz/account?uuid=${playername}`)
+    : fetch(`https://api.hyarcade.xyz/account?ign=${playername}`));
   playerdata = await rawjson.json();
 
   if (playerdata != undefined && playerdata.name != undefined) {
@@ -505,7 +518,7 @@ function makeTag(tag, color) {
  * @param muuid
  */
 async function guildStats(muuid) {
-  if (guildData == undefined) {
+  if (guildData === undefined) {
     guildData = await fetch(`https://api.hyarcade.xyz/guild?member=${muuid}`);
     guildData = await guildData.json();
   }

@@ -99,6 +99,13 @@ class DiscordConfig {
   setup = new DiscordSetupConfig();
 }
 
+class VerifyChannelConfig {
+  channel = "";
+  add = "";
+  remove = "";
+  blacklist = [""];
+}
+
 class DiscordBotConfig {
   key = process.env.HYARCADE_DISCORD_TOKEN;
   allEnabled = true;
@@ -106,6 +113,7 @@ class DiscordBotConfig {
     guilds: [""],
     channels: [""],
   };
+  verifyChannels = [new VerifyChannelConfig()];
 }
 
 class DiscordBotsConfig {

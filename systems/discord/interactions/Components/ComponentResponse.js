@@ -3,13 +3,15 @@ module.exports = class ComponentResponse {
   embeds = [];
   newButtons = [];
   img = undefined;
+  empty = false;
 
-  constructor(content, embeds, newButtons, img) {
+  constructor(content, embeds, newButtons, img, empty = false) {
     this.content = content != "" ? content : undefined;
 
     this.img = img;
     this.embeds = embeds;
     this.newButtons = newButtons;
+    this.empty = empty;
   }
 
   toDiscord() {

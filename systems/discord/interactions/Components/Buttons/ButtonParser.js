@@ -42,11 +42,9 @@ async function leaderboardHandler(interaction, leaderboard, time, index) {
 
   const res = await commands.Leaderboard.execute([leaderboard, time, index], interaction.user.id, undefined, interaction);
 
-  if (res == undefined) {
-    return;
+  if (res !== undefined) {
+    return new ComponentResponse("", undefined, res?.components, [res?.file]);
   }
-
-  return new ComponentResponse("", undefined, res?.components, [res?.file]);
 }
 
 /**

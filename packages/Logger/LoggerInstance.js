@@ -26,9 +26,9 @@ function shouldLog(type) {
  */
 function daytime() {
   const d = new Date();
-  return `${`0${d.getMonth() + 1}`.slice(-2)}-${`0${d.getDate()}`.slice(-2)}T${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(
+  return `${`0${d.getMonth() + 1}`.slice(-2)}-${`0${d.getDate()}`.slice(-2)}T${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(
     -2,
-  )}:${`00${d.getMilliseconds()}`.slice(-3)}`;
+  )}:${`0${d.getSeconds()}`.slice(-2)}:${`00${d.getMilliseconds()}`.slice(-3)}`;
 }
 
 /**

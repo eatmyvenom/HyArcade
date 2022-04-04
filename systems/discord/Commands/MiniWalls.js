@@ -44,7 +44,7 @@ function formatN(str) {
  */
 async function miniWallsStats(args, rawMsg, interaction) {
   let plr = args[0];
-  let time = args[1] ?? "lifetime";
+  let time = args[1];
 
   if (args.length == 1) {
     time = "lifetime";
@@ -57,7 +57,6 @@ async function miniWallsStats(args, rawMsg, interaction) {
   switch (time.toLowerCase()) {
     case "d":
     case "day":
-    case "dae":
     case "daily":
     case "today": {
       time = "day";
@@ -66,19 +65,14 @@ async function miniWallsStats(args, rawMsg, interaction) {
 
     case "w":
     case "week":
-    case "weak":
-    case "weekly":
-    case "weeekly": {
+    case "weekly": {
       time = "weekly";
       break;
     }
 
     case "m":
     case "monthly":
-    case "month":
-    case "mnth":
-    case "mnthly":
-    case "mon": {
+    case "month": {
       time = "monthly";
       break;
     }
@@ -185,7 +179,14 @@ async function miniWallsStats(args, rawMsg, interaction) {
   img.writeText(`F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
   img.writeText(`WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
   img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
-  img.writeText(`Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`, rightX, (y += increment), rightAlign, aaColor, fontSize);
+  img.writeText(
+    `Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`,
+    rightX,
+    (y += increment),
+    rightAlign,
+    aaColor,
+    fontSize,
+  );
 
   return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }

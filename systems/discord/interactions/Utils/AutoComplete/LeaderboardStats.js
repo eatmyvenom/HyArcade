@@ -28,7 +28,7 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
     if (genStats == undefined) {
       genStats = {};
       for (const key in testStats) {
-        if (typeof testStats[key] == "number") {
+        if (typeof testStats[key] === "number") {
           let formatted = key
             .replace(/([A-Z])/g, " $1")
             .replace(/_zombies/g, "")
@@ -50,13 +50,13 @@ module.exports = async function LeaderboardStats(category, stat, interaction, te
       delete genStats["Weekly Coins"];
       delete genStats["Time Playing"];
       delete genStats["Update Time"];
-      delete genStats["Importance"];
+      delete genStats.Importance;
       delete genStats["Monthly Coins"];
       delete genStats["Update Time"];
       delete genStats["Quests Completed"];
       delete genStats["Ranks Gifted"];
       delete genStats["Unknown Wins"];
-      delete genStats["Xp"];
+      delete genStats.Xp;
     }
 
     const types = Object.keys(genStats)

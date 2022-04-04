@@ -28,7 +28,7 @@ async function SendRequest(endpoint) {
       Logger.error(error.response.headers);
       Logger.error(error.response.data);
 
-      if (error.response?.status ?? 0 == 403) {
+      if (error.response?.status ?? 0 === 403) {
         Logger.error("Your hypixel API key is invalid!");
       }
     }

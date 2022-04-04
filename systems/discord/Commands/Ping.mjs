@@ -5,7 +5,17 @@ const require = createRequire(import.meta.url);
 import BotRuntime from "../BotRuntime.js";
 const { MessageEmbed } = require("discord.js");
 
-const statusName = ["READY", "CONNECTING", "RECONNECTING", "IDLE", "NEARLY", "DISCONNECTED", "WAITING_FOR_GUILDS", "IDENTIFYING", "RESUMING"];
+const statusName = [
+  "READY",
+  "CONNECTING",
+  "RECONNECTING",
+  "IDLE",
+  "NEARLY",
+  "DISCONNECTED",
+  "WAITING_FOR_GUILDS",
+  "IDENTIFYING",
+  "RESUMING",
+];
 
 export default new Command("ping", ["*"], async () => {
   const embed = new MessageEmbed()

@@ -48,11 +48,11 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
   const path = args[1];
   let val = getProp(acc, path);
 
-  if (typeof val == "number" || typeof val == "boolean") {
+  if (typeof val === "number" || typeof val === "boolean") {
     val = `${val}`;
   }
 
-  if (typeof val != "string") {
+  if (typeof val !== "string") {
     val = Util.inspect(val, true);
   }
 

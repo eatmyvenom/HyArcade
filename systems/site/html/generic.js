@@ -489,7 +489,9 @@ async function showCounts() {
     }
 
     case "zombies": {
-      info.innerHTML += formatNum((arcade.ZOMBIES_ALIEN_ARCADIUM?.players ?? 0) + (arcade.ZOMBIES_BAD_BLOOD?.players ?? 0) + (arcade.ZOMBIES_DEAD_END?.players ?? 0));
+      info.innerHTML += formatNum(
+        (arcade.ZOMBIES_ALIEN_ARCADIUM?.players ?? 0) + (arcade.ZOMBIES_BAD_BLOOD?.players ?? 0) + (arcade.ZOMBIES_DEAD_END?.players ?? 0),
+      );
       break;
     }
 
@@ -633,9 +635,15 @@ function formatRank(rank, plusColor, name = "", mvpColor = "GOLD") {
       `<b class="${plusColor.toLowerCase()}">+</b>`,
     )}</b><b class="${mvpColor.toLowerCase()}">]${name}</b>`;
   } else if (betterRank == "MVP+" || betterRank == "MVP") {
-    betterRank = `<b class="aqua">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="aqua">]${name}</b>`;
+    betterRank = `<b class="aqua">[${betterRank.replace(
+      /\+/g,
+      `<b class="${plusColor.toLowerCase()}">+</b>`,
+    )}</b><b class="aqua">]${name}</b>`;
   } else if (betterRank == "VIP+" || betterRank == "VIP") {
-    betterRank = `<b class="green">[${betterRank.replace(/\+/g, `<b class="${plusColor.toLowerCase()}">+</b>`)}</b><b class="green">]${name}</b>`;
+    betterRank = `<b class="green">[${betterRank.replace(
+      /\+/g,
+      `<b class="${plusColor.toLowerCase()}">+</b>`,
+    )}</b><b class="green">]${name}</b>`;
   } else if (betterRank == "YOUTUBER") {
     betterRank = `<b class="red">[</b><b class="white">YOUTUBE</b><b class="red">]${name}</b>`;
   } else if (betterRank == "ADMIN") {

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 const Discord = require("discord.js");
 const config = require("@hyarcade/config").fromJSON();
@@ -598,7 +599,9 @@ async function genMiWLB(prop, timetype, limit) {
     return new MessageEmbed()
       .setTitle("ERROR")
       .setColor(0xff0000)
-      .setDescription("You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!");
+      .setDescription(
+        "You have requested an over 6000 character response, this is unable to be handled and your request has been ignored!",
+      );
   }
 
   if (res.length > 2000) {

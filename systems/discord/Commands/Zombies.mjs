@@ -77,7 +77,9 @@ function createDefaultEmbed(acc) {
     )
     .addField(
       "Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies ?? 0) / (acc.zombies?.total_rounds_survived_zombies ?? 0))}\`\n` +
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies ?? 0) / (acc.zombies?.total_rounds_survived_zombies ?? 0),
+      )}\`\n` +
         `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies ?? 0) / (acc.zombies?.deaths_zombies ?? 0))}\`\n` +
         `・**Accuracy** - \`${toPercent((acc.zombies?.bullets_hit_zombies ?? 0) / (acc.zombies?.bullets_shot_zombies ?? 0))}\`\n` +
         `・**Headshots** - \`${toPercent((acc.zombies?.headshots_zombies ?? 0) / (acc.zombies?.bullets_hit_zombies ?? 0))}\``,
@@ -114,8 +116,12 @@ function createBadBloodEmbed(acc) {
     )
     .addField(
       "Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_badblood ?? 0) / (acc.zombies?.total_rounds_survived_zombies_badblood ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_badblood ?? 0) / (acc.zombies?.deaths_zombies_badblood ?? 0))}\``,
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_badblood ?? 0) / (acc.zombies?.total_rounds_survived_zombies_badblood ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_badblood ?? 0) / (acc.zombies?.deaths_zombies_badblood ?? 0),
+        )}\``,
       false,
     )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
@@ -149,8 +155,12 @@ function createDeadEndEmbed(acc) {
     )
     .addField(
       "Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_deadend ?? 0) / (acc.zombies?.total_rounds_survived_zombies_deadend ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_deadend ?? 0) / (acc.zombies?.deaths_zombies_deadend ?? 0))}\``,
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_deadend ?? 0) / (acc.zombies?.total_rounds_survived_zombies_deadend ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_deadend ?? 0) / (acc.zombies?.deaths_zombies_deadend ?? 0),
+        )}\``,
       false,
     )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)
@@ -184,8 +194,12 @@ function createAlienArcadiumEmbed(acc) {
     )
     .addField(
       "Ratios",
-      `・**Kills/Rounds** - \`${numberify((acc.zombies?.zombie_kills_zombies_alienarcadium ?? 0) / (acc.zombies?.total_rounds_survived_zombies_alienarcadium ?? 0))}\`\n` +
-        `・**Revives/Deaths** - \`${numberify((acc.zombies?.players_revived_zombies_alienarcadium ?? 0) / (acc.zombies?.deaths_zombies_alienarcadium ?? 0))}\``,
+      `・**Kills/Rounds** - \`${numberify(
+        (acc.zombies?.zombie_kills_zombies_alienarcadium ?? 0) / (acc.zombies?.total_rounds_survived_zombies_alienarcadium ?? 0),
+      )}\`\n` +
+        `・**Revives/Deaths** - \`${numberify(
+          (acc.zombies?.players_revived_zombies_alienarcadium ?? 0) / (acc.zombies?.deaths_zombies_alienarcadium ?? 0),
+        )}\``,
       false,
     )
     .setThumbnail(`https://crafatar.com/renders/head/${acc.uuid}?overlay`)

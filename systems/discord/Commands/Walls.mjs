@@ -47,11 +47,18 @@ export default new Command("walls", ["*"], async (args, rawMsg, interaction) => 
     .addField(
       "---------Ratios--------",
       `**K/D** - ${numberify((data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.deaths ?? 0))}\n` +
-        `**K+A/D** - ${numberify(((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0))}\n` +
-        `**D/Games** - ${numberify((data?.stats?.Walls?.deaths ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0))}\n` +
-        `**K/Games** - ${numberify((data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0))}\n` +
+        `**K+A/D** - ${numberify(
+          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0),
+        )}\n` +
+        `**D/Games** - ${numberify(
+          (data?.stats?.Walls?.deaths ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
+        )}\n` +
+        `**K/Games** - ${numberify(
+          (data?.stats?.Walls?.kills ?? 0) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
+        )}\n` +
         `**K+A/Games** - ${numberify(
-          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0) + (data?.stats?.Walls?.losses ?? 0),
+          ((data?.stats?.Walls?.kills ?? 0) + (data?.stats?.Walls?.assists ?? 0)) / (data?.stats?.Walls?.wins ?? 0) +
+            (data?.stats?.Walls?.losses ?? 0),
         )}\n`,
       true,
     )

@@ -34,7 +34,7 @@
       "never"
     ],
     "object-curly-spacing": [
-      "warn",
+      "error",
       "always"
     ],
     "space-before-blocks": [
@@ -46,13 +46,17 @@
     "no-param-reassign": "error",
     "no-whitespace-before-property": "error",
     "object-shorthand": "error",
-    "prefer-const": "warn",
+    "prefer-const": "error",
     "camelcase": "warn",
+    "complexity": [
+      "warn",
+      50
+    ],
     "semi": [
       "error",
       "always"
     ],
-    "no-use-before-define": "warn",
+    "no-use-before-define": "error",
     "max-depth": [
       "error",
       {
@@ -62,7 +66,7 @@
     "prettier/prettier": [
       2,
       {
-        "printWidth": 180,
+        "printWidth": 140,
         "singleQuote": false,
         "quoteProps": "as-needed",
         "trailingComma": "all",
@@ -71,7 +75,7 @@
       }
     ],
     "prefer-destructuring": [
-      "warn",
+      "error",
       {
         "VariableDeclarator": {
           "array": false,

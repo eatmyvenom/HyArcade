@@ -51,7 +51,9 @@ class CommandStorage {
    */
   static async execInteraction(name, interaction) {
     let args = [];
-    args = interaction.options?.data[0]?.options ? interaction.options.data[0].options?.map(c => c.value) : interaction.options.data.map(c => c.value);
+    args = interaction.options?.data[0]?.options
+      ? interaction.options.data[0].options?.map(c => c.value)
+      : interaction.options.data.map(c => c.value);
 
     for (const mod in this._commands) {
       if (this._commands[mod].aliases.includes(name.toLowerCase())) {

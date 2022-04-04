@@ -20,7 +20,7 @@ module.exports = async (req, res, runtime) => {
     }
 
     let data;
-    if (typeof HypixelApi.resources[path] == "function") {
+    if (typeof HypixelApi.resources[path] === "function") {
       if (await redisInterface.exists(`hyresource-${path}`)) {
         data = await redisInterface.getJSON(`hyresource-${path}`);
       } else {

@@ -50,7 +50,10 @@ async function genEmbed(stat, category, limit, title) {
   const list = await Database.getLeaderboard(stat, category, undefined, true, false, limit);
   const string = stringifyList(list, stat, category, limit);
 
-  const embed = new Discord.MessageEmbed().setTitle(`${title}`).setColor(0x44a3e7).addField("------------- Lifetime -------------", string, true);
+  const embed = new Discord.MessageEmbed()
+    .setTitle(`${title}`)
+    .setColor(0x44a3e7)
+    .addField("------------- Lifetime -------------", string, true);
 
   return embed;
 }

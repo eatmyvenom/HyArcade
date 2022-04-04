@@ -29,7 +29,7 @@ export default new Command("eval", ["156952208045375488"], async (args, rawMsg) 
     evaled = error;
   }
 
-  if (typeof evaled != "string") {
+  if (typeof evaled !== "string") {
     evaled = inspect(evaled, true);
   }
 

@@ -31,7 +31,10 @@ module.exports = async function (category, lbprop, timePeriod, reverse, max, noC
 
       const uuids = list.map(li => li.value);
 
-      const accCursor = connector.accounts.find({ uuid: { $in: uuids } }, { projection: { _id: 0, uuid: 1, name: 1, rank: 1, plusColor: 1, mvpColor: 1 } });
+      const accCursor = connector.accounts.find(
+        { uuid: { $in: uuids } },
+        { projection: { _id: 0, uuid: 1, name: 1, rank: 1, plusColor: 1, mvpColor: 1 } },
+      );
       const displayAccs = await accCursor.toArray();
 
       accs = [];

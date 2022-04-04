@@ -152,7 +152,11 @@ module.exports = new Command(
           true,
         );
 
-      embed.setTitle(`${acc1.name} VS ${acc2.name}`).setColor(0x7873f5).addField("━━━━━━ Stats: ━━━━━", stats, true).addField("━━━━━ Ratios: ━━━━━", ratios, true);
+      embed
+        .setTitle(`${acc1.name} VS ${acc2.name}`)
+        .setColor(0x7873f5)
+        .addField("━━━━━━ Stats: ━━━━━", stats, true)
+        .addField("━━━━━ Ratios: ━━━━━", ratios, true);
     } catch (error) {
       logger.err(error.stack);
       return {

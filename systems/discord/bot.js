@@ -15,7 +15,12 @@ const fullIntents = [
 
 const lesserIntents = [Discord.Intents.FLAGS.GUILDS];
 
-const miwIntents = [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_WEBHOOKS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILDS];
+const miwIntents = [
+  Discord.Intents.FLAGS.GUILD_MESSAGES,
+  Discord.Intents.FLAGS.GUILD_WEBHOOKS,
+  Discord.Intents.FLAGS.GUILD_MEMBERS,
+  Discord.Intents.FLAGS.GUILDS,
+];
 
 /**
  * Execute the discord bot

@@ -1,4 +1,13 @@
-const { MessageAttachment, MessageEmbed, FileOptions, BufferResolvable, MessageActionRow, MessageActionRowOptions, ReplyMessageOptions, MessageOptions } = require("discord.js");
+const {
+  MessageAttachment,
+  MessageEmbed,
+  FileOptions,
+  BufferResolvable,
+  MessageActionRow,
+  MessageActionRowOptions,
+  ReplyMessageOptions,
+  MessageOptions,
+} = require("discord.js");
 
 module.exports = class CommandResponse {
   text = "";
@@ -18,7 +27,7 @@ module.exports = class CommandResponse {
    * @param {boolean} priv
    */
   constructor(text, embed, file, components, silent = false, priv = false) {
-    if (typeof text == "object" && typeof text != "string") {
+    if (typeof text === "object" && typeof text !== "string") {
       this.text = text.res;
       this.file = text.img;
       this.embed = text.embed;

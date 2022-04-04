@@ -8,9 +8,9 @@ const { Account } = require("@hyarcade/structures");
  */
 function subtractNumbers(oldObj, newObj) {
   for (const val in oldObj) {
-    if (typeof oldObj[val] == "number") {
+    if (typeof oldObj[val] === "number") {
       oldObj[val] -= newObj?.[val] ?? 0;
-    } else if (typeof oldObj?.[val] == "object") {
+    } else if (typeof oldObj?.[val] === "object") {
       oldObj[val] = subtractNumbers(oldObj?.[val] ?? 0, newObj?.[val] ?? 0);
     }
   }

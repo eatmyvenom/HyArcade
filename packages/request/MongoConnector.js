@@ -791,20 +791,28 @@ class MongoConnector {
     if (level == 0) {
       const basicQuery = [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }];
 
-      const mainAccs = await this.accounts.find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts).toArray();
+      const mainAccs = await this.accounts
+        .find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts)
+        .toArray();
       const highImportance = await this.accounts.find({ importance: { $gte: cfg.hypixel.forceImportance } }, opts).toArray();
       accs = [...mainAccs, ...highImportance];
 
       leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit);
     } else if (level == 1) {
-      accs = await this.accounts.find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }, opts).toArray();
+      accs = await this.accounts
+        .find({ $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] }, opts)
+        .toArray();
 
       leaderboarders = await this.getLeaderboarders(cfg.hypixel.leaderboardLimit * 2);
     } else if (level == 2) {
       accs = await this.accounts
         .find(
           {
-            $or: [{ importance: { $gte: cfg.hypixel.minImportance } }, { discordID: { $exists: true } }, { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit } }],
+            $or: [
+              { importance: { $gte: cfg.hypixel.minImportance } },
+              { discordID: { $exists: true } },
+              { updateTime: { $lte: Date.now() - cfg.hypixel.loginLimit } },
+            ],
           },
           opts,
         )

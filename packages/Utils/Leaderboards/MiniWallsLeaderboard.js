@@ -15,7 +15,11 @@ async function getLb(category, stat, timePeriod, max, connector) {
   Logger.verbose("Getting leaderboard");
   const dotNotated = `${category ?? ""}.${stat}`.replace(/^\./, "").replace(/\.\./g, ".");
 
-  const accs = await (timePeriod == undefined || timePeriod == "life" || timePeriod == "lifetime" || timePeriod == undefined || timePeriod == ""
+  const accs = await (timePeriod == undefined ||
+  timePeriod == "life" ||
+  timePeriod == "lifetime" ||
+  timePeriod == undefined ||
+  timePeriod == ""
     ? connector.getMiniWallsLeaderboard(dotNotated, max)
     : connector.getHistoricalMiniWallsLeaderboard(dotNotated, timePeriod, max));
 

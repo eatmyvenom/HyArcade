@@ -76,7 +76,8 @@ function getNameDate(time) {
  * @returns {Promise<MessageEmbed>}
  */
 async function generateWhoisEmbed(acc) {
-  const rank = acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined ? `[${acc.rank.replace(/_PLUS/g, "+")}] ` : "";
+  const rank =
+    acc.rank != "NONE" && acc.rank != "NORMAL" && acc.rank != "" && acc.rank != undefined ? `[${acc.rank.replace(/_PLUS/g, "+")}] ` : "";
 
   const embed = new MessageEmbed()
     .setTitle(`Who is ${rank}${acc.name}`)
@@ -95,7 +96,10 @@ async function generateWhoisEmbed(acc) {
 
   nameHist = nameHist.join("\n");
 
-  discord = acc.discord != undefined && acc.discord != "" ? `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}` : "Unknown!";
+  discord =
+    acc.discord != undefined && acc.discord != ""
+      ? `**Ping** - <@${acc.discord}>\n**ID** - ${acc.discord}\n**Hypixel tag** - ${acc.hypixelDiscord}`
+      : "Unknown!";
 
   embed.addField("--------- Names ---------", nameHist, true);
   embed.addField("-------- Discord --------", discord, true);

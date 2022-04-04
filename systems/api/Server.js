@@ -42,7 +42,7 @@ async function callback(request, response) {
 
   let rateLimit;
   try {
-    rateLimit = await RateLimiter(address, endpoint, request.headers["key"], request.headers.authorization, mongo);
+    rateLimit = await RateLimiter(address, endpoint, request.headers.key, request.headers.authorization, mongo);
   } catch (error) {
     if (error instanceof DupeKeyError) {
       response.write(JSON.stringify({ success: false, reason: "DUPLICATE-KEY" }));
@@ -74,7 +74,9 @@ async function callback(request, response) {
       if (error instanceof MissingFieldError) {
         response.statusCode = 400;
         response.setHeader("Content-Type", "application/json");
-        response.write(JSON.stringify({ success: false, cause: "Missing Field(s)", message: error.message, neededFields: error.neededFields }));
+        response.write(
+          JSON.stringify({ success: false, cause: "Missing Field(s)", message: error.message, neededFields: error.neededFields }),
+        );
         response.end();
       } else if (error instanceof DataNotFoundError) {
         response.statusCode = 404;

@@ -419,7 +419,14 @@ module.exports = class ImageGenerator {
     const mbold = type == "monthly";
     const wbold = type == "weekly";
 
-    this.drawMcText(`${lbold ? "&l&a" : "&r&7"}Lifetime ${mbold ? "&l&a" : "&r&7"}Monthly ${wbold ? "&l&a" : "&r&7"}Weekly`, x, y, size, "center", true);
+    this.drawMcText(
+      `${lbold ? "&l&a" : "&r&7"}Lifetime ${mbold ? "&l&a" : "&r&7"}Monthly ${wbold ? "&l&a" : "&r&7"}Weekly`,
+      x,
+      y,
+      size,
+      "center",
+      true,
+    );
   }
 
   /**
@@ -548,7 +555,9 @@ module.exports = class ImageGenerator {
 
     let guild = "";
     if (acc.guildTag != "NONE" && acc.guildTag != "" && showGuild) {
-      guild = ` ${colorFormatters[acc.guildTagColor?.toLowerCase()]}[${acc.guildTag}${colorFormatters[acc.guildTagColor?.toLowerCase()]}]`.replace(/§/g, "&");
+      guild = ` ${colorFormatters[acc.guildTagColor?.toLowerCase()]}[${acc.guildTag}${
+        colorFormatters[acc.guildTagColor?.toLowerCase()]
+      }]`.replace(/§/g, "&");
     }
 
     return `${rank}${acc.name}${guild}`;
