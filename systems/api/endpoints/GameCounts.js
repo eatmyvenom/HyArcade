@@ -1,16 +1,14 @@
 const { HypixelApi } = require("@hyarcade/requests");
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
-const RedisInterface = require("@hyarcade/requests/RedisInterface");
-const cfg = require("@hyarcade/config").fromJSON();
+const APIRuntime = require("../APIRuntime");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
- * @param {RedisInterface} redisInterface
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector, redisInterface) => {
+module.exports = async (req, res, runtime) => {
+  const { redisInterface, config } = runtime;
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
@@ -19,7 +17,7 @@ module.exports = async (req, res, connector, redisInterface) => {
       counts = await redisInterface.getJSON("counts");
     } else {
       counts = await HypixelApi.counts();
-      await redisInterface.setJSON("counts", counts, cfg.database.cacheTime.counts);
+      await redisInterface.setJSON("counts", counts, config.database.cacheTime.counts);
     }
 
     res.write(JSON.stringify(counts));

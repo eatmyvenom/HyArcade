@@ -1,20 +1,19 @@
 const { HypixelApi } = require("@hyarcade/requests");
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const AccountResolver = require("../AccountResolver");
+const APIRuntime = require("../APIRuntime");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector) => {
-  const url = new URL(req.url, `https://${req.headers.host}`);
+module.exports = async (req, res, runtime) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
-    let cacheAccount = await AccountResolver(connector, url, true);
-    let resolvedAccount = await AccountResolver(connector, url);
+    const cacheAccount = await AccountResolver(runtime, true);
+    const resolvedAccount = await AccountResolver(runtime);
 
     const status = await HypixelApi.status(resolvedAccount.uuid);
 

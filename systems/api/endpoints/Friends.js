@@ -1,18 +1,18 @@
 const { SlothpixelApiRequest } = require("@hyarcade/requests");
 const AccountResolver = require("../AccountResolver");
+const APIRuntime = require("../APIRuntime");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param connector
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector) => {
-  const url = new URL(req.url, `https://${req.headers.host}`);
+module.exports = async (req, res, runtime) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
-    const acc = await AccountResolver(connector, url);
+    const acc = await AccountResolver(runtime);
     const friends = await SlothpixelApiRequest.friends(acc.uuid);
 
     res.write(JSON.stringify(friends));

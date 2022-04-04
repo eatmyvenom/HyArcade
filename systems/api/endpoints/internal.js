@@ -1,8 +1,6 @@
 /* eslint-disable unicorn/no-lonely-if */
 const Logger = require("@hyarcade/logger");
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
-const RedisInterface = require("@hyarcade/requests/RedisInterface");
-const cfg = require("@hyarcade/config").fromJSON();
+const APIRuntime = require("../APIRuntime");
 
 // eslint-disable-next-line prefer-arrow-callback
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
@@ -19,10 +17,10 @@ function safeEval(str) {
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
- * @param {RedisInterface} redis
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector, redis) => {
+module.exports = async (req, res, runtime) => {
+  const { config, mongoConnector, redisInterface } = runtime;
   if (req.method == "GET") {
     res.statusCode = 404;
     res.end();
@@ -30,8 +28,8 @@ module.exports = async (req, res, connector, redis) => {
     let data = "";
     let json = {};
 
-    const key = cfg.database.keys[req.headers.key];
-    const fullAuth = req.headers.authorization == cfg.database.pass;
+    const key = config.database.keys[req.headers.key];
+    const fullAuth = req.headers.authorization == config.database.pass;
     const keyValid = key != undefined && key.perms.includes("internal");
 
     if (fullAuth || keyValid) {
@@ -41,55 +39,55 @@ module.exports = async (req, res, connector, redis) => {
         json = JSON.parse(data);
 
         if ((fullAuth || key.perms.includes("important")) && json.fetchImportant) {
-          res.write(JSON.stringify(connector.getImportantAccounts(json.fetchImportant)));
+          res.write(JSON.stringify(mongoConnector.getImportantAccounts(json.fetchImportant)));
         }
 
         if ((fullAuth || key.perms.includes("eval")) && json.mongoEval) {
           Logger.warn("Evaluating raw JS.");
           const fun = safeEval(json.mongoEval);
-          const result = await fun(connector);
+          const result = await fun(mongoConnector);
 
           res.write(JSON.stringify({ result }));
         }
 
         if ((fullAuth || key.perms.includes("statsEdit")) && json.useCommand) {
-          await connector.useCommand(json.useCommand.name, json.useCommand.type);
+          await mongoConnector.useCommand(json.useCommand.name, json.useCommand.type);
           res.write(JSON.stringify({ success: true }));
         }
 
         if ((fullAuth || key.perms.includes("statsEdit")) && json.usePage) {
-          await connector.useWebpage(json.usePage.endpoint, Date.now());
+          await mongoConnector.useWebpage(json.usePage.endpoint, Date.now());
           res.write(JSON.stringify({ success: true }));
         }
 
         if ((fullAuth || key.perms.includes("forceUpdate")) && json.forceUpdate) {
           Logger.debug("Setting next force level to " + json.forceUpdate);
-          const nextLevel = await redis.get("nextLevel");
-          await redis.set("nextLevel", Math.max(json.forceUpdate, nextLevel, 0));
+          const nextLevel = await redisInterface.get("nextLevel");
+          await redisInterface.set("nextLevel", Math.max(json.forceUpdate, nextLevel, 0));
 
           res.write(JSON.stringify({ success: true }));
         }
 
         if ((fullAuth || key.perms.includes("batch")) && json.getBatch) {
-          let currentUUIDs = (await redis.getJSON("currentUUIDs")) ?? [];
-          const isGenerating = (await redis.get("generating")) == true;
+          let currentUUIDs = (await redisInterface.getJSON("currentUUIDs")) ?? [];
+          const isGenerating = (await redisInterface.get("generating")) == true;
           if (currentUUIDs.length === 0) {
             if (!isGenerating) {
-              const nextLevel = await redis.get("nextLevel");
-              await redis.set("generating", true);
-              currentUUIDs = await connector.getImportantAccounts(nextLevel ?? 0);
-              await redis.set("nextLevel", 0);
-              await redis.set("generating", false);
+              const nextLevel = await redisInterface.get("nextLevel");
+              await redisInterface.set("generating", true);
+              currentUUIDs = await mongoConnector.getImportantAccounts(nextLevel ?? 0);
+              await redisInterface.set("nextLevel", 0);
+              await redisInterface.set("generating", false);
             } else {
               Logger.debug("Returning random accounts");
-              const templist = await connector.accounts.aggregate([{ $sample: cfg.hypixel.segmentSize }]).toArray();
+              const templist = await mongoConnector.accounts.aggregate([{ $sample: config.hypixel.segmentSize }]).toArray();
 
               res.write(JSON.stringify(templist));
             }
           }
 
-          const batch = currentUUIDs.splice(0, Math.min(cfg.hypixel.segmentSize, currentUUIDs.length));
-          await redis.setJSON("currentUUIDs", currentUUIDs);
+          const batch = currentUUIDs.splice(0, Math.min(config.hypixel.segmentSize, currentUUIDs.length));
+          await redisInterface.setJSON("currentUUIDs", currentUUIDs);
 
           if (batch.length > 0) {
             res.write(JSON.stringify(batch));
@@ -97,71 +95,71 @@ module.exports = async (req, res, connector, redis) => {
         }
 
         if ((fullAuth || key.perms.includes("listEdit")) && json.ezmsgs) {
-          let reply = {};
+          const reply = {};
           if (json.ezmsgs.add) {
-            await connector.addEZMsg(json.ezmsgs.add);
+            await mongoConnector.addEZMsg(json.ezmsgs.add);
             reply.success = true;
           }
 
           if (json.ezmsgs.ls) {
-            reply.list = await connector.ezMsgs.find().toArray();
+            reply.list = await mongoConnector.ezMsgs.find().toArray();
           }
 
           res.write(JSON.stringify(reply));
         }
 
         if ((fullAuth || key.perms.includes("discord")) && json.discord) {
-          let reply = {};
+          const reply = {};
           if (json.discord.ln) {
-            await connector.linkDiscord(json.discord.ln.id, json.discord.ln.uuid);
+            await mongoConnector.linkDiscord(json.discord.ln.id, json.discord.ln.uuid);
             reply.success = true;
           }
 
           if (json.discord.rm) {
-            await connector.linkDiscord(json.discord.fuv.id, json.discord.fuv.uuid);
+            await mongoConnector.linkDiscord(json.discord.fuv.id, json.discord.fuv.uuid);
             reply.success = true;
           }
 
           if (json.discord.ls) {
-            reply.list = await connector.getDiscordAccounts();
+            reply.list = await mongoConnector.getDiscordAccounts();
           }
 
           res.write(JSON.stringify(reply));
         }
 
         if ((fullAuth || key.perms.includes("banned")) && json.banned) {
-          let reply = {};
+          const reply = {};
           if (json.banned.add) {
-            await connector.addBanned(json.banned.ln.uuid);
+            await mongoConnector.addBanned(json.banned.ln.uuid);
             reply.success = true;
           }
 
           if (json.banned.rm) {
-            await connector.deleteBanned(json.banned.rm.uuid);
+            await mongoConnector.deleteBanned(json.banned.rm.uuid);
             reply.success = true;
           }
 
           if (json.banned.ls) {
-            reply.list = await connector.bannedList.find().toArray();
+            reply.list = await mongoConnector.bannedList.find().toArray();
           }
 
           res.write(JSON.stringify(reply));
         }
 
         if ((fullAuth || key.perms.includes("hacker")) && json.hacker) {
-          let reply = {};
+          const reply = {};
           if (json.hacker.add) {
-            await connector.addHacker(json.hacker.ln.uuid);
+            await mongoConnector.addHacker(json.hacker.ln.uuid);
             reply.success = true;
           }
 
           if (json.hacker.rm) {
-            await connector.deleteHacker(json.hacker.rm.uuid);
+            await mongoConnector.deleteHacker(json.hacker.rm.uuid);
             reply.success = true;
           }
 
           if (json.hacker.ls) {
-            reply.list = await connector.hackerList.find().toArray();
+            reply.list = await mongoConnector.hackerList.find().toArray();
           }
 
           res.write(JSON.stringify(reply));

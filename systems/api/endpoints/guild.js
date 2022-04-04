@@ -1,17 +1,17 @@
-const cfg = require("@hyarcade/config").fromJSON();
 const Logger = require("@hyarcade/logger");
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const APIRuntime = require("../APIRuntime");
 const GuildResolver = require("../GuildResolver");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector) => {
+module.exports = async (req, res, runtime) => {
+  const { mongoConnector, config } = runtime;
   if (req.method == "GET") {
-    const guild = await GuildResolver(req, connector);
+    const guild = await GuildResolver(req, runtime);
 
     res.setHeader("Content-Type", "application/json");
 
@@ -20,13 +20,13 @@ module.exports = async (req, res, connector) => {
   } else if (req.method == "POST") {
     let data = "";
     let json = {};
-    if (req.headers.authorization == cfg.database.pass) {
+    if (req.headers.authorization == config.database.pass) {
       req.on("data", d => (data += d));
       req.on("end", async () => {
         json = JSON.parse(data);
         const newGuild = json;
 
-        connector
+        mongoConnector
           .updateGuild(newGuild)
           .then(() => {})
           .catch(error => Logger.err(error.stack));

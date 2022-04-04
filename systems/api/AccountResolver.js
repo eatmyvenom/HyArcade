@@ -1,28 +1,22 @@
 const { MissingFieldError } = require("@hyarcade/errors");
 const Logger = require("@hyarcade/logger");
-const { mojangRequest, MongoConnector } = require("@hyarcade/requests");
+const { mojangRequest } = require("@hyarcade/requests");
 const { Account } = require("@hyarcade/structures");
 const MergeJSON = require("@hyarcade/utils/MergeJSON");
-const config = require("@hyarcade/config");
-let cfg = config.fromJSON();
-let cfgTime = Date.now();
+const APIRuntime = require("./APIRuntime");
 
 let fakeData;
 
 /**
  *
- * @param {MongoConnector} connector
- * @param {URL} url
+ * @param {APIRuntime} runtime
  * @param {boolean} forceCache
  * @returns {Promise<Account>}
  */
-async function AccountResolver(connector, url, forceCache = false) {
+async function AccountResolver(runtime, forceCache = false) {
+  const { url, mongoConnector, config } = runtime;
   if (fakeData == undefined) {
-    fakeData = await connector.fakePlayers.find().toArray();
-  }
-
-  if (Date.now() - cfgTime > cfg.database.cacheTime.config) {
-    cfg = config.fromJSON();
+    fakeData = await mongoConnector.fakePlayers.find().toArray();
   }
 
   const ign = url.searchParams.get("ign");
@@ -38,13 +32,13 @@ async function AccountResolver(connector, url, forceCache = false) {
 
   if (ign != undefined) {
     Logger.verbose(`Using ign "${ign}"`);
-    acc = await connector.getAccount(ign);
+    acc = await mongoConnector.getAccount(ign);
   } else if (uuid != undefined) {
     Logger.verbose(`Using uuid ${uuid}`);
-    acc = await connector.getAccount(uuid);
+    acc = await mongoConnector.getAccount(uuid);
   } else if (discid != undefined) {
     Logger.verbose(`Using discord id ${discid}`);
-    acc = await connector.getAccount(discid);
+    acc = await mongoConnector.getAccount(discid);
   }
 
   if (acc == undefined) {
@@ -66,7 +60,7 @@ async function AccountResolver(connector, url, forceCache = false) {
 
       if (acc?.name != "INVLAID-NAME" && acc?.name != undefined) {
         Logger.verbose("Pushing to mongodb");
-        connector
+        mongoConnector
           .updateAccount(acc)
           .then(() => {})
           .catch(error => Logger.err(error.stack));
@@ -78,7 +72,7 @@ async function AccountResolver(connector, url, forceCache = false) {
     acc = undefined;
   }
 
-  if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - cfg.database.cacheTime.accounts) {
+  if (acc != undefined && !cacheOnly && acc.updateTime < Date.now() - config.database.cacheTime.accounts) {
     Logger.log(`Updating data for ${acc.name}`);
     let newAccount = new Account(acc.name, 0, acc.uuid);
     Object.assign(newAccount, acc);
@@ -93,7 +87,7 @@ async function AccountResolver(connector, url, forceCache = false) {
 
     acc = newAccount;
 
-    connector
+    mongoConnector
       .updateAccount(acc)
       .then(() => {})
       .catch(error => Logger.err(error.stack));

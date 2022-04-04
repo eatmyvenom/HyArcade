@@ -1,10 +1,9 @@
 const { URL } = require("url");
-const cfg = require("@hyarcade/config").fromJSON();
 const Logger = require("@hyarcade/logger");
 const { Account } = require("@hyarcade/structures");
 const AccountResolver = require("../AccountResolver");
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const MergeJSON = require("@hyarcade/utils/MergeJSON");
+const APIRuntime = require("../APIRuntime");
 
 let fakeData;
 
@@ -12,17 +11,17 @@ let fakeData;
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector) => {
+module.exports = async (req, res, runtime) => {
   if (fakeData == undefined) {
-    fakeData = await connector.fakePlayers.find().toArray();
+    fakeData = await runtime.mongoConnector.fakePlayers.find().toArray();
   }
 
   const url = new URL(req.url, `https://${req.headers.host}`);
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
-    let resolvedAccount = await AccountResolver(connector, url);
+    const resolvedAccount = await AccountResolver(runtime, url);
 
     if (resolvedAccount?.name == "INVALID-NAME" || resolvedAccount?.name == undefined || resolvedAccount == undefined) {
       Logger.warn(`${url.searchParams} could not resolve to anything`);
@@ -40,7 +39,7 @@ module.exports = async (req, res, connector) => {
 
     if (time != undefined && time != "lifetime") {
       response.acc = resolvedAccount;
-      const snapshotAccount = await connector.getTimedAccount(resolvedAccount.uuid, time);
+      const snapshotAccount = await runtime.mongoConnector.getTimedAccount(resolvedAccount.uuid, time);
       response.timed = snapshotAccount;
     } else {
       response = resolvedAccount;
@@ -52,8 +51,8 @@ module.exports = async (req, res, connector) => {
     let data = "";
     let json = {};
 
-    const key = cfg.database.keys[req.headers.key];
-    const fullAuth = req.headers.authorization == cfg.database.pass;
+    const key = runtime.config.database.keys[req.headers.key];
+    const fullAuth = req.headers.authorization == runtime.config.database.pass;
     const keyValid = key != undefined && key.perms.includes("push");
 
     if (fullAuth || keyValid) {
@@ -68,7 +67,7 @@ module.exports = async (req, res, connector) => {
           newAcc = MergeJSON(newAcc, fakeAcc);
         }
 
-        connector
+        runtime.mongoConnector
           .updateAccount(newAcc)
           .then(() => {})
           .catch(error => Logger.err(error.stack));
@@ -81,15 +80,15 @@ module.exports = async (req, res, connector) => {
       res.end();
     }
   } else if (req.method == "DELETE") {
-    const key = cfg.database.keys[req.headers.key];
-    const fullAuth = req.headers.authorization == cfg.database.pass;
+    const key = runtime.config.database.keys[req.headers.key];
+    const fullAuth = req.headers.authorization == runtime.config.database.pass;
     const keyValid = key != undefined && key.perms.includes("push");
 
     if (fullAuth || keyValid) {
       const uuid = url.searchParams.get("uuid");
 
       Logger.warn(`Removing ${uuid} from database!`);
-      const del = await connector.accounts.deleteMany({ uuid });
+      const del = await runtime.config.accounts.deleteMany({ uuid });
       Logger.debug(JSON.stringify(del));
       res.write(JSON.stringify(del));
       res.end();

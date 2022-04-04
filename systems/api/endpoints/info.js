@@ -1,16 +1,16 @@
-const MongoConnector = require("@hyarcade/requests/MongoConnector");
+const APIRuntime = require("../APIRuntime");
 
 /**
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector) => {
+module.exports = async (req, res, runtime) => {
   if (req.method == "GET") {
     res.setHeader("Content-Type", "application/json");
 
-    const obj = await connector.getInfo();
+    const obj = await runtime.mongoConnector.getInfo();
     const { version } = require("../../../package.json");
 
     res.write(JSON.stringify({ ...obj, version }));

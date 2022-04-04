@@ -8,12 +8,13 @@ const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const EndpointStorage = require("./EndpointStorage");
 const RateLimiter = require("./RateLimiter");
 const RedisInterface = require("@hyarcade/requests/RedisInterface");
+const APIRuntime = require("./APIRuntime");
 const cfg = require("@hyarcade/config").fromJSON();
 
 let mongo;
 let redis;
 
-let endpoints = new EndpointStorage();
+const endpoints = new EndpointStorage();
 
 /**
  * @param {Request} request
@@ -67,7 +68,8 @@ async function callback(request, response) {
     response.end();
   } else {
     try {
-      await mod(request, response, mongo, redis);
+      const runtime = new APIRuntime(mongo, redis, cfg);
+      await mod(request, response, runtime);
     } catch (error) {
       if (error instanceof MissingFieldError) {
         response.statusCode = 400;
@@ -96,11 +98,13 @@ async function Server(port) {
   logger.name = "API";
   logger.emoji = "⚡";
 
-  mongo = new MongoConnector("mongodb://127.0.0.1:27017");
+  mongo = new MongoConnector();
   await mongo.connect();
 
   redis = new RedisInterface(cfg.redis.url);
   await redis.connect();
+
+  cfg.autoRefresh();
 
   process.on("beforeExit", code => {
     logger.log(`Exiting process with code : ${code}`);
@@ -111,12 +115,6 @@ async function Server(port) {
   server.on("close", (...args) => logger.log(...args));
   server.on("error", e => {
     logger.err(e.stack);
-  });
-
-  process.on("SIGINT", async signal => {
-    logger.log(`Exiting process with signal : ${signal}`);
-
-    process.exit(0);
   });
 }
 

@@ -2,10 +2,10 @@
 const { MissingFieldError } = require("@hyarcade/errors");
 const Logger = require("@hyarcade/logger");
 const MongoConnector = require("@hyarcade/requests/MongoConnector");
-const RedisInterface = require("@hyarcade/requests/RedisInterface");
 const { Guild } = require("@hyarcade/structures");
 const GenericLeaderboard = require("@hyarcade/utils/Leaderboards/GenericLeaderboard");
 const MiniWallsLeaderboard = require("@hyarcade/utils/Leaderboards/MiniWallsLeaderboard");
+const APIRuntime = require("../APIRuntime");
 const GuildResolver = require("../GuildResolver");
 const cfg = require("@hyarcade/config").fromJSON();
 
@@ -62,11 +62,10 @@ async function OldLeaderboard(path, timePeriod, reverse, max, connector) {
  *
  * @param {*} req
  * @param {*} res
- * @param {MongoConnector} connector
- * @param {RedisInterface} redisInterface
+ * @param {APIRuntime} runtime
  */
-module.exports = async (req, res, connector, redisInterface) => {
-  const url = new URL(req.url, `https://${req.headers.host}`);
+module.exports = async (req, res, runtime) => {
+  const { url, mongoConnector, redisInterface } = runtime;
   const reqPath = url.pathname.split("/").slice(1);
 
   const args = url.searchParams;
@@ -84,7 +83,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         }
 
         Logger.log(`Guild Leaderboard: ${lbprop} - ${timePeriod} - ${max}`);
-        const guilds = await GuildLeaderboard(lbprop, timePeriod, reverse, max, connector);
+        const guilds = await GuildLeaderboard(lbprop, timePeriod, reverse, max, mongoConnector);
 
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(guilds));
@@ -103,7 +102,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         Logger.log(`Mini Walls Leaderboard: ${stat} - ${time}`);
         res.setHeader("Content-Type", "application/json");
 
-        const leaderboard = JSON.stringify(await MiniWallsLeaderboard(connector, stat, time));
+        const leaderboard = JSON.stringify(await MiniWallsLeaderboard(mongoConnector, stat, time));
 
         res.write(leaderboard);
         res.end();
@@ -119,7 +118,7 @@ module.exports = async (req, res, connector, redisInterface) => {
           throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);
         }
 
-        const guild = await GuildResolver(req, connector);
+        const guild = await GuildResolver(req, mongoConnector);
 
         if (guild.error) {
           res.setHeader("Content-Type", "application/json");
@@ -128,7 +127,7 @@ module.exports = async (req, res, connector, redisInterface) => {
           return;
         }
 
-        const mems = await GuildMemberLeaderboard(guild, path, reverse, connector);
+        const mems = await GuildMemberLeaderboard(guild, path, reverse, mongoConnector);
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(mems));
         res.end();
@@ -141,7 +140,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         const reverse = args.has("reverse");
         const max = Math.min(args.get("max") ?? cfg.database.defaultLBSize, cfg.database.maxLBSize);
 
-        const accs = await OldLeaderboard(path, timePeriod, reverse, max, connector);
+        const accs = await OldLeaderboard(path, timePeriod, reverse, max, mongoConnector);
 
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(accs));
@@ -163,7 +162,7 @@ module.exports = async (req, res, connector, redisInterface) => {
         }
 
         Logger.log(`Leaderboard: ${category}.${lbprop} - ${timePeriod} - ${max}`);
-        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, noCache, connector, redisInterface);
+        const accs = await GenericLeaderboard(category, lbprop, timePeriod, reverse, max, noCache, mongoConnector, redisInterface);
 
         res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(accs));
