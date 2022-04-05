@@ -5,7 +5,7 @@ const { Database } = require("@hyarcade/requests");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const cfg = require("@hyarcade/config").fromJSON();
 const Handlebars = require("handlebars");
-
+const path = require("path");
 let context;
 
 const pages = new Set([
@@ -40,7 +40,7 @@ async function handleAssets(urlPath, response) {
     response.end();
     return;
   } else {
-    Logger.info(urlPath[2]);
+    Logger.warn(`Asset ${urlPath[2]} failed to resolve to a valid path`);
     response.statusCode = 403;
     response.end();
     return;
@@ -74,10 +74,10 @@ async function callback(request, response) {
 
   if (request.method == "GET") {
     if (endpoint == "/") {
-      replyData = await fs.readFile("html/hub.handlebars");
+      replyData = await fs.readFile(path.join(__dirname, "html", "hub.handlebars"));
     } else if (urlPath[urlPath.length - 1].endsWith(".js") || (urlPath[urlPath.length - 1].endsWith(".css") && urlPath.length < 4)) {
-      if (fs.existsSync(`html/${urlPath[urlPath.length - 1]}`)) {
-        replyData = await fs.readFile(`html/${urlPath[urlPath.length - 1]}`);
+      if (fs.existsSync(path.join(__dirname, "html", `${urlPath[urlPath.length - 1]}`))) {
+        replyData = await fs.readFile(path.join(__dirname, "html", `${urlPath[urlPath.length - 1]}`));
       } else {
         Logger.info(urlPath.length - 1);
         response.statusCode = 403;
@@ -85,16 +85,16 @@ async function callback(request, response) {
         return;
       }
     } else if (urlPath[1] == "guilds") {
-      replyData = await fs.readFile("html/guild.handlebars");
+      replyData = await fs.readFile(path.join(__dirname, "html", "guild.handlebars"));
     } else if (urlPath[1] == "assets") {
       await handleAssets(urlPath, response);
       return;
     } else if (pages.has(endpoint.slice(1))) {
-      replyData = await fs.readFile("html/generic.handlebars");
+      replyData = await fs.readFile(path.join(__dirname, "html", "generic.handlebars"));
     } else if (urlPath[1] == "player") {
-      replyData = await fs.readFile("html/player.handlebars");
+      replyData = await fs.readFile(path.join(__dirname, "html", "player.handlebars"));
     } else if (urlPath[1] == "guildstats") {
-      replyData = await fs.readFile("html/guildstats.handlebars");
+      replyData = await fs.readFile(path.join(__dirname, "html", "guildstats.handlebars"));
     } else {
       switch (endpoint) {
         case "/github": {
@@ -115,7 +115,7 @@ async function callback(request, response) {
 
         default: {
           Logger.warn(`${endpoint} redirected to home (${request.headers["x-real-ip"]})`);
-          replyData = await fs.readFile("html/hub.handlebars");
+          replyData = await fs.readFile(path.join(__dirname, "html", "hub.handlebars"));
         }
       }
     }
