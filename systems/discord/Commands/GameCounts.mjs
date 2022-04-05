@@ -1,7 +1,10 @@
-const { default: axios } = require("axios");
+import axios from "axios";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 
 /**
  * @param {number} n
@@ -35,7 +38,7 @@ async function getGames() {
   return str;
 }
 
-module.exports = new Command(
+export default new Command(
   ["game-counts", "gamecounts", "counts", "gc"],
   ["*"],
   async () => {

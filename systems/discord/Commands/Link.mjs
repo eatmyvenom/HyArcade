@@ -1,19 +1,17 @@
-const Database = require("@hyarcade/requests/Database");
-const { addAccount } = require("@hyarcade/requests/Database");
-const mojangRequest = require("@hyarcade/requests/mojangRequest");
-const { Account } = require("@hyarcade/structures");
-const Command = require("@hyarcade/structures/Discord/Command");
-const BotRuntime = require("../BotRuntime");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
-const {
+import { Database, mojangRequest } from "@hyarcade/requests";
+import { Account } from "@hyarcade/structures";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import { client } from "../BotRuntime";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
+import {
   ERROR_IGN_UNDEFINED,
   INFO_LINK_SUCCESS,
   ERROR_PLAYER_PREVIOUSLY_LINKED,
   ERROR_ACCOUNT_PREVIOUSLY_LINKED,
-} = require("../Utils/Embeds/StaticEmbeds");
-const LogUtils = require("../Utils/LogUtils");
+} from "../Utils/Embeds/StaticEmbeds";
+import LogUtils from "../Utils/LogUtils";
 
-module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
+export default new Command(["link", "ln"], ["%trusted%"], async args => {
   if (args.length === 0) {
     return {
       res: "",
@@ -33,7 +31,7 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
     const channelID = player.slice(player.lastIndexOf("/") - 18, player.lastIndexOf("/"));
     const msgID = player.slice(player.lastIndexOf("/") + 1);
 
-    const channel = await BotRuntime.client.channels.fetch(channelID);
+    const channel = await client.channels.fetch(channelID);
     const msg = await channel.messages.fetch(msgID);
 
     discord = msg.author.id;
@@ -54,7 +52,7 @@ module.exports = new Command(["link", "ln"], ["%trusted%"], async args => {
 
   const acc = new Account(player, 0, uuid);
   await acc.updateHypixel();
-  await addAccount([acc]);
+  await Database.addAccount([acc]);
 
   uuid = acc.uuid;
 

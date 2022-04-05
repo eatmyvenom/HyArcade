@@ -2,7 +2,7 @@ import Logger from "@hyarcade/logger";
 import { createRequire } from "node:module";
 import botCommands from "./botCommands.mjs";
 import BotRuntime from "./BotRuntime.js";
-import mwCommands from "./MiniWallsCommands.js";
+import mwCommands from "./MiniWallsCommands.mjs";
 import CommandResponse from "./Utils/CommandResponse.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
 import LogUtils from "./Utils/LogUtils.js";
@@ -177,7 +177,7 @@ export default async function messageHandler(msg) {
   if (msg.author.bot) return;
   if (msg.webhookID != undefined) return;
 
-  for (const verifyChannel of cfg.discordBot.verifyChannels) {
+  for (const verifyChannel of cfg.discordBot.arcadeBot.verifyChannels) {
     if (msg.channel.id === verifyChannel.channel) {
       await VerifyChannel(msg, verifyChannel.add, verifyChannel.remove);
       return;

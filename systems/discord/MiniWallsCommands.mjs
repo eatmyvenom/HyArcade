@@ -1,12 +1,8 @@
+import CommandStorage from "./CommandStorage.mjs";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 const { Message } = require("discord.js");
-const logger = require("@hyarcade/logger");
-const linkCmd = require("./Commands/Link");
-const MiniWalls = require("./Commands/MiniWalls");
-const MiniWallsDev = require("./Commands/MiniWalls-dev");
-const MiniWallsCompare = require("./Commands/MiniWallsCompare");
-const MiniWallsInvite = require("./Commands/MiniWallsInvite");
-const MiniWallsLB = require("./Commands/MiniWallsLB");
-const UpdateNames = require("./Commands/UpdateNames");
 
 /**
  * @param {Message} rawMsg
@@ -16,14 +12,15 @@ const UpdateNames = require("./Commands/UpdateNames");
  * @returns {object}
  */
 async function checkCommands(rawMsg, command, args, author) {
+  const commands = await CommandStorage.getCommands();
   switch (command.toLowerCase()) {
     case "link":
     case "ln": {
-      return await linkCmd.execute(args, author, rawMsg);
+      return await commands.Link.execute(args, author, rawMsg);
     }
 
     case "dev-s": {
-      return await MiniWallsDev.execute(args, author, rawMsg);
+      return await commands["MiniWalls-dev"].execute(args, author, rawMsg);
     }
 
     case "s":
@@ -32,7 +29,7 @@ async function checkCommands(rawMsg, command, args, author) {
     case "player":
     case "mw":
     case "stats": {
-      return await MiniWalls.execute(args, author, rawMsg);
+      return await commands.MiniWalls.execute(args, author, rawMsg);
     }
 
     case "lb":
@@ -41,7 +38,7 @@ async function checkCommands(rawMsg, command, args, author) {
     case "mlb":
     case "miniwallsleaderboard":
     case "miniwallslb": {
-      return await MiniWallsLB.execute(args, author, rawMsg);
+      return await commands.MiniWallsLB.execute(args, author, rawMsg);
     }
 
     case "mwcompare":
@@ -49,31 +46,28 @@ async function checkCommands(rawMsg, command, args, author) {
     case "c":
     case "compare":
     case "comparemw": {
-      return MiniWallsCompare.execute(args, author, rawMsg);
+      return commands.MiniWallsCompare.execute(args, author, rawMsg);
     }
 
     case "flb": {
-      const { FakeLb } = await import("./Commands/FakeLb.mjs");
-      return await FakeLb.execute([], author, rawMsg);
+      return await commands.FakeLb.execute([], author, rawMsg);
     }
 
     case "ping": {
-      const { Ping } = await import("./Commands/Ping.mjs");
-      return await Ping.execute(args, author, rawMsg);
+      return await commands.Ping.execute(args, author, rawMsg);
     }
 
     case "updnames": {
-      return await UpdateNames.execute(args, author, rawMsg);
+      return await commands.UpdateNames.execute(args, author, rawMsg);
     }
 
     case "getinvite":
     case "geninvite":
     case "invite": {
-      return await MiniWallsInvite.execute(args, author, rawMsg);
+      return await commands.MiniWallsInvite.execute(args, author, rawMsg);
     }
 
     default: {
-      logger.out(`Nonexistent command "${command.toLowerCase()}" was attempted.`);
       return {};
     }
   }
@@ -94,4 +88,4 @@ async function execute(msg, senderID) {
   };
 }
 
-module.exports = { execute };
+export default { execute };

@@ -1,11 +1,10 @@
-const { Message } = require("discord.js");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("../Utils/CommandResponse");
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "../Utils/CommandResponse.js";
 
 /**
  *
  * @param {string[]} args
- * @param {Message} rawMsg
+ * @param {object} rawMsg
  * @returns {Promise<CommandResponse>}
  */
 async function miniWallsInvite(args, rawMsg) {
@@ -23,4 +22,4 @@ async function miniWallsInvite(args, rawMsg) {
   return new CommandResponse("Invite sent to you in DMs!");
 }
 
-module.exports = new Command("miniwallsinvite", ["*"], miniWallsInvite, 20000);
+export default new Command("miniwallsinvite", ["*"], miniWallsInvite, 20000);

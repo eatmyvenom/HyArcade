@@ -1,11 +1,14 @@
+import { err } from "@hyarcade/logger";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import { getHackerlist } from "../BotRuntime.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
+import EmojiGetter from "../Utils/Formatting/EmojiGetter.js";
+
+import { createRequire } from "node:module";
+import { Database } from "@hyarcade/requests";
+const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
-const logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
-const Command = require("@hyarcade/structures/Discord/Command");
-const BotRuntime = require("../BotRuntime");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
-const EmojiGetter = require("../Utils/Formatting/EmojiGetter");
 
 /**
  * @param {number} n
@@ -73,7 +76,7 @@ function lineR(stat1, stat2, name, hasPerms) {
   return `${clr(stat1, stat2, hasPerms)} **${name}**:\n${formatR(stat1)} | ${formatR(stat2)}\n`;
 }
 
-module.exports = new Command(
+export default new Command(
   "mw-compare",
   ["*"],
   async (args, rawMsg, interaction) => {
@@ -101,7 +104,7 @@ module.exports = new Command(
       acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
     }
 
-    const hackers = await BotRuntime.getHackerlist();
+    const hackers = await getHackerlist();
 
     if (hackers.includes(acc1.uuid)) {
       return {
@@ -158,7 +161,7 @@ module.exports = new Command(
         .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);
     } catch (error) {
-      logger.err(error.stack);
+      err(error.stack);
       return {
         res: "",
         embed: ERROR_IGN_UNDEFINED,

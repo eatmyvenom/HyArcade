@@ -5,7 +5,6 @@ const Arc5 = require("./FakeLBs/Arc5");
 const Arc6 = require("./FakeLBs/Arc6");
 const ArcLeft = require("./FakeLBs/ArcLeft");
 const Guild = require("./FakeLBs/Guild");
-const { getBanlist } = require("../BotRuntime");
 
 const generics = [Arc3, Arc4, Arc5, Arc6];
 
@@ -33,7 +32,7 @@ module.exports = async function FakeLb(path, category, time) {
     topTen = await Database.getLeaderboard(path, category, realTime);
   }
 
-  const banlist = await getBanlist();
+  const banlist = await Database.readDB("banList");
   topTen = topTen.filter(a => !banlist.includes(a.uuid));
   topTen = topTen.slice(0, 10);
 

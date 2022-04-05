@@ -1,11 +1,10 @@
-const Database = require("@hyarcade/requests/Database");
-const { Account, Command, CommandResponse } = require("@hyarcade/structures");
-const BotRuntime = require("../BotRuntime");
-const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
-const MiniWallsButtons = require("../interactions/Components/Buttons/Generators/MiniWallsButtons");
-const ImageGenerator = require("../images/ImageGenerator");
-const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
+import { Database } from "@hyarcade/requests";
+import { Account, Command, CommandResponse } from "@hyarcade/structures";
+import { getHackerlist } from "../BotRuntime.js";
+import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
+import ImageGenerator from "../images/ImageGenerator.js";
+import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 
 /**
  *
@@ -13,7 +12,7 @@ const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
  * @returns {boolean}
  */
 async function isHacker(acc) {
-  const hackers = await BotRuntime.getHackerlist();
+  const hackers = await getHackerlist();
   return hackers.includes(acc?.uuid?.toLowerCase());
 }
 
@@ -45,7 +44,7 @@ function formatN(str) {
  */
 async function miniWallsStats(args, rawMsg, interaction) {
   let plr = args[0];
-  let time = args[1] ?? "lifetime";
+  let time = args[1];
 
   if (args.length == 1) {
     time = "lifetime";
@@ -133,50 +132,63 @@ async function miniWallsStats(args, rawMsg, interaction) {
 
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc.miniWalls;
 
-  const img = new ImageGenerator(2560, 1600, "'myfont'", true);
-  await img.addBackground(GetAsset("miwblur2.png"), 0, 0, 2560, 1600, "#0000008E");
+  const img = new ImageGenerator(2560, 1600, "'Fira Code Bold'");
   img.context.beginPath();
   img.context.rect(0, 0, 2560, 1600);
+  img.context.fillStyle = "#181c30";
+  img.context.fill();
+
+  const gradient = img.context.createLinearGradient(0, 0, img.canvas.width, img.canvas.height);
+  gradient.addColorStop(0, "#FF5555");
+  gradient.addColorStop(0.4, "#55FF55");
+  gradient.addColorStop(0.6, "#FFFF55");
+  gradient.addColorStop(1, "#00AAFF");
+
+  img.context.beginPath();
+  img.context.rect(1, 1, 2559, 1599);
+  img.context.strokeStyle = gradient;
+  img.context.lineWidth = 20;
+  img.context.stroke();
 
   img.writeText("Mini Walls Stats", 1280, 100, "center", "#FFFFFF", "112px");
   img.writeAcc(acc, undefined, 220, "112px");
 
-  const size = 96;
+  const fontSize = "96px";
   const increment = 200;
-
   const leftAlign = "left";
   const rightAlign = "right";
   const leftX = 100;
   const rightX = 2460;
-  const winColor = "&f";
-  const killColor = "&e";
-  const witherColor = "&a";
-  const deathColor = "&c";
-  const aaColor = "&b";
+  const winColor = gradient;
+  const killColor = gradient;
+  const witherColor = gradient;
+  const deathColor = gradient;
+  const aaColor = gradient;
 
   let y = 250;
-  img.drawMcText(`${winColor}Wins: ${formatN(wins ?? 0)}`, leftX, (y += increment), size, leftAlign);
-  img.drawMcText(`${killColor}Kills: ${formatN(kills ?? 0)}`, leftX, (y += increment), size, leftAlign);
-  img.drawMcText(`${killColor}Finals: ${formatN(finalKills ?? 0)}`, leftX, (y += increment), size, leftAlign);
-  img.drawMcText(`${witherColor}Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, (y += increment), size, leftAlign);
-  img.drawMcText(`${witherColor}Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, (y += increment), size, leftAlign);
-  img.drawMcText(`${deathColor}Deaths: ${formatN(deaths ?? 0)}`, leftX, (y += increment), size, leftAlign);
+  img.writeText(`Wins: ${formatN(wins ?? 0)}`, leftX, (y += increment), leftAlign, winColor, fontSize);
+  img.writeText(`Kills: ${formatN(kills ?? 0)}`, leftX, (y += increment), leftAlign, killColor, fontSize);
+  img.writeText(`Finals: ${formatN(finalKills ?? 0)}`, leftX, (y += increment), leftAlign, killColor, fontSize);
+  img.writeText(`Wither Damage: ${formatN(witherDamage ?? 0)}`, leftX, (y += increment), leftAlign, witherColor, fontSize);
+  img.writeText(`Wither Kills: ${formatN(witherKills ?? 0)}`, leftX, (y += increment), leftAlign, witherColor, fontSize);
+  img.writeText(`Deaths: ${formatN(deaths ?? 0)}`, leftX, (y += increment), leftAlign, deathColor, fontSize);
 
   y = 250;
-  img.drawMcText(`${killColor}F+K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, (y += increment), size, rightAlign);
-  img.drawMcText(`${killColor}K/D: ${formatR((kills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
-  img.drawMcText(`${killColor}F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
-  img.drawMcText(`${witherColor}WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
-  img.drawMcText(`${witherColor}WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), size, rightAlign);
-  img.drawMcText(
-    `${aaColor}Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`,
+  img.writeText(`K/D: ${formatR(((kills ?? 0) + (finalKills ?? 0)) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`K/D (no finals): ${formatR((kills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`F/D: ${formatR((finalKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, killColor, fontSize);
+  img.writeText(`WD/D: ${formatR((witherDamage ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
+  img.writeText(`WK/D: ${formatR((witherKills ?? 0) / deaths)}`, rightX, (y += increment), rightAlign, witherColor, fontSize);
+  img.writeText(
+    `Arrow Accuracy: ${formatR(((arrowsHit ?? 0) / (arrowsShot ?? 0)) * 100)}`,
     rightX,
     (y += increment),
-    size,
     rightAlign,
+    aaColor,
+    fontSize,
   );
 
   return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }
 
-module.exports = new Command("mini-walls", ["*"], miniWallsStats, 2500);
+export default new Command("mini-walls", ["*"], miniWallsStats, 2500);

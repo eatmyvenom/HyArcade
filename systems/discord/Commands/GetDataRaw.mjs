@@ -1,9 +1,9 @@
-const Logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
-const Util = require("node:util");
-const AccountComparitor = require("../Utils/AccountComparitor");
+import { info } from "@hyarcade/logger";
+import { account, timedAccount } from "@hyarcade/requests/Database.js";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { inspect } from "node:util";
+import AccountComparitor from "../Utils/AccountComparitor.js";
 
 /**
  * @param {object} o
@@ -27,19 +27,19 @@ function getProp(o, s) {
   return obj;
 }
 
-module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "rawdata"], ["*"], async (args, rawMsg, interaction) => {
+export default new Command(["get-data-raw", "getraw", "getdataraw", "raw", "rawdata"], ["*"], async (args, rawMsg, interaction) => {
   const plr = args[0];
   const time = args[2];
   let acc;
   if (interaction == undefined) {
-    acc = await Database.account(plr, rawMsg.author.id);
+    acc = await account(plr, rawMsg.author.id);
   } else {
     await interaction.deferReply();
-    acc = await Database.timedAccount(interaction.options.getString("player"), interaction.user.id, time);
+    acc = await timedAccount(interaction.options.getString("player"), interaction.user.id, time);
   }
 
   if (acc.timed != undefined && acc.timed != {}) {
-    Logger.info("Getting account diff");
+    info("Getting account diff");
     const tmpAcc = AccountComparitor(acc.acc, acc.timed);
 
     acc = tmpAcc;
@@ -53,7 +53,7 @@ module.exports = new Command(["get-data-raw", "getraw", "getdataraw", "raw", "ra
   }
 
   if (typeof val !== "string") {
-    val = Util.inspect(val, true);
+    val = inspect(val, true);
   }
 
   if (val == "") {

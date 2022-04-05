@@ -1,10 +1,12 @@
 /* eslint-disable complexity */
+import Logger from "@hyarcade/logger";
+import { Database } from "@hyarcade/requests";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { stringifyList } from "@hyarcade/utils/Leaderboards/ListUtils.js";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
-const logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
-const { stringifyList } = require("@hyarcade/utils/Leaderboards/ListUtils");
 
 /**
  * @param {string} prop
@@ -57,7 +59,7 @@ async function getLB(prop, timetype, limit) {
   return { res, time };
 }
 
-module.exports = new Command(
+export default new Command(
   "mw-leaderboard",
   ["*"],
   async args => {
@@ -336,7 +338,7 @@ module.exports = new Command(
       }
     }
 
-    logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
+    Logger.debug(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
     return new CommandResponse("", embed);
   },

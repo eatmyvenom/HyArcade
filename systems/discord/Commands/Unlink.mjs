@@ -1,9 +1,9 @@
-const Database = require("@hyarcade/requests/Database");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
+import { Database } from "@hyarcade/requests";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
-module.exports = new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], async args => {
+export default new Command(["unlink", "uln", "uv", "fuv"], ["%trusted%"], async args => {
   if (args.length === 0) {
     return {
       res: "",

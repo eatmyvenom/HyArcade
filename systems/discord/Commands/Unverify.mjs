@@ -1,7 +1,9 @@
+import { Database } from "@hyarcade/requests";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 const { Interaction } = require("discord.js");
-const Database = require("@hyarcade/requests/Database");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 
 /**
  *
@@ -27,4 +29,4 @@ async function unverify(args, rawMsg, interaction) {
   return new CommandResponse("You are not verified and therefore cannot unverify yourself!");
 }
 
-module.exports = new Command(["unlink", "unverify"], ["*"], unverify);
+export default new Command(["unlink", "unverify"], ["*"], unverify);

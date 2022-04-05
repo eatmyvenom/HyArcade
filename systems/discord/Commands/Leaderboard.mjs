@@ -1,18 +1,19 @@
 /* eslint-disable complexity */
-const { Message, CommandInteraction, ButtonInteraction } = require("discord.js");
-const { MessageActionRow } = require("discord.js");
-const { MessageButton } = require("discord.js");
-const logger = require("@hyarcade/logger");
-const Command = require("@hyarcade/structures/Discord/Command");
-const CommandResponse = require("../Utils/CommandResponse");
-const { ERROR_ARGS_LENGTH } = require("../Utils/Embeds/DynamicEmbeds");
-const { ERROR_NO_LEADERBOARD } = require("../Utils/Embeds/StaticEmbeds");
-const getLB = require("../Utils/Leaderboards/GetLeaderboard");
-const MillisecondLBs = require("../Utils/Leaderboards/MillisecondLBs");
-const ReversedLBs = require("../Utils/Leaderboards/ReversedLBs");
-const SecondLBs = require("../Utils/Leaderboards/SecondLBs");
-const ImageGenerator = require("../images/ImageGenerator");
-const LeaderboardButtons = require("../interactions/Components/Buttons/Generators/LeaderboardButtons");
+import { verbose, debug, err, info } from "@hyarcade/logger";
+import Command from "@hyarcade/structures/Discord/Command.js";
+import CommandResponse from "../Utils/CommandResponse.js";
+import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
+import { ERROR_NO_LEADERBOARD } from "../Utils/Embeds/StaticEmbeds.js";
+import getLB from "../Utils/Leaderboards/GetLeaderboard.js";
+import MillisecondLBs from "../Utils/Leaderboards/MillisecondLBs.js";
+import ReversedLBs from "../Utils/Leaderboards/ReversedLBs.js";
+import SecondLBs from "../Utils/Leaderboards/SecondLBs.js";
+import ImageGenerator from "../images/ImageGenerator.js";
+import LeaderboardButtons from "../interactions/Components/Buttons/Generators/LeaderboardButtons.js";
+
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+const { MessageButton, MessageActionRow, CommandInteraction, ButtonInteraction, Message } = require("discord.js");
 
 /**
  *
@@ -54,10 +55,10 @@ function toHHMMSS(secs) {
 async function hander(args, rawMsg, interaction) {
   // Start time before any packets are sent
   const startTime = Date.now();
-  logger.verbose("Deferring");
+  verbose("Deferring");
 
   if (interaction != undefined && !interaction.isButton()) {
-    logger.debug("Deferring interaction");
+    debug("Deferring interaction");
     await interaction.deferReply();
   } else if (interaction?.isButton()) {
     const row = new MessageActionRow({
@@ -69,7 +70,7 @@ async function hander(args, rawMsg, interaction) {
     await interaction.update({ components: [row] });
     interaction.deferred = true;
   }
-  logger.verbose("Parsing");
+  verbose("Parsing");
 
   if (args.length === 0) {
     return new CommandResponse("", ERROR_ARGS_LENGTH(1));
@@ -87,7 +88,7 @@ async function hander(args, rawMsg, interaction) {
 
   const sanitizedType = type.toLowerCase().trim().replace(/ /g, "");
 
-  logger.verbose("Processing");
+  verbose("Processing");
 
   switch (sanitizedType) {
     case "sex":
@@ -1192,7 +1193,7 @@ async function hander(args, rawMsg, interaction) {
 
           lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], formatter);
         } catch (error) {
-          logger.err(error.stack);
+          err(error.stack);
           return { res: "", embed: ERROR_NO_LEADERBOARD };
         }
 
@@ -1219,7 +1220,7 @@ async function hander(args, rawMsg, interaction) {
             gid = `.${stat}`;
           }
         } else {
-          logger.info(`${type} leaderboard does not exist.`);
+          info(`${type} leaderboard does not exist.`);
 
           return {
             res: "",
@@ -1230,14 +1231,14 @@ async function hander(args, rawMsg, interaction) {
     }
   }
 
-  logger.verbose("Converting canvas");
+  verbose("Converting canvas");
   const finalRes = res.toDiscord("leaderboard.png");
 
-  logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
+  debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
   const buttons = LeaderboardButtons(startingIndex, gid, timetype);
 
   return new CommandResponse("", undefined, finalRes, buttons);
 }
 
-module.exports = new Command(["leaderboard", "lb"], ["*"], hander, 10000);
+export default new Command(["leaderboard", "lb"], ["*"], hander, 10000);

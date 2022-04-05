@@ -1,4 +1,3 @@
-const { Client } = require("discord.js");
 const logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/requests/Database");
 const fs = require("fs-extra");
@@ -8,31 +7,23 @@ let hackerlist;
 let blacklist;
 let banlist;
 
-module.exports = class BotRuntime {
-  static isBotInstance = false;
-  /**
-   *
-   * @type {Client}
-   * @static
-   */
-  static client;
-  static botMode;
-  static tus = [];
-
-  static get trustedUsers() {
-    return BotRuntime.tus;
-  }
-
-  static getWebhookObj(embed) {
+module.exports = {
+  isBotInstance: false,
+  client: undefined,
+  botMode: undefined,
+  tus: [],
+  get trustedUsers() {
+    return this.tus;
+  },
+  getWebhookObj(embed) {
     const embeds = embed == undefined ? [] : [embed];
     return {
-      username: BotRuntime.client.user.username,
-      avatarURL: BotRuntime.client.user.avatarURL({ format: "png" }),
+      username: this.client.user.username,
+      avatarURL: this.client.user.avatarURL({ format: "png" }),
       embeds,
     };
-  }
-
-  static async getHackerlist() {
+  },
+  async getHackerlist() {
     if (hackerlist == undefined) {
       const list = await Database.readDB("hackerList");
       hackerlist = list.map(h => h.uuid);
@@ -40,9 +31,8 @@ module.exports = class BotRuntime {
     }
 
     return hackerlist;
-  }
-
-  static async getBlacklist() {
+  },
+  async getBlacklist() {
     if (blacklist == undefined) {
       // eslint-disable-next-line no-undef
       fs.readFile(path.join(__dirname, "../../", "data/blacklist"))
@@ -54,9 +44,8 @@ module.exports = class BotRuntime {
     }
 
     return blacklist;
-  }
-
-  static async getBanlist() {
+  },
+  async getBanlist() {
     if (banlist == undefined) {
       const list = await Database.readDB("bannedList");
       banlist = list.map(h => h.uuid);
@@ -64,5 +53,5 @@ module.exports = class BotRuntime {
     }
 
     return banlist;
-  }
+  },
 };
