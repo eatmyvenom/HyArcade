@@ -3,7 +3,7 @@ import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import { getHackerlist } from "../BotRuntime.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
-import ImageGenerator from "../images/ImageGenerator.js";
+import { ImageGenerator } from "@hyarcade/images";
 import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 
 /**

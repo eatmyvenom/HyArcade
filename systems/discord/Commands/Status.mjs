@@ -4,7 +4,7 @@ import Database from "@hyarcade/requests/Database.js";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
-import ImageGenerator from "../images/ImageGenerator.js";
+import { ImageGenerator } from "@hyarcade/images";
 import { ERROR_IGN_UNDEFINED, ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 

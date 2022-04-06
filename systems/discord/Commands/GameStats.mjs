@@ -3,7 +3,7 @@ import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
-import ImageGenerator from "../images/ImageGenerator.js";
+import { ImageGenerator } from "@hyarcade/images";
 import StatsMenu from "../interactions/Components/Menus/Generators/StatsMenu.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";

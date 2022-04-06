@@ -5,7 +5,7 @@ const config = require("@hyarcade/config").fromJSON();
 const { MessageEmbed } = Discord;
 const logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/requests/Database");
-const FakeLB = require("../../systems/discord/images/FakeLB");
+const { FakeLB } = require("@hyarcade/images");
 const { stringifyList } = require("@hyarcade/utils/Leaderboards/ListUtils");
 
 /**

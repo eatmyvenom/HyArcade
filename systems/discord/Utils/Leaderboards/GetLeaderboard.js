@@ -1,7 +1,7 @@
 const Logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/requests/Database");
 const DrawLeaderboard = require("./DrawLeaderboard");
-const ImageGenerator = require("../../images/ImageGenerator");
+const { ImageGenerator } = require("@hyarcade/images");
 
 let lbCache = {};
 

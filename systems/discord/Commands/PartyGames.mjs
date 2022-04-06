@@ -8,7 +8,7 @@ const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");
 const { ERROR_IGN_UNDEFINED } = require("../Utils/Embeds/StaticEmbeds");
-const PartyGamesImg = require("../images/PartyGamesImg");
+const { PartyGamesImg } = require("@hyarcade/images");
 
 /**
  *
@@ -20,7 +20,7 @@ function nonDatabaseError(ign) {
 }
 
 export default new Command(
-  ["party-games", "pg", "partygames"],
+  ["party-games", "pg", "partygames", "party"],
   ["*"],
   async (args, rawMsg, interaction) => {
     const plr = args[0];

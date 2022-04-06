@@ -76,7 +76,7 @@ class AccountWithAchievements {
 
   /**
    *
-   * @type {object.<string, number>}
+   * @type {Object<string, number>}
    * @memberof AccountWithAchievements
    */
   achievements = {};

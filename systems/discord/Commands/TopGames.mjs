@@ -3,7 +3,7 @@ import Database from "@hyarcade/requests/Database.js";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
-import ImageGenerator from "../images/ImageGenerator.js";
+import { ImageGenerator } from "@hyarcade/images";
 import TopGamesButtons from "../interactions/Components/Buttons/Generators/TopGamesButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";

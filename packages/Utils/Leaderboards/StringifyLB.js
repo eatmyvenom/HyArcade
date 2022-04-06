@@ -1,20 +1,12 @@
 const TimSort = require("timsort");
 const { stringifyList, getList } = require("./ListUtils");
 
-/**
- * @param {string} str
- * @returns {number} The number primitive
- */
-function numberify(str) {
-  return Number(str);
-}
-
 module.exports = async function stringLB(lbprop, maxamnt, category, startingIndex = 0) {
   const list = await getList();
   if (category == undefined) {
-    TimSort.sort(list, (b, a) => numberify(a?.[lbprop] ?? 0) - numberify(b?.[lbprop] ?? 0));
+    TimSort.sort(list, (b, a) => Number(a?.[lbprop] ?? 0) - Number(b?.[lbprop] ?? 0));
   } else {
-    TimSort.sort(list, (b, a) => numberify(a?.[category]?.[lbprop] ?? 0) - numberify(b?.[category]?.[lbprop] ?? 0));
+    TimSort.sort(list, (b, a) => Number(a?.[category]?.[lbprop] ?? 0) - Number(b?.[category]?.[lbprop] ?? 0));
   }
 
   return stringifyList(list, lbprop, category, maxamnt, startingIndex);

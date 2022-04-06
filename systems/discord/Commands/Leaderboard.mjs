@@ -8,10 +8,10 @@ import getLB from "../Utils/Leaderboards/GetLeaderboard.js";
 import MillisecondLBs from "../Utils/Leaderboards/MillisecondLBs.js";
 import ReversedLBs from "../Utils/Leaderboards/ReversedLBs.js";
 import SecondLBs from "../Utils/Leaderboards/SecondLBs.js";
-import ImageGenerator from "../images/ImageGenerator.js";
 import LeaderboardButtons from "../interactions/Components/Buttons/Generators/LeaderboardButtons.js";
 
 import { createRequire } from "node:module";
+import { ImageGenerator } from "@hyarcade/images";
 const require = createRequire(import.meta.url);
 const { MessageButton, MessageActionRow, CommandInteraction, ButtonInteraction, Message } = require("discord.js");
 

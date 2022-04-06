@@ -1672,9 +1672,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/events@workspace:packages/events":
+"@hyarcade/events@workspace:packages/Events":
   version: 0.0.0-use.local
-  resolution: "@hyarcade/events@workspace:packages/events"
+  resolution: "@hyarcade/events@workspace:packages/Events"
+  languageName: unknown
+  linkType: soft
+
+"@hyarcade/images@workspace:packages/Images":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/images@workspace:packages/Images"
+  dependencies:
+    "@hyarcade/logger": "workspace:^"
+    "@hyarcade/structures": "workspace:^"
+    "@hyarcade/utils": "workspace:^"
+    canvas: ^2.9.1
+    discord.js: ^13.6.0
+    stackblur-canvas: ^2.5.0
   languageName: unknown
   linkType: soft
 
@@ -1684,9 +1697,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/requests@*, @hyarcade/requests@workspace:^, @hyarcade/requests@workspace:packages/request":
+"@hyarcade/requests@*, @hyarcade/requests@workspace:^, @hyarcade/requests@workspace:packages/Request":
   version: 0.0.0-use.local
-  resolution: "@hyarcade/requests@workspace:packages/request"
+  resolution: "@hyarcade/requests@workspace:packages/Request"
   dependencies:
     "@hyarcade/config": "workspace:^"
     "@hyarcade/logger": "workspace:^"

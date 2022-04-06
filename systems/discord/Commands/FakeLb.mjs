@@ -1,8 +1,7 @@
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
-import FakeLB from "../images/FakeLB.js";
-import ImageGenerator from "../images/ImageGenerator.js";
+import { FakeLB, ImageGenerator } from "@hyarcade/images";
 
 export default new Command("fakelb", ["%trusted%", "303732854787932160"], async args => {
   const img = new ImageGenerator(1900, 1035, "'myFont'", false);
