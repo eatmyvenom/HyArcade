@@ -1,13 +1,13 @@
 const { MessageEmbed, User } = require("discord.js");
 
-module.exports = class AdvancedEmbeds {
+class AdvancedEmbeds {
   /**
    *
    * @param {string} ign
    * @param {User} user
    * @returns {MessageEmbed}
    */
-  static playerLink(ign, user) {
+  playerLink(ign, user) {
     const embed = new MessageEmbed()
       .setTitle("Success")
       .setColor(0x00cc66)
@@ -16,4 +16,6 @@ module.exports = class AdvancedEmbeds {
 
     return embed;
   }
-};
+}
+
+module.exports = new AdvancedEmbeds();

@@ -131,104 +131,104 @@ module.exports = class HypixelApi {
     return await Api.makeRequest();
   }
 
-  static resources = class resources {
-    static async games() {
+  static resources = {
+    async games() {
       const req = await axios.get("https://api.hypixel.net/resources/games");
       return await req.data;
-    }
+    },
 
-    static async challenges() {
+    async challenges() {
       const req = await axios.get("https://api.hypixel.net/resources/challenges");
       return await req.data;
-    }
+    },
 
-    static async achievements() {
+    async achievements() {
       const req = await axios.get("https://api.hypixel.net/resources/achievements");
       return await req.data;
-    }
+    },
 
-    static async quests() {
+    async quests() {
       const req = await axios.get("https://api.hypixel.net/resources/quests");
       return await req.data;
-    }
+    },
 
-    static guilds = class guilds {
+    guilds: {
       async achievements() {
         const req = await axios.get("https://api.hypixel.net/resources/guilds/achievements");
         return await req.data;
-      }
-    };
+      },
+    },
 
-    static vanity = class vanity {
+    vanity: {
       async pets() {
         const req = await axios.get("https://api.hypixel.net/resources/vanity/pets");
         return await req.data;
-      }
+      },
 
       async companions() {
         const req = await axios.get("https://api.hypixel.net/resources/vanity/companions");
         return await req.data;
-      }
-    };
+      },
+    },
 
-    static skyblock = class skyblock {
-      static async collections() {
+    skyblock: {
+      async collections() {
         const req = await axios.get("https://api.hypixel.net/resources/skyblock/collections");
         return req.data;
-      }
+      },
 
-      static async skills() {
+      async skills() {
         const req = await axios.get("https://api.hypixel.net/resources/skyblock/skills");
         return req.data;
-      }
+      },
 
-      static async items() {
+      async items() {
         const req = await axios.get("https://api.hypixel.net/resources/skyblock/items");
         return req.data;
-      }
+      },
 
-      static async election() {
+      async election() {
         const req = await axios.get("https://api.hypixel.net/resources/skyblock/items");
         return req.data;
-      }
-    };
+      },
+    },
   };
 
-  static skyblock = class skyblock {
-    static async news() {
+  static skyblock = {
+    async news() {
       const Api = new HypixelApi("skyblock/news", {});
       return await Api.makeRequest();
-    }
+    },
 
-    static async auction(uuid, player, profile) {
+    async auction(uuid, player, profile) {
       const Api = new HypixelApi("skyblock/auction", { uuid, player, profile });
       return await Api.makeRequest();
-    }
+    },
 
-    static async auctions(page) {
+    async auctions(page) {
       const Api = new HypixelApi("skyblock/auctions", { page });
       return await Api.makeRequest();
-    }
+    },
 
     // eslint-disable-next-line camelcase
-    static async auctions_ended() {
+    async auctions_ended() {
       const Api = new HypixelApi("skyblock/auctions_ended", {});
       return await Api.makeRequest();
-    }
+    },
 
-    static async bazaar() {
+    async bazaar() {
       const Api = new HypixelApi("skyblock/bazaar", {});
       return await Api.makeRequest();
-    }
+    },
 
-    static async profile(profile) {
+    async profile(profile) {
       const Api = new HypixelApi("skyblock/profile", { profile });
       return await Api.makeRequest();
-    }
+    },
 
-    static async profiles(uuid) {
+    async profiles(uuid) {
       const Api = new HypixelApi("skyblock/profiles", { uuid });
       return await Api.makeRequest();
-    }
+    },
   };
 };

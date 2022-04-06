@@ -3,7 +3,7 @@ const Webhooks = require("./Webhooks");
 const BotRuntime = require("../BotRuntime");
 const { MessageEmbed } = require("discord.js");
 
-module.exports = class LogUtils {
+class LogUtils {
   /**
    * Log a command run
    *
@@ -11,7 +11,7 @@ module.exports = class LogUtils {
    * @param {string} args The arguments used with the command
    * @param {object} message The message object that the command came from
    */
-  static async logCommand(command, args, message) {
+  async logCommand(command, args, message) {
     await Webhooks.commandHook.send({
       embeds: [LOG_COMMAND_EXECUTION(command, args, message)],
       avatarURL: BotRuntime?.client?.user?.avatarURL(),
@@ -19,9 +19,11 @@ module.exports = class LogUtils {
     });
   }
 
-  static async logVerify(discord, ign) {
+  async logVerify(discord, ign) {
     await Webhooks.verifyHook.send({
       embeds: [new MessageEmbed({ title: "User verified", description: `${discord} - <@${discord}> was verified as "**${ign}**"` })],
     });
   }
-};
+}
+
+module.exports = new LogUtils();

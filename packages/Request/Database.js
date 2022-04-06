@@ -12,6 +12,7 @@ function validateStatus(status) {
   return status < 500;
 }
 
+// eslint-disable-next-line unicorn/no-static-only-class
 module.exports = class Database {
   static async readDB(file, fields) {
     let fileData;

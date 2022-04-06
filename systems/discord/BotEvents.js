@@ -17,8 +17,8 @@ async function getHookFromChannel(channelID) {
   return await channelHooks.first();
 }
 
-module.exports = class BotEvents {
-  static async rateLimit(rlInfo) {
+class BotEventsManager {
+  async rateLimit(rlInfo) {
     const { timeout, method, path } = rlInfo;
     const str = `Rate limit event triggered\nTime : ${timeout}\nCause : ${method.toUpperCase()} - ${path}\n`;
     logger.err(str);
@@ -29,7 +29,7 @@ module.exports = class BotEvents {
     }
   }
 
-  static async messageDelete(msg) {
+  async messageDelete(msg) {
     if (BotRuntime.botMode == "mw") {
       if (msg.content.charAt(0) == ".") {
         const str = `Command Deleted: ${msg.guild.name}#${msg.channel.name} ${msg.author.tag} - ${msg.content} `;
@@ -45,7 +45,7 @@ module.exports = class BotEvents {
     }
   }
 
-  static async ready(mode) {
+  async ready(mode) {
     BotRuntime.isBotInstance = true;
     BotRuntime.botMode = mode;
 
@@ -99,7 +99,7 @@ module.exports = class BotEvents {
     await SetPresence(BotRuntime.client, mode);
   }
 
-  static async heartBeat() {
+  async heartBeat() {
     logger.info("Heart beat - I'm alive!");
 
     if (BotRuntime.botMode == undefined) {
@@ -113,11 +113,11 @@ module.exports = class BotEvents {
     }
   }
 
-  static warn(info) {
+  warn(info) {
     logger.warn(info);
   }
 
-  static invalidated() {
+  invalidated() {
     logger.error("Discord session invalidated! Bot will most likely stop soon.");
   }
 
@@ -125,7 +125,7 @@ module.exports = class BotEvents {
    *
    * @param {Guild} guild
    */
-  static guildCreate(guild) {
+  guildCreate(guild) {
     Webhooks.logHook.send(
       `Bot was added to guild ${guild.name} with ${guild.memberCount} members!\nGuild owner: ${guild.ownerID}\nGuild ID: ${guild.id}`,
     );
@@ -138,7 +138,7 @@ module.exports = class BotEvents {
    *
    * @param {Error} error
    */
-  static error(error) {
+  error(error) {
     logger.err(`${error.name} : ${error.message}`);
     logger.err(`Current stack:\n${error.stack}`);
     Webhooks.errHook.send(ERROR_LOG(error, "unknown"));
@@ -148,7 +148,7 @@ module.exports = class BotEvents {
    *
    * @param {TextChannel} channel
    */
-  static webhookUpdate(channel) {
+  webhookUpdate(channel) {
     logger.debug(`${channel.guild.name}#${channel.name} had a webhook change`);
   }
 
@@ -156,47 +156,51 @@ module.exports = class BotEvents {
    *
    * @param {Guild} guild
    */
-  static guildUnavailable(guild) {
-    logger.warn(`Guild ${guild.name} has become unavailable! Bot will no longer respond there.`);
+  guildUnavailable(guild) {
+    const logStr = `Guild ${guild.name} has become unavailable! Bot will no longer respond there.`;
+    logger.warn(logStr);
+    Webhooks.logHook.send({ content: logStr });
   }
 
   /**
    *
    * @param {InvalidRequestWarningData} warning
    */
-  static invalidRequestWarning(warning) {
+  invalidRequestWarning(warning) {
     logger.warn(`An invalid request was made, this is number ${warning.count}!`);
   }
 
-  static async cyclePresence() {
+  async cyclePresence() {
     logger.info("Cycling presence...");
     await SetPresence(BotRuntime.client, BotRuntime.botMode);
   }
 
-  static guildIntegrationsUpdate(guild) {
+  guildIntegrationsUpdate(guild) {
     logger.debug(`${guild.name}'s integrations updated`);
   }
 
-  static shardDisconnect(event, id) {
+  shardDisconnect(event, id) {
     logger.warn(`Shard ${id} has disconnected and will no longer reconnect!`);
     logger.warn(`Code : ${event.code} - ${event.reason}`);
   }
 
-  static shardError(error, shardId) {
+  shardError(error, shardId) {
     logger.error(`Shard ${shardId} has encountered an error!`);
     logger.error(error.stack);
     Webhooks.errHook.send(ERROR_LOG(error, `Shard ${shardId} has encountered an error!`));
   }
 
-  static shardReady(id) {
+  shardReady(id) {
     logger.info(`Shard ${id} is ready!`);
   }
 
-  static shardReconnecting(id) {
+  shardReconnecting(id) {
     logger.out(`Shard ${id} is reconnecting, bot is unable to respond during this time`);
   }
 
-  static shardResume(id, replayedEvents) {
+  shardResume(id, replayedEvents) {
     logger.out(`Shard ${id} has resumed succesfully with ${replayedEvents} replayed events.`);
   }
-};
+}
+
+module.exports = new BotEventsManager();

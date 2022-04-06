@@ -1,35 +1,33 @@
 const { Webhook } = require("discord.js");
 
-module.exports = class Webhooks {
+class Webhooks {
   /**
    * Webhook for logging commands
    *
    * @type {Webhook}
-   * @static
    */
-  static commandHook;
+  commandHook;
 
   /**
    * Webhook for logging output
    *
    * @type {Webhook}
-   * @static
    */
-  static logHook;
+  logHook;
 
   /**
    * Webhook for logging errors
    *
    * @type {Webhook}
-   * @static
    */
-  static errHook;
+  errHook;
 
   /**
    * Webhook for logging verifications
    *
    * @type {Webhook}
-   * @static
    */
-  static verifyHook;
-};
+  verifyHook;
+}
+
+module.exports = new Webhooks();

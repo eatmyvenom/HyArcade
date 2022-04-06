@@ -17,11 +17,11 @@ async function importNew(mod) {
   return importedMod.default;
 }
 
-class CommandStorage {
-  static initalized = false;
-  static _commands = {};
+const CommandStorage = {
+  initalized: false,
+  _commands: {},
 
-  static async initCommands() {
+  async initCommands() {
     // eslint-disable-next-line no-undef
     const dir = await fs.readdir(path.join(__dirname, "Commands"));
 
@@ -30,9 +30,9 @@ class CommandStorage {
     }
 
     this.initalized = true;
-  }
+  },
 
-  static async execute(string, args, author, rawMsg, interaction) {
+  async execute(string, args, author, rawMsg, interaction) {
     for (const mod in this._commands) {
       if (this._commands[mod].aliases.includes(string.toLowerCase())) {
         return await this._commands[mod].execute(args, author, rawMsg, interaction);
@@ -41,7 +41,7 @@ class CommandStorage {
 
     Logger.warn(`Nonexistent command "${string}" was attempted.`);
     return { res: "" };
-  }
+  },
 
   /**
    *
@@ -49,7 +49,7 @@ class CommandStorage {
    * @param {CommandInteraction} interaction
    * @returns {CommandResponse}
    */
-  static async execInteraction(name, interaction) {
+  async execInteraction(name, interaction) {
     let args = [];
     args = interaction.options?.data[0]?.options
       ? interaction.options.data[0].options?.map(c => c.value)
@@ -61,15 +61,15 @@ class CommandStorage {
         return await this._commands[mod].execute(args, interaction.member.id, null, interaction);
       }
     }
-  }
+  },
 
-  static async getCommands() {
+  async getCommands() {
     if (!this.initalized) {
       await this.initCommands();
     }
 
     return this._commands;
-  }
-}
+  },
+};
 
 export default CommandStorage;

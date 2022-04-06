@@ -6,7 +6,7 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es2021": true
+    "es2022": true
   },
   "globals": {
     "__dirname": "readonly",
@@ -28,10 +28,8 @@
     "unicorn/prefer-module": 0,
     "unicorn/filename-case": 0,
     "unicorn/no-process-exit": 0,
-    "unicorn/no-static-only-class": 0,
     "unicorn/number-literal-case": 0,
     "unicorn/numeric-separators-style": 0,
-    "unicorn/no-nested-ternary": 0,
     "unicorn/prevent-abbreviations": 0,
     "template-curly-spacing": [
       "error",
