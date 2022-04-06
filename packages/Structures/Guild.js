@@ -278,6 +278,8 @@ class Guild {
       return;
     }
 
+    const oldGuild = await Database.guild(this.uuid);
+
     logger.log(`Updating member data for ${this.name}`);
     this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;
     this.gexp = data?.guild?.exp ?? 0;
@@ -305,6 +307,16 @@ class Guild {
 
       // dont add empty accounts
       if (gamer != undefined && gamer.name != "INVALID-NAME") {
+        if (oldGuild) {
+          const oldMember = oldGuild.memberStats.find(o => o.uuid === gamer.uuid);
+
+          if (oldMember != undefined) {
+            const gexpHistory = {};
+            Object.assign(gexpHistory, oldMember.gexpHistory);
+            Object.assign(gexpHistory, gamer.guildData.expHistory);
+            gamer.guildData.expHistory = gexpHistory;
+          }
+        }
         this.memberUUIDs.push(gamer.uuid);
         this.members.push(gamer);
       }
