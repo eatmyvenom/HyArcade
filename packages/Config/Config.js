@@ -23,11 +23,6 @@ class Clusters {
   };
 }
 
-class DatabaseKey {
-  limit = 120;
-  perms = [];
-}
-
 class Database {
   url = "https://api.hyarcade.xyz";
   defaultLimit = 100;
@@ -35,9 +30,6 @@ class Database {
   key = process.env.HYARCADE_KEY;
   mongoURL = "mongodb://127.0.0.1:27017";
   serverIP = "";
-  /**
-   * @type {object<string, DatabaseKey>}
-   */
   keys = {};
   maxLBSize = 2000;
   defaultLBSize = 250;
@@ -58,10 +50,12 @@ class MiniWallsConfig {
 }
 
 class PresenceItem {
-  activities = {
-    name: "Your stats",
-    type: "WATCHING",
-  };
+  activities = [
+    {
+      name: "Your stats",
+      type: "WATCHING",
+    },
+  ];
 
   status = "online";
 }
