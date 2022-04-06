@@ -49,7 +49,7 @@
         "@hyarcade/structures": "*",
         "@hyarcade/utils": "*",
         "fs-extra": "^10.0.1",
-        "redoc-cli": "^0.13.9"
+        "redoc-cli": "^0.13.10"
     },
     "devDependencies": {
         "@babel/core": "^7.17.8",
@@ -62,13 +62,13 @@
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^8.12.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-jsdoc": "^38.0.7",
+        "eslint-plugin-jsdoc": "^38.1.6",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-unicorn": "^41.0.1",
+        "eslint-plugin-unicorn": "^42.0.0",
         "husky": "^7.0.4",
         "is-ci": "^3.0.1",
         "json-ts": "^1.6.4",
-        "prettier": "^2.6.1"
+        "prettier": "^2.6.2"
     },
     "engines": {
         "node": ">=16.14.0",

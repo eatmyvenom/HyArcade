@@ -1692,8 +1692,8 @@ __metadata:
     "@hyarcade/logger": "workspace:^"
     "@hyarcade/utils": "workspace:^"
     axios: ^0.26.1
-    mongodb: ^4.4.1
-    redis: ^4.0.4
+    mongodb: ^4.5.0
+    redis: ^4.0.6
   languageName: unknown
   linkType: soft
 
@@ -1773,15 +1773,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@node-redis/client@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@node-redis/client@npm:1.0.4"
+"@node-redis/client@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@node-redis/client@npm:1.0.5"
   dependencies:
     cluster-key-slot: 1.1.0
     generic-pool: 3.8.2
     redis-parser: 3.0.0
     yallist: 4.0.0
-  checksum: 80c2665e86b24c704c502b673884551ad7e5f4a94d2337d1b2c24a3194841be12b4c493ae3d447eb4a0bc3fc7ec1449a591c7b792f053b185338b2000b20a84d
+  checksum: cea9c4e339605afe805b5fb762b35d614dffbc40d8290f7050ae4994604c9f74b57d71433f50d3aa090d04b1f5c593ff52170b5cbc13a00ae3222b4282f47b2a
   languageName: node
   linkType: hard
 
@@ -1803,12 +1803,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@node-redis/search@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@node-redis/search@npm:1.0.3"
+"@node-redis/search@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@node-redis/search@npm:1.0.5"
   peerDependencies:
     "@node-redis/client": ^1.0.0
-  checksum: 5ad7ff7849728aec4bda2af51a3f5fc263420c812b4af4f2ac6e47cbe18f245e4c440de7aacf18db40bd209e088f448f2801ccfb3b0e3475b77c9aea507686a0
+  checksum: 3ef636d2386c79df3567bd5d2540932f544da7e097c2c6c0953410a0d11f9f214e4d98e4f3a61aa66690b1c77de5501f754adcb0ae2c9ba03cf07d649fc57ac8
   languageName: node
   linkType: hard
 
@@ -1853,9 +1853,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:^1.0.0-beta.54":
-  version: 1.0.0-beta.84
-  resolution: "@redocly/openapi-core@npm:1.0.0-beta.84"
+"@redocly/openapi-core@npm:^1.0.0-beta.88":
+  version: 1.0.0-beta.93
+  resolution: "@redocly/openapi-core@npm:1.0.0-beta.93"
   dependencies:
     "@redocly/ajv": ^8.6.4
     "@types/node": ^14.11.8
@@ -1867,7 +1867,7 @@ __metadata:
     node-fetch: ^2.6.1
     pluralize: ^8.0.0
     yaml-ast-parser: 0.0.43
-  checksum: 76d8a5016075d2a70f4262140cf8fb1e073690d12b1c4af9dfc7cf8de4818552f473fe44707b9748b8c59b6a9ac3025e7de3cbb462d264da44748b0ddad909b0
+  checksum: 3c60dfea9888b0081b02b0381ce7f652f09bcfcad5554687743b0cce5edb846165f8248f6d58daf718c86792be1697494c7420112a2a085990342f7f2eba4751
   languageName: node
   linkType: hard
 
@@ -2168,7 +2168,7 @@ __metadata:
     "@hyarcade/requests": "workspace:^"
     "@hyarcade/structures": "workspace:^"
     "@hyarcade/utils": "workspace:^"
-    redoc-cli: ^0.13.9
+    redoc-cli: ^0.13.10
     timsort: ^0.3.0
   languageName: unknown
   linkType: soft
@@ -2500,12 +2500,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bson@npm:^4.6.1":
-  version: 4.6.1
-  resolution: "bson@npm:4.6.1"
+"bson@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "bson@npm:4.6.2"
   dependencies:
     buffer: ^5.6.0
-  checksum: 32c38400b0c5f85cf22c28b9f9bbc63b3c090c23a749a8c159db975f225161a7fe776f8a18ed1da3f58a9e7496ce2b7935753e9471f17c614bf02ebab145e052
+  checksum: f4072d059ad9a46dd92451da5efb278d98f7b23fe6de0ee8dd1f9f05e005189156509b11deeba655befdf9434cffd283bfc35bcf75d2123c1fdf9b723ce8a98d
   languageName: node
   linkType: hard
 
@@ -3482,9 +3482,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^38.0.7":
-  version: 38.0.7
-  resolution: "eslint-plugin-jsdoc@npm:38.0.7"
+"eslint-plugin-jsdoc@npm:^38.1.6":
+  version: 38.1.6
+  resolution: "eslint-plugin-jsdoc@npm:38.1.6"
   dependencies:
     "@es-joy/jsdoccomment": ~0.22.1
     comment-parser: 1.3.1
@@ -3496,7 +3496,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: ca69853291fa63e559f4349bb24015a32a6d10e1e74b67b3885fa7df6142d6d2fd3ea2f972dc50fe0c825bd612f2b5af258c61d8ce81afb755330401d808cc73
+  checksum: 600dac3a9b81ac6fcb62a30a30e83a85a003ca3ecfe5376d99a1042ba703cfdf3ef404413c74a75f61c2a77e6cc7435628cfc51d80081108a67965ac238d14b4
   languageName: node
   linkType: hard
 
@@ -3515,9 +3515,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unicorn@npm:^41.0.1":
-  version: 41.0.1
-  resolution: "eslint-plugin-unicorn@npm:41.0.1"
+"eslint-plugin-unicorn@npm:^42.0.0":
+  version: 42.0.0
+  resolution: "eslint-plugin-unicorn@npm:42.0.0"
   dependencies:
     "@babel/helper-validator-identifier": ^7.15.7
     ci-info: ^3.3.0
@@ -3535,7 +3535,7 @@ __metadata:
     strip-indent: ^3.0.0
   peerDependencies:
     eslint: ">=8.8.0"
-  checksum: 90c9dd93b57ec2cdd650168364b4e2220e2c72c1ffc8ea43cd1be2dabadc7821ec5077656f44fa4622e284caa39ca497058e1dbe609f530d392bdb2da3d73b70
+  checksum: 03757cbf417d39691fe04048ac9352585162a4dd68c2f26f5bc0956409625c7c4841487f0fa623e0d6dd5ff9cc3e758b74e4d170e3b0a877bbd0114995310058
   languageName: node
   linkType: hard
 
@@ -4392,15 +4392,15 @@ __metadata:
     cz-conventional-changelog: ^3.3.0
     eslint: ^8.12.0
     eslint-config-prettier: ^8.5.0
-    eslint-plugin-jsdoc: ^38.0.7
+    eslint-plugin-jsdoc: ^38.1.6
     eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-unicorn: ^41.0.1
+    eslint-plugin-unicorn: ^42.0.0
     fs-extra: ^10.0.1
     husky: ^7.0.4
     is-ci: ^3.0.1
     json-ts: ^1.6.4
-    prettier: ^2.6.1
-    redoc-cli: ^0.13.9
+    prettier: ^2.6.2
+    redoc-cli: ^0.13.10
   languageName: unknown
   linkType: soft
 
@@ -5316,11 +5316,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^4.4.1":
-  version: 4.4.1
-  resolution: "mongodb@npm:4.4.1"
+"mongodb@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "mongodb@npm:4.5.0"
   dependencies:
-    bson: ^4.6.1
+    bson: ^4.6.2
     denque: ^2.0.1
     mongodb-connection-string-url: ^2.5.2
     saslprep: ^1.0.3
@@ -5328,7 +5328,7 @@ __metadata:
   dependenciesMeta:
     saslprep:
       optional: true
-  checksum: 5a2924df04612cc3dfd54e6f4a9b4ab01683fe2bcb8a6aa424485939fc213aea4c7e9b59ef244aa30ccc14948906990335a6371310fe354aec8206983f3f733a
+  checksum: 423974a663c90e6673226a9ad691e8b445ecd43fc4e9e424343644b20c35188bd3d6692dcc2798022cc6b5c6f4391b54747c7543134b46f93cb3da428e5f9246
   languageName: node
   linkType: hard
 
@@ -5926,12 +5926,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "prettier@npm:2.6.1"
+"prettier@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "prettier@npm:2.6.2"
   bin:
     prettier: bin-prettier.js
-  checksum: 78be1f8a3ddfad7c3d8a854b6c8941a3bb1ddfca4225c38d778e0fe1029a55368f71b3bbefff82c689015fbb4d391ec44add957f01308ad2725e01a7c1f37cb6
+  checksum: 48d08dde8e9fb1f5bccdd205baa7f192e9fc8bc98f86e1b97d919de804e28c806b0e6cc685e4a88211aa7987fa9668f30baae19580d87ced3ed0f2ec6572106f
   languageName: node
   linkType: hard
 
@@ -6192,23 +6192,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redis@npm:^4.0.4":
-  version: 4.0.4
-  resolution: "redis@npm:4.0.4"
+"redis@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "redis@npm:4.0.6"
   dependencies:
     "@node-redis/bloom": 1.0.1
-    "@node-redis/client": 1.0.4
+    "@node-redis/client": 1.0.5
     "@node-redis/graph": 1.0.0
     "@node-redis/json": 1.0.2
-    "@node-redis/search": 1.0.3
+    "@node-redis/search": 1.0.5
     "@node-redis/time-series": 1.0.2
-  checksum: bed4ded396646d128843a97ff01202d802729c83234ba755701ef693e526e2d858b30c566e8830c7c70793ffbf3f91f6e316bfe61ddff3d1c11120ba292ce98a
+  checksum: 1b15d5703a1298e75125b2818ca5fc923f66f6e0d6463932a98890d6455db88f1bddb492172f5707f8273a124a5e9b807f4cd692e1c8edd6e3a63826401c2220
   languageName: node
   linkType: hard
 
-"redoc-cli@npm:^0.13.9":
-  version: 0.13.9
-  resolution: "redoc-cli@npm:0.13.9"
+"redoc-cli@npm:^0.13.10":
+  version: 0.13.10
+  resolution: "redoc-cli@npm:0.13.10"
   dependencies:
     chokidar: ^3.5.1
     handlebars: ^4.7.7
@@ -6218,20 +6218,20 @@ __metadata:
     node-libs-browser: ^2.2.1
     react: ^17.0.1
     react-dom: ^17.0.1
-    redoc: 2.0.0-rc.65
+    redoc: 2.0.0-rc.66
     styled-components: ^5.3.0
-    yargs: ^17.0.1
+    yargs: ^17.3.1
   bin:
     redoc-cli: index.js
-  checksum: d95aa80abb161ab64cbaf03235d635856bf00483be2d683d5c56b123255cb2d011dd066adfccdb7c587de7c0bc58e70097293dfba21115547002e32ad8be1b27
+  checksum: 32e422e83a915e462fef5128a7542aa17b859f59e2f90937d290fe528ec541c2b1242f033b67fcad2134b4966478213f2485559576e51fb9833e1ec049dd35ca
   languageName: node
   linkType: hard
 
-"redoc@npm:2.0.0-rc.65":
-  version: 2.0.0-rc.65
-  resolution: "redoc@npm:2.0.0-rc.65"
+"redoc@npm:2.0.0-rc.66":
+  version: 2.0.0-rc.66
+  resolution: "redoc@npm:2.0.0-rc.66"
   dependencies:
-    "@redocly/openapi-core": ^1.0.0-beta.54
+    "@redocly/openapi-core": ^1.0.0-beta.88
     "@redocly/react-dropdown-aria": ^2.0.11
     classnames: ^2.3.1
     decko: ^1.2.0
@@ -6260,7 +6260,7 @@ __metadata:
     react: ^16.8.4 || ^17.0.0
     react-dom: ^16.8.4 || ^17.0.0
     styled-components: ^4.1.1 || ^5.1.1
-  checksum: 589e3811c8f05ef6259730e326740750a2e7dc1f1c3649516fd0d7e1ad7c104e55dc87fae40309e77fb234ad33c94be9beeebb2ff57f80e1f1cfaf24c019e725
+  checksum: 3570535ed43b0ebf089e947c45d7fc1c831297e738277410f383f6827965843886a11fafa8a39a85f3accaa9d7652e02f4da63b219f7315d253e63166fa69286
   languageName: node
   linkType: hard
 
@@ -6271,7 +6271,7 @@ __metadata:
     "@hyarcade/config": "workspace:^"
     "@hyarcade/logger": "workspace:^"
     "@hyarcade/requests": "workspace:^"
-    redoc-cli: ^0.13.9
+    redoc-cli: ^0.13.10
   languageName: unknown
   linkType: soft
 
@@ -7654,6 +7654,21 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^21.0.0
   checksum: 64fc2e32c56739f1d14d2d24acd17a6944c3c8e3e3558f09fc1953ac112e868cc16013d282886b9d5be22187f8b9ed4f60741a6b1011f595ce2718805a656852
+  languageName: node
+  linkType: hard
+
+"yargs@npm:^17.3.1":
+  version: 17.4.0
+  resolution: "yargs@npm:17.4.0"
+  dependencies:
+    cliui: ^7.0.2
+    escalade: ^3.1.1
+    get-caller-file: ^2.0.5
+    require-directory: ^2.1.1
+    string-width: ^4.2.3
+    y18n: ^5.0.5
+    yargs-parser: ^21.0.0
+  checksum: 63985bddddf1fb6b9c98744591e8b70f99839591521cb84eea60903d52ec0da35ab46c42c325d151f3ab5c41935f976c10da096b5a7067c217714a91c0bd4be3
   languageName: node
   linkType: hard
 

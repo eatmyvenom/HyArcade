@@ -18,7 +18,7 @@
     "@hyarcade/logger": "workspace:^",
     "@hyarcade/utils": "workspace:^",
     "axios": "^0.26.1",
-    "mongodb": "^4.4.1",
-    "redis": "^4.0.4"
+    "mongodb": "^4.5.0",
+    "redis": "^4.0.6"
   }
 }
