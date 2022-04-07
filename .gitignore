@@ -5,20 +5,12 @@
 *.log
 *.tar.gz
 data/*
-wrangler.toml
-starttime
-force
-pid
-timeupdate
 
 # Config files
-!systems/redoc/*.json
 !package.json
 !package-lock.json
 !.prettierrc.json
 !.eslintrc.json
-!babel.config.json
-!config.def.json
 !.commitlintrc.json
 
 # High res images

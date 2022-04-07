@@ -1,10 +1,12 @@
 {
-  "name": "redoc",
+  "name": "@hyarcade/redoc",
   "version": "0.0.0",
   "private": true,
   "main": "build.js",
   "scripts": {
-    "start": "node ."
+    "build:swagger": "node .",
+    "build:redoc": "redoc-cli build swagger-new.json -t redoc.handlebars --options redoc-settings.json -o ../../assets/api-docs.html",
+    "build": "yarn build:swagger && yarn build:redoc"
   },
   "dependencies": {
     "@hyarcade/config": "workspace:^",

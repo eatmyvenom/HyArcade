@@ -20,9 +20,7 @@
         "EatMyVenom"
     ],
     "scripts": {
-        "build:swagger": "node systems/redoc/build.js",
-        "build:redoc": "redoc-cli bundle systems/redoc/swagger-new.json -t systems/redoc/redoc.handlebars --options systems/redoc/redoc-settings.json -o assets/api-docs.html",
-        "build:docs": "yarn build:swagger && yarn build:redoc",
+        "build:docs": "yarn workspace @hyarcade/redoc build",
         "build:worker": "cd src/Worker;wrangler publish;cd ../..",
         "changelog": "git cliff --output ./CHANGELOG.md -c ./cliff.toml && yarn postchangelog",
         "postchangelog": "git add CHANGELOG.md && git commit -m 'chore: generate changelog'",
@@ -48,8 +46,7 @@
         "@hyarcade/requests": "*",
         "@hyarcade/structures": "*",
         "@hyarcade/utils": "*",
-        "fs-extra": "^10.0.1",
-        "redoc-cli": "^0.13.10"
+        "fs-extra": "^10.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.17.8",
