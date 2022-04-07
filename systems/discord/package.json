@@ -9,14 +9,14 @@
   "dependencies": {
     "@hyarcade/config": "workspace:^",
     "@hyarcade/errors": "workspace:^",
+    "@hyarcade/helpers-objects": "workspace:^",
+    "@hyarcade/images": "workspace:^",
     "@hyarcade/logger": "workspace:^",
     "@hyarcade/requests": "workspace:^",
     "@hyarcade/structures": "workspace:^",
     "@hyarcade/utils": "workspace:^",
     "axios": "^0.26.1",
-    "canvas": "^2.9.1",
     "discord.js": "^13.6.0",
-    "javascript-time-ago": "^2.3.13",
-    "stackblur-canvas": "^2.5.0"
+    "javascript-time-ago": "^2.3.13"
   }
 }

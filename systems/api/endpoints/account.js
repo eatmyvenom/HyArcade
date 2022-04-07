@@ -2,8 +2,8 @@ const { URL } = require("url");
 const Logger = require("@hyarcade/logger");
 const { Account } = require("@hyarcade/structures");
 const AccountResolver = require("../AccountResolver");
-const MergeJSON = require("@hyarcade/utils/MergeJSON");
 const APIRuntime = require("../APIRuntime");
+const { DeepMerge } = require("@hyarcade/helpers-objects");
 
 let fakeData;
 
@@ -64,7 +64,7 @@ module.exports = async (req, res, runtime) => {
         const fakeAcc = fakeData.find(a => a.uuid == newAcc.uuid);
         if (fakeAcc != undefined) {
           Logger.info(`Overwriting data for ${newAcc.name}`);
-          newAcc = MergeJSON(newAcc, fakeAcc);
+          newAcc = DeepMerge(newAcc, fakeAcc);
         }
 
         runtime.mongoConnector

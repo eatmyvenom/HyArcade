@@ -11,13 +11,13 @@ function isObject(item) {
  * @param source
  * @returns {object}
  */
-function MergeJSON(target, source) {
+function DeepMerge(target, source) {
   const output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
     for (const key of Object.keys(source)) {
       if (isObject(source[key])) {
         if (!(key in target)) Object.assign(output, { [key]: source[key] });
-        else output[key] = MergeJSON(target[key], source[key]);
+        else output[key] = DeepMerge(target[key], source[key]);
       } else {
         Object.assign(output, { [key]: source[key] });
       }
@@ -26,4 +26,4 @@ function MergeJSON(target, source) {
   return output;
 }
 
-module.exports = MergeJSON;
+module.exports = DeepMerge;

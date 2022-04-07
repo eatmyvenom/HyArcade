@@ -2,7 +2,7 @@ const { MissingFieldError } = require("@hyarcade/errors");
 const Logger = require("@hyarcade/logger");
 const { mojangRequest } = require("@hyarcade/requests");
 const { Account } = require("@hyarcade/structures");
-const MergeJSON = require("@hyarcade/utils/MergeJSON");
+const { DeepMerge } = require("@hyarcade/helpers-objects");
 const APIRuntime = require("./APIRuntime");
 
 let fakeData;
@@ -82,7 +82,7 @@ async function AccountResolver(runtime, forceCache = false) {
     const fakeAcc = fakeData.find(a => a.uuid == newAccount.uuid);
     if (fakeAcc != undefined) {
       Logger.info(`Overwriting data for ${newAccount.name}`);
-      newAccount = MergeJSON(newAccount, fakeAcc);
+      newAccount = DeepMerge(newAccount, fakeAcc);
     }
 
     acc = newAccount;

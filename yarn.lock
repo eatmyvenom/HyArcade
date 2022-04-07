@@ -1678,7 +1678,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/images@workspace:packages/Images":
+"@hyarcade/helpers-objects@workspace:^, @hyarcade/helpers-objects@workspace:packages/Helpers-Objects":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/helpers-objects@workspace:packages/Helpers-Objects"
+  languageName: unknown
+  linkType: soft
+
+"@hyarcade/images@workspace:^, @hyarcade/images@workspace:packages/Images":
   version: 0.0.0-use.local
   resolution: "@hyarcade/images@workspace:packages/Images"
   dependencies:
@@ -1694,6 +1700,17 @@ __metadata:
 "@hyarcade/logger@*, @hyarcade/logger@workspace:^, @hyarcade/logger@workspace:packages/Logger":
   version: 0.0.0-use.local
   resolution: "@hyarcade/logger@workspace:packages/Logger"
+  languageName: unknown
+  linkType: soft
+
+"@hyarcade/redoc@workspace:systems/redoc":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/redoc@workspace:systems/redoc"
+  dependencies:
+    "@hyarcade/config": "workspace:^"
+    "@hyarcade/logger": "workspace:^"
+    "@hyarcade/requests": "workspace:^"
+    redoc-cli: ^0.13.10
   languageName: unknown
   linkType: soft
 
@@ -2177,6 +2194,7 @@ __metadata:
   dependencies:
     "@hyarcade/config": "workspace:^"
     "@hyarcade/errors": "workspace:^"
+    "@hyarcade/helpers-objects": "workspace:^"
     "@hyarcade/logger": "workspace:^"
     "@hyarcade/requests": "workspace:^"
     "@hyarcade/structures": "workspace:^"
@@ -2387,15 +2405,15 @@ __metadata:
   dependencies:
     "@hyarcade/config": "workspace:^"
     "@hyarcade/errors": "workspace:^"
+    "@hyarcade/helpers-objects": "workspace:^"
+    "@hyarcade/images": "workspace:^"
     "@hyarcade/logger": "workspace:^"
     "@hyarcade/requests": "workspace:^"
     "@hyarcade/structures": "workspace:^"
     "@hyarcade/utils": "workspace:^"
     axios: ^0.26.1
-    canvas: ^2.9.1
     discord.js: ^13.6.0
     javascript-time-ago: ^2.3.13
-    stackblur-canvas: ^2.5.0
   languageName: unknown
   linkType: soft
 
@@ -4413,7 +4431,6 @@ __metadata:
     is-ci: ^3.0.1
     json-ts: ^1.6.4
     prettier: ^2.6.2
-    redoc-cli: ^0.13.10
   languageName: unknown
   linkType: soft
 
@@ -6276,17 +6293,6 @@ __metadata:
   checksum: 3570535ed43b0ebf089e947c45d7fc1c831297e738277410f383f6827965843886a11fafa8a39a85f3accaa9d7652e02f4da63b219f7315d253e63166fa69286
   languageName: node
   linkType: hard
-
-"redoc@workspace:systems/redoc":
-  version: 0.0.0-use.local
-  resolution: "redoc@workspace:systems/redoc"
-  dependencies:
-    "@hyarcade/config": "workspace:^"
-    "@hyarcade/logger": "workspace:^"
-    "@hyarcade/requests": "workspace:^"
-    redoc-cli: ^0.13.10
-  languageName: unknown
-  linkType: soft
 
 "reftools@npm:^1.1.9":
   version: 1.1.9

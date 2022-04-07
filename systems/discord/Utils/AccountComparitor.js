@@ -1,22 +1,5 @@
+const { DeepSubtract } = require("@hyarcade/helpers-objects");
 const { Account } = require("@hyarcade/structures");
-
-/**
- *
- * @param {*} oldObj
- * @param {*} newObj
- * @returns {*}
- */
-function subtractNumbers(oldObj, newObj) {
-  for (const val in oldObj) {
-    if (typeof oldObj[val] === "number") {
-      oldObj[val] -= newObj?.[val] ?? 0;
-    } else if (typeof oldObj?.[val] === "object") {
-      oldObj[val] = subtractNumbers(oldObj?.[val] ?? 0, newObj?.[val] ?? 0);
-    }
-  }
-
-  return oldObj;
-}
 
 /**
  *
@@ -25,7 +8,7 @@ function subtractNumbers(oldObj, newObj) {
  * @returns {Account}
  */
 function AccountComparitor(oldAcc, newAcc) {
-  return subtractNumbers(oldAcc, newAcc);
+  return DeepSubtract(oldAcc, newAcc);
 }
 
 module.exports = AccountComparitor;
