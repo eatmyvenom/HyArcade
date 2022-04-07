@@ -1,13 +1,11 @@
-const { Message } = require("discord.js");
-const Logger = require("@hyarcade/logger");
-const { mojangRequest } = require("@hyarcade/requests");
-const Database = require("@hyarcade/requests/Database");
-const { Account } = require("@hyarcade/structures");
-const BotRuntime = require("../BotRuntime.js");
-const { playerLink } = require("./Embeds/AdvancedEmbeds.js");
-const { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } = require("./Embeds/StaticEmbeds.js");
-const isValidIGN = require("../../datagen/utils/ignValidator.js");
-const LogUtils = require("./LogUtils.js");
+import Logger from "@hyarcade/logger";
+import { mojangRequest, Database } from "@hyarcade/requests";
+import { Account } from "@hyarcade/structures";
+import utils from "@hyarcade/utils";
+import BotRuntime from "../BotRuntime.js";
+import { playerLink } from "./Embeds/AdvancedEmbeds.js";
+import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_AUTO } from "./Embeds/StaticEmbeds.js";
+import LogUtils from "./LogUtils.mjs";
 
 /**
  * @param {string} id
@@ -19,17 +17,17 @@ async function isBlacklisted(id) {
 }
 
 /**
- * @param {Message} msg
+ * @param {object} msg
  * @param {string} roleidAdd
  * @param {string} roleidRemove
  */
-module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
+export default async function VerifyChannel(msg, roleidAdd, roleidRemove) {
   const { tag, id, bot: isBot } = msg.author;
 
   if (await isBlacklisted(id)) return;
 
   const firstWord = msg.content.split(" ")[0];
-  if (isBot || !isValidIGN(firstWord)) {
+  if (isBot || !utils.isValidIGN(firstWord)) {
     return;
   }
 
@@ -76,4 +74,4 @@ module.exports = async function VerifyChannel(msg, roleidAdd, roleidRemove) {
       embeds: [ERROR_LINK_HYPIXEL_MISMATCH_AUTO],
     });
   }
-};
+}

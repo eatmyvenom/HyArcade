@@ -5,10 +5,10 @@ import BotRuntime from "./BotRuntime.js";
 import mwCommands from "./MiniWallsCommands.mjs";
 import CommandResponse from "./Utils/CommandResponse.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
-import LogUtils from "./Utils/LogUtils.js";
+import LogUtils from "./Utils/LogUtils.mjs";
 import MiniWallsVerify from "./Utils/MiniWallsVerify.mjs";
 import SlashHelpTxt from "./Utils/SlashHelpTxt.js";
-import VerifyChannel from "./Utils/VerifyChannel.js";
+import VerifyChannel from "./Utils/VerifyChannel.mjs";
 import Webhooks from "./Utils/Webhooks.js";
 
 const require = createRequire(import.meta.url);

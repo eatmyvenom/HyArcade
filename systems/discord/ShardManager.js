@@ -9,16 +9,17 @@ const path = require("path");
  * @param args
  */
 async function BotSpawner(args) {
-  Logger.name = "Shard-Manager";
-  Logger.out(`Sharding ${args}`);
+  Logger.name = "ShardManager";
+  Logger.out(`Shard manager started with\n${args}`);
   try {
     // eslint-disable-next-line no-undef
-    const manager = new ShardingManager(path.join(__dirname, "bot.js"), {
+    const manager = new ShardingManager(path.join(__dirname, "bot.mjs"), {
       token: cfg.discord.token,
       shardArgs: args,
       respawn: true,
       mode: "process",
     });
+
     manager.on("shardCreate", shard => Logger.info(`Launched shard ${shard.id}`));
     await manager.spawn();
   } catch (error) {

@@ -5,7 +5,7 @@ import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";
 import BotRuntime from "../BotRuntime.js";
 import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH_MW } from "./Embeds/StaticEmbeds.js";
-import LogUtils from "./LogUtils.js";
+import LogUtils from "./LogUtils.mjs";
 const require = createRequire(import.meta.url);
 const { mojangRequest } = require("@hyarcade/requests");
 const { playerLink } = require("./Embeds/AdvancedEmbeds.js");

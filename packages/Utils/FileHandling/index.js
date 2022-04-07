@@ -1,6 +1,11 @@
+const AccountArray = require("./AccountArray");
+const GetAsset = require("./GetAsset");
+const Json = require("./Json");
+const List = require("./List");
+
 module.exports = {
-  AccountArray: require("./AccountArray"),
-  GetAsset: require("./GetAsset"),
-  Json: require("./Json"),
-  List: require("./List"),
+  AccountArray,
+  GetAsset,
+  Json,
+  List,
 };

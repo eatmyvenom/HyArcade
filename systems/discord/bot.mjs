@@ -1,37 +1,34 @@
-const process = require("process");
-const Discord = require("discord.js");
-const config = require("@hyarcade/config").fromJSON();
-const logger = require("@hyarcade/logger");
-const BotEvents = require("./BotEvents");
-const BotRuntime = require("./BotRuntime");
+import process from "node:process";
+import Config from "@hyarcade/config";
+import Logger from "@hyarcade/logger";
+import BotEvents from "./BotEvents.mjs";
+import BotRuntime from "./BotRuntime.js";
+import { Intents, Client } from "discord.js";
+
+const config = Config.fromJSON();
 
 const fullIntents = [
-  Discord.Intents.FLAGS.GUILDS,
-  Discord.Intents.FLAGS.GUILD_MESSAGES,
-  Discord.Intents.FLAGS.GUILD_WEBHOOKS,
-  Discord.Intents.FLAGS.GUILD_INTEGRATIONS,
-  Discord.Intents.FLAGS.GUILD_MEMBERS,
+  Intents.FLAGS.GUILDS,
+  Intents.FLAGS.GUILD_MESSAGES,
+  Intents.FLAGS.GUILD_WEBHOOKS,
+  Intents.FLAGS.GUILD_INTEGRATIONS,
+  Intents.FLAGS.GUILD_MEMBERS,
 ];
 
-const lesserIntents = [Discord.Intents.FLAGS.GUILDS];
+const lesserIntents = [Intents.FLAGS.GUILDS];
 
-const miwIntents = [
-  Discord.Intents.FLAGS.GUILD_MESSAGES,
-  Discord.Intents.FLAGS.GUILD_WEBHOOKS,
-  Discord.Intents.FLAGS.GUILD_MEMBERS,
-  Discord.Intents.FLAGS.GUILDS,
-];
+const miwIntents = [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_WEBHOOKS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS];
 
 /**
  * Execute the discord bot
  *
  */
 function doBot() {
-  logger.name = "Bot";
+  Logger.name = "Bot";
   const mode = process.argv[3];
   let client;
   if (mode == "mini") {
-    client = new Discord.Client({
+    client = new Client({
       intents: lesserIntents,
       allowedMentions: {
         parse: [],
@@ -39,7 +36,7 @@ function doBot() {
       },
     });
   } else if (mode == "mw") {
-    client = new Discord.Client({
+    client = new Client({
       intents: miwIntents,
       allowedMentions: {
         parse: [],
@@ -47,7 +44,7 @@ function doBot() {
       },
     });
   } else if (mode == "slash") {
-    client = new Discord.Client({
+    client = new Client({
       intents: lesserIntents,
       allowedMentions: {
         parse: [],
@@ -55,7 +52,7 @@ function doBot() {
       },
     });
   } else {
-    client = new Discord.Client({
+    client = new Client({
       intents: fullIntents,
       allowedMentions: {
         parse: [],
@@ -71,10 +68,10 @@ function doBot() {
     if (mode == undefined || mode == "mw" || mode == "test") {
       client.on("messageDelete", BotEvents.messageDelete);
 
-      logger.debug("Registering message event");
+      Logger.debug("Registering message event");
       const messageHandler = await import("./messageHandler.mjs");
       client.on("messageCreate", msg => {
-        messageHandler.default(msg).catch(error => logger.err(error.stack));
+        messageHandler.default(msg).catch(error => Logger.err(error.stack));
       });
     }
   });
@@ -94,16 +91,16 @@ function doBot() {
   client.on("shardResume", BotEvents.shardResume);
 
   if (mode == "mini") {
-    logger.info("Logging in to micro arcade module");
+    Logger.info("Logging in to micro arcade module");
     client.login(config.discord.miniToken);
   } else if (mode == "mw") {
-    logger.info("Logging in to mini walls module");
+    Logger.info("Logging in to mini walls module");
     client.login(config.discord.mwToken);
   } else if (mode == "test") {
-    logger.info("Logging in to testing bot");
+    Logger.info("Logging in to testing bot");
     client.login(config.discord.testToken);
   } else {
-    logger.info("Logging in to arcade bot");
+    Logger.info("Logging in to arcade bot");
     client.login(config.discord.token);
   }
 
@@ -111,8 +108,8 @@ function doBot() {
   setInterval(BotEvents.heartBeat, 900000);
 }
 
-module.exports = doBot;
+export default doBot;
 
-if (require.main == module) {
+if (process.argv[1].endsWith("bot.mjs")) {
   doBot();
 }

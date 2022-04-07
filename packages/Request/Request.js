@@ -1,10 +1,19 @@
+const Database = require("./Database");
+const HyarcadeWorkerRequest = require("./HyarcadeWorkerRequest");
+const HypixelApi = require("./HypixelApi");
+const hypixelReq = require("./hypixelReq");
+const mojangRequest = require("./mojangRequest");
+const MongoConnector = require("./MongoConnector");
+const RedisInterface = require("./RedisInterface");
+const SlothpixelApiRequest = require("./SlothpixelApiRequest");
+
 module.exports = {
-  Database: require("./Database"),
-  HyarcadeWorkerRequest: require("./HyarcadeWorkerRequest"),
-  HypixelApi: require("./HypixelApi"),
-  hypixelReq: require("./hypixelReq"),
-  mojangRequest: require("./mojangRequest"),
-  MongoConnector: require("./MongoConnector"),
-  RedisInterface: require("./RedisInterface"),
-  SlothpixelApiRequest: require("./SlothpixelApiRequest"),
+  Database,
+  HyarcadeWorkerRequest,
+  HypixelApi,
+  hypixelReq,
+  mojangRequest,
+  MongoConnector,
+  RedisInterface,
+  SlothpixelApiRequest,
 };
