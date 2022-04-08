@@ -6,7 +6,8 @@
   "scripts": {
     "build:swagger": "node .",
     "build:redoc": "redoc-cli build swagger-new.json -t redoc.handlebars --options redoc-settings.json -o ../../assets/api-docs.html",
-    "build": "yarn build:swagger && yarn build:redoc"
+    "build": "yarn build:swagger && yarn build:redoc",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@hyarcade/config": "workspace:^",

@@ -32,10 +32,20 @@ function daytime() {
 }
 
 /**
+ * @returns {string} Formatted time
+ */
+function shortTime() {
+  const d = new Date();
+  return `${`0${d.getMonth() + 1}`.slice(-2)}-${`0${d.getDate()}`.slice(-2)}T${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(
+    -2,
+  )}:${`0${d.getSeconds()}`.slice(-2)}`;
+}
+
+/**
  * @returns {string}
  */
 function timeStr() {
-  return `\u001B[32m${daytime().trim()}\u001B[0m |`;
+  return `\u001B[32m${shortTime().trim()}\u001B[0m |`;
 }
 
 /**
@@ -44,7 +54,7 @@ function timeStr() {
  * @returns {string}
  */
 function nameStr(name = "") {
-  return `\u001B[36m${name.trim().slice(0, 8).padEnd(8)}\u001B[0m |`;
+  return `\u001B[36m${name.trim().slice(0, 9).padEnd(9)}\u001B[0m |`;
 }
 
 /**
@@ -54,7 +64,7 @@ function nameStr(name = "") {
  * @returns {string}
  */
 function typeStr(type, color) {
-  return `${color}${type.slice(0, 8).padEnd(8)}\u001B[0m |`;
+  return `${color}${type.slice(0, 5).padEnd(5)}\u001B[0m |`;
 }
 
 /**

@@ -68,7 +68,7 @@ async function callback(request, response) {
     response.end();
   } else {
     try {
-      const runtime = new APIRuntime(mongo, redis, cfg);
+      const runtime = new APIRuntime(url, mongo, redis, cfg);
       await mod(request, response, runtime);
     } catch (error) {
       if (error instanceof MissingFieldError) {

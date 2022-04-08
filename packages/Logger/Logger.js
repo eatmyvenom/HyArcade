@@ -12,7 +12,7 @@ Logger.debug("----- NEW PROCESS STARTED -----");
 
 const start = new Date();
 
-Logger.debug(`Args are [${process.argv}] - executing`);
+Logger.debug(`[${process.argv}]`);
 Logger.debug("----- Process info -----");
 Logger.debug(`START TIME - ${start.toString()}`);
 Logger.debug(`PLATFORM - ${process.platform} ${process.arch}`);

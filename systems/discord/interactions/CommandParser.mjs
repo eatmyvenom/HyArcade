@@ -20,7 +20,7 @@ export default async interaction => {
 
   switch (interaction.commandName) {
     case "stats": {
-      return commands.gameStats.execute(
+      return commands.GameStats.execute(
         [opts.getString("player"), opts.getString("game"), opts.getString("time")],
         authorID,
         null,

@@ -1,12 +1,12 @@
+import Config from "@hyarcade/config";
 import Logger from "@hyarcade/logger";
+import { createRequire } from "node:module";
 import BotRuntime from "./BotRuntime.js";
 import { ERROR_LOG } from "./Utils/Embeds/DynamicEmbeds.js";
+import NameUpdater from "./Utils/MemberHandlers/NameUpdater.mjs";
+import roleHandler from "./Utils/MemberHandlers/roleHandler.js";
 import SetPresence from "./Utils/SetPresence.js";
 import Webhooks from "./Utils/Webhooks.js";
-import roleHandler from "./Utils/MemberHandlers/roleHandler.js";
-import NameUpdater from "./Utils/MemberHandlers/NameUpdater.mjs";
-import { createRequire } from "node:module";
-import Config from "@hyarcade/config";
 
 const require = createRequire(import.meta.url);
 const { Guild, TextChannel, InvalidRequestWarningData, Webhook } = require("discord.js");
@@ -77,7 +77,7 @@ class BotEventsManager {
     } else if (BotRuntime.botMode == "slash") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
-      Logger.name = "Interactions";
+      Logger.name = "Slash";
       Logger.out(`Logged in as ${BotRuntime.client.user.tag} - Interaction module`);
     } else if (BotRuntime.botMode == "mini") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
@@ -87,7 +87,7 @@ class BotEventsManager {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
       Logger.name = "MIWBot";
-      Logger.emoji = "⚔️";
+      Logger.emoji = "🤺";
       Logger.out(`Logged in as ${BotRuntime.client.user.tag} - MW module`);
     } else if (BotRuntime.botMode == "test") {
       const InteractionHandler = await import("./InteractionHandler.mjs");
@@ -98,7 +98,7 @@ class BotEventsManager {
       const InteractionHandler = await import("./InteractionHandler.mjs");
       await InteractionHandler.default(BotRuntime.client);
 
-      Logger.name = "ArcadeBot";
+      Logger.name = "ArcBot";
       Logger.out(`Logged in as ${BotRuntime.client.user.tag}!`);
     }
     await SetPresence(BotRuntime.client, mode);
