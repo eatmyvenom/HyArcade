@@ -130,10 +130,11 @@ class LoggerInstance {
   /**
    * Log content to stdout or a file
    *
-   * @param {string[]} content
+   * @param {string|string[]} content
    */
-  log(...content) {
-    print("LOG", content.join(" "), this.name, undefined, this.emoji);
+  log(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("LOG", str, this.name, undefined, this.emoji);
   }
 
   out = this.log;
@@ -141,10 +142,11 @@ class LoggerInstance {
   /**
    * Log content to stdout or a file
    *
-   * @param {string} content
+   * @param {string|string[]} content
    */
-  info(...content) {
-    print("INFO", content.join(" "), this.name, "\u001B[32m", this.emoji);
+  info(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("INFO", str, this.name, "\u001B[32m", this.emoji);
   }
 
   /**
@@ -153,8 +155,9 @@ class LoggerInstance {
    * @param {string} event
    * @param {string|string[]} content
    */
-  event(event, ...content) {
-    print(event.toUpperCase(), content.join(" "), this.name, "\u001B[44m", this.emoji);
+  event(event, content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print(event.toUpperCase(), str, this.name, "\u001B[44m", this.emoji);
   }
 
   /**
@@ -164,26 +167,29 @@ class LoggerInstance {
    * @param {string} color
    * @param {string|string[]} content
    */
-  custom(name, color, ...content) {
-    print(name.toUpperCase(), content.join(" "), this.name, color, this.emoji);
+  custom(name, color, content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print(name.toUpperCase(), str, this.name, color, this.emoji);
   }
 
   /**
    * Log content to stdout or a file
    *
-   * @param {string} content
+   * @param {string|string[]} content
    */
-  warn(...content) {
-    print("WARN", content.join(" "), this.name, "\u001B[33m", this.emoji);
+  warn(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("WARN", str, this.name, "\u001B[33m", this.emoji);
   }
 
   /**
    * Log content to stdout or a file
    *
-   * @param {string} content
+   * @param {string|string[]} content
    */
-  debug(...content) {
-    print("DEBUG", content.join(" "), this.name, "\u001B[95m", this.emoji);
+  debug(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("DEBUG", str, this.name, "\u001B[95m", this.emoji);
   }
 
   dbg = this.debug;
@@ -191,19 +197,21 @@ class LoggerInstance {
   /**
    * Log content to stdout or a file
    *
-   * @param {string} content
+   * @param {string|string[]} content
    */
-  verbose(...content) {
-    print("VERBOSE", content.join(" "), this.name, "\u001B[90m", this.emoji);
+  verbose(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("VERBOSE", str, this.name, "\u001B[90m", this.emoji);
   }
 
   /**
    * Log content to stderr or a file
    *
-   * @param {string} content
+   * @param {string|string[]} content
    */
-  error(...content) {
-    error(content.join(" "), this.name);
+  error(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    error(str, this.name);
   }
 
   err = this.error;
