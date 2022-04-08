@@ -1666,6 +1666,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hyarcade/datagen@workspace:systems/datagen":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/datagen@workspace:systems/datagen"
+  dependencies:
+    "@hyarcade/config": "workspace:^"
+    "@hyarcade/errors": "workspace:^"
+    "@hyarcade/logger": "workspace:^"
+    "@hyarcade/requests": "workspace:^"
+    "@hyarcade/structures": "workspace:^"
+    "@hyarcade/utils": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@hyarcade/errors@*, @hyarcade/errors@workspace:^, @hyarcade/errors@workspace:packages/Errors":
   version: 0.0.0-use.local
   resolution: "@hyarcade/errors@workspace:packages/Errors"
@@ -3184,19 +3197,6 @@ __metadata:
   checksum: b8f1e3cba59c42e1f13a114ad4848c3fc1cf7470f633ee9e9f1043762429bc97d91ae31b826fb135eefde203a3fdb20deb0c0a0222ac29d937b8046085d668d1
   languageName: node
   linkType: hard
-
-"datagen@workspace:systems/datagen":
-  version: 0.0.0-use.local
-  resolution: "datagen@workspace:systems/datagen"
-  dependencies:
-    "@hyarcade/config": "workspace:^"
-    "@hyarcade/errors": "workspace:^"
-    "@hyarcade/logger": "workspace:^"
-    "@hyarcade/requests": "workspace:^"
-    "@hyarcade/structures": "workspace:^"
-    "@hyarcade/utils": "workspace:^"
-  languageName: unknown
-  linkType: soft
 
 "debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2":
   version: 4.3.3

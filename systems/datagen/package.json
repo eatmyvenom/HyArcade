@@ -1,5 +1,5 @@
 {
-  "name": "datagen",
+  "name": "@hyarcade/datagen",
   "version": "0.0.0",
   "private": true,
   "main": "WorkerManager.js",

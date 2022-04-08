@@ -60,7 +60,11 @@ async function verifyCommand(args, rawMsg, interaction) {
     await LogUtils.logVerify(id, acc.name);
     Logger.out(`${tag} was verified as ${acc.name}`);
 
-    await Database.addAccount(acc);
+    try {
+      await Database.addAccount(acc);
+    } catch (error) {
+      Logger.error(error);
+    }
 
     return new CommandResponse("", AdvancedEmbeds.playerLink(acc.name, { id }));
   }

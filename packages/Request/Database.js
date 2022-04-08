@@ -1,4 +1,5 @@
 const Config = require("@hyarcade/config");
+const { DatabaseResponseError } = require("@hyarcade/errors");
 const Logger = require("@hyarcade/logger");
 const { default: axios } = require("axios");
 
@@ -166,10 +167,9 @@ module.exports = class Database {
     const url = new URL("account", cfg.database.url);
 
     try {
-      await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
-    } catch {
-      Logger.err("A database connection error occured");
-      return {};
+      return await axios.post(url.toString(), json, { headers: { Authorization: cfg.database.pass }, validateStatus });
+    } catch (error) {
+      throw new DatabaseResponseError(error?.message ?? error);
     }
   }
 

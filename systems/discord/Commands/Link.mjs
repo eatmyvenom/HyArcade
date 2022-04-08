@@ -1,3 +1,4 @@
+import Logger from "@hyarcade/logger";
 import { Database, mojangRequest } from "@hyarcade/requests";
 import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
@@ -52,7 +53,11 @@ export default new Command(["link", "ln"], ["%trusted%"], async args => {
 
   const acc = new Account(player, 0, uuid);
   await acc.updateHypixel();
-  await Database.addAccount([acc]);
+  try {
+    await Database.addAccount(acc);
+  } catch (error) {
+    Logger.error(error);
+  }
 
   uuid = acc.uuid;
 

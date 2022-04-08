@@ -68,7 +68,11 @@ export default async function VerifyChannel(msg, roleidAdd, roleidRemove) {
       Logger.err("Linking error!");
       Logger.err(error);
     }
-    await Database.addAccount(acc);
+    try {
+      await Database.addAccount(acc);
+    } catch (error) {
+      Logger.error(error);
+    }
   } else {
     await msg.channel.send({
       embeds: [ERROR_LINK_HYPIXEL_MISMATCH_AUTO],

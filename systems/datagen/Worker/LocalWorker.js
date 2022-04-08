@@ -1,6 +1,6 @@
 const https = require("https");
 const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
-const Logger = new LoggerInstance("Local-Worker", "📈");
+const Logger = new LoggerInstance("Worker", "📈");
 const Database = require("@hyarcade/requests/Database");
 const { Account } = require("@hyarcade/structures");
 const Sleep = require("@hyarcade/utils/Sleep");
@@ -107,7 +107,7 @@ async function getAccount(uuid, key, address) {
       Logger.verbose(error);
       return await getAccount(uuid, key, address);
     } else {
-      Logger.error(error);
+      throw error;
     }
   }
 }
@@ -131,8 +131,12 @@ async function runBatch(batchUUIDs, key, address) {
 async function LocalWorker(batchRes, key, address) {
   Logger.verbose(`${address} - Querying data`);
   const batchUUIDs = batchRes.map(a => a.uuid);
-  await runBatch(batchUUIDs, key, address);
-  Logger.verbose(`Batch completed`);
+  try {
+    await runBatch(batchUUIDs, key, address);
+    Logger.verbose(`Batch completed`);
+  } catch (error) {
+    Logger.error(error);
+  }
 }
 
 module.exports = LocalWorker;
