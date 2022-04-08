@@ -36,27 +36,24 @@ interface DataCacheTime {
 }
 
 interface DatabaseKey {
-  /** Rate limit for key */
   limit: number;
 
-  /** Permissions for key user */
   perms: string;
 }
 
+interface DatabaseKeys {
+  [key: string]: DatabaseKey;
+}
+
 interface DatabaseConfig {
-  /** The database url for other systems to access from */
   url: string;
 
-  /** Default ratelimit for ips without a key */
   defaultLimit: string;
 
-  /** Database override key for internal usage */
   pass: string;
 
-  /** Database access key */
   key: string;
 
-  /** Url to mongo database server to access from */
   mongoURL: string;
 
   serverIP: string;
@@ -67,15 +64,12 @@ interface DatabaseConfig {
    * a full database system to use similar data 
    * from the Hyarcade API instead.
    */
-  [keys: string]: DatabaseKey;
+  keys: DatabaseKeys;
 
-  /** The maximum length of any leaderboard generated */
   maxLBSize: number;
 
-  /** Size of a leaderboard when no size is specified by the user */
   defaultLBSize: number;
 
-  /** Duration that various caches last for in API */
   cacheTime: DataCacheTime;
 
   /**
@@ -203,7 +197,7 @@ interface SiteConfig {
   port: number;
 }
 
-interface HyarcadeConfig {
+declare class HyarcadeConfig {
   /** @private */
   _interval: object;
 
@@ -231,7 +225,7 @@ interface HyarcadeConfig {
   destory(): void;
 }
 
-export default class Config implements HyarcadeConfig {
+export default class Config extends HyarcadeConfig {
   constructor(json: object);
   static fromJSON(): HyarcadeConfig;
 }
