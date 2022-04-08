@@ -9,7 +9,7 @@ data/*
 # Typescript
 packages/*/dist
 systems/*/dist
-!tsconfig.json
+!tsconfig*.json
 
 # Config files
 !package.json
