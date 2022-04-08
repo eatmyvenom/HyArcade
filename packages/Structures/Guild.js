@@ -308,7 +308,7 @@ class Guild {
       // dont add empty accounts
       if (gamer != undefined && gamer.name != "INVALID-NAME") {
         if (oldGuild) {
-          const oldMember = oldGuild.memberStats.find(o => o.uuid === gamer.uuid);
+          const oldMember = oldGuild.membersStats.find(o => o.uuid === gamer.uuid);
 
           if (oldMember != undefined) {
             const gexpHistory = {};
