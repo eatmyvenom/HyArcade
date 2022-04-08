@@ -1675,6 +1675,11 @@ __metadata:
 "@hyarcade/database@workspace:packages/Database":
   version: 0.0.0-use.local
   resolution: "@hyarcade/database@workspace:packages/Database"
+  dependencies:
+    "@hyarcade/config": "workspace:^"
+    "@hyarcade/logger": "workspace:^"
+    "@hyarcade/utils": "workspace:^"
+    axios: ^0.26.1
   languageName: unknown
   linkType: soft
 

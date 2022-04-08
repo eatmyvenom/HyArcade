@@ -6,6 +6,11 @@
 *.tar.gz
 data/*
 
+# Typescript
+packages/*/dist
+systems/*/dist
+!tsconfig.json
+
 # Config files
 !package.json
 !package-lock.json
