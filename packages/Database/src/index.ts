@@ -131,8 +131,9 @@ export async function account(text: string, discordID: string, cacheOnly: boolea
 /**
  *
  * @param text
+ * @param cache
  */
-export async function guild(text: string): Promise<object> {
+export async function guild(text: string, cache = false): Promise<object> {
   const url = new URL("guild", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -141,6 +142,10 @@ export async function guild(text: string): Promise<object> {
     } else {
       url.searchParams.set("member", text.replace(/-/g, ""));
     }
+  }
+
+  if (cache) {
+    url.searchParams.set("cache", "");
   }
 
   let guild;

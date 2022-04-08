@@ -11,6 +11,7 @@ const APIRuntime = require("./APIRuntime");
 async function GuildResolver(req, runtime) {
   const { url, config, mongoConnector } = runtime;
   const uuid = url.searchParams.get("uuid");
+  const cacheOnly = url.searchParams.has("cache");
   let memberUUID = url.searchParams.get("member");
 
   if (uuid == undefined && memberUUID == undefined) {
@@ -32,8 +33,9 @@ async function GuildResolver(req, runtime) {
     guild = await mongoConnector.getGuildByMember(memberUUID);
   }
 
-  // eslint-disable-next-line unicorn/no-null
-  if (guild == undefined || guild == null || (guild.updateTime ?? 0) < Date.now() - config.database.cacheTime.guilds) {
+  const isOutOfDate = (guild.updateTime ?? 0) < Date.now() - config.database.cacheTime.guilds;
+
+  if ((guild == undefined || isOutOfDate) && !cacheOnly) {
     guild = new Guild(uuid ?? memberUUID);
     Logger.debug(`Guild: ${uuid ?? memberUUID} missed cache. Fetching!`);
     await guild.updateWins();
