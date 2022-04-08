@@ -33,7 +33,7 @@ async function GuildResolver(req, runtime) {
     guild = await mongoConnector.getGuildByMember(memberUUID);
   }
 
-  const isOutOfDate = (guild.updateTime ?? 0) < Date.now() - config.database.cacheTime.guilds;
+  const isOutOfDate = (guild?.updateTime ?? 0) < Date.now() - config.database.cacheTime.guilds;
 
   if ((guild == undefined || isOutOfDate) && !cacheOnly) {
     guild = new Guild(uuid ?? memberUUID);
