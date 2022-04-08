@@ -1,10 +1,13 @@
 {
   "name": "@hyarcade/database",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Database interface for hyarcade",
-  "main": "src/index.js",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "yarn build",
+    "build": "tsc --outDir dist -d"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/eatmyvenom/hyarcade/issues"
   },
-  "homepage": "https://github.com/eatmyvenom/hyarcade#readme"
+  "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
+  "dependencies": {
+    "@hyarcade/config": "workspace:^",
+    "@hyarcade/logger": "workspace:^",
+    "@hyarcade/utils": "workspace:^",
+    "axios": "^0.26.1",
+    "typescript": "^4.4.3"
+  }
 }

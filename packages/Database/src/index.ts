@@ -1,8 +1,8 @@
-const Config = require("@hyarcade/config");
-const { DatabaseResponseError } = require("@hyarcade/errors");
-const Logger = require("@hyarcade/logger");
-const { default: axios } = require("axios");
-const { URL } = require("url");
+import Config from "@hyarcade/config";
+import Logger from "@hyarcade/logger";
+import { Account } from "@hyarcade/structures";
+import axios from "axios";
+import { DatabaseResponseError } from "@hyarcade/errors";
 
 const cfg = Config.fromJSON();
 
@@ -10,7 +10,7 @@ const cfg = Config.fromJSON();
  * @param status
  * @returns {boolean}
  */
-function validateStatus(status) {
+function validateStatus(status: number) {
   return status < 500;
 }
 
@@ -20,7 +20,7 @@ function validateStatus(status) {
  * @param {object} args
  * @returns {object}
  */
-async function GET(endpoint, args = {}) {
+export async function GET(endpoint: string, args: object = {}): Promise<object> {
   const url = new URL(endpoint, cfg.database.url);
 
   for (const arg in args) {
@@ -33,10 +33,24 @@ async function GET(endpoint, args = {}) {
 
 /**
  *
- * @param file
- * @param fields
+ * @param {string} endpoint
+ * @param {object} data
+ * @returns {Promise<object>}
  */
-async function readDB(file, fields) {
+ export async function POST(endpoint: string, data: object): Promise<object> {
+  const url = new URL(endpoint, cfg.database.url);
+
+  const req = await axios.post(url.toString(), data, { headers: { Authorization: cfg.database.pass }, validateStatus });
+  return req.data;
+}
+
+/**
+ * 
+ * @param file 
+ * @param fields 
+ * @returns 
+ */
+export async function readDB(file: string, fields: string[]): Promise<object> {
   let fileData;
   const url = new URL("database", cfg.database.url);
   const path = `${file}`;
@@ -65,7 +79,7 @@ async function readDB(file, fields) {
  * @param path
  * @param json
  */
-async function writeDB(path, json) {
+export async function writeDB(path: string, json: object): Promise<void> {
   const url = new URL("database", cfg.database.url);
   url.searchParams.set("path", path);
   Logger.debug(`Writing to ${path} in database`);
@@ -74,12 +88,13 @@ async function writeDB(path, json) {
 }
 
 /**
- *
- * @param text
- * @param discordID
- * @param cacheOnly
+ * 
+ * @param text 
+ * @param discordID 
+ * @param cacheOnly 
+ * @returns 
  */
-async function account(text, discordID, cacheOnly = false) {
+export async function account(text: string, discordID: string, cacheOnly: boolean = false): Promise<Account | object> {
   const url = new URL("account", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -117,7 +132,7 @@ async function account(text, discordID, cacheOnly = false) {
  *
  * @param text
  */
-async function guild(text) {
+ export async function guild(text: string): Promise<object> {
   const url = new URL("guild", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -150,7 +165,7 @@ async function guild(text) {
  * @param time
  * @param cacheOnly
  */
-async function timedAccount(text, discordID, time, cacheOnly = false) {
+export async function timedAccount(text: string, discordID?: string, time?: string, cacheOnly?: boolean): Promise<Account | object> {
   const url = new URL("account", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -191,7 +206,7 @@ async function timedAccount(text, discordID, time, cacheOnly = false) {
 /**
  *
  */
-async function info() {
+export async function info(): Promise<object> {
   const url = new URL("info", cfg.database.url);
 
   let info;
@@ -212,7 +227,7 @@ async function info() {
  *
  * @param json
  */
-async function addAccount(json) {
+export async function addAccount(json: Account): Promise<object> {
   Logger.verbose(`Adding ${json.name} to accounts in database`);
   const url = new URL("account", cfg.database.url);
 
@@ -227,8 +242,8 @@ async function addAccount(json) {
  *
  * @param json
  */
-async function addGuild(json) {
-  Logger.info(`Adding ${json.name} to guilds in database`);
+export async function addGuild(json: any): Promise<object> {
+  Logger.info(`Adding ${json?.name} to guilds in database`);
   const url = new URL("guild", cfg.database.url);
 
   try {
@@ -244,7 +259,7 @@ async function addGuild(json) {
  *
  * @param uuid
  */
-async function addHacker(uuid) {
+export async function addHacker(uuid: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { hacker: { add: { uuid } } };
@@ -267,7 +282,7 @@ async function addHacker(uuid) {
  *
  * @param uuid
  */
-async function delHacker(uuid) {
+export async function delHacker(uuid: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { hacker: { rm: { uuid } } };
@@ -290,7 +305,7 @@ async function delHacker(uuid) {
  *
  * @param uuid
  */
-async function addBanned(uuid) {
+export async function addBanned(uuid: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { banned: { add: { uuid } } };
@@ -313,7 +328,7 @@ async function addBanned(uuid) {
  *
  * @param uuid
  */
-async function delBanned(uuid) {
+export async function delBanned(uuid: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { banned: { rm: { uuid } } };
@@ -342,7 +357,7 @@ async function delBanned(uuid) {
  * @param max
  * @param noCache
  */
-async function getLeaderboard(path, category, time, min, reverse, max, noCache = false) {
+export async function getLeaderboard(path: string, category?: string, time?: string, min?: boolean, reverse?: boolean, max?: number, noCache?: boolean): Promise<object> {
   Logger.verbose("Reading database");
 
   const url = new URL("leaderboard", cfg.database.url);
@@ -357,7 +372,7 @@ async function getLeaderboard(path, category, time, min, reverse, max, noCache =
   }
 
   if (max != undefined) {
-    url.searchParams.set("max", max);
+    url.searchParams.set("max", max.toString());
   }
 
   if (min) {
@@ -395,7 +410,7 @@ async function getLeaderboard(path, category, time, min, reverse, max, noCache =
  * @param reverse
  * @param max
  */
-async function getGuildLeaderboard(path, time, reverse, max) {
+export async function getGuildLeaderboard(path: string, time?: string, reverse?: boolean, max?: number): Promise<object> {
   Logger.verbose("Reading database");
 
   const url = new URL("leaderboard/guild", cfg.database.url);
@@ -406,7 +421,7 @@ async function getGuildLeaderboard(path, time, reverse, max) {
   }
 
   if (max != undefined) {
-    url.searchParams.set("max", max);
+    url.searchParams.set("max", max.toString());
   }
 
   if (reverse) {
@@ -430,12 +445,13 @@ async function getGuildLeaderboard(path, time, reverse, max) {
 }
 
 /**
- *
- * @param stat
- * @param time
+ * 
+ * @param stat 
+ * @param time 
+ * @returns 
  */
-async function getMWLeaderboard(stat, time) {
-  Logger.debug(`Fetching miniwalls ${stat} leaderboard from!`);
+export async function getMWLeaderboard(stat: string, time?: string): Promise<object> {
+  Logger.verbose("Reading database");
 
   const url = new URL("leaderboard/miniwalls", cfg.database.url);
   url.searchParams.set("stat", stat);
@@ -460,11 +476,12 @@ async function getMWLeaderboard(stat, time) {
 }
 
 /**
- *
- * @param json
- * @param auth
+ * 
+ * @param json 
+ * @param auth 
+ * @returns 
  */
-async function internal(json, auth = "") {
+export async function internal(json: any, auth = ""): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   let response;
@@ -483,7 +500,7 @@ async function internal(json, auth = "") {
 /**
  *
  */
-async function ping() {
+export async function ping(): Promise<boolean> {
   const url = new URL("ping", cfg.database.url);
 
   try {
@@ -499,7 +516,7 @@ async function ping() {
  * @param id
  * @param uuid
  */
-async function linkDiscord(id, uuid) {
+export async function linkDiscord(id: string, uuid?: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { discord: { ln: { id, uuid } } };
@@ -523,7 +540,7 @@ async function linkDiscord(id, uuid) {
  * @param id
  * @param uuid
  */
-async function unlinkDiscord(id, uuid) {
+export async function unlinkDiscord(id: string, uuid?: string): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { discord: { rm: { id, uuid } } };
@@ -545,7 +562,7 @@ async function unlinkDiscord(id, uuid) {
 /**
  *
  */
-async function getLinkedAccounts() {
+export async function getLinkedAccounts(): Promise<object> {
   const url = new URL("internal", cfg.database.url);
 
   const obj = { discord: { ls: true } };
@@ -569,7 +586,7 @@ async function getLinkedAccounts() {
  * @param text
  * @param discordID
  */
-async function status(text, discordID) {
+export async function status(text: string, discordID?: string) {
   const url = new URL("status", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -602,7 +619,7 @@ async function status(text, discordID) {
 /**
  *
  */
-async function gameCounts() {
+export async function gameCounts(): Promise<object> {
   const url = new URL("gamecounts", cfg.database.url);
 
   let counts;
@@ -624,7 +641,7 @@ async function gameCounts() {
  * @param text
  * @param discordID
  */
-async function friends(text, discordID) {
+export async function friends(text: string, discordID?: string): Promise<object> {
   const url = new URL("friends", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -659,7 +676,7 @@ async function friends(text, discordID) {
  * @param text
  * @param discordID
  */
-async function achievements(text, discordID) {
+export async function achievements(text: string, discordID?: string): Promise<object> {
   const url = new URL("achievements", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -693,7 +710,7 @@ async function achievements(text, discordID) {
  *
  * @param uuid
  */
-async function DeleteAccount(uuid) {
+export async function DeleteAccount(uuid: string): Promise<object> {
   const url = new URL("account", cfg.database.url);
   url.searchParams.set("uuid", uuid);
 
@@ -716,7 +733,7 @@ async function DeleteAccount(uuid) {
  *
  * @param path
  */
-async function Resource(path) {
+export async function Resource(path: string): Promise<object> {
   const url = new URL("hypixelresource", cfg.database.url);
   url.searchParams.set("path", path);
 
@@ -734,33 +751,3 @@ async function Resource(path) {
 
   return resource;
 }
-
-module.exports = {
-  GET,
-  readDB,
-  writeDB,
-  account,
-  guild,
-  timedAccount,
-  info,
-  addAccount,
-  addGuild,
-  addHacker,
-  delHacker,
-  addBanned,
-  delBanned,
-  getLeaderboard,
-  getGuildLeaderboard,
-  getMWLeaderboard,
-  internal,
-  ping,
-  linkDiscord,
-  unlinkDiscord,
-  getLinkedAccounts,
-  status,
-  gameCounts,
-  friends,
-  achievements,
-  DeleteAccount,
-  Resource,
-};
