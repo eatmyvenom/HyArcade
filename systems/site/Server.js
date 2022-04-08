@@ -133,7 +133,7 @@ async function callback(request, response) {
  */
 async function Server(port) {
   Logger.name = "Site";
-  Logger.emoji = "🌐";
+  Logger.emoji = "📊";
   Logger.log(`Starting website server on port ${port}`);
   const server = require("http").createServer(callback).listen({ port, hostname: "localhost" });
 

@@ -1,18 +1,13 @@
 /* eslint-disable camelcase */
-const Canvas = require("canvas");
+const { Canvas, FontLibrary, loadImage } = require("skia-canvas");
 const Discord = require("discord.js");
 const Logger = require("@hyarcade/logger");
 const { Account } = require("@hyarcade/structures");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const StackBlur = require("stackblur-canvas");
 
-Canvas.registerFont(GetAsset("minecraft.ttf"), {
-  family: "myFont",
-});
-
-Canvas.registerFont(GetAsset("bold.otf"), {
-  family: "boldmc",
-});
+FontLibrary.use("minecraft", GetAsset("minecraft.ttf"));
+FontLibrary.use("boldmc", GetAsset("mcbold.otf"));
 
 const PlusColors = {
   black: "#000000",
@@ -62,8 +57,8 @@ module.exports = class ImageGenerator {
   font;
   shadow = false;
   gradient;
-  constructor(width, height, font = "Fira Code", shadow = false) {
-    this.canvas = Canvas.createCanvas(width, height);
+  constructor(width, height, font = "minecraft", shadow = false) {
+    this.canvas = new Canvas(width, height);
     this.context = this.canvas.getContext("2d");
     this.context.antialias = "none";
     this.context.textDrawingMode = "glyph";
@@ -76,7 +71,7 @@ module.exports = class ImageGenerator {
   }
 
   async addBackground(path, x = 0, y = 0, dx = this.canvas.width, dy = this.canvas.height, fillColor = "#181c3099") {
-    const bg = await Canvas.loadImage(path);
+    const bg = await loadImage(path);
 
     this.context.drawImage(bg, x, y, dx, dy);
     this.context.beginPath();
@@ -106,7 +101,7 @@ module.exports = class ImageGenerator {
 
   drawMcText(txt, x, y, size = 32, align = "left", tag = false, fake = false) {
     const offset = size * 0.1;
-    this.context.font = `${size}px 'myfont'`;
+    this.context.font = `${size}px 'minecraft'`;
     this.context.textAlign = align;
     this.context.textBaseline = "middle";
 
@@ -253,7 +248,7 @@ module.exports = class ImageGenerator {
         }
 
         case "r": {
-          this.context.font = `${size}px 'myfont'`;
+          this.context.font = `${size}px 'minecraft'`;
           this.context.fillStyle = "#FFFFFF";
           break;
         }
@@ -453,7 +448,7 @@ module.exports = class ImageGenerator {
 
     this.context.textAlign = "left";
     this.context.textBaseline = "middle";
-    this.context.font = `${size}px 'myFont'`;
+    this.context.font = `${size}px 'minecraft'`;
 
     const posWidth = this.context.measureText(`${pos}. `).width;
     const title = this.writeAccTitle(rank, plusColor, name, x + posWidth, y, `${size}px`, false, true);
@@ -773,7 +768,7 @@ module.exports = class ImageGenerator {
     this.writeText(txt, 4, 80, "left");
   }
 
-  toDiscord(name = "image.png") {
-    return new Discord.MessageAttachment(this.canvas.toBuffer("image/png", { compressionLevel: 3 }), name);
+  async toDiscord(name = "image.png") {
+    return new Discord.MessageAttachment(await this.canvas.toBuffer("image/png"), name);
   }
 };

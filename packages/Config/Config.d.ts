@@ -58,10 +58,10 @@ interface DatabaseConfig {
 
   serverIP: string;
 
-  /** 
+  /**
    * Keys for users to access the database from
    * allows for workers or for other people without
-   * a full database system to use similar data 
+   * a full database system to use similar data
    * from the Hyarcade API instead.
    */
   keys: DatabaseKeys;
@@ -75,9 +75,9 @@ interface DatabaseConfig {
   /**
    * Dot notated list of all leaderboards to be stored in redis.
    * Used by the api for returning results for default leaderboards
-   * however is prone to being out of date. 
-   * 
-   * The caching process runs once every 20 minutes but can be 
+   * however is prone to being out of date.
+   *
+   * The caching process runs once every 20 minutes but can be
    * modified in the pm2 ecosystem config file. However it takes
    * about 30 seconds to generate each set of leaderboards for the
    * cache which means it should be at least leaderboards*30 seconds
@@ -102,7 +102,7 @@ interface Activity {
   type: string;
 }
 
-interface PresenseItem {
+interface PresenceItem {
   activities: Activity[];
   status: string;
 }
@@ -110,7 +110,7 @@ interface PresenseItem {
 interface SetupItem {
   username: string;
   icon: string;
-  presences: PresenseItem
+  presences: PresenceItem;
 }
 
 interface DiscordSetupConfig {
@@ -139,7 +139,7 @@ interface DiscordConfig {
   leaderboards: object;
   lbArchive: object;
 
-  presences: PresenseItem[];
+  presences: PresenceItem[];
   setup: DiscordSetupConfig;
 }
 
@@ -198,8 +198,7 @@ interface SiteConfig {
 }
 
 declare class HyarcadeConfig {
-  /** @private */
-  _interval: object;
+  private _interval: object;
 
   key: string;
   mode: string;
@@ -226,6 +225,7 @@ declare class HyarcadeConfig {
 }
 
 export default class Config extends HyarcadeConfig {
+  // eslint-disable-next-line no-unused-vars
   constructor(json: object);
   static fromJSON(): HyarcadeConfig;
 }

@@ -1,11 +1,11 @@
+import Database from "@hyarcade/database";
+import { ImageGenerator } from "@hyarcade/images";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
-import { getHackerlist } from "../BotRuntime.js";
+import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
+import BotRuntime from "../BotRuntime.js";
+import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
-import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
-import { ImageGenerator } from "@hyarcade/images";
-import GetAsset from "@hyarcade/utils/FileHandling/GetAsset";
-import Database from "@hyarcade/database";
 
 /**
  *
@@ -13,7 +13,7 @@ import Database from "@hyarcade/database";
  * @returns {boolean}
  */
 async function isHacker(acc) {
-  const hackers = await getHackerlist();
+  const hackers = await BotRuntime.getHackerlist();
   return hackers.includes(acc?.uuid?.toLowerCase());
 }
 
@@ -133,7 +133,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
 
   const { wins, kills, finalKills, witherDamage, witherKills, deaths, arrowsHit, arrowsShot } = acc.miniWalls;
 
-  const img = new ImageGenerator(2560, 1600, "'myfont'", true);
+  const img = new ImageGenerator(2560, 1600, "'minecraft'", true);
   await img.addBackground(GetAsset("miwblur2.png"), 0, 0, 2560, 1600, "#0000008E");
   img.context.beginPath();
   img.context.rect(0, 0, 2560, 1600);
@@ -176,7 +176,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
     rightAlign,
   );
 
-  return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
+  return new CommandResponse("", undefined, await img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }
 
 export default new Command("mini-walls", ["*"], miniWallsStats, 2500);

@@ -1,5 +1,9 @@
+const FakeLB = require("./FakeLB");
+const ImageGenerator = require("./ImageGenerator");
+const PartyGamesImg = require("./PartyGamesImg");
+
 module.exports = {
-  FakeLB: require("./FakeLB"),
-  ImageGenerator: require("./ImageGenerator"),
-  PartyGamesImg: require("./PartyGamesImg"),
+  FakeLB,
+  ImageGenerator,
+  PartyGamesImg,
 };

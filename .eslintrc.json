@@ -3,6 +3,7 @@
     "jsdoc"
   ],
   "root": true,
+  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true,
     "commonjs": true,

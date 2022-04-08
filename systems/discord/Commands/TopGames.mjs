@@ -1,9 +1,9 @@
 import Config from "@hyarcade/config";
 import Database from "@hyarcade/database";
+import { ImageGenerator } from "@hyarcade/images";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
-import { ImageGenerator } from "@hyarcade/images";
 import TopGamesButtons from "../interactions/Components/Buttons/Generators/TopGamesButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
@@ -171,7 +171,7 @@ function nonDatabaseError(ign) {
 async function generateImage(acc) {
   const games = getGames(acc);
 
-  const img = new ImageGenerator(3000, 1800, "'myFont'", true);
+  const img = new ImageGenerator(3000, 1800, "'minecraft'", true);
   await img.addBackground(GetAsset(cfg.commandImages.topGames.file), 0, 0, 3000, 2040, cfg.commandImages.topGames.overlay);
 
   img.drawMcText("&l&fTop Arcade Games", img.canvas.width / 2, 80, 128, "center");
@@ -206,7 +206,7 @@ async function generateImage(acc) {
     }
   }
 
-  return img.toDiscord();
+  return await img.toDiscord();
 }
 
 /**

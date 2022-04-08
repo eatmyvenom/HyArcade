@@ -16,7 +16,7 @@ const cfg = Config.fromJSON();
  * @returns {ImageGenerator}
  */
 async function DrawLeaderboard(res, valueGetter, time, startingIndex, formatter, title) {
-  const img = new ImageGenerator(2560, 1600, "'myFont'", true);
+  const img = new ImageGenerator(2560, 1600, "'minecraft'", true);
   Logger.verbose("Adding background");
   await img.addBackground(GetAsset(cfg.commandImages.leaderboard.file), 0, 0, 2560, 1600, cfg.commandImages.leaderboard.overlay);
 

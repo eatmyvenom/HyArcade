@@ -29,7 +29,7 @@ class LongRenderer {
   }
 
   async render() {
-    const image = new ImageGenerator(1280, this.options.length * 80, "myfont", true);
+    const image = new ImageGenerator(1280, this.options.length * 80, "minecraft", true);
     if (this.options.background) {
       await image.addBackground(this.options.background);
 

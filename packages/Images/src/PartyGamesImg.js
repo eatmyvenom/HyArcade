@@ -33,7 +33,7 @@ function ms2time(time) {
  * @returns {MessageAttachment}
  */
 async function generateImage(account, game) {
-  const img = new ImageGenerator(1280, 800, "'myFont'", true);
+  const img = new ImageGenerator(1280, 800, "'minecraft'", true);
 
   await img.addBackground(GetAsset("blur.png"), 0, 0, 1280, 800, "#00000064");
 
@@ -213,7 +213,7 @@ async function generateImage(account, game) {
   if (stat5 != "") img.drawMcText(`&b${stat5}`, 960, 450, 48, "center");
   if (stat6 != "") img.drawMcText(`&e${stat6}`, 960, 550, 48, "center");
 
-  return img.toDiscord();
+  return await img.toDiscord();
 }
 
 module.exports = generateImage;

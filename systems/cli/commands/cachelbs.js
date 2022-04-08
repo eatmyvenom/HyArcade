@@ -1,5 +1,6 @@
+const { getLeaderboard } = require("@hyarcade/database");
 const Logger = require("@hyarcade/logger");
-const { Database, RedisInterface } = require("@hyarcade/requests");
+const { RedisInterface } = require("@hyarcade/requests");
 
 const cfg = require("@hyarcade/config").fromJSON();
 
@@ -9,7 +10,7 @@ const cfg = require("@hyarcade/config").fromJSON();
  * @param redis
  */
 async function cacheLB(name, time, redis) {
-  const lb = await Database.getLeaderboard(name, undefined, time, false, false, cfg.redis.leaderboardSize ?? 1000, true);
+  const lb = await getLeaderboard(name, undefined, time, false, false, cfg.redis.leaderboardSize ?? 1000, true);
   await redis.getLeaderboard(name, time).destroy();
   await redis.getLeaderboard(name, time).setMany(lb);
   await redis.getLeaderboard(name, time).setExpire(1800);

@@ -1,12 +1,12 @@
-import { Interaction, Message } from "discord.js";
-import Logger from "@hyarcade/logger";
 import Database from "@hyarcade/database";
+import Logger from "@hyarcade/logger";
 import mojangRequest from "@hyarcade/requests/mojangRequest.js";
 import { Account, Command } from "@hyarcade/structures";
+import { Interaction, Message } from "discord.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";
 import { ERROR_IGN_UNDEFINED, ERROR_LINK_HYPIXEL_MISMATCH } from "../Utils/Embeds/StaticEmbeds.js";
-import LogUtils from "../Utils/LogUtils.js";
+import LogUtils from "../Utils/LogUtils.mjs";
 
 /**
  *

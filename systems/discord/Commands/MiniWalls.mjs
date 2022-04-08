@@ -1,10 +1,10 @@
 import Database from "@hyarcade/database";
+import { ImageGenerator } from "@hyarcade/images";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
-import { getHackerlist } from "../BotRuntime.js";
+import BotRuntime from "../BotRuntime.js";
+import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
-import { ImageGenerator } from "@hyarcade/images";
-import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 
 /**
  *
@@ -12,7 +12,7 @@ import MiniWallsButtons from "../interactions/Components/Buttons/Generators/Mini
  * @returns {boolean}
  */
 async function isHacker(acc) {
-  const hackers = await getHackerlist();
+  const hackers = await BotRuntime.getHackerlist();
   return hackers.includes(acc?.uuid?.toLowerCase());
 }
 
@@ -188,7 +188,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
     fontSize,
   );
 
-  return new CommandResponse("", undefined, img.toDiscord(), MiniWallsButtons(time, acc.uuid));
+  return new CommandResponse("", undefined, await img.toDiscord(), MiniWallsButtons(time, acc.uuid));
 }
 
 export default new Command("mini-walls", ["*"], miniWallsStats, 2500);

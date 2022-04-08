@@ -2,3 +2,4 @@ api-docs.html
 
 packages/*/dist
 systems/*/dist
+*.d.ts

@@ -22,7 +22,6 @@ class EndpointStorage {
       lb: await importNew("leaderboard.js"),
       db: await importNew("Database.js"),
       database: await importNew("Database.js"),
-      mwlb: await importNew("MiniWallsLeaderboard.js"),
       info: await importNew("info.js"),
       ping: await importNew("ping.js"),
       status: await importNew("Status.js"),

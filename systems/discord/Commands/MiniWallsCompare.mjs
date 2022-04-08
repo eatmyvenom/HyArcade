@@ -1,12 +1,12 @@
-import { err } from "@hyarcade/logger";
+import Database from "@hyarcade/database";
+import Logger from "@hyarcade/logger";
 import Command from "@hyarcade/structures/Discord/Command.js";
-import { getHackerlist } from "../BotRuntime.js";
+import { createRequire } from "node:module";
+import BotRuntime from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import EmojiGetter from "../Utils/Formatting/EmojiGetter.js";
 
-import { createRequire } from "node:module";
-import Database from "@hyarcade/database";
 const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
 
@@ -104,7 +104,7 @@ export default new Command(
       acc2 = await Database.account(interaction.options.getString("player2"), interaction.user.id);
     }
 
-    const hackers = await getHackerlist();
+    const hackers = await BotRuntime.getHackerlist();
 
     if (hackers.includes(acc1.uuid)) {
       return {
@@ -161,7 +161,7 @@ export default new Command(
         .addField("━━━━━━ Stats: ━━━━━", stats, true)
         .addField("━━━━━ Ratios: ━━━━━", ratios, true);
     } catch (error) {
-      err(error.stack);
+      Logger.err(error.stack);
       return {
         res: "",
         embed: ERROR_IGN_UNDEFINED,

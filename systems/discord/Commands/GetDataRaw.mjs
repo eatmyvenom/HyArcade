@@ -1,5 +1,5 @@
-import { info } from "@hyarcade/logger";
 import { account, timedAccount } from "@hyarcade/database";
+import Logger from "@hyarcade/logger";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import { inspect } from "node:util";
@@ -39,7 +39,7 @@ export default new Command(["get-data-raw", "getraw", "getdataraw", "raw", "rawd
   }
 
   if (acc.timed != undefined && acc.timed != {}) {
-    info("Getting account diff");
+    Logger.info("Getting account diff");
     const tmpAcc = AccountComparitor(acc.acc, acc.timed);
 
     acc = tmpAcc;

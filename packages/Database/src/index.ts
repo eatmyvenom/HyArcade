@@ -1,8 +1,8 @@
 import Config from "@hyarcade/config";
+import { DatabaseResponseError } from "@hyarcade/errors";
 import Logger from "@hyarcade/logger";
 import { Account } from "@hyarcade/structures";
 import axios from "axios";
-import { DatabaseResponseError } from "@hyarcade/errors";
 
 const cfg = Config.fromJSON();
 
@@ -20,7 +20,7 @@ function validateStatus(status: number) {
  * @param {object} args
  * @returns {object}
  */
-export async function GET(endpoint: string, args: object = {}): Promise<object> {
+export async function ApiGET(endpoint: string, args: object = {}): Promise<object> {
   const url = new URL(endpoint, cfg.database.url);
 
   for (const arg in args) {
@@ -37,7 +37,7 @@ export async function GET(endpoint: string, args: object = {}): Promise<object> 
  * @param {object} data
  * @returns {Promise<object>}
  */
- export async function POST(endpoint: string, data: object): Promise<object> {
+export async function ApiPOST(endpoint: string, data: object): Promise<object> {
   const url = new URL(endpoint, cfg.database.url);
 
   const req = await axios.post(url.toString(), data, { headers: { Authorization: cfg.database.pass }, validateStatus });
@@ -45,10 +45,10 @@ export async function GET(endpoint: string, args: object = {}): Promise<object> 
 }
 
 /**
- * 
- * @param file 
- * @param fields 
- * @returns 
+ *
+ * @param file
+ * @param fields
+ * @returns {Promise<object>}
  */
 export async function readDB(file: string, fields: string[]): Promise<object> {
   let fileData;
@@ -88,11 +88,11 @@ export async function writeDB(path: string, json: object): Promise<void> {
 }
 
 /**
- * 
- * @param text 
- * @param discordID 
- * @param cacheOnly 
- * @returns 
+ *
+ * @param text
+ * @param discordID
+ * @param cacheOnly
+ * @returns {Promise<object>}
  */
 export async function account(text: string, discordID: string, cacheOnly: boolean = false): Promise<Account | object> {
   const url = new URL("account", cfg.database.url);
@@ -132,7 +132,7 @@ export async function account(text: string, discordID: string, cacheOnly: boolea
  *
  * @param text
  */
- export async function guild(text: string): Promise<object> {
+export async function guild(text: string): Promise<object> {
   const url = new URL("guild", cfg.database.url);
 
   if (text != undefined && text != "" && text != "!") {
@@ -357,7 +357,15 @@ export async function delBanned(uuid: string): Promise<object> {
  * @param max
  * @param noCache
  */
-export async function getLeaderboard(path: string, category?: string, time?: string, min?: boolean, reverse?: boolean, max?: number, noCache?: boolean): Promise<object> {
+export async function getLeaderboard(
+  path: string,
+  category?: string,
+  time?: string,
+  min?: boolean,
+  reverse?: boolean,
+  max?: number,
+  noCache?: boolean,
+): Promise<object> {
   Logger.verbose("Reading database");
 
   const url = new URL("leaderboard", cfg.database.url);
@@ -445,10 +453,10 @@ export async function getGuildLeaderboard(path: string, time?: string, reverse?:
 }
 
 /**
- * 
- * @param stat 
- * @param time 
- * @returns 
+ *
+ * @param stat
+ * @param time
+ * @returns {Promise<object>}
  */
 export async function getMWLeaderboard(stat: string, time?: string): Promise<object> {
   Logger.verbose("Reading database");
@@ -476,10 +484,10 @@ export async function getMWLeaderboard(stat: string, time?: string): Promise<obj
 }
 
 /**
- * 
- * @param json 
- * @param auth 
- * @returns 
+ *
+ * @param json
+ * @param auth
+ * @returns {Promise<object>}
  */
 export async function internal(json: any, auth = ""): Promise<object> {
   const url = new URL("internal", cfg.database.url);

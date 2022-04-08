@@ -1,16 +1,17 @@
+import { addAccount, linkDiscord, readDB } from "@hyarcade/database";
 import Logger from "@hyarcade/logger";
-import { Database, mojangRequest } from "@hyarcade/requests";
+import { mojangRequest } from "@hyarcade/requests";
 import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
-import { client } from "../BotRuntime";
+import { client } from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 import {
-  ERROR_IGN_UNDEFINED,
-  INFO_LINK_SUCCESS,
-  ERROR_PLAYER_PREVIOUSLY_LINKED,
   ERROR_ACCOUNT_PREVIOUSLY_LINKED,
-} from "../Utils/Embeds/StaticEmbeds";
-import LogUtils from "../Utils/LogUtils";
+  ERROR_IGN_UNDEFINED,
+  ERROR_PLAYER_PREVIOUSLY_LINKED,
+  INFO_LINK_SUCCESS,
+} from "../Utils/Embeds/StaticEmbeds.js";
+import LogUtils from "../Utils/LogUtils.mjs";
 
 export default new Command(["link", "ln"], ["%trusted%"], async args => {
   if (args.length === 0) {
@@ -21,7 +22,7 @@ export default new Command(["link", "ln"], ["%trusted%"], async args => {
   }
   let player = args[0];
   let discord = args[1];
-  const list = await Database.readDB("discordList");
+  const list = await readDB("discordList");
   const disclist = {};
 
   for (const link of list) {
@@ -54,7 +55,7 @@ export default new Command(["link", "ln"], ["%trusted%"], async args => {
   const acc = new Account(player, 0, uuid);
   await acc.updateHypixel();
   try {
-    await Database.addAccount(acc);
+    await addAccount(acc);
   } catch (error) {
     Logger.error(error);
   }
@@ -62,7 +63,7 @@ export default new Command(["link", "ln"], ["%trusted%"], async args => {
   uuid = acc.uuid;
 
   if (args.includes("-f")) {
-    await Database.linkDiscord(discord, uuid);
+    await linkDiscord(discord, uuid);
     const embed = INFO_LINK_SUCCESS;
 
     await LogUtils.logVerify(discord, acc.name);
@@ -88,7 +89,7 @@ export default new Command(["link", "ln"], ["%trusted%"], async args => {
   }
 
   await LogUtils.logVerify(discord, acc.name);
-  await Database.linkDiscord(discord, uuid);
+  await linkDiscord(discord, uuid);
   const embed = INFO_LINK_SUCCESS;
   return {
     res: "",

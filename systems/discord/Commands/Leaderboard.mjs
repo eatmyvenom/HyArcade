@@ -1,6 +1,9 @@
 /* eslint-disable complexity */
-import { verbose, debug, err, info } from "@hyarcade/logger";
+import { ImageGenerator } from "@hyarcade/images";
+import Logger from "@hyarcade/logger";
 import Command from "@hyarcade/structures/Discord/Command.js";
+import { createRequire } from "node:module";
+import LeaderboardButtons from "../interactions/Components/Buttons/Generators/LeaderboardButtons.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_NO_LEADERBOARD } from "../Utils/Embeds/StaticEmbeds.js";
@@ -8,10 +11,7 @@ import getLB from "../Utils/Leaderboards/GetLeaderboard.js";
 import MillisecondLBs from "../Utils/Leaderboards/MillisecondLBs.js";
 import ReversedLBs from "../Utils/Leaderboards/ReversedLBs.js";
 import SecondLBs from "../Utils/Leaderboards/SecondLBs.js";
-import LeaderboardButtons from "../interactions/Components/Buttons/Generators/LeaderboardButtons.js";
 
-import { createRequire } from "node:module";
-import { ImageGenerator } from "@hyarcade/images";
 const require = createRequire(import.meta.url);
 const { MessageButton, MessageActionRow, CommandInteraction, ButtonInteraction, Message } = require("discord.js");
 
@@ -55,10 +55,10 @@ function toHHMMSS(secs) {
 async function hander(args, rawMsg, interaction) {
   // Start time before any packets are sent
   const startTime = Date.now();
-  verbose("Deferring");
+  Logger.verbose("Deferring");
 
   if (interaction != undefined && !interaction.isButton()) {
-    debug("Deferring interaction");
+    Logger.debug("Deferring interaction");
     await interaction.deferReply();
   } else if (interaction?.isButton()) {
     const row = new MessageActionRow({
@@ -70,7 +70,7 @@ async function hander(args, rawMsg, interaction) {
     await interaction.update({ components: [row] });
     interaction.deferred = true;
   }
-  verbose("Parsing");
+  Logger.verbose("Parsing");
 
   if (args.length === 0) {
     return new CommandResponse("", ERROR_ARGS_LENGTH(1));
@@ -88,7 +88,7 @@ async function hander(args, rawMsg, interaction) {
 
   const sanitizedType = type.toLowerCase().trim().replace(/ /g, "");
 
-  verbose("Processing");
+  Logger.verbose("Processing");
 
   switch (sanitizedType) {
     case "sex":
@@ -1193,7 +1193,7 @@ async function hander(args, rawMsg, interaction) {
 
           lb = await getLB(type, timetype, undefined, startingIndex, reverse || ReversedLBs?.[typeArgs[1]]?.[typeArgs[2]], formatter);
         } catch (error) {
-          err(error.stack);
+          Logger.err(error.stack);
           return { res: "", embed: ERROR_NO_LEADERBOARD };
         }
 
@@ -1220,7 +1220,7 @@ async function hander(args, rawMsg, interaction) {
             gid = `.${stat}`;
           }
         } else {
-          info(`${type} leaderboard does not exist.`);
+          Logger.info(`${type} leaderboard does not exist.`);
 
           return {
             res: "",
@@ -1231,10 +1231,10 @@ async function hander(args, rawMsg, interaction) {
     }
   }
 
-  verbose("Converting canvas");
-  const finalRes = res.toDiscord("leaderboard.png");
+  Logger.verbose("Converting canvas");
+  const finalRes = await res.toDiscord("leaderboard.png");
 
-  debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
+  Logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
   const buttons = LeaderboardButtons(startingIndex, gid, timetype);
 

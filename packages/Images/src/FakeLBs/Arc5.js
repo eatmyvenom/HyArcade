@@ -12,7 +12,7 @@ function formatNum(n) {
 }
 
 module.exports = async function Arc5(path, category, time, topTen) {
-  const img = new ImageGenerator(1900, 1035, "'myFont'", false);
+  const img = new ImageGenerator(1900, 1035, "'minecraft'", false);
   await img.addBackground(GetAsset("leaderboard5.png"), 0, 0, 1900, 1035, "#00000000");
 
   let y = 80;
@@ -96,5 +96,5 @@ module.exports = async function Arc5(path, category, time, topTen) {
   const strTime = path == undefined ? "monthly" : time ?? "lifetime";
   await img.drawTimeType(strTime, x, (y += dy), fontSize);
 
-  return img.toDiscord();
+  return await img.toDiscord();
 };

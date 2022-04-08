@@ -1,9 +1,9 @@
 import Database from "@hyarcade/database";
+import { ImageGenerator } from "@hyarcade/images";
 import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
-import { ImageGenerator } from "@hyarcade/images";
 import StatsMenu from "../interactions/Components/Menus/Generators/StatsMenu.js";
 import AccountComparitor from "../Utils/AccountComparitor.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
@@ -25,7 +25,7 @@ function numberify(n) {
  */
 // eslint-disable-next-line complexity
 async function genImg(account, game = "") {
-  const img = new ImageGenerator(3000, 1800, "'myfont'", true);
+  const img = new ImageGenerator(3000, 1800, "'minecraft'", true);
   const startY = 600;
   const lineHeight = 110;
   const spacer = 75;
@@ -1099,7 +1099,7 @@ export default new Command(
     const img = await genImg(acc, game);
     const menu = StatsMenu(acc.uuid, time, game ?? "undefined");
 
-    return new CommandResponse("", undefined, img.toDiscord(), menu);
+    return new CommandResponse("", undefined, await img.toDiscord(), menu);
   },
   2500,
 );

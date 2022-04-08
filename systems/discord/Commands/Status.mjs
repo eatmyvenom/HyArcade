@@ -1,10 +1,10 @@
 /* eslint-disable complexity */
-import fs from "fs-extra";
 import Database from "@hyarcade/database";
+import { ImageGenerator } from "@hyarcade/images";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
+import fs from "fs-extra";
 import { createRequire } from "node:module";
-import { ImageGenerator } from "@hyarcade/images";
 import { ERROR_IGN_UNDEFINED, ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";
 import TimeFormatter from "../Utils/Formatting/TimeFormatter.js";
 
@@ -537,7 +537,7 @@ async function callback(args, rawmsg, interaction) {
     gameData = gameAPI.games;
   }
 
-  const img = new ImageGenerator(1280, 800, "'myFont'", true);
+  const img = new ImageGenerator(1280, 800, "'minecraft'", true);
 
   const startY = 200;
   const increase = 50;
@@ -642,7 +642,7 @@ async function callback(args, rawmsg, interaction) {
     }
   }
 
-  return new CommandResponse("", undefined, img.toDiscord());
+  return new CommandResponse("", undefined, await img.toDiscord());
 }
 
 export default new Command(["status", "sts"], ["*"], callback, 15000);
