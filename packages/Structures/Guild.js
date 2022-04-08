@@ -278,7 +278,7 @@ class Guild {
       return;
     }
 
-    const oldGuild = await Database.guild(this.uuid);
+    const oldGuild = await Database.guild(this.uuid, true);
 
     logger.log(`Updating member data for ${this.name}`);
     this.arcadeEXP = data?.guild?.guildExpByGameType?.ARCADE ?? 0;

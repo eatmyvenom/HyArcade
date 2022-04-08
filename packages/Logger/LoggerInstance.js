@@ -54,7 +54,7 @@ function timeStr() {
  * @returns {string}
  */
 function nameStr(name = "") {
-  return `\u001B[36m${name.trim().slice(0, 9).padEnd(9)}\u001B[0m |`;
+  return `\u001B[36m${name.trim().slice(0, 8).padEnd(8)}\u001B[0m |`;
 }
 
 /**
