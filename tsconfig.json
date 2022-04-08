@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "importsNotUsedAsValues": "error",
@@ -13,5 +13,5 @@
     "target": "ES2018",
     "strict": false
   },
-  "exclude": ["node_modules"]
+  "include": ["packages/Database"]
 }

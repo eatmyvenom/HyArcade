@@ -1,4 +1,5 @@
 import Command from "@hyarcade/structures/Discord/Command.js";
+import Database from "@hyarcade/database";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 
 export default new Command("banlist", ["%trusted%"], async args => {
