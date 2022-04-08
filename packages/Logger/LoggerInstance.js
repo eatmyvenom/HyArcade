@@ -45,7 +45,7 @@ function shortTime() {
  * @returns {string}
  */
 function timeStr() {
-  return `\u001B[32m${shortTime().trim()}\u001B[0m |`;
+  return `\u001B[34m${shortTime().trim()}\u001B[0m |`;
 }
 
 /**

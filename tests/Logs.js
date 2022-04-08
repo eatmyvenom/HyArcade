@@ -13,9 +13,9 @@ function main() {
   Logger.event("a", "Main logger EVENT");
   Logger.verbose("Main logger VERBOSE");
 
-  // for (let i = 0; i < 100; i++) {
-  //   console.log(`\u001B[${i}m    AAAA ${i}  \u001B[0m`);
-  // }
+  for (let i = 0; i < 100; i++) {
+    console.log(`\u001B[${i}m    AAAA ${i}  \u001B[0m`);
+  }
 }
 
 main();
