@@ -2,7 +2,7 @@ const { Message } = require("discord.js");
 const { Interaction } = require("discord.js");
 const cfg = require("@hyarcade/config").fromJSON();
 const logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const CommandResponse = require("./CommandResponse");
 
 let trustedUsers;

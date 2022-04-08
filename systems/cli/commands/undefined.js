@@ -4,7 +4,7 @@ const { readdir } = require("fs-extra");
  *
  */
 async function main() {
-  const mods = await readdir("systems/cli/commands/");
+  const mods = await readdir(__dirname);
 
   console.log("If you are reading this, you probably did something wrong!");
   console.log("");

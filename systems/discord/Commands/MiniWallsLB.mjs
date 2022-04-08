@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import Logger from "@hyarcade/logger";
-import { Database } from "@hyarcade/requests";
+import Database from "@hyarcade/database";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import { stringifyList } from "@hyarcade/utils/Leaderboards/ListUtils.js";

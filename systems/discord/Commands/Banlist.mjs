@@ -1,4 +1,3 @@
-import Database from "@hyarcade/requests/Database.js";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";
 

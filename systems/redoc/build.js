@@ -1,6 +1,6 @@
 const { writeJson } = require("fs-extra");
 const Logger = require("@hyarcade/logger");
-const { Database } = require("@hyarcade/requests");
+const Database = require("@hyarcade/database");
 const path = require("path");
 
 /**

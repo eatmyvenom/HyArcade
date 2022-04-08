@@ -1,10 +1,10 @@
 {
-  "name": "@hyarcade/cli",
-  "version": "0.0.0",
-  "description": "error structures",
-  "main": "index.js",
+  "name": "@hyarcade/database",
+  "version": "1.0.0",
+  "description": "Database interface for hyarcade",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

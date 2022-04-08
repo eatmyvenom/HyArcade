@@ -1,6 +1,6 @@
 const { ButtonInteraction, Interaction } = require("discord.js");
 const ComponentResponse = require("../ComponentResponse");
-const { Database } = require("@hyarcade/requests");
+const Database = require("@hyarcade/database");
 const EZButton = require("./Generators/EZButton");
 
 let commandStorage;

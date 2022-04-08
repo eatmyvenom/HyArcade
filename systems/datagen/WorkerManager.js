@@ -1,5 +1,5 @@
 const Logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const Sleep = require("@hyarcade/utils/Sleep");
 const LocalWorker = require("./Worker/LocalWorker");
 const cfg = require("@hyarcade/config").fromJSON();

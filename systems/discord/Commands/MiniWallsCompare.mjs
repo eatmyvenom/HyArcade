@@ -6,7 +6,7 @@ import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import EmojiGetter from "../Utils/Formatting/EmojiGetter.js";
 
 import { createRequire } from "node:module";
-import { Database } from "@hyarcade/requests";
+import Database from "@hyarcade/database";
 const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
 

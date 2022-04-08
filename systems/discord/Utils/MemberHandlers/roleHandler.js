@@ -1,5 +1,5 @@
 const { Client } = require("discord.js");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const Role = require("@hyarcade/structures/Discord/Role");
 const RoleUpdater = require("./RoleUpdater");
 const cfg = require("@hyarcade/config").fromJSON();

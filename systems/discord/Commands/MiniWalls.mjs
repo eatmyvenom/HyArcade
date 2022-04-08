@@ -1,4 +1,4 @@
-import { Database } from "@hyarcade/requests";
+import Database from "@hyarcade/database";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import { getHackerlist } from "../BotRuntime.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";

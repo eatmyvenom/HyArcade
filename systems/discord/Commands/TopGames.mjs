@@ -1,5 +1,5 @@
 import Config from "@hyarcade/config";
-import Database from "@hyarcade/requests/Database.js";
+import Database from "@hyarcade/database";
 import { Account, Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";

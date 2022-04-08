@@ -1,4 +1,4 @@
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const { Account, AccountArray } = require("@hyarcade/structures");
 const Guild = require("@hyarcade/structures/Guild");
 

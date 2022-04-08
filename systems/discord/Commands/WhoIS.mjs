@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from "axios";
-import Database from "@hyarcade/requests/Database.js";
+import Database from "@hyarcade/database";
 import { Account, Command } from "@hyarcade/structures";
 import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";

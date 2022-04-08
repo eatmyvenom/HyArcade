@@ -3,7 +3,7 @@ const { Account } = require("@hyarcade/structures");
 const Sleep = require("@hyarcade/utils/Sleep");
 const HyarcadeWorkerRequest = require("@hyarcade/requests/HyarcadeWorkerRequest");
 const fs = require("fs-extra");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 
 let cfg;
 let disclist;

@@ -1,9 +1,9 @@
+import Database from "@hyarcade/database";
 import { createRequire } from "node:module";
 import PartyGamesMenu from "../interactions/Components/Menus/Generators/PartyGamesMenu.js";
 const require = createRequire(import.meta.url);
 
 const Command = require("@hyarcade/structures/Discord/Command");
-const { Database } = require("@hyarcade/requests");
 const CommandResponse = require("@hyarcade/structures/Discord/CommandResponse");
 const AccountComparitor = require("../Utils/AccountComparitor");
 const { ERROR_WAS_NOT_IN_DATABASE } = require("../Utils/Embeds/DynamicEmbeds");

@@ -5,7 +5,7 @@ import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 import { ImageGenerator } from "@hyarcade/images";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset";
-import { Database } from "@hyarcade/requests";
+import Database from "@hyarcade/database";
 
 /**
  *

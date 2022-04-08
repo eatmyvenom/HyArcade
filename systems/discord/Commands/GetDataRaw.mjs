@@ -1,5 +1,5 @@
 import { info } from "@hyarcade/logger";
-import { account, timedAccount } from "@hyarcade/requests/Database.js";
+import { account, timedAccount } from "@hyarcade/database";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import { inspect } from "node:util";

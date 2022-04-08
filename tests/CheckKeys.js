@@ -1,5 +1,5 @@
 const Logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const cfg = require("@hyarcade/config").fromJSON();
 const https = require("https");
 

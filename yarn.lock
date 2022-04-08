@@ -1660,9 +1660,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyarcade/config@*, @hyarcade/config@workspace:^, @hyarcade/config@workspace:packages/Config":
+"@hyarcade/cli@workspace:systems/cli":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/cli@workspace:systems/cli"
+  languageName: unknown
+  linkType: soft
+
+"@hyarcade/config@workspace:^, @hyarcade/config@workspace:packages/Config":
   version: 0.0.0-use.local
   resolution: "@hyarcade/config@workspace:packages/Config"
+  languageName: unknown
+  linkType: soft
+
+"@hyarcade/database@workspace:packages/Database":
+  version: 0.0.0-use.local
+  resolution: "@hyarcade/database@workspace:packages/Database"
   languageName: unknown
   linkType: soft
 
@@ -1679,7 +1691,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/errors@*, @hyarcade/errors@workspace:^, @hyarcade/errors@workspace:packages/Errors":
+"@hyarcade/errors@workspace:^, @hyarcade/errors@workspace:packages/Errors":
   version: 0.0.0-use.local
   resolution: "@hyarcade/errors@workspace:packages/Errors"
   languageName: unknown
@@ -1710,7 +1722,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/logger@*, @hyarcade/logger@workspace:^, @hyarcade/logger@workspace:packages/Logger":
+"@hyarcade/logger@workspace:^, @hyarcade/logger@workspace:packages/Logger":
   version: 0.0.0-use.local
   resolution: "@hyarcade/logger@workspace:packages/Logger"
   languageName: unknown
@@ -1727,7 +1739,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/requests@*, @hyarcade/requests@workspace:^, @hyarcade/requests@workspace:packages/Request":
+"@hyarcade/requests@workspace:^, @hyarcade/requests@workspace:packages/Request":
   version: 0.0.0-use.local
   resolution: "@hyarcade/requests@workspace:packages/Request"
   dependencies:
@@ -1740,7 +1752,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/structures@*, @hyarcade/structures@workspace:^, @hyarcade/structures@workspace:packages/Structures":
+"@hyarcade/structures@workspace:^, @hyarcade/structures@workspace:packages/Structures":
   version: 0.0.0-use.local
   resolution: "@hyarcade/structures@workspace:packages/Structures"
   dependencies:
@@ -1751,7 +1763,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyarcade/utils@*, @hyarcade/utils@workspace:^, @hyarcade/utils@workspace:packages/Utils":
+"@hyarcade/utils@workspace:^, @hyarcade/utils@workspace:packages/Utils":
   version: 0.0.0-use.local
   resolution: "@hyarcade/utils@workspace:packages/Utils"
   dependencies:
@@ -2805,12 +2817,6 @@ __metadata:
   checksum: 3c21b897a2ff551ae5b3c3ab32c866ed2965dcf7fb442f81adf0e27f4a397925c8f84619af7bcc6354821303f6ee9b2aa31d248306174f32c287986158cf4eed
   languageName: node
   linkType: hard
-
-"cli@workspace:systems/cli":
-  version: 0.0.0-use.local
-  resolution: "cli@workspace:systems/cli"
-  languageName: unknown
-  linkType: soft
 
 "cliui@npm:^7.0.2":
   version: 7.0.4
@@ -4076,13 +4082,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-stdin@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "get-stdin@npm:5.0.1"
-  checksum: f9784638ad3e68a0a8bdc031aedf0fca749843cd134956fbd4f3bbac17c359e0fb9210343fcbed72ee79fb19d8e4c49b7a6e742cc5d44e94ac1405e9371d4b3e
-  languageName: node
-  linkType: hard
-
 "get-stream@npm:^6.0.0":
   version: 6.0.1
   resolution: "get-stream@npm:6.0.1"
@@ -4411,12 +4410,6 @@ __metadata:
     "@babel/preset-env": ^7.16.11
     "@commitlint/cli": ^16.2.3
     "@commitlint/config-angular": ^16.2.3
-    "@hyarcade/config": "*"
-    "@hyarcade/errors": "*"
-    "@hyarcade/logger": "*"
-    "@hyarcade/requests": "*"
-    "@hyarcade/structures": "*"
-    "@hyarcade/utils": "*"
     "@types/node": ^17.0.23
     commitizen: ^4.2.4
     commitlint: ^16.2.3
@@ -4429,7 +4422,6 @@ __metadata:
     fs-extra: ^10.0.1
     husky: ^7.0.4
     is-ci: ^3.0.1
-    json-ts: ^1.6.4
     prettier: ^2.6.2
   languageName: unknown
   linkType: soft
@@ -4463,13 +4455,6 @@ __metadata:
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
-  languageName: node
-  linkType: hard
-
-"immutable@npm:^3.8.1":
-  version: 3.8.2
-  resolution: "immutable@npm:3.8.2"
-  checksum: 41909b386950ff84ca3cfca77c74cfc87d225a914e98e6c57996fa81a328da61a7c32216d6d5abad40f54747ffdc5c4b02b102e6ad1a504c1752efde8041f964
   languageName: node
   linkType: hard
 
@@ -4817,22 +4802,6 @@ __metadata:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: cff44156ddce9c67c44386ad5cddf91925fe06b1d217f2da9c4910d01f358c6e3989c4d5a02683c7a5667f9727ff05831f7aa8ae66c8ff691c556f0884d49215
-  languageName: node
-  linkType: hard
-
-"json-ts@npm:^1.6.4":
-  version: 1.6.4
-  resolution: "json-ts@npm:1.6.4"
-  dependencies:
-    get-stdin: ^5.0.1
-    immutable: ^3.8.1
-    minimist: ^1.2.0
-    needsquotes: ^1.0.0
-    transducers-js: ^0.4.174
-    typescript: ^2.3.2
-  bin:
-    json-ts: dist/bin.js
-  checksum: dcd10adb43a0c83601f27d24ad56a9820485eb90a57f88e59f04bbd5eeddd766b5c695d059086dba9e50f841ecd69726516b465f498ba6684da4f86049e1ff7e
   languageName: node
   linkType: hard
 
@@ -5211,7 +5180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:1.2.5, minimist@npm:^1.2.0, minimist@npm:^1.2.5":
+"minimist@npm:1.2.5, minimist@npm:^1.2.5":
   version: 1.2.5
   resolution: "minimist@npm:1.2.5"
   checksum: 86706ce5b36c16bfc35c5fe3dbb01d5acdc9a22f2b6cc810b6680656a1d2c0e44a0159c9a3ba51fb072bb5c203e49e10b51dcd0eec39c481f4c42086719bae52
@@ -5396,13 +5365,6 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
-  languageName: node
-  linkType: hard
-
-"needsquotes@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "needsquotes@npm:1.0.0"
-  checksum: 062a7f086af120973fdb8b6469dc19ae4737be334770192466ca2a904d8a3df0c625d284507b9f16aff9ad2230d45f3162303e1512443d068cdcb01051a206b5
   languageName: node
   linkType: hard
 
@@ -7190,13 +7152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"transducers-js@npm:^0.4.174":
-  version: 0.4.174
-  resolution: "transducers-js@npm:0.4.174"
-  checksum: c5f0c853b9467f067f4abc144eaffe1605494475ec7b33fa965e68a16fe52434a961e58f8ce30a9af1246207677a28d39ce3cebf449304433ac3a3fc29eb1efd
-  languageName: node
-  linkType: hard
-
 "trim-newlines@npm:^3.0.0":
   version: 3.0.1
   resolution: "trim-newlines@npm:3.0.1"
@@ -7306,16 +7261,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^2.3.2":
-  version: 2.9.2
-  resolution: "typescript@npm:2.9.2"
-  bin:
-    tsc: ./bin/tsc
-    tsserver: ./bin/tsserver
-  checksum: 88be998ac339b6e45f1cd15e22e4a0fedcdb5320d8d1d736e3996a0b9dff03728ebb2580a0658f0c52152b139ea9a405443f42a4ff8a2c4a1a6f4d58e0320132
-  languageName: node
-  linkType: hard
-
 "typescript@npm:^4.4.3":
   version: 4.5.5
   resolution: "typescript@npm:4.5.5"
@@ -7323,16 +7268,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^2.3.2#~builtin<compat/typescript>":
-  version: 2.9.2
-  resolution: "typescript@patch:typescript@npm%3A2.9.2#~builtin<compat/typescript>::version=2.9.2&hash=bda367"
-  bin:
-    tsc: ./bin/tsc
-    tsserver: ./bin/tsserver
-  checksum: 8e4b4eceecd9c4c0d45a74e49d715eb7b12e0d4a12768b70681c9a81a7c2a335f15fe14c78dddda73c90f9ebb5ddac0b2e33c12df606c7d46f7e7829326cc653
   languageName: node
   linkType: hard
 

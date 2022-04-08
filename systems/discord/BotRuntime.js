@@ -1,5 +1,5 @@
 const logger = require("@hyarcade/logger");
-const Database = require("@hyarcade/requests/Database");
+const Database = require("@hyarcade/database");
 const fs = require("fs-extra");
 const path = require("path");
 

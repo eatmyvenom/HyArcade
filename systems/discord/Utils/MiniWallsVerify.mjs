@@ -1,5 +1,5 @@
 import Logger from "@hyarcade/logger";
-import Database from "@hyarcade/requests/Database.js";
+import Database from "@hyarcade/database";
 import { Account } from "@hyarcade/structures";
 import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";

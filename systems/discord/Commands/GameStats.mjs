@@ -1,4 +1,4 @@
-import Database from "@hyarcade/requests/Database.js";
+import Database from "@hyarcade/database";
 import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";

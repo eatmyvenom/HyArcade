@@ -24,7 +24,6 @@
         "build:worker": "cd src/Worker;wrangler publish;cd ../..",
         "changelog": "git cliff --output ./CHANGELOG.md -c ./cliff.toml && yarn postchangelog",
         "postchangelog": "git add CHANGELOG.md && git commit -m 'chore: generate changelog'",
-        "bot:test": "node index.js bot test",
         "postinstall": "is-ci || husky install",
         "commit": "cz",
         "tag:patch": "yarn changelog && npm version patch -m 'build: :bookmark: %s'",
@@ -35,17 +34,12 @@
         "api": "yarn workspace api",
         "site": "yarn workspace site",
         "worker": "yarn workspace @hyarcade/datagen",
-        "refreshcache": "node index.js cachelbs",
-        "cli": "node index.js"
+        "cli": "yarn workspace @hyarcade/cli start",
+        "start": "yarn cli",
+        "refreshcache": "yarn cli cachelbs"
     },
     "dependencies": {
         "@commitlint/config-angular": "^16.2.3",
-        "@hyarcade/config": "*",
-        "@hyarcade/errors": "*",
-        "@hyarcade/logger": "*",
-        "@hyarcade/requests": "*",
-        "@hyarcade/structures": "*",
-        "@hyarcade/utils": "*",
         "fs-extra": "^10.0.1"
     },
     "devDependencies": {
@@ -64,7 +58,6 @@
         "eslint-plugin-unicorn": "^42.0.0",
         "husky": "^7.0.4",
         "is-ci": "^3.0.1",
-        "json-ts": "^1.6.4",
         "prettier": "^2.6.2"
     },
     "engines": {

@@ -1,6 +1,6 @@
 import { Interaction, Message } from "discord.js";
 import Logger from "@hyarcade/logger";
-import Database from "@hyarcade/requests/Database.js";
+import Database from "@hyarcade/database";
 import mojangRequest from "@hyarcade/requests/mojangRequest.js";
 import { Account, Command } from "@hyarcade/structures";
 import CommandResponse from "../Utils/CommandResponse.js";
