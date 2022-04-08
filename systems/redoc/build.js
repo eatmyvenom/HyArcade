@@ -210,48 +210,53 @@ All responses in JSON format.`,
       post: await getPath("Data Generation", { success: true }, "Upload Account"),
     },
     "/leaderboard": {
-      get: await getPath("Leaderboards", await Database.getLeaderboard("wins", "partyGames", "monthly", false, false, 10), "Leaderboard", [
-        {
-          in: "query",
-          name: "category",
-          schema: {
-            type: "string",
+      get: await getPath(
+        "Leaderboards",
+        await Database.getLeaderboard("partyGames.wins", undefined, "monthly", false, false, 10, false),
+        "Leaderboard",
+        [
+          {
+            in: "query",
+            name: "category",
+            schema: {
+              type: "string",
+            },
+            required: false,
           },
-          required: false,
-        },
-        {
-          in: "query",
-          name: "path",
-          schema: {
-            type: "string",
+          {
+            in: "query",
+            name: "path",
+            schema: {
+              type: "string",
+            },
+            required: true,
           },
-          required: true,
-        },
-        {
-          in: "query",
-          name: "time",
-          schema: {
-            type: "string",
+          {
+            in: "query",
+            name: "time",
+            schema: {
+              type: "string",
+            },
+            required: false,
           },
-          required: false,
-        },
-        {
-          in: "query",
-          name: "max",
-          schema: {
-            type: "integer",
+          {
+            in: "query",
+            name: "max",
+            schema: {
+              type: "integer",
+            },
+            required: false,
           },
-          required: false,
-        },
-        {
-          in: "query",
-          name: "filter",
-          schema: {
-            type: "string",
+          {
+            in: "query",
+            name: "filter",
+            schema: {
+              type: "string",
+            },
+            required: false,
           },
-          required: false,
-        },
-      ]),
+        ],
+      ),
     },
     "/database": {
       get: await getPath("Other", {}, "Database collection", [
