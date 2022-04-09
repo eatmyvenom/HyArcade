@@ -2,7 +2,8 @@ const cfg = require("@hyarcade/config").fromJSON();
 const { default: axios } = require("axios");
 const Logger = require("@hyarcade/logger");
 const logger = require("@hyarcade/logger");
-const { Account, AccountArray } = require("@hyarcade/structures");
+const { AccountArray } = require("@hyarcade/structures");
+const Account = require("@hyarcade/account");
 
 /**
  * @param {number} number
