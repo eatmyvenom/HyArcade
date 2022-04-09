@@ -1,7 +1,8 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import Logger from "@hyarcade/logger";
 import mojangRequest from "@hyarcade/requests/mojangRequest.js";
-import { Account, Command } from "@hyarcade/structures";
+import { Command } from "@hyarcade/structures";
 import { Interaction, Message } from "discord.js";
 import CommandResponse from "../Utils/CommandResponse.js";
 import AdvancedEmbeds from "../Utils/Embeds/AdvancedEmbeds.js";

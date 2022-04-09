@@ -1,7 +1,8 @@
+import Account from "@hyarcade/account";
 import Config from "@hyarcade/config";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
-import { Account, Command, CommandResponse } from "@hyarcade/structures";
+import { Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import { createRequire } from "node:module";
 import TopGamesButtons from "../interactions/Components/Buttons/Generators/TopGamesButtons.js";

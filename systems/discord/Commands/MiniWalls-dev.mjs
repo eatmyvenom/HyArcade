@@ -1,6 +1,7 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
-import { Account, Command, CommandResponse } from "@hyarcade/structures";
+import { Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import BotRuntime from "../BotRuntime.js";
 import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";

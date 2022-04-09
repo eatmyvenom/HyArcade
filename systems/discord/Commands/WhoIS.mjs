@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
-import axios from "axios";
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
-import { Account, Command } from "@hyarcade/structures";
+import { Command } from "@hyarcade/structures";
+import axios from "axios";
 import { createRequire } from "node:module";
 import CommandResponse from "../Utils/CommandResponse.js";
 import { COLOR_PURPLE } from "../Utils/Embeds/Colors.js";

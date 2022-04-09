@@ -1,6 +1,7 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
-import { Account, Command, CommandResponse } from "@hyarcade/structures";
+import { Command, CommandResponse } from "@hyarcade/structures";
 import BotRuntime from "../BotRuntime.js";
 import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";

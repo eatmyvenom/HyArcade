@@ -1,5 +1,6 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
-import { Account, Command, CommandResponse } from "@hyarcade/structures";
+import { Command, CommandResponse } from "@hyarcade/structures";
 import { createRequire } from "node:module";
 import ZombiesButtons from "../interactions/Components/Buttons/Generators/ZombiesButtons.js";
 import { ERROR_UNLINKED } from "../Utils/Embeds/StaticEmbeds.js";

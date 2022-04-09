@@ -1,11 +1,11 @@
 const Database = require("@hyarcade/database");
-const { Account, AccountArray } = require("@hyarcade/structures");
+const { AccountArray } = require("@hyarcade/structures");
 const Guild = require("@hyarcade/structures/Guild");
 
 /**
  * Gets a list of account object from the json account list
  *
- * @returns {Promise<Account[]>} All of the accounts in the database
+ * @returns {Promise<[]>} All of the accounts in the database
  */
 exports.accounts = async function accounts() {
   return AccountArray(await Database.readDB("accounts"));
