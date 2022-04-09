@@ -91,39 +91,6 @@ export default async interaction => {
       return await commands.Info.execute([], authorID, null, interaction);
     }
 
-    case commands.Compare.name: {
-      return await commands.Compare.execute(
-        [opts.getString("player1"), opts.getString("player2"), opts.getString("game")],
-        authorID,
-        null,
-        interaction,
-      );
-    }
-
-    case commands.TopGames.name: {
-      return await commands.TopGames.execute([opts.getString("player"), opts.getString("time")], authorID, null, interaction);
-    }
-
-    case commands.Quake.name: {
-      return await commands.Quake.execute([opts.getString("player")], authorID, null, interaction);
-    }
-
-    case commands.Zombies.name: {
-      return await commands.Zombies.execute([opts.getString("player"), opts.getString("map")], authorID, null, interaction);
-    }
-
-    case commands.Arena.name: {
-      return await commands.Arena.execute([opts.getString("player")], authorID, null, interaction);
-    }
-
-    case commands.PBall.name: {
-      return await commands.PBall.execute([opts.getString("player")], authorID, null, interaction);
-    }
-
-    case commands.Walls.name: {
-      return await commands.Walls.execute([opts.getString("player")], authorID, null, interaction);
-    }
-
     case "status": {
       return await commands.Status.execute([opts.getString("player")], authorID, null, interaction);
     }
