@@ -1,9 +1,12 @@
 {
   "name": "@hyarcade/logger",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A logger for usage with hyarcade between modules",
-  "main": "Logger.js",
-  "module": "Logger.js",
+  "main": "dist/Logger.js",
+  "scripts": {
+    "postinstall": "yarn build",
+    "build": "tsc --outDir dist -d"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eatmyvenom/hyarcade.git"
@@ -13,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/eatmyvenom/hyarcade/issues"
   },
-  "homepage": "https://github.com/eatmyvenom/hyarcade#readme"
+  "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.1"
+  }
 }

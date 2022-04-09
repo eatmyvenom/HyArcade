@@ -19,11 +19,13 @@
     "url": "https://github.com/eatmyvenom/hyarcade/issues"
   },
   "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  },
   "dependencies": {
     "@hyarcade/config": "workspace:^",
     "@hyarcade/logger": "workspace:^",
     "@hyarcade/utils": "workspace:^",
-    "axios": "^0.26.1",
-    "typescript": "^4.6.3"
+    "axios": "^0.26.1"
   }
 }

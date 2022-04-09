@@ -1636,6 +1636,9 @@ __metadata:
 "@hyarcade/logger@workspace:^, @hyarcade/logger@workspace:packages/Logger":
   version: 0.0.0-use.local
   resolution: "@hyarcade/logger@workspace:packages/Logger"
+  dependencies:
+    fs-extra: ^10.0.1
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 

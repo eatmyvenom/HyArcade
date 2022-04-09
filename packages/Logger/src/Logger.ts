@@ -1,14 +1,16 @@
-const LoggerInstance = require("./LoggerInstance");
+import process from "node:process";
+import { LoggerInstance } from "./Logger.instance";
 
-const process = require("process");
+/**
+ * @returns {string}
+ */
+function getName(): string {
+  let name = process.argv[2];
+  name = name == "bot" ? process.argv[process.argv.length - 1] : name;
+  return name == undefined ? "hyarcade" : name;
+}
 
-let name = process.argv[2];
-name = this.name == "bot" ? process.argv[process.argv.length - 1] : this.name;
-name = this.name == undefined ? "hyarcade" : this.name;
-
-const Logger = new LoggerInstance(name, "🎮");
-
-Logger.debug("----- NEW PROCESS STARTED -----");
+const Logger = new LoggerInstance(getName(), "🎮");
 
 const start = new Date();
 
@@ -26,7 +28,7 @@ process.on("warning", warning => {
 });
 
 process.on("exit", code => {
-  Logger.out(`${name} exiting with code ${code}`);
+  Logger.out(`${getName()} exiting with code ${code}`);
 });
 
 process.on("uncaughtException", (error, origin) => {
@@ -39,5 +41,8 @@ process.on("uncaughtException", (error, origin) => {
   process.exit(1);
 });
 
-module.exports = Logger;
-module.exports.LoggerInstance = LoggerInstance;
+const { name, emoji, log, out, info, event, custom, warn, debug, dbg, explain, verbose, error, err } = Logger;
+
+export default Logger;
+export * from "./Logger.instance";
+export { name, emoji, log, out, info, event, custom, warn, debug, dbg, explain, verbose, error, err };

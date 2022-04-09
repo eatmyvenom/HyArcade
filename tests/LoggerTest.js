@@ -1,4 +1,4 @@
-const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
+const { LoggerInstance } = require("@hyarcade/logger");
 
 /**
  *

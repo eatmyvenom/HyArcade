@@ -13,6 +13,5 @@
     "target": "ES2018",
     "strict": false
   },
-  "include": ["packages/Database"],
   "exclude": ["node_modules", "packages/*/dist"]
 }
