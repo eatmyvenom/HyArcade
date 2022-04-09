@@ -54,7 +54,7 @@ async function miniWallsStats(args, rawMsg, interaction) {
     }
   }
 
-  switch (time.toLowerCase()) {
+  switch (time?.toLowerCase()) {
     case "d":
     case "day":
     case "daily":
