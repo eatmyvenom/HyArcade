@@ -15,7 +15,7 @@ function formatNum(number) {
 /**
  *
  * @param {string} type
- * @returns {Promise<Account>} Account list
+ * @returns {Promise<Account[]>} Account list
  */
 exports.getList = async function getList(type = "") {
   Logger.warn("YOU SHOULD NOT BE HERE!");

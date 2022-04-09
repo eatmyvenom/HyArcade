@@ -1,7 +1,7 @@
+import Account from "@hyarcade/account";
 import Config from "@hyarcade/config";
 import { DatabaseResponseError } from "@hyarcade/errors";
 import Logger from "@hyarcade/logger";
-import { Account } from "@hyarcade/structures";
 import axios from "axios";
 
 const cfg = Config.fromJSON();

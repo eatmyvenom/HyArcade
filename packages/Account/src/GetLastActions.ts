@@ -1,11 +1,16 @@
-module.exports = function GetLastActions(acc) {
-  if (acc.displayname == undefined) return { quest: { time: 0 }, pets: 0, dailyReward: 0, otherActions: 0 };
+/**
+ *
+ * @param {any} acc
+ * @returns {any}
+ */
+export default function GetLastActions(acc: any) {
+  if (acc.displayname == undefined) return { quest: { name: "", time: 0 }, pets: 0, dailyReward: 0, otherActions: 0 };
   const actions = [];
 
   const allQuests = acc?.quests ?? {};
 
   let lastQuestTime = 0;
-  let lastQuestName;
+  let lastQuestName: string;
 
   for (const questName in allQuests) {
     const quest = allQuests[questName];
@@ -64,12 +69,13 @@ module.exports = function GetLastActions(acc) {
   }
 
   if (acc?.achievementRewardsNew) {
-    const rewardsArr = Object.values(acc?.achievementRewardsNew ?? {});
+    const rewardsArr: number[] = Object.values(acc?.achievementRewardsNew ?? {});
     actions.push(Math.max(...rewardsArr));
   }
 
   if (acc?.stats?.Pit?.profile?.items_last_buy) {
-    actions.push(Math.max(...Object.values(acc?.stats?.Pit?.profile?.items_last_buy)));
+    const lastBuys: number[] = Object.values(acc?.stats?.Pit?.profile?.items_last_buy);
+    actions.push(Math.max(...lastBuys));
   }
 
   if (Array.isArray(acc?.stats?.Pit?.profile?.ended_contracts)) {
@@ -85,4 +91,4 @@ module.exports = function GetLastActions(acc) {
   }
 
   return { quest, pets: lastPetTime, dailyReward: acc?.lastAdsenseGenerateTime ?? 0, otherActions: Math.max(...actions) };
-};
+}

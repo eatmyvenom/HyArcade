@@ -1,8 +1,11 @@
+const Account = require("@hyarcade/account");
 const fs = require("fs-extra");
-const { Account } = require("@hyarcade/structures");
 const normalize = require("../src/datagen/utils/NormalizeAccount");
 
-async function main () {
+/**
+ *
+ */
+async function main() {
   /**
    * @type {Account[]}
    */
@@ -18,7 +21,7 @@ async function main () {
 
   accs = accs.slice(0, 120);
 
-  accs = accs.map((oldAcc) => {
+  accs = accs.map(oldAcc => {
     const normalizedWins = normalize(oldAcc);
 
     return `${oldAcc.name.padEnd(17, " ")} : ${Math.round(normalizedWins)}`;
@@ -27,6 +30,4 @@ async function main () {
   return accs.join("\n");
 }
 
-main()
-  .then(console.log)
-  .catch(console.error);
+main().then(console.log).catch(console.error);

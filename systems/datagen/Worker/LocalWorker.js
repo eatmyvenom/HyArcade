@@ -2,10 +2,10 @@ const https = require("https");
 const { LoggerInstance } = require("@hyarcade/logger");
 const Logger = new LoggerInstance("Worker", "📈");
 const Database = require("@hyarcade/database");
-const { Account } = require("@hyarcade/structures");
 const Sleep = require("@hyarcade/utils/Sleep");
 const cfg = require("@hyarcade/config").fromJSON();
 const { RequestTimeoutError, HypixelResponseError } = require("@hyarcade/errors");
+const Account = require("@hyarcade/account");
 
 /**
  *

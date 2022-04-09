@@ -1,5 +1,5 @@
+const Account = require("@hyarcade/account");
 const { DeepSubtract } = require("@hyarcade/helpers-objects");
-const { Account } = require("@hyarcade/structures");
 
 /**
  *

@@ -1,8 +1,9 @@
 {
-  "name": "@hyarcade/logger",
+  "name": "@hyarcade/account",
   "version": "0.0.0",
-  "description": "A logger for usage with hyarcade between modules",
-  "main": "dist/Logger.js",
+  "description": "Account data format for hyarcade",
+  "main": "dist/Account.js",
+  "types": "dist/Account.d.ts",
   "scripts": {
     "build": "swc src  --config-file ../../.swcrc --out-dir dist && tsc --declaration --emitDeclarationOnly --outDir dist/"
   },
@@ -18,8 +19,5 @@
   "homepage": "https://github.com/eatmyvenom/hyarcade#readme",
   "devDependencies": {
     "typescript": "^4.6.3"
-  },
-  "dependencies": {
-    "fs-extra": "^10.0.1"
   }
 }

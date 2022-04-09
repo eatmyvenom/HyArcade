@@ -9,98 +9,75 @@ const arcadeOneTime = achievements.arcade.one_time;
 const arcadeTiered = achievements.arcade.tiered;
 
 class Achievement {
-  name = "";
-  description = "";
+  name: string;
+  description: string;
 }
 
 class OneTimeAP extends Achievement {
-  points = 0;
-  gamePercentUnlocked = 0;
-  globalPercentUnlocked = 0;
+  points: number;
+  gamePercentUnlocked: number;
+  globalPercentUnlocked: number;
+  legacy: boolean;
 }
 
 class APTier {
-  tier = 0;
-  points = 0;
-  amount = 0;
+  tier: number;
+  points: number;
+  amount: number;
 }
 
 class TieredAP extends Achievement {
-  /**
-   *
-   * @type {ArrayLike<APTier>}
-   * @memberof TieredAP
-   */
-  tiers = {};
+  tiers: APTier[];
+  legacy?: boolean;
 }
 
 class TeiredAchievementWrapper {
-  /**
-   *
-   * @type {TieredAP}
-   * @memberof TeiredAchievementWrapper
-   */
-  achievement = {};
+  achievement: TieredAP;
 
-  stat = "";
+  stat: string;
 
-  constructor(achievement, stat) {
+  constructor(achievement: TieredAP, stat: string) {
     this.achievement = achievement;
     this.stat = `arcade_${stat.toLowerCase()}`;
   }
 }
 
 class OneTimeAchievementWrapper {
-  /**
-   *
-   * @type {OneTimeAP}
-   * @memberof TeiredAchievementWrapper
-   */
-  achievement = {};
+  achievement: OneTimeAP;
 
-  stat = "";
+  stat: string;
 
-  constructor(achievement, stat) {
+  constructor(achievement: OneTimeAP, stat: string) {
     this.achievement = achievement;
     this.stat = `arcade_${stat.toLowerCase()}`;
   }
 }
 
 class AccountWithAchievements {
-  /**
-   *
-   * @type {ArrayLike<string>}
-   * @memberof AccountWithAchievements
-   */
-  achievementsOneTime = {};
+  achievementsOneTime: string[];
 
-  /**
-   *
-   * @type {Object<string, number>}
-   * @memberof AccountWithAchievements
-   */
-  achievements = {};
+  achievements: { [s: string]: number } = {};
 }
 
 class ArcadeTieredAP {
-  name = "";
-  legacy = false;
-  currentTier = 0;
-  topTier = 0;
+  name: string;
+  legacy: boolean;
+  currentTier: number;
+  topTier: number;
 
-  amount = 0;
-  toTop = 0;
-  toNext = 0;
+  amount: number;
+  toTop: number;
+  toNext: number;
 
-  ap = 0;
-  availiableAP = 0;
+  ap: number;
+  availiableAP: number;
 
   /**
    *
    * @param {number} amnt
    * @param {TieredAP} achievement
    */
-  constructor(amnt, achievement) {
+  constructor(amnt: number, achievement: TieredAP) {
     this.amount = amnt;
     this.name = achievement.name;
     this.legacy = achievement.legacy ?? false;
@@ -123,17 +100,17 @@ class ArcadeTieredAP {
 }
 
 class ArcadeGameAP {
-  apEarned = 0;
-  apAvailable = 0;
+  apEarned: number;
+  apAvailable: number;
 
-  legacyEarned = 0;
-  legacyAvailable = 0;
+  legacyEarned: number;
+  legacyAvailable: number;
 
-  challengeEarned = 0;
-  challengeAvailable = 0;
+  challengeEarned: number;
+  challengeAvailable: number;
 
-  tieredEarned = 0;
-  tieredAvailable = 0;
+  tieredEarned: number;
+  tieredAvailable: number;
 
   tieredAP = [];
   challengeAP = [];
@@ -147,7 +124,7 @@ class ArcadeGameAP {
    * @param {OneTimeAchievementWrapper[]} onetimes
    * @param {TeiredAchievementWrapper[]} tiered
    */
-  constructor(accData, onetimes, tiered) {
+  constructor(accData: AccountWithAchievements, onetimes: OneTimeAchievementWrapper[], tiered: TeiredAchievementWrapper[]) {
     const onetimeArr = new Set(accData?.achievementsOneTime ?? []);
     const tieredKeys = Object.keys(accData?.achievements ?? []);
 
@@ -231,130 +208,30 @@ class ArcadeGameAP {
   }
 }
 
-class AccountAP {
-  totalEarned = 0;
-  totalAvailiable = 0;
+export class AccountAP {
+  totalEarned: number;
+  totalAvailiable: number;
 
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  overall;
+  overall: ArcadeGameAP;
+  blockingDead: ArcadeGameAP;
+  bountyHunters: ArcadeGameAP;
+  captureTheWool: ArcadeGameAP;
+  creeperAttack: ArcadeGameAP;
+  dragonWars: ArcadeGameAP;
+  enderSpleef: ArcadeGameAP;
+  farmHunt: ArcadeGameAP;
+  football: ArcadeGameAP;
+  galaxyWars: ArcadeGameAP;
+  hideAndSeek: ArcadeGameAP;
+  holeInTheWall: ArcadeGameAP;
+  hypixelSays: ArcadeGameAP;
+  miniWalls: ArcadeGameAP;
+  pixelPainters: ArcadeGameAP;
+  partyGames: ArcadeGameAP;
+  throwOut: ArcadeGameAP;
+  zombies: ArcadeGameAP;
 
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  blockingDead;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  bountyHunters;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  captureTheWool;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  creeperAttack;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  dragonWars;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  enderSpleef;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  farmHunt;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  football;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  galaxyWars;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  hideAndSeek;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  holeInTheWall;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  hypixelSays;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  miniWalls;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  pixelPainters;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  throwOut;
-
-  /**
-   *
-   * @type {ArcadeGameAP}
-   * @memberof AccountAP
-   */
-  zombies;
-
-  constructor(accData) {
+  constructor(accData: any) {
     this.overall = new ArcadeGameAP(
       accData,
       [new OneTimeAchievementWrapper(arcadeOneTime.WORLD_ECONOMICS, "WORLD_ECONOMICS")],

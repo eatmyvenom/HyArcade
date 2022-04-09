@@ -1,7 +1,7 @@
+import Account from "@hyarcade/account";
 import { addAccount, linkDiscord, readDB } from "@hyarcade/database";
 import Logger from "@hyarcade/logger";
 import { mojangRequest } from "@hyarcade/requests";
-import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import { client } from "../BotRuntime.js";
 import { ERROR_ARGS_LENGTH } from "../Utils/Embeds/DynamicEmbeds.js";

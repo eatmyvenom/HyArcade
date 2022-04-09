@@ -1,6 +1,6 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
-import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";

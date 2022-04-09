@@ -2,7 +2,7 @@
 const { Canvas, FontLibrary, loadImage } = require("skia-canvas");
 const Discord = require("discord.js");
 const Logger = require("@hyarcade/logger");
-const { Account } = require("@hyarcade/structures");
+const Account = require("@hyarcade/account");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const StackBlur = require("stackblur-canvas");
 

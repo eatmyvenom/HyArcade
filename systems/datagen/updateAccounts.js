@@ -1,11 +1,11 @@
 const fs = require("fs-extra");
 const logger = require("@hyarcade/logger");
 const HyarcadeWorkerRequest = require("@hyarcade/requests/HyarcadeWorkerRequest");
-const { Account } = require("@hyarcade/structures");
 const sleep = require("@hyarcade/utils/Sleep");
 const Sleep = require("@hyarcade/utils/Sleep");
 const Util = require("node:util");
 const NormalizeAccount = require("./utils/NormalizeAccount");
+const Account = require("@hyarcade/account");
 
 const force = fs.existsSync("force");
 let cfg;

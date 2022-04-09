@@ -1,9 +1,9 @@
 const { MissingFieldError } = require("@hyarcade/errors");
 const Logger = require("@hyarcade/logger");
 const { mojangRequest } = require("@hyarcade/requests");
-const { Account } = require("@hyarcade/structures");
 const { DeepMerge } = require("@hyarcade/helpers-objects");
 const APIRuntime = require("./APIRuntime");
+const Account = require("@hyarcade/account");
 
 let fakeData;
 

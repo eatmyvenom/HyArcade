@@ -1,4 +1,9 @@
-module.exports = function NormalizeAccount(acc) {
+/**
+ *
+ * @param {any} acc
+ * @returns {number}
+ */
+export default function NormalizeAccount(acc: any): number {
   return (
     acc.blockingDead.wins * 7 +
     acc.bountyHunters.wins * 8 +
@@ -17,4 +22,4 @@ module.exports = function NormalizeAccount(acc) {
     acc.seasonalWins.total * 3 +
     (acc.zombies.wins_zombies ?? 0) * 30
   );
-};
+}

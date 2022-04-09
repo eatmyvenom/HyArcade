@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "swc src  --config-file ../../.swcrc --out-dir dist"
+    "build": "swc src  --config-file ../../.swcrc --out-dir dist && tsc --declaration --emitDeclarationOnly --outDir dist/"
   },
   "repository": {
     "type": "git",

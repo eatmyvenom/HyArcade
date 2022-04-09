@@ -1,8 +1,8 @@
-import { MessageEmbed } from "discord.js";
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
-import { Account } from "@hyarcade/structures";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
+import { MessageEmbed } from "discord.js";
 import BotRuntime from "../BotRuntime.js";
 
 export default new Command(["dbinfo", "database"], ["*"], async (args, rawMsg, interaction) => {

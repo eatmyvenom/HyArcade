@@ -1,7 +1,7 @@
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import Logger from "@hyarcade/logger";
 import { mojangRequest } from "@hyarcade/requests";
-import { Account } from "@hyarcade/structures";
 import utils from "@hyarcade/utils";
 import BotRuntime from "../BotRuntime.js";
 import { playerLink } from "./Embeds/AdvancedEmbeds.js";

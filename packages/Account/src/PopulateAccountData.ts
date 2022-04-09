@@ -1,6 +1,5 @@
-const Account = require("./Account");
-const GetLastActions = require("./GetLastActions");
-const NormalizeAccount = require("./NormalizeAccount");
+import GetLastActions from "./GetLastActions";
+import NormalizeAccount from "./NormalizeAccount";
 
 /**
  * @param {object} json
@@ -58,9 +57,9 @@ function getRank(json) {
 /**
  *
  * @param {object} json
- * @param {Account} account
+ * @param {any} account
  */
-module.exports = function PopulateAccountData(json, account) {
+export default function PopulateAccountData(json: any, account: any) {
   account.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
   account.rank = getRank(json);
@@ -129,4 +128,4 @@ module.exports = function PopulateAccountData(json, account) {
   account.unknownWins = Math.abs(account.arcadeWins - account.combinedArcadeWins);
   account.actionTime = GetLastActions(json?.player);
   account.importance = NormalizeAccount(account);
-};
+}

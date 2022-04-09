@@ -1,9 +1,9 @@
 const { URL } = require("url");
 const Logger = require("@hyarcade/logger");
-const { Account } = require("@hyarcade/structures");
 const AccountResolver = require("../AccountResolver");
 const APIRuntime = require("../APIRuntime");
 const { DeepMerge } = require("@hyarcade/helpers-objects");
+const Account = require("@hyarcade/account");
 
 let fakeData;
 

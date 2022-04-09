@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 const Logger = require("@hyarcade/logger");
-const { Account } = require("@hyarcade/structures");
+const Account = require("@hyarcade/account");
 
 module.exports = class Accounts {
   folderPath = "";

@@ -1,6 +1,6 @@
-import Logger from "@hyarcade/logger";
+import Account from "@hyarcade/account";
 import Database from "@hyarcade/database";
-import { Account } from "@hyarcade/structures";
+import Logger from "@hyarcade/logger";
 import { createRequire } from "node:module";
 import addAccounts from "../../datagen/addAccounts.js";
 import BotRuntime from "../BotRuntime.js";
