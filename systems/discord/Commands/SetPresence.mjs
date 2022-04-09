@@ -1,6 +1,6 @@
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
-import BotRuntime from "../BotRuntime";
+import BotRuntime from "../BotRuntime.js";
 
 export default new Command("setpresence", ["%trusted%"], async args => {
   const txt = args.join(" ");
