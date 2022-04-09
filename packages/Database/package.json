@@ -6,8 +6,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "postinstall": "yarn build",
-    "build": "tsc --outDir dist -d"
+    "build": "swc src  --config-file ../../.swcrc --out-dir dist"
   },
   "repository": {
     "type": "git",

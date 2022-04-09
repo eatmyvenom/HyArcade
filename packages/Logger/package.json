@@ -4,8 +4,7 @@
   "description": "A logger for usage with hyarcade between modules",
   "main": "dist/Logger.js",
   "scripts": {
-    "postinstall": "yarn build",
-    "build": "tsc --outDir dist -d"
+    "build": "swc src  --config-file ../../.swcrc --out-dir dist"
   },
   "repository": {
     "type": "git",

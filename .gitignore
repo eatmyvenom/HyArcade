@@ -11,6 +11,11 @@ packages/*/dist
 systems/*/dist
 !tsconfig*.json
 
+# Turbo
+!turbo.json
+.turbo
+
+
 # Config files
 !package.json
 !package-lock.json
