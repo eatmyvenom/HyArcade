@@ -43,6 +43,7 @@ module.exports = async function (category, lbprop, timePeriod, reverse, max, noC
         accs.push({ ...displayData, lbProp: lilAcc.score });
       }
     } else {
+      Logger.explain("Not using cache for historical leaderboard");
       accs = await connector.getHistoricalLeaderboard(dotNotated, time, reverse, max);
     }
   }

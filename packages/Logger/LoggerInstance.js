@@ -199,10 +199,20 @@ class LoggerInstance {
    */
   debug(content) {
     const str = Array.isArray(content) ? content.join(" ") : content;
-    print("DEBUG", str, this.name, "\u001B[95m", this.emoji);
+    print("DEBUG", str, this.name, "\u001B[35m", this.emoji);
   }
 
   dbg = this.debug;
+
+  /**
+   * Log content to stdout or a file
+   *
+   * @param {string|string[]} content
+   */
+  explain(content) {
+    const str = Array.isArray(content) ? content.join(" ") : content;
+    print("EXPLN", str, this.name, "\u001B[96m", this.emoji);
+  }
 
   /**
    * Log content to stdout or a file
