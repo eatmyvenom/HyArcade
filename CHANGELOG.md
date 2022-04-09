@@ -5,18 +5,51 @@ All notable changes to this project will be documented in this file.
 
 ## Bug Fixes
 
-- **cli:** :rotating_light: catch cli errors ([7e704f5](https://github.com/eatmyvenom/hyarcade/commit/7e704f567811bffdb6a945bd910fed55ec9fc6f7))
+- Remove redoc build script ([eb5f48b](https://github.com/eatmyvenom/hyarcade/commit/eb5f48bf7de00276de755aac4afefaf38639fd80))
+- **guild:** :busts_in_silhouette: use correct key ([836b384](https://github.com/eatmyvenom/hyarcade/commit/836b384f8c04f6907ac7e316318375b8f591ec84))
+- **api:** :zap: allow nullish guild ([deefae5](https://github.com/eatmyvenom/hyarcade/commit/deefae52a32aa828ed0a6c6516d392e5e9a0a59e))
+- **guild:** :busts_in_silhouette: use cache ([bf3110b](https://github.com/eatmyvenom/hyarcade/commit/bf3110b017ca20d56f65a4efe173d7d7c68eec0b))
+- **guild:** :busts_in_silhouette: old data cache ([69986fa](https://github.com/eatmyvenom/hyarcade/commit/69986fa75247a844830969b018afaca2495f2f21))
+- Resolve server errors ([10684ff](https://github.com/eatmyvenom/hyarcade/commit/10684ffd3a88bfeb2b339fca7628f349078f9bae))
+- :bug: some bug fixes ([bce3350](https://github.com/eatmyvenom/hyarcade/commit/bce335021a2212d93ed9e23b6e575999f83dad38))
+- Add tsconfig ([a64dead](https://github.com/eatmyvenom/hyarcade/commit/a64deadc82f107c6ef8d6e48151cb33af2599aef))
+- **package:** Tsconfig err ([c92ae63](https://github.com/eatmyvenom/hyarcade/commit/c92ae634ad70f56573a5f914d8b1c3ad6b221190))
+- **discord:** :speech_balloon: import database ([2b3af18](https://github.com/eatmyvenom/hyarcade/commit/2b3af18030577465e4ad42015cdfb75e75b02ffe))
+- **logs:** :loud_sound: logger types ([80e2829](https://github.com/eatmyvenom/hyarcade/commit/80e2829afa168617829cf3c95ba509db1d3bdf88))
+- **types:** :label: config types ([70115d0](https://github.com/eatmyvenom/hyarcade/commit/70115d0e19c35e06ed73e700fa937c88754e3405))
+- **site:** :globe_with_meridians: use relative paths for site ([775427f](https://github.com/eatmyvenom/hyarcade/commit/775427f91a702ee0f1331f4084b908600e29e92f))
+- **lint:** :rotating_light: fix __dirname errors ([6afde4d](https://github.com/eatmyvenom/hyarcade/commit/6afde4dbdb3c20f53a42f07de76256325330e4ff))
+- **cli:** :rotating_light: catch cli errors ([c654316](https://github.com/eatmyvenom/hyarcade/commit/c6543167674a547c201175c82b37a84d5169c4ca))
+- **mongo:** :card_file_box: jsdoc ([50d5fe9](https://github.com/eatmyvenom/hyarcade/commit/50d5fe95ca1f6f0b0582c80492fe13ec13e53d19))
 
 ## Features
 
-- **logs:** :loud_sound: log important info for each process ([e2928e4](https://github.com/eatmyvenom/hyarcade/commit/e2928e45a3ff23a3f4537fec236b94b2b8cace9d))
-- **logs:** :loud_sound: better formatting ([5829602](https://github.com/eatmyvenom/hyarcade/commit/5829602a1f66da233ca1983d6de067db435cd2fa))
+- **redoc:** :memo: use cached lbs ([2371553](https://github.com/eatmyvenom/hyarcade/commit/2371553350d3ab255441a0807ec5097fe9fff350))
+- **db-interface:** :card_file_box: make db interface package ([c52e843](https://github.com/eatmyvenom/hyarcade/commit/c52e8435af7e1647923b8ef478be32d3f7ef1491))
+- **datagen:** :chart_with_upwards_trend: stop worker upon api exit ([eeb3fd2](https://github.com/eatmyvenom/hyarcade/commit/eeb3fd21204e1b17595cd715e6273f09afd7c7ee))
+- **package:** :package: add helpers for objects ([789069a](https://github.com/eatmyvenom/hyarcade/commit/789069a83c246a08ad4a1bd00702dae50ed9a367))
+- **redoc:** :memo: update build command ([3ec22ab](https://github.com/eatmyvenom/hyarcade/commit/3ec22ab58d0ab65753fe238a51fdedec4699af19))
+- **images:** :art: start Long leaderboard renderer ([221d8fd](https://github.com/eatmyvenom/hyarcade/commit/221d8fdbae8e9691b5330189ff571df97fd0ceb4))
+- **guild:** :busts_in_silhouette: preserve gxp forever ([577901d](https://github.com/eatmyvenom/hyarcade/commit/577901d53e38d60095f36beee6f7ba260a14c49e))
+- **images:** :art: move image gen to package ([2764a9a](https://github.com/eatmyvenom/hyarcade/commit/2764a9a9eb4d8a2b778d2a033366beb43aeb9514))
+- **lint:** :rotating_light: update lint ([5cbdfbe](https://github.com/eatmyvenom/hyarcade/commit/5cbdfbe630038bf6fd3291512b91fc0d342d213d))
+- **api:** :zap: use runtime structure ([3a42bba](https://github.com/eatmyvenom/hyarcade/commit/3a42bba03273def000eb3aaa6787d0a568c36a70))
+- **logs:** :loud_sound: log important info for each process ([6a4f877](https://github.com/eatmyvenom/hyarcade/commit/6a4f877deeceb04c74f77a20e72aad5985227c94))
+- **logs:** :loud_sound: better formatting ([073021a](https://github.com/eatmyvenom/hyarcade/commit/073021aec1ab5af03382ae4618653915b9441380))
 - **redis:** :page_facing_up: make redis lbs configurable ([7acc814](https://github.com/eatmyvenom/hyarcade/commit/7acc814aa6dfd805189ce01a559da1d7e877ba4a))
 
 ## Refactor
 
-- Rework imports ([9e4904a](https://github.com/eatmyvenom/hyarcade/commit/9e4904a2c57fbdc249508a9a8f16d01fe08d1cb6))
-- **cli:** :rotating_light: remove all cli from index ([c76a105](https://github.com/eatmyvenom/hyarcade/commit/c76a1059088b007b4141043dff42bbbc08879c50))
+- **logger:** :loud_sound: change time color ([2b7feec](https://github.com/eatmyvenom/hyarcade/commit/2b7feece1061bd52d64a13218232b5d05d8fc2ae))
+- **database:** Move database to typescript ([ab24eb0](https://github.com/eatmyvenom/hyarcade/commit/ab24eb0fd7b0b79d27ab5df7cac2c927baf57ab8))
+- **discord:** :speech_balloon: move more to mjs ([0b25404](https://github.com/eatmyvenom/hyarcade/commit/0b25404383b2ac80e7bfbaec7efa875c2a36d05e))
+- **lint:** :rotating_light: update lint rules ([f7ac914](https://github.com/eatmyvenom/hyarcade/commit/f7ac914221346780b50fd49acfa3394be2c9aac0))
+- Rework imports ([b02e5aa](https://github.com/eatmyvenom/hyarcade/commit/b02e5aaa3b77c5a8dcc728be26714c489118c245))
+- **cli:** :rotating_light: remove all cli from index ([1697bbe](https://github.com/eatmyvenom/hyarcade/commit/1697bbe94bf2917f379a7e9528c0e4b572875579))
+
+## Typings
+
+- **config:** :wrench: add typings ([77739f7](https://github.com/eatmyvenom/hyarcade/commit/77739f7ef42599501c4bb2d40c678038e772d2d8))
 
 # [v2.7.2](https://github.com/eatmyvenom/hyarcade/compare/v2.7.1...v2.7.2) - (2022-03-30)
 
