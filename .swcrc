@@ -11,15 +11,15 @@
     },
     "target": "es2022",
     "keepClassNames": true,
-    "loose": false,
+    "loose": true,
     "externalHelpers": true
   },
   "module": {
     "type": "commonjs",
-    "strict": true,
+    "strict": false,
     "strictMode": true,
     "lazy": false,
-    "noInterop": true
+    "noInterop": false
   },
   "sourceMaps": true
 }

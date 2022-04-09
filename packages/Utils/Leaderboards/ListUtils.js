@@ -2,7 +2,6 @@ const cfg = require("@hyarcade/config").fromJSON();
 const { default: axios } = require("axios");
 const Logger = require("@hyarcade/logger");
 const logger = require("@hyarcade/logger");
-const { AccountArray } = require("@hyarcade/structures");
 const Account = require("@hyarcade/account");
 
 /**
@@ -28,7 +27,7 @@ exports.getList = async function getList(type = "") {
   const listFetch = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass } });
   const list = listFetch.data;
   logger.debug("Data fetched!");
-  return AccountArray(list);
+  return list;
 };
 
 exports.stringifyList = function stringifyList(list, lbprop, category, maxamnt, startingIndex = 0) {
