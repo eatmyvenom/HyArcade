@@ -1,7 +1,7 @@
 const process = require("process");
 const { URL } = require("url");
 const logger = require("@hyarcade/logger");
-const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
+const { LoggerInstance } = require("@hyarcade/logger");
 const AccessLogger = new LoggerInstance("Access", "📄");
 const { DupeKeyError, MissingFieldError, DataNotFoundError } = require("@hyarcade/errors");
 const MongoConnector = require("@hyarcade/requests/MongoConnector");

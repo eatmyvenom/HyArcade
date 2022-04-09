@@ -2,7 +2,7 @@
 /* eslint-disable unicorn/no-array-callback-reference */
 /* eslint-disable unicorn/no-array-method-this-argument */
 const os = require("node:os");
-const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
+const { LoggerInstance } = require("@hyarcade/logger");
 const { MongoClient, Collection, Db } = require("mongodb");
 const CommandMetadata = require("@hyarcade/structures/Discord/CommandMetadata");
 const config = require("@hyarcade/config");

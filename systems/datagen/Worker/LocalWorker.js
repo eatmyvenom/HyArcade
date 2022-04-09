@@ -1,5 +1,5 @@
 const https = require("https");
-const LoggerInstance = require("@hyarcade/logger/LoggerInstance");
+const { LoggerInstance } = require("@hyarcade/logger");
 const Logger = new LoggerInstance("Worker", "📈");
 const Database = require("@hyarcade/database");
 const { Account } = require("@hyarcade/structures");
