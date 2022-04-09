@@ -1,4 +1,3 @@
-const AccountArray = require("./Account/AccountArray");
 const Command = require("./Discord/Command");
 const CommandMetadata = require("./Discord/CommandMetadata");
 const CommandResponse = require("./Discord/CommandResponse");
@@ -8,7 +7,6 @@ const Event = require("./Event");
 const Guild = require("./Guild");
 
 module.exports = {
-  AccountArray,
   Command,
   CommandMetadata,
   CommandResponse,
