@@ -88,7 +88,7 @@ module.exports = async (req, res, runtime) => {
       const uuid = url.searchParams.get("uuid");
 
       Logger.warn(`Removing ${uuid} from database!`);
-      const del = await runtime.config.accounts.deleteMany({ uuid });
+      const del = await runtime.mongoConnector.accounts.deleteMany({ uuid });
       Logger.debug(JSON.stringify(del));
       res.write(JSON.stringify(del));
       res.end();
