@@ -3,7 +3,7 @@ const Logger = require("@hyarcade/logger");
 const { mojangRequest } = require("@hyarcade/requests");
 const { DeepMerge } = require("@hyarcade/helpers-objects");
 const APIRuntime = require("./APIRuntime");
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 let fakeData;
 

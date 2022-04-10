@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
 import { Command, CommandResponse } from "@hyarcade/structures";

@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/no-array-reduce */
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 const ImageGenerator = require("../ImageGenerator");
 
 class LongRendererOptions {

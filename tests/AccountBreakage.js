@@ -1,4 +1,4 @@
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 const { writeJson } = require("fs-extra");
 
 /**

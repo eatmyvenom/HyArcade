@@ -1,4 +1,4 @@
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 const Logger = require("@hyarcade/logger");
 const MongoConnector = require("@hyarcade/requests/MongoConnector");
 const TimSort = require("timsort");

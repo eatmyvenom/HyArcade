@@ -1,4 +1,4 @@
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 const fs = require("fs-extra");
 const normalize = require("../src/datagen/utils/NormalizeAccount");
 

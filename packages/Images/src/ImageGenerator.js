@@ -2,9 +2,9 @@
 const { Canvas, FontLibrary, loadImage } = require("skia-canvas");
 const Discord = require("discord.js");
 const Logger = require("@hyarcade/logger");
-const Account = require("@hyarcade/account");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const StackBlur = require("stackblur-canvas");
+const { Account } = require("@hyarcade/account");
 
 FontLibrary.use("minecraft", GetAsset("minecraft.ttf"));
 FontLibrary.use("boldmc", GetAsset("mcbold.otf"));

@@ -3,7 +3,7 @@ const Logger = require("@hyarcade/logger");
 const AccountResolver = require("../AccountResolver");
 const APIRuntime = require("../APIRuntime");
 const { DeepMerge } = require("@hyarcade/helpers-objects");
-const { default: Account } = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 let fakeData;
 

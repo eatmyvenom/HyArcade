@@ -1,4 +1,4 @@
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";
 import Command from "@hyarcade/structures/Discord/Command.js";

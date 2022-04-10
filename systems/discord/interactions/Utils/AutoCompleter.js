@@ -4,7 +4,7 @@ const Logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/database");
 const LeaderboardCategorys = require("./AutoComplete/LeaderboardCategorys");
 const LeaderboardStats = require("./AutoComplete/LeaderboardStats");
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 /**
  * @type {Account}

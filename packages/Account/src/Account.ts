@@ -26,7 +26,7 @@ import {
 } from "./ArcadeModes";
 import { PopulateAccountData } from "./PopulateAccountData";
 
-export default class Account {
+export class Account {
   name: string;
   // eslint-disable-next-line camelcase
   name_lower: string;

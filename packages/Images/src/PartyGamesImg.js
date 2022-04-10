@@ -1,7 +1,7 @@
 const { MessageAttachment } = require("discord.js");
 const GetAsset = require("@hyarcade/utils/FileHandling/GetAsset");
 const ImageGenerator = require("./ImageGenerator");
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 /**
  * @param {number} n

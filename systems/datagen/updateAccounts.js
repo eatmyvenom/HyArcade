@@ -5,7 +5,7 @@ const sleep = require("@hyarcade/utils/Sleep");
 const Sleep = require("@hyarcade/utils/Sleep");
 const Util = require("node:util");
 const NormalizeAccount = require("./utils/NormalizeAccount");
-const Account = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 const force = fs.existsSync("force");
 let cfg;

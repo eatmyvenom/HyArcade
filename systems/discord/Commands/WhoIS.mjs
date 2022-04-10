@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { Command } from "@hyarcade/structures";
 import axios from "axios";

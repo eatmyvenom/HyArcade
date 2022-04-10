@@ -1,4 +1,4 @@
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import { addAccount, linkDiscord, readDB } from "@hyarcade/database";
 import Logger from "@hyarcade/logger";
 import { mojangRequest } from "@hyarcade/requests";

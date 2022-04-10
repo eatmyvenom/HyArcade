@@ -5,7 +5,7 @@ const Database = require("@hyarcade/database");
 const Sleep = require("@hyarcade/utils/Sleep");
 const cfg = require("@hyarcade/config").fromJSON();
 const { RequestTimeoutError, HypixelResponseError } = require("@hyarcade/errors");
-const { default: Account } = require("@hyarcade/account");
+const { Account } = require("@hyarcade/account");
 
 /**
  *

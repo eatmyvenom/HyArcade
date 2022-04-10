@@ -1,4 +1,4 @@
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import Config from "@hyarcade/config";
 import Database from "@hyarcade/database";
 import { ImageGenerator } from "@hyarcade/images";

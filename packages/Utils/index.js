@@ -4,6 +4,7 @@ const Leaderboards = require("./Leaderboards/index");
 const ExecAsync = require("./ExecAsync");
 const listParser = require("./listParser");
 const Sleep = require("./Sleep");
+const isValidIGN = require("./isValidIGN");
 
 module.exports = {
   Database,
@@ -12,4 +13,5 @@ module.exports = {
   ExecAsync,
   listParser,
   Sleep,
+  isValidIGN,
 };

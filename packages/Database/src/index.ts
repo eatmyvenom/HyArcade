@@ -1,4 +1,4 @@
-import Account from "@hyarcade/account";
+import type { Account } from "@hyarcade/account";
 import Config from "@hyarcade/config";
 import { DatabaseResponseError } from "@hyarcade/errors";
 import Logger from "@hyarcade/logger";
@@ -60,7 +60,7 @@ export async function readDB(file: string, fields: string[]): Promise<object> {
     url.searchParams.set("fields", fields.join(","));
   }
 
-  Logger.debug(`Fetching ${url.searchParams.toString()} from database`);
+  Logger.info(`Fetching ${url.searchParams.toString()} from database`);
 
   try {
     const fileReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
@@ -150,7 +150,6 @@ export async function guild(text: string, cache = false): Promise<object> {
 
   let guild;
   try {
-    Logger.debug(`Fetching guild ${url.searchParams} from database!`);
     const guildReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
     guild = guildReq.data;
   } catch (error) {
@@ -195,7 +194,6 @@ export async function timedAccount(text: string, discordID?: string, time?: stri
 
   let acc;
   try {
-    Logger.debug(`Fetching ${url.searchParams} from database!`);
     const accReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
     acc = accReq.data;
   } catch (error) {
@@ -402,7 +400,6 @@ export async function getLeaderboard(
 
   let lb;
 
-  Logger.debug(`Fetching ${time ?? "lifetime"} ${category ?? ""} ${path} leaderboard`);
   try {
     const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
     lb = lbReq.data;
@@ -443,7 +440,6 @@ export async function getGuildLeaderboard(path: string, time?: string, reverse?:
 
   let lb;
 
-  Logger.debug(`Fetching ${time ?? "lifetime"} ${path} guild leaderboard`);
   try {
     const lbReq = await axios.get(url.toString(), { headers: { Authorization: cfg.database.pass }, validateStatus });
     lb = lbReq.data;

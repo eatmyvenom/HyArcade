@@ -1,4 +1,4 @@
-import Account from "@hyarcade/account";
+import { Account } from "@hyarcade/account";
 import Database from "@hyarcade/database";
 import { Command, CommandResponse } from "@hyarcade/structures";
 import { createRequire } from "node:module";

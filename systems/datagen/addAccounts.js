@@ -1,7 +1,7 @@
-const logger = require("@hyarcade/logger");
+const Logger = require("@hyarcade/logger");
 const Database = require("@hyarcade/database");
 const { getUUID } = require("@hyarcade/requests/mojangRequest");
-const isValidIGN = require("./utils/ignValidator");
+const { isValidIGN } = require("@hyarcade/utils");
 
 /**
  * Add a list of accounts to another list
@@ -20,7 +20,7 @@ module.exports = async function addAccounts(names) {
       uuid = name.replace(/-/g, "").toLowerCase();
     } else {
       if (!isValidIGN(name)) {
-        logger.warn(`${name} is not a valid IGN and is being ignored!`);
+        Logger.warn(`${name} is not a valid IGN and is being ignored!`);
         res += `${name} is not a valid IGN!\n`;
         continue;
       }
@@ -29,7 +29,7 @@ module.exports = async function addAccounts(names) {
 
     if (uuid == undefined) {
       res += `${name} does not exist!\n`;
-      logger.warn(`${name} does not exist!`);
+      Logger.warn(`${name} does not exist!`);
       continue;
     }
 
@@ -38,7 +38,7 @@ module.exports = async function addAccounts(names) {
 
   const info = await Database.info();
 
-  logger.out(`Accounts delta: ${info.accs - infoPre.accs}`);
+  Logger.out(`Accounts delta: ${info.accs - infoPre.accs}`);
   res += `Accounts delta: ${info.accs - infoPre.accs}\n`;
 
   return res;
