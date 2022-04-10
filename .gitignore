@@ -15,6 +15,10 @@ systems/*/dist
 !turbo.json
 .turbo
 
+# Runtime files
+force
+pg
+updcd
 
 # Config files
 !package.json
