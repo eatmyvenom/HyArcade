@@ -11,9 +11,10 @@ const cfg = require("@hyarcade/config").fromJSON();
  */
 async function cacheLB(name, time, redis) {
   const lb = await getLeaderboard(name, undefined, time, false, false, cfg.redis.leaderboardSize ?? 1000, true);
-  await redis.getLeaderboard(name, time).destroy();
-  await redis.getLeaderboard(name, time).setMany(lb);
-  await redis.getLeaderboard(name, time).setExpire(1800);
+  const redisLB = redis.getLeaderboard(name, time);
+  await redisLB.destroy();
+  await redisLB.setMany(lb);
+  await redisLB.setExpire(cfg.database.cacheTime.leaderboards);
 }
 
 /**

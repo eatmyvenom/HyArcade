@@ -427,7 +427,6 @@ async function getLB(prop, timetype, limit) {
  * @returns {Discord.MessageEmbed}
  */
 async function genMiWLB(prop, timetype, limit) {
-  const startTime = Date.now();
   const type = prop;
 
   let correctedTime = "";
@@ -613,8 +612,6 @@ async function genMiWLB(prop, timetype, limit) {
       resArr = resArr.slice(end);
     }
   }
-
-  logger.out(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
   return embed;
 }

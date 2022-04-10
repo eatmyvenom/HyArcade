@@ -33,6 +33,7 @@ interface DataCacheTime {
   config: number;
   counts: number;
   resources: number;
+  leaderboards: number;
 }
 
 interface DatabaseKey {
