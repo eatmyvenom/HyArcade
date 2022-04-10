@@ -17,7 +17,7 @@ async function statsHandler(accUUID, time, game, interaction) {
   }
   const commands = await commandStorage.default.getCommands();
 
-  const res = await commands.gameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
+  const res = await commands.GameStats.execute([accUUID, game, time], interaction.user.id, undefined, interaction);
 
   return new ComponentResponse("", undefined, res.components, [res.file]);
 }
