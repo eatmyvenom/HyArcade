@@ -7,11 +7,13 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es2022": true
+    "es2022": true,
+    "node": true
   },
   "globals": {
     "__dirname": "readonly",
-    "__filename": "readonly"
+    "__filename": "readonly",
+    "process": "readonly"
   },
   "extends": [
     "eslint:recommended",

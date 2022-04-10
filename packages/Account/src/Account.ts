@@ -24,7 +24,7 @@ import {
   ThrowOutStats,
   ZombiesStats,
 } from "./ArcadeModes";
-import PopulateAccountData from "./PopulateAccountData";
+import { PopulateAccountData } from "./PopulateAccountData";
 
 export default class Account {
   name: string;

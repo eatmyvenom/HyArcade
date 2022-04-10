@@ -11,7 +11,7 @@
     },
     "target": "es2022",
     "keepClassNames": true,
-    "loose": true,
+    "loose": false,
     "externalHelpers": true
   },
   "module": {

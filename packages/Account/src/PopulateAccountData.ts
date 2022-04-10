@@ -59,7 +59,7 @@ function getRank(json) {
  * @param {object} json
  * @param {any} account
  */
-export default function PopulateAccountData(json: any, account: any) {
+export function PopulateAccountData(json: any, account: any) {
   account.ranksGifted = json.player?.giftingMeta?.ranksGiven ?? 0;
 
   account.rank = getRank(json);

@@ -1,4 +1,3 @@
-import process from "node:process";
 import { LoggerInstance } from "./Logger.instance";
 
 /**

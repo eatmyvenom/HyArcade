@@ -6,12 +6,15 @@
     "importsNotUsedAsValues": "error",
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
+    "skipDefaultLibCheck": false,
+    "skipLibCheck": false,
     "resolveJsonModule": true,
-    "downlevelIteration": true,
+    "downlevelIteration": false,
     "target": "ES2018",
-    "strict": false
+    "strict": false,
+    "types": [
+      "node"
+    ]
   },
   "exclude": ["node_modules", "packages/*/dist"]
 }

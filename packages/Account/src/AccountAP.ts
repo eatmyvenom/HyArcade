@@ -510,5 +510,3 @@ export class AccountAP {
       this.zombies.apEarned;
   }
 }
-
-module.exports = AccountAP;

@@ -1,12 +1,11 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import process, { argv, stderr, stdout } from "node:process";
 
 let logLevel = process.env.HYARCADE_LOG_LEVEL ?? 5;
 
-if (argv.includes("--silent") || process.env.SILENT == "true") {
+if (process.argv.includes("--silent") || process.env.SILENT == "true") {
   logLevel = 0;
-} else if (argv.includes("--verbose") || argv.includes("-v")) {
+} else if (process.argv.includes("--verbose") || process.argv.includes("-v")) {
   logLevel = 6;
 }
 
@@ -85,7 +84,7 @@ function typeStr(type: string, color: string): string {
 function errorln(string: string, name: string = "") {
   if (shouldLog("ERROR")) {
     const str = `❌ ${timeStr()} ${nameStr(name)} ${typeStr("ERROR", "\u001B[31m")}\u001B[31m ${string}\u001B[0m\n`;
-    stderr.write(str, () => {});
+    process.stderr.write(str, () => {});
   }
 
   writeFile(path.join(__dirname, "../../..", "logs", `${name.trim()}-err.log`), `${daytime().trim()} - ${string}\n`, {
@@ -106,7 +105,7 @@ function println(type: string, string: string, name: string, color: string = "\u
   const realEmoji = emoji ? `${emoji.trim()} ` : "";
   if (shouldLog(type)) {
     const str = `${realEmoji}${timeStr()} ${nameStr(name)} ${typeStr(type, color)} ${color}${string}\u001B[0m\n`;
-    stdout.write(str, () => {});
+    process.stdout.write(str, () => {});
   }
 
   writeFile(path.join(__dirname, "../../..", "logs", `${name.trim()}-out.log`), `${daytime().trim()} - ${string}\n`, {
