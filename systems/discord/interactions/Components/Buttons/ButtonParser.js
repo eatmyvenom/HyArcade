@@ -179,5 +179,22 @@ module.exports = async function ButtonParser(interaction) {
     case "mw": {
       return await miwHandler(data[1], data[2], interaction);
     }
+
+    default: {
+      if (commandStorage == undefined) {
+        commandStorage = await import("../../../CommandStorage.mjs");
+        await commandStorage.default.initCommands();
+      }
+
+      const string = commandType;
+      const args = data.slice(1);
+      const author = interaction.user.id;
+      const cmdres = await commandStorage.default.execute(string, args, author, undefined, interaction);
+
+      const file = cmdres.file ? [cmdres.file] : undefined;
+      const embed = cmdres.embed ? [cmdres.embed] : undefined;
+
+      return new ComponentResponse(cmdres.content, embed, cmdres.components, file, false);
+    }
   }
 };

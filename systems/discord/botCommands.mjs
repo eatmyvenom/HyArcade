@@ -24,9 +24,10 @@ async function checkCommands(rawMsg, command, args, author) {
   Logger.debug(`Parsing command ${rawMsg.content}`);
   switch (command.toLowerCase()) {
     case commands.MiniWalls.name.toLowerCase():
+    case "miw-dev":
     case "mw": {
       if (author == owner) {
-        return await commands.MiniWalls.execute(args, author, rawMsg);
+        return await commands["MiniWalls-dev"].execute(args, author, rawMsg);
       }
 
       return { res: "" };

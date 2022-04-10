@@ -4,7 +4,7 @@ import { ImageGenerator } from "@hyarcade/images";
 import { Command, CommandResponse } from "@hyarcade/structures";
 import GetAsset from "@hyarcade/utils/FileHandling/GetAsset.js";
 import BotRuntime from "../BotRuntime.js";
-import MiniWallsButtons from "../interactions/Components/Buttons/Generators/MiniWallsButtons.js";
+import AutomaticButtons from "../interactions/Components/Buttons/Generators/AutomaticButtons.js";
 import { ERROR_WAS_NOT_IN_DATABASE } from "../Utils/Embeds/DynamicEmbeds.js";
 import { ERROR_IGN_UNDEFINED } from "../Utils/Embeds/StaticEmbeds.js";
 
@@ -177,7 +177,14 @@ async function miniWallsStats(args, rawMsg, interaction) {
     rightAlign,
   );
 
-  return new CommandResponse("", undefined, await img.toDiscord(), MiniWallsButtons(time, acc.uuid));
+  const buttons = new AutomaticButtons("miw-dev", [
+    { style: "SUCCESS", label: "Lifetime", disabled: time == "lifetime", args: [acc.uuid, "lifetime"] },
+    { style: "SECONDARY", label: "Daily", disabled: time == "day", args: [acc.uuid, "day"] },
+    { style: "SECONDARY", label: "Weekly", disabled: time == "weekly", args: [acc.uuid, "weekly"] },
+    { style: "SECONDARY", label: "Monthly", disabled: time == "monthly", args: [acc.uuid, "monthly"] },
+  ]);
+
+  return new CommandResponse("", undefined, await img.toDiscord(), buttons);
 }
 
-export default new Command("mini-walls", ["*"], miniWallsStats, 2500);
+export default new Command(["mini-walls", "miw-dev"], ["*"], miniWallsStats, 2500);
