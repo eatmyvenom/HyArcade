@@ -69,8 +69,8 @@ class ArcadeTieredAP {
   toTop: number;
   toNext: number;
 
-  ap: number;
-  availiableAP: number;
+  ap = 0;
+  availiableAP = 0;
 
   /**
    *
@@ -100,17 +100,17 @@ class ArcadeTieredAP {
 }
 
 class ArcadeGameAP {
-  apEarned: number;
-  apAvailable: number;
+  apEarned = 0;
+  apAvailable = 0;
 
-  legacyEarned: number;
-  legacyAvailable: number;
+  legacyEarned = 0;
+  legacyAvailable = 0;
 
-  challengeEarned: number;
-  challengeAvailable: number;
+  challengeEarned = 0;
+  challengeAvailable = 0;
 
-  tieredEarned: number;
-  tieredAvailable: number;
+  tieredEarned = 0;
+  tieredAvailable = 0;
 
   tieredAP = [];
   challengeAP = [];
