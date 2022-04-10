@@ -1,5 +1,4 @@
 /* eslint-disable complexity */
-import Logger from "@hyarcade/logger";
 import Database from "@hyarcade/database";
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
@@ -63,7 +62,6 @@ export default new Command(
   "mw-leaderboard",
   ["*"],
   async args => {
-    const startTime = Date.now();
     const type = args[0] ?? "";
 
     let timetype = args[1] ?? "lifetime";
@@ -337,8 +335,6 @@ export default new Command(
         resArr = resArr.slice(end);
       }
     }
-
-    Logger.debug(`MW Leaderboard command ran in ${Date.now() - startTime}ms`);
 
     return new CommandResponse("", embed);
   },

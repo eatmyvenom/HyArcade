@@ -54,9 +54,6 @@ function toHHMMSS(secs) {
  */
 async function hander(args, rawMsg, interaction) {
   // Start time before any packets are sent
-  const startTime = Date.now();
-  Logger.verbose("Deferring");
-
   if (interaction != undefined && !interaction.isButton()) {
     Logger.debug("Deferring interaction");
     await interaction.deferReply();
@@ -1233,8 +1230,6 @@ async function hander(args, rawMsg, interaction) {
 
   Logger.verbose("Converting canvas");
   const finalRes = await res.toDiscord("leaderboard.png");
-
-  Logger.debug(`Leaderboard command ran in ${Date.now() - startTime}ms`);
 
   const buttons = LeaderboardButtons(startingIndex, gid, timetype);
 
