@@ -6,6 +6,7 @@ module.exports = class hypixelReq {
   url = "";
   address = "";
   headers = {};
+
   /**
    * Creates an instance of hypixelReq.
    *
@@ -20,7 +21,7 @@ module.exports = class hypixelReq {
   /**
    * Send the request to hypixel
    *
-   * @returns {string}
+   * @returns {Promise<string>}
    */
   async makeRequest() {
     try {

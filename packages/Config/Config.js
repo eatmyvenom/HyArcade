@@ -39,6 +39,7 @@ class Database {
     config: 600000,
     counts: 600,
     resources: 6000,
+    leaderboards: 2400,
   };
   cacheLbs = [];
 }

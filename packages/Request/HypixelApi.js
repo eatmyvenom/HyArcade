@@ -35,11 +35,11 @@ module.exports = class HypixelApi {
   reqUrl = "";
   interfaceIP;
 
-  constructor(endpoint, args = {}, interface) {
+  constructor(endpoint, args = {}, localIP) {
     let key;
-    if (interface) {
-      key = keys[interface];
-      this.interfaceIP = interfaces[interface];
+    if (localIP) {
+      key = keys[localIP];
+      this.interfaceIP = interfaces[localIP];
     } else {
       key = getKey();
     }
