@@ -4,9 +4,12 @@ import { LoggerInstance } from "./Logger.instance";
  * @returns {string}
  */
 function getName(): string {
+  const modPath = require.main.filename;
+  const mainName = modPath.slice(modPath.lastIndexOf("/") + 1, modPath.indexOf("."));
+
   let name = process.argv[2];
   name = name == "bot" ? process.argv[process.argv.length - 1] : name;
-  return name == undefined ? require.main.id : name;
+  return name == undefined ? mainName : name;
 }
 
 const Logger = new LoggerInstance(getName(), "🎮");
