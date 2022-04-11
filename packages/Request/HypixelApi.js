@@ -8,6 +8,9 @@ const hypixelReq = require("./hypixelReq");
 const Logger = require("@hyarcade/logger");
 const { default: axios } = require("axios");
 
+const keys = config.hypixel.batchKeys;
+const interfaces = config.hypixel.localInterfaces;
+
 /**
  * Function to get the key to use
  *
@@ -30,18 +33,26 @@ module.exports = class HypixelApi {
   endpoint = "";
   args = {};
   reqUrl = "";
+  interfaceIP;
 
-  constructor(endpoint, args = {}) {
+  constructor(endpoint, args = {}, interface) {
+    let key;
+    if (interface) {
+      key = keys[interface];
+      this.interfaceIP = interfaces[interface];
+    } else {
+      key = getKey();
+    }
     this.endpoint = endpoint;
     this.args = args;
-    args.key = getKey();
+    args.key = key;
     const urlargs = new url.URLSearchParams(args);
     this.reqUrl = new url.URL(`${endpoint}?${urlargs.toString()}`, "https://api.hypixel.net");
   }
 
   async makeRequest() {
     Logger.verbose(`Querying Hypixel /${this.endpoint}`);
-    const apiPoint = new hypixelReq(this.reqUrl.toString());
+    const apiPoint = new hypixelReq(this.reqUrl.toString(), this.interfaceIP);
     let response = await apiPoint.makeRequest();
 
     while (apiPoint.headers["retry-after"]) {

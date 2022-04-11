@@ -1,16 +1,20 @@
 const { default: axios } = require("axios");
 const Logger = require("@hyarcade/logger");
+const { Agent } = require("https");
 
 module.exports = class hypixelReq {
   url = "";
+  address = "";
   headers = {};
   /**
    * Creates an instance of hypixelReq.
    *
    * @param {string} url
+   * @param {string} address
    */
-  constructor(url) {
+  constructor(url, address) {
     this.url = url;
+    this.address = address;
   }
 
   /**
@@ -20,11 +24,17 @@ module.exports = class hypixelReq {
    */
   async makeRequest() {
     try {
-      const req = await axios.get(this.url.toString(), {
+      const options = {
         validateStatus(status) {
           return status < 500 && status != 403;
         },
-      });
+      };
+
+      if (this.address != undefined && this.address != "") {
+        options.httpsAgent = new Agent({ localAddress: this.address });
+      }
+
+      const req = await axios.get(this.url.toString(), options);
 
       this.headers = req.headers;
       return req.data;
