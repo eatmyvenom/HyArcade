@@ -6,7 +6,7 @@ import { LoggerInstance } from "./Logger.instance";
 function getName(): string {
   let name = process.argv[2];
   name = name == "bot" ? process.argv[process.argv.length - 1] : name;
-  return name == undefined ? "hyarcade" : name;
+  return name == undefined ? require.main.id : name;
 }
 
 const Logger = new LoggerInstance(getName(), "🎮");

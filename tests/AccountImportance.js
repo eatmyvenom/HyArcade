@@ -1,33 +1,20 @@
-const { Account } = require("@hyarcade/account");
-const fs = require("fs-extra");
-const normalize = require("../src/datagen/utils/NormalizeAccount");
+const Logger = require("@hyarcade/logger");
+const connector = require("@hyarcade/requests/MongoConnector");
 
 /**
  *
  */
 async function main() {
-  /**
-   * @type {Account[]}
-   */
-  let accs = await fs.readJSON("data/accounts.json");
+  const c = new connector();
+  await c.connect(false);
 
-  accs = accs.sort((b, a) => {
-    const normalizedWinsA = normalize(a);
+  const i = await c.getImportantAccounts();
 
-    const normalizedWinsB = normalize(b);
-
-    return normalizedWinsA - normalizedWinsB;
-  });
-
-  accs = accs.slice(0, 120);
-
-  accs = accs.map(oldAcc => {
-    const normalizedWins = normalize(oldAcc);
-
-    return `${oldAcc.name.padEnd(17, " ")} : ${Math.round(normalizedWins)}`;
-  });
-
-  return accs.join("\n");
+  Logger.log(i.length);
+  await c.destroy();
+  process.exit(0);
 }
 
-main().then(console.log).catch(console.error);
+main()
+  .then((...args) => Logger.log(...args))
+  .catch(error => Logger.err(error.stack));

@@ -76,7 +76,7 @@ export function PopulateAccountData(json: any, account: any) {
   account.internalId = json?.player?._id ?? 0;
   account.isLoggedIn = json?.player?.lastLogin > json.player?.lastLogout;
   account.lastLogout = json?.player?.lastLogout ?? 0;
-  account.firstLogin = json?.player?.firstLogin ?? Date.now();
+  account.firstLogin = json?.player?.firstLogin ?? 0;
 
   account.mostRecentGameType = json.player?.mostRecentGameType ?? "NONE";
 

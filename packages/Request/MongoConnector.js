@@ -789,11 +789,15 @@ class MongoConnector {
     };
 
     if (level == 0) {
-      const basicQuery = [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }];
+      const basicReqs = { $or: [{ importance: { $gte: cfg.hypixel.importanceLimit } }, { discordID: { $exists: true } }] };
+      const timeLimit = {
+        $or: [
+          { "actionTime.otherActions": { $gte: Date.now() - cfg.hypixel.loginLimit } },
+          { lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } },
+        ],
+      };
 
-      const mainAccs = await this.accounts
-        .find({ $or: basicQuery, lastLogin: { $gte: Date.now() - cfg.hypixel.loginLimit } }, opts)
-        .toArray();
+      const mainAccs = await this.accounts.find({ $and: [basicReqs, timeLimit] }, opts).toArray();
       const highImportance = await this.accounts.find({ importance: { $gte: cfg.hypixel.forceImportance } }, opts).toArray();
       accs = [...mainAccs, ...highImportance];
 

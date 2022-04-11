@@ -56,6 +56,9 @@ export default function GetLastActions(acc: any) {
     acc?.lastClaimedReward ?? 0,
     acc?.petJourneyTimestamp ?? 0,
     acc?.stats?.Legacy?.tokens_last_received_stamp ?? 0,
+    acc?.lastLogin ?? 0,
+    acc?.lastLogout ?? 0,
+    lastPetTime,
   );
 
   const swHeads = acc?.stats?.SkyWars?.head_collection ?? {};
