@@ -359,7 +359,7 @@ async function load() {
 
       const gsim = document.createElement("div");
       gsim.title = "Grinch Wins";
-      gsim.id = "seasonalWins.grinch";
+      gsim.id = "seasonalWins.easter";
       main.append(gsim);
 
       break;
