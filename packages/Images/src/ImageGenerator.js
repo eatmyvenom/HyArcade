@@ -99,6 +99,17 @@ module.exports = class ImageGenerator {
     this.context.drawImage(img, x, y, imgWidth, imgHeight);
   }
 
+  /**
+   *
+   * @param {string} txt
+   * @param {number} x starting x position
+   * @param {number} y starting y position
+   * @param {number} size font size used to render or measure text
+   * @param {string} align how the text is aligned to the starting X position
+   * @param {boolean} tag should a box be added like a minecraft nametag
+   * @param {boolean} fake should text be rendered or just return the width
+   * @returns {number} the width of the rendered text
+   */
   drawMcText(txt, x, y, size = 32, align = "left", tag = false, fake = false) {
     const offset = size * 0.1;
     this.context.font = `${size}px 'minecraft'`;
