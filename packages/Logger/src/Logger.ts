@@ -4,7 +4,7 @@ import { LoggerInstance } from "./Logger.instance";
  * @returns {string}
  */
 function getName(): string {
-  const modPath = require.main.filename;
+  const modPath = require?.main?.filename ?? "/Hyarcade.";
   const mainName = modPath.slice(modPath.lastIndexOf("/") + 1, modPath.indexOf("."));
 
   let name = process.argv[2];
