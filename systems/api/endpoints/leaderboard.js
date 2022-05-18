@@ -122,7 +122,7 @@ module.exports = async (req, res, runtime) => {
           throw new MissingFieldError("No path specified to generate a leaderboard from", ["path"]);
         }
 
-        const guild = await GuildResolver(req, mongoConnector);
+        const guild = await GuildResolver(req, runtime);
 
         if (guild.error) {
           res.setHeader("Content-Type", "application/json");
