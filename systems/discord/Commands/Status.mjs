@@ -437,7 +437,7 @@ function loggedIn(acc) {
 /**
  * @param status
  */
-function classicGamesTransformer(status) {
+function sessionTransformer(status) {
   switch (status.session.gameType) {
     case "VAMPIREZ": {
       status.session.gameType = "LEGACY";
@@ -473,6 +473,10 @@ function classicGamesTransformer(status) {
       status.session.gameType = "LEGACY";
       status.session.mode = "QUAKECRAFT";
       break;
+    }
+
+    case "MAIN": {
+      status.session.gameType = "MAIN_LOBBY";
     }
   }
 }
@@ -553,7 +557,7 @@ async function callback(args, rawmsg, interaction) {
   if (status.session.online) {
     const counts = await Database.gameCounts();
 
-    classicGamesTransformer(status);
+    sessionTransformer(status);
 
     const modeOthers = numberify(counts?.games?.[status.session.gameType]?.modes?.[status.session.mode]) ?? "Unknown";
     const typeOthers = numberify(counts?.games?.[status.session.gameType]?.players) ?? "Unknown";
