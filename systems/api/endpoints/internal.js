@@ -68,6 +68,11 @@ module.exports = async (req, res, runtime) => {
           res.write(JSON.stringify({ success: true }));
         }
 
+        if ((fullAuth || key.perms.includes("statsEdit")) && json.hypixelBackup) {
+          delete json.hypixelBackup.player.id;
+          await mongoConnector.hypixel.replaceOne({ uuid: json.hypixelBackup.player.uuid }, json.hypixelBackup.player, { upsert: true });
+        }
+
         if ((fullAuth || key.perms.includes("batch")) && json.getBatch) {
           let currentUUIDs = (await redisInterface.getJSON("currentUUIDs")) ?? [];
           const isGenerating = (await redisInterface.get("generating")) == true;
