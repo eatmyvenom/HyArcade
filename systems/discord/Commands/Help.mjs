@@ -1,9 +1,9 @@
 import Command from "@hyarcade/structures/Discord/Command.js";
 import CommandResponse from "@hyarcade/structures/Discord/CommandResponse.js";
-import { client } from "../BotRuntime.js";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { MessageEmbed } = require("discord.js");
+const { client } = require("../BotRuntime.js");
 
 /**
  *
