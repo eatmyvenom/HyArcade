@@ -119,6 +119,8 @@ class MongoConnector {
 
     this.accounts = this.database.collection("accounts");
 
+    this.hypixel = this.database.collection("hypixel");
+
     this.dailyAccounts = this.database.collection("dailyAccounts");
     this.weeklyAccounts = this.database.collection("weeklyAccounts");
     this.monthlyAccounts = this.database.collection("monthlyAccounts");
@@ -489,7 +491,6 @@ class MongoConnector {
     pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.accounts.aggregate(pipeline).toArray();
-    Logger.debug("Historical leaderboard generation completed");
 
     return historical;
   }
@@ -599,7 +600,6 @@ class MongoConnector {
     pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.accounts.aggregate(pipeline).toArray();
-    Logger.debug("Historical leaderboard generation completed");
 
     return historical;
   }
@@ -700,7 +700,6 @@ class MongoConnector {
     pipeline.push({ $sort: sort }, { $limit: limit });
 
     const historical = await this.guilds.aggregate(pipeline).toArray();
-    Logger.debug("Historical leaderboard generation completed");
 
     return historical;
   }
