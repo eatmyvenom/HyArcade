@@ -161,6 +161,11 @@ export default async interaction => {
           );
         }
       }
+      break;
+    }
+
+    default: {
+      return await CommandStorage.execInteraction(interaction.commandName, interaction);
     }
   }
 
