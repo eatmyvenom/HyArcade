@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 interface ArcadeGameStats {
   /**
    *
@@ -273,20 +274,20 @@ export class PartyGamesStats implements ArcadeGameStats {
   hoePB: number;
 
   jigsawWins: number;
-  jigsawPB: number;
+  jigsawPB: number = 9999999999;
 
   jungleJumpWins: number;
-  jungleJumpPB: number;
+  jungleJumpPB: number = 9999999999;
 
   labEscapeWins: number;
-  labEscapePB: number;
+  labEscapePB: number = 9999999999;
 
   lawnMoowerWins: number;
   lawnMoowerScore: number;
   lawnMoowerPB: number;
 
   minecartRacingWins: number;
-  minecartRacingPB: number;
+  minecartRacingPB: number = 9999999999;
 
   rpgWins: number;
   rpgKills: number;
@@ -296,7 +297,7 @@ export class PartyGamesStats implements ArcadeGameStats {
   spiderMazePB: number;
 
   theFloorIsLavaWins: number;
-  theFloorIsLavaPB: number;
+  theFloorIsLavaPB: number = 9999999999;
 
   avalancheWins: number;
 
@@ -340,7 +341,7 @@ export class PartyGamesStats implements ArcadeGameStats {
     this.bombardmentPB = arcade?.bombardment_best_time_party ?? 0;
 
     this.chickenRingsWins = arcade?.chicken_rings_round_wins_party ?? 0;
-    this.chickenRingsPB = arcade?.chicken_rings_best_time_party;
+    this.chickenRingsPB = arcade?.chicken_rings_best_time_party ?? 9999999999;
 
     this.diveWins = arcade?.dive_round_wins_party ?? 0;
     this.diveScore = arcade?.dive_total_score_party ?? 0;
@@ -355,30 +356,30 @@ export class PartyGamesStats implements ArcadeGameStats {
     this.hoePB = arcade?.hoe_hoe_hoe_best_score_party ?? 0;
 
     this.jigsawWins = arcade?.jigsaw_rush_round_wins_party ?? 0;
-    this.jigsawPB = arcade?.jigsaw_rush_best_time_party;
+    this.jigsawPB = arcade?.jigsaw_rush_best_time_party ?? 9999999999;
 
     this.jungleJumpWins = arcade?.jungle_jump_round_wins_party ?? 0;
-    this.jungleJumpPB = arcade?.jungle_jump_best_time_party;
+    this.jungleJumpPB = arcade?.jungle_jump_best_time_party ?? 9999999999;
 
     this.labEscapeWins = arcade?.lab_escape_round_wins_party ?? 0;
-    this.labEscapePB = arcade?.lab_escape_best_time_party;
+    this.labEscapePB = arcade?.lab_escape_best_time_party ?? 9999999999;
 
     this.lawnMoowerWins = arcade?.lawn_moower_round_wins_party ?? 0;
     this.lawnMoowerScore = arcade?.lawn_moower_mowed_total_score_party ?? 0;
     this.lawnMoowerPB = arcade?.lawn_moower_mowed_best_score_party ?? 0;
 
     this.minecartRacingWins = arcade?.minecart_racing_round_wins_party ?? 0;
-    this.minecartRacingPB = arcade?.minecart_racing_best_time_party;
+    this.minecartRacingPB = arcade?.minecart_racing_best_time_party ?? 9999999999;
 
     this.rpgWins = arcade?.rpg_16_round_wins_party ?? 0;
     this.rpgKills = arcade?.rpg_16_kills_party ?? 0;
     this.rpgPB = arcade?.rpg_16_kills_best_score_party ?? 0;
 
     this.spiderMazeWins = arcade?.spider_maze_round_wins_party ?? 0;
-    this.spiderMazePB = arcade?.spider_maze_best_time_party;
+    this.spiderMazePB = arcade?.spider_maze_best_time_party ?? 9999999999;
 
     this.theFloorIsLavaWins = arcade?.the_floor_is_lava_round_wins_party ?? 0;
-    this.theFloorIsLavaPB = arcade?.the_floor_is_lava_best_time_party;
+    this.theFloorIsLavaPB = arcade?.the_floor_is_lava_best_time_party ?? 9999999999;
 
     this.avalancheWins = arcade?.avalanche_round_wins_party ?? 0;
 
